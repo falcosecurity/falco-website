@@ -13,7 +13,7 @@ params:
     # Main hero title
     title: Detect, Alert, Protect
     # Hero subtitle (optional)
-    subtitle: Falco provides intrusion and abnormality detection for Cloud Native platforms such as Kubernetes, Mesosphere, and Cloud Foundry.
+    subtitle: Falco is an open source project for intrusion and abnormality detection for Cloud Native platforms such as Kubernetes, Mesosphere, and Cloud Foundry. Detect abnormal application behavior; alert via Slack, Fluentd, NATS, and more; Protect your platform by taking action through serverless (FaaS) frameworks and more.
     # Button text
     buttontext: Get started
     # Where the main hero button links to
@@ -52,9 +52,9 @@ params:
     - title: Container-native
       icon: laptop-cloud
       text: Runtime Security built for containers. Built from the ground up to natively support containerized applications.
-    - title: See Everything
+    - title: Deep Visibility
       icon: plug-cloud
-      text: Complete container visibility through a single sensor. Easily build rules and get notified immediately. 
+      text: Complete container visibility through a single sensor. Gain insight into application and container behavior. 
   section2:
     title: Downloads & Resources
     subtitle: Get started today, contribute to the open source project, & learn more.
@@ -77,17 +77,4 @@ params:
       buttonLink: /
   footer:
     # Logo (from /images/logos/___)
-    logo: falco.png
-    # Social media links (GitHub, Twitter, etc.). All are optional.   
-    socialmedia:
-    - link: https://github.com/lucperkins/github-fresh
-      # Icons are from Font Awesome
-      icon: github
-    - link: https://dribbble.com/#
-      icon: dribbble
-    - link: https://facebook.com/#
-      icon: facebook
-    - link: https://twitter.com/lucperkins
-      icon: twitter
-    - link: https://bitbucket.org/#
-      icon: bitbucket
+    copyright: Copyright 2018, The Falco Authors

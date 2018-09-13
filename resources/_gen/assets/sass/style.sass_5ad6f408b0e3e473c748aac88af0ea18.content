@@ -6429,7 +6429,7 @@ footer.footer-dark {
   background: #444F60;
   color: #fff; }
   footer.footer-dark .columns {
-    margin-top: 35px; }
+    margin-top: 5px; }
   footer.footer-dark .footer-logo img {
     height: 40px; }
   footer.footer-dark .footer-column .footer-header h3 {

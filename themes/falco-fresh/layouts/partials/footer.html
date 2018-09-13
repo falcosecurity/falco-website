@@ -1,42 +1,9 @@
 {{- $footer       := .Site.Params.footer }}
-{{- $logo         := index $footer "logo" }}
-{{- $cncf         := index $footer "cncf" }}
-{{- $socialMedia  := index $footer "socialmedia" }}
 <footer class="footer footer-dark">
   <div class="container">
     <div class="columns">
       <div class="column is-one-third">
-        <div class="footer-logo">
-          <img src="{{ printf "/images/logos/%s" $logo | relURL }}">
-        </div>
-      </div>
-      <div class="column is-one-third">
-        <div class="footer-column has-text-centered">
-          <p>
-            <a href="{{ $cncf.cncfLink }}">
-              <img src="{{ printf "/images/logos/%s" $cncf.logo | relURL }}">
-            </a>  
-          </p>
-          <p>
-            Falco is a <a href="{{ $cncf.levelLink }}">{{ $cncf.level }}</a> level project.
-          </p>
-        </div>
-      </div>
-      <div class="column is-one-third">
-        <div class="footer-column has-text-centered">
-          <div class="footer-header">
-            <h3>Follow Us</h3>
-            <nav class="level is-mobile">
-              <div class="level-left has-text-centered">
-                {{- range $socialMedia }}
-                <a class="level-item" href="{{ .link }}">
-                  <span class="icon"><i class="fa fa-{{ .icon }}"></i></span>
-                </a>
-                {{- end }}
-              </div>
-            </nav>
-          </div>
-        </div>
+        {{ $footer.copyright}}
       </div>
     </div>
   </div>
