@@ -9,7 +9,7 @@
 
 <link rel="icon" type="image/png" href="{{ "/images/favicon.png" | absURL }}" />
 <link href="{{ $fontUrl }}" rel="stylesheet">
-<link href="{{ printf "/css/%s" $secondaryFontFace | relURL}}" rel="stylesheet">
+<link href="{{ printf "/css/%s.css" $secondaryFontFace | relURL}}" rel="stylesheet">
 {{- if $inServerMode }}
 {{- $css := resources.Get $sass | toCSS $cssOpts }}
 <link rel="stylesheet" type="text/css" href="{{ $css.RelPermalink }}">

@@ -1,4 +1,6 @@
 {{- $navbar := .Site.Params.navbar }}
+{{- $menu   := index $navbar "menu"}}
+{{- $cncf   := index $navbar "cncf" }}
 <nav class="navbar is-fresh is-transparent no-shadow" role="navigation" aria-label="main navigation">
   <div class="container">
     <div class="navbar-brand">
@@ -6,11 +8,20 @@
         <img src="{{ "/images/logos/falco.png" | absURL }}" alt="">
       </a>
     </div>
-
+    <div class="navbar-middle">
+      <p>
+        <a href="{{ $cncf.cncfLink }}">
+          <img src="{{ printf "/images/logos/%s" $cncf.logo | relURL }}">
+        </a>  
+      </p>
+      <p>
+        Falco is a CNCF <a href="{{ $cncf.levelLink }}">{{ $cncf.level }}</a> level project.
+      </p>
+    </div>
     <div id="navbar-menu" class="navbar-menu is-static">
 
       <div class="navbar-end">
-        {{- range $navbar }}
+        {{- range $menu }}
         {{- if .sublinks }}
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">

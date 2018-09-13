@@ -23,8 +23,8 @@ Navbar
     .navbar-brand {
         min-height: 4rem;
         img {
-            max-height: 100px !important;
-            height: 100px;
+            max-height: 75px !important;
+            height: 75px;
         }
         //Removing navbar item default hover behaviour
         &:hover {
@@ -33,12 +33,24 @@ Navbar
             }
         }
     }
+    .navbar-middle {
+        align-self: center;
+        align-items: center;
+        padding-left: 25%;
+        font-size: .65rem;
+        img {
+            max-height: 30px !important;
+            height: 30px;
+        }
+    }
+
     .navbar-end {
         align-items: center;
     }
     //Navbar items
     .navbar-item {
         color: $muted-grey;
+        font-size: 1.25rem;
         &.is-secondary {
             &:hover {
                 color: $secondary !important;

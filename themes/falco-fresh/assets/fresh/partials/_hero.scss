@@ -5,11 +5,11 @@ Hero styles
 .hero-body {
     padding-top: 6rem;
     padding-bottom: 6rem;
-    .title, .subtitle {
-        font-family: 'Open Sans', sans-serif;
+    .subtitle {
+        font-family: 'Karla';
     }
     .title {
-        font-family: 'MaaxMono', sans-serif;
+        font-family: 'MaaxMono';
 
         &.is-bold {
             font-weight: 700;
@@ -24,6 +24,6 @@ Hero styles
 
 .hero-foot {
     img.partner-logo {
-        height: 70px;
+        height: 100px;
     }
 }

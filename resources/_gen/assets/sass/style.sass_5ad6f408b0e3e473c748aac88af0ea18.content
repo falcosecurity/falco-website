@@ -262,13 +262,13 @@ button,
 input,
 select,
 textarea {
-  font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif; }
+  font-family: Karla, BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif; }
 
 code,
 pre {
   -moz-osx-font-smoothing: auto;
   -webkit-font-smoothing: auto;
-  font-family: monospace; }
+  font-family: MaaxMono, monospace; }
 
 body {
   color: #4a4a4a;
@@ -6194,14 +6194,23 @@ Navbar
   .navbar.is-fresh .navbar-brand {
     min-height: 4rem; }
     .navbar.is-fresh .navbar-brand img {
-      max-height: 100px !important;
-      height: 100px; }
+      max-height: 75px !important;
+      height: 75px; }
     .navbar.is-fresh .navbar-brand:hover .navbar-item {
       background: transparent !important; }
+  .navbar.is-fresh .navbar-middle {
+    align-self: center;
+    align-items: center;
+    padding-left: 25%;
+    font-size: .65rem; }
+    .navbar.is-fresh .navbar-middle img {
+      max-height: 30px !important;
+      height: 30px; }
   .navbar.is-fresh .navbar-end {
     align-items: center; }
   .navbar.is-fresh .navbar-item {
-    color: #999; }
+    color: #999;
+    font-size: 1.25rem; }
     .navbar.is-fresh .navbar-item.is-secondary:hover {
       color: #0a1429 !important; }
     .navbar.is-fresh .navbar-item.has-dropdown {
@@ -6350,19 +6359,23 @@ Section Styles
 .section.section-half {
   height: 75vh !important; }
 
-.section .title, .section .subtitle {
-  font-family: 'Open Sans', sans-serif; }
+.section .title {
+  font-family: 'MaaxMono', monospace; }
 
-.section .subtitle.is-muted {
-  color: #999; }
+.section .subtitle {
+  font-family: 'Karla','Open Sans', sans-serif; }
+  .section .subtitle.is-muted {
+    color: #999; }
 
 .title-wrapper {
   max-width: 500px;
   margin: 0 auto; }
-  .title-wrapper .title, .title-wrapper .subtitle {
-    font-family: 'Open Sans', sans-serif; }
-  .title-wrapper .subtitle.is-muted {
-    color: #999; }
+  .title-wrapper .title {
+    font-family: 'MaaxMono', monospace; }
+  .title-wrapper .subtitle {
+    font-family: 'Karla','Open Sans', sans-serif; }
+    .title-wrapper .subtitle.is-muted {
+      color: #999; }
 
 .divider {
   height: 3px;
@@ -6397,17 +6410,17 @@ Hero styles
 .hero-body {
   padding-top: 6rem;
   padding-bottom: 6rem; }
-  .hero-body .title, .hero-body .subtitle {
-    font-family: 'Open Sans', sans-serif; }
+  .hero-body .subtitle {
+    font-family: 'Karla'; }
   .hero-body .title {
-    font-family: 'MaaxMono', sans-serif; }
+    font-family: 'MaaxMono'; }
     .hero-body .title.is-bold {
       font-weight: 700; }
   .hero-body .subtitle.is-muted {
     color: #999; }
 
 .hero-foot img.partner-logo {
-  height: 70px; }
+  height: 100px; }
 
 /* ==========================================================================
 Fresh Footer
@@ -6535,7 +6548,7 @@ Cards and Card content styles
   border-radius: 3px;
   margin: 0 auto; }
   .feature-card .card-title h4 {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'MaaxMono', monospace;
     padding-top: 25px;
     font-size: 1.2rem;
     font-weight: 600;

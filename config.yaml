@@ -28,14 +28,20 @@ params:
     - DC-OS.png
   # Customizable navbar. For a dropdown, add a "sublinks" list.
   navbar:
-  - title: Features
-    url: "#features"
-  - title: Download
-    url: "#download"
-  - title: GitHub
-    url: https://github.com/falcosecurity/falco
-  - title: Docs
-    url: https://github.com/falcosecurity/falco/wiki
+    cncf:
+      logo: cncf-black.svg
+      cncfLink: https://cncf.io
+      level: Sandbox
+      levelLink: https://github.com/cncf/toc/blob/master/process/sandbox.md 
+    menu:  
+    - title: Features
+      url: "#features"
+    - title: Download
+      url: "#download"
+    - title: GitHub
+      url: https://github.com/falcosecurity/falco
+    - title: Docs
+      url: https://github.com/falcosecurity/falco/wiki
   section1:
     title: Key Features
     subtitle: 
@@ -72,12 +78,7 @@ params:
   footer:
     # Logo (from /images/logos/___)
     logo: falco.png
-    # Social media links (GitHub, Twitter, etc.). All are optional.
-    cncf:
-      logo: cncf-white.svg
-      cncfLink: https://cncf.io
-      level: Sandbox
-      levelLink: https://github.com/cncf/toc/blob/master/process/sandbox.md    
+    # Social media links (GitHub, Twitter, etc.). All are optional.   
     socialmedia:
     - link: https://github.com/lucperkins/github-fresh
       # Icons are from Font Awesome

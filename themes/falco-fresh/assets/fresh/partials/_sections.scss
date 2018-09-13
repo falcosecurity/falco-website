@@ -16,11 +16,13 @@ Section Styles
     &.section-half {
         height: 75vh !important;
     }
-    .title, .subtitle {
-        font-family: 'Open Sans', sans-serif;
+    .title {
+        font-family: 'MaaxMono', monospace;
+    } 
 
-    }
     .subtitle {
+        font-family: 'Karla','Open Sans', sans-serif;
+
         &.is-muted {
             color: $muted-grey;
         }
@@ -31,11 +33,12 @@ Section Styles
 .title-wrapper {
     max-width: 500px;
     margin: 0 auto;
-    .title, .subtitle {
-        font-family: 'Open Sans', sans-serif;
-
+    .title {
+        font-family: 'MaaxMono', monospace;
     }
     .subtitle {
+        font-family: 'Karla','Open Sans', sans-serif;
+
         &.is-muted {
             color: $muted-grey;
         }

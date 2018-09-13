@@ -1,4 +1,5 @@
 {{- $navbar := .Site.Params.navbar }}
+{{- $menu   := index $navbar "menu"}}
 <nav id="navbar-clone" class="navbar is-fresh is-transparent" role="navigation" aria-label="main navigation">
   <div class="container">
     <div class="navbar-brand">
@@ -9,7 +10,7 @@
 
     <div id="cloned-navbar-menu" class="navbar-menu is-fixed">
       <div class="navbar-end">
-        {{- range $navbar }}
+        {{- range $menu }}
         {{- if .sublinks }}
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">
