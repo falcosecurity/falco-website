@@ -1,0 +1,92 @@
+baseURL: http://falco.org/
+languageCode: en-us
+title: Falco - Cloud Native Runtime Security
+theme: falco-fresh
+
+params:
+  primaryFont:
+    name: "Karla"
+    sizes: [400 700]
+  secondaryFont:
+    name: "MaaxMono"    
+  hero:
+    # Main hero title
+    title: Detect, Alert, Protect
+    # Hero subtitle (optional)
+    subtitle: Falco provides intrusion and abnormality detection for Cloud Native platforms such as Kubernetes, Mesosphere, and Cloud Foundry.
+    # Button text
+    buttontext: Get started
+    # Where the main hero button links to
+    buttonlink: "#download"
+    # Hero image (from /images/___)
+    image: illustrations/worker.svg
+    # Footer logos (from /images/logos/clients/___.svg)
+    clientlogos:
+    - kubernetes.png
+    - mesos.png
+    - openshift.png
+    - DC-OS.png
+  # Customizable navbar. For a dropdown, add a "sublinks" list.
+  navbar:
+  - title: Features
+    url: "#features"
+  - title: Download
+    url: "#download"
+  - title: GitHub
+    url: https://github.com/falcosecurity/falco
+  - title: Docs
+    url: https://github.com/falcosecurity/falco/wiki
+  section1:
+    title: Key Features
+    subtitle: 
+    tiles:
+    - title: Platform Aware
+      icon: plug-cloud
+      text: Build rules specific to your Cloud Native platforms to enforce policy across all your containers & microservices.
+    - title: Container-native
+      icon: laptop-cloud
+      text: Runtime Security built for containers. Built from the ground up to natively support containerized applications.
+    - title: See Everything
+      icon: plug-cloud
+      text: Complete container visibility through a single sensor. Easily build rules and get notified immediately. 
+  section2:
+    title: Downloads & Resources
+    subtitle: Get started today, contribute to the open source project, & learn more.
+    resources:
+    - title: CONTRIBUTE
+      text: Jump over to our GitHub page to contribute to our open source ecosystem.
+      # Icon (from /images/illustrations/icons/___.svg)
+      icon: contribute.png
+      buttonText: Sysdig Falco Github
+      buttonLink: /
+    - title: Download
+      text: Get started with our Falco installation guide.
+      icon: download_288px.png
+      buttonText: Sysdig Falco Install Guide
+      buttonLink: /
+    - title: Documentation
+      text: Visit our wiki where you can find information about sysdig, csysdig, and their APIs.
+      icon: documentation.png
+      buttonText: Sysdig Falco Wiki
+      buttonLink: /
+  footer:
+    # Logo (from /images/logos/___)
+    logo: falco.png
+    # Social media links (GitHub, Twitter, etc.). All are optional.
+    cncf:
+      logo: cncf-white.svg
+      cncfLink: https://cncf.io
+      level: Sandbox
+      levelLink: https://github.com/cncf/toc/blob/master/process/sandbox.md    
+    socialmedia:
+    - link: https://github.com/lucperkins/github-fresh
+      # Icons are from Font Awesome
+      icon: github
+    - link: https://dribbble.com/#
+      icon: dribbble
+    - link: https://facebook.com/#
+      icon: facebook
+    - link: https://twitter.com/lucperkins
+      icon: twitter
+    - link: https://bitbucket.org/#
+      icon: bitbucket

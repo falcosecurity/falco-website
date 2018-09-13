@@ -1,0 +1,29 @@
+/* ==========================================================================
+Hero styles
+========================================================================== */
+
+.hero-body {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+    .title, .subtitle {
+        font-family: 'Open Sans', sans-serif;
+    }
+    .title {
+        font-family: 'MaaxMono', sans-serif;
+
+        &.is-bold {
+            font-weight: 700;
+        }
+    }
+    .subtitle {
+        &.is-muted {
+            color: $muted-grey;
+        }
+    }
+}
+
+.hero-foot {
+    img.partner-logo {
+        height: 70px;
+    }
+}
