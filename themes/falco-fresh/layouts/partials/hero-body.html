@@ -6,11 +6,18 @@
 {{- $image      := index $hero "image" }}
 <div class="hero-body">
   <div class="container">
-    <div class="columns is-vcentered">
-      <div class="column is-5 is-offset-1 landing-caption">
-        <h1 class="title is-1 is-bold is-spaced">
+    <div class="columns u-logo-offset">
+      <div class="column landing-caption">
+        <h1 class="title is-3 is-spaced has-text-weight-normal">
           {{ $title }}
         </h1>
+      </div>
+    </div>
+    <div class="columns u-logo-offset">
+      <div class="column is-6 landing-caption">
+        <figure class="image hero__img is-hidden-tablet">
+          <img src="{{ printf "/images/%s" $image | relURL }}" alt="Description">
+        </figure>
         {{ with $subtitle }}
         <h2 class="subtitle is-5 is-muted">
           {{ . }}
@@ -22,8 +29,8 @@
           </a>
         </p>
       </div>
-      <div class="column is-5 is-offset-1">
-        <figure class="image is-4by3">
+      <div class="column is-6 is-5-widescreen is-offset-1-widescreen">
+        <figure class="image hero__img is-hidden-mobile">
           <img src="{{ printf "/images/%s" $image | relURL }}" alt="Description">
         </figure>
       </div>

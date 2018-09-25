@@ -70,19 +70,32 @@ img.pushed-image {
 //Icon box
 .media.icon-box {
     border-top: none !important;
+    margin-bottom: 2rem;
     .media-content .content p {
         span {
             display: block;
         }
         .icon-box-title {
             color: $blue-grey;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .5px;
         }
         .icon-box-text {
             color: $title-grey;
             font-size: 1rem;
             font-weight: 400;
+        }
+    }
+}
+
+// Custom for features section
+.section--features {
+    .content-wrapper {
+        // Remove extra bottom padding for narrow width layouts
+        @include mobile() {
+            padding-bottom: 0;
         }
     }
 }

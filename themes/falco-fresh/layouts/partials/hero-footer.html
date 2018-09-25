@@ -5,16 +5,12 @@
     <div class="title-wrapper has-text-centered">
       <h3 class="subtitle is-3 is-muted">Supported Integrations</h3>
     </div>
-    <div class="tabs is-centered">
-      <ul>
-        {{- range $clientLogos }}
-        <li>
-          <a>
-            <img class="partner-logo" src="{{ printf "/images/logos/clients/%s" . | relURL }}">
-          </a>
-        </li>
-        {{- end }}
-      </ul>
-    </div>
+    <ul class="c-logo-grid">
+      {{- range $clientLogos }}
+      <li class="c-logo-grid__item">
+        <img class="partner-logo" src="{{ printf "/images/logos/clients/%s" .src | relURL }}" alt="{{ .alt }}">
+      </li>
+      {{- end }}
+    </ul>
   </div>
 </div>

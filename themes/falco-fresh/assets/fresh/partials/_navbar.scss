@@ -8,6 +8,9 @@ Navbar
     min-height: 3.8rem;
     transition: all .3s;
     z-index: 99;
+    @include desktop() {
+        padding-top: 4.9rem;
+    }
     .container {
         min-height: 4rem;
     }
@@ -16,16 +19,39 @@ Navbar
     }
     //Responsive menu icon
     .navbar-burger {
+        // Match sysdig.com hamburger style
         width: 4rem;
         height: 4rem;
+        color: black;
+        margin-top: 0.1rem; // Offset a bit to balance with logo b/c of high wings about text line
+        @include tablet() {
+            width: 5rem;
+            height: 5rem;
+        }
+        span {
+            height: 4px;
+            left: calc(50% - 1rem);
+            width: 2rem;
+        }
+        span:nth-child(1) {
+            top: calc(50% - 10px);
+        }
+        span:nth-child(3) {
+            top: calc(50% + 8px);
+        }
+        &.is-active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+        &.is-active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+        &:hover {
+            background-color: transparent;
+        }
     }
     //Brand
     .navbar-brand {
         min-height: 4rem;
-        img {
-            max-height: 75px !important;
-            height: 75px;
-        }
         //Removing navbar item default hover behaviour
         &:hover {
             .navbar-item {
@@ -33,16 +59,27 @@ Navbar
             }
         }
     }
-    .navbar-middle {
-        align-self: center;
-        align-items: center;
-        padding-left: 25%;
-        font-size: .65rem;
-        img {
-            max-height: 30px !important;
-            height: 30px;
+
+    .navbar-brand__logo {
+        max-height: 50px !important;
+        height: 50px;
+        @include desktop() {
+            max-height: 90px !important;
+            height: 90px;
+            position: relative;
+            top: -24px;
+            margin-right: 1.5rem;
         }
     }
+    &#navbar-clone .navbar-brand__logo {
+            margin-bottom: .25rem;
+            @include desktop() {
+                margin-bottom: 0;
+                max-height: 50px !important;
+                height: 50px;
+                top: -6px;
+            }
+        }
 
     .navbar-end {
         align-items: center;
@@ -121,6 +158,10 @@ Navbar
     transform: translateY(-100%);
     z-index: 100;
     box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.12);
+    padding-top: 0;
+    @include desktop() {
+        padding-top: .5rem;
+    }
     &.is-active {
         transform: translateY(0); 
     }

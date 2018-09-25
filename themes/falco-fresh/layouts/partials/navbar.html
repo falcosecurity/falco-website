@@ -5,22 +5,19 @@
   <div class="container">
     <div class="navbar-brand">
       <a class="navbar-item" href="{{ "/" | absURL }}">
-        <img src="{{ "/images/logos/falco.png" | absURL }}" alt="">
+        <img class="navbar-brand__logo" src="{{ "/images/logos/falco-logo.svg" | absURL }}" alt="">
+      </a>
+
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
       </a>
     </div>
-    <div class="navbar-middle">
-      <p>
-        <a href="{{ $cncf.cncfLink }}">
-          <img src="{{ printf "/images/logos/%s" $cncf.logo | relURL }}">
-        </a>  
-      </p>
-      <p>
-        Falco is a CNCF <a href="{{ $cncf.levelLink }}">{{ $cncf.level }}</a> level project.
-      </p>
-    </div>
+    
     <div id="navbar-menu" class="navbar-menu is-static">
 
-      <div class="navbar-end">
+      <div class="navbar-start">
         {{- range $menu }}
         {{- if .sublinks }}
         <div class="navbar-item has-dropdown is-hoverable">
@@ -49,6 +46,17 @@
         {{- end }}
         {{- end }}
       </div>
+
+      <div class="navbar-end">
+        <div class="c-cncf">
+          <a href="{{ $cncf.cncfLink }}">
+            <img class="c-cncf__img" src="{{ printf "/images/logos/%s" $cncf.logo | relURL }}">
+          </a>
+          <p>
+            Falco is a CNCF <a href="{{ $cncf.levelLink }}">{{ $cncf.level }}</a> level project.
+          </p>
+        </div>
     </div>
+
   </div>
 </nav>

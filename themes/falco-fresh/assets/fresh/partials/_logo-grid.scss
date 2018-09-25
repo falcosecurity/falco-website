@@ -1,0 +1,19 @@
+.c-logo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+
+  @include tablet() {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @include desktop-only() {
+    // Custom offest to line up with logo
+    margin-left: 28px;
+  }
+}
+
+.c-logo-grid__item {
+
+}
+

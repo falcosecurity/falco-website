@@ -137,6 +137,10 @@ body #backtotop a {
     margin-top: 40px;
 }
 
+.mt-45 {
+    margin-top: 45px;
+}
+
 .mt-50 {
     margin-top: 50px;
 }
@@ -161,6 +165,10 @@ body #backtotop a {
     padding-bottom: 40px !important;
 }
 
+.pb-0 {
+    padding-bottom: 0 !important;
+}
+
 //Input placeholders
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: $placeholder;
@@ -173,4 +181,19 @@ body #backtotop a {
 }
 :-moz-placeholder { /* Firefox 18- */
     color: $placeholder;
+}
+
+.is-muted {
+    color: $muted-grey !important;
+}
+
+// Offsets for cotent to line up with text in logo
+.u-logo-offset {
+    @include tablet() {
+        margin-left: calc(33px - .75rem) !important;
+    }
+
+    @include desktop() {
+        margin-left: calc(72px - .75rem) !important;
+    }
 }
