@@ -6162,7 +6162,7 @@ label.panel-block {
   padding: 3rem 1.5rem; }
   @media screen and (min-width: 1088px) {
     .section.is-medium {
-      padding: 9rem 1.5rem; }
+      padding: 6rem 1.5rem; }
     .section.is-large {
       padding: 18rem 1.5rem; } }
 
@@ -6184,28 +6184,58 @@ Navbar
   min-height: 3.8rem;
   transition: all .3s;
   z-index: 99; }
+  @media screen and (min-width: 1088px) {
+    .navbar.is-fresh {
+      padding-top: 4.9rem; } }
   .navbar.is-fresh .container {
     min-height: 4rem; }
   .navbar.is-fresh.no-shadow {
     box-shadow: none !important; }
   .navbar.is-fresh .navbar-burger {
     width: 4rem;
-    height: 4rem; }
+    height: 4rem;
+    color: black;
+    margin-top: 0.1rem; }
+    @media screen and (min-width: 769px), print {
+      .navbar.is-fresh .navbar-burger {
+        width: 5rem;
+        height: 5rem; } }
+    .navbar.is-fresh .navbar-burger span {
+      height: 4px;
+      left: calc(50% - 1rem);
+      width: 2rem; }
+    .navbar.is-fresh .navbar-burger span:nth-child(1) {
+      top: calc(50% - 10px); }
+    .navbar.is-fresh .navbar-burger span:nth-child(3) {
+      top: calc(50% + 8px); }
+    .navbar.is-fresh .navbar-burger.is-active span:nth-child(1) {
+      transform: translateY(9px) rotate(45deg); }
+    .navbar.is-fresh .navbar-burger.is-active span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg); }
+    .navbar.is-fresh .navbar-burger:hover {
+      background-color: transparent; }
   .navbar.is-fresh .navbar-brand {
     min-height: 4rem; }
-    .navbar.is-fresh .navbar-brand img {
-      max-height: 75px !important;
-      height: 75px; }
     .navbar.is-fresh .navbar-brand:hover .navbar-item {
       background: transparent !important; }
-  .navbar.is-fresh .navbar-middle {
-    align-self: center;
-    align-items: center;
-    padding-left: 25%;
-    font-size: .65rem; }
-    .navbar.is-fresh .navbar-middle img {
-      max-height: 30px !important;
-      height: 30px; }
+  .navbar.is-fresh .navbar-brand__logo {
+    max-height: 50px !important;
+    height: 50px; }
+    @media screen and (min-width: 1088px) {
+      .navbar.is-fresh .navbar-brand__logo {
+        max-height: 90px !important;
+        height: 90px;
+        position: relative;
+        top: -24px;
+        margin-right: 1.5rem; } }
+  .navbar.is-fresh#navbar-clone .navbar-brand__logo {
+    margin-bottom: .25rem; }
+    @media screen and (min-width: 1088px) {
+      .navbar.is-fresh#navbar-clone .navbar-brand__logo {
+        margin-bottom: 0;
+        max-height: 50px !important;
+        height: 50px;
+        top: -6px; } }
   .navbar.is-fresh .navbar-end {
     align-items: center; }
   .navbar.is-fresh .navbar-item {
@@ -6259,7 +6289,11 @@ Navbar
   background: #fff;
   transform: translateY(-100%);
   z-index: 100;
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.12); }
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.12);
+  padding-top: 0; }
+  @media screen and (min-width: 1088px) {
+    #navbar-clone {
+      padding-top: .5rem; } }
   #navbar-clone.is-active {
     transform: translateY(0); }
 
@@ -6344,6 +6378,12 @@ div.nav-item.is-drop {
       float: left;
       padding: 10px 0; }
 
+.media-left {
+  margin-right: 1.7rem; }
+
+.media-right {
+  margin-left: 1.7rem; }
+
 /* ==========================================================================
 Section Styles
 ========================================================================== */
@@ -6392,24 +6432,38 @@ img.pushed-image {
   margin-top: -29vh; }
 
 .media.icon-box {
-  border-top: none !important; }
+  border-top: none !important;
+  margin-bottom: 2rem; }
   .media.icon-box .media-content .content p span {
     display: block; }
   .media.icon-box .media-content .content p .icon-box-title {
     color: #444F60;
-    font-size: 1.2rem;
-    font-weight: 600; }
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .5px; }
   .media.icon-box .media-content .content p .icon-box-text {
     color: #A9ABAC;
     font-size: 1rem;
     font-weight: 400; }
 
+@media screen and (max-width: 768px) {
+  .section--features .content-wrapper {
+    padding-bottom: 0; } }
+
 /* ==========================================================================
 Hero styles
 ========================================================================== */
 .hero-body {
-  padding-top: 6rem;
-  padding-bottom: 6rem; }
+  padding-top: 2rem;
+  padding-bottom: 2rem; }
+  @media screen and (min-width: 769px), print {
+    .hero-body {
+      padding-top: 4rem;
+      padding-bottom: 6rem; } }
+  @media screen and (min-width: 1088px) {
+    .hero-body {
+      padding-top: 6rem; } }
   .hero-body .subtitle {
     font-family: 'Karla'; }
   .hero-body .title {
@@ -6420,14 +6474,26 @@ Hero styles
     color: #999; }
 
 .hero-foot img.partner-logo {
-  height: 100px; }
+  height: 80px; }
+  @media screen and (min-width: 769px), print {
+    .hero-foot img.partner-logo {
+      height: 100px; } }
+
+.hero__img {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto; }
+  @media screen and (min-width: 769px), print {
+    .hero__img {
+      width: 100%; } }
 
 /* ==========================================================================
 Fresh Footer
 ========================================================================== */
 footer.footer-dark {
   background: #444F60;
-  color: #fff; }
+  color: #fff;
+  padding: 4rem 1.5rem 4rem; }
   footer.footer-dark .columns {
     margin-top: 5px; }
   footer.footer-dark .footer-logo img {
@@ -6542,24 +6608,32 @@ Classes to change the feel of bulma buttons
 Cards and Card content styles
 ========================================================================== */
 .feature-card {
-  width: 300px;
-  height: 320px;
+  height: 100%;
+  padding: 1rem 1rem;
   background-color: #fff;
   border-radius: 3px;
   margin: 0 auto; }
+  @media screen and (min-width: 1088px) {
+    .feature-card {
+      padding: 0 2rem 1.5rem;
+      max-width: 300px; } }
   .feature-card .card-title h4 {
-    font-family: 'MaaxMono', monospace;
+    font-family: Karla, BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
     padding-top: 25px;
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     font-weight: 600;
-    color: #444F60; }
+    color: #444F60;
+    text-transform: uppercase; }
   .feature-card .card-icon img {
-    height: 120px;
-    margin-top: 20px; }
-  .feature-card .card-text {
-    padding: 0 40px; }
-    .feature-card .card-text p {
-      color: #999; }
+    height: 65px;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem; }
+    @media screen and (min-width: 1088px) {
+      .feature-card .card-icon img {
+        margin-top: 2.5rem;
+        margin-bottom: 2rem; } }
+  .feature-card .card-text p {
+    color: #999; }
   .feature-card .card-action {
     margin-top: 10px; }
   .feature-card.is-bordered {
@@ -6992,6 +7066,57 @@ Responsive Styles
     .is-centered-tablet-portrait .divider {
       margin: 0 auto !important; } }
 
+.c-cncf {
+  font-size: .65rem;
+  margin-top: .5rem;
+  margin-bottom: .8rem;
+  text-align: center; }
+  @media screen and (min-width: 769px), print {
+    .c-cncf {
+      padding-left: .7rem;
+      text-align: left; } }
+  @media screen and (min-width: 1088px) {
+    .c-cncf {
+      padding-left: 1.5rem;
+      border-left: 1px solid black; } }
+  @media screen and (min-width: 1280px) {
+    .c-cncf {
+      padding-left: 4.5rem; } }
+  .c-cncf:before {
+    content: '';
+    background-color: black;
+    width: 5rem;
+    height: 1px;
+    margin-top: .8rem;
+    margin-bottom: 1.3rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto; }
+    @media screen and (min-width: 769px), print {
+      .c-cncf:before {
+        margin-left: 0;
+        margin-right: 0; } }
+    @media screen and (min-width: 1088px) {
+      .c-cncf:before {
+        content: none; } }
+
+.c-cncf__img {
+  height: 30px; }
+  @media screen and (min-width: 1088px) {
+    #navbar-clone .c-cncf__img {
+      height: 25px; } }
+
+.c-logo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center; }
+  @media screen and (min-width: 769px), print {
+    .c-logo-grid {
+      grid-template-columns: repeat(4, 1fr); } }
+  @media screen and (min-width: 1088px) and (max-width: 1279px) {
+    .c-logo-grid {
+      margin-left: 28px; } }
+
 section:focus {
   outline: none !important; }
 
@@ -7100,6 +7225,9 @@ body #backtotop a {
 .mt-40 {
   margin-top: 40px; }
 
+.mt-45 {
+  margin-top: 45px; }
+
 .mt-50 {
   margin-top: 50px; }
 
@@ -7118,6 +7246,9 @@ body #backtotop a {
 .pb-40 {
   padding-bottom: 40px !important; }
 
+.pb-0 {
+  padding-bottom: 0 !important; }
+
 ::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
   color: #cecece; }
@@ -7133,5 +7264,16 @@ body #backtotop a {
 :-moz-placeholder {
   /* Firefox 18- */
   color: #cecece; }
+
+.is-muted {
+  color: #999 !important; }
+
+@media screen and (min-width: 769px), print {
+  .u-logo-offset {
+    margin-left: calc(33px - .75rem) !important; } }
+
+@media screen and (min-width: 1088px) {
+  .u-logo-offset {
+    margin-left: calc(72px - .75rem) !important; } }
 
 /*# sourceMappingURL=style.css.map */

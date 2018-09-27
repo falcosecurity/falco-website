@@ -1,0 +1,45 @@
+.c-cncf {
+  font-size: .65rem;
+  margin-top: .5rem;
+  margin-bottom: .8rem;
+  text-align: center;
+  @include tablet() {
+    padding-left: .7rem;
+    text-align: left;
+  }
+  @include desktop() {
+    padding-left: 1.5rem;
+    border-left: 1px solid black;
+  }
+  @include widescreen() {
+    padding-left: 4.5rem;
+  }
+
+  &:before {
+    content: '';
+    background-color: black;
+    width: 5rem;
+    height: 1px;
+    margin-top: .8rem;
+    margin-bottom: 1.3rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    @include tablet() {
+      margin-left: 0;
+      margin-right: 0;
+    }
+    @include desktop() {
+      content: none;
+    }
+  }
+}
+
+.c-cncf__img {
+  height: 30px;
+  #navbar-clone & {
+    @include desktop() {
+      height: 25px;
+    }
+  }
+}
