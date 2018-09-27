@@ -2,6 +2,7 @@ baseURL: http://falco.org/
 languageCode: en-us
 title: Falco - Cloud Native Runtime Security
 theme: falco-fresh
+publishDir: ../falcosecurity.github.io
 
 params:
   primaryFont:
