@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lange="{{ .Site.LanguageCode }}">
   <head>
+    {{ partial "ga.html"}}
     {{ partial "meta.html" . }}
     <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
     {{ partial "css.html" . }}
