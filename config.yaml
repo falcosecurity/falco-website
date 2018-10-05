@@ -14,7 +14,7 @@ params:
     # Main hero title
     title: Container Native Runtime Security
     # Hero subtitle (optional)
-    subtitle: Falco is an open source project for intrusion and abnormality detection for Cloud Native platforms such as Kubernetes, Mesosphere, and Cloud Foundry. Detect abnormal application behavior; alert via Slack, Fluentd, NATS, and more; Protect your platform by taking action through serverless (FaaS) frameworks and more.
+    subtitle: Falco is an open source project for intrusion and abnormality detection for Cloud Native platforms such as Kubernetes, Mesosphere, and Cloud Foundry. Detect abnormal application behavior. Alert via Slack, Fluentd, NATS, and more. Protect your platform by taking action through serverless (FaaS) frameworks, or other automation. 
     # Button text
     buttontext: Get started
     # Where the main hero button links to
@@ -27,20 +27,21 @@ params:
       alt: Kubernetes
     - src: docker.svg
       alt: Docker
+    - src: mesosphere.svg
+      alt: Mesosphere
     - src: rkt.svg
       alt: Rkt
     - src: helm.svg
       alt: Helm
     - src: nats.svg
       alt: Nats
-    - src: kubeless.svg
-      alt: Kubeless
-    - src: mesosphere.svg
-      alt: Mesosphere
-    - src: slack.svg
-      alt: Slack
     - src: fluentd.svg
       alt: Fluentd
+    - src: kubeless.svg
+      alt: Kubeless
+    - src: slack.svg
+      alt: Slack
+
 
   # Customizable navbar. For a dropdown, add a "sublinks" list.
   navbar:
@@ -50,10 +51,10 @@ params:
       level: Sandbox
       levelLink: https://github.com/cncf/toc/blob/master/process/sandbox.md 
     menu:  
-    - title: Features
-      url: "#features"
     - title: About
       url: "#about"
+    - title: Features
+      url: "#features"
     - title: Download
       url: "#download"
     - title: GitHub
@@ -62,7 +63,7 @@ params:
       url: https://github.com/falcosecurity/falco/wiki
   sectionAbout:
     title: About Falco.
-    summary: Falco was born from the need to better understand what action containers are performing and how to protect your container platform from possible malicious behavior. With more choice and responsibility shifting left into the development teams, security teams need to have deep insight into container activities. Falco leverages Sysdig’s open source technology to instrument the Linux kernel, and create an event stream from Linux system calls. Falco’s rules engine can then detect abnormal activity in containers, the underlying host, and the container platform.
+    summary: With more responsibility shifting left to developers and the opaque nature of containers, organizations require deeper insight into container activities. The Falco project was hatched to understand container behavior and protect your platform from possible malicious activity. Leveraging Sysdig’s open source Linux kernel instrumentation, Falco gains deep insight into system behavior. The rules engine can then detect abnormal activity in applications, containers, the underlying host, and the container platform. 
   section1:
     title: Key Features.
     subtitle: 
