@@ -1,6 +1,6 @@
-baseURL: http://falco.org/
+baseURL: https://falco.org/
 languageCode: en-us
-title: Falco - Cloud Native Runtime Security
+title: Falco - Container Native Runtime Security
 theme: falco-fresh
 publishDir: ../falcosecurity.github.io
 
@@ -12,7 +12,7 @@ params:
     name: "MaaxMono"    
   hero:
     # Main hero title
-    title: Detect, Alert, Protect
+    title: Container Native Runtime Security
     # Hero subtitle (optional)
     subtitle: Falco is an open source project for intrusion and abnormality detection for Cloud Native platforms such as Kubernetes, Mesosphere, and Cloud Foundry. Detect abnormal application behavior; alert via Slack, Fluentd, NATS, and more; Protect your platform by taking action through serverless (FaaS) frameworks and more.
     # Button text
@@ -23,22 +23,22 @@ params:
     image: illustrations/falco-hero-1.png
     # Footer logos (from /images/logos/clients/___.svg)
     clientlogos:
+    - src: kubernetes.svg
+      alt: Kubernetes
+    - src: docker.svg
+      alt: Docker
+    - src: rkt.svg
+      alt: Rkt
+    - src: helm.svg
+      alt: Helm
     - src: nats.svg
       alt: Nats
     - src: kubeless.svg
       alt: Kubeless
-    - src: helm.svg
-      alt: Helm
-    - src: rkt.svg
-      alt: Rkt
     - src: mesosphere.svg
       alt: Mesosphere
-    - src: docker.svg
-      alt: Docker
     - src: slack.svg
       alt: Slack
-    - src: kubernetes.svg
-      alt: Kubernetes
     - src: fluentd.svg
       alt: Fluentd
 
@@ -62,7 +62,7 @@ params:
       url: https://github.com/falcosecurity/falco/wiki
   sectionAbout:
     title: About Falco.
-    summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    summary: Falco was born from the need to better understand what action containers are performing and how to protect your container platform from possible malicious behavior. With more choice and responsibility shifting left into the development teams, security teams need to have deep insight into container activities. Falco leverages Sysdig’s open source technology to instrument the Linux kernel, and create an event stream from Linux system calls. Falco’s rules engine can then detect abnormal activity in containers, the underlying host, and the container platform.
   section1:
     title: Key Features.
     subtitle: 
@@ -84,18 +84,27 @@ params:
       text: Jump over to our GitHub page to contribute to our open source ecosystem.
       # Icon (from /images/illustrations/icons/___.svg)
       icon: group.png
-      buttonText: Sysdig Falco Github
-      buttonLink: /
+      buttonText:  Falco Github
+      buttonLink: https://github.com/falcosecurity/falco
     - title: Download
       text: Get started with our Falco installation guide.
       icon: download.png
-      buttonText: Sysdig Falco Install Guide
-      buttonLink: /
+      buttonText: Falco Install Guide
+      buttonLink: https://github.com/falcosecurity/falco/wiki/How-to-Install-Falco-for-Linux
     - title: Documentation
-      text: Visit our wiki where you can find information about sysdig, csysdig, and their APIs.
+      text: Visit our wiki where you can find information about installing Falco, configuration options, and writing custom rules.
       icon: documentation-2.png
-      buttonText: Sysdig Falco Wiki
-      buttonLink: /
+      buttonText: Falco Wiki
+      buttonLink: https://github.com/falcosecurity/falco/wiki
+    - title: Connect
+      text: Join our Slack team to interact with other users and developers.
+      icon: group.png
+      buttonText: Falco Slack
+      buttonLink: https://slack.sysdig.com        
+  section3:
+    title: Stay up to date.
+    subtitle: Sign-up for project updates.
+    buttonText: Sign-up!
   footer:
     # Logo (from /images/logos/___)
     copyright: Copyright 2018, The Falco Authors
