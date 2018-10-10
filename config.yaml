@@ -33,8 +33,6 @@ params:
       alt: Rkt
     - src: helm.svg
       alt: Helm
-    - src: nats.svg
-      alt: Nats
     - src: fluentd.svg
       alt: Fluentd
     - src: kubeless.svg
@@ -99,7 +97,7 @@ params:
       buttonLink: https://github.com/falcosecurity/falco/wiki
     - title: Connect
       text: Join our Slack team to interact with other users and developers.
-      icon: group.png
+      icon: chat.png
       buttonText: Falco Slack
       buttonLink: https://slack.sysdig.com        
   section3:
