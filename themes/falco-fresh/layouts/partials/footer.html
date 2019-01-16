@@ -1,9 +1,9 @@
-{{- $footer       := .Site.Params.footer }}
+{{ $year := now.Year }}
 <footer class="footer footer-dark">
   <div class="container">
     <div class="columns u-logo-offset">
       <div class="column is-one-third">
-        {{ $footer.copyright}}
+        Copyright {{ $year }}, The Falco authors
       </div>
     </div>
   </div>

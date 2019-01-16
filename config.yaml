@@ -104,6 +104,3 @@ params:
     title: Stay up to date.
     subtitle: Sign-up for project updates.
     buttonText: Sign-up!
-  footer:
-    # Logo (from /images/logos/___)
-    copyright: Copyright 2018, The Falco Authors
