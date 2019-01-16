@@ -7,24 +7,7 @@
     {{ partial "css.html" . }}
   </head>
   <body>
-    <!-- Preloader -->
-    <div id="preloader">
-      <div id="status"></div>
-    </div>
-
-    {{ partial "navbar.html" . }}
-    {{ partial "navbar-clone.html" . }}
     {{ block "main" . }}
-    {{ partial "hero.html" . }}
-    {{ partial "section-about.html" . }}
-    {{ partial "section1.html" . }}
-    {{ partial "section2.html" . }}
-    {{ partial "section3.html" . }}
-    {{ partial "footer.html" . }}
-
-    <!-- Back To Top Button -->
-    <div id="backtotop"><a href="#"></a></div>
-
     {{ end }}
 
     {{ partial "javascript.html" . }}

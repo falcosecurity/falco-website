@@ -6162,7 +6162,7 @@ label.panel-block {
   padding: 3rem 1.5rem; }
   @media screen and (min-width: 1088px) {
     .section.is-medium {
-      padding: 6rem 1.5rem; }
+      padding: 9rem 1.5rem; }
     .section.is-large {
       padding: 18rem 1.5rem; } }
 

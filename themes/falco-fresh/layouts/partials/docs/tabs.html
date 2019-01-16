@@ -1,0 +1,15 @@
+{{ $docs  := where .Site.Pages "Section" "docs" }}
+<nav class="tabs">
+  <div class="container">
+    <ul>
+      {{ range $docs }}
+      {{ $title := cond (isset .Params "short") (.Params.short) .Title }}
+      <li>
+        <a href="{{ .URL }}">
+          {{ $title }}
+        </a>
+      </li>
+      {{ end }}
+    </ul>
+  </div>
+</nav>
