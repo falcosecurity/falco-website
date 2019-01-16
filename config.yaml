@@ -58,7 +58,7 @@ params:
     - title: GitHub
       url: https://github.com/falcosecurity/falco
     - title: Docs
-      url: https://github.com/falcosecurity/falco/wiki
+      url: /docs
   sectionAbout:
     title: About Falco.
     summary: With more responsibility shifting left to developers and the opaque nature of containers, organizations require deeper insight into container activities. The Falco project was hatched to understand container behavior and protect your platform from possible malicious activity. Leveraging Sysdig’s open source Linux kernel instrumentation, Falco gains deep insight into system behavior. The rules engine can then detect abnormal activity in applications, containers, the underlying host, and the container platform. 
