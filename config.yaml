@@ -2,7 +2,7 @@ baseURL: https://falco.org/
 languageCode: en-us
 title: Falco - Container Native Runtime Security
 theme: falco-fresh
-publishDir: ../falcosecurity.github.io
+disableKinds: ["taxonomy", "taxonomyTerm"]
 
 params:
   primaryFont:
