@@ -3,6 +3,8 @@ languageCode: en-us
 title: Falco - Container Native Runtime Security
 theme: falco-fresh
 disableKinds: ["taxonomy", "taxonomyTerm"]
+pygmentsCodefences: true
+pygmentsStyle: monokai
 
 params:
   primaryFont:

@@ -1,7 +1,10 @@
 {{- $inServerMode := .Site.IsServer }}
 {{- $sass         := "style.sass" }}
 {{- $cssTarget    := "css/style.css" }}
-{{- $cssOpts      := cond ($inServerMode) (dict "targetPath" $cssTarget "enableSourceMap" true) (dict "targetPath" $cssTarget "outputStyle" "compressed") }}
+{{- $includePaths := (slice "node_modules") }}
+{{- $cssDevOpts   := (dict "targetPath" $cssTarget "enableSourceMap" true "includePaths" $includePaths) }}
+{{- $cssProdOpts  := (dict "targetPath" $cssTarget "outputStyle" "compressed" "includePaths" $includePaths) }}
+{{- $cssOpts      := cond $inServerMode $cssDevOpts $cssProdOpts }}
 {{- $fontFace     := replace .Site.Params.primaryFont.name " " "+" }}
 {{- $fontSizes    := delimit .Site.Params.primaryFont.sizes "," }}
 {{- $fontUrl      := printf "https://fonts.googleapis.com/css?family=%s:%s" $fontFace $fontSizes }}
