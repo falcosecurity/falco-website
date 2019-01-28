@@ -93,10 +93,10 @@ params:
       buttonText: Falco Install Guide
       buttonLink: https://github.com/falcosecurity/falco/wiki/How-to-Install-Falco-for-Linux
     - title: Documentation
-      text: Visit our wiki where you can find information about installing Falco, configuration options, and writing custom rules.
+      text: In the official docs, you can find information about [installing Falco](/docs/installation), [configuration options](/docs/configuration), and writing [custom rules](/docs/rules).
       icon: documentation-2.png
-      buttonText: Falco Wiki
-      buttonLink: https://github.com/falcosecurity/falco/wiki
+      buttonText: /docs
+      buttonLink: /docs
     - title: Connect
       text: Join our Slack team to interact with other users and developers.
       icon: chat.png
