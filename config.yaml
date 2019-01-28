@@ -81,7 +81,7 @@ params:
     title: Downloads + Resources.
     subtitle: Get started today, contribute to the open source project, & learn more.
     resources:
-    - title: CONTRIBUTE
+    - title: Contribute
       text: Jump over to our GitHub page to contribute to our open source ecosystem.
       # Icon (from /images/illustrations/icons/___.svg)
       icon: group.png
@@ -91,7 +91,7 @@ params:
       text: Get started with our Falco installation guide.
       icon: download.png
       buttonText: Falco Install Guide
-      buttonLink: https://github.com/falcosecurity/falco/wiki/How-to-Install-Falco-for-Linux
+      buttonLink: /docs/installation
     - title: Documentation
       text: In the official docs, you can find information about [installing Falco](/docs/installation), [configuration options](/docs/configuration), and writing [custom rules](/docs/rules).
       icon: documentation-2.png
