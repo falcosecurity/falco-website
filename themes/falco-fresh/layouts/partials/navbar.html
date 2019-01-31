@@ -1,7 +1,7 @@
 {{- $navbar := .Site.Params.navbar }}
 {{- $menu   := index $navbar "menu"}}
 {{- $cncf   := index $navbar "cncf" }}
-<nav class="navbar is-fresh is-transparent no-shadow" role="navigation" aria-label="main navigation">
+<nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
   <div class="container">
     <div class="navbar-brand">
       <a class="navbar-item" href="{{ "/" | absURL }}">
@@ -16,47 +16,17 @@
     </div>
     
     <div id="navbar-menu" class="navbar-menu is-static">
-
-      <div class="navbar-start">
-        {{- range $menu }}
-        {{- if .sublinks }}
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">
-            {{ .title }}
-          </a>
-
-          <div class="navbar-dropdown">
-            {{- range .sublinks }}
-            <a href="{{ .url }}" class="navbar-item">
-              {{ .title }}
-            </a>
-            {{- end }}
-          </div>
-        </div>
-        {{- else if .button }}
-        <a href="{{ .url }}" class="navbar-item">
-          <span class="button signup-button rounded secondary-btn raised">
-            {{ .title }}
-          </span>
-        </a>
-        {{- else }}
-        <a href="{{ .url }}" class="navbar-item is-secondary">
+      <div class="navbar-end">
+        {{ range $menu }}
+        <a class="navbar-item has-text-grey is-size-5" href="{{ .url }}">
           {{ .title }}
         </a>
-        {{- end }}
-        {{- end }}
+        {{ end }}
+
+        <a class="navbar-item" href="https://cncf.io">
+          <img class="c-cncf__img" src="{{ printf "/images/logos/%s" $cncf.logo | relURL }}">
+        </a>
       </div>
-
-      <div class="navbar-end">
-        <div class="c-cncf">
-          <a href="{{ $cncf.cncfLink }}">
-            <img class="c-cncf__img" src="{{ printf "/images/logos/%s" $cncf.logo | relURL }}">
-          </a>
-          <p>
-            Falco is a CNCF <a href="{{ $cncf.levelLink }}">{{ $cncf.level }}</a> level project.
-          </p>
-        </div>
     </div>
-
   </div>
 </nav>

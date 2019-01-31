@@ -52,11 +52,11 @@ params:
       levelLink: https://github.com/cncf/toc/blob/master/process/sandbox.md 
     menu:  
     - title: About
-      url: "#about"
+      url: "/#about"
     - title: Features
-      url: "#features"
+      url: "/#features"
     - title: Download
-      url: "#download"
+      url: "/#download"
     - title: GitHub
       url: https://github.com/falcosecurity/falco
     - title: Docs
