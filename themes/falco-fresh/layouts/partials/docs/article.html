@@ -1,8 +1,18 @@
 <article class="article">
   <section class="section">
     <div class="container">
-      <div class="content">
-        {{ .Content }}
+      <div class="columns is-variable is-8">
+        <div class="column is-9">
+          <div class="content">
+            {{ .Content }}
+          </div>
+        </div>
+
+        <div class="column is-3 is-hidden-mobile">
+          <div class="toc">
+            {{ .TableOfContents }}
+          </div>
+        </div>
       </div>
     </div>
   </section>
