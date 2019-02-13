@@ -1,0 +1,22 @@
+{{ $toc := .TableOfContents }}
+<article class="article">
+  <section class="section">
+    <div class="container">
+      <div class="columns is-variable is-8">
+        <div class="column{{ if $toc }} is-9{{ end }}">
+          <div class="content">
+            {{ .Content }}
+          </div>
+        </div>
+
+        {{ with $toc }}
+        <div class="column is-3 is-hidden-mobile">
+          <div class="toc">
+            {{ . }}
+          </div>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+</article>

@@ -1,3 +1,33 @@
-@import "fresh/partials/variables"
+@charset "utf-8"
+
+@import "bulma/sass/utilities/initial-variables"
+@import "bulma/sass/utilities/functions"
+
+$primary: #00b4c8
+$secondary: #444f60
+
+$link: $primary
+$code: darken($primary, 5%)
+$code-background: $white-bis
+$section-padding: 1rem
+$navbar-height: 5rem
+$navbar-item-img-max-height: 3.5rem
+
+@import "bulma/sass/utilities/derived-variables"
 @import "bulma/bulma"
+
 @import "fresh/core"
+@import "toc"
+
+.content ol
+  margin-left: 1rem
+
+  li + li
+    margin-top: 1.25rem
+
+.article
+  margin-bottom: 5rem
+
+.content pre
+  background-color: rgb(39, 40, 34)
+  color: rgb(248, 248, 242)
