@@ -1,0 +1,100 @@
+- name: rules_file
+  type: List
+  description: |
+    The location of the rules file(s). This can contain one or more paths to separate rules files. The following examples are equivalent:
+
+    ```yaml
+    rules_file:
+    - path1
+    - path2
+
+    rules_file: [path1, path2]
+    ```
+
+    You can also specify multiple rules files on the command line via one or more `-r` options.
+- name: json_output
+  type: Boolean
+  description: Whether to use JSON output for alert messages.
+- name: json_include_output_property
+  type: Boolean
+  description: |
+    When using json output, whether or not to include the `output` property itself (e.g. `File below a known binary directory opened for writing (user=root ....`) in the JSON output.
+- name: log_stderr
+  type: Boolean
+  description: |
+    If `true`, log messages describing Falco's activity will be logged to stderr. Note these are *not* alert messages---these are log messages for Falco itself.
+- name: log_syslog
+  type: Boolean
+  description: |
+    If `true`, log messages describing Falco's activity will be logged to syslog.
+- name: log_level
+  type: |
+    Enum with the following possible values: `emergency`, `alert`, `critical`, `error`, `warning`, `notice`, `info`, `debug`
+  description: |
+    Minimum log level to include in logs. Note: these levels are separate from the priority field of rules. This refers only to the log level of Falco's internal logging.
+- name: priority
+  type: |
+    Enum with the following possible values: `emergency`, `alert`, `critical`, `error`, `warning`, `notice`, `info`, `debug`
+  description: Minimum rule priority level to load and run. All rules having a priority more severe than this level will be loaded/run. 
+- name: outputs
+  type: |
+    List containing the following sub-keys:
+    
+    * `rate: <notifications/second>`
+    * `outputs: max_burst: <number of messages>`
+  description: |
+    A throttling mechanism implemented as a token bucket limits the rate of falco notifications. This throttling is controlled by the `rate` and `max_burst` options.
+
+    `rate` is the number of tokens (i.e. right to send a notification) gained per second, and defaults to 1. `max_burst` is the maximum number of tokens outstanding, and defaults to 1000.
+
+    With these defaults, falco could send up to 1000 notifications after an initial quiet period, and then up to 1 notification per second afterward. It would gain the full burst back after 1000 seconds of no activity.
+- name: syslog_output
+  type: |
+    List containing the following sub-keys:
+    
+    * `enabled: [true|false]`
+  description: |
+    If `true`, Falco alerts will be sent via syslog.
+- name: file_output
+  type: |
+    List containing the following sub-keys:
+    
+    * `enabled: [true|false]`
+    * `keep_alive: [true|false]`
+    * `filename: <path>`
+  description: |
+    If `enabled` is set to `true`, Falco alerts will be sent to the filepath specified in `filename`.
+
+    If `keep_alive` is set to `false` (the default), Falco will re-open the file for every alert. If `true`, Falco will open the file once and keep it open for all alerts. It may also be necessary to specify `--unbuffered` using the Falco CLI.
+- name: stdout_output
+  type: |
+    List containing the following sub-keys:
+
+    * `enabled: [true|false]`
+  description: |
+    If `enabled` is set to `true`, Falco alerts will be sent to standard output (stdout).
+- name: program_output
+  type: |
+    List containing the following sub-keys:
+
+    * `enabled: [true|false]`
+    * `keep_alive: [true|false]`
+  description: |
+    If `enabled` is set to `true`, Falco alerts will be sent to a program.
+    
+    If `keep_alive` is set to `false` (the default), run the program for each alert. If `true`, Falco will spawn the program once and keep it open for all alerts. It may also be necessary to specify `--unbuffered` using the Falco CLI.
+  
+    The `program` setting specifies the program to be run for each alert. This is started via the shell, so you can specify a command pipeline to allow for additional formatting.
+- name: webserver
+  type: |
+    List containing the following sub-keys:
+
+    * `enabled: [true|false]`
+    * `listen_port`
+    * `k8s_audit_endpoint`
+  description: |
+    If `enabled` is set to `true`, Falco will start an embedded web server to accept Kubernetes audit events.
+
+    `listen_port` specifies the port on which the web server will listen. The default is 8765.
+
+    `k8s_audit_endpoint` specifies the URI on which to listen for Kubernetes audit events. The default is `/k8s_audit`.

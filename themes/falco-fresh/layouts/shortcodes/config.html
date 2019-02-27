@@ -1,0 +1,31 @@
+{{ $config := site.Data.config }}
+<table>
+  <thead>
+    <tr>
+      <th>
+        Config
+      </th>
+      <th>
+        Type
+      </th>
+      <th>
+        Description
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {{ range $config }}
+    <tr>
+      <td>
+        <code>{{ .name }}</code>
+      </td>
+      <td>
+        {{ .type | markdownify }}
+      </td>
+      <td>
+        {{ .description | markdownify }}
+      </td>
+    </tr>
+    {{ end }}
+  </tbody>
+</table>
