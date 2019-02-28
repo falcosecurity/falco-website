@@ -1,6 +1,5 @@
 ---
-title: Falco Configuration
-short: Configuration
+title: The Falco Configuration File
 notoc: true
 weight: 2
 ---
@@ -13,4 +12,3 @@ Any configuration option can be overridden on the command line via the `-o/--opt
 ## Current configuration options
 
 {{< config >}}
-

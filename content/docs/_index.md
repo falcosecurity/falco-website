@@ -1,5 +1,5 @@
 ---
-title: Documentation
+title: Falco
 description: An overview of the Falco container security system
 short: Docs home
 weight: 1

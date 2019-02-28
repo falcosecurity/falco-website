@@ -1,0 +1,68 @@
+{{ $docsSections := where site.Sections "Section" "docs" }}
+{{ $currentUrl   := .URL }}
+<div class="dashboard">
+  <div class="dashboard-panel left is-hidden-mobile is-scrollable">
+    <div class="dashboard-panel-header is-centered">
+      <img class="panel-logo" src="{{ "/images/logos/falco-logo.png" | absURL }}">
+    </div>
+
+    <div class="dashboard-panel-main">
+      <div class="docs-nav">
+        {{ range $docsSections }}
+        {{ $currentPage := eq .URL $currentUrl }}
+
+        <a class="top-level{{ if $currentPage }} is-active{{ end }}" href="{{ .URL }}">
+          {{ .Title }}
+        </a>
+
+        {{ range .Pages }}
+        {{ $currentPage := eq .URL $currentUrl }}
+        <a class="top-level{{ if $currentPage }} is-active{{ end }}" href="{{ .URL }}">
+          {{ .Title }}
+        </a>
+        {{ end }}
+
+        {{ range .Sections }}
+        {{ $currentPage := eq .URL $currentUrl }}
+        <a class="top-level{{ if $currentPage }} is-active{{ end }}" href="{{ .URL }}">
+          {{ .Title }}
+        </a>
+
+        {{ range .Pages }}
+        {{ $currentPage := eq .URL $currentUrl }}
+        <a class="sub{{ if $currentPage }} is-active{{ end }}" href="{{ .URL }}">
+          {{ .Title }}
+        </a>
+        {{ end }}
+        {{ end }}
+        {{ end }}
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-main is-scrollable">
+    <section class="hero is-small is-primary">
+      <div class="hero-body">
+        <p class="title is-size-3 is-size-4-mobile has-text-weight-light">
+          {{ .Title }}
+        </p>
+
+        {{ with .Params.description }}
+        <p class="subtitle is-size-4 is-size-5-mobile has-text-weight-light">
+          {{ . | markdownify }}
+        </p>
+        {{ end }}
+      </div>
+    </section>
+
+    {{ partial "docs/article.html" . }}
+  </div>
+
+  <!--
+  {{ if not .Params.notoc }}
+  <div class="dashboard-panel right is-hidden-mobile has-background-black">
+
+  </div>
+  {{ end }}
+  -->
+</div>

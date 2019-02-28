@@ -1,6 +1,5 @@
 ---
 title: Falco Alerts
-short: Alerts
 ---
 
 Falco can send alerts to one or more channels:
