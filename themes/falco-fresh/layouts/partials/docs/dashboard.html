@@ -2,10 +2,6 @@
 {{ $currentUrl   := .URL }}
 <div class="dashboard">
   <div class="dashboard-panel left is-hidden-mobile is-scrollable">
-    <div class="dashboard-panel-header is-centered">
-      <img class="panel-logo" src="{{ "/images/logos/falco-logo.png" | relURL }}">
-    </div>
-
     <div class="dashboard-panel-main">
       <div class="docs-nav">
         {{ range $docsSections }}
@@ -41,6 +37,7 @@
   </div>
 
   <div class="dashboard-main is-scrollable">
+    {{ partial "navbar.html" . }}
     <section class="hero is-small is-primary">
       <div class="hero-body">
         <p class="title is-size-3 is-size-4-mobile has-text-weight-light">

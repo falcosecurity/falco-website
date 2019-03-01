@@ -7,7 +7,7 @@
     {{ partial "css.html" . }}
   </head>
   <body{{ if .IsHome }} class="has-navbar-fixed-top"{{ end }}>
-      {{ block "main" . }}
+    {{ block "main" . }}
     {{ end }}
 
     {{ partial "javascript.html" . }}
