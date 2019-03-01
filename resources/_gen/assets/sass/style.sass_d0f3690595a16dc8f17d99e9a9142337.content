@@ -7165,13 +7165,13 @@ body #backtotop a {
   .dashboard-panel {
     display: flex;
     flex-direction: column;
-    padding: 2rem 3rem;
-    flex: 0 0 25rem;
+    padding: 2rem;
+    flex: 0 0 25%;
     height: 100%; }
     .dashboard-panel.left {
-      width: 25rem; }
+      width: 25%; }
     .dashboard-panel.right {
-      width: 25rem; }
+      width: 25%; }
     .dashboard-panel.has-thick-padding {
       padding: 3rem 2rem; }
     .dashboard-panel.is-one-quarter {
@@ -7223,6 +7223,11 @@ body #backtotop a {
 .title {
   line-height: 120%; }
 
+.toc {
+  padding: 0 1rem; }
+  .toc li a {
+    font-size: 1rem; }
+
 .docs-nav a {
   color: #363636;
   line-height: 110%; }
@@ -7230,14 +7235,15 @@ body #backtotop a {
     color: #00b4c8;
     font-weight: 700; }
   .docs-nav a + a {
-    margin-top: .5rem; }
+    margin-top: .75rem; }
 
 .docs-nav .top-level {
   font-size: 1.2rem;
   display: block; }
 
 .docs-nav .sub {
-  font-size: 1rem;
+  display: block;
+  margin-top: .5rem;
   padding-left: 1rem; }
 
 .dashboard-panel.left {

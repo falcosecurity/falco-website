@@ -38,21 +38,10 @@
 
   <div class="dashboard-main is-scrollable">
     {{ partial "navbar.html" . }}
-    <section class="hero is-small is-primary">
-      <div class="hero-body">
-        <p class="title is-size-3 is-size-4-mobile has-text-weight-light">
-          {{ .Title }}
-        </p>
-
-        {{ with .Params.description }}
-        <p class="subtitle is-size-4 is-size-5-mobile has-text-weight-light">
-          {{ . | markdownify }}
-        </p>
-        {{ end }}
-      </div>
-    </section>
+    {{ partial "docs/hero.html" . }}
 
     {{ partial "docs/article.html" . }}
+    {{ partial "footer.html" . }}
   </div>
 
   <!--

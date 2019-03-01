@@ -12,8 +12,9 @@ $code-background: $white-bis
 $section-padding: 1rem
 $navbar-height: 5rem
 $navbar-item-img-max-height: 3.5rem
+$dashboard-panel-width: 25%
 $dashboard-panel-header-bottom-margin: 3rem
-$dashboard-panel-padding: 2rem 3rem
+$dashboard-panel-padding: 2rem
 
 @import "bulma/sass/utilities/derived-variables"
 @import "bulma/bulma"
@@ -38,6 +39,12 @@ $dashboard-panel-padding: 2rem 3rem
 .title
   line-height: 120%
 
+.toc
+  padding: 0 1rem
+
+  li a
+    font-size: 1rem
+
 .docs-nav
   a
     color: $dark
@@ -48,14 +55,15 @@ $dashboard-panel-padding: 2rem 3rem
       font-weight: 700
 
     & + a
-      margin-top: .5rem
+      margin-top: .75rem
 
   .top-level
     font-size: 1.2rem
     display: block
 
   .sub
-    font-size: 1rem
+    display: block
+    margin-top: .5rem
     padding-left: 1rem
 
 .dashboard-panel

@@ -1,6 +1,16 @@
 {{ $toc := .TableOfContents }}
 <article class="article">
-  <div class="content">
-    {{ .Content }}
+  <div class="columns">
+    <div class="column">
+      <div class="content">
+        {{ .Content }}
+      </div>
+    </div>
+
+    <div class="column is-3 is-hidden-mobile">
+      <div class="toc">
+        {{ .TableOfContents }}
+      </div>
+    </div>
   </div>
 </article>
