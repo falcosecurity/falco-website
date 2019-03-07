@@ -1,5 +1,6 @@
 ---
 title: Default Macros
+weight: 2
 ---
 
 The default Falco rule set defines a number of macros that makes it easier to start writing rules. These macros provide shortcuts for a number of common scenarios and can be used in any user defined rule sets. Falco also provide Macros that should be overridden by the user to provide settings that are specific to a user's environment. The provided Macros can also be appended to in a local rules file.
