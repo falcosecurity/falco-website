@@ -1,9 +1,8 @@
 ---
-title: Falco Formatting for Containers and Orchestration
-short: Formatting
+title: Formatting for Containers and Orchestration
 ---
 
-Like sysdig, Falco has native support for containers and orchestration environments. With `-k`, falco communicates with the provided K8s API server to decorate events with the K8s pod/namespace/deployment/etc. associated with the event. With `-m`, falco communicates with the marathon server to do the same thing.
+Like Sysdig, Falco has native support for containers and orchestration environments. With `-k`, falco communicates with the provided K8s API server to decorate events with the K8s pod/namespace/deployment/etc. associated with the event. With `-m`, falco communicates with the marathon server to do the same thing.
 
 Like sysdig, falco can be run with `-pk`/`-pm`/`-pc`/`-p` arguments that change the formatted output to be a k8s-friendly/mesos-friendly/container-friendly/general format. However, unlike sysdig, the source of formatted output is in the set of rules and not on the command line. This page provides more detail on how `-pk`/`-pm`/`-pc`/`-p` interacts with the format strings in the `output` attribute of rules.
 

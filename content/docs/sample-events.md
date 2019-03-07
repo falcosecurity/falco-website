@@ -1,6 +1,5 @@
 ---
 title: Generating sample events
-short: Sample events
 ---
 
 If you'd like to check if Falco is working properly, we've created a test program [`event_generator`](https://github.com/falcosecurity/falco/blob/dev/docker/event-generator/event_generator.cpp) that performs a variety of suspect actions that are detected by the current Falco ruleset.

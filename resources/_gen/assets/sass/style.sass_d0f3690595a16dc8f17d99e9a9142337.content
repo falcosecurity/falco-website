@@ -7166,12 +7166,12 @@ body #backtotop a {
     display: flex;
     flex-direction: column;
     padding: 2rem;
-    flex: 0 0 25%;
+    flex: 0 0 25rem;
     height: 100%; }
     .dashboard-panel.left {
-      width: 25%; }
+      width: 25rem; }
     .dashboard-panel.right {
-      width: 25%; }
+      width: 25rem; }
     .dashboard-panel.has-thick-padding {
       padding: 3rem 2rem; }
     .dashboard-panel.is-one-quarter {
@@ -7196,6 +7196,7 @@ body #backtotop a {
     .dashboard-panel-footer {
       margin-top: 2rem; }
   .dashboard-main {
+    display: block;
     display: flex;
     flex: 1;
     display: flex;
@@ -7224,13 +7225,12 @@ body #backtotop a {
   line-height: 120%; }
 
 .toc {
-  padding: 0 1rem; }
-  .toc li a {
-    font-size: 1rem; }
+  padding: 0 1rem;
+  line-height: 125%; }
 
 .docs-nav a {
   color: #363636;
-  line-height: 110%; }
+  line-height: 120%; }
   .docs-nav a.is-active {
     color: #00b4c8;
     font-weight: 700; }
@@ -7238,13 +7238,13 @@ body #backtotop a {
     margin-top: .75rem; }
 
 .docs-nav .top-level {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   display: block; }
 
 .docs-nav .sub {
   display: block;
   margin-top: .5rem;
-  padding-left: 1rem; }
+  padding-left: 1.1rem; }
 
 .dashboard-panel.left {
   background-color: #fafafa; }

@@ -12,7 +12,6 @@ $code-background: $white-bis
 $section-padding: 1rem
 $navbar-height: 5rem
 $navbar-item-img-max-height: 3.5rem
-$dashboard-panel-width: 25%
 $dashboard-panel-header-bottom-margin: 3rem
 $dashboard-panel-padding: 2rem
 
@@ -41,14 +40,15 @@ $dashboard-panel-padding: 2rem
 
 .toc
   padding: 0 1rem
+  line-height: 125%
 
-  li a
-    font-size: 1rem
+  > ul > li > ul > li
+    > ul > li
 
 .docs-nav
   a
     color: $dark
-    line-height: 110%
+    line-height: 120%
 
     &.is-active
       color: $primary
@@ -58,13 +58,13 @@ $dashboard-panel-padding: 2rem
       margin-top: .75rem
 
   .top-level
-    font-size: 1.2rem
+    font-size: 1.25rem
     display: block
 
   .sub
     display: block
     margin-top: .5rem
-    padding-left: 1rem
+    padding-left: 1.1rem
 
 .dashboard-panel
   &.left
