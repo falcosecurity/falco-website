@@ -1,7 +1,7 @@
 ---
 title: The Falco Configuration File
 notoc: true
-weight: 2
+weight: 1
 ---
 
 Falco's configuration file is a [YAML](http://www.yaml.org/start.html)
