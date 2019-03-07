@@ -1,16 +1,19 @@
-{{ $toc := .TableOfContents }}
+{{ $toc   := .TableOfContents }}
+{{ $notoc := .Params.notoc }}
 <article class="article">
   <div class="columns">
-    <div class="column is-9">
+    <div class="column{{ if not $notoc }} is-9{{ end }}">
       <div class="content">
         {{ .Content }}
       </div>
     </div>
 
+    {{ if not $notoc }}
     <div class="column is-hidden-mobile">
       <div class="toc">
         {{ .TableOfContents }}
       </div>
     </div>
+    {{ end }}
   </div>
 </article>
