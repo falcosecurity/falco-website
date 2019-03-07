@@ -1,5 +1,5 @@
 ---
-title: Formatting for Containers and Orchestration
+title: Formatting Alerts for Containers and Orchestration
 ---
 
 Like Sysdig, Falco has native support for containers and orchestration environments. With `-k`, falco communicates with the provided K8s API server to decorate events with the K8s pod/namespace/deployment/etc. associated with the event. With `-m`, falco communicates with the marathon server to do the same thing.

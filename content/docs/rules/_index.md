@@ -1,5 +1,6 @@
 ---
 title: Rules
+weight: 2
 ---
 
 _Call for contributions: If you come up with additional rules which you'd like to see in the core repository - PR welcome!_
