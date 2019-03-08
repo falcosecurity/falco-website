@@ -1,10 +1,13 @@
 {{ $docsSections := where site.Sections "Section" "docs" }}
 {{ $currentUrl   := .URL }}
 {{ $logo         := "/images/logos/falco-logo.png" | relURL }}
+{{ $home         := site.BaseURL }}
 <div class="dashboard">
   <div class="dashboard-panel left is-hidden-mobile is-scrollable">
     <div class="dashboard-panel-header has-text-centered">
-      <img class="panel-logo" src="{{ $logo }}">
+      <a href="{{ $home }}">
+        <img class="panel-logo" src="{{ $logo }}">
+      </a>
     </div>
 
     <div class="dashboard-panel-main">
