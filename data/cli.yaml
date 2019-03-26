@@ -1,0 +1,21 @@
+- flag: c
+  description: Configuration file
+  default: '`/mnt/sf_mstemm/work/src/falco/falco.yaml` or `/etc/falco/falco.yaml`'
+- flag: A
+  description: Monitor all events, including those with `EF_DROP_FALCO` flag.
+- flag: b
+  alias: print-base64
+  description: Print data buffers in base64. This is useful for encoding binary data.
+- flag: d
+  alias: daemon
+  description: Run as a daemon
+- flag: D
+  arg: pattern
+  description: Disable any rules matching the regex `pattern`. Can be specified multiple times but cannot be specified with `-t`.
+- flag: e
+  arg: events_file
+  description: Read the events from `events_file` (in `.scap` format for sinsp events or `jsonl` for Kubernetes audit events) instead of tapping into live.
+- flag: k
+  alias: k8s-api
+  arg: url
+  description: Enable Kubernetes audit support by connecting to the API server specified as an argument, e.g. `http://admin:password@127.0.0.1:8080`. The API server can also be specified as via the `FALCO_K8S_API` environment variable.

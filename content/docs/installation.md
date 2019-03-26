@@ -1,8 +1,7 @@
 ---
 title: Installing Falco
-short: Install
 description: Get up and running on Linux and a variety of container platforms
-weight: 1
+weight: 2
 ---
 
 Falco can be installed on several platforms:

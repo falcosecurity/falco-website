@@ -1,10 +1,11 @@
-{{ $year := now.Year }}
+{{ $year   := now.Year }}
+{{ $isHome := .IsHome }}
 <footer class="footer footer-dark">
-  <div class="container">
-    <div class="columns u-logo-offset">
-      <div class="column is-one-third">
+  {{ if $isHome }}<div class="container">{{ end }}
+    <div class="columns">
+      <div class="column">
         Copyright {{ $year }}, The Falco authors
       </div>
     </div>
-  </div>
+  {{ if $isHome }}</div>{{ end }}
 </footer>

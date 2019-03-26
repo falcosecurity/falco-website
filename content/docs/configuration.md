@@ -1,8 +1,7 @@
 ---
 title: Falco Configuration
-short: Configuration
+weight: 5
 notoc: true
-weight: 2
 ---
 
 Falco's configuration file is a [YAML](http://www.yaml.org/start.html)
@@ -13,4 +12,3 @@ Any configuration option can be overridden on the command line via the `-o/--opt
 ## Current configuration options
 
 {{< config >}}
-

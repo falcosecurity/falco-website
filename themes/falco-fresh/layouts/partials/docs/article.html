@@ -1,24 +1,19 @@
-{{ $toc := .TableOfContents }}
+{{ $toc   := .TableOfContents }}
+{{ $notoc := .Params.notoc }}
 <article class="article">
-  <section class="section">
-    <div class="container">
-      <div class="columns is-variable is-8">
-        <div class="column{{ if and $toc (not .Params.notoc) }} is-9{{ end }}">
-          <div class="content">
-            {{ .Content }}
-          </div>
-        </div>
-
-        {{ if not .Params.notoc }}
-        {{ with $toc }}
-        <div class="column is-3 is-hidden-mobile">
-          <div class="toc">
-            {{ . }}
-          </div>
-        </div>
-        {{ end }}
-        {{ end }}
+  <div class="columns">
+    <div class="column{{ if not $notoc }} is-9{{ end }}">
+      <div class="content">
+        {{ .Content }}
       </div>
     </div>
-  </section>
+
+    {{ if not $notoc }}
+    <div class="column is-hidden-mobile">
+      <div class="toc">
+        {{ .TableOfContents }}
+      </div>
+    </div>
+    {{ end }}
+  </div>
 </article>

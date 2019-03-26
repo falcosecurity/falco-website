@@ -1,12 +1,15 @@
 {{- $navbar := .Site.Params.navbar }}
 {{- $menu   := index $navbar "menu"}}
 {{- $cncf   := index $navbar "cncf" }}
+{{- $isHome := .IsHome}}
 <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
-  <div class="container">
+  {{ if $isHome }}<div class="container">{{ end }}
     <div class="navbar-brand">
+      {{ if $isHome }}
       <a class="navbar-item" href="{{ "/" | absURL }}">
         <img class="navbar-brand__logo" src="{{ "/images/logos/falco-logo.png" | absURL }}" alt="">
       </a>
+      {{ end }}
 
       <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
         <span aria-hidden="true"></span>
@@ -28,5 +31,5 @@
         </a>
       </div>
     </div>
-  </div>
+  {{ if $isHome }}</div>{{ end }}
 </nav>
