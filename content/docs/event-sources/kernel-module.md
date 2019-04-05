@@ -1,6 +1,6 @@
 ---
 title: Falco Kernel Module
-weight: 4
+weight: 1
 ---
 
 Falco depends on a kernel module that taps into the stream of system calls on a machine and passes those system calls to user space.
