@@ -34,4 +34,4 @@ To reduce the likelihood of a flood of log messages/alerts, actions are governed
 
 ## Configuration
 
-The actions to take on a dropped syscall event and the throttling parameters for the token bucket are configurable in `falco.yaml` and described [[here|Falco-Configuration#syscall_event_drops]].
+The actions to take on a dropped syscall event and the throttling parameters for the token bucket are configurable in `falco.yaml` and described [here](/docs/configuration/#syscall_event_drops).
