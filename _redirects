@@ -1,0 +1,2 @@
+# Redirect default Netlify subdomain to primary domain
+https://falcosecurity.netlify.com/* https://falco.org/:splat 301!

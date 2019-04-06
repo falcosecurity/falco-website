@@ -25,7 +25,7 @@ checked out falco and sysdig to directories below /home/user/src, and
 want to use a build directory of /home/user/build/falco:
 
 ```bash
-docker run --user $(id -u):$(id -g) -v /etc/passwd:/etc/passwd:ro -e MAKE_JOBS=4 -it -v /home/user/src:/source -v /home/user/build/falco:/build falco-builder cmake
+docker run --user $(id -u):$(id -g) -v /etc/passwd:/etc/passwd:ro -e MAKE_JOBS=4 -it -v /home/user/src:/source -v /home/user/build/falco:/build falcosecurity/falco-builder cmake
 docker run --user $(id -u):$(id -g) -v /etc/passwd:/etc/passwd:ro -e MAKE_JOBS=4 -it -v /home/user/src:/source -v /home/user/build/falco:/build falcosecurity/falco-builder package
 ```
 

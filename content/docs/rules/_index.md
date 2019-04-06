@@ -76,7 +76,7 @@ As noted above, macros provide a way to define common sub-portions of rules in a
 
 With this macro defined, we can then rewrite the above rule's condition as `in_container and proc.name = bash`.
 
-For many more examples of rules and macros, please take a look `rules/falco_rules.yaml`.
+For many more examples of rules and macros, please take a look the documentation on [default macros](./default-macros) or the `rules/falco_rules.yaml` file.
 
 ## Lists
 

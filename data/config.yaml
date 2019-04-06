@@ -36,6 +36,21 @@
   type: |
     Enum with the following possible values: `emergency`, `alert`, `critical`, `error`, `warning`, `notice`, `info`, `debug`
   description: Minimum rule priority level to load and run. All rules having a priority more severe than this level will be loaded/run. 
+- name: syscall_event_drops
+  type: |
+    List containing the following sub-keys:
+
+    * `actions`: A list containing one or more of these boolean sub-keys:
+      * `ignore`: do nothing. If an empty list is provided, ignore is assumed.
+      * `log`: log a CRITICAL message noting that the buffer was full.
+      * `alert`: emit a falco alert noting that the buffer was full.
+      * `exit`: exit falco with a non-zero rc.
+    * `rate`: The steady-state rate at which actions can be taken. Units of actions/second. Default 0.03333 (one action per 30 seconds).
+    * `max_burst`: The maximum number of actions that can be taken before the steady-state rate is applied.
+  description: Controls [Actions For Dropped System Call Events](../event-sources/dropped-events/).
+- name: buffered_outputs
+  type: Boolean
+  description: Whether or not output to any of the output channels below is buffered. Defaults to false.
 - name: outputs
   type: |
     List containing the following sub-keys:

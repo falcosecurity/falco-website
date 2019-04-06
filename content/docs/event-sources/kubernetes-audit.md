@@ -21,7 +21,7 @@ Once you've configured your cluster with audit logging and selected which events
 
 The overall architecture of Falco remains the same, with events being matched against sets of rules, with a rule identifying suspicious/notable behavior. What's new is that there are two parallel independent streams of events being read separately and matched separately against the sets of rules instead of just one.
 
-To receive k8s audit events, falco embeds a [civetweb](https://github.com/civetweb/civetweb) webserver that listens on a configurable port and accepts POST requests on a configurable endpoint. Details on configuring the embedded webserver are on the [config page](../../configuration/config-file). The posted JSON object comprises the event.
+To receive k8s audit events, falco embeds a [civetweb](https://github.com/civetweb/civetweb) webserver that listens on a configurable port and accepts POST requests on a configurable endpoint. Details on configuring the embedded webserver are on the [configuration page](../../configuration/). The posted JSON object comprises the event.
 
 A given rule is tied to either system call events or k8s audit events, via the `source` attribute. If not specified, the source defaults to `syscall`. Rules with source `syscall` are matched against system call events. Rules with source `k8s_audit` are matched against k8s audit events.
 
