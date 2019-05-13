@@ -142,7 +142,7 @@ docker run -i -t \
     falcosecurity/falco
 ```
 
-To see it in action, also run the [event generator](../sample-events) to perform actions that trigger Falco's ruleset:
+To see it in action, also run the [event generator](../event-sources/sample-events) to perform actions that trigger Falco's ruleset:
 
 ```shell
 docker pull sysdig/falco-event-generator
