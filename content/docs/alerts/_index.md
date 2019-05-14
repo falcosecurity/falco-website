@@ -8,6 +8,7 @@ Falco can send alerts to one or more channels:
 * A file
 * Syslog
 * A spawned program
+* A HTTP[s] end point
 
 The channels are configured via the falco configuration file `falco.yaml`. See the [Falco Configuration](../configuration) page for more details. Here are details on each of those channels.
 
@@ -108,6 +109,20 @@ program_output:
 ```
 
 Note the use of `keep_alive: true` to keep the network connection persistent.
+
+## HTTP[s] Output: Send alerts to an HTTP[s] end point.
+
+If you'd like to send alerts to an HTTP[s] endpoint, you can use the `http_output` option:
+
+```yaml
+json_output: true
+...
+http_output:
+  enabled: true
+  url: http://some.url/some/path/
+```
+
+Currently only unencrypted HTTP endpoints or valid, secure HTTPs endpoints are supported (ie invalid or self signed certificates are not supported). 
 
 ## JSON Output
 
