@@ -1,3 +1,8 @@
+---
+title: Supported Fields for Rule Conditions
+weight: 3
+---
+
 # Introduction
 
 Here are the fields supported by Falco. You can also see this set of fields via `falco --list=<source>`, with `<source>` being one of the sources below.
