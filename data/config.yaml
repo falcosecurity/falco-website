@@ -106,7 +106,7 @@
     The `program` setting specifies the program to be run for each alert. This is started via the shell, so you can specify a command pipeline to allow for additional formatting.
 - name: http_output
   type: |
-      List containing the following sub-keys:
+    List containing the following sub-keys:
 
     * `enabled: [true|false]`
     * `url: [http[s]://path/to/webhook/]`
