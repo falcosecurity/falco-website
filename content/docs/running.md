@@ -36,6 +36,8 @@ Options:
  -A                            Monitor all events, including those with EF_DROP_FALCO flag.
  -b, --print-base64            Print data buffers in base64. This is useful for encoding
                                binary data that needs to be used over media designed to
+ --cri <path>                  Path to CRI socket for container metadata
+                               Use the specified socket to fetch data from a CRI-compatible runtime
  -d, --daemon                  Run as a daemon
  -D <pattern>                  Disable any rules matching the regex <pattern>. Can be specified multiple times.
                                Can not be specified with -t.
@@ -85,10 +87,13 @@ Options:
                                from multiple files/directories.
  -s <stats_file>               If specified, write statistics related to falco's reading/processing of events
                                to this file. (Only useful in live mode).
+ --stats_interval <msec>       When using -s <stats_file>, write statistics every <msec> ms.
+                               (This uses signals, so don't recommend intervals below 200 ms)
+                               defaults to 5000 (5 seconds)
  -S <len>, --snaplen=<len>
-                                   Capture the first <len> bytes of each I/O buffer.
-                                   By default, the first 80 bytes are captured. Use this
-                                   option with caution, it can generate huge trace files.
+                  		   Capture the first <len> bytes of each I/O buffer.
+                   		   By default, the first 80 bytes are captured. Use this
+                   		   option with caution, it can generate huge trace files.
  --support                     Print support information including version, rules files used, etc.
                                and exit.
  -T <tag>                      Disable any rules with a tag=<tag>. Can be specified multiple times.
