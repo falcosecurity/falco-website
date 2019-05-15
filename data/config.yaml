@@ -12,6 +12,10 @@
     ```
 
     You can also specify multiple rules files on the command line via one or more `-r` options.
+- name: time_format_iso_8601
+  type: Boolean
+  description: |
+    If `true` (default is `false`), the times displayed in log messages and output messages will be in ISO 8601. By default, times are displayed in the local time zone, as governed by /etc/localtime.
 - name: json_output
   type: Boolean
   description: Whether to use JSON output for alert messages.
@@ -100,6 +104,14 @@
     If `keep_alive` is set to `false` (the default), run the program for each alert. If `true`, Falco will spawn the program once and keep it open for all alerts. It may also be necessary to specify `--unbuffered` using the Falco CLI.
   
     The `program` setting specifies the program to be run for each alert. This is started via the shell, so you can specify a command pipeline to allow for additional formatting.
+- name: http_output
+  type: |
+    List containing the following sub-keys:
+
+    * `enabled: [true|false]`
+    * `url: [http[s]://path/to/webhook/]`
+  description: |
+    As of `0.15.0`, if enabled is set to true, Falco alerts will be sent to the HTTP[s] URL defined by `url`. Currently this is a blocking operation and this output does not support `keep_alive`.
 - name: webserver
   type: |
     List containing the following sub-keys:
@@ -107,9 +119,13 @@
     * `enabled: [true|false]`
     * `listen_port`
     * `k8s_audit_endpoint`
+    * `ssl_enabled: [true|false]`
+    * `ssl_certificate: <path>`
   description: |
     If `enabled` is set to `true`, Falco will start an embedded web server to accept Kubernetes audit events.
 
     `listen_port` specifies the port on which the web server will listen. The default is 8765.
 
     `k8s_audit_endpoint` specifies the URI on which to listen for Kubernetes audit events. The default is `/k8s_audit`.
+
+    `ssl_enabled` enables SSL support for the webserver, using the certificate specified in `ssl_certificate`. The specified `ssl_certificate` file should contain the server's certificate as well as the key as [documented by civitweb](https://github.com/civetweb/civetweb/blob/master/docs/OpenSSL.md#creating-a-self-signed-certificate).
