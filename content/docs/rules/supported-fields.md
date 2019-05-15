@@ -15,7 +15,7 @@ You can also see this set of fields via `falco --list=<source>`, with `<source>`
 
 ```
 # System Kernel Fields
-$ falco --list=syscall``
+$ falco --list=syscall
 ```
 
 ## `fd` Field Class
@@ -482,7 +482,7 @@ Kubernetes Audit event fields are supported by the Kubernetes Audit event source
 
 ```
 # Kubernetes Audit event Fields
-$ falco --list=k8s_audit``
+$ falco --list=k8s_audit
 ```
 
 ## `jevt` Field Class: generic ways to access json events
