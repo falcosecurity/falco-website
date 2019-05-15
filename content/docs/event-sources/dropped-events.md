@@ -4,6 +4,8 @@ weight: 3
 ---
 # Introduction
 
+For more info on this feature, please read our blog post on [CVE-2019-8339](https://sysdig.com/blog/cve-2019-8339-falco-vulnerability/).
+
 A new feature in 0.15.0 allows Falco to take actions when it detects dropped system call events. When system call events are dropped, Falco may have problems building its internal view of the processes, files, containers, and orchestrator metadata in use, which in turn may affect rules that depend on that metadata. These actions make it easier to detect when dropped system calls are occurring.
 
 ## Implementation
