@@ -9,7 +9,7 @@ Versions before v0.6.0 used the kernel module from sysdig called `sysdig-probe`.
 
 # Installing the kernel module
 
-By default, the kernel module will be installed when installing the falco debian/redhat package or when running the `faclosecurity/falco` docker image. The script that installs the kernel module tries to install it in 3 different ways:
+By default, the kernel module will be installed when installing the falco debian/redhat package or when running the `falcosecurity/falco` docker image. The script that installs the kernel module tries to install it in 3 different ways:
 
 * Build the kernel module from source using [dkms](https://en.wikipedia.org/wiki/Dynamic_Kernel_Module_Support).
 * Download a pre-built kernel module from downloads.draios.com.
