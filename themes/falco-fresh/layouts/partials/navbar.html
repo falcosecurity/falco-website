@@ -6,11 +6,9 @@
 <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
   {{ if $isHome }}<div class="container">{{ end }}
     <div class="navbar-brand">
-      {{ if not $isDocs }}
-      <a class="navbar-item" href="{{ "/" | absURL }}">
+      <a class="navbar-item{{ if $isDocs }} is-hidden-tablet{{ end }}" href="{{ "/" | absURL }}">
         <img class="navbar-brand__logo" src="{{ "/images/logos/falco-logo.png" | absURL }}" alt="">
       </a>
-      {{ end }}
 
       <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
         <span aria-hidden="true"></span>
