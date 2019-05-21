@@ -7,6 +7,7 @@ pygmentsCodefences: true
 pygmentsStyle: monokai
 
 params:
+  md5sum: 3632bde02be5aeaef522138919cfece2
   primaryFont:
     name: "Karla"
     sizes: [400 700]

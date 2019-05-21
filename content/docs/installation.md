@@ -27,7 +27,7 @@ Then verify the [MD5](https://en.wikipedia.org/wiki/MD5) checksum of the script 
 md5sum install-falco.sh
 ```
 
-It should be `3632bde02be5aeaef522138919cfece2`.
+It should be `{{< md5sum >}}`.
 
 Then run the script either as root or with sudo:
 
