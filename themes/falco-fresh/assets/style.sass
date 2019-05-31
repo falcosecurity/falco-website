@@ -5,6 +5,7 @@
 
 $primary: #00b4c8
 $secondary: #444f60
+$twitter-blue: #00aced
 
 $link: $primary
 $code: darken($primary, 5%)
@@ -16,6 +17,9 @@ $dashboard-panel-header-bottom-margin: 3rem
 $dashboard-panel-padding: 2rem
 
 @import "bulma/sass/utilities/derived-variables"
+
+$colors: mergeColorMaps(("twitter-blue": ($twitter-blue, $white)), $colors)
+
 @import "bulma/bulma"
 
 @import "fresh/core"
