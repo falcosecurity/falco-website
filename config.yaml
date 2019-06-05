@@ -7,6 +7,7 @@ pygmentsCodefences: true
 pygmentsStyle: monokai
 
 params:
+  version: v0.15.0
   md5sum: 3632bde02be5aeaef522138919cfece2
   primaryFont:
     name: "Karla"
