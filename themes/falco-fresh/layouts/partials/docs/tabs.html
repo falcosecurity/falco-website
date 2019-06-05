@@ -1,13 +1,13 @@
 {{ $docs       := where .Site.Pages "Section" "docs" }}
-{{ $currentUrl := .URL }}
+{{ $currentUrl := .RelPermalink }}
 <nav class="tabs">
   <div class="container">
     <ul>
       {{ range $docs }}
-      {{ $isCurrentPage := eq .URL $currentUrl }}
+      {{ $isCurrentPage := eq .RelPermalink $currentUrl }}
       {{ $title := cond (isset .Params "short") (.Params.short) .Title }}
       <li{{ if $isCurrentPage }} class="is-active"{{ end }}>
-        <a href="{{ .URL }}">
+        <a href="{{ .RelPermalink }}">
           {{ $title }}
         </a>
       </li>
