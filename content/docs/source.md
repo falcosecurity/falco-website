@@ -48,10 +48,10 @@ want to use a build directory of /home/user/build/falco, you would run
 the following:
 
 ```bash
-docker run --user $(id -u):$(id -g) -v /boot:/boot:ro -v /var/run/docker.sock:/var/run/docker.sock -v /etc/passwd:/etc/passwd:ro -e FALCO_VERSION=${FALCO_VERSION} -v /home/user/src:/source -v /home/user/build/falco:/build falcosecurity/falco-tester
+docker run --user $(id -u):$(id -g) -v $HOME:$HOME:ro -v /boot:/boot:ro -v /var/run/docker.sock:/var/run/docker.sock -v /etc/passwd:/etc/passwd:ro -e FALCO_VERSION=${FALCO_VERSION} -v /home/user/src:/source -v /home/user/build/falco:/build falcosecurity/falco-tester
 ```
 
-You may need to replace `$(id -g)` with the right gid of the group that is allowed to access the docker socket (often the `docker` group).
+Mounting $HOME allows the test execution framework to run. You may need to replace `$(id -g)` with the right gid of the group that is allowed to access the docker socket (often the `docker` group).
 
 The default value for FALCO_VERSION is `0.1.1dev`, so you can skip specifying FALCO_VERSION if you want.
 
