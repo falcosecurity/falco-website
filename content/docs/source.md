@@ -1,80 +1,124 @@
 ---
-title: Installing Falco from Source
+title: Build Falco from source
 weight: 6
 ---
 
-Building falco requires having `cmake` and `g++` installed.
+TODO(fntlnz, leodido): finish up this page.
 
-## Build using falco-builder container
+Content that will be here:
+- System requirements
+- Obtain the source code
+- Build options (USE_BUNDLED STUFF, linking) - Also build type, Debug or Release - The FALCO_VERSION environment variable
+- Build the falco binary
+- Build the kernel module
+- Build the bpf probe
+- Building packages
+- Debugging
 
-One easy way to build falco is to run the [falco-builder](https://hub.docker.com/r/falcosecurity/falco-builder) container. It contains the reference toolchain we use to build packages.
 
-The image depends on the following parameters:
 
-* `FALCO_VERSION`: the version to give any built packages
-* `BUILD_TYPE`: Debug or Release
-* `BUILD_DRIVER`: whether or not to build the kernel module when
-building. This should usually be OFF, as the kernel module would be
-built for the files in the centos image, not the host.
-* `BUILD_BPF`: Like `BUILD_DRIVER` but for the ebpf program.
-* `BUILD_WARNINGS_AS_ERRORS`: consider all build warnings fatal
-* `MAKE_JOBS`: passed to the -j argument of make
+## System requirements
 
-A typical way to run this builder is the following. Assuming you have
-checked out falco and sysdig to directories below /home/user/src, and
-want to use a build directory of /home/user/build/falco, you would run
-the following:
+TODO(fntlnz, leodido): finish up this
 
-```bash
-FALCO_VERSION=0.1.2-test docker run --user $(id -u):$(id -g) -v /etc/passwd:/etc/passwd:ro -e MAKE_JOBS=4 -e FALCO_VERSION=${FALCO_VERSION} -it -v /home/user/src:/source -v /home/user/build/falco:/build falcosecurity/falco-builder cmake
-FALCO_VERSION=0.1.2-test docker run --user $(id -u):$(id -g) -v /etc/passwd:/etc/passwd:ro -e MAKE_JOBS=4 -e FALCO_VERSION=${FALCO_VERSION} -it -v /home/user/src:/source -v /home/user/build/falco:/build falcosecurity/falco-builder package
-```
+- wget
+- pkg-config
+- make
+- cmake
+- gcc
+- g++
+- glibc-static
+- kernel headers
+- libelf-dev
 
-The default value for FALCO_VERSION is `0.1.1dev`, so you can skip specifying FALCO_VERSION if you want.
 
-### Test using falco-tester container
-
-If you'd like to run the regression test suite against your build, you can use the [falco-tester](https://hub.docker.com/r/falcosecurity/falco-tester) container. Like the builder image, it contains the necessary environment to run the regression tests, but relies on a source directory and build directory that are mounted into the image. It's a different image than `falco-builder` as it doesn't need a compiler and needs a different base image to include the test runner framework [avocado](http://avocado-framework.github.io/).
-
-It does build a new container image `falcosecurity/falco:test` to test the process of buillding and running a container with the falco packages built during the build step.
-
-The image depends on the following parameters:
-
-* `FALCO_VERSION`: The version of the falco package to include in the test container image.
-
-A typical way to run this builder is the following. Assuming you have
-checked out falco and sysdig to directories below /home/user/src, and
-want to use a build directory of /home/user/build/falco, you would run
-the following:
+### CentOS/RHEL
 
 ```bash
-docker run --user $(id -u):$(id -g) -v $HOME:$HOME:ro -v /boot:/boot:ro -v /var/run/docker.sock:/var/run/docker.sock -v /etc/passwd:/etc/passwd:ro -e FALCO_VERSION=${FALCO_VERSION} -v /home/user/src:/source -v /home/user/build/falco:/build falcosecurity/falco-tester
+yum install gcc gcc-c++ cmake make pkgconfig autoconf wget automake patch elfutils-libelf libtool kernel-devel kernel-headers
 ```
 
-Mounting $HOME allows the test execution framework to run. You may need to replace `$(id -g)` with the right gid of the group that is allowed to access the docker socket (often the `docker` group).
+### Fedora
 
-The default value for FALCO_VERSION is `0.1.1dev`, so you can skip specifying FALCO_VERSION if you want.
-
-## Build directly on host
-
-If you'd rather build directly on the host, you can use your local toolchain and cmake binaries.
-
-Clone this repo in a directory that also contains the sysdig source repo. The result should be something like:
-
-```
-22:50 vagrant@vagrant-ubuntu-trusty-64:/sysdig
-$ pwd
-/sysdig
-22:50 vagrant@vagrant-ubuntu-trusty-64:/sysdig
-$ ls -l
-total 20
-drwxr-xr-x  1 vagrant vagrant  238 Feb 21 21:44 falco
-drwxr-xr-x  1 vagrant vagrant  646 Feb 21 17:41 sysdig
+```bash
+dnf install gcc gcc-c++ cmake make pkgconfig autoconf wget automake patch elfutils-libelf libtool kernel-devel kernel-headers
 ```
 
-To build from the head of falco's dev branch, make sure you're also using the head of the sysdig dev branch. If you're building from a specific version of falco (say x.y.z), there will be a corresponding tag `falco/x.y.z` on the sysdig repository that you should use.
+### Ubuntu
 
-create a build dir, then setup cmake and run make from that dir:
+```
+TODO
+```
+
+### Debian
+
+```
+TODO
+```
+
+### Arch Linux
+
+```
+TODO
+```
+
+## Dependencies
+
+TODO(fntlnz, leodido): write here about the runtime dependencies,
+how to have them static, dynamic by using the USE_BUNDLED flags.
+
+b64
+cares
+civetweb
+grpc
+jq
+libcurl
+libyaml
+lpeg
+luajit
+lyaml
+ncurses
+njson
+openssl
+protobuf
+sysdig
+tbb
+yamlcpp
+zlib
+
+
+## Obtain the source code
+
+First, make sure you have a working copy of the Falco source code along with a working copy of Sysdig.
+
+You will need to have them in the same directory, this is a requirement to compile Falco.
+
+**Clone Falco**
+
+```bash
+git clone https://github.com/falcosecurity/falco.git
+```
+
+**Clone Sysdig**
+
+```bash
+git clone https://github.com/draios/sysdig.git
+```
+
+## Build from source
+
+To build Falco, you will need to create a `build` directory.
+It's common to have the `build` directory in the Falco working copy itself, however it can be
+anywhere in your filesystem.
+
+There are **three main steps to compile** Falco.
+
+1. Create the build directory and enter in it
+2. Use cmake in the build directory to create the build files for Falco. `..` was used because the source directory
+is a parent of the current directory, you can also use the absolute path for the Falco source code instead
+3. Build using make
+
+Here's how to do it:
 
 ```bash
 mkdir build
@@ -83,32 +127,28 @@ cmake ..
 make
 ```
 
-Afterward, you should have a falco executable in `build/userspace/falco/falco`.
+When doing the `cmake` command, we can pass additional parameters to change the behavior of the build files.
 
-If you'd like to build a debug version, run cmake as `cmake -DCMAKE_BUILD_TYPE=Debug ..` instead.
+### Examples
 
-## Load latest falco-probe kernel module
+Here'are some examples, always assuming your `build` folder is inside the Falco working copy.
 
-If you have a binary version of falco installed, an older falco kernel module may already be loaded. To ensure you are using the latest version, you should unload any existing falco kernel module and load the locally built version.
-
-Unload any existing kernel module via:
+**Generate verbose makefiles**
 
 ```bash
-rmmod falco_probe
+cmake -DCMAKE_VERBOSE_MAKEFILE=On ..
 ```
 
-To load the locally built version, assuming you are in the `build` dir, use:
+**Specify C and CXX compilers**
 
-```bash
-insmod driver/falco-probe.ko
+```
+cmake -DCMAKE_C_COMPILER=$(which gcc) -DCMAKE_CXX_COMPILER=$(which g++) ..
 ```
 
-## Running falco
+**Disable a bundled dependency**
 
-Assuming you are in the `build` dir, you can run falco as:
-
-```bash
-sudo ./userspace/falco/falco -c ../falco.yaml -r ../rules/falco_rules.yaml
+```
+cmake -DUSE_BUNDLED_JQ=False ..
 ```
 
-By default, falco logs events to standard error.
+Read more about Falco dependencies [here](#Dependencies).
