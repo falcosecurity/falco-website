@@ -14,6 +14,7 @@ Content that will be here:
 - Build the bpf probe
 - Building packages
 - Debugging
+- Release a new version
 
 
 
@@ -81,7 +82,8 @@ ncurses
 njson
 openssl
 protobuf
-sysdig
+libscap
+libsinsp
 tbb
 yamlcpp
 zlib
@@ -89,7 +91,7 @@ zlib
 
 ## Obtain the source code
 
-First, make sure you have a working copy of the Falco source code along with a working copy of Sysdig.
+First, make sure you have a working copy of the Falco source code along with a working copy of Sysdig to compile `libscap` and `libsinsp`.
 
 You will need to have them in the same directory, this is a requirement to compile Falco.
 
@@ -118,7 +120,8 @@ There are **three main steps to compile** Falco.
 is a parent of the current directory, you can also use the absolute path for the Falco source code instead
 3. Build using make
 
-Here's how to do it:
+
+### Build all
 
 ```bash
 mkdir build
@@ -127,28 +130,114 @@ cmake ..
 make
 ```
 
-When doing the `cmake` command, we can pass additional parameters to change the behavior of the build files.
+You can also build only specific targets:
 
-### Examples
+### Build Falco
+
+Do the build folder and cmake setup, then:
+
+```bash
+make falco
+```
+
+### Build the Falco engine
+
+Do the build folder and cmake setup, then:
+
+```bash
+make falco_engine
+```
+
+### Build libscap
+
+Do the build folder and cmake setup, then:
+
+```bash
+make scap
+```
+
+### Build libsinsp
+
+Do the build folder and cmake setup, then:
+
+```bash
+make sinsp
+```
+
+### Build the kernel driver
+
+Do the build folder and cmake setup, then:
+
+```bash
+make driver
+```
+
+### Build results
+
+Once Falco is built, the three interesting things that you will find in your `build` folder are:
+
+- `userspace/falco/falco`: the actual Falco binary
+- `driver/src/falco-probe.ko`: the Falco kernel driver
+- `driver/bpf/probe.o`: if you built Falco with (BPF support)[#enable-bpf-support]
+
+### CMake Options
+When doing the `cmake` command, we can pass additional parameters to change the behavior of the build files.
 
 Here'are some examples, always assuming your `build` folder is inside the Falco working copy.
 
-**Generate verbose makefiles**
+#### Generate verbose makefiles
 
 ```bash
-cmake -DCMAKE_VERBOSE_MAKEFILE=On ..
+-DCMAKE_VERBOSE_MAKEFILE=On
 ```
 
-**Specify C and CXX compilers**
+#### Specify C and CXX compilers
 
 ```
-cmake -DCMAKE_C_COMPILER=$(which gcc) -DCMAKE_CXX_COMPILER=$(which g++) ..
+-DCMAKE_C_COMPILER=$(which gcc) -DCMAKE_CXX_COMPILER=$(which g++)
 ```
 
-**Disable a bundled dependency**
+#### Disable a bundled dependency
 
 ```
-cmake -DUSE_BUNDLED_JQ=False ..
+-DUSE_BUNDLED_JQ=False
 ```
 
 Read more about Falco dependencies [here](#Dependencies).
+
+
+#### Treat warnings as errors
+
+```
+-DBUILD_WARNINGS_AS_ERRORS=True
+```
+
+#### Specify the build type
+
+Debug build type
+```
+-DCMAKE_BUILD_TYPE=Debug
+```
+
+Release build type
+```
+-DCMAKE_BUILD_TYPE=Release
+```
+
+#### Specify the Falco version
+
+```
+ -DFALCO_VERSION=0.15.0-dirty
+```
+
+#### Enable BPF support
+
+```
+-DBUILD_BPF=True
+```
+
+When enabling this you will be able to make the `bpf` target after:
+
+```bash
+make bpf
+```
