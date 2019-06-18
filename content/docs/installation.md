@@ -16,11 +16,11 @@ Falco can be installed via several methods based on your specific requirements. 
 
 The default method to run Falco on Kubernetes is to use a Daemonset. Falco supports a variety of installation methods depending on your deployment methods of choice and underlying Kubernetes version. The default installation includes support for system call events via a kernel module and is thus dependent on the underlying operating system for the worker nodes. Installing the appropriate kernel headers on the worker nodes will allow Falco to dynamically build (and `insmod`) the kernel module on pod start. Falco also provides a number of prebuilt modules for common distributions and kernels. Falco will automatically attempt to download a prebuilt module if module compilation fails. 
 
-For platforms such as Google's Container Optimized OS & GKE, where access to the underlying kernel is limited, see the [GKE section(#GKE)] below.
+For platforms such as Google's Container Optimized OS & GKE, where access to the underlying kernel is limited, see the [GKE section(#GKE)](#GKE) below.
 
 ### Downloading the Kernel Module via HTTPs
 
-The kernel module can be prebuilt and provided to the Falco pods via HTTPs. The easiest way to build the kernel module is to deploy Falco on a node with the required kernel headers, have Falco (via the `falco-probe-loader` script) build the kernel module, then copy the kernel module out of the pod or container. By default the kernel module is copied to ......
+The kernel module can be prebuilt and provided to the Falco pods via HTTPs. The easiest way to build the kernel module is to deploy Falco on a node with the required kernel headers, have Falco (via the `falco-probe-loader` script) build the kernel module, then copy the kernel module out of the pod or container. By default the kernel module is copied to `/root/.sysdig/`.
 
 `SYSDIG_PROBE_URL` - Set this environment variable for the Falco pod to override the default host for prebuilt kernel modules. This should be only the host portion of the URL without the trailing slash, ie `https://myhost.mydomain.com`. The kernel modules should be placed in directory `/stable/sysdig-probe-binaries/` and named as follows:
 `falco-probe-${falco_version}-$(uname -i)-$(uname -r)-{md5sum of kernel config}.ko`
