@@ -14,9 +14,9 @@ Falco can be installed via several methods based on your specific requirements. 
 
 ## Kubernetes
 
-The default method to run Falco on Kubernetes is to use a Daemonset. Falco supports a variety of installation methods depending on your deployment methods of choice and underlying Kubernetes version. The default installation includes support for system call events via a kernel module and is thus dependent on the underlying operating system for the worker nodes. Installing the appropriate kernel headers on the worker nodes will allow Falco to dynamically build (and `insmod`) the kernel module on pod start. Falco also provides a number of prebuilt modules for common distributions and kernels. Falco will automatically attempt to download a prebuilt module if module compilation fails. 
+The default method to run Falco on Kubernetes is to use a Daemonset. Falco supports a variety of installation methods depending on your deployment methods of choice and underlying Kubernetes version. The default installation includes support for system call events via a kernel module and is thus dependent on the underlying operating system for the worker nodes. Installing the appropriate kernel headers on the worker nodes will allow Falco to dynamically build (and `insmod`) the kernel module on pod start. Falco also provides a number of prebuilt modules for common distributions and kernels. Falco will automatically attempt to download a prebuilt module if module compilation fails.
 
-For platforms such as Google's Container Optimized OS & GKE, where access to the underlying kernel is limited, see the [GKE section(#GKE)](#GKE) below.
+For platforms such as Google's Container Optimized OS & GKE, where access to the underlying kernel is limited, see the [GKE section](#GKE) below.
 
 ### Downloading the Kernel Module via HTTPs
 
@@ -25,7 +25,7 @@ The kernel module can be prebuilt and provided to the Falco pods via HTTPs. The 
 `SYSDIG_PROBE_URL` - Set this environment variable for the Falco pod to override the default host for prebuilt kernel modules. This should be only the host portion of the URL without the trailing slash - ie., `https://myhost.mydomain.com`. The kernel modules should be placed in directory `/stable/sysdig-probe-binaries/` and named as follows:
 `falco-probe-${falco_version}-$(uname -i)-$(uname -r)-{md5sum of kernel config}.ko`
 
-The `falco-probe-loader` script will name the module in this format by default. 
+The `falco-probe-loader` script will name the module in this format by default.
 
 ### Helm
 
@@ -43,7 +43,7 @@ helm delete falco
 
 #### Kubernetes Response Engine
 
-Using the Falco Helm chart is the easiest way to deploy the [Falco Kubernetes Response Engine (KRE)](https://github.com/falcosecurity/kubernetes-response-engine). The KRE provides the ability to send Falco alerts to a messaging service such as NATS, AWS SNS, or Google Pub/Sub. This allows Falco alerts to be processed by subscribers of the respective messaging services. Refer to the `integrations.*` [configuration options](https://github.com/helm/charts/tree/master/stable/falco#configuration) of the Helm chart to enable this integration. 
+Using the Falco Helm chart is the easiest way to deploy the [Falco Kubernetes Response Engine (KRE)](https://github.com/falcosecurity/kubernetes-response-engine). The KRE provides the ability to send Falco alerts to a messaging service such as NATS, AWS SNS, or Google Pub/Sub. This allows Falco alerts to be processed by subscribers of the respective messaging services. Refer to the `integrations.*` [configuration options](https://github.com/helm/charts/tree/master/stable/falco#configuration) of the Helm chart to enable this integration.
 
 The KRE also allows you to deploy security playbooks (via serverless functions) that can take action when Falco rules are violated. Refer to the [Response Engine documentation](https://github.com/falcosecurity/kubernetes-response-engine/tree/master/playbooks) on how to deploy the included playbooks.
 
@@ -55,7 +55,7 @@ To run Falco as a Kubernetes [DaemonSet](https://kubernetes.io/docs/concepts/wor
 git clone https://github.com/falcosecurity/falco/
 cd falco/integrations/k8s-using-daemonset
 ```
-2. Create a service account and RBAC permissions which Falco will run as. This will allow Falco to connect to the Kubernetes API server to fetch resource metadata. 
+2. Create a service account and RBAC permissions which Falco will run as. This will allow Falco to connect to the Kubernetes API server to fetch resource metadata.
 ```shell
 kubectl apply -f k8s-with-rbac/falco-account.yaml
 ```
