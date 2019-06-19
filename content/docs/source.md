@@ -95,8 +95,6 @@ Furthermore Falco also depends on the following libraries coming from the Sysdig
 
 First, make sure you have a working copy of the Falco source code along with a working copy of Sysdig to compile `libscap` and `libsinsp`.
 
-You will need to have them in the same directory, this is a requirement to compile Falco.
-
 **Clone Falco**
 
 ```bash
@@ -135,7 +133,7 @@ is a parent of the current directory, you can also use the absolute path for the
 ```bash
 mkdir build
 cd build
-cmake ..
+cmake -DSYSDIG_DIR=/path/to/sysdig .. # make sure to change the path to the directory where you cloned sysdig
 make
 ```
 
