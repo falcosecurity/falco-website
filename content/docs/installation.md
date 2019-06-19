@@ -10,7 +10,7 @@ Falco can be installed via several methods based on your specific requirements. 
 - Install Falco directly on a Linux host. This can be done for a variety of reasons:
     - To monitor containers running inside of Kubernetes. Installing directly on the worker node OS provides an additional level of isolation from the applications running in Kubernetes and users of the Kubernetes API.
     - To monitor containers running directly on the Linux host or containers running under another platform such as Cloud Foundry, or Mesosphere DC/OS.
-    - To monitor an application running directly on the Linux host (ie non containerized workloads).
+    - To monitor an application running directly on the Linux host (ie., non containerized workloads).
 
 ## Kubernetes
 
@@ -22,7 +22,7 @@ For platforms such as Google's Container Optimized OS & GKE, where access to the
 
 The kernel module can be prebuilt and provided to the Falco pods via HTTPs. The easiest way to build the kernel module is to deploy Falco on a node with the required kernel headers, have Falco (via the `falco-probe-loader` script) build the kernel module, then copy the kernel module out of the pod or container. By default the kernel module is copied to `/root/.sysdig/`.
 
-`SYSDIG_PROBE_URL` - Set this environment variable for the Falco pod to override the default host for prebuilt kernel modules. This should be only the host portion of the URL without the trailing slash, ie `https://myhost.mydomain.com`. The kernel modules should be placed in directory `/stable/sysdig-probe-binaries/` and named as follows:
+`SYSDIG_PROBE_URL` - Set this environment variable for the Falco pod to override the default host for prebuilt kernel modules. This should be only the host portion of the URL without the trailing slash - ie., `https://myhost.mydomain.com`. The kernel modules should be placed in directory `/stable/sysdig-probe-binaries/` and named as follows:
 `falco-probe-${falco_version}-$(uname -i)-$(uname -r)-{md5sum of kernel config}.ko`
 
 The `falco-probe-loader` script will name the module in this format by default. 
@@ -43,7 +43,7 @@ helm delete falco
 
 #### Kubernetes Response Engine
 
-Using the Falco Helm chart is the easiest way to deploy the [Falco Kuberentes Response Engine (KRE)](https://github.com/falcosecurity/kubernetes-response-engine). The KRE provides the ability to send Falco alerts to a messaging service such as NATS, AWS SNS, or Google Pub/Sub. This allows Falco alerts to be processed by subcribers of the respective messaging services. Refer to the `integrations.*` [configuration options](https://github.com/helm/charts/tree/master/stable/falco#configuration) of the Helm chart to enable this integration. 
+Using the Falco Helm chart is the easiest way to deploy the [Falco Kubernetes Response Engine (KRE)](https://github.com/falcosecurity/kubernetes-response-engine). The KRE provides the ability to send Falco alerts to a messaging service such as NATS, AWS SNS, or Google Pub/Sub. This allows Falco alerts to be processed by subscribers of the respective messaging services. Refer to the `integrations.*` [configuration options](https://github.com/helm/charts/tree/master/stable/falco#configuration) of the Helm chart to enable this integration. 
 
 The KRE also allows you to deploy security playbooks (via serverless functions) that can take action when Falco rules are violated. Refer to the [Response Engine documentation](https://github.com/falcosecurity/kubernetes-response-engine/tree/master/playbooks) on how to deploy the included playbooks.
 
@@ -59,12 +59,12 @@ cd falco/integrations/k8s-using-daemonset
 ```shell
 kubectl apply -f k8s-with-rbac/falco-account.yaml
 ```
-3. Create a service for the Falco pods. This will allow Falco to recieve [Kubernetes Audit Log Events](event-sources/kubernetes-audit). If you're not planning on using this feature, you can skip this step.
+3. Create a service for the Falco pods. This will allow Falco to receive [Kubernetes Audit Log Events](event-sources/kubernetes-audit). If you're not planning on using this feature, you can skip this step.
 ```shell
 kubectl apply -f k8s-with-rbac/falco-service.yaml
 ```
 
-4. The Daemon Set also relies on a Kubernetes ConfigMap to store the Falco configuration and make the configuration available to the Falco Pods. This allows you to manage custom configuration without rebuilding and redeploying the underlying Pods. In order to create the ConfigMap you'll need to first need to copy the required configuration from their location in this GitHub repo to the `k8s-with-rbac/falco-config/` directory (please note that you will need to create the k8s-with-rbac/falco-config directory). Any modification of the configuration should be performed on these copies rather than the original files.
+4. The Daemon Set also relies on a Kubernetes ConfigMap to store the Falco configuration and make the configuration available to the Falco Pods. This allows you to manage custom configuration without rebuilding and redeploying the underlying Pods. In order to create the ConfigMap you'll need to first copy the required configuration from their location in this GitHub repo to the `k8s-with-rbac/falco-config/` directory (please note that you will need to create the k8s-with-rbac/falco-config directory). Any modification of the configuration should be performed on these copies rather than the original files.
 
 ```shell
 mkdir -p k8s-with-rbac/falco-config
@@ -102,11 +102,11 @@ Going forward, we'll continue to support the most recent 10 Minikube versions wi
 
 ### GKE
 
-Google Kubernetes Engine's (GKE) default operating system for worker node pools is Container-Optimized OS (COS), a security enhanced operating system that limits access to certain parts of the underlying OS. Because of these security enhancements, Falco cannot insert its kernel module inorder to process events for system calls. COS does provide the ability to leverage eBPF (extended Berkeley Packet Filter) to provide the stream of system calls to the Falco engine. eBPF is currently only supported on GKE and COS.
+Google Kubernetes Engine's (GKE) default operating system for worker node pools is Container-Optimized OS (COS), a security enhanced operating system that limits access to certain parts of the underlying OS. Because of these security enhancements, Falco cannot insert its kernel module in order to process events for system calls. COS does provide the ability to leverage eBPF (extended Berkeley Packet Filter) to provide the stream of system calls to the Falco engine. eBPF is currently only supported on GKE and COS.
 
 #### Enabling eBPF Support
 
-Falco can be configured to use eBPF by setting the environment variable `SYSDIG_BPF_PROBE` to an empty value (ie `SYSDIG_BPF_PROBE=""`). When this environment variable is set, the `falco-probe-loader` script will attempt to download the kernel headers for the appropriate version of COS, and then compile the appropriate eBPF probe. Alternatively, you can set `SYSDIG_BPF_PROBE` to the path of an existing eBPF probe.
+Falco can be configured to use eBPF by setting the environment variable `SYSDIG_BPF_PROBE` to an empty value (ie., `SYSDIG_BPF_PROBE=""`). When this environment variable is set, the `falco-probe-loader` script will attempt to download the kernel headers for the appropriate version of COS, and then compile the appropriate eBPF probe. Alternatively, you can set `SYSDIG_BPF_PROBE` to the path of an existing eBPF probe.
 
 If using Helm, you can enable eBPF by setting the `ebpf.enable` configuration option.
 ```shell
@@ -114,7 +114,8 @@ helm install --name falco stable/falco --set ebpf.enabled=true
 ```
 
 If using the provided daemonset manifests, you can uncomment the following lines in the daemonset file.
-```
+
+```yaml
           env:
           - name: SYSDIG_BPF_PROBE
             value: ""
