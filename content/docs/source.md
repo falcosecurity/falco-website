@@ -336,6 +336,31 @@ By default, falco logs events to standard error.
 
 ## Test directly on host
 
+To run regression tests, after building Falco, in the Falco root directory, you need to run the `test/run_regression_tests.sh` script.
+
+### Dependencies
+
+You will need the following dependencies for the regression testing framework to work.
+
+- [Avocado Framework](https://github.com/avocado-framework/avocado) 
+- [Avocado Yaml to Mux plugin](https://avocado-framework.readthedocs.io/en/66.0/optional_plugins/varianter_yaml_to_mux.html)
+- [JQ](https://github.com/stedolan/jq)
+- The unzip command
+- [Docker CE[https://docs.docker.com/install/]
+
+To install Avocado and its plugins, you can use pip:
+
+```
+pip install avocado-framework avocado-framework-plugin-varianter-yaml-to-mux
+```
+
+### Run the tests
+
+Change `$PWD/build` with the directory you built Falco in, if different.
+
+```bash
+./test/run_regression_tests.sh $PWD/build
+```
 
 ## Test using falco-tester container
 
