@@ -3,24 +3,12 @@ title: Build Falco from source
 weight: 6
 ---
 
-TODO(fntlnz, leodido): finish up this page.
-
-Content that will be here:
-- System requirements
-- Obtain the source code
-- Build options (USE_BUNDLED STUFF, linking) - Also build type, Debug or Release - The FALCO_VERSION environment variable
-- Build the falco binary
-- Build the kernel module
-- Build the bpf probe
-- Building packages
-- Debugging
-- Release a new version
-
-
+Welcome to the guide on how to build Falco yourself! You are very brave! Since you are already
+doing all this, chances that you are willing to contribute are high! Please read our [contributing guide](https://github.com/falcosecurity/falco/blob/dev/CONTRIBUTING.md).
 
 ## System requirements
 
-TODO(fntlnz, leodido): finish up this
+In order compile Falco, you will need the following tools and installed on your machine.
 
 - wget
 - pkg-config
@@ -28,10 +16,10 @@ TODO(fntlnz, leodido): finish up this
 - cmake
 - gcc
 - g++
-- glibc-static
 - kernel headers
 - libelf-dev
 
+Following, you can find how to meet the minimum requirements in the most common Linux distros.
 
 ### CentOS/RHEL
 
@@ -48,24 +36,24 @@ dnf install gcc gcc-c++ cmake make pkgconfig autoconf wget automake patch elfuti
 ### Ubuntu
 
 ```
-TODO
+apt install build-essential cmake autoconf wget automake patch elfutils libelf-dev libtool linux-headers-$(uname -r)
 ```
 
 ### Debian
 
 ```
-TODO
+apt install build-essential cmake autoconf wget automake patch elfutils libelf-dev libtool linux-headers-$(uname -r)
 ```
 
 ### Arch Linux
 
 ```
-TODO
+pacman -S gcc cmake make pkgconfig autoconf automake patch elfutils libelf libtool linux-headers
 ```
 
-## Dependencies
+## Runtime dependencies
 
-By default Falco build bundles its dependencies statically.
+By default Falco build bundles its runtime dependencies statically.
 
 You can notice this observing that the option [`USE_BUNDLED_DEPS`](https://github.com/falcosecurity/falco/blob/75b816d806d29bd47ace6b14a311c18dfc610d19/CMakeLists.txt#L86) is `ON` by default. Which in turn causes all of the dependencies options (eg., [`USE_BUNDLED_ZLIB`](https://github.com/falcosecurity/falco/blob/75b816d806d29bd47ace6b14a311c18dfc610d19/CMakeLists.txt#L91), [`USE_BUNDLED_JQ`](https://github.com/falcosecurity/falco/blob/75b816d806d29bd47ace6b14a311c18dfc610d19/CMakeLists.txt#L120), ...) to inherit this setting.
 
@@ -227,7 +215,7 @@ Here'are some examples, always assuming your `build` folder is inside the Falco 
 -DUSE_BUNDLED_JQ=False
 ```
 
-Read more about Falco dependencies [here](#dependencies).
+Read more about Falco dependencies [here](#runtime-dependencies).
 
 
 #### Treat warnings as errors
@@ -346,7 +334,7 @@ You will need the following dependencies for the regression testing framework to
 - [Avocado Yaml to Mux plugin](https://avocado-framework.readthedocs.io/en/66.0/optional_plugins/varianter_yaml_to_mux.html)
 - [JQ](https://github.com/stedolan/jq)
 - The unzip command
-- [Docker CE[https://docs.docker.com/install/]
+- [Docker CE](https://docs.docker.com/install/)
 
 To install Avocado and its plugins, you can use pip:
 
