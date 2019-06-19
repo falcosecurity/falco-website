@@ -36,13 +36,13 @@ dnf install gcc gcc-c++ cmake make pkgconfig autoconf wget automake patch elfuti
 ### Ubuntu
 
 ```
-apt install build-essential cmake autoconf wget automake patch elfutils libelf-dev libtool linux-headers-$(uname -r)
+apt install build-essential cmake autoconf wget automake patch elfutils libelf-dev pkg-config libtool linux-headers-$(uname -r)
 ```
 
 ### Debian
 
 ```
-apt install build-essential cmake autoconf wget automake patch elfutils libelf-dev libtool linux-headers-$(uname -r)
+apt install build-essential cmake autoconf wget automake patch elfutils libelf-dev pkg-config libtool linux-headers-$(uname -r)
 ```
 
 ### Arch Linux
