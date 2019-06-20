@@ -1,24 +1,24 @@
-{{- $inServerMode := .Site.IsServer }}
-{{- $sass         := "style.sass" }}
-{{- $cssTarget    := "css/style.css" }}
-{{- $includePaths := (slice "node_modules") }}
-{{- $cssDevOpts   := (dict "targetPath" $cssTarget "enableSourceMap" true "includePaths" $includePaths) }}
-{{- $cssProdOpts  := (dict "targetPath" $cssTarget "outputStyle" "compressed" "includePaths" $includePaths) }}
-{{- $cssOpts      := cond $inServerMode $cssDevOpts $cssProdOpts }}
-{{- $fontFace     := replace .Site.Params.primaryFont.name " " "+" }}
-{{- $fontSizes    := delimit .Site.Params.primaryFont.sizes "," }}
-{{- $fontUrl      := printf "https://fonts.googleapis.com/css?family=%s:%s" $fontFace $fontSizes }}
-{{- $secondaryFontFace     := replace .Site.Params.secondaryFont.name " " "+" }}
+{{ $inServerMode := .Site.IsServer }}
+{{ $sass         := "style.sass" }}
+{{ $cssTarget    := "css/style.css" }}
+{{ $includePaths := (slice "node_modules") }}
+{{ $cssDevOpts   := (dict "targetPath" $cssTarget "enableSourceMap" true "includePaths" $includePaths) }}
+{{ $cssProdOpts  := (dict "targetPath" $cssTarget "outputStyle" "compressed" "includePaths" $includePaths) }}
+{{ $cssOpts      := cond $inServerMode $cssDevOpts $cssProdOpts }}
+{{ $fontFace     := replace .Site.Params.primaryFont.name " " "+" }}
+{{ $fontSizes    := delimit .Site.Params.primaryFont.sizes "," }}
+{{ $fontUrl      := printf "https://fonts.googleapis.com/css?family=%s:%s" $fontFace $fontSizes }}
+{{ $secondaryFontFace := replace .Site.Params.secondaryFont.name " " "+" }}
+{{ $css               := resources.Get $sass | toCSS $cssOpts }}
 
 <link rel="icon" type="image/png" href="{{ "/images/favicon.png" | absURL }}" />
 <link href="{{ $fontUrl }}" rel="stylesheet">
 <link href="{{ printf "/css/%s.css" $secondaryFontFace | relURL}}" rel="stylesheet">
 {{- if $inServerMode }}
-{{- $css := resources.Get $sass | toCSS $cssOpts }}
 <link rel="stylesheet" type="text/css" href="{{ $css.RelPermalink }}">
 {{- else }}
-{{- $css := resources.Get $sass | toCSS $cssOpts | minify | fingerprint }}
-<link rel="stylesheet" type="text/css" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+{{- $prodCss := resources.Get $sass | toCSS $cssOpts | minify | fingerprint }}
+<link rel="stylesheet" type="text/css" href="{{ $prodCss.RelPermalink }}" integrity="{{ $prodCss.Data.Integrity }}">
 {{- end }}
 <link rel="stylesheet" type="text/css" href="{{ "/css/icons.css" | absURL }}">
 <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
