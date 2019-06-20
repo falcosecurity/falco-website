@@ -4,8 +4,7 @@ dependencies:
 serve: dependencies
 	hugo server \
 		--buildDrafts \
-		--buildFuture \
-		--disableFastRender
+		--buildFuture
 
 production-build: dependencies
 	hugo

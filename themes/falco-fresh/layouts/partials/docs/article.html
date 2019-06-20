@@ -1,17 +1,24 @@
-{{ $toc   := .TableOfContents }}
-{{ $notoc := .Params.notoc }}
+{{ $toc    := .TableOfContents }}
+{{ $noToc  := .Params.notoc }}
+{{ $hasToc := and (not $noToc) (gt (len $toc) 0) }}
 <article class="article">
   <div class="columns">
-    <div class="column{{ if not $notoc }} is-9{{ end }}">
+    <div class="column{{ if $hasToc }} is-9{{ end }}">
       <div class="content">
         {{ .Content }}
       </div>
     </div>
 
-    {{ if not $notoc }}
+    {{ if $hasToc }}
     <div class="column is-hidden-mobile">
-      <div class="toc">
-        {{ .TableOfContents }}
+      <div class="toc-container">
+        <p class="title is-size-5 has-text-weight-medium">
+          Table of contents
+        </p>
+
+        <div class="toc">  
+          {{ .TableOfContents }}
+        </div>
       </div>
     </div>
     {{ end }}
