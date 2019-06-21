@@ -21,13 +21,13 @@ To install Falco on Linux, you can download a shell script that takes care of th
 curl -o install-falco.sh -s https://s3.amazonaws.com/download.draios.com/stable/install-falco
 ```
 
-Then verify the [MD5](https://en.wikipedia.org/wiki/MD5) checksum of the script using the `md5sum` tool (or something analogous):
+Then verify the [SHA256](https://en.wikipedia.org/wiki/SHA-2) checksum of the script using the `sha256sum` tool (or something analogous):
 
 ```shell
-md5sum install-falco.sh
+sha256sum install-falco.sh
 ```
 
-It should be `{{< md5sum >}}`.
+It should be `{{< sha256sum >}}`.
 
 Then run the script either as root or with sudo:
 
