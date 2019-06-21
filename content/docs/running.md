@@ -3,25 +3,46 @@ title: Running Falco
 weight: 2
 ---
 
-# Running Falco
+Falco is meant to be run as a service. But for experimentation and designing/testing rulesets, you will likely want to run it manually from the command-line.
 
-Falco is intended to be run as a service. But for experimentation and designing/testing rulesets, you will likely want to run it manually from the command-line.
+## Running Falco as a service
 
-## Running falco as a service (after installing package)
+Once you've [installed](../installation) Falco as a package, you can start the service:
 
-`service falco start` will start the falco service. The default configuration logs events to syslog.
+```bash
+service falco start
+```
 
-## Reloading Configuration
+The default configuration logs events to syslog.
 
-As of Falco >= 0.13.0, on SIGHUP falco will entirely restart its main loop, closing the device for the kernel module and re-reading all config, etc. from scratch. This can be useful if you want to change the set of rules files, config, etc. on the fly without having to restart falco.
+## Reloading configuration
 
-## Running falco in a container
+As of Falco >= 0.13.0, on SIGHUP Falco will fully restart its main loop, closing the device for the kernel module and re-reading all config, etc. from scratch. This can be useful if you want to change the set of rules files, config, etc. on the fly without having to restart Falco.
 
-`docker run -i -t --name falco --privileged -v /var/run/docker.sock:/host/var/run/docker.sock -v /dev:/host/dev -v /proc:/host/proc:ro -v /boot:/host/boot:ro -v /lib/modules:/host/lib/modules:ro -v /usr:/host/usr:ro falcosecurity/falco`
+## Running Falco in a container
 
-By default, starting the container will attempt to load and/or build the falco kernel module. If you already know the kernel module is loaded and want to skip this step, you can set the environment variable SYSDIG_SKIP_LOAD to 1, for example:
+The current version of Falco is available as the `falcosecurity/falco:{{< latest >}}` container. Here's an example command to run the container locally on Linux:
 
-`docker run ... -e SYSDIG_SKIP_LOAD=1 ... falcosecurity/falco`
+```bash
+docker run \
+  --interactive \
+  --privileged \
+  --tty \
+  --name falco \
+  --volume /var/run/docker.sock:/host/var/run/docker.sock \
+  --volume /dev:/host/dev \
+  --volume /proc:/host/proc:ro \
+  --volume /boot:/host/boot:ro \
+  --volume /lib/modules:/host/lib/modules:ro \
+  --volume /usr:/host/usr:ro \
+  falcosecurity/falco:{{< latest >}}
+```
+
+By default, starting the container will attempt to load and/or build the Falco kernel module. If you already know that the kernel module is loaded and want to skip this step, you can set the environment variable `SYSDIG_SKIP_LOAD` to `1`:
+
+```bash
+docker run ... -e SYSDIG_SKIP_LOAD=1 ... falcosecurity/falco:{{< latest >}}
+```
 
 ## Running falco manually
 
