@@ -6,7 +6,7 @@ weight: 1
 
 ## About Falco
 
-Falco is a behavioral activity monitor designed to detect anomalous activity in your applications. Powered by [Sysdig](https://sysdig.com/)'s [system call capture](https://sysdig.com/blog/fascinating-world-linux-system-calls/) infrastructure, Falco lets you continuously monitor and detect container, application, host, and network activity, all in one place, from one source of data, with one set of [rules](rules).
+Falco is a behavioral activity monitor designed to detect anomalous activity in your applications. Powered by [Sysdig](https://github.com/draios/sysdig)'s [system call capture](https://sysdig.com/blog/fascinating-world-linux-system-calls/) infrastructure, Falco lets you continuously monitor and detect container, application, host, and network activity, all in one place, from one source of data, with one set of [rules](rules).
 
 ### What kind of behaviors can Falco detect?
 
@@ -20,11 +20,11 @@ Falco can detect and alert on any behavior that involves making [Linux system ca
 
 ## How Falco compares to other tools
 
-People often ask how Falco differs from [SELinux](https://en.wikipedia.org/wiki/Security-Enhanced_Linux), [AppArmor](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=6&ved=2ahUKEwju4J3G1fjiAhVEwZ8KHZnuDhUQFjAFegQIARAB&url=https%3A%2F%2Fwiki.ubuntu.com%2FAppArmor&usg=AOvVaw1WzylrmSdwSADN7420atY5), [Auditd](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=2ahUKEwj4n8fO1fjiAhUQBnwKHdjUBv0QFjAAegQIABAB&url=https%3A%2F%2Flinux.die.net%2Fman%2F8%2Fauditd&usg=AOvVaw3kdma9trI4_K20-nq3KBeS), and other tools related to Linux security policy. We wrote a [blog post](https://sysdig.com/blog/selinux-seccomp-falco-technical-discussion/) on the [Sysdig blog](https://sysdig.com/blog) comparing Falco to other tools.
+People often ask how Falco differs from [SELinux](https://en.wikipedia.org/wiki/Security-Enhanced_Linux), [AppArmor](https://wiki.ubuntu.com/AppArmor), [Auditd](https://linux.die.net/man/8/auditd), and other tools related to Linux security policy. We wrote a [blog post](https://sysdig.com/blog/selinux-seccomp-falco-technical-discussion/) on the [Sysdig blog](https://sysdig.com/blog) comparing Falco to other tools.
 
 ## How to use Falco
 
-Falco is deployed as a long-running daemon. You can install it as a [Debian](installation#debian)/[rpm](installation#rhel) package on a regular host or container host, or you can deploy it as a [container](installation#docker).
+Falco is deployed as a long-running daemon. You can install it as a [Debian](installation#debian)/[rpm](installation#rhel) package on a regular host or container host, you can deploy it as a [container](installation#docker), or you can build it [from source](source).
 
 Falco is configured via (1) a [rules file](rules) that defines which behaviors and events to watch for and (2) a [general configuration file](config). Rules are expressed in a high-level, human-readable language. We've provided a sample rules file [`./rules/falco_rules.yaml`](https://github.com/falcosecurity/falco/blob/dev/rules/falco_rules.yaml) as a starting point—you can (and will likely want!) to adapt it to your environment.
 
