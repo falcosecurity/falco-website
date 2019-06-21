@@ -281,7 +281,7 @@ FALCO_VERSION=0.1.2-test docker run --user $(id -u):$(id -g) -v /etc/passwd:/etc
 The default value for `FALCO_VERSION` is `0.1.1dev`, so you can skip specifying `FALCO_VERSION` if you want.
 
 
-## Load latest falco-probe kernel module
+# Load latest falco-probe kernel module
 
 If you have a binary version of falco installed, an older falco kernel module may already be loaded. To ensure you are using the latest version, you should unload any existing falco kernel module and load the locally built version.
 
