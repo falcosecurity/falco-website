@@ -98,7 +98,7 @@ kubectl apply -f k8s-with-rbac/falco-daemonset-configmap.yaml
 kubectl logs -l app=falco
 ```
 
-### Minkube
+### Minikube
 
 The easiest way to use Falco on Kubernetes in a local environment is on [Minikube](https://kubernetes.io/docs/tutorials/hello-minikube/). Both the Kubernetes YAML manifests and the Helm chart are regularly tested with Minikube.
 
