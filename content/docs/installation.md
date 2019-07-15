@@ -16,7 +16,7 @@ Install Falco by using one of the following methods. Your specific infrastructur
 
 The default method to run Falco on Kubernetes is to use a DaemonSet. Falco supports a variety of installation methods depending on your deployment methods of choice and underlying Kubernetes version. The default installation includes support for system call events via a kernel module and is thus dependent on the underlying operating system for the worker nodes. Installing the appropriate kernel headers on the worker nodes will allow Falco to dynamically build (and `insmod`) the kernel module on pod start. Falco also provides a number of pre-built modules for common distributions and kernels. Falco will automatically attempt to download a prebuilt module if the module compilation fails.
 
-For platforms such as Google's Container Optimized OS & GKE, where access to the underlying kernel is limited, see the [GKE section](#GKE) below.
+For platforms such as Google's Container Optimized OS & GKE, where access to the underlying kernel is limited, see the [GKE section](#gke) below.
 
 ### Downloading the Kernel Module via HTTPs
 
