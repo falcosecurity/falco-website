@@ -1,0 +1,27 @@
+.cheatsheet
+  display: flex
+
+  +desktop
+    flex-flow: row nowrap
+  +mobile
+    flex-flow: column nowrap
+
+  flex-flow: row nowrap
+  justify-content: space-between
+
+  .cheat
+    padding: 1rem
+    background-color: $light
+
+    +desktop
+      width: calc(50% - .25rem)
+    +mobile
+      width: 100%
+
+      & + .cheat
+        margin-top: 1rem
+
+    &-title
+      font-size: 1.25rem
+      font-weight: 700
+

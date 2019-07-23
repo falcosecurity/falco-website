@@ -1,0 +1,8 @@
+{{ $key   := .Get 0 }}
+{{ $cheat := index site.Data.cheatsheet $key }}
+{{ $title := $cheat.title }}
+{{ $file  := printf "cheatsheet/%s.yaml" $key }}
+{{ $yaml  := readFile $file }}
+<h2>{{ $title }}</h2>
+
+{{ highlight $yaml "yaml" "" }}

@@ -1,0 +1,3 @@
+- rule: forbid_something
+  desc: This thing shouldn't happen
+  condition: not thing in (allowed_thing, other_allowed_thing)

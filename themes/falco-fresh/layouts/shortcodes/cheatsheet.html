@@ -1,0 +1,14 @@
+{{ $cheats := site.Data.cheatsheet }}
+<div class="cheatsheet">
+  {{ range $k, $v := $cheats }}
+  {{ $yaml  := readFile (printf "cheatsheet/%s.yaml" $k) }}
+  {{ $title := $v.title | markdownify }}
+  <div class="cheat">
+    <p class="cheat-title">
+      {{ $title }}
+    </p>
+
+    {{ highlight $yaml "yaml" "" }}
+  </div>
+  {{ end }}
+</div>
