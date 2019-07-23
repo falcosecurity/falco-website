@@ -1,5 +1,5 @@
 {{- $navbar := .Site.Params.navbar }}
-{{- $menu   := index $navbar "menu"}}
+{{- $menu   := .Site.Menus.navbar }}
 {{- $cncf   := index $navbar "cncf" }}
 {{- $isHome := .IsHome }}
 {{- $isDocs := eq .Section "docs" }}
@@ -20,8 +20,8 @@
     <div id="navbar-menu" class="navbar-menu is-static">
       <div class="navbar-end">
         {{ range $menu }}
-        <a class="navbar-item has-text-grey is-size-5" href="{{ .url }}">
-          {{ .title }}
+        <a class="navbar-item has-text-grey is-size-5" href="{{ .URL }}">
+          {{ .Name }}
         </a>
         {{ end }}
 

@@ -1,9 +1,10 @@
 {{- $hero       := .Site.Params.hero }}
-{{- $title      := index $hero "title" }}
-{{- $subtitle   := index $hero "subtitle" }}
-{{- $buttonText := index $hero "buttontext" }}
-{{- $buttonLink := index $hero "buttonlink" }}
-{{- $image      := index $hero "image" }}
+{{- $heroText   := .Site.Params.heroText }}
+{{- $title      := $heroText.title }}
+{{- $subtitle   := $heroText.subtitle }}
+{{- $buttonText := $heroText.buttontext }}
+{{- $buttonLink := $hero.buttonlink }}
+{{- $image      := $hero.image }}
 <div class="hero-body">
   <div class="container">
     <div class="columns u-logo-offset">
