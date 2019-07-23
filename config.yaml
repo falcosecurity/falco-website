@@ -5,6 +5,7 @@ disableKinds: ["taxonomy", "taxonomyTerm"]
 pygmentsCodefences: true
 pygmentsStyle: monokai
 defaultContentLanguage: en
+disableLanguages: [zh]
 
 languages:
   en:
@@ -88,7 +89,7 @@ languages:
         # Button text
         buttontext: Get started
       sectionAbout:
-        title: About Falco.
+        title: About Falco. (in chinese!)
         summary: With more responsibility shifting left to developers and the opaque nature of containers, organizations require deeper insight into container activities. The Falco project was hatched to understand container behavior and protect your platform from possible malicious activity. Leveraging Sysdig’s open source Linux kernel instrumentation, Falco gains deep insight into system behavior. The rules engine can then detect abnormal activity in applications, containers, the underlying host, and the container platform. 
       section1:
         title: Key Features.
