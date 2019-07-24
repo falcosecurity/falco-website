@@ -1,27 +1,32 @@
 .cheatsheet
-  display: flex
+  &-group
+    &-title
+      font-size: 1.75rem
 
-  +desktop
-    flex-flow: row nowrap
-  +mobile
-    flex-flow: column nowrap
+    & + &
+      margin-top: 2rem
 
-  flex-flow: row nowrap
-  justify-content: space-between
+  &-cheats
+    display: flex
+    justify-content: space-between
 
-  .cheat
-    padding: 1rem
-    background-color: $light
+    .cheat
+      padding: 1rem
+      background-color: $light
+
+      &-title
+        font-weight: 700
+        font-size: 1.25rem
 
     +desktop
-      width: calc(50% - .25rem)
+      flex-flow: row wrap
+
+      .cheat
+        margin-bottom: 1rem
+        width: calc(50% - .25rem)
+
     +mobile
-      width: 100%
+      flex-flow: column nowrap
 
-      & + .cheat
+      .cheat + .cheat
         margin-top: 1rem
-
-    &-title
-      font-size: 1.25rem
-      font-weight: 700
-

@@ -1,4 +1,13 @@
-forbidden-thing:
-  title: Do a thing
-other-thing:
-  title: Some other thing
+groups:
+- name: Group 1
+  cheats:
+  - filename: forbidden-thing
+    title: Do a thing
+  - filename: other-thing
+    title: A different thing
+  - filename: other-thing
+    title: A different thing
+- name: Group 2
+  cheats:
+  - filename: other-thing
+    title: Some other thing

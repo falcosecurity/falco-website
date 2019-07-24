@@ -1,14 +1,24 @@
-{{ $cheats := site.Data.cheatsheet }}
+{{ $groups := site.Data.cheatsheet.groups }}
 <div class="cheatsheet">
-  {{ range $k, $v := $cheats }}
-  {{ $yaml  := readFile (printf "cheatsheet/%s.yaml" $k) }}
-  {{ $title := $v.title | markdownify }}
-  <div class="cheat">
-    <p class="cheat-title">
-      {{ $title }}
+  {{ range $groups }}
+  <div class="cheatsheet-group">
+    <p class="cheatsheet-group-title">
+      {{ .name }}
     </p>
 
-    {{ highlight $yaml "yaml" "" }}
+    <div class="cheatsheet-cheats">
+      {{ range .cheats }}
+      {{ $yaml  := readFile (printf "cheatsheet/%s.yaml" .filename) }}
+      {{ $title := .title | markdownify }}
+      <div class="cheat">
+        <p class="cheat-title">
+          {{ $title }}
+        </p>
+
+        {{ highlight $yaml "yaml" "" }}
+      </div>
+      {{ end }}
+    </div>
   </div>
   {{ end }}
 </div>
