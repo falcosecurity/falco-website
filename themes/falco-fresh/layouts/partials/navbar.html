@@ -1,12 +1,13 @@
-{{- $navbar := .Site.Params.navbar }}
-{{- $menu   := index $navbar "menu"}}
-{{- $cncf   := index $navbar "cncf" }}
-{{- $isHome := .IsHome }}
-{{- $isDocs := eq .Section "docs" }}
+{{- $navbar  := .Site.Params.navbar }}
+{{- $menu    := .Site.Menus.navbar }}
+{{- $cncf    := index $navbar "cncf" }}
+{{- $isHome  := .IsHome }}
+{{- $isDocs  := eq .Section "docs" }}
+{{- $baseUrl := printf "/%s" .Language }}
 <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
   {{ if $isHome }}<div class="container">{{ end }}
     <div class="navbar-brand">
-      <a class="navbar-item{{ if $isDocs }} is-hidden-tablet{{ end }}" href="{{ "/" | absURL }}">
+      <a class="navbar-item{{ if $isDocs }} is-hidden-tablet{{ end }}" href="{{ $baseUrl }}">
         <img class="navbar-brand__logo" src="{{ "/images/logos/falco-logo.png" | absURL }}" alt="">
       </a>
 
@@ -20,8 +21,8 @@
     <div id="navbar-menu" class="navbar-menu is-static">
       <div class="navbar-end">
         {{ range $menu }}
-        <a class="navbar-item has-text-grey is-size-5" href="{{ .url }}">
-          {{ .title }}
+        <a class="navbar-item has-text-grey is-size-5" href="{{ .URL }}">
+          {{ .Name }}
         </a>
         {{ end }}
 

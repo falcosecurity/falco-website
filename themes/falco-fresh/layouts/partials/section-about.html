@@ -1,6 +1,6 @@
 {{- $sectionAbout := .Site.Params.sectionAbout }}
-{{- $title    := index $sectionAbout "title" }}
-{{- $summary     := index $sectionAbout "summary" }}
+{{- $title        := $sectionAbout.title }}
+{{- $summary      := $sectionAbout.summary }}
 <a id="about"></a>
 <section class="section section-feature-grey">
   <div class="container">
