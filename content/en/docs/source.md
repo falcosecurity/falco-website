@@ -225,20 +225,30 @@ Read more about Falco dependencies [here](#runtime-dependencies).
 #### Specify the build type
 
 Debug build type
+
 ```
 -DCMAKE_BUILD_TYPE=Debug
 ```
 
 Release build type
+
 ```
 -DCMAKE_BUILD_TYPE=Release
 ```
 
+Notice this variable is case-insensitive and it defaults to release.
+
 #### Specify the Falco version
+
+Optionally the user can specify the version he wants Falco to have. Eg.,
 
 ```
  -DFALCO_VERSION=0.15.0-dirty
 ```
+
+When not explicitly specifying it the build system will compute the `FALCO_VERSION` value from the git history.
+
+In case the current git revision has a git tag, the Falco version will be equal to it (without the leading "v" character). Otherwise the Falco version will be in the form `0.<commit hash>[.dirty]`.
 
 #### Enable BPF support
 
@@ -259,8 +269,7 @@ It contains the reference toolchain that can be used to build packages and all t
 
 The image depends on the following parameters:
 
-* `FALCO_VERSION`: the version to give any built packages
-* `BUILD_TYPE`: Debug or Release
+* `BUILD_TYPE`: debug or release (case-insensitive, defaults to release)
 * `BUILD_DRIVER`: whether or not to build the kernel module when
 building. This should usually be OFF, as the kernel module would be
 built for the files in the centos image, not the host.
@@ -274,11 +283,13 @@ want to use a build directory of /home/user/build/falco, you would run
 the following:
 
 ```bash
-FALCO_VERSION=0.1.2-test docker run --user $(id -u):$(id -g) -v /etc/passwd:/etc/passwd:ro -e MAKE_JOBS=4 -e FALCO_VERSION=${FALCO_VERSION} -it -v /home/user/src:/source -v /home/user/build/falco:/build falcosecurity/falco-builder cmake
-FALCO_VERSION=0.1.2-test docker run --user $(id -u):$(id -g) -v /etc/passwd:/etc/passwd:ro -e MAKE_JOBS=4 -e FALCO_VERSION=${FALCO_VERSION} -it -v /home/user/src:/source -v /home/user/build/falco:/build falcosecurity/falco-builder package
+docker run --user $(id -u):$(id -g) -v /etc/passwd:/etc/passwd:ro -it -v /home/user/src:/source -v /home/user/build/falco:/build falcosecurity/falco-builder cmake
+docker run --user $(id -u):$(id -g) -v /etc/passwd:/etc/passwd:ro -it -v /home/user/src:/source -v /home/user/build/falco:/build falcosecurity/falco-builder package
 ```
 
-The default value for `FALCO_VERSION` is `0.1.1dev`, so you can skip specifying `FALCO_VERSION` if you want.
+It's also possible to explicitly provide the `FALCO_VERSION` environment variable to use it as the version for any built package.
+
+Otherwise the docker image will use the default `FALCO_VERSION`.
 
 
 # Load latest falco-probe kernel module
@@ -328,10 +339,10 @@ To run regression tests, after building Falco, in the Falco root directory, you 
 
 You will need the following dependencies for the regression testing framework to work.
 
-- [Avocado Framework](https://github.com/avocado-framework/avocado) 
-- [Avocado Yaml to Mux plugin](https://avocado-framework.readthedocs.io/en/66.0/optional_plugins/varianter_yaml_to_mux.html)
+- [Avocado Framework](https://github.com/avocado-framework/avocado), version 69
+- [Avocado Yaml to Mux plugin](https://avocado-framework.readthedocs.io/en/69.0/optional_plugins/varianter_yaml_to_mux.html)
 - [JQ](https://github.com/stedolan/jq)
-- The unzip command
+- The `unzip` and `xargs` commands
 - [Docker CE](https://docs.docker.com/install/)
 
 To install Avocado and its plugins, you can use pip:
@@ -356,17 +367,15 @@ It does build a new container image `falcosecurity/falco:test` to test the proce
 
 The image depends on the following parameters:
 
-* `FALCO_VERSION`: The version of the falco package to include in the test container image.
+* `FALCO_VERSION`: The version of the falco package to include in the test container image. It must match the version of the built packages.
 
 A typical way to run this builder is the following. Assuming you have
-checked out falco and sysdig to directories below /home/user/src, and
-want to use a build directory of /home/user/build/falco, you would run
+checked out falco and sysdig to directories below `/home/user/src`, and
+want to use a build directory of `/home/user/build/falco`, you would run
 the following:
 
 ```bash
 docker run --user $(id -u):$(id -g) -v $HOME:$HOME:ro -v /boot:/boot:ro -v /var/run/docker.sock:/var/run/docker.sock -v /etc/passwd:/etc/passwd:ro -e FALCO_VERSION=${FALCO_VERSION} -v /home/user/src:/source -v /home/user/build/falco:/build falcosecurity/falco-tester
 ```
 
-Mounting $HOME allows the test execution framework to run. You may need to replace `$(id -g)` with the right gid of the group that is allowed to access the docker socket (often the `docker` group).
-
-The default value for FALCO_VERSION is `0.1.1dev`, so you can skip specifying `FALCO_VERSION` if you want.
+Mounting `$HOME` allows the test execution framework to run. You may need to replace `$(id -g)` with the right gid of the group that is allowed to access the docker socket (often the `docker` group).
