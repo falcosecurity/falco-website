@@ -3,7 +3,7 @@
 {{- $cncf    := index $navbar "cncf" }}
 {{- $isHome  := .IsHome }}
 {{- $isDocs  := eq .Section "docs" }}
-{{- $baseUrl := printf "/%s" .Language }}
+{{- $baseUrl := site.BaseURL }}
 <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
   {{ if $isHome }}<div class="container">{{ end }}
     <div class="navbar-brand">
