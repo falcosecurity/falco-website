@@ -3,57 +3,57 @@ title: Rules
 weight: 2
 ---
 
-_Call for contributions: If you come up with additional rules which you'd like to see in the core repository - PR welcome!_
+A Falco *rules file* is a [YAML](http://www.yaml.org/start.html) file containing three types of elements:
 
-A falco rules file is a [YAML](http://www.yaml.org/start.html) file containing three kinds of elements: *rules*, *macros*, and *lists*. 
-
-Rules consist of a *condition* under which an alert should be generated and a *output string* to send with the alert.
-
-Macros are simply rule condition snippets that can be re-used inside rules and other macros, providing a way to factor out and name common patterns.
-
-Lists are (surprise!) lists of items that can be included in rules, macros, or other lists. Unlike rules/macros, they can not be parsed as sysdig filtering expressions.
+Element | Description
+:-------|:-----------
+[Rules](#rules) | *Conditions* under which an alert should be generated. A rule is accompanied by a descriptive *output string* that is sent with the alert.
+[Macros](#macros) | Rule condition snippets that can be re-used inside rules and even other macros. Macros provide a way to name common patterns and factor out redundancies in rules.
+[Lists](#lists) | Collections of items that can be included in rules, macros, or other lists. Unlike rules and macros, lists cannot be parsed as filtering expressions.
 
 ## Versioning
 
-From time to time, we make changes to the rules file format that are not backwards-compatible with older versions of falco. Similarly, the sysdig libraries incorporated into falco may define new filtercheck fields, operators, etc. We want to denote that a given set of rules depends on the fields/operators from those sysdig libraries.
+From time to time, we make changes to the rules file format that are not backwards-compatible with older versions of Falco. Similarly, the Sysdig libraries incorporated into Falco may define new filtercheck fields, operators, etc. We want to denote that a given set of rules depends on the fields/operators from those Sysdig libraries.
 
-To address this, as of falco 0.14.0 we're introducing explicit versioning of both the falco engine and the falco rules file.
+> As of Falco version **0.14.0**, the Falco rules support explicit versioning of both the Falco engine and the Falco rules file.
 
 ### Falco Engine Versioning
 
-The falco executable and the falco_engine c++ object now support returning a version number. The initial version will be 2 (implying prior versions were 1). Any time we make an incompatible change to the rules file format or add new filtercheck fields/operators to falco, we will increment this version.
+The `falco` executable and the `falco_engine` C++ object now support returning a version number. The initial version will be 2 (implying that prior versions were 1). Any time we make an incompatible change to the rules file format or add new filtercheck fields/operators to Falco, we will increment this version.
 
 ### Falco Rules File Versioning
 
-The falco rules files included with falco will include a new top-level object `required_engine_version: N` that mandates the minimum engine version required to read this rules file. If not included, no version check is performed when reading the rules file.
+The Falco rules files included with Falco include a new top-level object, `required_engine_version: N`, that specifies the minimum engine version required to read this rules file. If not included, no version check is performed when reading the rules file.
 
-If a rules file has a engine_version greater than the falco engine version, the rules file will not be loaded and an error will be returned.
+If a rules file has an `engine_version` greater than the Falco engine version, the rules file is be loaded and an error is returned.
 
 ## Rules
 
-A Rule is a node containing the following keys:
+A Falco *rule* is a node containing the following keys:
 
-* _rule_: a short unique name for the rule
-* _condition_: a filtering expression that is applied against events to see if they match the rule.
-* _desc_: a longer description of what the rule detects
-* _output_ and _priority_: The output format specifies the message that should be output if a matching event occurs, and follows the Sysdig [output format syntax](http://www.sysdig.org/wiki/sysdig-user-guide/#output-formatting). The priority is a case-insensitive representation of severity and should be one of "emergency", "alert", "critical", "error", "warning", "notice", "informational", or "debug".
-* (optional) _enabled_: can be either `true` or `false`. If `enabled=false`, a rule will not be loaded nor will it be matched against any events. The default for `enabled` is `true`.
-* (optional) _tags_: a list of tags applied to the rule. More on this below.
-* (optional) _warn_evttypes_:  can be either `true` or `false`. If `warn_evttypes=false`, falco will suppress warnings related to a rule not having an event type (See [here](#rule-condition-best-practices)). The default for `warn_evttypes` is `true`.
-* (optional) _skip-if-unknown-filter_: Can be either `true` or `false`. If `skip-if-unknown-filter=true`, if a rule's condition contains a filtercheck (e.g. `fd.some_new_field`) that is not known to this version of falco, falco will silently accept the rule but not execute it. With the default `false`, upon finding an unknown filtercheck Falco will report an error and exit.
+Key | Required | Description | Default
+:---|:---------|:------------|:-------
+`rule` | yes | A short, unique name for the rule. |
+`condition` | yes | A filtering expression that is applied against events to check whether they match the rule. |
+`desc` | yes | A longer description of what the rule detects. |
+`output` | yes | Specifies the message that should be output if a matching event occurs, following the Sysdig [output format syntax](http://www.sysdig.org/wiki/sysdig-user-guide/#output-formatting). |
+`priority` | yes | A case-insensitive representation of the severity of the event. Should be one of the following: `emergency`, `alert`, `critical`, `error`, `warning`, `notice`, `informational`, `debug`. |
+`enabled` | no | If set to `false`, a rule is neither loaded nor matched against any events. | `true`
+`tags` | no | A list of tags applied to the rule (more on this [below](#tags)). |
+`warn_evttypes` | no | If set to `false`, Falco suppresses warnings related to a rule not having an event type (more on this [below](#rule-condition-best-practices)). | `true`
+`skip-if-unknown-filter` | no | If set to `true`, if a rule conditions contains a filtercheck, e.g. `fd.some_new_field`, that is not known to this version of Falco, Falco silently accepts the rule but does not execute it; if set to `false`, Falco repots an error and exists when finding an unknown filtercheck. | `false`
 
 ## Conditions
 
-The key part of a rule is the _condition_ field. A condition is simply a boolean predicate on sysdig events.
-Conditions are expressed using the Sysdig [filter syntax](http://www.sysdig.org/wiki/sysdig-user-guide/#filtering). Any Sysdig filter is a valid falco condition (with the caveat of certain excluded system calls, discussed below). In addition, falco conditions can contain macro terms--this capability is not present in Sysdig syntax.
+The key part of a rule is the _condition_ field. A condition is simply a Boolean predicate on Sysdig events expressed using the Sysdig [filter syntax](http://www.sysdig.org/wiki/sysdig-user-guide/#filtering). Any Sysdig filter is a valid Falco condition (with the exception of certain excluded system calls, discussed below). In addition, Falco conditions can contain macro terms (this capability is not present in Sysdig syntax).
 
 Here's an example of a condition that alerts whenever a bash shell is run inside a container:
 
 `container.id != host and proc.name = bash`
 
-The first clause checks that the event happened in a container (sysdig events have a `container` field that is equal to "host" if the event happened on a regular host). The second clause checks that the process name is `bash`. Note that this condition does not even include a clause with system call! It only uses event metadata. As such, if a bash shell does start up in a container, falco will output events for every syscall that is done by that shell.
+The first clause checks that the event happened in a container (Sysdig events have a `container` field that is equal to `"host"` if the event happened on a regular host). The second clause checks that the process name is `bash`. Note that this condition does not even include a clause with a system call! It only checks event metadata. Because of that, if a bash shell does start up in a container, Falco outputs events for every syscall that is performed by that shell.
 
-_Tip: If you're new to sysdig and unsure what fields are available, run `sysdig -l` to see the list of supported fields._
+> **Tip**: If you're new to Sysdig and unsure which fields are available, run `sysdig -l` to see the list of supported fields.
 
 A complete rule using the above condition might be:
 
@@ -67,7 +67,7 @@ A complete rule using the above condition might be:
 
 ## Macros
 
-As noted above, macros provide a way to define common sub-portions of rules in a reusable way. As a very simple example, if we had many rules for events happening in containers, we might to define a `in_container` macro:
+As noted above, macros provide a way to define common sub-portions of rules in a reusable way. As a very simple example, if we had many rules for events happening in containers, we might to define an `in_container` macro:
 
 ```yaml
 - macro: in_container
@@ -76,16 +76,19 @@ As noted above, macros provide a way to define common sub-portions of rules in a
 
 With this macro defined, we can then rewrite the above rule's condition as `in_container and proc.name = bash`.
 
-For many more examples of rules and macros, please take a look the documentation on [default macros](./default-macros) or the `rules/falco_rules.yaml` file.
+For many more examples of rules and macros, take a look the documentation on [default macros](./default-macros) or the `rules/falco_rules.yaml` file.
 
 ## Lists
 
-The third type of item in a rules file is lists. A list is a node with the following keys:
+*Lists* are named collections of items that you can include in rules, macros, or even other lists. Please note that lists *cannot* be parsed as filtering expressions. Each list node has the following keys:
 
-* _list_: a name for the list
-* _items_: a list of values
+Key | Description
+:---|:-----------
+`list` | The unique name for the list (as a slug)
+`items` | The list of values
 
-Here's an example:
+
+Here are some example lists as well as a macro that uses them:
 
 ```yaml
 - list: shell_binaries
@@ -101,15 +104,17 @@ Here's an example:
   condition: proc.name in (known_binaries)
 ```
 
-Referring to a list inserts the list items in the macro, rule, or list. Note that lists can contain other lists.
+Referring to a list inserts the list items in the macro, rule, or list.
+
+> **Note**: Lists *can* contain other lists.
 
 ## Appending to Lists, Rules, and Macros
 
-If you use multiple falco rules files, you might want to append new items to an existing list, rule, or macro. To do that, define a item with the same name as an existing item and add an `append: true` attribute to the list. When appending lists, items are added to the end of the list. When appending rules/macros, the additional text is appended to the condition: field of the rule/macro.
+If you use multiple Falco rules files, you might want to append new items to an existing list, rule, or macro. To do that, define an item with the same name as an existing item and add an `append: true` attribute to the list. When appending lists, items are added to the **end** of the list. When appending rules/macros, the additional text is appended to the condition: field of the rule/macro.
 
 ### Examples
 
-In all of the examples below, it's assumed one is running falco via `falco -r /etc/falco/falco_rules.yaml -r /etc/falco/falco_rules.local.yaml`, or has the default entries for `rules_file` in falco.yaml, which has `/etc/falco/falco.yaml` first and `/etc/falco/falco_rules.local.yaml` second.
+In all of the examples below, it's assumed one is running Falco via `falco -r /etc/falco/falco_rules.yaml -r /etc/falco/falco_rules.local.yaml`, or has the default entries for `rules_file` in falco.yaml, which has `/etc/falco/falco.yaml` first and `/etc/falco/falco_rules.local.yaml` second.
 
 #### Appending to lists
 Here's an example of appending to lists:
@@ -172,6 +177,7 @@ Here's an example of appending to rules:
 ```
 
 **/etc/falco/falco_rules.local.yaml**
+
 ```yaml
 - rule: program_accesses_file
   append: true
@@ -202,14 +208,14 @@ In cases like this, be sure to scope the logical operators of the original condi
 
 Every falco rule has a priority which indicates how serious a violation of the rule is. The priority will be included in the message/json output/etc. The possible set of priorities are:
 
-* EMERGENCY
-* ALERT
-* CRITICAL
-* ERROR
-* WARNING
-* NOTICE
-* INFORMATIONAL
-* DEBUG
+* `EMERGENCY`
+* `ALERT`
+* `CRITICAL`
+* `ERROR`
+* `WARNING`
+* `NOTICE`
+* `INFORMATIONAL`
+* `DEBUG`
 
 The general guidelines used to assign priorities to rules are the following:
 
@@ -220,7 +226,7 @@ The general guidelines used to assign priorities to rules are the following:
 
 One exception is that the rule "Run shell untrusted", which is fairly FP-prone, has a priority of DEBUG.
 
-## Rule Tags
+## Rule Tags {#tags}
 
 As of 0.6.0, rules have an optional set of _tags_ that are used to categorize the ruleset into groups of related rules. Here's an example:
 
