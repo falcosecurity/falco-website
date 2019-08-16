@@ -1,0 +1,14 @@
+<div class="notification is-{{ .type }}">
+  <article class="media">
+    <div class="media-left">
+      <span class="icon">
+        <i class="fas fa-lg fa-{{ .icon }}"></i>
+      </span>
+    </div>
+    <div class="media-content">
+      <div class="content is-medium has-text-white">
+        {{ .content | markdownify }}
+      </div>
+    </div>
+  </article>
+</div>

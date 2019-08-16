@@ -15,11 +15,13 @@ Element | Description
 
 From time to time, we make changes to the rules file format that are not backwards-compatible with older versions of Falco. Similarly, the Sysdig libraries incorporated into Falco may define new filtercheck fields, operators, etc. We want to denote that a given set of rules depends on the fields/operators from those Sysdig libraries.
 
-> As of Falco version **0.14.0**, the Falco rules support explicit versioning of both the Falco engine and the Falco rules file.
+{{< info >}}
+As of Falco version **0.14.0**, the Falco rules support explicit versioning of both the Falco engine and the Falco rules file.
+{{< /info >}}
 
 ### Falco Engine Versioning
 
-The `falco` executable and the `falco_engine` C++ object now support returning a version number. The initial version will be 2 (implying that prior versions were 1). Any time we make an incompatible change to the rules file format or add new filtercheck fields/operators to Falco, we will increment this version.
+The `falco` executable and the `falco_engine` C++ object now support returning a version number. The initial version is 2 (implying that prior versions were 1). We will increment this version any time we make an incompatible change to the rules file format or add new filtercheck fields/operators to Falco.
 
 ### Falco Rules File Versioning
 
@@ -49,11 +51,15 @@ The key part of a rule is the _condition_ field. A condition is simply a Boolean
 
 Here's an example of a condition that alerts whenever a bash shell is run inside a container:
 
-`container.id != host and proc.name = bash`
+```
+container.id != host and proc.name = bash
+```
 
 The first clause checks that the event happened in a container (Sysdig events have a `container` field that is equal to `"host"` if the event happened on a regular host). The second clause checks that the process name is `bash`. Note that this condition does not even include a clause with a system call! It only checks event metadata. Because of that, if a bash shell does start up in a container, Falco outputs events for every syscall that is performed by that shell.
 
-> **Tip**: If you're new to Sysdig and unsure which fields are available, run `sysdig -l` to see the list of supported fields.
+{{< success >}}
+If you're new to Sysdig and unsure which fields are available, run `sysdig -l` to see the list of supported fields.
+{{< /success >}}
 
 A complete rule using the above condition might be:
 
@@ -87,7 +93,6 @@ Key | Description
 `list` | The unique name for the list (as a slug)
 `items` | The list of values
 
-
 Here are some example lists as well as a macro that uses them:
 
 ```yaml
@@ -106,7 +111,9 @@ Here are some example lists as well as a macro that uses them:
 
 Referring to a list inserts the list items in the macro, rule, or list.
 
-> **Note**: Lists *can* contain other lists.
+{{< success >}}
+Lists *can* contain other lists.
+{{< /success >}}
 
 ## Appending to Lists, Rules, and Macros
 
@@ -117,9 +124,11 @@ If you use multiple Falco rules files, you might want to append new items to an 
 In all of the examples below, it's assumed one is running Falco via `falco -r /etc/falco/falco_rules.yaml -r /etc/falco/falco_rules.local.yaml`, or has the default entries for `rules_file` in falco.yaml, which has `/etc/falco/falco.yaml` first and `/etc/falco/falco_rules.local.yaml` second.
 
 #### Appending to lists
+
 Here's an example of appending to lists:
 
 **/etc/falco/falco_rules.yaml**
+
 ```yaml
 - list: my_programs
   items: [ls, cat, pwd]
@@ -132,6 +141,7 @@ Here's an example of appending to lists:
 ```
 
 **/etc/falco/falco_rules.local.yaml**
+
 ```yaml
 - list: my_programs
   append: true
@@ -141,9 +151,11 @@ Here's an example of appending to lists:
 The rule `my_programs_opened_file` would trigger whenever any of `ls`, `cat`, `pwd`, or `cp` opened a file.
 
 #### Appending to Macros
+
 Here's an example of appending to macros:
 
 **/etc/falco/falco_rules.yaml**
+
 ```yaml
 - macro: access_file
   condition: evt.type=open
@@ -165,6 +177,7 @@ Here's an example of appending to macros:
 The rule `program_accesses_file` would trigger when `ls`/`cat` either used `open`/`openat` on a file.
 
 #### Appending to Rules
+
 Here's an example of appending to rules:
 
 **/etc/falco/falco_rules.yaml**
@@ -206,7 +219,7 @@ In cases like this, be sure to scope the logical operators of the original condi
 
 ## Rule Priorities
 
-Every falco rule has a priority which indicates how serious a violation of the rule is. The priority will be included in the message/json output/etc. The possible set of priorities are:
+Every falco rule has a priority which indicates how serious a violation of the rule is. The priority is included in the message/JSON output/etc. Here are the available priorities:
 
 * `EMERGENCY`
 * `ALERT`
@@ -219,18 +232,18 @@ Every falco rule has a priority which indicates how serious a violation of the r
 
 The general guidelines used to assign priorities to rules are the following:
 
-* If a rule is related to a write of state (i.e. filesystem, etc.), its priority is ERROR.
-* If a rule is related to an unauthorized read of state (i.e. reading sensitive filees, etc.), its priority is WARNING.
-* If a rule is related to unexpected behavior (spawning an unexpected shell in a container, opening an unexpected network connection, etc.), its priority is NOTICE.
-* If a rule is related to behaving against good practices (unexpected privileged containers, containers with sensitive mounts, running interactive commands as root), its priority is INFO.
+* If a rule is related to writing state (i.e. filesystem, etc.), its priority is `ERROR`.
+* If a rule is related to an unauthorized read of state (i.e. reading sensitive filees, etc.), its priority is `WARNING`.
+* If a rule is related to unexpected behavior (spawning an unexpected shell in a container, opening an unexpected network connection, etc.), its priority is `NOTICE`.
+* If a rule is related to behaving against good practices (unexpected privileged containers, containers with sensitive mounts, running interactive commands as root), its priority is `INFO`.
 
-One exception is that the rule "Run shell untrusted", which is fairly FP-prone, has a priority of DEBUG.
+One exception is that the rule "Run shell untrusted", which is fairly FP-prone, has a priority of `DEBUG`.
 
 ## Rule Tags {#tags}
 
 As of 0.6.0, rules have an optional set of _tags_ that are used to categorize the ruleset into groups of related rules. Here's an example:
 
-``` 
+```yaml
 - rule: File Open by Privileged Container
   desc: Any open by a privileged container. Exceptions are made for known trusted images.
   condition: (open_read or open_write) and container and container.privileged=true and not trusted_containers
@@ -250,31 +263,33 @@ Here's how you can use tags:
 
 We've also gone through the default ruleset and tagged all the rules with an initial set of tags. Here are the tags we've used:
 
-* filesystem: the rule relates to reading/writing files
-* sofware_mgmt: the rule relates to any software/package management tool like rpm, dpkg, etc.
-* process: the rule relates to starting a new process or changing the state of a current process.
-* database: the rule relates to databases
-* host: the rule *only* works outside of containers
-* shell: the rule specifically relates to starting shells
-* container: the rule *only* works inside containers
-* cis: the rule is related to the CIS Docker benchmark.
-* users: the rule relates to management of users or changing the identity of a running process.
-* network: the rule relates to network activity
+Tag | Description
+:---|:-----------
+`filesystem` | The rule relates to reading/writing files
+`sofware_mgmt` | The rule relates to any software/package management tool like rpm, dpkg, etc.
+`process` | The rule relates to starting a new process or changing the state of a current process
+`database` | The rule relates to databases
+`host` | The rule *only* works outside of containers
+`shell` | The rule specifically relates to starting shells
+`container` | The rule *only* works inside containers
+`cis` | The rule is related to the CIS Docker benchmark
+`users` | The rule relates to management of users or changing the identity of a running process
+`network` |Tthe rule relates to network activity
 
 Rules can have multiple tags if they relate to multiple of the above. Every rule in the falco ruleset currently has at least one tag.
 
 ## Rule Condition Best Practices
 
-To allow for grouping of rules by event type, which improves performance, falco prefers rule conditions that have at least one `evt.type=` operator, at the beginning of the condition, before any negative operators (i.e. `not` or `!=`). If a condition does not have any `evt.type=` operator, falco will log a warning like:
+To allow for grouping rules by event type, which improves performance, Falco prefers rule conditions that have at least one `evt.type=` operator, at the beginning of the condition, before any negative operators (i.e. `not` or `!=`). If a condition does not have any `evt.type=` operator, Falco logs a warning like:
 
 ```
 Rule no_evttype: warning (no-evttype):
 proc.name=foo
-     did not contain any evt.type restriction, meaning it will run for all event types.
+     did not contain any evt.type restriction, meaning that it will run for all event types.
      This has a significant performance penalty. Consider adding an evt.type restriction if possible.
 ```
 
-If a rule has a `evt.type` operator in the later portion of the condition, falco will log a warning like:
+If a rule has an `evt.type` operator in the latter portion of the condition, Falco logs a warning like this:
 
 ```
 Rule evttype_not_equals: warning (trailing-evttype):
@@ -288,9 +303,9 @@ evt.type!=execve
 
 ## Escaping Special Characters
 
-In some cases, rules may need to contain special characters like '(', spaces, etc. For example, you may need to look for a `proc.name` of `(systemd)`, including the surrounding parentheses.
+In some cases, rules may need to contain special characters like `(`, spaces, etc. For example, you may need to look for a `proc.name` of `(systemd)`, including the surrounding parentheses.
 
-Falco, like sysdig, supports quoting using `"` to capture these special characters. Here's an example:
+Falco, like Sysdig, allows you to use `"` to capture these special characters. Here's an example:
 
 ```yaml
 - rule: Any Open Activity by Systemd
@@ -300,7 +315,7 @@ Falco, like sysdig, supports quoting using `"` to capture these special characte
   priority: WARNING
 ```
 
-When including items in lists, you also need to ensure the double quotes are not interpreted at the yaml document level, so you should surround the quoted string with single quotes. Here's an example:
+When including items in lists, ensure that the double quotes are not interpreted from your YAML file by surrounding the quoted string with single quotes. Here's an example:
 
 ```yaml
 - list: systemd_procs
@@ -315,12 +330,12 @@ When including items in lists, you also need to ensure the double quotes are not
 
 ## Ignored system calls
 
-For performance reasons, some system calls are currently discarded before falco processing. The current list is:
+For performance reasons, some system calls are currently discarded before Falco processes them. Here is the current list:
 
 ```
 accept access alarm brk capget clock_getres clock_gettime clock_nanosleep clock_settime clone close container cpu_hotplug drop epoll_create epoll_create1 epoll_ctl epoll_pwait epoll_wait eventfd eventfd2 execve exit_group fcntl fcntl64 fdatasync fgetxattr flistxattr fork fstat fstat64 fstatat64 fstatfs fstatfs64 fsync futex get_robust_list get_thread_area getcpu getcwd getdents getdents64 getegid geteuid getgid getgroups getitimer getpeername getpgid getpgrp getpid getppid getpriority getresgid getresuid getrlimit getrusage getsid getsockname getsockopt gettid gettimeofday getuid getxattr infra io_cancel io_destroy io_getevents io_setup io_submit ioctl ioprio_get ioprio_set k8s lgetxattr listxattr llistxattr llseek lseek lstat lstat64 madvise mesos mincore mlock mlockall mmap mmap2 mprotect mq_getsetattr mq_notify mq_timedreceive mq_timedsend mremap msgget msgrcv msgsnd munlock munlockall munmap nanosleep newfstatat newselect notification olduname page_fault pause poll ppoll pread pread64 preadv procexit procinfo pselect6 pwrite pwrite64 pwritev read readv recv recvmmsg remap_file_pages rt_sigaction rt_sigpending rt_sigprocmask rt_sigsuspend rt_sigtimedwait sched_get_priority_max sched_get_priority_min sched_getaffinity sched_getparam sched_getscheduler sched_yield select semctl semget semop send sendfile sendfile64 sendmmsg setitimer setresgid setrlimit settimeofday sgetmask shutdown signaldeliver signalfd signalfd4 sigpending sigprocmask sigreturn splice stat stat64 statfs statfs64 switch sysdigevent tee time timer_create timer_delete timer_getoverrun timer_gettime timer_settime timerfd_create timerfd_gettime timerfd_settime times ugetrlimit umask uname unlink unlinkat ustat vfork vmsplice wait4 waitid waitpid write writev
 ```
 
-When run with `-i`, falco will print the set of events/syscalls ignored and exit. If you'd like to run falco against all events, including system calls in the above list, you can run falco with the `-A` flag.
+When run with `-i`, Falco prints the set of events/syscalls ignored and exits. If you'd like to run Falco against all events, including system calls in the above list, you can run Falco with the `-A` flag.
 
 
