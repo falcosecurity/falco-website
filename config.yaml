@@ -78,6 +78,7 @@ languages:
         url: /docs
         weight: 3
   zh:
+    languageName: 中文 Chinese
     title: Falco — Container-native Runtime Security
     contentDir: content/zh
     params:
