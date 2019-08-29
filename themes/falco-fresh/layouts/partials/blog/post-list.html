@@ -1,0 +1,41 @@
+{{ $posts := where site.RegularPages "Section" "blog" }}
+<section class="section">
+  <div class="container">
+    <div class="columns is-multiline is-variable is-8">
+      {{ range $posts }}
+      {{ $date   := dateFormat "January 2, 2006" .Date }}
+      {{ $author := .Params.author }}
+      <div class="column is-half">
+        <a href="{{ .RelPermalink }}">
+          <div class="card">
+            <div class="card-content content">
+              <h2 class="has-text-primary">
+                {{ .Title }}
+              </h2>
+
+              <p>
+                <span class="has-text-weight-light">
+                  {{ $date }}
+                </span>
+                {{ with .Params.author }}
+                &nbsp;&mdash;&nbsp;
+                <span class="has-text-weight-bold">
+                  {{ . }}
+                </span>
+                {{ end }}
+              </p>
+
+              {{ with .Summary }}
+
+              <p>
+                {{ . }}
+              </p>
+              {{ end }}
+            </div>
+          </div>
+        </a>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
