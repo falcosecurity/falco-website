@@ -148,7 +148,7 @@ languages:
         weight: 3
 
 params:
-  version: v0.16.0
+  version: v0.17.0
   sha256sum: ecd5517492ebb356b820f404aea4afcb9d2d81bf98c55a8174b050c5bbc7092a
   primaryFont:
     name: "Karla"
