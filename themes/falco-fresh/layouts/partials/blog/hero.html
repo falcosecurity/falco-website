@@ -1,18 +1,19 @@
 {{ $title  := .Title }}
-{{ $isPost := or .Date .Params.author }}
 {{ $date   := dateFormat "January 2, 2006" .Date }}
 <section class="hero is-primary">
   <div class="hero-body">
     <div class="container">
-      <p class="title{{ if $isPost }} is-spaced{{ end }}">
+      <p class="title is-spaced">
         {{ $title }}
       </p>
 
-      {{ if $isPost }}
+      {{ if not .Pages }}
       <p class="subtitle is-size-4 is-size-5-mobile">
+        {{ with $date }}
         <span class="has-text-weight-light">
-          {{ $date }}
+          {{ . }}
         </span>
+        {{ end }}
         {{ with .Params.author }}
         &nbsp;&mdash;&nbsp;
         <span class="has-text-weight-bold">

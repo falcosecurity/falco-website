@@ -1,9 +1,8 @@
 {{ $posts := where site.RegularPages "Section" "blog" }}
 <section class="section">
   <div class="container">
-    <div class="columns is-multiline is-variable is-8">
+    <div class="columns is-multiline is-variable is-2">
       {{ range $posts }}
-      {{ $date   := dateFormat "January 2, 2006" .Date }}
       {{ $author := .Params.author }}
       <div class="column is-half">
         <a href="{{ .RelPermalink }}">
@@ -13,17 +12,11 @@
                 {{ .Title }}
               </h2>
 
-              <p>
-                <span class="has-text-weight-light">
-                  {{ $date }}
-                </span>
-                {{ with .Params.author }}
-                &nbsp;&mdash;&nbsp;
-                <span class="has-text-weight-bold">
-                  {{ . }}
-                </span>
-                {{ end }}
+              {{ with $author }}
+              <p class="has-text-weight-bold">
+                {{ . }}
               </p>
+              {{ end }}
 
               {{ with .Summary }}
 
