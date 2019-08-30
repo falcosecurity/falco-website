@@ -1,6 +1,7 @@
 {{ $title  := .Title }}
 {{ $date   := dateFormat "January 2, 2006" .Date }}
-<section class="hero is-primary">
+{{ $author := .Params.author }}
+<section class="hero is-light">
   <div class="hero-body">
     <div class="container">
       <p class="title is-spaced">
@@ -14,13 +15,17 @@
           {{ . }}
         </span>
         {{ end }}
-        {{ with .Params.author }}
+        {{ with $author }}
         &nbsp;&mdash;&nbsp;
         <span class="has-text-weight-bold">
           {{ . }}
         </span>
         {{ end }}
       </p>
+      {{ end }}
+
+      {{ if .Pages }}
+      {{ partial "rss-button.html" . }}
       {{ end }}
     </div>
   </div>
