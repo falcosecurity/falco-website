@@ -1,9 +1,13 @@
-{{- $navbar  := .Site.Params.navbar }}
-{{- $menu    := .Site.Menus.navbar }}
-{{- $cncf    := index $navbar "cncf" }}
-{{- $isThin  := or .IsHome (eq .Section "blog") }}
-{{- $isDocs  := eq .Section "docs" }}
-{{- $baseUrl := site.BaseURL }}
+{{ $navbar    := site.Params.navbar }}
+{{ $menu      := site.Menus.navbar }}
+{{ $cncf      := index $navbar "cncf" }}
+{{ $isHome    := .IsHome }}
+{{ $isDocs    := eq .Section "docs" }}
+{{ $baseUrl   := site.BaseURL }}
+{{ $isEnglish := eq .Lang "en" }}
+{{ $langText  := cond $isEnglish "中文 Chinese" "English" }}
+{{ $langUrl   := cond $isEnglish "/zh" "/" | relURL }}
+{{ $isThin    := or (.IsHome) (eq .Section "blog") }}
 <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
   {{ if $isThin }}<div class="container">{{ end }}
     <div class="navbar-brand">
@@ -21,10 +25,15 @@
     <div id="navbar-menu" class="navbar-menu is-static">
       <div class="navbar-end">
         {{ range $menu }}
-        <a class="navbar-item has-text-grey is-size-5" href="{{ .URL }}">
+        {{ $url := .URL | relLangURL }}
+        <a class="navbar-item has-text-grey is-size-5" href="{{ $url }}">
           {{ .Name }}
         </a>
         {{ end }}
+
+        <a class="navbar-item has-text-grey is-size-5" href="{{ $langUrl }}">
+          {{ $langText }}
+        </a>
 
         <div class="navbar-item">
           <div class="buttons">
