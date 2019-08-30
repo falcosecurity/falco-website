@@ -5,10 +5,10 @@ disableKinds: ["taxonomy", "taxonomyTerm"]
 pygmentsCodefences: true
 pygmentsStyle: monokai
 defaultContentLanguage: en
-disableLanguages: [zh]
 
 languages:
   en:
+    languageName: English
     title: Falco — Container-native Runtime Security
     contentDir: content/en
     params:
@@ -78,6 +78,7 @@ languages:
         url: /docs
         weight: 3
   zh:
+    languageName: 中文 Chinese
     title: Falco — Container-native Runtime Security
     contentDir: content/zh
     params:
@@ -85,7 +86,7 @@ languages:
         # Main hero title
         title: Container Native Runtime Security
         # Hero subtitle (optional)
-        subtitle: Falco is an open source project for intrusion and abnormality detection for Cloud Native platforms such as Kubernetes, Mesosphere, and Cloud Foundry. Detect abnormal application behavior. Alert via Slack, Fluentd, NATS, and more. Protect your platform by taking action through serverless (FaaS) frameworks, or other automation. 
+        subtitle: Falco is an open source project for intrusion and abnormality detection for Cloud Native platforms such as Kubernetes, Mesosphere, and Cloud Foundry. Detect abnormal application behavior. Alert via Slack, Fluentd, NATS, and more. Protect your platform by taking action through serverless (FaaS) frameworks, or other automation.
         # Button text
         buttontext: Get started
       sectionAbout:
