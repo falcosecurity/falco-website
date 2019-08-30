@@ -1,5 +1,5 @@
 dependencies:
-	(cd themes/falco-fresh && npm install)
+	(cd themes/falco-fresh && yarn)
 
 serve: dependencies
 	hugo server \
