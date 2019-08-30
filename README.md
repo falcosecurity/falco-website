@@ -8,7 +8,7 @@ To build this website you need :
 * [nodejs](https://nodejs.org/en/download/)
 * [yarn](https://yarnpkg.com/lang/en/docs/install/#windows-stable)
 
-### Test & Build
+### Test locally
 
 #### Clone repository
 
@@ -23,22 +23,18 @@ cd ./falco-website/themes/falco-fresh
 yarn install
 ```
 
-#### Test in local
+#### Run hugo server
 
 ```bash
 make server
 ```
 You can access your local website on http://localhost:1313
 
-#### Build
+## Translations
 
-```bash
-make production-build
-```
+### Chineses
 
-## Translation
-
-There is currently scaffolding in place for a Chinese translation of the site. To develop the translation, run `make serve`. This will start the Hugo server running locally. Navigate to `http://localhost:1313/zh` to see the current Chinese translation.
+There is currently scaffolding in place for a Chinese translation of the site.
 
 To translate docs into Chinese, create Chinese-language Markdown files in the `content/zh/docs` directory.
 
