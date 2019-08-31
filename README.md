@@ -2,11 +2,11 @@
 
 ## Prerequisites
 
-To build this website you need :
+To build this website you need:
 
-* [hugo](https://gohugo.io/getting-started/installing/)
-* [nodejs](https://nodejs.org/en/download/)
-* [yarn](https://yarnpkg.com/lang/en/docs/install/#windows-stable)
+* [Hugo](https://gohugo.io/getting-started/installing/)
+* [Nodejs](https://nodejs.org/en/download/)
+* [Yarn](https://yarnpkg.com/lang/en/docs/install/#windows-stable)
 
 ### Test locally
 
@@ -16,23 +16,17 @@ To build this website you need :
 git clone git@github.com:falcosecurity/falco-website.git
 ```
 
-#### Install theme
-
-```bash
-cd ./falco-website/themes/falco-fresh
-yarn install
-```
-
 #### Run hugo server
 
 ```bash
-make server
+make serve
 ```
+
 You can access your local website on http://localhost:1313
 
 ## Translations
 
-### Chineses
+### Chinese
 
 There is currently scaffolding in place for a Chinese translation of the site.
 
