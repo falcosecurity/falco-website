@@ -1,14 +1,15 @@
-{{- $navbar    := .Site.Params.navbar }}
-{{- $menu      := .Site.Menus.navbar }}
-{{- $cncf      := index $navbar "cncf" }}
-{{- $isHome    := .IsHome }}
-{{- $isDocs    := eq .Section "docs" }}
-{{- $baseUrl   := site.BaseURL }}
-{{- $isEnglish := eq .Lang "en" }}
-{{- $langText  := cond $isEnglish "中文 Chinese" "English" }}
-{{- $langUrl   := cond $isEnglish "/zh" "/" | relURL }}
+{{ $navbar    := site.Params.navbar }}
+{{ $menu      := site.Menus.navbar }}
+{{ $cncf      := index $navbar "cncf" }}
+{{ $isHome    := .IsHome }}
+{{ $isDocs    := eq .Section "docs" }}
+{{ $baseUrl   := site.BaseURL }}
+{{ $isEnglish := eq .Lang "en" }}
+{{ $langText  := cond $isEnglish "中文 Chinese" "English" }}
+{{ $langUrl   := cond $isEnglish "/zh" "/" | relURL }}
+{{ $isThin    := or (.IsHome) (eq .Section "blog") }}
 <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
-  {{ if $isHome }}<div class="container">{{ end }}
+  {{ if $isThin }}<div class="container">{{ end }}
     <div class="navbar-brand">
       <a class="navbar-item{{ if $isDocs }} is-hidden-tablet{{ end }}" href="{{ $baseUrl }}">
         <img class="navbar-brand__logo" src="{{ "/images/logos/falco-logo.png" | absURL }}" alt="">
@@ -40,7 +41,7 @@
               <span class="icon">
                 <i class="fab fa-github"></i>
               </span>
-              {{ if $isHome }}
+              {{ if $isThin }}
               <span>
                 <strong>
                   GitHub
@@ -53,7 +54,7 @@
               <span class="icon">
                 <i class="fab fa-twitter"></i>
               </span>
-              {{ if $isHome }}
+              {{ if $isThin }}
               <span>
                 <strong>
                   Twitter
@@ -69,5 +70,5 @@
         </a>
       </div>
     </div>
-  {{ if $isHome }}</div>{{ end }}
+  {{ if $isThin }}</div>{{ end }}
 </nav>

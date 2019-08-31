@@ -74,9 +74,13 @@ languages:
         weight: 2
       - name: Download
         url: "/#download"
+        weight: 3
       - name: Docs
         url: /docs
-        weight: 3
+        weight: 4
+      - name: Blog
+        url: /blog
+        weight: 5
   zh:
     languageName: 中文 Chinese
     title: Falco — Container-native Runtime Security

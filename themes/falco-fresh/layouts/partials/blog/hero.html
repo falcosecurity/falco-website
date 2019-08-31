@@ -1,0 +1,32 @@
+{{ $title  := .Title }}
+{{ $date   := dateFormat "January 2, 2006" .Date }}
+{{ $author := .Params.author }}
+<section class="hero is-light">
+  <div class="hero-body">
+    <div class="container">
+      <p class="title is-spaced">
+        {{ $title }}
+      </p>
+
+      {{ if ne .RelPermalink "/blog/" }}
+      <p class="subtitle is-size-4 is-size-5-mobile">
+        {{ with $date }}
+        <span class="has-text-weight-light">
+          {{ . }}
+        </span>
+        {{ end }}
+        {{ with $author }}
+        &nbsp;&mdash;&nbsp;
+        <span class="has-text-weight-bold">
+          {{ . }}
+        </span>
+        {{ end }}
+      </p>
+      {{ end }}
+
+      {{ if .Pages }}
+      {{ partial "blog/rss-button.html" . }}
+      {{ end }}
+    </div>
+  </div>
+</section>

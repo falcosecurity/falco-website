@@ -1,0 +1,12 @@
+{{ define "main" }}
+{{ partial "navbar.html" . }}
+{{ partial "blog/hero.html" . }}
+
+<section class="section">
+  <div class="container">
+    <div class="content">
+      {{ .Content }}
+    </div>
+  </div>
+</section>
+{{ end }}

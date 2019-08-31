@@ -1,11 +1,11 @@
-{{ $year   := now.Year }}
-{{ $isHome := .IsHome }}
+{{ $year     := now.Year }}
+{{ $standard := or .IsHome (eq .Section "blog") }}
 <footer class="footer footer-dark">
-  {{ if $isHome }}<div class="container">{{ end }}
+  {{ if $standard }}<div class="container">{{ end }}
     <div class="columns">
       <div class="column">
         {{ T "copyright"}} {{ $year }}, {{ T "falco_authors"}}
       </div>
     </div>
-  {{ if $isHome }}</div>{{ end }}
+  {{ if $standard }}</div>{{ end }}
 </footer>
