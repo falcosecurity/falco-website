@@ -1,8 +1,34 @@
 # falco-website
 
-## Translation
+## Prerequisites
 
-There is currently scaffolding in place for a Chinese translation of the site. To develop the translation, run `make serve`. This will start the Hugo server running locally. Navigate to `http://localhost:1313/zh` to see the current Chinese translation.
+To build this website you need:
+
+* [Hugo](https://gohugo.io/getting-started/installing/)
+* [Nodejs](https://nodejs.org/en/download/)
+* [Yarn](https://yarnpkg.com/lang/en/docs/install/#windows-stable)
+
+### Test locally
+
+#### Clone repository
+
+```bash
+git clone git@github.com:falcosecurity/falco-website.git
+```
+
+#### Run hugo server
+
+```bash
+make serve
+```
+
+You can access your local website on http://localhost:1313
+
+## Translations
+
+### Chinese
+
+There is currently scaffolding in place for a Chinese translation of the site.
 
 To translate docs into Chinese, create Chinese-language Markdown files in the `content/zh/docs` directory.
 
