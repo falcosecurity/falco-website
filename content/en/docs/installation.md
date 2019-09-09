@@ -34,7 +34,7 @@ The `falco-probe-loader` script will name the module in this format by default.
 
 ### Helm
 
-Helm is one of the preferred methods for installing Falco on Kubernetes. The [Falco Helm chart](https://github.com/helm/charts/tree/master/stable/falco) provides an extensive set of [configuration values (https://github.com/helm/charts/tree/master/stable/falco#configuration) to start Falco with different configurations.
+Helm is one of the preferred methods for installing Falco on Kubernetes. The [Falco Helm chart](https://github.com/helm/charts/tree/master/stable/falco) provides an extensive set of [configuration values](https://github.com/helm/charts/tree/master/stable/falco#configuration) to start Falco with different configurations.
 
 To deploy Falco with default configuration on a cluster where Helm is deployed, run:
 ```shell
