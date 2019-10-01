@@ -1,0 +1,9 @@
+{{ $dataJSONURL := (.Get 0) }}
+{{ $dataJSON := getJSON $dataJSONURL }}
+{{ range $dataJSON }}
+  <div>
+    <div><span style="font-weight: bold; font-size: 250%; color: #00b4c8">{{ .tag_name }}</span></div>
+    <div class="desc" style="padding-left: 5%; padding-top: 1%">{{ .body | markdownify }}</div>
+  </div>
+  <br>
+{{ end }}
