@@ -1,8 +1,10 @@
-{{ $docsSections := where site.Sections "Section" "docs" }}
-{{ $currentUrl   := .RelPermalink }}
-{{ $logo         := "/images/logos/falco-logo.png" | relURL }}
-{{ $home         := site.BaseURL }}
-{{ $version      := site.Params.version }}
+{{ $docsSections     := where site.Sections "Section" "docs" }}
+{{ $currentUrl       := .RelPermalink }}
+{{ $logo             := "/images/logos/falco-logo.png" | relURL }}
+{{ $home             := site.BaseURL }}
+{{ $githubRepository := site.Params.githubRepository }}
+{{ $dataJSON := getJSON "https://api.github.com/repos/" $githubRepository "/releases/latest" }}
+
 <div class="dashboard">
   <div class="dashboard-panel left is-hidden-mobile is-scrollable">
     <div class="dashboard-panel-header has-text-centered">
@@ -13,7 +15,7 @@
       <br /><br />
 
       <div class="button is-primary is-radiusless">
-        Version&nbsp;<strong>{{ $version }}</strong>
+        Version&nbsp;<strong>{{ $dataJSON.tag_name }}</strong>
       </div>
     </div>
 
