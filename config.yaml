@@ -5,6 +5,7 @@ disableKinds: ["taxonomy", "taxonomyTerm"]
 pygmentsCodefences: true
 pygmentsStyle: monokai
 defaultContentLanguage: en
+enableInlineShortcodes: true
 
 languages:
   en:

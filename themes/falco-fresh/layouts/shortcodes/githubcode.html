@@ -1,0 +1,5 @@
+{{ $repository := (.Get 0) }}
+{{ $path := (.Get 1) }}
+{{ $codeURL := printf "https://api.github.com/repos/%s/contents/%s" $repository $path }}
+{{ $dataJSON := getJSON $codeURL }}
+{{ $dataJSON.content | base64Decode | safeHTML }}
