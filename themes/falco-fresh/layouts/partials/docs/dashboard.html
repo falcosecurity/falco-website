@@ -30,9 +30,11 @@
 
         {{ range .Pages }}
         {{ $currentPage := eq .RelPermalink $currentUrl }}
+        {{ if not (strings.HasSuffix .File.Path "_index.md") }}
         <a class="top-level{{ if $currentPage }} is-active{{ end }}" href="{{ .RelPermalink }}">
           {{ .Title }}
         </a>
+        {{ end }}
         {{ end }}
 
         {{ range .Sections }}
