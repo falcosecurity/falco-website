@@ -49,6 +49,8 @@ The Falco authors plan to automate the certificates generation soon.
 
 In the meantime, to generate the certificates you can use the following script.
 
+Do not forget to adapt the `-passin`, `-passout`, and `-subj` flags to your needs.
+
 {{< highlight bash >}}
 #!/usr/bin/env bash
 
