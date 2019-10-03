@@ -5,10 +5,8 @@ weight: 2
 
 The [client-go](https://github.com/falcosecurity/client-go) Go library provides:
 
-- [type and service mappings](https://godoc.org/github.com/falcosecurity/client-go/pkg/api/output) for the Falco gRPC Outputs API ([schema](./outputs))
+- [type and service mappings](https://godoc.org/github.com/falcosecurity/client-go/pkg/api/output) for the Falco gRPC API ([output schema](./outputs))
 - `Client` and `Config` structs ([docs here](https://godoc.org/github.com/falcosecurity/client-go/pkg/client)) aimed at simplifying the connection to the gRPC server
-
-Please read the .
 
 A fully-working example which just connects to the Falco gRPC Outputs API and outputs the events in JSON is [here](https://github.com/falcosecurity/client-go/blob/master/examples/output/main.go).
 
