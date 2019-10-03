@@ -278,7 +278,7 @@ built for the files in the centos image, not the host.
 * `MAKE_JOBS`: passed to the -j argument of make
 
 A typical way to run this builder is the following. Assuming you have
-checked out falco and sysdig to directories below /home/user/src, and
+checked out Falco and Sysdig to directories below /home/user/src, and
 want to use a build directory of /home/user/build/falco, you would run
 the following:
 
@@ -294,7 +294,7 @@ Otherwise the docker image will use the default `FALCO_VERSION`.
 
 # Load latest falco-probe kernel module
 
-If you have a binary version of falco installed, an older falco kernel module may already be loaded. To ensure you are using the latest version, you should unload any existing falco kernel module and load the locally built version.
+If you have a binary version of Falco installed, an older Falco kernel module may already be loaded. To ensure you are using the latest version, you should unload any existing Falco kernel module and load the locally built version.
 
 Unload any existing kernel module via:
 
@@ -363,14 +363,14 @@ Change `$PWD/build` with the directory you built Falco in, if different.
 
 If you'd like to run the regression test suite against your build, you can use the [falco-tester](https://hub.docker.com/r/falcosecurity/falco-tester) container. Like the builder image, it contains the necessary environment to run the regression tests, but relies on a source directory and build directory that are mounted into the image. It's a different image than `falco-builder` as it doesn't need a compiler and needs a different base image to include the test runner framework [avocado](http://avocado-framework.github.io/).
 
-It does build a new container image `falcosecurity/falco:test` to test the process of buillding and running a container with the falco packages built during the build step.
+It does build a new container image `falcosecurity/falco:test` to test the process of buillding and running a container with the Falco packages built during the build step.
 
 The image depends on the following parameters:
 
-* `FALCO_VERSION`: The version of the falco package to include in the test container image. It must match the version of the built packages.
+* `FALCO_VERSION`: The version of the Falco package to include in the test container image. It must match the version of the built packages.
 
 A typical way to run this builder is the following. Assuming you have
-checked out falco and sysdig to directories below `/home/user/src`, and
+checked out Falco and Sysdig to directories below `/home/user/src`, and
 want to use a build directory of `/home/user/build/falco`, you would run
 the following:
 

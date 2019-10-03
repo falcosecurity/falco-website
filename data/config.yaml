@@ -39,7 +39,7 @@
 - name: priority
   type: |
     Enum with the following possible values: `emergency`, `alert`, `critical`, `error`, `warning`, `notice`, `info`, `debug`
-  description: Minimum rule priority level to load and run. All rules having a priority more severe than this level will be loaded/run. 
+  description: Minimum rule priority level to load and run. All rules having a priority more severe than this level will be loaded/run.
 - name: syscall_event_drops
   type: |
     List containing the following sub-keys:
@@ -47,8 +47,8 @@
     * `actions`: A list containing one or more of these boolean sub-keys:
       * `ignore`: do nothing. If an empty list is provided, ignore is assumed.
       * `log`: log a CRITICAL message noting that the buffer was full.
-      * `alert`: emit a falco alert noting that the buffer was full.
-      * `exit`: exit falco with a non-zero rc.
+      * `alert`: emit a Falco alert noting that the buffer was full.
+      * `exit`: exit Falco with a non-zero rc.
     * `rate`: The steady-state rate at which actions can be taken. Units of actions/second. Default 0.03333 (one action per 30 seconds).
     * `max_burst`: The maximum number of actions that can be taken before the steady-state rate is applied.
   description: Controls [Actions For Dropped System Call Events](../event-sources/dropped-events/).
@@ -58,26 +58,26 @@
 - name: outputs
   type: |
     List containing the following sub-keys:
-    
+
     * `rate: <notifications/second>`
     * `outputs: max_burst: <number of messages>`
   description: |
-    A throttling mechanism implemented as a token bucket limits the rate of falco notifications. This throttling is controlled by the `rate` and `max_burst` options.
+    A throttling mechanism implemented as a token bucket limits the rate of Falco notifications. This throttling is controlled by the `rate` and `max_burst` options.
 
     `rate` is the number of tokens (i.e. right to send a notification) gained per second, and defaults to 1. `max_burst` is the maximum number of tokens outstanding, and defaults to 1000.
 
-    With these defaults, falco could send up to 1000 notifications after an initial quiet period, and then up to 1 notification per second afterward. It would gain the full burst back after 1000 seconds of no activity.
+    With these defaults, Falco could send up to 1000 notifications after an initial quiet period, and then up to 1 notification per second afterward. It would gain the full burst back after 1000 seconds of no activity.
 - name: syslog_output
   type: |
     List containing the following sub-keys:
-    
+
     * `enabled: [true|false]`
   description: |
     If `true`, Falco alerts will be sent via syslog.
 - name: file_output
   type: |
     List containing the following sub-keys:
-    
+
     * `enabled: [true|false]`
     * `keep_alive: [true|false]`
     * `filename: <path>`
@@ -100,9 +100,9 @@
     * `keep_alive: [true|false]`
   description: |
     If `enabled` is set to `true`, Falco alerts will be sent to a program.
-    
+
     If `keep_alive` is set to `false` (the default), run the program for each alert. If `true`, Falco will spawn the program once and keep it open for all alerts. It may also be necessary to specify `--unbuffered` using the Falco CLI.
-  
+
     The `program` setting specifies the program to be run for each alert. This is started via the shell, so you can specify a command pipeline to allow for additional formatting.
 - name: http_output
   type: |

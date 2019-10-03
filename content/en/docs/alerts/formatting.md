@@ -2,9 +2,9 @@
 title: Formatting Alerts for Containers and Orchestration
 ---
 
-Like Sysdig, Falco has native support for containers and orchestration environments. With `-k`, falco communicates with the provided K8s API server to decorate events with the K8s pod/namespace/deployment/etc. associated with the event. With `-m`, falco communicates with the marathon server to do the same thing.
+Like Sysdig, Falco has native support for containers and orchestration environments. With `-k`, Falco communicates with the provided K8s API server to decorate events with the K8s pod/namespace/deployment/etc. associated with the event. With `-m`, Falco communicates with the marathon server to do the same thing.
 
-Like sysdig, falco can be run with `-pk`/`-pm`/`-pc`/`-p` arguments that change the formatted output to be a k8s-friendly/mesos-friendly/container-friendly/general format. However, unlike sysdig, the source of formatted output is in the set of rules and not on the command line. This page provides more detail on how `-pk`/`-pm`/`-pc`/`-p` interacts with the format strings in the `output` attribute of rules.
+Like Sysdig, Falco can be run with `-pk`/`-pm`/`-pc`/`-p` arguments that change the formatted output to be a k8s-friendly/mesos-friendly/container-friendly/general format. However, unlike sysdig, the source of formatted output is in the set of rules and not on the command line. This page provides more detail on how `-pk`/`-pm`/`-pc`/`-p` interacts with the format strings in the `output` attribute of rules.
 
 The information from k8s/mesos/containers is used in conjunction with the command line options in these ways:
 
@@ -17,7 +17,7 @@ The information from k8s/mesos/containers is used in conjunction with the comman
 
 ## Examples
 
-Here are some examples of falco command lines, output strings in rules, and the resulting output:
+Here are some examples of Falco command lines, output strings in rules, and the resulting output:
 
 ### Output contains `%container.info`
 ```

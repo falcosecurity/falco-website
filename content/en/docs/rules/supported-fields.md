@@ -7,7 +7,7 @@ weight: 3
 
 Here are the fields supported by Falco. These fields can be used in the `condition` key of a Falco rule and well as the `output` key. Any fields included in the `output` key of a rule will also be included in the alert's `output_fields` object when [`json_output`](../alerts/#json-output) is set to `true`.
 
-You can also see this set of fields via `falco --list=<source>`, with `<source>` being one of the sources below. 
+You can also see this set of fields via `falco --list=<source>`, with `<source>` being one of the sources below.
 
 # System Calls (source `syscall`)
 
@@ -28,7 +28,7 @@ fd.type         type of FD. Can be 'file', 'directory', 'ipv4', 'ipv6', 'unix',
                  'pipe', 'event', 'signalfd', 'eventpoll', 'inotify' or 'signal
                 fd'.
 fd.typechar     type of FD as a single character. Can be 'f' for file, 4 for IP
-                v4 socket, 6 for IPv6 socket, 'u' for unix socket, p for pipe, 
+                v4 socket, 6 for IPv6 socket, 'u' for unix socket, p for pipe,
                 'e' for eventfd, 's' for signalfd, 'l' for eventpoll, 'i' for i
                 notify, 'o' for unknown.
 fd.name         FD full name. If the fd is a file, this field contains the full
@@ -36,7 +36,7 @@ fd.name         FD full name. If the fd is a file, this field contains the full
                  tuple.
 fd.directory    If the fd is a file, the directory that contains it.
 fd.filename     If the fd is a file, the filename without the path.
-fd.ip           (FILTER ONLY) matches the ip address (client or server) of the 
+fd.ip           (FILTER ONLY) matches the ip address (client or server) of the
                 fd.
 fd.cip          client IP address.
 fd.sip          server IP address.
@@ -51,7 +51,7 @@ fd.rport        for TCP/UDP FDs, the remote port.
 fd.l4proto      the IP protocol of a socket. Can be 'tcp', 'udp', 'icmp' or 'ra
                 w'.
 fd.sockfamily   the socket family for socket events. Can be 'ip' or 'unix'.
-fd.is_server    'true' if the process owning this FD is the server endpoint in 
+fd.is_server    'true' if the process owning this FD is the server endpoint in
                 the connection.
 fd.uid          a unique identifier for the FD, created by chaining the FD numb
                 er and the thread ID.
@@ -67,7 +67,7 @@ fd.cproto       for TCP/UDP FDs, the client protocol.
 fd.sproto       for TCP/UDP FDs, server protocol.
 fd.lproto       for TCP/UDP FDs, the local protocol.
 fd.rproto       for TCP/UDP FDs, the remote protocol.
-fd.net          (FILTER ONLY) matches the IP network (client or server) of the 
+fd.net          (FILTER ONLY) matches the IP network (client or server) of the
                 fd.
 fd.cnet         (FILTER ONLY) matches the client IP network of the fd.
 fd.snet         (FILTER ONLY) matches the server IP network of the fd.
@@ -86,7 +86,7 @@ fd.dev.major    major device number containing the referenced file
 fd.dev.minor    minor device number containing the referenced file
 ```
 
-## `proc` & `thread` Field Class 
+## `proc` & `thread` Field Class
 
 Fields for running or spawned processes or threads.
 
@@ -96,7 +96,7 @@ Field Class: process
 proc.pid        the id of the process generating the event.
 proc.exe        the first command line argument (usually the executable name or
                  a custom one).
-proc.name       the name (excluding the path) of the executable generating the 
+proc.name       the name (excluding the path) of the executable generating the
                 event.
 proc.args       the arguments passed on the command line when starting the proc
                 ess generating the event.
@@ -112,21 +112,21 @@ proc.nchilds    the number of child threads that the process generating the eve
 proc.ppid       the pid of the parent of the process generating the event.
 proc.pname      the name (excluding the path) of the parent of the process gene
                 rating the event.
-proc.pcmdline   the full command line (proc.name + proc.args) of the parent of 
+proc.pcmdline   the full command line (proc.name + proc.args) of the parent of
                 the process generating the event.
 proc.apid       the pid of one of the process ancestors. E.g. proc.apid[1] retu
                 rns the parent pid, proc.apid[2] returns the grandparent pid, a
                 nd so on. proc.apid[0] is the pid of the current process. proc.
-                apid without arguments can be used in filters only and matches 
+                apid without arguments can be used in filters only and matches
                 any of the process ancestors, e.g. proc.apid=1234.
-proc.aname      the name (excluding the path) of one of the process ancestors. 
+proc.aname      the name (excluding the path) of one of the process ancestors.
                 E.g. proc.aname[1] returns the parent name, proc.aname[2] retur
                 ns the grandparent name, and so on. proc.aname[0] is the name o
                 f the current process. proc.aname without arguments can be used
                  in filters only and matches any of the process ancestors, e.g.
                  proc.aname=bash.
 proc.loginshellid
-                the pid of the oldest shell among the ancestors of the current 
+                the pid of the oldest shell among the ancestors of the current
                 process, if there is one. This field can be used to separate di
                 fferent user sessions, and is useful in conjunction with chisel
                 s like spy_user.
@@ -183,7 +183,7 @@ proc.is_container_healthcheck
 
 ## `evt` Field Class
 
-Fields for system call events. Use `evt.type` to specify the system call name. At least one `evt` field is required per Falco `syscall` rule. 
+Fields for system call events. Use `evt.type` to specify the system call name. At least one `evt` field is required per Falco `syscall` rule.
 
 ```
 evt.num         event number.
@@ -201,12 +201,12 @@ evt.reltime     number of nanoseconds from the beginning of the capture.
 evt.reltime.s   number of seconds from the beginning of the capture.
 evt.reltime.ns  fractional part (in ns) of the time from the beginning of the c
                 apture.
-evt.latency     delta between an exit event and the correspondent enter event, 
+evt.latency     delta between an exit event and the correspondent enter event,
                 in nanoseconds.
 evt.latency.s   integer part of the event latency delta.
 evt.latency.ns  fractional part of the event latency delta.
 evt.latency.human
-                delta between an exit event and the correspondent enter event, 
+                delta between an exit event and the correspondent enter event,
                 as a human readable string (e.g. 10.3ms).
 evt.deltatime   delta between this event and the previous event, in nanoseconds
                 .
@@ -223,7 +223,7 @@ evt.type.is     allows one to specify an event type, and returns 1 for events t
                 hat are of that type. For example, evt.type.is.open returns 1 f
                 or open events, 0 for any other event.
 syscall.type    For system call events, the name of the system call (e.g. 'open
-                '). Unset for other events (e.g. switch or sysdig internal even
+                '). Unset for other events (e.g. switch or Sysdig internal even
                 ts). Use this field instead of evt.type if you need to make sur
                 e that the filtered/printed value is actually a system call.
 evt.category    The event category. Example values are 'file' (for file operati
@@ -244,7 +244,7 @@ evt.info        for most events, this field returns the same value as evt.args.
 evt.buffer      the binary data buffer for events that have one, like read(), r
                 ecvfrom(), etc. Use this field in filters with 'contains' to se
                 arch into I/O data buffers.
-evt.buflen      the length of the binary data buffer for events that have one, 
+evt.buflen      the length of the binary data buffer for events that have one,
                 like read(), recvfrom(), etc.
 evt.res         event return value, as a string. If the event failed, the resul
                 t is an error code string (e.g. 'ENOENT'), otherwise the result
@@ -257,7 +257,7 @@ evt.is_io       'true' for events that read or write to FDs, like read(), send,
 evt.is_io_read  'true' for events that read from FDs, like read(), recv(), recv
                 from(), etc.
 evt.is_io_write 'true' for events that write to FDs, like write(), send(), etc.
-evt.io_dir      'r' for events that read from FDs, like read(); 'w' for events 
+evt.io_dir      'r' for events that read from FDs, like read(); 'w' for events
                 that write to FDs, like write().
 evt.is_wait     'true' for events that make the thread wait, e.g. sleep(), sele
                 ct(), poll().
@@ -294,7 +294,7 @@ evt.around      (FILTER ONLY) Accepts the event if it's around the specified ti
                 e returned by %evt.rawtime for the event and D is a delta in mi
                 lliseconds. For example, evt.around[1404996934793590564]=1000 w
                 ill return the events with timestamp with one second before the
-                 timestamp and one second after it, for a total of two seconds 
+                 timestamp and one second after it, for a total of two seconds
                 of capture.
 evt.abspath     Absolute path calculated from dirfd and name during syscalls li
                 ke renameat and symlinkat. Use 'evt.abspath.src' or 'evt.abspat
@@ -309,7 +309,7 @@ evt.is_open_write
 
 ## `user` Field Class
 
-Fields related to the user executing the event. 
+Fields related to the user executing the event.
 
 ```
 user.uid        user ID.
@@ -365,7 +365,7 @@ container.mount Information about a single mount, specified by number (e.g. con
                  The pathname can be a glob (container.mount[/usr/local/*]), in
                  which case the first matching mount will be returned. The info
                 rmation has the format <source>:<dest>:<mode>:<rdrw>:<propagati
-                on>. If there is no mount with the specified index or matching 
+                on>. If there is no mount with the specified index or matching
                 the provided source, returns the string "none" instead of a NUL
                 L value.
 container.mount.source
@@ -421,7 +421,7 @@ k8s.svc.name    Kubernetes service name (can return more than one value, concat
                 enated).
 k8s.svc.id      Kubernetes service id (can return more than one value, concaten
                 ated).
-k8s.svc.label   Kubernetes service label. E.g. 'k8s.svc.label.foo' (can return 
+k8s.svc.label   Kubernetes service label. E.g. 'k8s.svc.label.foo' (can return
                 more than one value, concatenated).
 k8s.svc.labels  Kubernetes service comma-separated key/value labels. E.g. 'foo1
                 :bar1,foo2:bar2'.

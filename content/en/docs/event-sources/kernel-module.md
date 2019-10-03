@@ -5,7 +5,7 @@ weight: 1
 
 Falco depends on a kernel module that taps into the stream of system calls on a machine and passes those system calls to user space.
 
-Versions before v0.6.0 used the kernel module from sysdig called `sysdig-probe`. As of 0.6.0, falco uses its own kernel module `falco-probe`. The kernel modules are actually built from the same source code, but having a falco-specific kernel module allows falco and sysdig to be updated independently without driver compatibility problems.
+Versions before v0.6.0 used the kernel module from Sysdig called `sysdig-probe`. As of 0.6.0, falco uses its own kernel module `falco-probe`. The kernel modules are actually built from the same source code, but having a falco-specific kernel module allows falco and Sysdig to be updated independently without driver compatibility problems.
 
 # Installing the kernel module
 

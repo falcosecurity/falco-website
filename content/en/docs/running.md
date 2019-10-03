@@ -44,9 +44,9 @@ By default, starting the container will attempt to load and/or build the Falco k
 docker run ... -e SYSDIG_SKIP_LOAD=1 ... falcosecurity/falco:{{< latest >}}
 ```
 
-## Running falco manually
+## Running Falco manually
 
-If you'd like to run falco by hand, here's the full usage description for falco:
+If you'd like to run Falco by hand, here's the full usage description for falco:
 
 ```
 Usage: falco [options]
@@ -95,7 +95,7 @@ Options:
  -o, --option <key>=<val>      Set the value of option <key> to <val>. Overrides values in configuration file.
                                <key> can be a two-part <key>.<subkey>
  -p <output_format>, --print=<output_format>
-                               Add additional information to each falco notification's output.
+                               Add additional information to each Falco notification's output.
                                With -pc or -pcontainer will use a container-friendly format.
                                With -pk or -pkubernetes will use a kubernetes-friendly format.
                                With -pm or -pmesos will use a mesos-friendly format.
@@ -122,7 +122,7 @@ Options:
  -t <tag>                      Only run those rules with a tag=<tag>. Can be specified multiple times.
                                Can not be specified with -T/-D.
  -U,--unbuffered               Turn off output buffering to configured outputs. This causes every
-                               single line emitted by falco to be flushed, which generates higher CPU
+                               single line emitted by Falco to be flushed, which generates higher CPU
                                usage but is useful when piping those outputs into another process
                                or into a script.
  -V,--validate <rules_file>    Read the contents of the specified rules(s) file and exit

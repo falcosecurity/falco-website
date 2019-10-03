@@ -16,8 +16,8 @@ When at least one dropped event is detected, Falco can take any of the following
 
 * "ignore": do nothing. If an empty list is provided, ignore is assumed.
 * "log": log a CRITICAL message noting that the buffer was full.
-* "alert": emit a falco alert noting that the buffer was full.
-* "exit": exit falco with a non-zero rc.
+* "alert": emit a Falco alert noting that the buffer was full.
+* "exit": exit Falco with a non-zero rc.
 
 Here's an sample log message, alert, and exit message:
 
