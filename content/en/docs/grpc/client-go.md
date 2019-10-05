@@ -5,21 +5,23 @@ weight: 2
 
 The [client-go](https://github.com/falcosecurity/client-go) Go library provides:
 
-- [type and service mappings](https://godoc.org/github.com/falcosecurity/client-go/pkg/api/output) for the Falco gRPC API ([output schema](./outputs))
-- `Client` and `Config` structs ([docs here](https://godoc.org/github.com/falcosecurity/client-go/pkg/client)) aimed at simplifying the connection to the gRPC server
+- [type and service mappings](https://godoc.org/github.com/falcosecurity/client-go/pkg/api/output) for the Falco gRPC API. For more information, see [output schema](./outputs).
+- `Client` and `Config` structs aimed at simplifying the connection to the gRPC server. For more information, see [documentation](https://godoc.org/github.com/falcosecurity/client-go/pkg/client).
 
-A fully-working example which just connects to the Falco gRPC Outputs API and outputs the events in JSON is [here](https://github.com/falcosecurity/client-go/blob/master/examples/output/main.go).
+Refer to the [fully-functional example](https://github.com/falcosecurity/client-go/blob/master/examples/output/main.go) to see how the Go client connects to the Falco gRPC Outputs API and displays the events in JSON.
 
-From within the [client-go](https://github.com/falcosecurity/client-go) root directory, assuming you have the certificates in the example's path (`/tmp/{client.crt,client.key,ca.crt}`), run it with:
+1. Ensure that you have the certificates in the example's path at `/tmp/{client.crt,client.key,ca.crt}`.
 
-{{< highlight bash >}}
-go run examples/output/main.go | jq
-{{< / highlight >}}
+2. From the [client-go](https://github.com/falcosecurity/client-go) root directory, run:
 
-You should see output events starting flowing in depending on the set of rules
+  ```
+  $ go run examples/output/main.go | jq
+  ```
+
+  You should see output events starting flowing in depending on the set of rules
 your Falco instance has.
 
-{{< highlight json >}}
+  ```
 {
   "time": {
     "seconds": 1570094449,
@@ -62,4 +64,4 @@ me file=<NA> res=0 oldpath=/usr/bin/realpath newpath=/usr/bin/realpath container
     "user.name": "vagrant"
   }
 }
-{{< / highlight >}}
+  ```
