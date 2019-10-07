@@ -14,14 +14,14 @@ Refer to the [fully-functional example](https://github.com/falcosecurity/client-
 
 2. From the [client-go](https://github.com/falcosecurity/client-go) root directory, run:
 
-  ```
+{{< highlight bash >}}
   $ go run examples/output/main.go | jq
-  ```
+{{< / highlight >}}
 
   You should see output events starting flowing in depending on the set of rules
 your Falco instance has.
 
-  ```
+{{< highlight json >}}
 {
   "time": {
     "seconds": 1570094449,
@@ -64,4 +64,4 @@ me file=<NA> res=0 oldpath=/usr/bin/realpath newpath=/usr/bin/realpath container
     "user.name": "vagrant"
   }
 }
-  ```
+{{< / highlight >}}
