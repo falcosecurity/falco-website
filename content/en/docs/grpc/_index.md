@@ -18,8 +18,7 @@ The Falco gRPC server and the Falco gRPC Outputs APIs are not enabled by default
 
 To enable them, edit the `falco.yaml` Falco configuration file. A sample Falco configuration file is given below:
 
-{{< highlight yaml >}}
-
+```yaml
 # gRPC server configuration.
 # The gRPC server is secure by default (mutual TLS) so you need to generate certificates and update their paths here.
 # By default the gRPC server is off.
@@ -39,8 +38,7 @@ grpc:
 # By enabling this all the output events will be kept in memory until you read them with a gRPC client.
 grpc_output:
   enabled: true
-
-{{< / highlight >}}
+```
 
 
 ### Certificates
@@ -57,47 +55,46 @@ In the meantime, use the following script to generate the certificates.
 
 Run the following command:
 
-{{< highlight bash >}}
+```bash
 $ openssl genrsa -passout pass:1234 -des3 -out ca.key 4096
 $ openssl req -passin pass:1234 -new -x509 -days 365 -key ca.key -out ca.crt -subj  "/C=SP/ST=Italy/L=Ornavasso/O=Test/OU=Test/CN=Root CA"
-{{< / highlight >}}
+```
 
 ### Generate valid Server Key/Cert
 
 Run the following command:
 
-{{< highlight bash >}}
+```bash
 $ openssl genrsa -passout pass:1234 -des3 -out server.key 4096
 $ openssl req -passin pass:1234 -new -key server.key -out server.csr -subj  "/C=SP/ST=Italy/L=Ornavasso/O=Test/OU=Server/CN=localhost"
 $ openssl x509 -req -passin pass:1234 -days 365 -in server.csr -CA ca.crt -CAkey ca.key -set_serial 01 -out server.crt
-{{< / highlight >}}
+```
 
 ### Remove passphrase from the Server Key
 
 Run the following command:
 
-{{< highlight bash >}}
+```bash
 $ openssl rsa -passin pass:1234 -in server.key -out server.key
-{{< / highlight >}}
-
+```
 
 ### Generate valid Client Key/Cert
 
 Run the following command:
 
-{{< highlight bash >}}
+```bash
 $ openssl genrsa -passout pass:1234 -des3 -out client.key 4096
 $ openssl req -passin pass:1234 -new -key client.key -out client.csr -subj  "/C=SP/ST=Italy/L=Ornavasso/O=Test/OU=Client/CN=localhost"
 $ openssl x509 -passin pass:1234 -req -days 365 -in client.csr -CA ca.crt -CAkey ca.key -set_serial 01 -out client.crt
-{{< / highlight >}}
+```
 
 ### Remove passphrase from Client Key
 
 Run the following command:
 
-{{< highlight bash >}}
+```bash
 $ openssl rsa -passin pass:1234 -in client.key -out client.key
-{{< / highlight >}}
+```
 
 ## Usage
 
@@ -105,8 +102,8 @@ When the configuration is complete, Falco is ready to expose its gRPC server and
 
 To do so, simply run Falco. For example:
 
-{{< highlight bash >}}
+```bash
 $ falco -c falco.yaml -r rules/falco_rules.yaml -r rules/falco_rules.local.yaml -r rules/k8s_audit_rules.yaml
-{{< / highlight >}}
+```
 
 Refer to the [Go example](./outputs) to learn how to receive and consume the output events.
