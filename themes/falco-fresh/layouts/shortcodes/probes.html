@@ -1,0 +1,66 @@
+{{ $sourceURL := (.Get 0) }}
+<script type="text/javascript" src="../../js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.dataTables.min.js" defer></script>
+<script>
+    var urlParams = new URLSearchParams(window.location.search);
+    var searchString = urlParams.get('search')
+    if (searchString == null) {
+        searchString = "";
+    };
+    if (urlParams.get('falcoversion') != null) {
+        $(document).ready(function(){
+        $.getJSON("{{ $sourceURL }}/data/"+urlParams.get('falcoversion')+".json", function( data ) {
+            $('#probes').DataTable({
+                "oSearch": {"sSearch": searchString },
+                "paging": false,
+                "data" : data,
+                "order": [[ 5, "desc" ]],
+                columns : [
+                    { "data" : "falco_version"},
+                    { "data" : "architecture"},
+                    { "data" : "kernel_version"},
+                    { "data" : "size"},
+                    { "data" : "creation_date"},
+                    { "data" : "link",  render: function ( data, type, row ) {
+                                            return '<a href="'+data+'" download="'+data+'"><span class="fas fa-download"></span></a>';
+                                        }},
+                    { "data" : "kernel_version", render: function ( data, type, row ) {
+                                            return '<a href="./?falcoversion='+urlParams.get('falcoversion')+'&search='+data+'"><span class="fas fa-search"></span></a>';
+                                        }},
+                    ]
+                });
+            });
+        });
+    }
+</script>
+<div>Select your version : <span id="releases" style="font-size: 17px;"></span></div>
+<br>
+<div>
+<table id="probes" class="table table-striped table-condensed">
+    <thead>
+        <tr>
+            <th>Falco Release</th>
+            <th>Architecture</th> 
+            <th>Kernel Version</th> 
+            <th>Size</th> 
+            <th>Creation Date</th> 
+            <th>Download Link</th> 
+            <th>Share Link</th>
+        </tr>
+    </thead>
+</table>
+</div>
+<script>
+    $.getJSON("{{ $sourceURL }}/data/index.json", function(data) {
+        for (var key in data) {
+            var aelement = document.createElement('a');
+            var linkText = document.createTextNode(" " + key + " ");
+            aelement.appendChild(linkText);
+            aelement.title = key;
+            aelement.href = "?falcoversion="+key;
+            aelement.style.cssText = "padding-left: 6px";
+            document.getElementById("releases").appendChild(aelement);
+        }
+    });
+</script>
