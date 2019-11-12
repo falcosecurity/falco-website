@@ -4,3 +4,4 @@
 # Hugo-generated assets
 public/
 resources/
+*idea*

@@ -6,7 +6,7 @@ weight: 1
 
 ## About Falco
 
-Falco is a behavioral activity monitor designed to detect anomalous activity in your applications. Powered by [Sysdig](https://github.com/draios/sysdig)'s [system call capture](https://sysdig.com/blog/fascinating-world-linux-system-calls/) infrastructure, Falco lets you continuously monitor and detect container, application, host, and network activity, all in one place, from one source of data, with one set of [rules](rules).
+Falco is a behavioral activity monitor designed to detect anomalous activity in your applications. Using powerful [system call capture](https://sysdig.com/blog/fascinating-world-linux-system-calls/) technology originally built by Sysdig. Falco lets you continuously monitor and detect container, application, host, and network activity, all in one place, from one source of data, with one set of [rules](rules).
 
 ### What kind of behaviors can Falco detect?
 
@@ -28,9 +28,9 @@ Falco is deployed as a long-running daemon. You can install it as a [Debian](ins
 
 Falco is configured via (1) a [rules file](rules) that defines which behaviors and events to watch for and (2) a [general configuration file](config). Rules are expressed in a high-level, human-readable language. We've provided a sample rules file [`./rules/falco_rules.yaml`](https://github.com/falcosecurity/falco/blob/dev/rules/falco_rules.yaml) as a starting point—you can (and will likely want!) to adapt it to your environment.
 
-When developing rules, one helpful feature is Falco's ability to read trace files saved by Sysdig. This allows you to "record" the offending behavior once and replay it with Falco as many times as needed while tweaking your rules.
+When developing rules, one helpful feature is Falco's ability to read trace files saved by the `sysdig ` command line tool. This allows you to "record" the offending behavior once and replay it with Falco as many times as needed while tweaking your rules.
 
-Once deployed, Falco uses the Sysdig kernel module and userspace libraries to watch for any events matching one of the conditions defined in the rule file. If a matching event occurs, a notification is written to the the configured output(s).
+Once deployed, Falco uses the kernel modules and eBPF probes to bring events to userspace. Falco watches for any events matching one of the conditions defined in the rule file. If a matching event occurs, a notification is written to the the configured output(s).
 
 ## Falco alerts
 
