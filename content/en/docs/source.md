@@ -85,15 +85,12 @@ Each of these respects an option `USE_BUNDLED_<DEPENDENCY_NAME>` you can set to 
 - tbb
 - yamlcpp
 - zlib
-
-Furthermore Falco also depends on the following libraries coming from the Sysdig repository:
-
 - libscap
 - libsinsp
 
 ## Obtain the source code
 
-First, make sure you have a working copy of the Falco source code along with a working copy of Sysdig to compile `libscap` and `libsinsp`.
+First, make sure you have a working copy of the Falco source code along with a working copy of `libsinsp` and `libscap`.
 
 **Clone Falco**
 
@@ -101,7 +98,7 @@ First, make sure you have a working copy of the Falco source code along with a w
 git clone https://github.com/falcosecurity/falco.git
 ```
 
-**Clone Sysdig**
+**Clone libscap and libsinsp**
 
 ```bash
 git clone https://github.com/draios/sysdig.git
