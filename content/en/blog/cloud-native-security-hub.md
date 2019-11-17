@@ -17,9 +17,8 @@ Notice how the meta information found in the [repository](https://github.com/fal
 
 The anatomy of a Falco rule for the security hub is as follows:
 
-
+</center>
 ```yaml
-
 apiVersion: v1
 kind: FalcoRules
 name: CVE-2020-12345
@@ -40,7 +39,7 @@ rules:
   - raw: |
   # Here is a valid Lua rule for Falco
 ```
-
+<center>
 
 # Contributing 
 
