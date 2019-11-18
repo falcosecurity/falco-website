@@ -26,7 +26,7 @@ Falco 可以监测调用 [Linux 系统调用](http://man7.org/linux/man-pages/ma
 
 Falco 应作为守护程序部署。您可将其作为一款 [Debian](installation#debian)/[rpm](installation#rhel) 软件包安装在主机或容器宿主上，亦或可以作为[容器](installation#docker)部署。当然，您也可以下载[源代码](source)并自己动手编译安装。
 
-您可通过[规则文件](rules)或[通用配置文件](config)定义 Falco 应监视的行为及事件。我们提供了一份示例规则文件 [`./rules/falco_rules.yaml`](https://github.com/falcosecurity/falco/blob/dev/rules/falco_rules.yaml)，您可随意修改规则来适配您的工作环境。
+您可通过[规则文件](rules)或[通用配置文件](configuration)定义 Falco 应监视的行为及事件。我们提供了一份示例规则文件 [`./rules/falco_rules.yaml`](https://github.com/falcosecurity/falco/blob/dev/rules/falco_rules.yaml)，您可随意修改规则来适配您的工作环境。
 
 当您撰写规则时，Falco 可读取由 Sysdig 产生的回溯文件。这一特性可让您在调整规则时“录制”有害行为，并无限次数地回放。
 

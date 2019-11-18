@@ -26,7 +26,7 @@ People often ask how Falco differs from [SELinux](https://en.wikipedia.org/wiki/
 
 Falco is deployed as a long-running daemon. You can install it as a [Debian](installation#debian)/[rpm](installation#rhel) package on a regular host or container host, you can deploy it as a [container](installation#docker), or you can build it [from source](source).
 
-Falco is configured via (1) a [rules file](rules) that defines which behaviors and events to watch for and (2) a [general configuration file](config). Rules are expressed in a high-level, human-readable language. We've provided a sample rules file [`./rules/falco_rules.yaml`](https://github.com/falcosecurity/falco/blob/dev/rules/falco_rules.yaml) as a starting point—you can (and will likely want!) to adapt it to your environment.
+Falco is configured via (1) a [rules file](rules) that defines which behaviors and events to watch for and (2) a [general configuration file](configuration). Rules are expressed in a high-level, human-readable language. We've provided a sample rules file [`./rules/falco_rules.yaml`](https://github.com/falcosecurity/falco/blob/dev/rules/falco_rules.yaml) as a starting point—you can (and will likely want!) to adapt it to your environment.
 
 When developing rules, one helpful feature is Falco's ability to read trace files saved by the `scap` format. This allows you to "record" the offending behavior once and replay it with Falco as many times as needed while tweaking your rules.
 
