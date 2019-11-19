@@ -13,11 +13,60 @@ We have published an [open source repository](https://github.com/falcosecurity/c
 
 In this quick example we will be adding runtime detection for `CVE-2019-11246`. 
 
+#### Understanding Rules
+
 Notice how the meta information found in the [repository](https://github.com/falcosecurity/cloud-native-security-hub/blob/master/resources/falco/cve/2019-11246.yaml#L10-L19) matches up with the data rendered on [the security hub page for CVE-2019-11246](https://github.com/falcosecurity/cloud-native-security-hub/blob/master/resources/falco/cve/2019-11246.yaml#L10-L19)
 
 Currently we support `helm upgrade` as well as raw YAML for rules.
 
-We have plans to take it a step further with our new CLI tool `falcoctl` that is currently in an alpha state. Keep reading to find out more on how to get involved and contribute.
+#### Installing with Helm
+
+If you are using `helm` to install and manage Falco you can mutate the configuration using friendly `helm` commands. In this example we use `-f` to append our `falco` installment with a rule from the repository.
+
+```bash
+helm upgrade falco -f https://api.securityhub.dev/resources/cve-2019-11246/custom-rules.yaml stable/falco
+```
+
+#### Installing with raw YAML
+
+You can click the `yaml` button in the repository website to view the raw YAML for the rule:
+
+```yaml
+- macro: safe_kubectl_version
+  condition: (jevt.value[/userAgent] startswith "kubectl/v1.19" or
+              jevt.value[/userAgent] startswith "kubectl/v1.18" or
+              jevt.value[/userAgent] startswith "kubectl/v1.17" or
+              jevt.value[/userAgent] startswith "kubectl/v1.16" or
+              jevt.value[/userAgent] startswith "kubectl/v1.15" or
+              jevt.value[/userAgent] startswith "kubectl/v1.14.3" or
+              jevt.value[/userAgent] startswith "kubectl/v1.14.2" or
+              jevt.value[/userAgent] startswith "kubectl/v1.13.7" or
+              jevt.value[/userAgent] startswith "kubectl/v1.13.6" or
+              jevt.value[/userAgent] startswith "kubectl/v1.12.9")
+
+# CVE-2019-11246
+# Run kubectl version --client and if it does not say client version 1.12.9, 1.13.6, or 1.14.2 or newer,  you are running a vulnerable version.
+- rule: K8s Vulnerable Kubectl Copy
+  desc: Detect any attempt vulnerable kubectl copy in pod
+  condition: kevt_started and pod_subresource and kcreate and
+             ka.target.subresource = "exec" and ka.uri.param[command] = "tar" and
+             not safe_kubectl_version
+  output: Vulnerable kubectl copy detected (user=%ka.user.name pod=%ka.target.name ns=%ka.target.namespace action=%ka.target.subresource command=%ka.uri.param[command] userAgent=%jevt.value[/userAgent])
+  priority: WARNING
+  source: k8s_audit
+  tags: [k8s]
+```
+
+You can then install using the supported Falco parlance defined [in the official documentation](https://falco.org/docs/rules/#appending-to-lists-rules-and-macros). 
+
+We have plans to take it a step further with our new CLI tool `falcoctl` that is currently in an alpha state. Some basic features we are looking to build
+
+ - CLI style interface for managing `falco` rules (install, get, update, remove)
+ - Authentication of rules using hashing and well-known keys in a repository 
+ - Documentation on how to build your own repository 
+ - Gitops style workflow 
+
+Keep reading to find out more on how to get involved and contribute, especially if you have ideas. We would **love** to hear them.
 
 # Getting involved 
 
