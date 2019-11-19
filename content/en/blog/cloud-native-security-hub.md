@@ -31,26 +31,7 @@ We are currently in the process of building out command line tooling for managin
 
 If you write Go, and are interested in joining in the effort of building out a management experience for users, we would love to collaborate with you! Please reach out using the links above and we can get started. 
 
-We are currently working on proposing the following subcommands with `falcoctl`. We welcome all ideas and would love to invite new contributors to work on these features or offer ideas and suggestions. 
-
-```bash 
-# This will add a rule to the Falco configuration directory
-# This will use the local kubeconfig to authenticate with the cluster
-# We can add a --local flag or something else to tell Falcoctl 
-falcoctl install rule github.com/org/repo/rule/
-
-# This will add a repository to the local cache to use to install 
-falcoctl add repo github.com/org/repo 
-
-# This will hot-reload Falco by sending SIGHUP to the process to reload it, thus reloading newly installed rules
-falcoctl reload
-
-# Other ideas for Falcoctl
-falcoctl delete rule 
-falcoctl explain rule 
-falcoctl list rules 
-falcoctl new rule 
-```
+We have [proposed some changes](https://github.com/falcosecurity/falcoctl/issues/44) to the `falcoctl` code base to begin work on using `falcoctl` to manage rules. 
 
 If reading about this gets you excited, and you would be interested in collaborating we would love to talk more. 
 
