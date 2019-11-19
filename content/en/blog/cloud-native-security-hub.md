@@ -76,7 +76,7 @@ If you are interested in getting involved with writing rules, or building out to
 
 ### Integrating with Falcoctl
 
-We are currently in the process of building out command line tooling for managing security hub rules with [falcoctl](github.com/falcosecurity/falcoctl).
+We are currently in the process of building out command line tooling for managing security hub rules with [falcoctl](https://github.com/falcosecurity/falcoctl).
 
 If you write Go, and are interested in joining in the effort of building out a management experience for users, we would love to collaborate with you! Please reach out using the links above and we can get started. 
 
