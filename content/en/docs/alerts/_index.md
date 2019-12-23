@@ -62,7 +62,7 @@ Syslog messages are sent with a facility of LOG_USER. The rule's priority is use
 
 ## Program Output
 
-When configured to send alerts to a program, for each alert the program is started and written to its standard input. You can only configure a single program output (e.g. route alerts to a single program) at a time.
+When configured to send alerts to a program, Falco starts the program for each alert and writes its contents to the program's standard input. You can only configure a single program output (e.g. route alerts to a single program) at a time.
 
 For example, given a `falco.yaml` configuration of:
 
