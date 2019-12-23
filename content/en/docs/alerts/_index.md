@@ -73,6 +73,15 @@ program_output:
   program: mail -s "Falco Notification" someone@example.com
 ```
 
+If the program cannot normally accept an input from standard input, `xargs` can be used to pass the falco events with an argument. For example :
+
+```yaml
+program_output:
+  enabled: true
+  keep_alive: false
+  program: "xargs -I {} aws --region ${region} sns publish --topic-arn ${falco_sns_arn} --message {}"
+```
+
 When `keep_alive` is false (the default), for each alert falco will run the program `mail -s ...` and write the alert to the program. The program is run via a shell, so it's possible to specify a command pipeline if you wish to add additional formatting.
 
 If `keep_alive` is set to true, before the first alert falco will spawn the program and write the alert. The program pipe will be kept open for subsequent alerts.  Output is buffered and will be flushed only on close. (This can be changed with --unbuffered). 
