@@ -20,10 +20,11 @@
           <img src="{{ printf "/images/%s" $image | relURL }}" alt="Description">
         </figure>
         {{ with $subtitle }}
-        <h2 class="subtitle is-5 is-muted">
+        <p class="subtitle is-5 is-muted">
           {{ . }}
-        </h2>
+        </p>
         {{ end }}
+	<p class="subtitle is-5 is-muted">Falco is the first runtime security project to join CNCF Incubating stage.</p>
         <p>
           <a class="button cta rounded primary-btn raised" href="{{ $buttonLink }}">
             {{ $buttonText }}

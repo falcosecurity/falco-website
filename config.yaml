@@ -10,36 +10,46 @@ enableInlineShortcodes: true
 languages:
   en:
     languageName: English
-    title: Falco — Container-native Runtime Security
+    title: Falco — Cloud-Native Runtime Security
     contentDir: content/en
     params:
       heroText:
         # Main hero title
-        title: Container Native Runtime Security
+        title: Cloud-Native Runtime Security
         # Hero subtitle (optional)
-        subtitle: Falco is an open source project for intrusion and abnormality detection for Cloud Native platforms such as Kubernetes, Mesosphere, and Cloud Foundry. Detect abnormal application behavior. Alert via Slack, Fluentd, NATS, and more. Protect your platform by taking action through serverless (FaaS) frameworks, or other automation. 
+        subtitle: Falco, the open source cloud-native runtime security project, is the defacto Kubernetes threat detection engine. Falco detects unexpected application behavior and alerts on threats at runtime.
         # Button text
         buttontext: Get started
-      sectionAbout:
-        title: About Falco.
-        summary: With more responsibility shifting left to developers and the opaque nature of containers, organizations require deeper insight into container activities. The Falco project was hatched to understand container behavior and protect your platform from possible malicious activity. Leveraging Sysdig’s open source Linux kernel instrumentation, Falco gains deep insight into system behavior. The rules engine can then detect abnormal activity in applications, containers, the underlying host, and the container platform. 
-      section1:
-        title: Key Features.
+      runtime:
+        title: Why Runtime Security?
+        intro: >-
+               Securing Kubernetes requires putting controls in place to detect unexpected behavior that could be malicious. Examples include:
+        items:
+          - example: Exploits of unpatched and new vulnerabilities
+          - example: Insecure configurations
+          - example: Leaked or weak credentials
+          - example: Insider threats
+        closing: Even when processes are in place for vulnerability scanning and implementing pod security and network policies, not every risk will be addressed. You still need mechanisms to confirm these security barriers are effective, as well as help to configure them and provide a last line of defense when they fail.
+      whyfalco:
+        title: Why Falco for Runtime Detection?
         subtitle: 
         tiles:
-        - title: Platform Aware
+        - title: Strengthen security
           icon: check.png
-          text: Build rules specific to your Cloud Native platforms to enforce policy across all your containers & microservices.
-        - title: Container-native
+          text: With Falco, you can create security rules driven by a context-rich and flexible engine to define unexpected application behavior.
+        - title: Reduce risk
           icon: box.png
-          text: Runtime Security built for containers. Built from the ground up to natively support containerized applications.
-        - title: Deep Visibility
+          text: You can immediately respond to policy violation alerts by plugging Falco into your current security response workflows and processes.
+        - title: Leverage OOO threat detection
           icon: scalable.png
-          text: Complete container visibility through a single sensor. Gain insight into application and container behavior. 
-      section2:
-        title: Downloads + Resources.
-        subtitle: Get started today, contribute to the open source project, & learn more.
-        resources:
+          text: Falco rules are out of the box detections, alerting on cloud-native malicious activity and CVE exploits.
+      syscalls:
+        title: System calls deliver deep visibility
+        summary: Falco efficiently leverages Extended Berkeley Packet Filter (eBPF), a secure mechanism, to capture system calls and gain deep visibility. By adding Kubernetes application context and Kubernetes API audit events, teams can understand who did what.
+      resources:
+        title: Downloads + Resources
+        subtitle: Get started today, contribute to the open source project & learn more.
+        items:
         - title: Contribute
           text: Jump over to our GitHub page to contribute to our open source ecosystem.
           # Icon (from /images/illustrations/icons/___.svg)
@@ -54,104 +64,31 @@ languages:
         - title: Documentation
           text: In the official docs, you can find information about [installing Falco](/docs/installation), [configuration options](/docs/configuration), and writing [custom rules](/docs/rules).
           icon: documentation-2.png
-          buttonText: /docs
+          buttonText: Falco Documentation
           buttonLink: /docs
         - title: Connect
           text: Join our Slack team to interact with other users and developers.
           icon: chat.png
           buttonText: Falco Slack
-          buttonLink: https://slack.sysdig.com        
-      section3:
-        title: Stay up to date.
+          buttonLink: https://slack.sysdig.com/
+      signup:
+        title: Stay up to date
         subtitle: Sign-up for project updates.
         buttonText: Sign-up!
     menu:
       navbar:
-      - name: About
-        url: "/#about"
-        weight: 1
-      - name: Features
-        url: "/#features"
+      - name: Why Falco?
+        url: "/#whyfalco"
         weight: 2
-      - name: Download
-        url: "/#download"
+      - name: Get started
+        url: "/#resources"
         weight: 3
-      - name: Docs
-        url: /docs
+      - name: Documentation
+        url: "/docs"
         weight: 4
       - name: Blog
-        url: /blog
+        url: "/blog"
         weight: 5
-  zh:
-    languageName: 中文 Chinese
-    title: Falco — Container-native Runtime Security
-    contentDir: content/zh
-    params:
-      heroText:
-        # Main hero title
-        title: Container Native Runtime Security
-        # Hero subtitle (optional)
-        subtitle: Falco is an open source project for intrusion and abnormality detection for Cloud Native platforms such as Kubernetes, Mesosphere, and Cloud Foundry. Detect abnormal application behavior. Alert via Slack, Fluentd, NATS, and more. Protect your platform by taking action through serverless (FaaS) frameworks, or other automation.
-        # Button text
-        buttontext: Get started
-      sectionAbout:
-        title: About Falco. (in chinese!)
-        summary: With more responsibility shifting left to developers and the opaque nature of containers, organizations require deeper insight into container activities. The Falco project was hatched to understand container behavior and protect your platform from possible malicious activity. Leveraging Sysdig’s open source Linux kernel instrumentation, Falco gains deep insight into system behavior. The rules engine can then detect abnormal activity in applications, containers, the underlying host, and the container platform. 
-      section1:
-        title: Key Features.
-        subtitle: 
-        tiles:
-        - title: Platform Aware
-          icon: check.png
-          text: Build rules specific to your Cloud Native platforms to enforce policy across all your containers & microservices.
-        - title: Container-native
-          icon: box.png
-          text: Runtime Security built for containers. Built from the ground up to natively support containerized applications.
-        - title: Deep Visibility
-          icon: scalable.png
-          text: Complete container visibility through a single sensor. Gain insight into application and container behavior. 
-      section2:
-        title: Downloads + Resources.
-        subtitle: Get started today, contribute to the open source project, & learn more.
-        resources:
-        - title: Contribute
-          text: Jump over to our GitHub page to contribute to our open source ecosystem.
-          # Icon (from /images/illustrations/icons/___.svg)
-          icon: group.png
-          buttonText:  Falco Github
-          buttonLink: https://github.com/falcosecurity/falco
-        - title: Download
-          text: Get started with our Falco installation guide.
-          icon: download.png
-          buttonText: Falco Install Guide
-          buttonLink: /docs/installation
-        - title: Documentation
-          text: In the official docs, you can find information about [installing Falco](/docs/installation), [configuration options](/docs/configuration), and writing [custom rules](/docs/rules).
-          icon: documentation-2.png
-          buttonText: /docs
-          buttonLink: /docs
-        - title: Connect
-          text: Join our Slack team to interact with other users and developers.
-          icon: chat.png
-          buttonText: Falco Slack
-          buttonLink: https://slack.sysdig.com        
-      section3:
-        title: Stay up to date.
-        subtitle: Sign-up for project updates.
-        buttonText: Sign-up!
-    menu:
-      navbar:
-      - name: About
-        url: "/#about"
-        weight: 1
-      - name: Features
-        url: "/#features"
-        weight: 2
-      - name: Download
-        url: "/#download"
-      - name: Docs
-        url: /docs
-        weight: 3
 
 params:
   version: v0.18.0
@@ -173,10 +110,10 @@ params:
       alt: Kubernetes
     - src: docker.svg
       alt: Docker
-    - src: mesosphere.svg
-      alt: Mesosphere
-    - src: rkt.svg
-      alt: Rkt
+    - src: red-hat-openshift-logo-grayscale.svg
+      alt: Red Hat Openshift
+    - src: cri-o-logo-grayscale.svg
+      alt: CRI-O
     - src: helm.svg
       alt: Helm
     - src: fluentd.svg
@@ -185,12 +122,15 @@ params:
       alt: Kubeless
     - src: slack.svg
       alt: Slack
-
+    - src: splunk-logo-grayscale.svg
+      alt: Splunk
+    - src: pagerduty-logo-grayscale.svg
+      alt: PagerDuty
 
   # Customizable navbar. For a dropdown, add a "sublinks" list.
   navbar:
     cncf:
       logo: cncf-black.svg
-      cncfLink: https://cncf.io
-      level: Sandbox
-      levelLink: https://github.com/cncf/toc/blob/master/process/sandbox.md
+      cncfLink: https://cncf.io/
+      level: Incubating
+      levelLink: https://github.com/cncf/toc/blob/master/process/graduation_criteria.adoc
