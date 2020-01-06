@@ -1,0 +1,29 @@
+{{- $runtime      := .Site.Params.runtime }}
+{{- $title        := index $runtime "title" }}
+{{- $intro        := index $runtime "intro" }}
+{{- $closing      := index $runtime "closing" }}
+{{- $items        := index $runtime "items" }}
+<a id="runtime"></a>
+<section class="section section-feature-grey">
+  <div class="container">
+    <div class="title-wrapper has-text-centered">
+      <h2 class="title is-3 has-text-weight-normal">{{ $title }}</h2>
+      <div class="divider is-centered"></div>
+    </div>
+    <div class="content-wrapper pb-0">
+      <div class="columns">
+        <div class="column is-10 is-offset-1 has-text-centered">
+          <p class="is-size-5 is-muted" >{{ $intro }}</p>
+	  <p class="is-size-5 is-muted" >
+	    <ul class="is-size-5 is-muted">
+            {{- range $items }}
+            <li>{{ .example }}</li>
+	    {{- end }}
+	    </ul>
+	  </p>
+          <p class="is-size-5 is-muted" >{{ $closing }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
