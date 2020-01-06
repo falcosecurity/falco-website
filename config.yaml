@@ -36,13 +36,13 @@ languages:
         tiles:
         - title: Strengthen security
           icon: check.png
-          text: With Falco, you can create security rules driven by a context-rich and flexible engine to define unexpected application behavior.
+          text: Create security rules driven by a context-rich and flexible engine to define unexpected application behavior.
         - title: Reduce risk
           icon: box.png
-          text: You can immediately respond to policy violation alerts by plugging Falco into your current security response workflows and processes.
-        - title: Leverage OOO threat detection
+          text: Immediately respond to policy violation alerts by plugging Falco into your current security response workflows and processes.
+        - title: Leverage up-to-date rules
           icon: scalable.png
-          text: Falco rules are out of the box detections, alerting on cloud-native malicious activity and CVE exploits.
+          text: Alert using community-sourced detections of malicious activity and CVE exploits.
       syscalls:
         title: System calls deliver deep visibility
         summary: Falco efficiently leverages Extended Berkeley Packet Filter (eBPF), a secure mechanism, to capture system calls and gain deep visibility. By adding Kubernetes application context and Kubernetes API audit events, teams can understand who did what.
