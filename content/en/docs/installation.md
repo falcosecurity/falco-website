@@ -162,7 +162,7 @@ sudo bash install-falco.sh
 
 ### Package install {#package}
 
-#### RHEL
+#### CentOS/RHEL
 
 1. Trust the Draios GPG key and configure the yum repository:
 
@@ -176,7 +176,7 @@ sudo bash install-falco.sh
     > **Note** — The following command is required only if DKMS is not available in the distribution. You can verify if DKMS is available using `yum list dkms`. If necessary, install it using:
 
     ```shell
-    rpm -i https://mirror.us.leaseweb.net/epel/6/i386/epel-release-6-8.noarch.rpm
+    yum install epel-release
     ```
 
 1. Install kernel headers:
