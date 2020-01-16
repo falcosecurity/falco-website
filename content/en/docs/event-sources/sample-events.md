@@ -3,7 +3,11 @@ title: Generating sample events
 weight: 4
 ---
 
-If you'd like to check if Falco is working properly, we've created a test program [`event_generator`](https://github.com/falcosecurity/falco/blob/dev/docker/event-generator/event_generator.cpp) that performs a variety of suspect actions that are detected by the current Falco ruleset.
+If you'd like to check if Falco is working properly, we have sample programs that can perform activity for both our syscall and k8s audit related rules.
+
+## System Call Activity
+
+We've created a test program [`event_generator`](https://github.com/falcosecurity/falco/blob/dev/docker/event-generator/event_generator.cpp) that performs a variety of suspect actions that are detected by the current Falco ruleset.
 
 Here's the usage block for the test program:
 
@@ -47,11 +51,37 @@ Options:
      -o/--once: Perform actions once and exit
 ```
 
-The program packaged as a [Docker image](https://hub.docker.com/r/sysdig/falco-event-generator/) on [Docker Hub](https://hub.docker.com). To run the image:
+> **Warning** — We strongly recommend that you run the program within Docker (see below), as it modifies files and directories below `/bin`, `/etc`, `/dev`, etc.
+
+## K8s Audit Activity
+
+We've created a shell script [`k8s_event_generator.sh`](https://github.com/falcosecurity/falco/blob/dev/docker/event-generator/k8_event_generator.sh) and supporting k8s object files that generate activity that matches the k8s audit event ruleset.
+
+In the interests of keeping things self-contained, all objects are created in a `falco-event-generator` namespace. This means that some activity related to cluster roles/cluster role bindings is not performed.
+
+You can provide a specific rule name to the script. If provided, only those objects related to that rule will trigger. The default is "all", meaning that all objects are created.
+
+The script loops forever, deleting the falco-event-generator namespace after each iteration.
+
+## Docker Image
+
+The above programs are also available as a [Docker image](https://hub.docker.com/r/falcosecurity/falco-event-generator/) on [Docker Hub](https://hub.docker.com). To run the image:
 
 ```shell
 docker pull sysdig/falco-event-generator
-docker run -it --name falco-event-generator sysdig/falco-event-generator
+docker run -it --name falco-event-generator sysdig/falco-event-generator [syscall|k8s_audit (<rule name>|all)|bash]
 ```
 
-> **Warning** — We strongly recommend that you run the program within Docker, as it modifies files and directories below `/bin`, `/etc`, `/dev`, etc.
+* syscall: generate activity for the system call rules
+* k8s_audit: generate activity for the k8s audit rules
+* bash: spawn a shell
+
+The default is "syscall" to preserve legacy behavior.
+
+The image includes a kubectl binary, but in most cases, you'll need to provide kube config files/directories that allow access to your cluster. A command like the following will work:
+
+```
+docker run -v $HOME/.kube:/root/.kube -it falcosecurity/falco-event-generator k8s_audit
+```
+
+
