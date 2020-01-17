@@ -4,11 +4,11 @@ weight: 6
 ---
 
 Welcome to the guide on how to build Falco yourself! You are very brave! Since you are already
-doing all this, chances that you are willing to contribute are high! Please read our [contributing guide](https://github.com/falcosecurity/falco/blob/dev/CONTRIBUTING.md).
+doing all this, chances that you are willing to contribute are high! Please read our [contributing guide](https://github.com/falcosecurity/.github/blob/master/CONTRIBUTING.md).
 
 ## System requirements
 
-In order compile Falco, you will need the following tools and installed on your machine.
+In order to compile Falco, you will need the following tools and installed on your machine.
 
 - wget
 - pkg-config
@@ -24,49 +24,42 @@ Following, you can find how to meet the minimum requirements in the most common 
 ### CentOS/RHEL
 
 ```bash
-yum install gcc gcc-c++ cmake make pkgconfig autoconf wget automake patch elfutils-libelf libtool kernel-devel kernel-headers
+yum install
 ```
 
 ### Fedora
 
 ```bash
-dnf install gcc gcc-c++ cmake make pkgconfig autoconf wget automake patch elfutils-libelf libtool kernel-devel kernel-headers
+dnf install
 ```
 
 ### Ubuntu
 
-```
-apt install build-essential cmake autoconf wget automake patch elfutils libelf-dev pkg-config libtool linux-headers-$(uname -r)
+```bash
+apt install
 ```
 
 ### Debian
 
-```
-apt install build-essential cmake autoconf wget automake patch elfutils libelf-dev pkg-config libtool linux-headers-$(uname -r)
+```bash
+apt install
 ```
 
 ### Arch Linux
 
+```bash
+pacman -S
 ```
-pacman -S gcc cmake make pkgconfig autoconf automake patch elfutils libelf libtool linux-headers
-```
 
-## Runtime dependencies
+## Dependencies
 
-By default Falco build bundles its runtime dependencies statically.
+By default Falco build bundles **most of** its runtime dependencies **dynamically**.
 
-You can notice this observing that the option [`USE_BUNDLED_DEPS`](https://github.com/falcosecurity/falco/blob/75b816d806d29bd47ace6b14a311c18dfc610d19/CMakeLists.txt#L86) is `ON` by default. Which in turn causes all of the dependencies options (eg., [`USE_BUNDLED_ZLIB`](https://github.com/falcosecurity/falco/blob/75b816d806d29bd47ace6b14a311c18dfc610d19/CMakeLists.txt#L91), [`USE_BUNDLED_JQ`](https://github.com/falcosecurity/falco/blob/75b816d806d29bd47ace6b14a311c18dfc610d19/CMakeLists.txt#L120), ...) to inherit this setting.
+You can notice this observing that the option `USE_BUNDLED_DEPS` is `OFF` by default. Which means that, whether applicable, Falco build will try to link against libraries already existing into your machine.
 
-In case you prefer to have all of them dynamically linked, you can change the value of this option.
+Changing such option to `ON` causes Falco build to bundle all the dependencies statically.
 
-But it's also possible to selectively declare which dependency have to be linked dynamically through the `USE_BUNDLED_*` environment variables to disable the default behavior.
-
-For example, suppose you do not want to use the bundled `jq` dependency but you prefer to link the `jq` dalready present in your system.
-To achieve this goal you need to configure the build process passing the `USE_BUNDLED_JQ=False` as shown in more detail [here](#disable-a-bundled-dependency).
-
-These are all the dependencies for which you can disable the bundling mechanism.
-
-Each of these respects an option `USE_BUNDLED_<DEPENDENCY_NAME>` you can set to `False`.
+For the sake of completeness this is the complete list of Falco dependencies:
 
 - b64
 - cares
@@ -98,12 +91,6 @@ First, make sure you have a working copy of the Falco source code along with a w
 git clone https://github.com/falcosecurity/falco.git
 ```
 
-**Clone libscap and libsinsp**
-
-```bash
-git clone https://github.com/draios/sysdig.git
-```
-
 # Build Falco
 
 There are two supported ways to build Falco
@@ -130,7 +117,7 @@ is a parent of the current directory, you can also use the absolute path for the
 ```bash
 mkdir build
 cd build
-cmake -DSYSDIG_DIR=/path/to/sysdig .. # make sure to change the path to the directory where you cloned sysdig
+cmake ..
 make
 ```
 
@@ -168,7 +155,7 @@ Do the build folder and cmake setup, then:
 make sinsp
 ```
 
-### Build the kernel driver only
+### Build the probe / kernel driver only
 
 Do the build folder and cmake setup, then:
 
@@ -204,13 +191,13 @@ Here'are some examples, always assuming your `build` folder is inside the Falco 
 -DCMAKE_C_COMPILER=$(which gcc) -DCMAKE_CXX_COMPILER=$(which g++)
 ```
 
-#### Disable a bundled dependency
+#### Enforce bundled dependencies
 
 ```
--DUSE_BUNDLED_JQ=False
+-DUSE_BUNDLED_DEPS=True
 ```
 
-Read more about Falco dependencies [here](#runtime-dependencies).
+Read more about Falco dependencies [here](#dependencies).
 
 
 #### Treat warnings as errors
@@ -240,7 +227,7 @@ Notice this variable is case-insensitive and it defaults to release.
 Optionally the user can specify the version he wants Falco to have. Eg.,
 
 ```
- -DFALCO_VERSION=0.15.0-dirty
+ -DFALCO_VERSION=0.19.0-dirty
 ```
 
 When not explicitly specifying it the build system will compute the `FALCO_VERSION` value from the git history.
@@ -345,7 +332,7 @@ You will need the following dependencies for the regression testing framework to
 To install Avocado and its plugins, you can use pip:
 
 ```
-pip install avocado-framework avocado-framework-plugin-varianter-yaml-to-mux
+pip2 install avocado-framework==69.0 avocado-framework-plugin-varianter-yaml-to-mux==69.0
 ```
 
 ### Run the tests
@@ -360,7 +347,7 @@ Change `$PWD/build` with the directory you built Falco in, if different.
 
 If you'd like to run the regression test suite against your build, you can use the [falco-tester](https://hub.docker.com/r/falcosecurity/falco-tester) container. Like the builder image, it contains the necessary environment to run the regression tests, but relies on a source directory and build directory that are mounted into the image. It's a different image than `falco-builder` as it doesn't need a compiler and needs a different base image to include the test runner framework [avocado](http://avocado-framework.github.io/).
 
-It does build a new container image `falcosecurity/falco:test` to test the process of buillding and running a container with the Falco packages built during the build step.
+It does build a new container image `falcosecurity/falco:test` (which source is into `docker/local` directory into Falco GitHub repository) to test the process of buillding and running a container with the Falco packages built during the build step.
 
 The image depends on the following parameters:
 
