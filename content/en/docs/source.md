@@ -6,51 +6,93 @@ weight: 6
 Welcome to the guide on how to build Falco yourself! You are very brave! Since you are already
 doing all this, chances that you are willing to contribute are high! Please read our [contributing guide](https://github.com/falcosecurity/.github/blob/master/CONTRIBUTING.md).
 
-## System requirements
+## CentOS 8
 
-In order to compile Falco, you will need the following tools and installed on your machine.
+CentOS 8 is the reference build environment we use to compile release artifacts.
 
-- wget
-- pkg-config
-- make
-- cmake
-- git
-- gcc
-- g++
-- kernel headers
-- libelf-dev
-
-Following, you can find how to meet the minimum requirements in the most common Linux distros.
-
-### CentOS/RHEL
+### Dependencies
 
 ```bash
-yum install
+dnf install 'dnf-command(config-manager)'
+dnf config-manager --set-enabled PowerTools # needed for libyaml-devel
+dnf install gcc gcc-c++ git make cmake autoconf automake
+dnf install libcurl-devel zlib-devel libyaml-devel openssl-devel ncurses-devel c-ares-devel libtool glibc-static libstdc++-static elfutils-libelf-devel -y
 ```
 
-### Fedora
+### Build Falco
+
+```bash
+git clone https://github.com/falcosecurity/falco.git
+cd falco
+mkdir -p build
+cd build
+cmake -DUSE_BUNDLED_DEPS=ON ..
+make falco
+```
+
+More details [here](#build-directly-on-host).
+
+### Build kernel module driver
+
+In the build directory:
+
+```bash
+make driver
+```
+
+### Build eBFP driver
+
+If you do not want to use the kernel module driver you can, alternatively, build the eBPF driver as follows.
+
+In the build directory:
+
+```bash
+dnf install clang llvm
+cmake -DBUILD_BPF=ON ..
+make bpf
+```
+
+### Build DEB/RPM packages
+
+In the build directory:
+
+```bash
+dnf install rpm-build createrepo
+make package
+```
+
+## RHEL 8
+
+```bash
+```
+
+## Fedora
 
 ```bash
 dnf install
 ```
 
-### Ubuntu
+## Ubuntu
 
 ```bash
 apt install
 ```
 
-### Debian
+## Debian
+
+### Dependencies
 
 ```bash
-apt install
+apt install git cmake build-essential linux-headers-$(uname -r)
 ```
 
-### Arch Linux
+### Build Falco
 
 ```bash
-pacman -S git cmake make gcc wget
-pacman -S zlib jq ncurses yaml-cpp openssl curl c-ares protobuf grpc libyaml
+apt install libssl-dev libyaml-dev libncurses-dev libc-ares-dev libprotobuf-dev protobuf-compiler libjq-dev libyaml-cpp-dev libgrpc++-dev protobuf-compiler-grpc libcurl4-openssl-dev libelf-dev
+```
+
+```bash
 git clone https://github.com/falcosecurity/falco.git
 cd falco
 mkdir -p build
@@ -59,13 +101,72 @@ cmake ..
 make falco
 ```
 
-If you want to build the kernel module too, execute:
+More details [here](#build-directly-on-host).
+
+### Build kernel module driver
+
+In the build directory:
 
 ```bash
 make driver
 ```
 
-In case you want to build the BPF probe, executeL
+### Build eBFP driver
+
+If you do not want to use the kernel module driver you can, alternatively, build the eBPF driver as follows.
+
+In the build directory:
+
+```bash
+apt install llvm clang
+cmake -DBUILD_BPF=ON ..
+make bpf
+```
+
+### Build DEB/RPM packages
+
+In the build directory:
+
+```bash
+apt install rpm
+make package
+```
+
+## Arch Linux
+
+### Dependencies
+
+```bash
+pacman -S git cmake make gcc wget
+pacman -S zlib jq ncurses yaml-cpp openssl curl c-ares protobuf grpc libyaml
+```
+
+### Build Falco
+
+```bash
+git clone https://github.com/falcosecurity/falco.git
+cd falco
+mkdir -p build
+cd build
+cmake ..
+make falco
+```
+
+More details [here](#build-directly-on-host).
+
+### Build kernel module driver
+
+In the build directory:
+
+```bash
+make driver
+```
+
+### Build eBFP driver
+
+If you do not want to use the kernel module driver you can, alternatively, build the eBPF driver as follows.
+
+In the build directory:
 
 ```bash
 pacman -S llvm clang
@@ -103,24 +204,14 @@ For the sake of completeness this is the complete list of Falco dependencies:
 - libscap
 - libsinsp
 
-## Obtain the source code
-
-First, make sure you have a working copy of the Falco source code along with a working copy of `libsinsp` and `libscap`.
-
-**Clone Falco**
-
-```bash
-git clone https://github.com/falcosecurity/falco.git
-```
-
-# Build Falco
+## Build Falco
 
 There are two supported ways to build Falco
 
 - [Build directly on host](#build-directly-on-host)
 - [Build using a container](#build-using-falco-builder-container)
 
-## Build directly on host
+### Build directly on host
 
 To build Falco, you will need to create a `build` directory.
 It's common to have the `build` directory in the Falco working copy itself, however it can be
@@ -134,7 +225,7 @@ is a parent of the current directory, you can also use the absolute path for the
 3. Build using make
 
 
-### Build all
+#### Build all
 
 ```bash
 mkdir build
@@ -145,7 +236,7 @@ make
 
 You can also build only specific targets:
 
-### Build Falco only
+#### Build Falco only
 
 Do the build folder and cmake setup, then:
 
@@ -153,7 +244,7 @@ Do the build folder and cmake setup, then:
 make falco
 ```
 
-### Build the Falco engine only
+#### Build the Falco engine only
 
 Do the build folder and cmake setup, then:
 
@@ -161,7 +252,7 @@ Do the build folder and cmake setup, then:
 make falco_engine
 ```
 
-### Build libscap only
+#### Build libscap only
 
 Do the build folder and cmake setup, then:
 
@@ -169,7 +260,7 @@ Do the build folder and cmake setup, then:
 make scap
 ```
 
-### Build libsinsp only
+#### Build libsinsp only
 
 Do the build folder and cmake setup, then:
 
@@ -177,7 +268,7 @@ Do the build folder and cmake setup, then:
 make sinsp
 ```
 
-### Build the probe / kernel driver only
+#### Build the probe / kernel driver only
 
 Do the build folder and cmake setup, then:
 
@@ -185,7 +276,7 @@ Do the build folder and cmake setup, then:
 make driver
 ```
 
-### Build results
+#### Build results
 
 Once Falco is built, the three interesting things that you will find in your `build` folder are:
 
@@ -268,7 +359,7 @@ When enabling this you will be able to make the `bpf` target after:
 make bpf
 ```
 
-## Build using falco-builder container
+### Build using falco-builder container
 
 An alternative way to build Falco is to run the [falco-builder](https://hub.docker.com/r/falcosecurity/falco-builder) container.
 It contains the reference toolchain that can be used to build packages and all the dependencies are already satisfied.
@@ -298,7 +389,7 @@ It's also possible to explicitly provide the `FALCO_VERSION` environment variabl
 Otherwise the docker image will use the default `FALCO_VERSION`.
 
 
-# Load latest falco-probe kernel module
+## Load latest falco-probe kernel module
 
 If you have a binary version of Falco installed, an older Falco kernel module may already be loaded. To ensure you are using the latest version, you should unload any existing Falco kernel module and load the locally built version.
 
@@ -324,7 +415,7 @@ To load the locally built version, assuming you are in the `build` dir, use:
 insmod driver/falco-probe.ko
 ```
 
-# Run falco
+## Run falco
 
 Once Falco is built and the kernel module is loaded, assuming you are in the `build` dir, you can run falco as:
 
@@ -335,13 +426,13 @@ sudo ./userspace/falco/falco -c ../falco.yaml -r ../rules/falco_rules.yaml
 By default, falco logs events to standard error.
 
 
-# Run regression tests
+### Run regression tests
 
-## Test directly on host
+#### Test directly on host
 
 To run regression tests, after building Falco, in the Falco root directory, you need to run the `test/run_regression_tests.sh` script.
 
-### Dependencies
+##### Dependencies
 
 You will need the following dependencies for the regression testing framework to work.
 
@@ -357,7 +448,7 @@ To install Avocado and its plugins, you can use pip:
 pip2 install avocado-framework==69.0 avocado-framework-plugin-varianter-yaml-to-mux==69.0
 ```
 
-### Run the tests
+##### Run the tests
 
 Change `$PWD/build` with the directory you built Falco in, if different.
 
@@ -365,7 +456,7 @@ Change `$PWD/build` with the directory you built Falco in, if different.
 ./test/run_regression_tests.sh $PWD/build
 ```
 
-## Test using falco-tester container
+#### Test using falco-tester container
 
 If you'd like to run the regression test suite against your build, you can use the [falco-tester](https://hub.docker.com/r/falcosecurity/falco-tester) container. Like the builder image, it contains the necessary environment to run the regression tests, but relies on a source directory and build directory that are mounted into the image. It's a different image than `falco-builder` as it doesn't need a compiler and needs a different base image to include the test runner framework [avocado](http://avocado-framework.github.io/).
 
