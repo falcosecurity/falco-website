@@ -14,6 +14,7 @@ In order to compile Falco, you will need the following tools and installed on yo
 - pkg-config
 - make
 - cmake
+- git
 - gcc
 - g++
 - kernel headers
@@ -48,7 +49,28 @@ apt install
 ### Arch Linux
 
 ```bash
-pacman -S
+pacman -S git cmake make gcc wget
+pacman -S zlib jq ncurses yaml-cpp openssl curl c-ares protobuf grpc libyaml
+git clone https://github.com/falcosecurity/falco.git
+cd falco
+mkdir -p build
+cd build
+cmake ..
+make falco
+```
+
+If you want to build the kernel module too, execute:
+
+```bash
+make driver
+```
+
+In case you want to build the BPF probe, executeL
+
+```bash
+pacman -S llvm clang
+cmake -DBUILD_BPF=ON ..
+make bpf
 ```
 
 ## Dependencies
