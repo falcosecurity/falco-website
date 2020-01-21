@@ -6,18 +6,30 @@ weight: 6
 Welcome to the guide on how to build Falco yourself! You are very brave! Since you are already
 doing all this, chances that you are willing to contribute are high! Please read our [contributing guide](https://github.com/falcosecurity/.github/blob/master/CONTRIBUTING.md).
 
-## CentOS 8
+## CentOS / RHEL
 
-CentOS 8 is the reference build environment we use to compile release artifacts.
+CentOS 7 is the reference build environment we use to compile release artifacts.
 
 ### Dependencies
+
+**CentOS 8 / RHEL 8**
 
 ```bash
 dnf install 'dnf-command(config-manager)'
 dnf config-manager --set-enabled PowerTools # needed for libyaml-devel
-dnf install gcc gcc-c++ git make cmake autoconf automake
-dnf install libcurl-devel zlib-devel libyaml-devel openssl-devel ncurses-devel c-ares-devel libtool glibc-static libstdc++-static elfutils-libelf-devel -y
+dnf install gcc gcc-c++ git make cmake autoconf automake pkg-config patch
+dnf install libcurl-devel zlib-devel libyaml-devel ncurses-devel libtool glibc-static libstdc++-static elfutils-libelf-devel -y
 ```
+
+**CentOS 7 / RHEL 7**
+
+```
+yum install gcc gcc-c++ git make autoconf automake pkg-config patch
+yum install libcurl-devel zlib-devel libyaml-devel ncurses-devel libtool glibc-static libstdc++-static elfutils-libelf-devel -y
+```
+
+You will also need `cmake` version `3.5.1` or higher which is not included in CentOS 7. You can follow the [official guide](https://cmake.org/install/) or look at how that is done
+in the [Falco builder Dockerfile](https://github.com/falcosecurity/falco/blob/dev/docker/builder/Dockerfile).
 
 ### Build Falco
 
@@ -37,6 +49,7 @@ More details [here](#build-directly-on-host).
 In the build directory:
 
 ```bash
+yum -y install kernel-devel-$(uname -r)
 make driver
 ```
 
@@ -57,33 +70,16 @@ make bpf
 In the build directory:
 
 ```bash
-dnf install rpm-build createrepo
+yum install rpm-build createrepo
 make package
 ```
 
-## RHEL 8
-
-```bash
-```
-
-## Fedora
-
-```bash
-dnf install
-```
-
-## Ubuntu
-
-```bash
-apt install
-```
-
-## Debian
+## Debian / Ubuntu
 
 ### Dependencies
 
 ```bash
-apt install git cmake build-essential linux-headers-$(uname -r)
+apt install git cmake build-essential
 ```
 
 ### Build Falco
@@ -105,6 +101,12 @@ More details [here](#build-directly-on-host).
 
 ### Build kernel module driver
 
+Kernel headers are required to build the driver.
+
+```bash
+apt install linux-headers-$(uname -r)
+```
+
 In the build directory:
 
 ```bash
@@ -121,15 +123,6 @@ In the build directory:
 apt install llvm clang
 cmake -DBUILD_BPF=ON ..
 make bpf
-```
-
-### Build DEB/RPM packages
-
-In the build directory:
-
-```bash
-apt install rpm
-make package
 ```
 
 ## Arch Linux
