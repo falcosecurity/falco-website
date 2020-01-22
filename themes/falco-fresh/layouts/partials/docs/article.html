@@ -11,13 +11,15 @@
 
     {{ if $hasToc }}
     <div class="column is-hidden-mobile">
-      <div class="toc-container">
-        <p class="title is-size-5 has-text-weight-medium">
-          Table of contents
-        </p>
+      <div class="toc-container-wrap">
+        <div class="toc-container">
+          <p class="title is-size-5 has-text-weight-medium">
+            Table of contents
+          </p>
 
-        <div class="toc">  
-          {{ .TableOfContents }}
+          <div class="toc">
+            {{ .TableOfContents }}
+          </div>
         </div>
       </div>
     </div>

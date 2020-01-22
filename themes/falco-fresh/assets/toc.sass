@@ -4,10 +4,13 @@ $root-font-size: 1.2rem
 =x
   border: 2px solid red
 
-.toc-container
+.toc-container-wrap
+  position: relative
+  .toc-container
+    position: fixed
   .toc
     border-left: 2px solid $grey-lighter
-    
+
     #TableOfContents
       ul + ul
         +x
@@ -35,7 +38,7 @@ $root-font-size: 1.2rem
 
           li + li
             margin-top: .4rem
-    
+
         // H3
         ul li
           padding-left: $left-padding-increment * 2
@@ -54,7 +57,6 @@ $root-font-size: 1.2rem
 
             // H5
             ul li
-
 
               // H6
               ul li
