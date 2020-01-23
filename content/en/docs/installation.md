@@ -4,15 +4,18 @@ description: Get up and running on Linux and a variety of container platforms
 weight: 2
 ---
 
-Install Falco by using one of the following methods. Your specific infrastructure requirements determine what installation method to choose.
+You can install Falco using one of the methods detailed below; select a method based on your infrastructure requirements:
 
-- Install Falco in a Kubernetes cluster. To do so, deploy a DaemonSet to the Kubernetes cluster. A Falco installation on Kubernetes monitors the cluster, its worker nodes, and running containers for abnormal behavior.
+* **Kubernetes** — To install Falco in a [Kubernetes](#k8s) cluster, deploy a [DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset) to the cluster. The Falco installation then monitors the cluster, its worker nodes, and running containers for abnormal behavior.
+
+* 
+
 - Install Falco directly on a Linux host. This can be done for a variety of reasons:
     - To monitor containers running inside Kubernetes. Installing directly on the worker node OS provides an additional level of isolation from the applications running in Kubernetes and users of the Kubernetes API.
     - To monitor containers running directly on a Linux host or containers running on another platform, such as Cloud Foundry or Mesosphere DC/OS.
     - To monitor an application running directly on the Linux host (ie., non containerized workloads).
 
-## Kubernetes
+## Kubernetes {#k8s}
 
 The default method to run Falco on Kubernetes is to use a DaemonSet. Falco supports a variety of installation methods depending on your deployment methods of choice and underlying Kubernetes version. The default installation includes support for system call events via a kernel module and is thus dependent on the underlying operating system for the worker nodes. Installing the appropriate kernel headers on the worker nodes will allow Falco to dynamically build (and `insmod`) the kernel module on pod start. Falco also provides a number of pre-built modules for common distributions and kernels. Falco will automatically attempt to download a prebuilt module if the module compilation fails.
 
@@ -295,5 +298,4 @@ toolbox --bind=/dev --bind=/var/run/docker.sock
 curl -s https://s3.amazonaws.com/download.draios.com/stable/install-falco | bash
 falco-probe-loader
 ```
-
 
