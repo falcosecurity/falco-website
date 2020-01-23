@@ -2,7 +2,7 @@
 {{ $noToc  := .Params.notoc }}
 {{ $hasToc := and (not $noToc) (gt (len $toc) 0) }}
 <article class="article">
-  <div class="columns">
+  <div class="columns is-variable is-8">
     <div class="column{{ if $hasToc }} is-9{{ end }}">
       <div class="content">
         {{ .Content }}
@@ -11,7 +11,7 @@
 
     {{ if $hasToc }}
     <div class="column is-hidden-mobile">
-      <div class="toc-container">
+      <div class="toc-container is-sticky">
         <p class="title is-size-5 has-text-weight-medium">
           Table of contents
         </p>
