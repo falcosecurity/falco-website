@@ -6,34 +6,35 @@ weight: 2
 
 You can install Falco using one of the methods detailed below; select a method based on your infrastructure requirements:
 
-* **Kubernetes** — To install Falco in a [Kubernetes](#k8s) cluster, deploy a [DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset) to the cluster. The Falco installation then monitors the cluster, its worker nodes, and running containers for abnormal behavior.
-
-* 
-
-- Install Falco directly on a Linux host. This can be done for a variety of reasons:
-    - To monitor containers running inside Kubernetes. Installing directly on the worker node OS provides an additional level of isolation from the applications running in Kubernetes and users of the Kubernetes API.
-    - To monitor containers running directly on a Linux host or containers running on another platform, such as Cloud Foundry or Mesosphere DC/OS.
-    - To monitor an application running directly on the Linux host (ie., non containerized workloads).
+* [Kubernetes](#k8s) — Install Falco on [Kubernetes](https://kubernetes.io) to monitor abnormal behavior of the Kubernetes cluster, its worker nodes, and containers running therein.
+* [Linux host](#linux) — Install Falco directly on a Linux host for:
+  * containers running inside [Kubernetes](#k8s) (installing Falco directly on the worker node OS provides an additional level of isolation from the applications running inside Kubernetes and users of the Kubernetes API)
+  * containers running directly on a Linux host or on a platform such as [Cloud Foundry](https://www.cloudfoundry.org) or D2iQ's [DC/OS](https://dcos.io)
+  * applications running directly on a Linux host (workloads that are not containerized)
 
 ## Kubernetes {#k8s}
 
-The default method to run Falco on Kubernetes is to use a DaemonSet. Falco supports a variety of installation methods depending on your deployment methods of choice and underlying Kubernetes version. The default installation includes support for system call events via a kernel module and is thus dependent on the underlying operating system for the worker nodes. Installing the appropriate kernel headers on the worker nodes will allow Falco to dynamically build (and `insmod`) the kernel module on pod start. Falco also provides a number of pre-built modules for common distributions and kernels. Falco will automatically attempt to download a prebuilt module if the module compilation fails.
+The default method for running Falco on Kubernetes is to use a [DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset). Falco supports a variety of installation methods depending on your deployment methods of choice and underlying Kubernetes version.
 
-For platforms such as Google's Container Optimized OS & GKE, where access to the underlying kernel is limited, see the [GKE section](#gke) below.
+The default installation includes support for system call events via a kernel module and is thus dependent on the underlying operating system for the worker nodes. Installing the appropriate kernel headers on the worker nodes allows Falco to dynamically build (and `insmod`) the kernel module on Pod start. Falco also provides a number of pre-built modules for common distributions and kernels. Falco automaticallys attempt to download a pre-built module if the module compilation fails.
+
+For platforms such as Google's [Container-Optimized OS](https://cloud.google.com/container-optimized-os/docs/) and [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/) (GKE), where access to the underlying kernel is limited, see the [GKE section](#gke) below.
 
 ### Downloading the Kernel Module via HTTPs
 
-Use HTTPs to pre-build and provide the kernel module to the Falco pods. The easiest way to build the kernel module is as follows:
+Use HTTPs to pre-build and provide the kernel module to the Falco Pods. The easiest way to build the kernel module is as follows:
 
 1. Deploy Falco on a node with the required kernel headers.
 2. Use the `falco-probe-loader` script on Falco to build the kernel module.
-3. Move the kernel module from the pod or container.
-    By default, the kernel module is copied to `/root/.sysdig/`.
+3. Move the kernel module from the Pod or container. By default, the kernel module is copied to `/root/.sysdig/`.
 
-`SYSDIG_PROBE_URL` - Set this environment variable for the Falco pod to override the default host for prebuilt kernel modules. This should be only the host portion of the URL without the trailing slash - ie., `https://myhost.mydomain.com`. Copy the kernel modules to the `/stable/sysdig-probe-binaries/` directory and name it as follows:
-`falco-probe-${falco_version}-$(uname -i)-$(uname -r)-{md5sum of kernel config}.ko`
+    Set the `SYSDIG_PROBE_URL` environment variable for the Pod running Falco to override the default host for pre-built kernel modules. This should be only the host portion of the URL without the trailing slash, i.e. `https://myhost.mydomain.com`. Copy the kernel modules to the `/stable/sysdig-probe-binaries/` directory and name the directly as follows:
 
-The `falco-probe-loader` script will name the module in this format by default.
+    ```
+    falco-probe-${falco_version}-$(uname -i)-$(uname -r)-{md5sum of kernel config}.ko
+    ```
+
+    The `falco-probe-loader` script names module in this format by default.
 
 ### Helm
 
@@ -56,28 +57,33 @@ Using the Falco Helm chart is the easiest way to deploy the [Falco Kubernetes Re
 The KRE also allows you to deploy security playbooks (via serverless functions) that can take action when Falco rules are violated. Refer to the [Response Engine documentation](https://github.com/falcosecurity/kubernetes-response-engine/tree/master/playbooks) for information on how to deploy the included playbooks.
 
 ### DaemonSet Manifests
+
 To run Falco as a Kubernetes [DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/), follow the instructions below. These are the `generic` instructions for Kubernetes. For platform-specific instructions see respective sections.
 
 1. Clone the [Falco repo](https://github.com/falcosecurity/falco/) and change to the directory with the manifests.
-```shell
-git clone https://github.com/falcosecurity/falco/
-cd falco/integrations/k8s-using-daemonset
-```
+
+    ```shell
+    git clone https://github.com/falcosecurity/falco/
+    cd falco/integrations/k8s-using-daemonset
+    ```
 2. Create a service account and provide necessary RBAC permissions. Falco uses this service account to connect to the Kubernetes API server and fetch resource metadata.
-```shell
-kubectl apply -f k8s-with-rbac/falco-account.yaml
-```
-3. Create a service for the Falco pods. This will allow Falco to receive [Kubernetes Audit Log Events](event-sources/kubernetes-audit). If you're not planning on using this feature, you can skip this step.
-```shell
-kubectl apply -f k8s-with-rbac/falco-service.yaml
-```
+
+    ```shell
+    kubectl apply -f k8s-with-rbac/falco-account.yaml
+    ```
+
+3. Create a service for the Falco Pods. This allows Falco to receive [Kubernetes Audit Log Events](event-sources/kubernetes-audit). If you're not planning on using this feature, you can skip this step.
+
+    ```shell
+    kubectl apply -f k8s-with-rbac/falco-service.yaml
+    ```
 
 4.  The DaemonSet also relies on a Kubernetes ConfigMap to store the Falco configuration and make the configuration available to the Falco Pods. This allows you to manage custom configuration without rebuilding and redeploying the underlying Pods. In order to create the ConfigMap:
 
   1. Create the `k8s-with-rbac/falco-config` directory.
   2. Copy the required configuration from this GitHub repository to the `k8s-with-rbac/falco-config/` directory.
 
-Do not modify the original files. Use the files you copied to make any configuration changes.
+Do not modify the original files; instead, use the files you copied to make any configuration changes.
 
 ```shell
 mkdir -p k8s-with-rbac/falco-config
@@ -119,7 +125,7 @@ Google Kubernetes Engine (GKE) uses Container-Optimized OS (COS) as the default 
 
 #### Enabling eBPF Support
 
-Falco can use eBPF with minimal configuration changes. To do so, set the `SYSDIG_BPF_PROBE` environment variable to an empty value: `SYSDIG_BPF_PROBE=""`. Setting this environment variable will trigger the `falco-probe-loader` script to download the kernel headers for the appropriate version of COS, and then compile the appropriate eBPF probe. Alternatively, you can set `SYSDIG_BPF_PROBE` to the path of an existing eBPF probe.
+Falco can use eBPF with minimal configuration changes. To do so, set the `SYSDIG_BPF_PROBE` environment variable to an empty value: `SYSDIG_BPF_PROBE=""`. Setting this environment variable triggers the `falco-probe-loader` script to download the kernel headers for the appropriate version of COS, and then compile the appropriate eBPF probe. Alternatively, you can set `SYSDIG_BPF_PROBE` to the path of an existing eBPF probe.
 
 If using Helm, you can enable eBPF by setting the `ebpf.enable` configuration option.
 ```shell
@@ -129,9 +135,9 @@ helm install --name falco stable/falco --set ebpf.enabled=true
 If you are using the provided DaemonSet manifests, uncomment the following lines in the corresponding YAML file.
 
 ```yaml
-          env:
-          - name: SYSDIG_BPF_PROBE
-            value: ""
+env:
+- name: SYSDIG_BPF_PROBE
+  value: ""
 ```
 
 ## Linux
