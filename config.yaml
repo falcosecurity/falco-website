@@ -72,9 +72,9 @@ languages:
           buttonText: Falco Slack
           buttonLink: https://slack.sysdig.com/
       signup:
-        title: Stay up to date
-        subtitle: Sign-up for project updates.
-        buttonText: Sign-up!
+        title: Join the mailing list
+        subtitle: Get involved with the community
+        buttonText: Submit
     menu:
       navbar:
       - name: Why Falco?
@@ -154,9 +154,9 @@ languages:
           buttonText: Falco Slack
           buttonLink: https://slack.sysdig.com/
       signup:
-        title: Stay up to date
-        subtitle: Sign-up for project updates.
-        buttonText: Sign-up!
+        title: Join the official CNCF Mailing List.
+        subtitle: Sign up here
+        buttonText: Join
     menu:
       navbar:
       - name: Why Falco?
