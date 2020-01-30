@@ -113,7 +113,7 @@ In the build directory:
 make driver
 ```
 
-### Build eBFP driver
+### Build eBPF driver
 
 If you do not want to use the kernel module driver you can, alternatively, build the eBPF driver as follows.
 
