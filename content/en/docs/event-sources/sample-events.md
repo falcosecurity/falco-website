@@ -7,7 +7,7 @@ If you'd like to check if Falco is working properly, we have sample programs tha
 
 ## System Call Activity
 
-We've created a test program [`event_generator`](https://github.com/falcosecurity/falco/blob/dev/docker/event-generator/event_generator.cpp) that performs a variety of suspect actions that are detected by the current Falco ruleset.
+We've created a test program [`event_generator`](https://github.com/falcosecurity/falco/blob/master/docker/event-generator/event_generator.cpp) that performs a variety of suspect actions that are detected by the current Falco ruleset.
 
 Here's the usage block for the test program:
 
@@ -55,7 +55,7 @@ Options:
 
 ## K8s Audit Activity
 
-We've created a shell script [`k8s_event_generator.sh`](https://github.com/falcosecurity/falco/blob/dev/docker/event-generator/k8_event_generator.sh) and supporting k8s object files that generate activity that matches the k8s audit event ruleset.
+We've created a shell script [`k8s_event_generator.sh`](https://github.com/falcosecurity/falco/blob/master/docker/event-generator/k8_event_generator.sh) and supporting k8s object files that generate activity that matches the k8s audit event ruleset.
 
 In the interests of keeping things self-contained, all objects are created in a `falco-event-generator` namespace. This means that some activity related to cluster roles/cluster role bindings is not performed.
 

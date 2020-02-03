@@ -35,7 +35,7 @@ If you wish to select a property value of the k8s audit event/json object that i
 
 ## K8s Audit Rules
 
-Rules devoted to k8s audit events are in [k8s_audit_rules.yaml](https://github.com/falcosecurity/falco/blob/dev/rules/k8s_audit_rules.yaml). When installed as a daemon, falco installs this rules file to `/etc/falco/`, so they are available for use.
+Rules devoted to k8s audit events are in [k8s_audit_rules.yaml](https://github.com/falcosecurity/falco/blob/master/rules/k8s_audit_rules.yaml). When installed as a daemon, falco installs this rules file to `/etc/falco/`, so they are available for use.
 
 ## Example
 
@@ -192,4 +192,4 @@ The output string is used to print essential information about the audit event, 
 
 # Enabling K8s Audit Logs
 
-In order to enable k8s audit logs, you need to change the arguments to the `kube-apiserver` process to add `--audit-policy-file` and `--audit-webhook-config` arguments and provide files that implement an audit policy/webhook config. Exactly how to do this is somewhat out of the scope of falco's documentation, but we've provided some example files [here](https://github.com/falcosecurity/falco/blob/dev/examples/k8s_audit_config/README.md) that show how we added audit logging to minikube.
+In order to enable k8s audit logs, you need to change the arguments to the `kube-apiserver` process to add `--audit-policy-file` and `--audit-webhook-config` arguments and provide files that implement an audit policy/webhook config. Exactly how to do this is somewhat out of the scope of falco's documentation, but we've provided some example files [here](https://github.com/falcosecurity/falco/blob/master/examples/k8s_audit_config/README.md) that show how we added audit logging to minikube.
