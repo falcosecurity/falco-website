@@ -104,7 +104,7 @@ kubectl apply -f k8s-with-rbac/falco-daemonset-configmap.yaml
 
 7. Verify Falco started correctly. To do so, check the status of the Falco pods in the corresponding log files.
 ```shell
-kubectl logs -l app=falco
+kubectl logs -l app=falco-example
 ```
 
 ### Minikube

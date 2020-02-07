@@ -29,7 +29,7 @@ yum install libcurl-devel zlib-devel libyaml-devel ncurses-devel libtool glibc-s
 ```
 
 You will also need `cmake` version `3.5.1` or higher which is not included in CentOS 7. You can follow the [official guide](https://cmake.org/install/) or look at how that is done
-in the [Falco builder Dockerfile](https://github.com/falcosecurity/falco/blob/dev/docker/builder/Dockerfile).
+in the [Falco builder Dockerfile](https://github.com/falcosecurity/falco/blob/master/docker/builder/Dockerfile).
 
 ### Build Falco
 
