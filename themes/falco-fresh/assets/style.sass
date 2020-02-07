@@ -32,6 +32,17 @@ $colors: mergeColorMaps(("twitter-blue": ($twitter-blue, $white), "orange": ($or
 @import "toc"
 @import "cheatsheet"
 
+.changelog
+  max-width: 100ch
+
+  &-item
+    &-content
+      margin: 1rem 0 0 1.5rem
+
+    & + &
+      margin-top: 2rem
+
+
 .is-sticky
   top: $navbar-height + 2rem
   position: sticky
