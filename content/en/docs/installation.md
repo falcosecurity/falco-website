@@ -150,11 +150,11 @@ If you are using the provided DaemonSet manifests, uncomment the following lines
             value: ""
 ```
 
-### Locally From packages
+### Locally from packages
 
-If you are installing falco from packages, you will need to edit the `falco` systemd unit.
+If you are installing Falco from packages, you will need to edit the `falco` systemd unit.
 
-You can do that by doing the following command:
+You can do that by executing the following command:
 
 ```bash
 systemctl edit falco
@@ -168,9 +168,9 @@ to the file:
 Environment='FALCO_BPF_PROBE=""'
 ```
 
-### Locally using the Falco binary directly
+### Locally using the Falco binary
 
-If you are using the falco binary directly you can enable the bpf probe by:
+If you are using the Falco binary directly you can enable the BPF probe by:
 
 ```bash
 sudo FALCO_BPF_PROBE="" falco
@@ -344,5 +344,4 @@ toolbox --bind=/dev --bind=/var/run/docker.sock
 curl -s https://s3.amazonaws.com/download.draios.com/stable/install-falco | bash
 falco-probe-loader
 ```
-
 
