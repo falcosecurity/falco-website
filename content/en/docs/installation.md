@@ -112,24 +112,73 @@ Going forward, we'll continue to support 10 most recent versions of Minikube wit
 
 ### GKE
 
-Google Kubernetes Engine (GKE) uses Container-Optimized OS (COS) as the default operating system for its worker node pools. COS is a security-enhanced operating system that limits access to certain parts of the underlying OS. Because of this security constraint, Falco cannot insert its kernel module to process events for system calls. However, COS provides the ability to leverage eBPF (extended Berkeley Packet Filter) to supply the stream of system calls to the Falco engine. eBPF is currently supported only on GKE and COS.
+Google Kubernetes Engine (GKE) uses Container-Optimized OS (COS) as the default operating system for its worker node pools. COS is a security-enhanced operating system that limits access to certain parts of the underlying OS. Because of this security constraint, Falco cannot insert its kernel module to process events for system calls. However, COS provides the ability to leverage eBPF (extended Berkeley Packet Filter) to supply the stream of system calls to the Falco engine.
 
-#### Enabling eBPF Support
 
-Falco can use eBPF with minimal configuration changes. To do so, set the `SYSDIG_BPF_PROBE` environment variable to an empty value: `SYSDIG_BPF_PROBE=""`. Setting this environment variable will trigger the `falco-probe-loader` script to download the kernel headers for the appropriate version of COS, and then compile the appropriate eBPF probe. Alternatively, you can set `SYSDIG_BPF_PROBE` to the path of an existing eBPF probe.
+## Enabling eBPF Support
 
+Falco can use eBPF with minimal configuration changes. To do so, set the `FALCO_BPF_PROBE` environment variable to an empty value: `FALCO_BPF_PROBE=""`.
+
+eBPF is currently supported only on GKE and COS, however here we provide installation details for a wider set of platforms
+
+**IMPORTANT**: If you want to specify an alternative path for the probe file, you can also set `FALCO_BPF_PROBE` to the path of an existing eBPF probe.
+
+### Obtaining the probe
+
+When using the official container images, setting this environment variable will trigger the `falco-probe-loader` script to download the kernel headers for the appropriate version of COS, and then compile the appropriate eBPF probe. In all the other environments you can call the `falco-probe-loader` script yourself to build it in this way:
+
+```bash
+FALCO_BPF_PROBE="" falco-probe-loader 
+```
+
+To execute the script above succesfully, you will need `clang` and `llvm` installed.
+
+### In Kubernetes using Helm
 If using Helm, you can enable eBPF by setting the `ebpf.enable` configuration option.
+
 ```shell
 helm install --name falco stable/falco --set ebpf.enabled=true
 ```
+
+### In Kubernetes using yaml files
 
 If you are using the provided DaemonSet manifests, uncomment the following lines in the corresponding YAML file.
 
 ```yaml
           env:
-          - name: SYSDIG_BPF_PROBE
+          - name: FALCO_BPF_PROBE
             value: ""
 ```
+
+### Locally From packages
+
+If you are installing falco from packages, you will need to edit the `falco` systemd unit.
+
+You can do that by doing the following command:
+
+```bash
+systemctl edit falco
+```
+
+It will open your editor, at this point you can set the environment variable for the unit by adding this content
+to the file:
+
+```
+[Service]
+Environment='FALCO_BPF_PROBE=""'
+```
+
+### Locally using the Falco binary directly
+
+If you are using the falco binary directly you can enable the bpf probe by:
+
+```bash
+sudo FALCO_BPF_PROBE="" falco
+```
+
+
+
+
 
 ## Linux
 
