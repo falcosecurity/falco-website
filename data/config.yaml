@@ -129,3 +129,37 @@
     `k8s_audit_endpoint` specifies the URI on which to listen for Kubernetes audit events. The default is `/k8s_audit`.
 
     `ssl_enabled` enables SSL support for the webserver, using the certificate specified in `ssl_certificate`. The specified `ssl_certificate` file should contain the server's certificate as well as the key as [documented by civitweb](https://github.com/civetweb/civetweb/blob/master/docs/OpenSSL.md#creating-a-self-signed-certificate).
+- name: grpc
+  type: |
+    List containing the following sub-keys:
+
+    * `enabled: [true|false]`
+    * `bind_address`: [address:port]
+    * `threadiness`: <integer>
+    * `private_key: <path>`
+    * `cert_chain: <path>`
+    * `root_certs: <path>`
+  description: |
+    If `enabled` is set to `true`, Falco will embed a gRPC server to expose its gRPC API. The default is false
+
+    The gRPC server can only be used with [mutual authentication](https://en.wikipedia.org/wiki/Mutual_authentication) between the clients and the server using TLS certificates. How to generate the certificates is [documented here](/docs/grpc/#generate-valid-ca).
+
+    Please always remember that the only common thing between server and clients is the root certificate. Every client will  need to generate their own certificates signed by the same root CA as the server.
+
+    `bind_address` specifies the address and port on which the gRPC server will listen. The default is 0.0.0.0:5060
+
+    `threadiness` defines the number of threads to use to serve gRPC requests. It will also affect the number of contexts with a 10x factor per threadiness unit. The default is 8
+
+    `private_key` path of the private key for server authentication. The default is /etc/falco/certs/server.key
+
+    `cert_chain` path of the public cert for server authentication. The default is /etc/falco/certs/server.crt
+
+    `root_certs` path of the CA certificate (or chain) common between the server and all the clients. The default is /etc/falco/certs/ca.crt
+
+- name: grpc_output
+  type: |
+    List containing the following sub-keys:
+
+    * `enabled: [true|false]`
+  description: |
+    If `enabled` is set to `true`, Falco will start collecting outputs for the gRPC server. It's important to consume them with an output client. Example of output client [here](https://github.com/falcosecurity/client-go/tree/master/examples/output)
