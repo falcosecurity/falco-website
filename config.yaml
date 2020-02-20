@@ -32,7 +32,7 @@ languages:
         closing: Even when processes are in place for vulnerability scanning and implementing pod security and network policies, not every risk will be addressed. You still need mechanisms to confirm these security barriers are effective, help configure them, and provide with a last line of defense when they fail.
       whyfalco:
         title: Why Falco for Runtime Detection?
-        subtitle: 
+        subtitle:
         tiles:
         - title: Strengthen security
           icon: check.png
@@ -114,7 +114,7 @@ languages:
         closing: Even when processes are in place for vulnerability scanning and implementing pod security and network policies, not every risk will be addressed. You still need mechanisms to confirm these security barriers are effective, help configure them, and provide with a last line of defense when they fail.
       whyfalco:
         title: Why Falco for Runtime Detection?
-        subtitle: 
+        subtitle:
         tiles:
         - title: Strengthen security
           icon: check.png
@@ -180,10 +180,10 @@ params:
     name: "Karla"
     sizes: [400 700]
   secondaryFont:
-    name: "MaaxMono"    
+    name: "MaaxMono"
   hero:
     # Where the main hero button links to
-    buttonlink: "#download"
+    buttonlink: "#resources"
     # Hero image (from /images/___)
     image: illustrations/falco-hero-1.png
     # Footer logos (from /images/logos/clients/___.svg)
