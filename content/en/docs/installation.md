@@ -128,7 +128,7 @@ eBPF is currently supported only on GKE and COS, however here we provide install
 When using the official container images, setting this environment variable will trigger the `falco-probe-loader` script to download the kernel headers for the appropriate version of COS, and then compile the appropriate eBPF probe. In all the other environments you can call the `falco-probe-loader` script yourself to obtain it in this way:
 
 ```bash
-FALCO_BPF_PROBE="" falco-probe-loader 
+sudo FALCO_VERSION="0.19.0" FALCO_BPF_PROBE="" falco-probe-loader 
 ```
 
 To execute the script above succesfully, you will need `clang` and `llvm` installed.
