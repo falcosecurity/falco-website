@@ -27,6 +27,8 @@ To receive Kubernetes audit events, falco embeds a [civetweb](https://github.com
 
 A given rule is tied to either system call events or Kubernetes audit events, via the `source` attribute. If not specified, the source defaults to `syscall`. Rules with source `syscall` are matched against system call events. Rules with source `k8s_audit` are matched against Kubernetes audit events.
 
+See [Auditing with Falco](https://kubernetes.io/docs/tasks/debug-application-cluster/falco/) to get started with Falco.
+
 ## Conditions and Fields
 
 Like system call rules, a condition field for Kubernetes audit rules is a logical expression based on operators and event fields. For example, `ka.user.name`. A given event field selects one property value from the json object. For instance, the field `ka.user.name` first identifies the `user` object within the Kubernetes audit event, and selects the `username` property of that object.
