@@ -125,7 +125,7 @@ eBPF is currently supported only on GKE and COS, however here we provide install
 
 ### Obtaining the probe
 
-When using the official container images, setting this environment variable will trigger the `falco-probe-loader` script to download the kernel headers for the appropriate version of COS, and then compile the appropriate eBPF probe. In all the other environments you can call the `falco-probe-loader` script yourself to build it in this way:
+When using the official container images, setting this environment variable will trigger the `falco-probe-loader` script to download the kernel headers for the appropriate version of COS, and then compile the appropriate eBPF probe. In all the other environments you can call the `falco-probe-loader` script yourself to obtain it in this way:
 
 ```bash
 FALCO_BPF_PROBE="" falco-probe-loader 
@@ -344,4 +344,3 @@ toolbox --bind=/dev --bind=/var/run/docker.sock
 curl -s https://s3.amazonaws.com/download.draios.com/stable/install-falco | bash
 falco-probe-loader
 ```
-
