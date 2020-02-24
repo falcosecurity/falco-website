@@ -70,7 +70,7 @@ When using the [Falco Go Client](https://github.com/falcosecurity/client-go/) yo
 	res, err := versionClient.Version(ctx, &version.Request{})
 ```
 
-
+Here there's a full [example](https://github.com/falcosecurity/client-go/blob/master/examples/version/main.go) you can checkout and run.
 
 ## Minor themes
 
@@ -88,6 +88,5 @@ When using the [Falco Go Client](https://github.com/falcosecurity/client-go/) yo
 * rule(write below root): let runc write to /exec.fifo [[#1028](https://github.com/falcosecurity/falco/pull/1028)]
 * rule(change thread namespace): let cilium-cni change namespaces [[#1028](https://github.com/falcosecurity/falco/pull/1028)]
 * rule(run shell untrusted): let puma reactor spawn shells [[#1028](https://github.com/falcosecurity/falco/pull/1028)]
-
 
 
