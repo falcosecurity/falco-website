@@ -4,7 +4,7 @@ date: 2020-02-24
 author: Lorenzo Fontana
 ---
 
-We're pleased to announce the release of Falco 0.20.0, our second release of 2020! Falco 0.20.20 consists of **a major bug fix**, a new feature, two minor bug fixes, and **seven** rules changes.
+We're pleased to announce the release of Falco 0.20.0, our second release of 2020! Falco 0.20.0 consists of **a major bug fix**, a new feature, two minor bug fixes, and **seven** rules changes.
 
 A total of **eight** people contributed to this release with a total of **thirteen** Pull Requests merged in!
 
