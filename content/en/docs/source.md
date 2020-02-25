@@ -333,7 +333,7 @@ Notice this variable is case-insensitive and it defaults to release.
 Optionally the user can specify the version he wants Falco to have. Eg.,
 
 ```
- -DFALCO_VERSION=0.20.0-dirty
+ -DFALCO_VERSION={{< latest >}}-dirty
 ```
 
 When not explicitly specifying it the build system will compute the `FALCO_VERSION` value from the git history.
