@@ -37,4 +37,4 @@ To reduce the likelihood of a flood of log messages/alerts, a token bucket is pr
 
 ## Configuration
 
-The actions to take on a dropped system call event and the throttling parameters for the token bucket are configurable in `falco.yaml` and are described in [syscall_event_drops](/docs/configuration.md).
+The actions to take on a dropped system call event and the throttling parameters for the token bucket are configurable in `falco.yaml` and are described in [syscall_event_drops](https://falco.org/docs/configuration/).
