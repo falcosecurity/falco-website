@@ -130,5 +130,3 @@ Options:
  -v                            Verbose output.
  --version                     Print version number.
 ```
-
-
