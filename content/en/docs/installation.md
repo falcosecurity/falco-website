@@ -37,6 +37,7 @@ The `falco-probe-loader` script will name the module in this format by default.
 Helm is one of the preferred methods for installing Falco on Kubernetes. The [Falco Helm chart](https://github.com/helm/charts/tree/master/stable/falco) provides an extensive set of [configuration values](https://github.com/helm/charts/tree/master/stable/falco#configuration) to start Falco with different configurations.
 
 To deploy Falco with default configuration on a cluster where Helm is deployed, run:
+
 ```shell
 helm install --name falco stable/falco
 ```
@@ -176,10 +177,6 @@ If you are using the Falco binary directly you can enable the BPF probe by:
 sudo FALCO_BPF_PROBE="" falco
 ```
 
-
-
-
-
 ## Linux
 
 Install Falco directly on Linux via a scripted install, package managers, or configuration management tools like Ansible. Installing Falco directly on the host provides:
@@ -213,14 +210,14 @@ sudo bash install-falco.sh
 
 #### CentOS/RHEL
 
-1. Trust the Draios GPG key and configure the yum repository:
+1. Trust the falcosecurity GPG key and configure the yum repository:
 
     ```shell
-    rpm --import https://s3.amazonaws.com/download.draios.com/DRAIOS-GPG-KEY.public
-    curl -s -o /etc/yum.repos.d/draios.repo https://s3.amazonaws.com/download.draios.com/stable/rpm/draios.repo
+    rpm --import https://falco.org/repo/falcosecurity-3672BA8F.asc
+    curl -s -o /etc/yum.repos.d/faclosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
     ```
 
-1. Install the EPEL repository:
+2. Install the EPEL repository:
 
     > **Note** — The following command is required only if DKMS is not available in the distribution. You can verify if DKMS is available using `yum list dkms`. If necessary, install it using:
 
@@ -228,7 +225,7 @@ sudo bash install-falco.sh
     yum install epel-release
     ```
 
-1. Install kernel headers:
+3. Install kernel headers:
 
     > **Warning** — The following command might not work with any kernel. Make sure to customize the name of the package properly.
 
@@ -236,7 +233,7 @@ sudo bash install-falco.sh
     yum -y install kernel-devel-$(uname -r)
     ```
 
-1. Install Falco:
+4. Install Falco:
 
     ```shell
     yum -y install falco
@@ -244,17 +241,17 @@ sudo bash install-falco.sh
 
     To uninstall, run `yum erase falco`.
 
-#### Debian
+#### Debian/Ubuntu
 
-1. Trust the Draios GPG key, configure the apt repository, and update the package list:
+1. Trust the falcosecurity GPG key, configure the apt repository, and update the package list:
 
     ```shell
-    curl -s https://s3.amazonaws.com/download.draios.com/DRAIOS-GPG-KEY.public | apt-key add -
-    curl -s -o /etc/apt/sources.list.d/draios.list https://s3.amazonaws.com/download.draios.com/stable/deb/draios.list
-    apt-get update
+    curl -s https://falco.org/repo/falcosecurity-3672BA8F.asc | apt-key add -
+    echo "deb https://dl.bintray.com/falcosecurity/deb stable main" | tee -a /etc/apt/sources.list.d/falcosecurity.list
+    apt-get update -y
     ```
 
-1. Install kernel headers:
+2. Install kernel headers:
 
     > **Warning** — The following command might not work with any kernel. Make sure to customize the name of the package properly.
 
@@ -262,7 +259,7 @@ sudo bash install-falco.sh
     apt-get -y install linux-headers-$(uname -r)
     ```
 
-1. Install Falco:
+3. Install Falco:
 
     ```shell
     apt-get install -y falco
