@@ -217,6 +217,8 @@ sudo bash install-falco.sh
     curl -s -o /etc/yum.repos.d/faclosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
     ```
 
+    > **Note** - In case you want to use a Falco package from the current master use the [falcosecurity-rpm-dev](https://falco.org/repo/falcosecurity-rpm-dev.repo).
+
 2. Install the EPEL repository:
 
     > **Note** — The following command is required only if DKMS is not available in the distribution. You can verify if DKMS is available using `yum list dkms`. If necessary, install it using:
@@ -250,6 +252,8 @@ sudo bash install-falco.sh
     echo "deb https://dl.bintray.com/falcosecurity/deb stable main" | tee -a /etc/apt/sources.list.d/falcosecurity.list
     apt-get update -y
     ```
+
+    > **Note** - In case you want to use a Falco package from the current master echo the https://dl.bintray.com/falcosecurity/deb-dev URL into the falcosecurity.list file.
 
 2. Install kernel headers:
 
