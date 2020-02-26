@@ -1,0 +1,7 @@
+# falcosecurity-rpm - packages by falcosecurity
+[falcosecurity-rpm]
+name=falcosecurity-rpm
+baseurl=https://dl.bintray.com/falcosecurity/rpm
+gpgcheck=1
+repo_gpgcheck=0
+enabled=1
