@@ -259,7 +259,7 @@ languages:
       - name: ブログ
         url: "/blog"
         weight: 5
-       
+
 params:
   version: v0.20.0
   githubRepository : falcosecurity/falco

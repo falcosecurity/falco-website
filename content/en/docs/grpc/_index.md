@@ -7,8 +7,8 @@ Starting from version [0.18.0](https://github.com/falcosecurity/falco/releases/t
 
 The current APIs are:
 
-- [schema definition](./outputs): Subscribe to Falco output events.
-- [schema definition](./version): Retrieve the Falco version.
+- [schema definition](outputs): Subscribe to Falco output events.
+- schema definition: Retrieve the Falco version. The current version is **{{< latest >}}**.
 
 In order to interact with these APIs, the falcosecurity organization provides the [Go](./client-go) and the [Python](./client-python) clients.
 

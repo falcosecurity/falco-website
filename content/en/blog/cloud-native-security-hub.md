@@ -72,7 +72,7 @@ Keep reading to find out more on how to get involved and contribute, especially 
 
 The project was originally started by Sysdig, but maintaining the repositories, and building out rules will now be governed by the CNCF and the Falco community. 
 
-If you are interested in getting involved with writing rules, or building out tooling around the new hub please reach out to [The official CNCF Falco Mailing List](https://lists.cncf.io/g/cncf-falco-dev) or join the [Falco slack channel](slack.sysdig.com).
+If you are interested in getting involved with writing rules, or building out tooling around the new hub please reach out to [The official CNCF Falco Mailing List](https://lists.cncf.io/g/cncf-falco-dev) or join the [Falco slack channel](https://slack.sysdig.com).
 
 ### Integrating with Falcoctl
 

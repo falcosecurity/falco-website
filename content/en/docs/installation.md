@@ -65,7 +65,7 @@ cd falco/integrations/k8s-using-daemonset
 ```shell
 kubectl apply -f k8s-with-rbac/falco-account.yaml
 ```
-3. Create a service for the Falco pods. This will allow Falco to receive [Kubernetes Audit Log Events](event-sources/kubernetes-audit). If you're not planning on using this feature, you can skip this step.
+3. Create a service for the Falco pods. This will allow Falco to receive [Kubernetes Audit Log Events](../event-sources/kubernetes-audit). If you're not planning on using this feature, you can skip this step.
 ```shell
 kubectl apply -f k8s-with-rbac/falco-service.yaml
 ```
@@ -84,7 +84,7 @@ k8s-using-daemonset$ cp ../../rules/falco_rules.* k8s-with-rbac/falco-config/
 k8s-using-daemonset$ cp ../../rules/k8s_audit_rules.yaml k8s-with-rbac/falco-config/
 ```
 
-5. Add the custom rules for your environment to the `falco_rules.local.yaml` file and they will be picked up by Falco at start time. You can also modify the `falco.yaml` file to change any [configuration options](configuration/) required for your deployment. Create the configMap as follows:
+5. Add the custom rules for your environment to the `falco_rules.local.yaml` file and they will be picked up by Falco at start time. You can also modify the `falco.yaml` file to change any [configuration options](../configuration) required for your deployment. Create the configMap as follows:
 ```shell
 kubectl create configmap falco-config --from-file=k8s-with-rbac/falco-config
 ```
@@ -208,7 +208,7 @@ sudo bash install_falco
 
 ### Package install {#package}
 
-#### CentOS/RHEL/Amazon Linux
+#### CentOS/RHEL/Amazon Linux {#centos-rhel}
 
 1. Trust the falcosecurity GPG key and configure the yum repository:
 
