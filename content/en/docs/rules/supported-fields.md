@@ -5,13 +5,13 @@ weight: 3
 
 # Introduction
 
-Here are the fields supported by Falco. These fields can be used in the `condition` key of a Falco rule and well as the `output` key. Any fields included in the `output` key of a rule will also be included in the alert's `output_fields` object when [`json_output`](../alerts/#json-output) is set to `true`.
+Here are the fields supported by Falco. These fields can be used in the `condition` key of a Falco rule and well as the `output` key. Any fields included in the `output` key of a rule will also be included in the alert's `output_fields` object when [`json_output`](../../alerts#json-output) is set to `true`.
 
 You can also see this set of fields via `falco --list=<source>`, with `<source>` being one of the sources below.
 
 # System Calls (source `syscall`)
 
-`syscall` event source fields are provided by the [kernel module](../event-sources/kernel-module/). These fields are identical to the [Sysdig filter fields](https://github.com/draios/sysdig/wiki/Sysdig-User-Guide#all-supported-filters) that can be used to filter Sysdig captures.
+`syscall` event source fields are provided by the [kernel module](../../event-sources/kernel-module/). These fields are identical to the [Sysdig filter fields](https://github.com/draios/sysdig/wiki/Sysdig-User-Guide#all-supported-filters) that can be used to filter Sysdig captures.
 
 ```
 # System Kernel Fields
@@ -478,7 +478,7 @@ marathon.group.id
 
 # Kubernetes Audit Events (source `k8s_audit`)
 
-Kubernetes Audit event fields are supported by the Kubernetes Audit event source. For more information please refer to the [Kubernetes Audit event source](../event-sources/kubernetes-audit/) documentation.
+Kubernetes Audit event fields are supported by the Kubernetes Audit event source. For more information please refer to the [Kubernetes Audit event source](../../event-sources/kubernetes-audit) documentation.
 
 ```
 # Kubernetes Audit event Fields
