@@ -189,13 +189,13 @@ Install Falco directly on Linux via a scripted install, package managers, or con
 To install Falco on Linux, you can download a shell script that takes care of the necessary steps:
 
 ```shell
-curl -o install-falco.sh -s https://s3.amazonaws.com/download.draios.com/stable/install-falco
+curl -o install_falco -s https://falco.org/script/install
 ```
 
 Then verify the [SHA256](https://en.wikipedia.org/wiki/SHA-2) checksum of the script using the `sha256sum` tool (or something analogous):
 
 ```shell
-sha256sum install-falco.sh
+sha256sum install_falco
 ```
 
 It should be `{{< sha256sum >}}`.
@@ -203,7 +203,7 @@ It should be `{{< sha256sum >}}`.
 Then run the script either as root or with sudo:
 
 ```shell
-sudo bash install-falco.sh
+sudo bash install_falco
 ```
 
 ### Package install {#package}
@@ -217,7 +217,7 @@ sudo bash install-falco.sh
     curl -s -o /etc/yum.repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
     ```
 
-    > **Note** - In case you want to use a Falco package from the current master use the [falcosecurity-rpm-dev](https://falco.org/repo/falcosecurity-rpm-dev.repo).
+    > **Note** - In case you want to use a Falco package from the current master use the [falcosecurity-rpm-dev](https://falco.org/repo/falcosecurity-rpm-dev.repo) file.
 
 2. Install the EPEL repository:
 
@@ -342,6 +342,6 @@ However, some users may prefer to run Falco in the CoreOS toolbox. While not the
 
 ```shell
 toolbox --bind=/dev --bind=/var/run/docker.sock
-curl -s https://s3.amazonaws.com/download.draios.com/stable/install-falco | bash
+curl -s https://falco.org/script/install | bash
 falco-probe-loader
 ```
