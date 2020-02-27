@@ -38,7 +38,7 @@ Key | Required | Description | Default
 `rule` | yes | A short, unique name for the rule. |
 `condition` | yes | A filtering expression that is applied against events to check whether they match the rule. |
 `desc` | yes | A longer description of what the rule detects. |
-`output` | yes | Specifies the message that should be output if a matching event occurs, following the Sysdig [output format syntax](http://www.sysdig.org/wiki/sysdig-user-guide/#output-formatting). |
+`output` | yes | Specifies the message that should be output if a matching event occurs, following the Sysdig [output format syntax](http://www.sysdig.com/wiki/sysdig-user-guide/#output-formatting). |
 `priority` | yes | A case-insensitive representation of the severity of the event. Should be one of the following: `emergency`, `alert`, `critical`, `error`, `warning`, `notice`, `informational`, `debug`. |
 `enabled` | no | If set to `false`, a rule is neither loaded nor matched against any events. | `true`
 `tags` | no | A list of tags applied to the rule (more on this [below](#tags)). |
@@ -47,7 +47,7 @@ Key | Required | Description | Default
 
 ## Conditions
 
-The key part of a rule is the _condition_ field. A condition is simply a Boolean predicate on Sysdig events expressed using the Sysdig [filter syntax](http://www.sysdig.org/wiki/sysdig-user-guide/#filtering). Any Sysdig filter is a valid Falco condition (with the exception of certain excluded system calls, discussed below). In addition, Falco conditions can contain macro terms (this capability is not present in Sysdig syntax).
+The key part of a rule is the _condition_ field. A condition is simply a Boolean predicate on Sysdig events expressed using the Sysdig [filter syntax](http://www.sysdig.com/wiki/sysdig-user-guide/#filtering). Any Sysdig filter is a valid Falco condition (with the exception of certain excluded system calls, discussed below). In addition, Falco conditions can contain macro terms (this capability is not present in Sysdig syntax).
 
 Here's an example of a condition that alerts whenever a bash shell is run inside a container:
 
