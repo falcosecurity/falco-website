@@ -5,3 +5,7 @@
 public/
 resources/
 *idea*
+
+# Link checker
+bin/
+tmp/
