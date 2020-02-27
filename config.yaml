@@ -175,7 +175,7 @@ languages:
 params:
   version: v0.20.0
   githubRepository : falcosecurity/falco
-  sha256sum: 6807eb9936ea750b46e0f9bd62bdeec5905ac2ee447aaf4855804cbf6d02f33a
+  sha256sum: 21e8053c37e32f95d91c9393d961af1c63b5839d795c8cac314d05daadea9779
   primaryFont:
     name: "Karla"
     sizes: [400 700]
