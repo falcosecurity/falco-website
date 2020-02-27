@@ -214,7 +214,7 @@ sudo bash install-falco.sh
 
     ```shell
     rpm --import https://falco.org/repo/falcosecurity-3672BA8F.asc
-    curl -s -o /etc/yum.repos.d/faclosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
+    curl -s -o /etc/yum.repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
     ```
 
     > **Note** - In case you want to use a Falco package from the current master use the [falcosecurity-rpm-dev](https://falco.org/repo/falcosecurity-rpm-dev.repo).
