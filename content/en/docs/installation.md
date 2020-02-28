@@ -208,7 +208,7 @@ sudo bash install_falco
 
 ### Package install {#package}
 
-#### CentOS/RHEL
+#### CentOS/RHEL/Amazon Linux
 
 1. Trust the falcosecurity GPG key and configure the yum repository:
 
