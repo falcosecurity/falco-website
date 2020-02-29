@@ -20,6 +20,8 @@ languages:
         subtitle: Falco, the open source cloud-native runtime security project, is the defacto Kubernetes threat detection engine. Falco detects unexpected application behavior and alerts on threats at runtime.
         # Button text
         buttontext: Get started
+        # Falco joins CNCF
+        falcoCNCF: Falco is the first runtime security project to join CNCF Incubating stage.
       runtime:
         title: Why Runtime Security?
         intro: >-
@@ -92,83 +94,85 @@ languages:
 
   zh:
     languageName: 中文 Chinese
-    title: Falco — Cloud-Native Runtime Security
+    title: Falco — 云原生运行时安全
     contentDir: content/zh
     params:
       heroText:
         # Main hero title
-        title: Cloud-Native Runtime Security
+        title: 云原生运行时安全
         # Hero subtitle (optional)
-        subtitle: Falco, the open source cloud-native runtime security project, is the defacto Kubernetes threat detection engine. Falco detects unexpected application behavior and alerts on threats at runtime.
+        subtitle: Falco，开源的云原生运行时安全项目，是Kubernetes威胁监测引擎的事实标准。Falco可以监测意外的应用行为和运行时发出的威胁警告。
         # Button text
-        buttontext: Get started
+        buttontext: 从这开始
+        # Falco joins CNCF
+        falcoCNCF: Falco是第一个加入云原生计算基金会CNCF并处于孵化阶段的运行时安全项目。
       runtime:
-        title: Why Runtime Security?
+        title: 为什么需要运行时安全？
         intro: >-
-               Securing Kubernetes requires putting controls in place to detect unexpected behavior that could be malicious. Examples include:
+               保障Kubernetes运行安全需要将控制器放置在适当的位置，以检测可能是恶意的意外行为。例子包括：
         items:
-          - example: Exploits of unpatched and new vulnerabilities
-          - example: Insecure configurations
-          - example: Leaked or weak credentials
-          - example: Insider threats
-        closing: Even when processes are in place for vulnerability scanning and implementing pod security and network policies, not every risk will be addressed. You still need mechanisms to confirm these security barriers are effective, help configure them, and provide with a last line of defense when they fail.
+          - example: 利用未修补的新漏洞
+          - example: 不安全的配置
+          - example: 被泄露的凭证或弱凭证
+          - example: 内部威胁
+        closing: 即使已存在用于漏洞扫描、配置pod安全和网络策略的程序，也不能解决所有风险。您仍然需要一些机制，以确认这些安全屏障是有效的，帮助配置它们，并在它们失败时提供最后一道防线。
       whyfalco:
-        title: Why Falco for Runtime Detection?
+        title: 为什么Falco是为了运行时监测？
         subtitle:
         tiles:
-        - title: Strengthen security
+        - title: 加强安全性
           icon: check.png
-          text: Create security rules driven by a context-rich and flexible engine to define unexpected application behavior.
-        - title: Reduce risk
+          text: 创建由上下文丰富且灵活的引擎驱动的安全规则，以定义意外的应用程序行为。
+        - title: 减小风险
           icon: box.png
-          text: Immediately respond to policy violation alerts by plugging Falco into your current security response workflows and processes.
-        - title: Leverage up-to-date rules
+          text: 通过将Falco对接您当前的安全响应工作流和流程，立即作出策略违反警报。
+        - title: 利用最新的规则
           icon: scalable.png
-          text: Alert using community-sourced detections of malicious activity and CVE exploits.
+          text: 使用来源于社区的恶意活动和CVE漏洞监测发出警报。
       syscalls:
-        title: System calls deliver deep visibility
-        summary: Falco efficiently leverages Extended Berkeley Packet Filter (eBPF), a secure mechanism, to capture system calls and gain deep visibility. By adding Kubernetes application context and Kubernetes API audit events, teams can understand who did what.
+        title: 系统调用提供深入的可见性
+        summary: Falco有效地利用Extended Berkeley Packet Filter (eBPF)，这一安全机制，来捕获系统调用并获得深入的可见性。通过添加Kubernetes应用程序上下文和Kubernetes API审计事件，团队可以了解谁做了什么。
       resources:
-        title: Downloads + Resources
-        subtitle: Get started today, contribute to the open source project & learn more.
+        title: 下载+资源
+        subtitle: 从今天开始，为开源项目作出贡献并学习更多。
         items:
-        - title: Contribute
-          text: Jump over to our GitHub page to contribute to our open source ecosystem.
+        - title: 贡献
+          text: 请转到我们的GitHub主页来为我们的开源生态作出贡献。
           # Icon (from /images/illustrations/icons/___.svg)
           icon: group.png
           buttonText:  Falco Github
           buttonLink: https://github.com/falcosecurity/falco
-        - title: Download
-          text: Get started with our Falco installation guide.
+        - title: 下载
+          text: 从我们的Falco安装指导开始。
           icon: download.png
-          buttonText: Falco Install Guide
+          buttonText: Falco安装指导
           buttonLink: /docs/installation
-        - title: Documentation
-          text: In the official docs, you can find information about [installing Falco](/docs/installation), [configuration options](/docs/configuration), and writing [custom rules](/docs/rules).
+        - title: 文档
+          text: 通过官方文档，您可以找到更多关于[安装Falco](/docs/installation)的信息，[配置选项](/docs/configuration)，和编写[自定义规则](/docs/rules).
           icon: documentation-2.png
-          buttonText: Falco Documentation
+          buttonText: Falco文档
           buttonLink: /docs
-        - title: Connect
-          text: Join our Slack team to interact with other users and developers.
+        - title: 连接
+          text: 加入我们的Slack团队，和其他用户和开发者沟通交流。
           icon: chat.png
           buttonText: Falco Slack
           buttonLink: https://slack.sysdig.com/
       signup:
-        title: Join the official CNCF Mailing List.
-        subtitle: Sign up here
-        buttonText: Join
+        title: 加入CNCF官方邮件列表。
+        subtitle: 从这注册
+        buttonText: 加入
     menu:
       navbar:
-      - name: Why Falco?
+      - name: 为什么需要Falco？
         url: "/#whyfalco"
         weight: 2
-      - name: Get started
+      - name: 从这开始
         url: "/#resources"
         weight: 3
-      - name: Documentation
+      - name: 文档
         url: "/docs"
         weight: 4
-      - name: Blog
+      - name: 博客
         url: "/blog"
         weight: 5
 
