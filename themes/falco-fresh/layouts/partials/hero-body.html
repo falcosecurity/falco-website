@@ -5,6 +5,7 @@
 {{- $buttonText := $heroText.buttontext }}
 {{- $buttonLink := $hero.buttonlink }}
 {{- $image      := $hero.image }}
+{{- $falcoCNCF  := $heroText.falcoCNCF }}
 <div class="hero-body">
   <div class="container">
     <div class="columns u-logo-offset">
@@ -24,7 +25,7 @@
           {{ . }}
         </p>
         {{ end }}
-	<p class="subtitle is-5 is-muted">Falco is the first runtime security project to join CNCF Incubating stage.</p>
+	<p class="subtitle is-5 is-muted">{{ $falcoCNCF }}</p>
         <p>
           <a class="button cta rounded primary-btn raised" href="{{ $buttonLink }}">
             {{ $buttonText }}
