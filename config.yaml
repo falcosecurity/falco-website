@@ -146,12 +146,12 @@ languages:
           text: 从我们的Falco安装指导开始。
           icon: download.png
           buttonText: Falco安装指导
-          buttonLink: /docs/installation
+          buttonLink: /zh/docs/installation
         - title: 文档
           text: 通过官方文档，您可以找到更多关于[安装Falco](/docs/installation)的信息，[配置选项](/docs/configuration)，和编写[自定义规则](/docs/rules).
           icon: documentation-2.png
           buttonText: Falco文档
-          buttonLink: /docs
+          buttonLink: /zh/docs
         - title: 连接
           text: 加入我们的Slack团队，和其他用户和开发者沟通交流。
           icon: chat.png
