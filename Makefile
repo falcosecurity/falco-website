@@ -29,4 +29,4 @@ run-link-checker:
 
 check-links: link-checker-setup run-link-checker
 
-check-links-locally: clean production-build check-links
+check-links-locally: check-links
