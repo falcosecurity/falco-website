@@ -10,7 +10,7 @@ The current APIs are:
 - [schema definition](./outputs): Subscribe to Falco output events.
 - [schema definition](./version): Retrieve the Falco version.
 
-In order to interact with these APIs, the falcosecurity organization provides a [Go client](./client-go).
+In order to interact with these APIs, the falcosecurity organization provides the [Go](./client-go) and the [Python](./client-python) clients.
 
 ## Configuration
 
@@ -106,4 +106,4 @@ To do so, simply run Falco. For example:
 $ falco -c falco.yaml -r rules/falco_rules.yaml -r rules/falco_rules.local.yaml -r rules/k8s_audit_rules.yaml
 ```
 
-Refer to the [Go example](./outputs) to learn how to receive and consume the output events.
+Refer to the [Go client](./client-go) or [Python client](./client-py) documentation to learn how to receive and consume [Output](./outputs) events.
