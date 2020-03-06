@@ -44,6 +44,28 @@ By default, starting the container will attempt to load and/or build the Falco k
 docker run ... -e SYSDIG_SKIP_LOAD=1 ... falcosecurity/falco:{{< latest >}}
 ```
 
+## Running Falco in a Kind cluster
+
+The easiest way to run Falco on a [Kind](https://github.com/kubernetes-sigs/kind) cluster is as follows:
+
+1. Create a configuration file (e.g., `kind-config.yaml`) and add this content to the file:
+```yaml
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+  extraMounts:
+  - hostPath: /dev
+    containerPath: /dev
+```
+
+2. Then create the cluster specifying the configuration file:
+```
+kind create cluster --config=./kind-config.yaml
+```
+
+3. Now, you can [installed](../installation) Falco in your Kubernetes cluster running on Kind. 
+
 ## Running Falco manually
 
 If you'd like to run Falco by hand, here's the full usage description for falco:
