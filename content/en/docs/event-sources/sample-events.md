@@ -57,11 +57,11 @@ Options:
 
 We've created a shell script [`k8s_event_generator.sh`](https://github.com/falcosecurity/falco/blob/master/docker/event-generator/k8_event_generator.sh) and supporting k8s object files that generate activity that matches the k8s audit event ruleset.
 
-In the interests of keeping things self-contained, all objects are created in a `falco-event-generator` namespace. This means that some activity related to cluster roles/cluster role bindings is not performed.
+In the interests of keeping things self-contained, all objects are created in a `falco-eg-sandbox` namespace. The namespace should be created before running the event generator. This means that some activity related to cluster roles/cluster role bindings is not performed.
 
 You can provide a specific rule name to the script. If provided, only those objects related to that rule will trigger. The default is "all", meaning that all objects are created.
 
-The script loops forever, deleting the falco-event-generator namespace after each iteration.
+The script loops forever, deleting the resources in the `falco-eg-sandbox` namespace after each iteration.
 
 ## Docker Image
 
@@ -84,4 +84,21 @@ The image includes a kubectl binary, but in most cases, you'll need to provide k
 docker run -v $HOME/.kube:/root/.kube -it falcosecurity/falco-event-generator k8s_audit
 ```
 
+## Running the Event Generator in K8s
+
+We've also provided K8s resource object files that make it easy to run the event generator in K8s Clusters:
+
+* [`event-generator-syscall-daemonset.yaml`](https://github.com/falcosecurity/falco/blob/master/docker/event-generator/event-generator-syscall-daemonset.yaml) creates a K8s DaemonSet that runs the event generator with the `syscall` argument. It will run on every non-master node.
+* [`event-generator-role-rolebinding-serviceaccount.yaml`](https://github.com/falcosecurity/falco/blob/master/docker/event-generator/event-generator-role-rolebinding-serviceaccount.yaml) creates a Service Account, Cluster Role, and Role that allows a service account `falco-event-generator` to create objects in a namespace `falco-eg-sandbox`.
+* [`event-generator-k8saudit-deployment.yaml`](https://github.com/falcosecurity/falco/blob/master/docker/event-generator/event-generator-syscall-daemonset.yaml) creates a deployment running in the `falco-event-generator` namespace that runs the event generator with the argument `k8s_audit`.
+
+You can run the following to create the necessary namespaces and objects:
+
+```
+kubectl create namespace falco-event-generator && \
+  kubectl create namespace falco-eg-sandbox && \
+  kubectl apply -f event-generator-role-rolebinding-serviceaccount.yaml && \
+  kubectl apply -f event-generator-k8saudit-deployment.yaml && \
+  kubectl apply -f event-generator-syscall-daemonset.yaml
+```
 
