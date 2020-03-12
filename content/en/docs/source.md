@@ -429,6 +429,7 @@ To run regression tests, after building Falco, in the Falco root directory, you 
 
 You will need the following dependencies for the regression testing framework to work.
 
+- Python 3
 - [Avocado Framework](https://github.com/avocado-framework/avocado), version 69
 - [Avocado Yaml to Mux plugin](https://avocado-framework.readthedocs.io/en/69.0/optional_plugins/varianter_yaml_to_mux.html)
 - [JQ](https://github.com/stedolan/jq)
@@ -438,7 +439,7 @@ You will need the following dependencies for the regression testing framework to
 To install Avocado and its plugins, you can use pip:
 
 ```
-pip2 install avocado-framework==69.0 avocado-framework-plugin-varianter-yaml-to-mux==69.0
+pip install avocado-framework==69.0 avocado-framework-plugin-varianter-yaml-to-mux==69.0
 ```
 
 ##### Run the tests
