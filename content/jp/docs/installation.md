@@ -14,29 +14,29 @@ weight: 2
 
 ## Kubernetes
 
-The default method to run Falco on Kubernetes is to use a DaemonSet. Falco supports a variety of installation methods depending on your deployment methods of choice and underlying Kubernetes version. The default installation includes support for system call events via a kernel module and is thus dependent on the underlying operating system for the worker nodes. Installing the appropriate kernel headers on the worker nodes will allow Falco to dynamically build (and `insmod`) the kernel module on pod start. Falco also provides a number of pre-built modules for common distributions and kernels. Falco will automatically attempt to download a prebuilt module if the module compilation fails.
+KubernetesでFalcoを実行するデフォルトの方法は、DaemonSetを使用することです。 Falcoは、選択したデプロイメント方法と基盤となるKubernetesバージョンに応じて、さまざまなインストール方法をサポートしています。デフォルトのインストールには、カーネルモジュールを介したシステムコールイベントのサポートが含まれているため、ワーカーノードの基盤となるオペレーティングシステムに依存しています。ワーカーノードに適切なカーネルヘッダーをインストールすると、Falcoはポッドの起動時にカーネルモジュールを動的に構築（および「insmod」）できます。Falcoはまた、一般的なディストリビューションとカーネル用にいくつかのビルド済みモジュールを提供します。Falcoは、モジュールのコンパイルが失敗した場合、事前に構築されたモジュールを自動的にダウンロードしようとします。
 
-For platforms such as Google's Container Optimized OS & GKE, where access to the underlying kernel is limited, see the [GKE section](#gke) below.
+基盤となるカーネルへのアクセスが制限されているGoogleのContainer Optimized OS＆GKEなどのプラットフォームについては、以下の[GKEセクション]（＃gke）を参照してください。
 
-### Downloading the Kernel Module via HTTPs
+### HTTP経由のカーネルモジュールのダウンロード
 
-Use HTTPs to pre-build and provide the kernel module to the Falco pods. The easiest way to build the kernel module is as follows:
+HTTPを使用してカーネルモジュールを事前に構築し、Falcoポッドに提供します。カーネルモジュールを構築する最も簡単な方法は次のとおりです：
 
-1. Deploy Falco on a node with the required kernel headers.
-2. Use the `falco-probe-loader` script on Falco to build the kernel module.
-3. Move the kernel module from the pod or container.
-    By default, the kernel module is copied to `/root/.sysdig/`.
+1. 必要なカーネルヘッダーを持つノードにFalcoをデプロイします。
+2. Falcoで `falco-probe-loader`スクリプトを使用して、カーネルモジュールをビルドします。
+3. カーネルモジュールをポッドまたはコンテナから移動します。
+    デフォルトでは、カーネルモジュールは `/root/.sysdig/`にコピーされます。
 
-`SYSDIG_PROBE_URL` - Set this environment variable for the Falco pod to override the default host for prebuilt kernel modules. This should be only the host portion of the URL without the trailing slash - ie., `https://myhost.mydomain.com`. Copy the kernel modules to the `/stable/sysdig-probe-binaries/` directory and name it as follows:
+`SYSDIG_PROBE_URL`-Falcoポッドにこの環境変数を設定して、事前に構築されたカーネルモジュールのデフォルトホストをオーバーライドします。これは、末尾のスラッシュなしのURLのホスト部分のみである必要があります。つまり、「https://myhost.mydomain.com」です。 カーネルモジュールを `/stable/sysdig-probe-binaries/`ディレクトリにコピーし、次のように名前を付けます：
 `falco-probe-${falco_version}-$(uname -i)-$(uname -r)-{md5sum of kernel config}.ko`
 
-The `falco-probe-loader` script will name the module in this format by default.
+`falco-probe-loader`スクリプトは、デフォルトでこの形式でモジュールに名前を付けます。
 
 ### Helm
 
-Helm is one of the preferred methods for installing Falco on Kubernetes. The [Falco Helm chart](https://github.com/helm/charts/tree/master/stable/falco) provides an extensive set of [configuration values](https://github.com/helm/charts/tree/master/stable/falco#configuration) to start Falco with different configurations.
+Helmは、FalcoをKubernetesにインストールするための推奨される方法の1つです。 [Falco Helm chart]（https://github.com/helm/charts/tree/master/stable/falco）は、[設定値]（https://github.com/helm/charts/treeの広範なセットを提供します /master/stable/falco＃configuration）異なる構成でFalcoを起動できます。
 
-To deploy Falco with default configuration on a cluster where Helm is deployed, run:
+Helmがデプロイされているクラスターにデフォルト構成でFalcoをデプロイするには、次を実行します。
 
 ```shell
 helm install --name falco stable/falco
@@ -47,35 +47,35 @@ To remove Falco from your cluster run:
 helm delete falco
 ```
 
-#### Kubernetes Response Engine
+#### Kubernetes レスポンスエンジン
 
-Using the Falco Helm chart is the easiest way to deploy the [Falco Kubernetes Response Engine (KRE)](https://github.com/falcosecurity/kubernetes-response-engine). The KRE provides the ability to send Falco alerts to a messaging service such as NATS, AWS SNS, or Google Pub/Sub. This allows Falco alerts to be processed by subscribers of the respective messaging services. Refer to the `integrations.*` [configuration options](https://github.com/helm/charts/tree/master/stable/falco#configuration) of the Helm chart to enable this integration.
+Falco Helmチャートを使用することは、[Falco Kubernetes Response Engine（KRE）]（https://github.com/falcosecurity/kubernetes-response-engine）をデプロイする最も簡単な方法です。KREは、NATS、AWS SNS、Google Pub/SubなどのメッセージングサービスにFalcoアラートを送信する機能を提供します。これにより、各メッセージングサービスのサブスクライバーがFalcoアラートを処理できます。 この統合を有効にするには、Helmチャートの `integrations ** [構成オプション]（https://github.com/helm/charts/tree/master/stable/falco#configuration）を参照してください。
 
-The KRE also allows you to deploy security playbooks (via serverless functions) that can take action when Falco rules are violated. Refer to the [Response Engine documentation](https://github.com/falcosecurity/kubernetes-response-engine/tree/master/playbooks) for information on how to deploy the included playbooks.
+KREを使用すると、Falcoルールに違反した場合にアクションを実行できるセキュリティプレイブックを（サーバーレス機能を介して）デプロイすることもできます。付属のプレイブックをデプロイする方法については、[Response Engine documentation]（https://github.com/falcosecurity/kubernetes-response-engine/tree/master/playbooks）を参照してください。
 
-### DaemonSet Manifests
-To run Falco as a Kubernetes [DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/), follow the instructions below. These are the `generic` instructions for Kubernetes. For platform-specific instructions see respective sections.
+### DaemonSet マニフェスト
+FalcoをKubernetes [DaemonSet]（https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/）として実行するには、以下の手順に従ってください。 これらはKubernetesの「一般的な」手順です。 プラットフォーム固有の手順については、それぞれのセクションを参照してください。
 
-1. Clone the [Falco repo](https://github.com/falcosecurity/falco/) and change to the directory with the manifests.
+1. [Falcoリポジトリ]（https://github.com/falcosecurity/falco/）のクローンを作成し、マニフェストのあるディレクトリに移動します。
 ```shell
 git clone https://github.com/falcosecurity/falco/
 cd falco/integrations/k8s-using-daemonset
 ```
-2. Create a service account and provide necessary RBAC permissions. Falco uses this service account to connect to the Kubernetes API server and fetch resource metadata.
+2. サービスアカウントを作成し、必要なRBAC権限を付与します。Falcoはこのサービスアカウントを使用してKubernetes APIサーバーに接続し、リソースメタデータを取得します。
 ```shell
 kubectl apply -f k8s-with-rbac/falco-account.yaml
 ```
-3. Create a service for the Falco pods. This will allow Falco to receive [Kubernetes Audit Log Events](event-sources/kubernetes-audit). If you're not planning on using this feature, you can skip this step.
+3. Falcoポッド用のサービスを作成します。これにより、Falcoは[Kubernetes Audit Log Events]（event-sources / kubernetes-audit）を受信できるようになります。この機能を使用する予定がない場合は、この手順をスキップできます。
 ```shell
 kubectl apply -f k8s-with-rbac/falco-service.yaml
 ```
 
-4.  The DaemonSet also relies on a Kubernetes ConfigMap to store the Falco configuration and make the configuration available to the Falco Pods. This allows you to manage custom configuration without rebuilding and redeploying the underlying Pods. In order to create the ConfigMap:
+4. DaemonSetはKubernetes ConfigMapにFalcoの設定を保存し、設定をFalcoポッドで使用できるようにします。 これにより、基になるPodを再ビルドおよび再デプロイすることなく、カスタム構成を管理できます。 ConfigMapを作成するには：
 
-  1. Create the `k8s-with-rbac/falco-config` directory.
-  2. Copy the required configuration from this GitHub repository to the `k8s-with-rbac/falco-config/` directory.
+  1. `k8s-with-rbac/falco-config`ディレクトリを作成します。
+  2. このGitHubリポジトリから必要な設定を `k8s-with-rbac/falco-config/`ディレクトリにコピーします。
 
-Do not modify the original files. Use the files you copied to make any configuration changes.
+元のファイルを変更しないでください。 コピーしたファイルを使用して、設定を変更します。
 
 ```shell
 mkdir -p k8s-with-rbac/falco-config

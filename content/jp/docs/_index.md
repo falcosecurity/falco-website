@@ -10,7 +10,6 @@ Falcoは、アプリケーションの異常なアクティビティを検出す
 
 ### Falcoはどのようなビヘイビアを検出できますか？
 
-Falco can detect and alert on any behavior that involves making [Linux system calls](http://man7.org/linux/man-pages/man2/syscalls.2.html). Falco alerts can be triggered by the use of specific system calls, their arguments, and by properties of the calling process. For example, you can easily detect when:
 Falcoは、[Linuxシステムコール]（http://man7.org/linux/man-pages/man2/syscalls.2.html）の作成に関連するすべてのビヘイビアを検出およびアラートできます。Falcoアラートは、特定のシステムコールとその引数の使用、および呼び出しプロセスのプロパティによってトリガーできます。たとえば、次の場合に簡単に検出できます。
 
 * コンテナ内でシェルが実行する
@@ -19,7 +18,7 @@ Falcoは、[Linuxシステムコール]（http://man7.org/linux/man-pages/man2/s
 * 非デバイスファイルが `/ dev`に書き込まれる
 * 標準システムバイナリ（ `ls`など）がアウトバウンドネットワーク接続を作成する
 
-## HFalcoと他のツールの比較
+## Falcoと他のツールの比較
 
 Falcoが[SELinux]（https://en.wikipedia.org/wiki/Security-Enhanced_Linux）、[AppArmor]（https://wiki.ubuntu.com/AppArmor）、[Auditd]（https：//linux.die.net/man/8/auditd）、およびLinuxセキュリティポリシーに関連するその他のツールとどのように異なるかをよく聞かれます。[Sysdig blog]（https://sysdig.com/blog/selinux-seccomp-falco-technical-discussion/）でFalcoを他のツールと比較する[ブログ投稿]を作成しました。
 
