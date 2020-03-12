@@ -36,3 +36,14 @@ To translate other parts of the site:
 
 1. See the `languages.zh` block in the site's [`config.yaml`](./config.yaml) configuration file and translate those items from the current English.
 1. See [`i18n/zh.yaml`](./i18n/zh.yaml) for a handful of language snippets that need to be translated from the current English. Translate the `other` block of each term.
+
+### Japanese
+
+There is currently scaffolding in place for a Japnese translation of the site.
+
+To translate docs into Japanese, create Japanese-language Markdown files in the `content/jp/docs` directory.
+
+To translate other parts of the site:
+
+1. See the `languages.jp` block in the site's [`config.yaml`](./config.yaml) configuration file and translate those items from the current English.
+1. See [`i18n/jp.yaml`](./i18n/jp.yaml) for a handful of language snippets that need to be translated from the current English. Translate the `other` block of each term.

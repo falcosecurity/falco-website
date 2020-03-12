@@ -230,12 +230,12 @@ languages:
           text: Falcoインストールガイドで始めましょう。
           icon: download.png
           buttonText: Falcoインストールガイド
-          buttonLink: /docs/installation
+          buttonLink: /jp/docs/installation
         - title: ドキュメンテーション
           text: 公式ドキュメントでは、[Falcoのインストール]（/docs/installation）、[設定オプション]（/docs/configuration）、および[カスタムルール]（/docs/rules）の記述に関する情報を見つけることができます。
           icon: documentation-2.png
           buttonText: Falcoドキュメンテーション
-          buttonLink: /docs
+          buttonLink: /jp/docs
         - title: コネクト
           text: Slackチームに参加して、他のユーザーやデベロッパーと交流してください。
           icon: chat.png
