@@ -7,7 +7,11 @@ author: Leonardo Di Donato
 Even though there's the lockdown, [Falco 0.21.0](https://github.com/falcosecurity/falco/releases/tag/0.21.0) decided to go out!
 Such a bad guy!
 
-Notably, this is the first release that happens with the new build & release process.
+Notably, this is the first release that happens with the new build & release process. 🚀
+
+<center>
+![The new release process!](/img/release-0210.png)
+</center>
 
 In case you just want Falco 0.21.0, you can find its packages at the following repositories:
 
@@ -20,11 +24,13 @@ Instructions to install using them are already updated on the Falco website:
 - [CentOS/Amazon Linux](https://falco.org/docs/installation/#centos-rhel-amazon-linux)
 - [Debian/Ubuntu](https://falco.org/docs/installation/#debian-ubuntu)
 
-Instead, or people preferring docker images...
+Instead, or people preferring docker images... 🐳
 
-- `docker pull falcosecurity/falco:0.21.0`
-- `docker pull falcosecurity/falco:0.21.0-minimal`
-- `docker pull falcosecurity/falco:0.21.0-slim`
+```bash
+docker pull falcosecurity/falco:0.21.0
+docker pull falcosecurity/falco:0.21.0-minimal
+docker pull falcosecurity/falco:0.21.0-slim
+```
 
 ## Notable Changes
 
@@ -34,12 +40,14 @@ Release #100 of Falco comes with some notable changes.
 
 During past weeks, [I](https://github.com/leodido) worked together with [Lorenzo](https://github.com/fntlnz) to put in place a completely new and automated release process for Falco.
 
-Most of the work about this is into PR [1059](https://github.com/falcosecurity/falco/pull/1059).
+We did most of the work into PR [1059](https://github.com/falcosecurity/falco/pull/1059).
+
 
 This process takes place in two cases:
 
 1. A pull request is merged into master, which leads to the release of a _development_ version of Falco
 2. A commit on master receives a git tag, which leads to the release of a _stable_ version of Falco
+3.
 
 When one of these two conditions happen:
 
@@ -56,6 +64,10 @@ When one of these two conditions happen:
 
 Thanks to [Lorenzo](https://github.com/fntlnz) contribution (PR [1050](https://github.com/falcosecurity/falco/pull/1050)),
 to make Falco use the eBPF probe as a driver you need to specify an environment variable named `FALCO_BPF_PROBE`, not `SYSDIG_BPF_PROBE` anymore.
+
+```bash
+FALCO_BPF_PROBE="" ./build/release/falco -r ...
+```
 
 Please update your systemd scripts or Kubernetes deployments.
 
@@ -88,3 +100,7 @@ You can read the full changelog [here](https://github.com/falcosecurity/falco/bl
 ## Upcoming things
 
 Stay tuned for the upcoming [drivers build grid](https://github.com/falcosecurity/test-infra/tree/master/driverkit) which, using [driverkit](https://github.com/falcosecurity/driverkit) - a quarantine project by [me](https://github.com/leodido) and [Lorenzo](https://github.com/fntlnz) - will pre-build and release (in the open too!) the Falco kernel modules and the Falco eBPF probes for a set of predefined target systems and kernel releases.
+
+<center>
+![Pre-built Falco kernel modules and Falco eBPF probes available in the open, soon!](/img/upcoming-drivers.png)
+</center>
