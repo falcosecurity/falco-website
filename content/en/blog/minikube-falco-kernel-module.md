@@ -11,7 +11,7 @@ Now, thanks to [Anders Björklund](https://github.com/afbjorklund) who proposed 
 using Minikube >= 1.8.0 (with the minikube iso, e.g: using a VM driver) will also find installed a copy of the Falco kernel module ready to serve Falco instances in user-space!
 
 At the moment of writing, Minikube installs Kubernetes 1.17.3, and the Falco repository does not yet ship the manifests containing the new changes for
-Kubernetes >= 1.16, altough there are PRs [#1044](https://github.com/falcosecurity/falco/pull/1044) and [#1005](https://github.com/falcosecurity/falco/pull/1005) that go to that direction.
+Kubernetes >= 1.16, although there are PRs [#1044](https://github.com/falcosecurity/falco/pull/1044) and [#1005](https://github.com/falcosecurity/falco/pull/1005) that go to that direction.
 
 For this reason, to test this you can either just patch the manifests yourself or use the Falco Helm Chart that was [already patched](https://github.com/helm/charts/pull/17339) and works in this case!
 
@@ -27,13 +27,13 @@ minikube start --driver=virtualbox
 Once you issue the command, look at the logs to make sure you have at least Minikube 1.8.0:
 
 ```
-😄  minikube v1.8.1 on Arch 
+😄  minikube v1.8.1 on Arch
     ▪ KUBECONFIG=/home/fntlnz/.kube/current
 ✨  Automatically selected the virtualbox driver
 💿  Downloading VM boot image ...
 🔥  Creating virtualbox VM (CPUs=2, Memory=3939MB, Disk=20000MB) ...
 🐳  Preparing Kubernetes v1.17.3 on Docker 19.03.6 ...
-🚀  Launching Kubernetes ... 
+🚀  Launching Kubernetes ...
 🌟  Enabling addons: default-storageclass, storage-provisioner
 ⌛  Waiting for cluster to come online ...
 🏄  Done! kubectl is now configured to use "minikube"
