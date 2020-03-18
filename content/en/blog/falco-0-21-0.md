@@ -24,7 +24,7 @@ Instructions to install using them are already updated on the Falco website:
 - [CentOS/Amazon Linux](https://falco.org/docs/installation/#centos-rhel-amazon-linux)
 - [Debian/Ubuntu](https://falco.org/docs/installation/#debian-ubuntu)
 
-Instead, or people preferring docker images... 🐳
+Instead, for people preferring docker images... 🐳
 
 ```bash
 docker pull falcosecurity/falco:0.21.0
@@ -47,7 +47,7 @@ This process takes place in two cases:
 
 1. A pull request is merged into master, which leads to the release of a _development_ version of Falco
 2. A commit on master receives a git tag, which leads to the release of a _stable_ version of Falco
-3.
+
 
 When one of these two conditions happen:
 
@@ -57,8 +57,8 @@ When one of these two conditions happen:
 	1. [deb](https://bintray.com/falcosecurity/deb/falco), [rpm](https://bintray.com/falcosecurity/rpm/falco), [bin](https://bintray.com/falcosecurity/bin/falco) for _stable_ versions
 3. it builds the docker images from these packages
 4. it pushes the docker images to the [docker hub](https://hub.docker.com/r/falcosecurity/falco)
-   1. falcosecurity/falco:master, falcosecurity/falco:master-slim, falcosecurity/falco:master-minimal for _development_ versions
-   2. falcosecurity/falco:latest, falcosecurity/falco:latest-slim, falcosecurity/falco:latest-minimal for _stable_ versions
+   1. `falcosecurity/falco:master`, `falcosecurity/falco:master-slim`, `falcosecurity/falco:master-minimal` for _development_ versions
+   2. `falcosecurity/falco:latest`, `falcosecurity/falco:latest-slim`, `falcosecurity/falco:latest-minimal` for _stable_ versions
 
 ### FALCO_BPF_PROBE
 
@@ -66,18 +66,20 @@ Thanks to [Lorenzo](https://github.com/fntlnz) contribution (PR [1050](https://g
 to make Falco use the eBPF probe as a driver you need to specify an environment variable named `FALCO_BPF_PROBE`, not `SYSDIG_BPF_PROBE` anymore.
 
 ```bash
-FALCO_BPF_PROBE="" ./build/release/falco -r ...
+FALCO_BPF_PROBE="" ./build/release/userspace/falco/falco -r ...
 ```
 
 Please update your systemd scripts or Kubernetes deployments.
 
 ### Falco versions are now SemVer 2.0 compliant
 
-In PR [1086](https://github.com/falcosecurity/falco/pull/1086) I completed the process of creating Falco version as SemVer 2.0 compliant version strings.
+In PR [1086](https://github.com/falcosecurity/falco/pull/1086), [I](https://github.com/leodido) completed the process of creating the Falco version as SemVer 2.0 compliant version strings, from the git index.
 
 This PR introduces the pre-release part into Falco versions.
 
 Now Falco versions are something like `0.21.0-3+c5674c9`, where 3 is the number of commits since the latest _stable_ version (`0.21.0`) of Falco, while `c5674c9` is the commit hash of the current _development_ version.
+
+Please notice that the Falco gRPC version API already contains this version part, too.
 
 ### Detect outbound connections to common miner pool ports rule disabled by default
 
