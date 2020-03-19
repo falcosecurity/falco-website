@@ -69,7 +69,7 @@ The above programs are also available as a [Docker image](https://hub.docker.com
 
 ```shell
 docker pull sysdig/falco-event-generator
-docker run -it --name falco-event-generator sysdig/falco-event-generator [syscall|k8s_audit (<rule name>|all)|bash]
+docker run -it --rm sysdig/falco-event-generator event_generator [syscall|k8s_audit (<rule name>|all)|bash]
 ```
 
 * syscall: generate activity for the system call rules
