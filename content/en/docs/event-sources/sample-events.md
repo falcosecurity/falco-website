@@ -68,8 +68,8 @@ The script loops forever, deleting the resources in the `falco-eg-sandbox` names
 The above programs are also available as a [Docker image](https://hub.docker.com/r/falcosecurity/falco-event-generator/) on [Docker Hub](https://hub.docker.com). To run the image:
 
 ```shell
-docker pull sysdig/falco-event-generator
-docker run -it --rm sysdig/falco-event-generator event_generator [syscall|k8s_audit (<rule name>|all)|bash]
+docker pull falcosecurity/falco-event-generator
+docker run -it --rm falcosecurity/falco-event-generator event_generator [syscall|k8s_audit (<rule name>|all)|bash]
 ```
 
 * syscall: generate activity for the system call rules
