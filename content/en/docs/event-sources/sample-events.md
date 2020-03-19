@@ -67,7 +67,7 @@ The script loops forever, deleting the falco-event-generator namespace after eac
 
 The above programs are also available as a [Docker image](https://hub.docker.com/r/falcosecurity/falco-event-generator/) on [Docker Hub](https://hub.docker.com). To run the image:
 
-```shell
+```bash
 docker pull falcosecurity/falco-event-generator
 docker run -it --rm falcosecurity/falco-event-generator event_generator [syscall|k8s_audit (<rule name>|all)|bash]
 ```
