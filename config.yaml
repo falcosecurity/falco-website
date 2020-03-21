@@ -176,6 +176,90 @@ languages:
         url: "/blog"
         weight: 5
 
+  jp:
+    languageName: 日本語 Japanese
+    title: Falco — クラウドネイティブランタイムセキュリティ
+    contentDir: content/jp
+    params:
+      heroText:
+        # Main hero title
+        title: クラウドネイティブ ランタイムセキュリティ
+        # Hero subtitle (optional)
+        subtitle: オープンソースのクラウドネイティブランタイムセキュリティプロジェクトであるFalcoは、デファクトのKubernetes脅威検出エンジンです。 Falcoは、予期しないアプリケーションのビヘイビアを検出し、ランタイム時に脅威を警告します。
+        # Button text
+        buttontext: 始めましょう
+        # Falco joins CNCF
+        falcoCNCF: Falcoは、CNCFインキュベーションステージに参加した初のランタイムセキュリティプロジェクトです。
+      runtime:
+        title: なぜランタイムセキュリティなのか？
+        intro: >-
+          Kubernetesを保護するには、悪意のある可能性のある予期しないビヘイビアを検出するためのコントロールの仕組みが必要です。例えば以下の場合です：
+        items:
+          - example: パッチ未適用および新しい脆弱性のエクスプロイト
+          - example: セキュアでない設定
+          - example: 漏洩または弱いクレデンシャル
+          - example: インサイダー脅威
+        closing: 脆弱性スキャンおよびポッドセキュリティとネットワークポリシーを実装するためのプロセスが整っている場合でも、すべてのリスクに対処できるわけではありません。これらのセキュリティバリアが効果的であることを確認し、設定を支援し、障害が発生した場合に最後の防御線を提供するメカニズムが必要です。
+      whyfalco:
+        title: なぜランタイム検出においてFalcoなのか？
+        subtitle:
+        tiles:
+        - title: セキュリティを強化する
+          icon: check.png
+          text: 豊富なコンテキストと柔軟なエンジンによって駆動されるセキュリティルールを作成して、予期しないアプリケーションのビヘイビアを定義します。
+        - title: リスクの低減
+          icon: box.png
+          text: Falcoをセキュリティレスポンスワークフローとプロセスに組み込むことにより、ポリシー違反アラートに対して即座に対応します。
+        - title: 最新のルールを活用する
+          icon: scalable.png
+          text: コミュニティをソースとした悪意のあるアクティビティの検出とCVEエクスプロイトからアラートします。
+      syscalls:
+        title: システムコールがディープな可視性をもたらす
+        summary: Falcoは、セキュアな仕組みであるExtended Berkeley Packet Filter（eBPF）を効率的に活用して、システムコールをキャプチャし、ディープな可視性を獲得します。KubernetesアプリケーションコンテキストとKubernetes API auditイベントを追加することにより、チームは誰が何をしたかを理解できます。
+      resources:
+        title: ダウンロード + リソース
+        subtitle: 今日、始めましょう。オープンソースプロジェクトにコントリビュート＆詳細をご覧ください。
+        items:
+        - title: コントリビュート
+          text: GitHubページにジャンプして、オープンソースエコシステムにコントリビュートしてください。
+          # Icon (from /images/illustrations/icons/___.svg)
+          icon: group.png
+          buttonText:  Falco Github
+          buttonLink: https://github.com/falcosecurity/falco
+        - title: ダウンロード
+          text: Falcoインストールガイドで始めましょう。
+          icon: download.png
+          buttonText: Falcoインストールガイド
+          buttonLink: /jp/docs/installation
+        - title: ドキュメンテーション
+          text: 公式ドキュメントでは、[Falcoのインストール]（/docs/installation）、[設定オプション]（/docs/configuration）、および[カスタムルール]（/docs/rules）の記述に関する情報を見つけることができます。
+          icon: documentation-2.png
+          buttonText: Falcoドキュメンテーション
+          buttonLink: /jp/docs
+        - title: コネクト
+          text: Slackチームに参加して、他のユーザーやデベロッパーと交流してください。
+          icon: chat.png
+          buttonText: Falco Slack
+          buttonLink: https://slack.sysdig.com/
+      signup:
+        title: メーリングリストに参加する
+        subtitle: コミュニティに参加する
+        buttonText: 送信
+    menu:
+      navbar:
+      - name: Falcoを選ぶ理由
+        url: "/#whyfalco"
+        weight: 2
+      - name: 始めましょう
+        url: "/#resources"
+        weight: 3
+      - name: ドキュメンテーション
+        url: "/docs"
+        weight: 4
+      - name: ブログ
+        url: "/blog"
+        weight: 5
+       
 params:
   version: v0.20.0
   githubRepository : falcosecurity/falco
