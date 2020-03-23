@@ -106,4 +106,4 @@ To do so, simply run Falco. For example:
 $ falco -c falco.yaml -r rules/falco_rules.yaml -r rules/falco_rules.local.yaml -r rules/k8s_audit_rules.yaml
 ```
 
-Refer to the [Go client](./client-go) or [Python client](./client-py) documentation to learn how to receive and consume [Output](./outputs) events.
+Refer to the [Go client](./client-go) or [Python client](./client-python) documentation to learn how to receive and consume [Output](./outputs) events.
