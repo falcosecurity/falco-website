@@ -39,7 +39,7 @@ To translate other parts of the site:
 
 ### Japanese
 
-There is currently scaffolding in place for a Japnese translation of the site.
+There is currently scaffolding in place for a Japanese translation of the site.
 
 To translate docs into Japanese, create Japanese-language Markdown files in the `content/jp/docs` directory.
 
