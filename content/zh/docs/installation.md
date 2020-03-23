@@ -65,7 +65,7 @@ cd falco/integrations/k8s-using-daemonset
 ```shell
 kubectl apply -f k8s-with-rbac/falco-account.yaml
 ```
-3. 为Falco pods创建一个Kubernetes service。这可以允许Falco接收[Kubernetes审计日志事件](event-sources/kubernetes-audit)。如果您不打算使用此功能，可以跳过此步骤。
+3. 为Falco pods创建一个Kubernetes service。这可以允许Falco接收Kubernetes审计日志事件。如果您不打算使用此功能，可以跳过此步骤。
 ```shell
 kubectl apply -f k8s-with-rbac/falco-service.yaml
 ```
@@ -84,7 +84,7 @@ k8s-using-daemonset$ cp ../../rules/falco_rules.* k8s-with-rbac/falco-config/
 k8s-using-daemonset$ cp ../../rules/k8s_audit_rules.yaml k8s-with-rbac/falco-config/
 ```
 
-5. 将您环境需要的自定义规则添加到`falco_rules.local.yaml`，它们将被Falco启动时候读取。您也可以修改`falco.yaml`，以更改部署所需的任何[配置选项](configuration/)。按照以下方式创建configMap：
+5. 将您环境需要的自定义规则添加到`falco_rules.local.yaml`，它们将被Falco启动时候读取。您也可以修改`falco.yaml`，以更改部署所需的任何配置选项。按照以下方式创建configMap：
 ```shell
 kubectl create configmap falco-config --from-file=k8s-with-rbac/falco-config
 ```
@@ -270,7 +270,7 @@ sudo bash install_falco
 
 ### 配置管理系统
 
-您还可以使用[Puppet](#Puppet)和[Ansible](#Ansible)等配置管理系统安装Falco。
+您还可以使用[Puppet](#puppet)和[Ansible](#ansible)等配置管理系统安装Falco。
 
 #### Puppet
 
@@ -316,7 +316,7 @@ docker run -i -t \
     falcosecurity/falco
 ```
 
-要查看它的运行情况，还需要运行[事件生成器](../event-sources/sample-events)来执行触发Falco的规则集的操作：
+要查看它的运行情况，还需要运行事件生成器来执行触发Falco的规则集的操作：
 
 ```shell
 docker pull sysdig/falco-event-generator
@@ -331,7 +331,7 @@ Falco镜像在`/etc/falco/falco_rules.yaml`文件中有一组内置的规则，�
 
 ### CoreOS
 
-在CoreOS上运行Falco的推荐方法是使用上面的[Docker章节](#Docker)中的安装命令，在自己的Docker容器中运行。此方法允许对主机操作系统上的所有容器进行完全的可见性。
+在CoreOS上运行Falco的推荐方法是使用上面的[Docker章节](#docker)中的安装命令，在自己的Docker容器中运行。此方法允许对主机操作系统上的所有容器进行完全的可见性。
 
 这个方法是自动更新的，包括一些不错的特性，比如自动安装和bash自动补全，并且是一种通用的方法，可以在CoreOS之外的其他发行版上使用。
 

@@ -172,9 +172,9 @@ languages:
       - name: 文档
         url: "/docs"
         weight: 4
-      - name: 博客
-        url: "/blog"
-        weight: 5
+      #- name: 博客
+      #  url: "/blog"
+      #  weight: 5
 
   jp:
     languageName: 日本語 Japanese
