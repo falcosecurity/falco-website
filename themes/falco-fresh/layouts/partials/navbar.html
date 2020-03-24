@@ -4,9 +4,6 @@
 {{ $isHome    := .IsHome }}
 {{ $isDocs    := eq .Section "docs" }}
 {{ $baseUrl   := site.BaseURL }}
-{{ $isEnglish := eq .Lang "en" }}
-{{ $langText  := cond $isEnglish "中文 Chinese" "English" }}
-{{ $langUrl   := cond $isEnglish "/zh" "/" | relURL }}
 {{ $isThin    := or (.IsHome) (eq .Section "blog") }}
 <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
   {{ if $isThin }}<div class="container">{{ end }}
@@ -31,9 +28,7 @@
         </a>
         {{ end }}
 
-        <a class="navbar-item has-text-grey is-size-5" href="{{ $langUrl }}">
-          {{ $langText }}
-        </a>
+        {{ partial "language-toggler.html" . }}
 
         <div class="navbar-item">
           <div class="buttons">
