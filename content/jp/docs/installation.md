@@ -10,13 +10,13 @@ weight: 2
 - FalcoをLinuxホストに直接インストールします。 これにはさまざまな理由があります。
     - Kubernetes内で実行されているコンテナを監視するため。ワーカーノードOSに直接インストールすると、Kubernetesで実行されているアプリケーションやKubernetes APIのユーザーからの分離レベルがさらに高まります。
     - Linuxホストで直接実行されているコンテナ、またはCloud FoundryやMesosphere DC/OSなどの別のプラットフォームで実行されているコンテナを監視するため。
-    - Linuxホストで直接実行されているアプリケーション（つまり、コンテナ化されていないワークロード）を監視するため。
+    - Linuxホストで直接実行されているアプリケーション(つまり、コンテナ化されていないワークロード)を監視するため。
 
 ## Kubernetes
 
-KubernetesでFalcoを実行するデフォルトの方法は、DaemonSetを使用することです。 Falcoは、選択したデプロイメント方法と基盤となるKubernetesバージョンに応じて、さまざまなインストール方法をサポートしています。デフォルトのインストールには、カーネルモジュールを介したシステムコールイベントのサポートが含まれているため、ワーカーノードの基盤となるオペレーティングシステムに依存しています。ワーカーノードに適切なカーネルヘッダーをインストールすると、Falcoはポッドの起動時にカーネルモジュールを動的に構築（および「insmod」）できます。Falcoはまた、一般的なディストリビューションとカーネル用にいくつかのビルド済みモジュールを提供します。Falcoは、モジュールのコンパイルが失敗した場合、事前に構築されたモジュールを自動的にダウンロードしようとします。
+KubernetesでFalcoを実行するデフォルトの方法は、DaemonSetを使用することです。 Falcoは、選択したデプロイメント方法と基盤となるKubernetesバージョンに応じて、さまざまなインストール方法をサポートしています。デフォルトのインストールには、カーネルモジュールを介したシステムコールイベントのサポートが含まれているため、ワーカーノードの基盤となるオペレーティングシステムに依存しています。ワーカーノードに適切なカーネルヘッダーをインストールすると、Falcoはポッドの起動時にカーネルモジュールを動的に構築(および「insmod」)できます。Falcoはまた、一般的なディストリビューションとカーネル用にいくつかのビルド済みモジュールを提供します。Falcoは、モジュールのコンパイルが失敗した場合、事前に構築されたモジュールを自動的にダウンロードしようとします。
 
-基盤となるカーネルへのアクセスが制限されているGoogleのContainer Optimized OS＆GKEなどのプラットフォームについては、以下の[GKEセクション]（＃gke）を参照してください。
+基盤となるカーネルへのアクセスが制限されているGoogleのContainer Optimized OS＆GKEなどのプラットフォームについては、以下の[GKEセクション](#gke)を参照してください。
 
 ### HTTP経由のカーネルモジュールのダウンロード
 
@@ -34,7 +34,7 @@ HTTPを使用してカーネルモジュールを事前に構築し、Falcoポ�
 
 ### Helm
 
-Helmは、FalcoをKubernetesにインストールするための推奨される方法の1つです。 [Falco Helm chart]（https://github.com/helm/charts/tree/master/stable/falco）は、[設定値]（https://github.com/helm/charts/treeの広範なセットを提供します /master/stable/falco＃configuration）異なる構成でFalcoを起動できます。
+Helmは、FalcoをKubernetesにインストールするための推奨される方法の1つです。 [Falco Helm chart](https://github.com/helm/charts/tree/master/stable/falco)は、広範なセットである[設定値](https://github.com/helm/charts/tree/master/stable/falco#configuration)を提供し、異なる構成でFalcoを起動できます。
 
 Helmがデプロイされているクラスターにデフォルト構成でFalcoをデプロイするには、次を実行します。
 
@@ -49,14 +49,14 @@ helm delete falco
 
 #### Kubernetes レスポンスエンジン
 
-Falco Helmチャートを使用することは、[Falco Kubernetes Response Engine（KRE）]（https://github.com/falcosecurity/kubernetes-response-engine）をデプロイする最も簡単な方法です。KREは、NATS、AWS SNS、Google Pub/SubなどのメッセージングサービスにFalcoアラートを送信する機能を提供します。これにより、各メッセージングサービスのサブスクライバーがFalcoアラートを処理できます。 この統合を有効にするには、Helmチャートの `integrations ** [構成オプション]（https://github.com/helm/charts/tree/master/stable/falco#configuration）を参照してください。
+Falco Helmチャートを使用することは、[Falco Kubernetes Response Engine(KRE)](https://github.com/falcosecurity/kubernetes-response-engine)をデプロイする最も簡単な方法です。KREは、NATS、AWS SNS、Google Pub/SubなどのメッセージングサービスにFalcoアラートを送信する機能を提供します。これにより、各メッセージングサービスのサブスクライバーがFalcoアラートを処理できます。 この統合を有効にするには、Helmチャートの `integrations ** [構成オプション](https://github.com/helm/charts/tree/master/stable/falco#configuration)を参照してください。
 
-KREを使用すると、Falcoルールに違反した場合にアクションを実行できるセキュリティプレイブックを（サーバーレス機能を介して）デプロイすることもできます。付属のプレイブックをデプロイする方法については、[Response Engine documentation]（https://github.com/falcosecurity/kubernetes-response-engine/tree/master/playbooks）を参照してください。
+KREを使用すると、Falcoルールに違反した場合にアクションを実行できるセキュリティプレイブックを(サーバーレス機能を介して)デプロイすることもできます。付属のプレイブックをデプロイする方法については、[Response Engine documentation](https://github.com/falcosecurity/kubernetes-response-engine/tree/master/playbooks)を参照してください。
 
 ### DaemonSet マニフェスト
-FalcoをKubernetes [DaemonSet]（https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/）として実行するには、以下の手順に従ってください。 これらはKubernetesの「一般的な」手順です。 プラットフォーム固有の手順については、それぞれのセクションを参照してください。
+FalcoをKubernetes [DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)として実行するには、以下の手順に従ってください。 これらはKubernetesの「一般的な」手順です。 プラットフォーム固有の手順については、それぞれのセクションを参照してください。
 
-1. [Falcoリポジトリ]（https://github.com/falcosecurity/falco/）のクローンを作成し、マニフェストのあるディレクトリに移動します。
+1. [Falcoリポジトリ](https://github.com/falcosecurity/falco/)のクローンを作成し、マニフェストのあるディレクトリに移動します。
 ```shell
 git clone https://github.com/falcosecurity/falco/
 cd falco/integrations/k8s-using-daemonset
@@ -65,7 +65,7 @@ cd falco/integrations/k8s-using-daemonset
 ```shell
 kubectl apply -f k8s-with-rbac/falco-account.yaml
 ```
-3. Falcoポッド用のサービスを作成します。これにより、Falcoは[Kubernetes Audit Log Events]（event-sources / kubernetes-audit）を受信できるようになります。この機能を使用する予定がない場合は、この手順をスキップできます。
+3. Falcoポッド用のサービスを作成します。これにより、Falcoは[Kubernetes Audit Log Events](event-sources / kubernetes-audit)を受信できるようになります。この機能を使用する予定がない場合は、この手順をスキップできます。
 ```shell
 kubectl apply -f k8s-with-rbac/falco-service.yaml
 ```
@@ -84,7 +84,7 @@ k8s-using-daemonset$ cp ../../rules/falco_rules.* k8s-with-rbac/falco-config/
 k8s-using-daemonset$ cp ../../rules/k8s_audit_rules.yaml k8s-with-rbac/falco-config/
 ```
 
-5. 環境のカスタムルールを `falco_rules.local.yaml`ファイルに追加すると、開始時にFalcoによって読み込まれます。`falco.yaml`ファイルを変更して、デプロイメントに必要な[設定オプション]（configuration /）を変更することもできます。次のようにconfigMapを作成します：
+5. 環境のカスタムルールを `falco_rules.local.yaml`ファイルに追加すると、開始時にFalcoによって読み込まれます。`falco.yaml`ファイルを変更して、デプロイメントに必要な[設定オプション](configuration /)を変更することもできます。次のようにconfigMapを作成します：
 ```shell
 kubectl create configmap falco-config --from-file=k8s-with-rbac/falco-config
 ```
@@ -101,7 +101,7 @@ kubectl logs -l app=falco-example
 
 ### Minikube
 
-ローカル環境のKubernetesでFalcoを使用する最も簡単な方法は、[Minikube]（https://kubernetes.io/docs/tutorials/hello-minikube/）です。Kubernetes YAMLマニフェストとHelmチャートの両方が、Minikubeで定期的にテストされています。
+ローカル環境のKubernetesでFalcoを使用する最も簡単な方法は、[Minikube](https://kubernetes.io/docs/tutorials/hello-minikube/)です。Kubernetes YAMLマニフェストとHelmチャートの両方が、Minikubeで定期的にテストされています。
 
 #### Minikube カーネルモジュール
 
@@ -113,7 +113,7 @@ kubectl logs -l app=falco-example
 
 ### GKE
 
-Google Kubernetes Engine（GKE）は、ワーカーノードプールのデフォルトのオペレーティングシステムとしてContainer-Optimized OS（COS）を使用します。COSは、基盤となるOSの特定の部分へのアクセスを制限するセキュリティが強化されたオペレーティングシステムです。このセキュリティ上の制約のため、Falcoはカーネルモジュールを挿入してシステムコールのイベントを処理できません。ただし、COSは、eBPF（extended Berkeley Packet Filter）を活用して、システムコールのストリームをFalcoエンジンに提供する機能を提供します。
+Google Kubernetes Engine(GKE)は、ワーカーノードプールのデフォルトのオペレーティングシステムとしてContainer-Optimized OS(COS)を使用します。COSは、基盤となるOSの特定の部分へのアクセスを制限するセキュリティが強化されたオペレーティングシステムです。このセキュリティ上の制約のため、Falcoはカーネルモジュールを挿入してシステムコールのイベントを処理できません。ただし、COSは、eBPF(extended Berkeley Packet Filter)を活用して、システムコールのストリームをFalcoエンジンに提供する機能を提供します。
 
 
 ## eBPFサポートの有効化
@@ -180,8 +180,8 @@ sudo FALCO_BPF_PROBE="" falco
 
 スクリプト化されたインストール、パッケージマネージャー、またはAnsibleなどの構成管理ツールを使用して、LinuxにFalcoを直接インストールします。Falcoをホストに直接インストールすると、以下が提供されます：
 
-- Linuxホストの異常を監視する機能。 Falcoの多くのユースケースはコンテナ化されたワークロードの実行に焦点を合わせていますが、Falcoは任意のLinuxホストで異常なアクティビティを監視できます。コンテナ（およびKubernetes）はオプションです。
-- コンテナスケジューラ（Kubernetes）およびコンテナランタイムからの分離。ホストで実行されているFalcoは、Falco構成およびFalcoデーモンの管理からコンテナスケジューラを削除します。これは、コンテナスケジューラが悪意のある攻撃者によって侵害された場合に、Falcoが改ざんされるのを防ぐのに役立ちます。
+- Linuxホストの異常を監視する機能。 Falcoの多くのユースケースはコンテナ化されたワークロードの実行に焦点を合わせていますが、Falcoは任意のLinuxホストで異常なアクティビティを監視できます。コンテナ(およびKubernetes)はオプションです。
+- コンテナスケジューラ(Kubernetes)およびコンテナランタイムからの分離。ホストで実行されているFalcoは、Falco構成およびFalcoデーモンの管理からコンテナスケジューラを削除します。これは、コンテナスケジューラが悪意のある攻撃者によって侵害された場合に、Falcoが改ざんされるのを防ぐのに役立ちます。
 
 ### スクリプトインストール{#scripted}
 
@@ -191,7 +191,7 @@ LinuxにFalcoをインストールするには、必要な手順を実行する�
 curl -o install_falco -s https://falco.org/script/install
 ```
 
-次に、 `sha256sum`ツール（または類似のもの）を使用して、スクリプトの[SHA256]（https://en.wikipedia.org/wiki/SHA-2）チェックサムを確認します：
+次に、 `sha256sum`ツール(または類似のもの)を使用して、スクリプトの[SHA256](https://en.wikipedia.org/wiki/SHA-2)チェックサムを確認します：
 
 ```shell
 sha256sum install_falco
@@ -216,7 +216,7 @@ sudo bash install_falco
     curl -s -o /etc/yum.repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
     ```
 
-    > **ノート** - 現在のマスターのFalcoパッケージを使用する場合は、[falcosecurity-rpm-dev]（https://falco.org/repo/falcosecurity-rpm-dev.repo）ファイルを使用します。
+    > **ノート** - 現在のマスターのFalcoパッケージを使用する場合は、[falcosecurity-rpm-dev](https://falco.org/repo/falcosecurity-rpm-dev.repo)ファイルを使用します。
 
 2. EPELリポジトリをインストールする:
 
@@ -272,23 +272,23 @@ sudo bash install_falco
 
 ### 構成管理システム
 
-[Puppet]（＃puppet）や[Ansible]（＃ansible）などの構成管理システムを使用してFalcoをインストールすることもできます。
+[Puppet](#puppet)や[Ansible](#ansible)などの構成管理システムを使用してFalcoをインストールすることもできます。
 
 #### Puppet
 
-Falco用の[Puppet]（https://puppet.com/）モジュールである `sysdig-falco`は、[Puppet Forge]（https://forge.puppet.com/sysdig/falco/readme）で入手できます。
+Falco用の[Puppet](https://puppet.com/)モジュールである `sysdig-falco`は、[Puppet Forge](https://forge.puppet.com/sysdig/falco/readme)で入手できます。
 
 #### Ansible
 
-[@ juju4]（https://github.com/juju4/）は、Falcoの[Ansible]（https://ansible.com）の役割である `juju4.falco`を有益に書いています。 [GitHub]（https://github.com/juju4/ansible-falco/）および[Ansible Galaxy]（https://galaxy.ansible.com/juju4/falco/）で入手できます。Ansible Galaxy（v0.7）の最新バージョンはFalco 0.9では動作しませんが、GitHubのバージョンは動作します。
+[@ juju4](https://github.com/juju4/)は、Falcoの[Ansible](https://ansible.com)の役割である `juju4.falco`を有益に書いています。 [GitHub](https://github.com/juju4/ansible-falco/)および[Ansible Galaxy](https://galaxy.ansible.com/juju4/falco/)で入手できます。Ansible Galaxy(v0.7)の最新バージョンはFalco 0.9では動作しませんが、GitHubのバージョンは動作します。
 
 ### Docker
 
-**ノート:** これらの手順は、LinuxホストでFalcoコンテナーを直接実行するためのものです。KubernetesでFalcoコンテナーを実行する手順については、[Kubernetes固有のドキュメント]（＃kubernetes）を参照してください。
+**ノート:** これらの手順は、LinuxホストでFalcoコンテナーを直接実行するためのものです。KubernetesでFalcoコンテナーを実行する手順については、[Kubernetes固有のドキュメント](#kubernetes)を参照してください。
 
 ホストオペレーティングシステムを完全に制御できる場合は、通常のインストール方法を使用してFalcoをインストールすることをお勧めします。 この方法により、ホストOS上のすべてのコンテナーを完全に可視化できます。 標準の自動/手動インストール手順を変更する必要はありません。
 
-ただし、Falcoは[Docker]（https://docker.com）コンテナー内で実行することもできます。 スムーズなデプロイメントを確実にするには、Falcoを実行する前にカーネルヘッダーをホストオペレーティングシステムにインストールする必要があります。
+ただし、Falcoは[Docker](https://docker.com)コンテナー内で実行することもできます。 スムーズなデプロイメントを確実にするには、Falcoを実行する前にカーネルヘッダーをホストオペレーティングシステムにインストールする必要があります。
 
 これは通常、`apt-get`を使用してDebianのようなディストリビューションで実行できます：
 
@@ -318,7 +318,7 @@ docker run -i -t \
     falcosecurity/falco
 ```
 
-動作を確認するには、[イベントジェネレータ]（../ event-sources/sample-events）を実行して、Falcoのルールセットをトリガーするアクションを実行します：
+動作を確認するには、[イベントジェネレータ](../ event-sources/sample-events)を実行して、Falcoのルールセットをトリガーするアクションを実行します：
 
 ```shell
 docker pull sysdig/falco-event-generator
@@ -333,7 +333,7 @@ Falcoイメージには、 `/etc/falco/falco_rules.yaml`にある組み込みの
 
 ### CoreOS
 
-CoreOSでFalcoを実行する推奨方法は、上記の[Dockerセクション]（＃docker）のインストールコマンドを使用して、独自のDockerコンテナー内で実行することです。この方法により、ホストOS上のすべてのコンテナーを完全に可視化できます。
+CoreOSでFalcoを実行する推奨方法は、上記の[Dockerセクション](#docker)のインストールコマンドを使用して、独自のDockerコンテナー内で実行することです。この方法により、ホストOS上のすべてのコンテナーを完全に可視化できます。
 
 この方法は自動的に更新され、自動セットアップやbash補完などの優れた機能が含まれています。また、CoreOS以外の他のディストリビューションでも使用できる一般的なアプローチです。
 
