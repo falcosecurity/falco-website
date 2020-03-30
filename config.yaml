@@ -259,7 +259,91 @@ languages:
       - name: ブログ
         url: "/blog"
         weight: 5
-       
+
+  kr:
+    languageName: 한글 Korean
+    title: Falco — 클라우드 네이티브 런타임 보안(Cloud-Native Runtime Security)
+    contentDir: content/kr
+    params:
+      heroText:
+        # Main hero title
+        title: 클라우드 네이티브 런타임 보안
+        # Hero subtitle (optional)
+        subtitle: Falco, 오픈소스 클라우드 네이티브 런타임 보안 프로젝트는 쿠버네티스의 위협을 감지 표준 엔진입니다. Falco는 런타임시 발생하는 어플리케이션 이상 감지 및 위협에 대한 알림을 지원합니다.
+        # Button text
+        buttontext: 시작하기
+        # Falco joins CNCF
+        falcoCNCF: Falco는 CNCF Incubating Stage에 선정된 첫 런타임 보안 프로젝트입니다.
+      runtime:
+        title: 왜 런타임 보안인가?
+        intro: >-
+          쿠버네티스 보안 강화는 악의적인 이상 행위를 탐지할 수 있는 곳을 제어하는 것을 뜻합니다. 예제:
+        items:
+          - example: 신규 및 패치전 취약점 공격
+          - example: 보안에 취약한 설정
+          - example: 약하거나 노출된 계정정보
+          - example: 내부 위협
+        closing: 취약점 스캔, 파드 보안 및 네트워크 폴리시에 대한 프로세스가 있더라도 모든 위협에서 자유롭지는 않습니다. 해당 보안 규칙의 유효성을 확인하는 메카니즘 및 설정 방안, 그리고 이 방안들이 실패했을 경우 최후의 방어 수칙을 가지고 있어야 됩니다.
+      whyfalco:
+        title: 왜 런타임 감지로 Falco를 선택해야 하는가?
+        subtitle:
+        tiles:
+          - title: 보안 강화
+            icon: check.png
+            text: 어플리케이션에 대한 이상감지에 대한 보안 룰을 풍부한 컨텍스트와 유연성을 지닌 엔진을 이용해 생성할 수 있습니다.
+          - title: 위험 감소
+            icon: box.png
+            text: Falco를 존재하는 보안 워크플로우나 프로세스에 플러그인 하여 보안 위반 사항에 대한 즉각적인 응답을 받을 수 있습니다.
+          - title: 최신 룰셋 활용
+            icon: scalable.png
+            text: 커뮤니티에서 소싱된 이상 감지 및 CVE 취약점에 대한 알림을 받을 수 있습니다.
+      syscalls:
+        title: 시스템 콜(System calls)을 활용한 확장된 가시성
+        summary: Falco는 보안 메카니즘인 Extended Berkeley Packet Filter (eBPF)를 효율적으로 사용하여 시스템 콜(system call)을 캡처하여 더 많은 가시성을 제공합니다. 쿠버네티스 어플리케이션 컨텍스트와 쿠버네티스 API audit 이벤트를 더해 관리자는 어떤 사용자가 무슨 행위를 한지 파악할 수 있습니다.
+      resources:
+        title: 다운로드 + 리소스
+        subtitle: Falco 시작하기, 오픈소스 프로젝트에 컨트리뷰션 등 정보 공유.
+        items:
+          - title: 컨트리뷰션
+            text: Github으로 이동해서 오픈소스 Eco-System의 컨트리뷰터가 되세요.
+            # Icon (from /images/illustrations/icons/___.svg)
+            icon: group.png
+            buttonText:  Falco Github
+            buttonLink: https://github.com/falcosecurity/falco
+          - title: 다운로드
+            text: Falco 설치가이드를 통해 시작하기
+            icon: download.png
+            buttonText: Falco 설치가이드
+            buttonLink: /docs/installation
+          - title: Documentation
+            text: 공식 Docs를 통해 [Falco 설치하기](/docs/installation), [설정 방법](/docs/configuration), [커스텀 룰](/docs/rules)을 작성하는 방법을 배워보세요.
+            icon: documentation-2.png
+            buttonText: Falco Documentation
+            buttonLink: /docs
+          - title: Connect
+            text: 슬랙 채널에 가입하여 많은 유저/개발자와 교류를 시작하세요.
+            icon: chat.png
+            buttonText: Falco 슬랙
+            buttonLink: https://slack.sysdig.com/
+      signup:
+        title: mailing list 가입하기
+        subtitle: 커뮤니티 활동에 참여
+        buttonText: 제출하기
+    menu:
+      navbar:
+        - name: 왜 Falco인가?
+          url: "/#whyfalco"
+          weight: 2
+        - name: 시작하기
+          url: "/#resources"
+          weight: 3
+        - name: Documentation
+          url: "/docs"
+          weight: 4
+        - name: 블로그
+          url: "/blog"
+          weight: 5
+
 params:
   version: v0.20.0
   githubRepository : falcosecurity/falco

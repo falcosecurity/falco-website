@@ -47,3 +47,14 @@ To translate other parts of the site:
 
 1. See the `languages.jp` block in the site's [`config.yaml`](./config.yaml) configuration file and translate those items from the current English.
 1. See [`i18n/jp.yaml`](./i18n/jp.yaml) for a handful of language snippets that need to be translated from the current English. Translate the `other` block of each term.
+
+### Korean
+
+There is currently scaffolding in place for a Korean translation of the site.
+
+To translate docs into Korean, create Korean Markdown file(s) in the `content/kr/docs` directory.
+
+To translate other parts of the site:
+
+1. See the `languages.kr` block in the site's [`config.yaml`](./config.yaml) configuration file and translate those items from the current English.
+1. See [`i18n/kr.yaml`](./i18n/kr.yaml) for a handful of language snippets that need to be translated from the current English. Translate the `other` block of each term.
