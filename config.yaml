@@ -256,9 +256,9 @@ languages:
       - name: ドキュメンテーション
         url: "/docs"
         weight: 4
-      - name: ブログ
-        url: "/blog"
-        weight: 5
+      #- name: ブログ
+      #  url: "/blog"
+      #  weight: 5
 
 params:
   version: v0.20.0

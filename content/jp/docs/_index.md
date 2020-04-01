@@ -20,13 +20,13 @@ Falcoは、[Linuxシステムコール](http://man7.org/linux/man-pages/man2/sys
 
 ## Falcoと他のツールの比較
 
-Falcoが[SELinux](https://en.wikipedia.org/wiki/Security-Enhanced_Linux)、[AppArmor](https://wiki.ubuntu.com/AppArmor)、[Auditd](https：//linux.die.net/man/8/auditd)、およびLinuxセキュリティポリシーに関連するその他のツールとどのように異なるかをよく聞かれます。[Sysdig blog](https://sysdig.com/blog/selinux-seccomp-falco-technical-discussion/)でFalcoを他のツールと比較する[ブログ投稿]を作成しました。
+Falcoが[SELinux](https://en.wikipedia.org/wiki/Security-Enhanced_Linux)、[AppArmor](https://wiki.ubuntu.com/AppArmor)、[Auditd](https://linux.die.net/man/8/auditd)、およびLinuxセキュリティポリシーに関連するその他のツールとどのように異なるかをよく聞かれます。[Sysdig blog](https://sysdig.com/blog/selinux-seccomp-falco-technical-discussion/)でFalcoを他のツールと比較する[ブログ投稿]を作成しました。
 
 ## Falcoの使用方法
 
-Falcoは、長時間実行されるデーモンとしてデプロイされます。通常のホストまたはコンテナホストに[Debian]（installation＃debian）/[rpm](installation＃rhel)パッケージとしてインストールするか、[container](installation＃docker)としてデプロイするか、または [ソースから]（ソース）をビルドします。
+Falcoは、長時間実行されるデーモンとしてデプロイされます。通常のホストまたはコンテナホストに[deb](/docs/installation#debian)/[rpm](/docs/installation#centos-rhel)パッケージとしてインストールするか、[container](/docs/installation#docker)としてデプロイするか、または [ソースから](/docs/source) をビルドします。
 
-Falcoは、（1）監視するビヘイビアとイベントを定義する[ルールファイル]（ルール）、および（2）[一般設定ファイル]（コンフィグレーション）で構成されます。ルールは、ハイレベルで人間が読める言語で表現されます。サンプルのルールファイル[`./rules/falco_rules.yaml`](https://github.com/falcosecurity/falco/blob/master/rules/falco_rules.yaml)を出発点として、あなたの環境に適応させる（そしておそらく望むでしょう！）ことができます。
+Falcoは、（1）監視するビヘイビアとイベントを定義する[ルールファイル](/docs/rules) 、および（2）[一般設定ファイル](/docs/configuration) で構成されます。ルールは、ハイレベルで人間が読める言語で表現されます。サンプルのルールファイル[`./rules/falco_rules.yaml`](https://github.com/falcosecurity/falco/blob/master/rules/falco_rules.yaml)を出発点として、あなたの環境に適応させる（そしておそらく望むでしょう！）ことができます。
 
 ルールを開発する際の便利な機能の1つは、`scap`形式で保存されたトレースファイルを読み取るFalcoの機能です。これにより、問題のあるビヘイビアを1回「レコード」し、ルールを調整しながら必要な回数だけFalcoでリプレイできます。
 

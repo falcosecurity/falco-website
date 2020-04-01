@@ -71,7 +71,7 @@ kubectl apply -f k8s-with-rbac/falco-service.yaml
 ```
 
 4. 部署DaemonSet还依赖Kubernetes ConfigMap来存储Falco配置，并使Falco pod可以使用该配置。这允许您管理自定义配置，而无需重新构建和重新部署底层的pod。为了创建ConfigMap：
-   
+
   1. 创建`k8s-with-rbac/falco-config`文件目录。
   2. 将所需的配置从这个GitHub仓库复制到`k8s-with-rbac/falco-config/`目录中。
 
@@ -206,19 +206,19 @@ sudo bash install_falco
 
 ### 包管理器安装 {#package}
 
-#### CentOS/RHEL/Amazon Linux
+#### CentOS/RHEL/Amazon Linux {#centos-rhel}
 
 1. 信任falcosecurity GPG密钥并配置yum仓库：
-   
+
    ```shell
    rpm --import https://falco.org/repo/falcosecurity-3672BA8F.asc
    curl -s -o /etc/yum.repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
    ```
 
    > **注意** - 如果您希望使用当前主服务器的Falco包，请使用[falcosecurity-rpm-dev](https://falco.org/repo/falcosecurity-rpm-dev.repo)文件。
-    
+
 2. 安装EPEL仓库：
-   
+
    > **注意** - 仅当发行版中没有DKMS时，才需要以下命令。您可以使用`yum list dkms`来验证DKMS是否可用。如果需要，安装它使用以下命令：
 
    ```shell
@@ -234,17 +234,17 @@ sudo bash install_falco
    ```
 
 4. 安装Falco：
-   
+
    ```shell
     yum -y install falco
-   ```   
+   ```
 
    要卸载，运行`yum erase falco`。
 
-#### Debian/Ubuntu
+#### Debian/Ubuntu {#debian}
 
 1. 信任falcosecurity GPG密钥并配置apt仓库，然后更新包列表:
-   
+
    ```shell
     curl -s https://falco.org/repo/falcosecurity-3672BA8F.asc | apt-key add -
     echo "deb https://dl.bintray.com/falcosecurity/deb stable main" | tee -a /etc/apt/sources.list.d/falcosecurity.list
@@ -254,7 +254,7 @@ sudo bash install_falco
     > **注意** - 如果您希望使用来自当前主服务器的Falco包将https://dl.bintray.com/falcosecurity/deb-dev地址输入到falcosecurity.list文件中。
 
 2. 安装内核头：
-   
+
    > **警告** - 下面的命令可能不适用于任何内核。确保正确地自定义包的名称。
 
    ```shell

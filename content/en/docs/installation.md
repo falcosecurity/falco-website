@@ -243,7 +243,7 @@ sudo bash install_falco
 
     To uninstall, run `yum erase falco`.
 
-#### Debian/Ubuntu
+#### Debian/Ubuntu {#debian}
 
 1. Trust the falcosecurity GPG key, configure the apt repository, and update the package list:
 
@@ -283,7 +283,7 @@ A [Puppet](https://puppet.com/) module for Falco, `sysdig-falco`, is available o
 
 [@juju4](https://github.com/juju4/) has helpfully written an [Ansible](https://ansible.com) role for Falco, `juju4.falco`. It's available on [GitHub](https://github.com/juju4/ansible-falco/) and [Ansible Galaxy](https://galaxy.ansible.com/juju4/falco/). The latest version of Ansible Galaxy (v0.7) doesn't work with Falco 0.9, but the version on GitHub does.
 
-### Docker
+### Docker {#docker}
 
 **Note:** These instructions are for running a Falco container directly on a Linux host. For instructions for running a Falco container on Kubernetes, see the [Kubernetes specific docs](#kubernetes).
 

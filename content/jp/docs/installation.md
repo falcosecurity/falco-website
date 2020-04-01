@@ -207,7 +207,7 @@ sudo bash install_falco
 
 ### パッケージインストール {#package}
 
-#### CentOS/RHEL/Amazon Linux
+#### CentOS/RHEL/Amazon Linux {#centos-rhel}
 
 1. falcosecurity GPGキーを信頼し、yumリポジトリを設定します:
 
@@ -242,7 +242,7 @@ sudo bash install_falco
 
     アンインストールするには、'yum erase falco'を実行します。
 
-#### Debian/Ubuntu
+#### Debian/Ubuntu {#debian}
 
 1. falcosecurity GPGキーを信頼し、aptリポジトリーを構成し、パッケージリストを更新します:
 
