@@ -5,13 +5,13 @@ weight: 3
 
 # はじめに
 
-Falcoがサポートするフィールドは次のとおりです。これらのフィールドは、Falcoルールの`condition` keyと`output` keyで使用できます。ルールの `output`keyに含まれるフィールドは、[`json_output`](../alerts/#json-output)が`true`に設定されている場合、アラートの`output_fields`オブジェクトにも含まれます。
+Falcoがサポートするフィールドは次のとおりです。これらのフィールドは、Falcoルールの`condition` keyと`output` keyで使用できます。ルールの `output`keyに含まれるフィールドは、[`json_output`](../../alerts/#json-output)が`true`に設定されている場合、アラートの`output_fields`オブジェクトにも含まれます。
 
 このフィールドのセットは、`falco --list=<source>`でも確認できます。`<source>`は以下のソースの1つです。
 
 # システムコール (ソース `syscall`)
 
-`syscall`イベントソースフィールドは、 [カーネルモジュール](../event-sources/kernel-module/).によって提供されます。これらのフィールドは、Sysdigキャプチャのフィルタリングに使用できる[Sysdig フィルターフィールド](https://github.com/draios/sysdig/wiki/Sysdig-User-Guide#all-supported-filters)と同じです。
+`syscall`イベントソースフィールドは、 [カーネルモジュール](../../event-sources/kernel-module/).によって提供されます。これらのフィールドは、Sysdigキャプチャのフィルタリングに使用できる[Sysdig フィルターフィールド](https://github.com/draios/sysdig/wiki/Sysdig-User-Guide#all-supported-filters)と同じです。
 
 ```
 # System Kernel Fields
@@ -478,7 +478,7 @@ marathon.group.id
 
 # Kubernetes Audit イベント (ソース `k8s_audit`)
 
-Kubernetes Auditイベントフィールドは、Kubernetes Auditイベントソースでサポートされています。詳細については、[Kubernetes Audit イベントソース](../event-sources/kubernetes-audit/) のドキュメントをご覧ください
+Kubernetes Auditイベントフィールドは、Kubernetes Auditイベントソースでサポートされています。詳細については、[Kubernetes Audit イベントソース](../../event-sources/kubernetes-audit/) のドキュメントをご覧ください
 
 ```
 # Kubernetes Audit event Fields
