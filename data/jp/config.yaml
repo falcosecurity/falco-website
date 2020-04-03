@@ -1,0 +1,165 @@
+- name: rules_file
+  type: List
+  description: |
+    ルールファイルの場所。 これには、個別のルールファイルへの1つ以上のパスを含めることができます。 次の例は同等です：
+    
+    ```yaml
+    rules_file:
+    - path1
+    - path2
+
+    rules_file: [path1, path2]
+    ```
+
+    コマンドラインで1つ以上の `-r`オプションを使用して複数のルールファイルを指定することもできます。
+- name: time_format_iso_8601
+  type: Boolean
+  description: |
+    `true`（デフォルトは「false」）の場合、ログメッセージと出力メッセージに表示される時刻はISO 8601になります。デフォルトでは、時刻は/etc/localtimeによって管理されるローカルタイムゾーンで表示されます。
+- name: json_output
+  type: Boolean
+  description: アラートメッセージにJSON出力を使用するかどうか。
+- name: json_include_output_property
+  type: Boolean
+  description: |
+    JSON出力を使用する場合、JSON出力に`output`プロパティ自体（たとえば、書き込み用に開かれた既知のバイナリディレクトリの下のファイル(user=root ....`) を含めるかどうか。
+- name: log_stderr
+  type: Boolean
+  description: |
+    `true`の場合、Falcoのアクティビティを説明するログメッセージはstderrに記録されます。これらは警告メッセージではないことに注意してください---これらはFalco自体のログメッセージです。
+- name: log_syslog
+  type: Boolean
+  description: |
+    `true`の場合、Falcoのアクティビティを説明するログメッセージはsyslogに記録されます。
+- name: log_level
+  type: |
+    次の可能な値を持つ列挙型: `emergency`, `alert`, `critical`, `error`, `warning`, `notice`, `info`, `debug`
+  description: |
+    ログに含める最小ログレベル。注：これらのレベルは、ルールの優先度フィールドとは異なります。 これは、Falcoの内部ログのログレベルのみを指します。
+- name: priority
+  type: |
+    次の可能な値を持つ列挙型: `emergency`, `alert`, `critical`, `error`, `warning`, `notice`, `info`, `debug`
+  description: ロードして実行する最小ルール優先度レベル。このレベルよりも優先度が高いすべてのルールがロード/実行されます。
+- name: syscall_event_drops
+  type: |
+    List containing the following sub-keys:
+
+    * `actions`: これらのboolean sub-keyの1つ以上を含むリスト:
+      * `ignore`: 何もしない。空のリストが提供された場合、無視が想定されます.
+      * `log`: バッファーがいっぱいであることを示すCRITICALなメッセージをログに記録する.
+      * `alert`: バッファがいっぱいであることを通知するFalcoアラートを発します.
+      * `exit`: non-zero rcでFalcoを終了します.
+    * `rate`: アクションを実行できる定常状態のレート。 actions/secondの単位。 デフォルト0.03333(30秒ごとに1つのアクション)。
+    * `max_burst`: 定常状態のレートが適用される前に実行できるアクションの最大数。
+  description: コントロール [ドロップされたシステムコールイベントのアクション](../event-sources/dropped-events/).
+- name: buffered_outputs
+  type: Boolean
+  description: 以下のいずれかの出力チャネルへの出力がバッファリングされるかどうか。デフォルトはfalseです。
+- name: outputs
+  type: |
+    List containing the following sub-keys:
+
+    * `rate: <notifications/second>`
+    * `outputs: max_burst: <number of messages>`
+  description: |
+    トークンバケットとして実装されたスロットリングメカニズムは、Falco通知のレートを制限します。このスロットルは、`rate`および`max_burst`オプションによって制御されます。
+
+    `rate`は1秒あたりに取得されるトークン(つまり、通知を送信する権利)の数で、デフォルトは1です。`max_burst`は未処理のトークンの最大数で、デフォルトは1000です。
+
+    これらのデフォルトでは、Falcoは最初の静止期間の後に最大1000件の通知を送信し、その後、1秒あたり最大1件の通知を送信できます。何もしない状態が1000秒続くと、完全なバーストが発生します。
+- name: syslog_output
+  type: |
+    List containing the following sub-keys:
+
+    * `enabled: [true|false]`
+  description: |
+    `true`の場合、Falcoアラートはsyslog経由で送信されます。
+- name: file_output
+  type: |
+    List containing the following sub-keys:
+
+    * `enabled: [true|false]`
+    * `keep_alive: [true|false]`
+    * `filename: <path>`
+  description: |
+    `enabled`が`true`に設定されている場合、Falcoアラートは `filename`で指定されたファイルパスに送信されます。
+
+    `keep_alive`が`false`（デフォルト）に設定されている場合、Falcoはアラートごとにファイルを再度開きます。`true`の場合、Falcoはファイルを1度開き、すべてのアラートで開いたままにします。Falco CLIを使用して `--unbuffered`を指定する必要がある場合もあります。
+- name: stdout_output
+  type: |
+    List containing the following sub-keys:
+
+    * `enabled: [true|false]`
+  description: |
+    `enabled`が`true`に設定されている場合、Falcoアラートは標準出力（stdout）に送信されます。
+- name: program_output
+  type: |
+    List containing the following sub-keys:
+
+    * `enabled: [true|false]`
+    * `keep_alive: [true|false]`
+  description: |
+    `enabled`が`true`に設定されている場合、Falcoアラートがプログラムに送信されます。
+
+    `keep_alive`が`false`（デフォルト）に設定されている場合、アラートごとにプログラムを実行します。`true`の場合、Falcoはプログラムを1回起動し、すべてのアラートに対して開いたままにします。Falco CLIを使用して`--unbuffered`を指定する必要がある場合もあります。
+
+    `program`設定は各アラートに対して実行されるプログラムを指定します。これはシェルを介して開始されるため、追加のフォーマットを可能にするコマンドパイプラインを指定できます。
+- name: http_output
+  type: |
+    List containing the following sub-keys:
+
+    * `enabled: [true|false]`
+    * `url: [http[s]://path/to/webhook/]`
+  description: |
+    `0.15.0`以降、enabledがtrueに設定されている場合、Falcoアラートは`url`で定義されたHTTP[s]URLに送信されます。現在、これはブロッキングオペレーションであり、この出力は`keep_alive`をサポートしていません。
+- name: webserver
+  type: |
+    List containing the following sub-keys:
+
+    * `enabled: [true|false]`
+    * `listen_port`
+    * `k8s_audit_endpoint`
+    * `ssl_enabled: [true|false]`
+    * `ssl_certificate: <path>`
+  description: |
+    `enabled`が`true`に設定されている場合、Falcoは埋め込みWebサーバーを起動してKubernetes監査イベントを受け入れます。
+
+    `listen_port`は、Webサーバーが待機するポートを指定します。デフォルトは8765です。
+
+    `k8s_audit_endpoint`は、Kubernetes監査イベントをリッスンするURIを指定します。デフォルトは`/k8s_audit`です。
+
+    `ssl_enabled`は、`ssl_certificate`で指定された証明書を使用して、ウェブサーバーのSSLサポートを有効にします。指定された`ssl_certificate`ファイルには、サーバーの証明書と[civitwebによって文書化された](https://github.com/civetweb/civetweb/blob/master/docs/OpenSSL.md#creating-a-self-signed-certificate)のキーが含まれている必要があります。
+- name: grpc
+  type: |
+    List containing the following sub-keys:
+
+    * `enabled: [true|false]`
+    * `bind_address`: [address:port]
+    * `threadiness`: <integer>
+    * `private_key: <path>`
+    * `cert_chain: <path>`
+    * `root_certs: <path>`
+  description: |
+    `enabled`が`true`に設定されている場合、FalcoはgRPCサーバーを埋め込み、gRPC APIを公開します。デフォルトはfalseです。
+
+    gRPCサーバーは、TLS証明書を使用するクライアントとサーバー間の[相互認証](https://en.wikipedia.org/wiki/Mutual_authentication)でのみ使用できます。証明書の生成方法は[ここに記載されています](/docs/grpc/#generate-valid-ca)。
+
+    サーバーとクライアントの唯一の共通点はルート証明書であることを常に覚えておいてください。すべてのクライアントは、サーバーと同じルートCAによって署名された独自の証明書を生成する必要があります。
+
+    `bind_address`は、gRPCサーバーがリッスンするアドレスとポートを指定します。デフォルトは0.0.0.0:5060です
+
+    `threadiness`は、gRPCリクエストを処理するために使用するスレッドの数を定義します。また、スレッド単位あたりの係数が10倍のコンテキストの数にも影響します。デフォルトは8です。
+
+    サーバー認証用の秘密鍵の`private_key`パス。デフォルトは/etc/falco/certs/server.keyです。
+
+    サーバー認証用の公開証明書の`cert_chain`パス。デフォルトは/etc/falco/certs/server.crtです。
+
+    サーバーとすべてのクライアント間で共通のCA証明書（またはチェーン）の `root_certs`パス。デフォルトは/etc/falco/certs/ca.crtです。
+
+- name: grpc_output
+  type: |
+    List containing the following sub-keys:
+
+    * `enabled: [true|false]`
+  description: |
+    `enabled`が`true`に設定されている場合、FalcoはgRPCサーバーの出力の収集を開始します。それらを出力クライアントで使用することが重要です。出力クライアントの例[ここ](https://github.com/falcosecurity/client-go/tree/master/examples/output)
