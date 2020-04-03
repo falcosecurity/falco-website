@@ -1,4 +1,5 @@
-{{ $config := site.Data.config }}
+<strong>{{ $lang := string site.Language }}</strong>
+{{ $config := (index site.Data $lang).config }}
 <table>
   <thead>
     <tr>
