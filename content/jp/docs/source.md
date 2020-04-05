@@ -44,7 +44,7 @@ cmake -DUSE_BUNDLED_DEPS=ON ..
 make falco
 ```
 
-詳細は [ここ](#build-directly-on-host)です。
+詳細は [ここ](#ホストで直接ビルド)です。
 
 ### カーネルモジュールドライバーのビルド
 
@@ -99,7 +99,7 @@ cmake ..
 make falco
 ```
 
-詳細は [ここ](#build-directly-on-host)です。
+詳細は [ここ](#ホストで直接ビルド)です。
 
 ### カーネルモジュールドライバーのビルド
 
@@ -147,7 +147,7 @@ cmake ..
 make falco
 ```
 
-詳細は [ここ](#build-directly-on-host)です。
+詳細は [ここ](#ホストで直接ビルド)です。
 
 ### カーネルモジュールドライバーのビルド
 
@@ -203,8 +203,8 @@ make bpf
 
 Falcoをビルドするには、2つの方法がサポートされています
 
-- [ホストで直接ビルド](#build-directly-on-host)
-- [コンテナを使用してビルドする](#build-using-falco-builder-container)
+- [ホストで直接ビルド](#ホストで直接ビルド)
+- [コンテナを使用してビルドする](#falco-builderコンテナを使用してビルド)
 
 ### ホストで直接ビルド
 
@@ -275,9 +275,9 @@ Falcoがビルドされると、`build`フォルダーにある3つの興味深�
 
 - `userspace/falco/falco`: 実際のFalcoバイナリ
 - `driver/src/falco-probe.ko`: Falcoカーネルドライバー
-- `driver/bpf/probe.o`: [BPF support](#enable-bpf-support)でFalcoをビルドした場合
+- `driver/bpf/probe.o`: [BPF support](#enable-bpf-support) でFalcoをビルドした場合
 
-デバッグバージョンをビルドする場合は、代わりにcmakeを`cmake -DCMAKE_BUILD_TYPE=Debug ..`として実行します。詳細なカスタマイズについては、[CMake オプション](#cmake-options) セクションを参照してください。
+デバッグバージョンをビルドする場合は、代わりにcmakeを`cmake -DCMAKE_BUILD_TYPE=Debug ..`として実行します。詳細なカスタマイズについては、[CMake オプション](#CMake オプション) セクションを参照してください。
 
 ### CMake オプション
 
@@ -303,7 +303,7 @@ Falcoがビルドされると、`build`フォルダーにある3つの興味深�
 -DUSE_BUNDLED_DEPS=True
 ```
 
-Falcoの依存関係の詳細については、[こちら](#dependencies)をご覧ください。
+Falcoの依存関係の詳細については、[こちら](#依存関係)をご覧ください。
 
 
 #### 警告をエラーとして扱う
@@ -340,7 +340,7 @@ Falcoの依存関係の詳細については、[こちら](#dependencies)をご�
 
 現在のgitリビジョンにgitタグがある場合、Falcoバージョンはそれと同じになります（先頭の「v」文字なし）。それ以外の場合、Falcoのバージョンは `0.<commit hash>[.dirty]`の形式になります。
 
-#### BPFサポートを有効にする
+#### Enable BPF support
 
 ```
 -DBUILD_BPF=True
