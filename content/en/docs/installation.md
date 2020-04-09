@@ -27,7 +27,7 @@ Use HTTPs to pre-build and provide the kernel module to the Falco pods. The easi
 3. Move the kernel module from the pod or container.
     By default, the kernel module is copied to `/root/.falco/`.
 
-`SYSDIG_PROBE_URL` - Set this environment variable for the Falco pod to override the default host for prebuilt kernel modules. This should be only the host portion of the URL without the trailing slash - ie., `https://myhost.mydomain.com`. Copy the kernel modules to the `/stable/sysdig-probe-binaries/` directory and name it as follows:
+`PROBE_URL` - Set this environment variable for the Falco pod to override the default host for prebuilt kernel modules. This should be only the host portion of the URL without the trailing slash - ie., `https://myhost.mydomain.com`. Copy the kernel modules to the `/stable/sysdig-probe-binaries/` directory and name it as follows:
 `falco-probe-${falco_version}-$(uname -i)-$(uname -r)-{md5sum of kernel config}.ko`
 
 The `falco-driver-loader` script will name the module in this format by default.
