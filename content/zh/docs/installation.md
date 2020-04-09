@@ -23,13 +23,13 @@ weight: 2
 使用HTTPs预构建并向Falco pod提供内核模块。构建内核模块的最简单方法如下：
 
 1. 在具有所需内核头的节点上部署Falco。
-2. 使用Falco提供的`falco-probe-loader`脚本构建内核模块。
+2. 使用Falco提供的`falco-driver-loader`脚本构建内核模块。
 3. 将内核模块从pod或容器实例中移出。
     默认情况下, 内核模块会被复制到`/root/.sysdig/`。
 
 `SYSDIG_PROBE_URL` - 为Falco pod设置此环境变量，以覆盖预构建内核模块的默认主机。这应该只是URL的host部分，不带结尾的斜杠 - 比如`https://myhost.mydomain.com`。复制内核模块到`/stable/sysdig-probe-binaries/`目录，并命名为如下名称：`falco-probe-${falco_version}-$(uname -i)-$(uname -r)-{md5sum of kernel config}.ko`。
 
-`falco-probe-loader` 脚本将默认以这种格式命名模块。
+`falco-driver-loader` 脚本将默认以这种格式命名模块。
 
 ### Helm
 
@@ -125,10 +125,10 @@ eBPF目前只被GKE和COS支持，但是我们这里提供了更广泛平台的�
 
 ### 获取探测器
 
-在使用官方容器镜像时，设置这个环境变量将触发`falco-probe-loader`脚本，下载相应版本COS的内核头文件，然后编译合适的eBPF探测器。在所有其他环境中，您可以自己调用`falco-probe-loader` 脚本，通过以下方式实现：
+在使用官方容器镜像时，设置这个环境变量将触发`falco-driver-loader`脚本，下载相应版本COS的内核头文件，然后编译合适的eBPF探测器。在所有其他环境中，您可以自己调用`falco-driver-loader` 脚本，通过以下方式实现：
 
 ```bash
-sudo FALCO_VERSION="{{< latest >}}" FALCO_BPF_PROBE="" falco-probe-loader
+sudo FALCO_VERSION="{{< latest >}}" FALCO_BPF_PROBE="" falco-driver-loader
 ```
 
 要成功执行上述脚本，需要先安装`clang`和`llvm`。
@@ -335,10 +335,10 @@ Falco镜像在`/etc/falco/falco_rules.yaml`文件中有一组内置的规则，�
 
 这个方法是自动更新的，包括一些不错的特性，比如自动安装和bash自动补全，并且是一种通用的方法，可以在CoreOS之外的其他发行版上使用。
 
-但是，有些用户可能更喜欢在CoreOS工具箱中运行Falco。虽然不是推荐的方法，但这可以通过使用常规安装方法在工具箱中安装Falco，然后手动运行`falco-probe-loader`脚本来实现：
+但是，有些用户可能更喜欢在CoreOS工具箱中运行Falco。虽然不是推荐的方法，但这可以通过使用常规安装方法在工具箱中安装Falco，然后手动运行`falco-driver-loader`脚本来实现：
 
 ```shell
 toolbox --bind=/dev --bind=/var/run/docker.sock
 curl -s https://falco.org/script/install | bash
-falco-probe-loader
+falco-driver-loader
 ```
