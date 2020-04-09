@@ -27,7 +27,7 @@ HTTPを使用してカーネルモジュールを事前に構築し、Falcoポ�
 3. カーネルモジュールをポッドまたはコンテナから移動します。
     デフォルトでは、カーネルモジュールは `/root/.falco/`にコピーされます。
 
-`SYSDIG_PROBE_URL`-Falcoポッドにこの環境変数を設定して、事前に構築されたカーネルモジュールのデフォルトホストをオーバーライドします。これは、末尾のスラッシュなしのURLのホスト部分のみである必要があります。つまり、「https://myhost.mydomain.com」です。 カーネルモジュールを `/stable/sysdig-probe-binaries/`ディレクトリにコピーし、次のように名前を付けます：
+`PROBE_URL`-Falcoポッドにこの環境変数を設定して、事前に構築されたカーネルモジュールのデフォルトホストをオーバーライドします。これは、末尾のスラッシュなしのURLのホスト部分のみである必要があります。つまり、「https://myhost.mydomain.com」です。 カーネルモジュールを `/stable/sysdig-probe-binaries/`ディレクトリにコピーし、次のように名前を付けます：
 `falco-probe-${falco_version}-$(uname -i)-$(uname -r)-{md5sum of kernel config}.ko`
 
 `falco-driver-loader`スクリプトは、デフォルトでこの形式でモジュールに名前を付けます。

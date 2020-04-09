@@ -27,7 +27,7 @@ weight: 2
 3. 将内核模块从pod或容器实例中移出。
     默认情况下, 内核模块会被复制到`/root/.falco/`。
 
-`SYSDIG_PROBE_URL` - 为Falco pod设置此环境变量，以覆盖预构建内核模块的默认主机。这应该只是URL的host部分，不带结尾的斜杠 - 比如`https://myhost.mydomain.com`。复制内核模块到`/stable/sysdig-probe-binaries/`目录，并命名为如下名称：`falco-probe-${falco_version}-$(uname -i)-$(uname -r)-{md5sum of kernel config}.ko`。
+`PROBE_URL` - 为Falco pod设置此环境变量，以覆盖预构建内核模块的默认主机。这应该只是URL的host部分，不带结尾的斜杠 - 比如`https://myhost.mydomain.com`。复制内核模块到`/stable/sysdig-probe-binaries/`目录，并命名为如下名称：`falco-probe-${falco_version}-$(uname -i)-$(uname -r)-{md5sum of kernel config}.ko`。
 
 `falco-driver-loader` 脚本将默认以这种格式命名模块。
 
