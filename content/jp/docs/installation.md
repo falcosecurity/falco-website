@@ -23,14 +23,14 @@ KubernetesでFalcoを実行するデフォルトの方法は、DaemonSetを使�
 HTTPを使用してカーネルモジュールを事前に構築し、Falcoポッドに提供します。カーネルモジュールを構築する最も簡単な方法は次のとおりです：
 
 1. 必要なカーネルヘッダーを持つノードにFalcoをデプロイします。
-2. Falcoで `falco-probe-loader`スクリプトを使用して、カーネルモジュールをビルドします。
+2. Falcoで `falco-driver-loader`スクリプトを使用して、カーネルモジュールをビルドします。
 3. カーネルモジュールをポッドまたはコンテナから移動します。
     デフォルトでは、カーネルモジュールは `/root/.sysdig/`にコピーされます。
 
 `SYSDIG_PROBE_URL`-Falcoポッドにこの環境変数を設定して、事前に構築されたカーネルモジュールのデフォルトホストをオーバーライドします。これは、末尾のスラッシュなしのURLのホスト部分のみである必要があります。つまり、「https://myhost.mydomain.com」です。 カーネルモジュールを `/stable/sysdig-probe-binaries/`ディレクトリにコピーし、次のように名前を付けます：
 `falco-probe-${falco_version}-$(uname -i)-$(uname -r)-{md5sum of kernel config}.ko`
 
-`falco-probe-loader`スクリプトは、デフォルトでこの形式でモジュールに名前を付けます。
+`falco-driver-loader`スクリプトは、デフォルトでこの形式でモジュールに名前を付けます。
 
 ### Helm
 
@@ -126,10 +126,10 @@ eBPFは現在GKEとCOSでのみサポートされていますが、ここでは�
 
 ### プローブの入手
 
-公式のコンテナイメージを使用する場合、この環境変数を設定すると、`falco-probe-loader`スクリプトがトリガーされ、適切なバージョンのCOSのカーネルヘッダーがダウンロードされ、適切なeBPFプローブがコンパイルされます。他のすべての環境では、 `falco-probe-loader`スクリプトを自分で呼び出してこの方法で取得できます：
+公式のコンテナイメージを使用する場合、この環境変数を設定すると、`falco-driver-loader`スクリプトがトリガーされ、適切なバージョンのCOSのカーネルヘッダーがダウンロードされ、適切なeBPFプローブがコンパイルされます。他のすべての環境では、 `falco-driver-loader`スクリプトを自分で呼び出してこの方法で取得できます：
 
 ```bash
-sudo FALCO_VERSION="{{< latest >}}" FALCO_BPF_PROBE="" falco-probe-loader
+sudo FALCO_VERSION="{{< latest >}}" FALCO_BPF_PROBE="" falco-driver-loader
 ```
 
 上記のスクリプトを正常に実行するには、`clang`と` llvm`がインストールされている必要があります。
@@ -337,10 +337,10 @@ CoreOSでFalcoを実行する推奨方法は、上記の[Dockerセクション](
 
 この方法は自動的に更新され、自動セットアップやbash補完などの優れた機能が含まれています。また、CoreOS以外の他のディストリビューションでも使用できる一般的なアプローチです。
 
-ただし、一部のユーザーはCoreOSツールボックスでFalcoを実行することを好む場合があります。推奨される方法ではありませんが、これは通常のインストール方法を使用してツールボックス内にFalcoをインストールしてから、手動で `falco-probe-loader`スクリプトを実行することで実現できます：
+ただし、一部のユーザーはCoreOSツールボックスでFalcoを実行することを好む場合があります。推奨される方法ではありませんが、これは通常のインストール方法を使用してツールボックス内にFalcoをインストールしてから、手動で `falco-driver-loader`スクリプトを実行することで実現できます：
 
 ```shell
 toolbox --bind=/dev --bind=/var/run/docker.sock
 curl -s https://falco.org/script/install | bash
-falco-probe-loader
+falco-driver-loader
 ```

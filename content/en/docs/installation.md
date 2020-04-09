@@ -23,14 +23,14 @@ For platforms such as Google's Container Optimized OS & GKE, where access to the
 Use HTTPs to pre-build and provide the kernel module to the Falco pods. The easiest way to build the kernel module is as follows:
 
 1. Deploy Falco on a node with the required kernel headers.
-2. Use the `falco-probe-loader` script on Falco to build the kernel module.
+2. Use the `falco-driver-loader` script on Falco to build the kernel module.
 3. Move the kernel module from the pod or container.
     By default, the kernel module is copied to `/root/.sysdig/`.
 
 `SYSDIG_PROBE_URL` - Set this environment variable for the Falco pod to override the default host for prebuilt kernel modules. This should be only the host portion of the URL without the trailing slash - ie., `https://myhost.mydomain.com`. Copy the kernel modules to the `/stable/sysdig-probe-binaries/` directory and name it as follows:
 `falco-probe-${falco_version}-$(uname -i)-$(uname -r)-{md5sum of kernel config}.ko`
 
-The `falco-probe-loader` script will name the module in this format by default.
+The `falco-driver-loader` script will name the module in this format by default.
 
 ### Helm
 
@@ -126,10 +126,10 @@ eBPF is currently supported only on GKE and COS, however here we provide install
 
 ### Obtaining the probe
 
-When using the official container images, setting this environment variable will trigger the `falco-probe-loader` script to download the kernel headers for the appropriate version of COS, and then compile the appropriate eBPF probe. In all the other environments you can call the `falco-probe-loader` script yourself to obtain it in this way:
+When using the official container images, setting this environment variable will trigger the `falco-driver-loader` script to download the kernel headers for the appropriate version of COS, and then compile the appropriate eBPF probe. In all the other environments you can call the `falco-driver-loader` script yourself to obtain it in this way:
 
 ```bash
-sudo FALCO_VERSION="{{< latest >}}" FALCO_BPF_PROBE="" falco-probe-loader
+sudo FALCO_VERSION="{{< latest >}}" FALCO_BPF_PROBE="" falco-driver-loader
 ```
 
 To execute the script above succesfully, you will need `clang` and `llvm` installed.
@@ -338,10 +338,10 @@ The recommended way to run Falco on CoreOS is inside of its own Docker container
 
 This method is automatically updated, includes some nice features such as automatic setup and bash completion, and is a generic approach that can be used on other distributions outside CoreOS as well.
 
-However, some users may prefer to run Falco in the CoreOS toolbox. While not the recommended method, this can be achieved by installing Falco inside the toolbox using the normal installation method, and then manually running the `falco-probe-loader` script:
+However, some users may prefer to run Falco in the CoreOS toolbox. While not the recommended method, this can be achieved by installing Falco inside the toolbox using the normal installation method, and then manually running the `falco-driver-loader` script:
 
 ```shell
 toolbox --bind=/dev --bind=/var/run/docker.sock
 curl -s https://falco.org/script/install | bash
-falco-probe-loader
+falco-driver-loader
 ```
