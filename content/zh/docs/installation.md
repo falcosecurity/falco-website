@@ -268,18 +268,6 @@ sudo bash install_falco
 
    要卸载，运行`apt-get remove falco`。
 
-### 配置管理系统
-
-您还可以使用[Puppet](#puppet)和[Ansible](#ansible)等配置管理系统安装Falco。
-
-#### Puppet
-
-Falco的[Puppet](https://puppet.com/)模块`sysdig-falco`可在[Puppet Forge](https://forge.puppet.com/sysdig/falco/readme)上找到。
-
-#### Ansible
-
-[@juju4](https://github.com/juju4/)为Falco写了一个很有帮助的[Ansible](https://ansible.com) role，`juju4.falco`。它可以在[GitHub](https://github.com/juju4/ansible-falco/)和[Ansible Galaxy](https://galaxy.ansible.com/juju4/falco/)上找到。Ansible Galaxy的最新版本(v0.7)不支持Falco 0.9，但GitHub上的版本可以。
-
 ### Docker
 
 **注意:** 这些说明用于直接在Linux主机上运行Falco容器。有关在Kubernetes上运行Falco容器的说明，请参阅[Kubernetes章节](#kubernetes)。
@@ -328,6 +316,19 @@ docker run -it --name falco-event-generator sysdig/falco-event-generator
 Falco镜像在`/etc/falco/falco_rules.yaml`文件中有一组内置的规则，适合于大多数场景。但是，您可能希望提供自己的规则文件并仍然使用Falco镜像。在这种情况下，您应该添加一个卷映射，通过添加`-v path-to-falco-rules.yaml:/etc/falco/falco_rules.yaml`到您的`docker run`命令，将外部规则文件映射到容器内的`/etc/falco/falco_rules.yaml`。这将使用用户提供的版本覆盖默认规则。
 
 为了使用自定义规则，除了默认的`falco_rules.yaml`。您可以将自定义规则放在本地目录中。然后通过添加`-v path-to-custom-rules/:/etc/falco/rules.d`到您的`docker run`命令，以挂载这个目录。
+
+
+### 配置管理系统
+
+您还可以使用[Puppet](#puppet)和[Ansible](#ansible)等配置管理系统安装Falco。
+
+#### Puppet
+
+Falco的[Puppet](https://puppet.com/)模块`sysdig-falco`可在[Puppet Forge](https://forge.puppet.com/sysdig/falco/readme)上找到。
+
+#### Ansible
+
+[@juju4](https://github.com/juju4/)为Falco写了一个很有帮助的[Ansible](https://ansible.com) role，`juju4.falco`。它可以在[GitHub](https://github.com/juju4/ansible-falco/)和[Ansible Galaxy](https://galaxy.ansible.com/juju4/falco/)上找到。Ansible Galaxy的最新版本(v0.7)不支持Falco 0.9，但GitHub上的版本可以。
 
 ### CoreOS
 

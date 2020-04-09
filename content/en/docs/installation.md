@@ -271,18 +271,6 @@ sudo bash install_falco
 
     To uninstall, run `apt-get remove falco`.
 
-### Config Management Systems
-
-You can also install Falco using configuration management systems like [Puppet](#puppet) and [Ansible](#ansible).
-
-#### Puppet
-
-A [Puppet](https://puppet.com/) module for Falco, `sysdig-falco`, is available on [Puppet Forge](https://forge.puppet.com/sysdig/falco/readme).
-
-#### Ansible
-
-[@juju4](https://github.com/juju4/) has helpfully written an [Ansible](https://ansible.com) role for Falco, `juju4.falco`. It's available on [GitHub](https://github.com/juju4/ansible-falco/) and [Ansible Galaxy](https://galaxy.ansible.com/juju4/falco/). The latest version of Ansible Galaxy (v0.7) doesn't work with Falco 0.9, but the version on GitHub does.
-
 ### Docker {#docker}
 
 **Note:** These instructions are for running a Falco container directly on a Linux host. For instructions for running a Falco container on Kubernetes, see the [Kubernetes specific docs](#kubernetes).
@@ -331,6 +319,18 @@ docker run -it --name falco-event-generator sysdig/falco-event-generator
 The Falco image has a built-in set of rules located at `/etc/falco/falco_rules.yaml` which is suitable for most purposes. However, you may want to provide your own rules file and still use the Falco image. In that case, you should add a volume mapping to map the external rules file to `/etc/falco/falco_rules.yaml` within the container by adding `-v path-to-falco-rules.yaml:/etc/falco/falco_rules.yaml` to your `docker run` command. This will overwrite the default rules with the user provided version.
 
 In order to use custom rules in addition to the default `falco_rules.yaml`, you can place your custom rules in a local directory. Then mount this directory by adding `-v path-to-custom-rules/:/etc/falco/rules.d` to your `docker run` command.
+
+### Config Management Systems
+
+You can also install Falco using configuration management systems like [Puppet](#puppet) and [Ansible](#ansible).
+
+#### Puppet
+
+A [Puppet](https://puppet.com/) module for Falco, `sysdig-falco`, is available on [Puppet Forge](https://forge.puppet.com/sysdig/falco/readme).
+
+#### Ansible
+
+[@juju4](https://github.com/juju4/) has helpfully written an [Ansible](https://ansible.com) role for Falco, `juju4.falco`. It's available on [GitHub](https://github.com/juju4/ansible-falco/) and [Ansible Galaxy](https://galaxy.ansible.com/juju4/falco/). The latest version of Ansible Galaxy (v0.7) doesn't work with Falco 0.9, but the version on GitHub does.
 
 ### CoreOS
 

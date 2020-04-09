@@ -270,18 +270,6 @@ sudo bash install_falco
 
     アンインストールするには、'apt-get remove falco'を実行します。
 
-### 構成管理システム
-
-[Puppet](#puppet)や[Ansible](#ansible)などの構成管理システムを使用してFalcoをインストールすることもできます。
-
-#### Puppet
-
-Falco用の[Puppet](https://puppet.com/)モジュールである `sysdig-falco`は、[Puppet Forge](https://forge.puppet.com/sysdig/falco/readme)で入手できます。
-
-#### Ansible
-
-[@ juju4](https://github.com/juju4/)は、Falcoの[Ansible](https://ansible.com)の役割である `juju4.falco`を有益に書いています。 [GitHub](https://github.com/juju4/ansible-falco/)および[Ansible Galaxy](https://galaxy.ansible.com/juju4/falco/)で入手できます。Ansible Galaxy(v0.7)の最新バージョンはFalco 0.9では動作しませんが、GitHubのバージョンは動作します。
-
 ### Docker
 
 **ノート:** これらの手順は、LinuxホストでFalcoコンテナーを直接実行するためのものです。KubernetesでFalcoコンテナーを実行する手順については、[Kubernetes固有のドキュメント](#kubernetes)を参照してください。
@@ -330,6 +318,19 @@ docker run -it --name falco-event-generator sysdig/falco-event-generator
 Falcoイメージには、 `/etc/falco/falco_rules.yaml`にある組み込みのルールセットがあり、ほとんどの目的に適しています。ただし、独自のルールファイルを提供し、Falcoイメージを引き続き使用することもできます。その場合、 `-v path-to-falco-rules.yaml:/etc/falco/を追加して、コンテナ内の` /etc/falco/falco_rules.yaml`に外部ルールファイルをマッピングするボリュームマッピングを追加する必要があります。 falco_rules.yaml`を `docker run`コマンドに追加します。 これにより、ユーザーが指定したバージョンでデフォルトのルールが上書きされます
 
 デフォルトの `falco_rules.yaml`に加えてカスタムルールを使用するには、ローカルディレクトリにカスタムルールを配置できます。 次に、 `-v path-to-custom-rules/:/etc/falco/rules.d`を` docker run`コマンドに追加して、このディレクトリをマウントします。
+
+
+### 構成管理システム
+
+[Puppet](#puppet)や[Ansible](#ansible)などの構成管理システムを使用してFalcoをインストールすることもできます。
+
+#### Puppet
+
+Falco用の[Puppet](https://puppet.com/)モジュールである `sysdig-falco`は、[Puppet Forge](https://forge.puppet.com/sysdig/falco/readme)で入手できます。
+
+#### Ansible
+
+[@ juju4](https://github.com/juju4/)は、Falcoの[Ansible](https://ansible.com)の役割である `juju4.falco`を有益に書いています。 [GitHub](https://github.com/juju4/ansible-falco/)および[Ansible Galaxy](https://galaxy.ansible.com/juju4/falco/)で入手できます。Ansible Galaxy(v0.7)の最新バージョンはFalco 0.9では動作しませんが、GitHubのバージョンは動作します。
 
 ### CoreOS
 
