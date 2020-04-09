@@ -20,7 +20,7 @@
 
 > /kind content
 
-> /kind transalation
+> /kind translation
 
 **Any specific area of the project related to this PR?**
 
