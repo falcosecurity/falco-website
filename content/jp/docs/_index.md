@@ -14,8 +14,8 @@ Falcoは、[Linuxシステムコール](http://man7.org/linux/man-pages/man2/sys
 
 * コンテナ内でシェルが実行する
 * サーバープロセスが、予期しないタイプの子プロセスを生成する
-* `/ etc / shadow`などの機密ファイルが予期せずに読み取られる
-* 非デバイスファイルが `/ dev`に書き込まれる
+* `/etc/shadow`などの機密ファイルが予期せずに読み取られる
+* 非デバイスファイルが `/dev`に書き込まれる
 * 標準システムバイナリ（ `ls`など）がアウトバウンドネットワーク接続を作成する
 
 ## Falcoと他のツールの比較
@@ -24,9 +24,9 @@ Falcoが[SELinux](https://en.wikipedia.org/wiki/Security-Enhanced_Linux)、[AppA
 
 ## Falcoの使用方法
 
-Falcoは、長時間実行されるデーモンとしてデプロイされます。通常のホストまたはコンテナホストに[deb](/docs/installation#debian)/[rpm](/docs/installation#centos-rhel)パッケージとしてインストールするか、[container](/docs/installation#docker)としてデプロイするか、または [ソースから](/docs/source) をビルドします。
+Falcoは、長時間実行されるデーモンとしてデプロイされます。通常のホストまたはコンテナホストに[deb](../docs/installation#debian)/[rpm](../docs/installation#centos-rhel)パッケージとしてインストールするか、[container](../docs/installation#docker)としてデプロイするか、または [ソースから](../docs/source) をビルドします。
 
-Falcoは、（1）監視するビヘイビアとイベントを定義する[ルールファイル](/docs/rules) 、および（2）[一般設定ファイル](/docs/configuration) で構成されます。ルールは、ハイレベルで人間が読める言語で表現されます。サンプルのルールファイル[`./rules/falco_rules.yaml`](https://github.com/falcosecurity/falco/blob/master/rules/falco_rules.yaml)を出発点として、あなたの環境に適応させる（そしておそらく望むでしょう！）ことができます。
+Falcoは、（1）監視するビヘイビアとイベントを定義する[ルールファイル](../docs/rules) 、および（2）[一般設定ファイル](/docs/configuration) で構成されます。ルールは、ハイレベルで人間が読める言語で表現されます。サンプルのルールファイル[`./rules/falco_rules.yaml`](https://github.com/falcosecurity/falco/blob/master/rules/falco_rules.yaml)を出発点として、あなたの環境に適応させる（そしておそらく望むでしょう！）ことができます。
 
 ルールを開発する際の便利な機能の1つは、`scap`形式で保存されたトレースファイルを読み取るFalcoの機能です。これにより、問題のあるビヘイビアを1回「レコード」し、ルールを調整しながら必要な回数だけFalcoでリプレイできます。
 
