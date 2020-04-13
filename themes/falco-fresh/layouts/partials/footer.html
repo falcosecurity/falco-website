@@ -2,10 +2,8 @@
 {{ $standard := or .IsHome (eq .Section "blog") }}
 <footer class="footer footer-dark">
   {{ if $standard }}<div class="container">{{ end }}
-    <div class="columns">
-      <div class="column">
-        {{ T "copyright"}} {{ $year }}, {{ T "falco_authors"}}
-      </div>
-    </div>
+  <p>
+    {{ $year}} &copy; Falco Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our <a href="https://www.linuxfoundation.org/trademark-usage" target="_blank">Trademark Usage</a> page.
+  </p>
   {{ if $standard }}</div>{{ end }}
 </footer>
