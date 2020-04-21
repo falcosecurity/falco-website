@@ -1,42 +1,92 @@
 ---
-title: Documentation Home
-description: An overview of the Falco container security system
+title: The Falco Project
+description: Cloud Native Runtime Security
 weight: 1
 ---
 
-## About Falco
+{{< info >}}
 
-Falco is a behavioral activity monitor designed to detect anomalous activity in your applications. Using powerful [system call capture](https://sysdig.com/blog/fascinating-world-linux-system-calls/) technology originally built by Sysdig. Falco lets you continuously monitor and detect container, application, host, and network activity, all in one place, from one source of data, with one set of [rules](rules).
+The Falco Project does not suggest running Falco on top of Kubernetes but rather beside Kubernetes on the Linux host with systemd. 
 
-### What kind of behaviors can Falco detect?
+See this [blog post](../blog/falco-and-kubernetes/) for more information.
 
-Falco can detect and alert on any behavior that involves making [Linux system calls](http://man7.org/linux/man-pages/man2/syscalls.2.html). Falco alerts can be triggered by the use of specific system calls, their arguments, and by properties of the calling process. For example, you can easily detect when:
+{{< /info >}}
 
-* A shell is run inside a container
-* A server process spawns a child process of an unexpected type
-* A sensitive file, like `/etc/shadow`, is unexpectedly read
-* A non-device file is written to `/dev`
-* A standard system binary (like `ls`) makes an outbound network connection
+## What is Falco?
 
-## How Falco compares to other tools
+The Falco Project is an open source runtime security tool originally built by [Sysdig, Inc](https://sysdig.com). Falco was [donated to the CNCF and is now a CNCF incubating project](https://www.cncf.io/blog/2020/01/08/toc-votes-to-move-falco-into-cncf-incubator/).
 
-People often ask how Falco differs from [SELinux](https://en.wikipedia.org/wiki/Security-Enhanced_Linux), [AppArmor](https://wiki.ubuntu.com/AppArmor), [Auditd](https://linux.die.net/man/8/auditd), and other tools related to Linux security policy. We wrote a [blog post](https://sysdig.com/blog/selinux-seccomp-falco-technical-discussion/) on the [Sysdig blog](https://sysdig.com/blog) comparing Falco to other tools.
+## What does Falco do?
 
-## How to use Falco
+Falco parses Linux system calls from the kernel at runtime, and asserts the stream against a powerful rules engine. 
+If a rule is violated a Falco alert is triggered. Read more about Falco [rules](../rules)
 
-Falco is deployed as a long-running daemon. You can install it as a [deb](installation#debian)/[rpm](installation#centos-rhel) package on a regular host or container host, you can deploy it as a [container](installation#docker), or you can build it [from source](source).
+ - Parse
+ - Assert
+ - Alert
 
-Falco is configured via (1) a [rules file](rules) that defines which behaviors and events to watch for and (2) a [general configuration file](configuration). Rules are expressed in a high-level, human-readable language. We've provided a sample rules file [`./rules/falco_rules.yaml`](https://github.com/falcosecurity/falco/blob/master/rules/falco_rules.yaml) as a starting point—you can (and will likely want!) to adapt it to your environment.
+## What does Falco look for?
 
-When developing rules, one helpful feature is Falco's ability to read trace files saved by the `scap` format. This allows you to "record" the offending behavior once and replay it with Falco as many times as needed while tweaking your rules.
+By default Falco ships with a mature set of rules that will check the kernel for unusual behavior such as
 
-Once deployed, Falco uses the kernel modules and eBPF probes to bring events to userspace. Falco watches for any events matching one of the conditions defined in the rule file. If a matching event occurs, a notification is written to the the configured output(s).
+ - Privilege escalation using privileged containers 
+ - Namespace changes using tools like `setns` 
+ - Read/Writes to well-known directories such as `/etc`, `/usr/bin`, `/usr/sbin`, etc
+ - Creating symlinks 
+ - Ownership and Mode changes 
+ - Unexpected network connections or socket mutations
+ - Spawned processes using `execve`
+ - Executing shell binaries such as `sh`, `bash`, `csh`, `zsh`, etc
+ - Executing SSH binaries such as `ssh`, `scp`, `sftp`, etc
+ - Mutating Linux `coreutils` executables
+ - Mutating login binaries 
+ - Mutating `shadowutil` or `passwd` executables 
+    - `shadowconfig`
+    - `pwck`
+    - `chpasswd`
+    - `getpasswd`
+    - `change`
+    - `useradd`
+    - etc
 
-## Falco alerts
+...and many more. 
 
-When Falco detects suspicious behavior, it sends [alerts](alerts) via one or more channels:
+## What are Falco rules?
 
-* Writing to standard error
-* Writing to a file
-* Writing to syslog
-* Pipe to a spawned program. A common use of this output type would be to send an email for every Falco notification.
+These are the items that Falco will assert against. They are defined in the Falco configuration, and represent the things you will be looking for on your system.
+
+See the section on [rules](../rules) for more information on writing, managing, and deploying Falco rules.
+
+## What are Falco alerts?
+
+These are configurable downstream actions that can be as simple as logging to `STDOUT` or as complex as delivering a gRPC call to a client. 
+
+See the section on [alerts](../alerts) for more information on configuring, understanding, and developing Falco alerts.
+
+
+## Falco Components 
+
+Falco is composed of 3 main components
+
+ - Userspace program
+ - Driver
+ - Configuration
+
+### Falco userspace program
+
+This is the CLI tool `falco`. This is the program a user interacts with. The userspace program is responsible for handling signals, parsing information from a Falco driver, and alerting.
+
+### Falco driver
+
+This is a piece of software that adheres to the Falco driver spec and can send a stream of system call information from the kernel.
+Falco cannot run without a driver installed.
+
+Currently the Falco project has support for the following drivers
+
+ - (Default) A kernel module built on `libscap` and `libsinsp` C++ libraries
+ - A BPF probe built from the same modules
+ - A new BPF probe being built out by the Falco community 
+ 
+### Falco configuration 
+
+This defines how Falco is run, what rules to assert, and how to perform alerts. See the section on [configuration](../configuration) for more information on how to configure Falco. 

@@ -57,10 +57,6 @@ container.id != host and proc.name = bash
 
 The first clause checks that the event happened in a container (Sysdig events have a `container` field that is equal to `"host"` if the event happened on a regular host). The second clause checks that the process name is `bash`. Note that this condition does not even include a clause with a system call! It only checks event metadata. Because of that, if a bash shell does start up in a container, Falco outputs events for every syscall that is performed by that shell.
 
-{{< success >}}
-If you're new to Sysdig and unsure which fields are available, run `sysdig -l` to see the list of supported fields.
-{{< /success >}}
-
 A complete rule using the above condition might be:
 
 ```yaml
@@ -111,9 +107,8 @@ Here are some example lists as well as a macro that uses them:
 
 Referring to a list inserts the list items in the macro, rule, or list.
 
-{{< success >}}
 Lists *can* contain other lists.
-{{< /success >}}
+
 
 ## Appending to Lists, Rules, and Macros
 
