@@ -72,7 +72,7 @@ languages:
           text: Join our Slack team to interact with other users and developers.
           icon: chat.png
           buttonText: Falco Slack
-          buttonLink: https://slack.sysdig.com/
+          buttonLink: https://cloud-native.slack.com/archives/falco
       signup:
         title: Join the mailing list
         subtitle: Get involved with the community
@@ -156,7 +156,7 @@ languages:
           text: 加入我们的Slack团队，和其他用户和开发者沟通交流。
           icon: chat.png
           buttonText: Falco Slack
-          buttonLink: https://slack.sysdig.com/
+          buttonLink: https://cloud-native.slack.com/archives/falco
       signup:
         title: 加入CNCF官方邮件列表。
         subtitle: 从这注册
@@ -240,7 +240,7 @@ languages:
           text: Slackチームに参加して、他のユーザーやデベロッパーと交流してください。
           icon: chat.png
           buttonText: Falco Slack
-          buttonLink: https://slack.sysdig.com/
+          buttonLink: https://cloud-native.slack.com/archives/falco
       signup:
         title: メーリングリストに参加する
         subtitle: コミュニティに参加する
