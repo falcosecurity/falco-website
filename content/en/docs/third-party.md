@@ -26,39 +26,6 @@ Then run the script either as root or with sudo:
 sudo bash install_falco
 ```
 
-## Docker {#docker}
-
-This is how the Falco userspace process can be ran in a container. 
-
-Once a kernel driver has been installed directly on the host system, it can be used from within a container.
-
-1. Install the driver:
-
-    - You can use an official [installation method](installation) directly on the host
-    - Alternatively, you can temporarily use a privileged container to install the driver on the host:
-
-    ```shell
-    docker pull falcosecurity/falco-driver-loader:latest
-    docker run --rm -i -t \
-        --privileged \
-        -v /root/.falco:/root/.falco \
-        -v /proc:/host/proc:ro \
-        -v /boot:/host/boot:ro \
-        -v /lib/modules:/host/lib/modules:ro \
-        -v /usr:/host/usr:ro \
-        -v /etc:/host/etc:ro \
-        falcosecurity/falco-driver-loader:latest
-    ``` 
-
-2. Run Falco in a non privileged container using Docker:
-
-    ```shell
-    docker pull falcosecurity/falco-no-driver:latest
-    docker run --rm -i -t \
-        TODO
-        falcosecurity/falco-no-driver:lastest
-    ``` 
-
 ## Minikube 
 
 The easiest way to use Falco on Kubernetes in a local environment is on [Minikube](https://kubernetes.io/docs/tutorials/hello-minikube/). Both the Kubernetes YAML manifests and the Helm chart are regularly tested with Minikube.
@@ -118,7 +85,7 @@ A [Puppet](https://puppet.com/) module for Falco, `sysdig-falco`, is available o
 
 ## CoreOS
 
-The recommended way to run Falco on CoreOS is inside of its own Docker container using the install commands in the [Docker section](#docker) above. This method allows full visibility into all containers on the host OS.
+The recommended way to run Falco on CoreOS is inside of its own Docker container using the install commands in the [Docker section](/docs/running#docker). This method allows full visibility into all containers on the host OS.
 
 This method is automatically updated, includes some nice features such as automatic setup and bash completion, and is a generic approach that can be used on other distributions outside CoreOS as well.
 
