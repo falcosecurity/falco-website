@@ -11,7 +11,7 @@ You can also see this set of fields via `falco --list=<source>`, with `<source>`
 
 # System Calls (source `syscall`)
 
-`syscall` event source fields are provided by the [kernel module](../../event-sources/kernel-module/). These fields are identical to the [Sysdig filter fields](https://github.com/draios/sysdig/wiki/Sysdig-User-Guide#all-supported-filters) that can be used to filter Sysdig captures.
+`syscall` event source fields are provided by the [kernel module](../../event-sources/drivers/). These fields are identical to the [Sysdig filter fields](https://github.com/draios/sysdig/wiki/Sysdig-User-Guide#all-supported-filters) that can be used to filter Sysdig captures.
 
 ```
 # System Kernel Fields
