@@ -17,11 +17,13 @@ If you would like to run Falco in Kubernetes with a tool like Kind, Minikube, or
 {{< /info >}}
 
 
-If Falco is installed using the package manager artifacts below, you will have the following in place.
+If Falco is installed using the package manager artifacts below, you will have the following in place:
 
  - Falco userspace program scheduled and watched via `systemd`
  - Falco driver installed via package manager (either kernel module or eBPF depending on host)
  - Sane and default configuration file installed in `/etc/falco`
+
+Alternatively, it is also possible to use a binary package as [explained below](#linux-binary).
 
 ## Installing
 
@@ -29,7 +31,7 @@ If Falco is installed using the package manager artifacts below, you will have t
 
 1. Trust the falcosecurity GPG key, configure the apt repository, and update the package list:
 
-    ```bash
+    ```shell
     curl -s https://falco.org/repo/falcosecurity-3672BA8F.asc | apt-key add -
     echo "deb https://dl.bintray.com/falcosecurity/deb stable main" | tee -a /etc/apt/sources.list.d/falcosecurity.list
     apt-get update -y
@@ -93,9 +95,23 @@ If Falco is installed using the package manager artifacts below, you will have t
     yum erase falco
     ```
 
-### Linux (generic)
+### Linux (binary package) {#linux-binary}
 
-TODO
+1. Download the latest binary:
+
+    ```shell
+    curl -s -L https://dl.bintray.com/falcosecurity/bin/x86_64/:falco-{{< latest >}}-x86_64.tar.gz
+    ```
+
+2. Install Falco:
+
+    ```shell
+    tar -xvf falco-{{< latest >}}-x86_64.tar.gz
+    cp -R falco-{{< latest >}}-x86_64/* /
+    ```
+
+Finally, you need to install kernel headers for your distribution and install the driver as explained below.
+Once the driver has been installed, you can manually run Falco.
 
 #### Installing the driver
 
