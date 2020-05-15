@@ -9,7 +9,7 @@ weight: 2
 The Falco Project community only supports two ways for downloading and running Falco:
 
  - Running Falco directly on a Linux host
- - Running the Falco userspace program in a container, with a kernel driver installed on the underlying host.
+ - Running the Falco userspace program in a container, with a driver installed on the underlying host.
  
 Below you can find artifacts for both. 
 
@@ -30,16 +30,21 @@ The list of all available artifacts can be found [here](https://bintray.com/falc
 
 {{< info >}}
 
-Falco depends on having a driver installed on the host system to parse system calls
+Falco depends on having a driver installed on the host system to get information about the running system calls.
+
 The preferred installation method is to install the driver using the native artifacts defined above or 
-temporarily run the `falcosecurity/falco-driver-loader` image as privileged, finally using the `falcosecurity/falco-no-driver` that does not require to be privileged.
+temporarily run the `falcosecurity/falco-driver-loader` image as privileged, then using the `falcosecurity/falco-no-driver`.
 
 {{< /info >}}
 
 |tag | pull command | description |
 |----|----------|-----------------|
-|[latest](https://hub.docker.com/r/falcosecurity/falco/tags)| `docker pull falcosecurity/falco-no-driver:latest` | The most recent version pushed to the registry |
+|[latest](https://hub.docker.com/r/falcosecurity/falco-no-driver/tags)| `docker pull falcosecurity/falco-no-driver:latest` | The most recent version |
 |[*version*](https://hub.docker.com/r/falcosecurity/falco-no-driver/tags)| `docker pull falcosecurity/falco-no-driver:<version>` | A specific version of Falco such as `{{< latest >}}` |
+|[latest](https://hub.docker.com/r/falcosecurity/falco-driver-loader/tags)| `docker pull falcosecurity/falco-driver-loader:latest` | The most recent version of `falco-script-loader` with the building toolchain |
+|[*version*](https://hub.docker.com/r/falcosecurity/falco-driver-loader/tags)| `docker pull falcosecurity/falco-driver-loader:<version>` | A specific version of `falco-driver-loader` such as `{{< latest >}}` with the building toolchain |
+|[latest](https://hub.docker.com/r/falcosecurity/falco/tags)| `docker pull falcosecurity/falco:latest` | The most recent version with the `falco-script-loader` included |
+|[*version*](https://hub.docker.com/r/falcosecurity/falco/tags)| `docker pull falcosecurity/falco:<version>` | A specific version of Falco such as `{{< latest >}}` with `falco-script-loader` included |
 
 The list of all available images can be found [here](https://github.com/falcosecurity/falco/tree/master/docker).
 

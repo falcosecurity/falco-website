@@ -8,9 +8,7 @@ Falco is a Linux security tool that uses system calls to secure and monitor a sy
 
 {{< info >}}
 
-The Falco Project does not suggest running Falco on top of Kubernetes but rather beside Kubernetes on the Linux host with systemd. 
-
-See this [blog post](https://falco.org/blog/falco-and-kubernetes/) for more information.
+The Falco Project does not suggest running Falco on top of Kubernetes but rather on its nodes directly.
 
 If you would like to run Falco in Kubernetes with a tool like Kind, Minikube, or Helm please see the [third party integrations](../third-party)
 
@@ -100,7 +98,7 @@ Alternatively, it is also possible to use a binary package as [explained below](
 1. Download the latest binary:
 
     ```shell
-    curl -s -L https://dl.bintray.com/falcosecurity/bin/x86_64/:falco-{{< latest >}}-x86_64.tar.gz
+    curl -L -O https://dl.bintray.com/falcosecurity/bin/x86_64/falco-{{< latest >}}-x86_64.tar.gz
     ```
 
 2. Install Falco:
@@ -109,26 +107,32 @@ Alternatively, it is also possible to use a binary package as [explained below](
     tar -xvf falco-{{< latest >}}-x86_64.tar.gz
     cp -R falco-{{< latest >}}-x86_64/* /
     ```
+3. Install the following dependencies:
+    - `libyaml`
+    - kernel headers for your distribution
 
-Finally, you need to install kernel headers for your distribution and the driver as explained below.
+4. Install the driver as explained [below](#install-driver).
+
 Once the driver has been installed, you can manually run `falco`.
 
-#### Installing the driver
+#### Installing the driver {#install-driver}
 
-The easiest way to install the driver is as follows:
+The easiest way to install the driver is using the `falco-driver-loader` script.
 
-1. Use the `falco-driver-loader` script to build the driver.
-2. The script tries to locally build the driver, if not possible, then it tries to download a prebuilt one. 
-3. By default, the driver is copied to `/root/.falco/` and, if a kernel module, loaded.
+By default, it first tries to locally build the kernel module with `dkms`. If not possible, then it tries to download a prebuilt one into `~/.falco/`. If a kernel module is found, then it gets inserted.
 
-Optionally:
+In case you want to install the eBPF probe driver, run `falco-driver-loader bpf`.
+It first tries to build the eBPF probe locally, otherwise to download a prebuilt into into `~/.falco/`. 
 
-`FALCO_BPF_PROBE` - Set this environment variable (ie. `FALCO_BPF_PROBE=""`) to use the eBPF probe, instead of a kernel module.
-`DRIVERS_REPO` - Set this environment variable to override the default base URL for prebuilt kernel modules and eBPF probes, without the trailing slash. - ie., `https://myhost.mydomain.com` or if the server has a subdirectories structure `https://myhost.mydomain.com/drivers`. `ko` and `o` stands for Kernel module and `eBPF` probe respectively.
-The drivers will need to be hosted with the following structure:
-`/${driver_version}/falco_${target}_${kernelrelease}_${kernelversion}.[ko|o]`.
+Configurable options:
 
-Examples:
-- `/a259b4bf49c3330d9ad6c3eed9eb1a31954259a6/:falco_amazonlinux2_4.14.128-112.105.amzn2.x86_64_1.ko`
+- `DRIVERS_REPO` - Set this environment variable to override the default repository URL for prebuilt kernel modules and eBPF probes, without the trailing slash. 
 
-The `falco-driver-loader` script will name the module in this format by default.
+    Ie., `https://myhost.mydomain.com` or if the server has a subdirectories structure `https://myhost.mydomain.com/drivers`.
+
+    The drivers will need to be hosted with the following structure:
+    `/${driver_version}/falco_${target}_${kernelrelease}_${kernelversion}.[ko|o]` where `ko` and `o` stands for Kernel module and `eBPF` probe respectively.
+
+    Eg., `/a259b4bf49c3330d9ad6c3eed9eb1a31954259a6/falco_amazonlinux2_4.14.128-112.105.amzn2.x86_64_1.ko`. 
+
+    The `falco-driver-loader` script fetches the drivers using the above format.
