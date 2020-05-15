@@ -11,7 +11,7 @@ Falcoがサポートするフィールドは次のとおりです。これらの
 
 # システムコール (ソース `syscall`)
 
-`syscall`イベントソースフィールドは、 [カーネルモジュール](../../event-sources/kernel-module/).によって提供されます。これらのフィールドは、Sysdigキャプチャのフィルタリングに使用できる[Sysdig フィルターフィールド](https://github.com/draios/sysdig/wiki/Sysdig-User-Guide#all-supported-filters)と同じです。
+`syscall`イベントソースフィールドは、 [カーネルモジュール](../../event-sources/drivers/).によって提供されます。これらのフィールドは、Sysdigキャプチャのフィルタリングに使用できる[Sysdig フィルターフィールド](https://github.com/draios/sysdig/wiki/Sysdig-User-Guide#all-supported-filters)と同じです。
 
 ```
 # System Kernel Fields
