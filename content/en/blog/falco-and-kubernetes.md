@@ -54,7 +54,7 @@ This means that The Falco Community will only support installations where Falco 
  - RHEL/EC2 Linux/CentOS (`.rpm` packages)
  - Binary installation (`.tar.gz` packages)
  
-[Read more](../docs/install) in the documentation.
+[Read more](https://falco.org/docs/installation) in the documentation.
  
 Furthermore we will support a handful of container images as a community. These images will only contain the userspace component of the Falco process, and will still require a driver installed on the underlying host to work. 
 

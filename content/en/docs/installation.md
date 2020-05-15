@@ -10,7 +10,7 @@ Falco is a Linux security tool that uses system calls to secure and monitor a sy
 
 The Falco Project does not suggest running Falco on top of Kubernetes but rather beside Kubernetes on the Linux host with systemd. 
 
-See this [blog post](../blog/falco-and-kubernetes/) for more information.
+See this [blog post](https://falco.org/blog/falco-and-kubernetes/) for more information.
 
 If you would like to run Falco in Kubernetes with a tool like Kind, Minikube, or Helm please see the [third party integrations](../third-party)
 
@@ -25,7 +25,7 @@ If Falco is installed using the package manager artifacts below, you will have t
 
 ## Installing
 
-### Debian/Ubuntu
+### Debian/Ubuntu {#debian}
 
 1. Trust the falcosecurity GPG key, configure the apt repository, and update the package list:
 
@@ -59,7 +59,7 @@ If Falco is installed using the package manager artifacts below, you will have t
     apt-get remove falco
     ```
 
-### CentOS/RHEL/EC2 Linux/Fedora
+### CentOS/RHEL/EC2 Linux/Fedora {#centos-rhel}
 
 1. Trust the falcosecurity GPG key and configure the yum repository:
 

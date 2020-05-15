@@ -15,4 +15,4 @@ By default, the kernel module will be installed when installing the falco debian
 * Download a pre-built kernel module from `https://dl.bintray.com/falcosecurity/driver/`.
 * Look for a pre-built kernel module from `~/.falco`.
 
-For options using a pre-built kernel module, please refer to the [installation](/docs/installation/#downloading-the-kernel-module-via-https) page.
+For options using a pre-built kernel module, please refer to the [installation](/docs/installation/#installing-the-driver) page.

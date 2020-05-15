@@ -8,7 +8,7 @@ weight: 1
 
 The Falco Project does not suggest running Falco on top of Kubernetes but rather beside Kubernetes on the Linux host with systemd. 
 
-See this [blog post](../blog/falco-and-kubernetes/) for more information.
+See this [blog post](https://falco.org/blog/falco-and-kubernetes/) for more information.
 
 {{< /info >}}
 
@@ -19,7 +19,7 @@ The Falco Project is an open source runtime security tool originally built by [S
 ## What does Falco do?
 
 Falco parses Linux system calls from the kernel at runtime, and asserts the stream against a powerful rules engine. 
-If a rule is violated a Falco alert is triggered. Read more about Falco [rules](../rules)
+If a rule is violated a Falco alert is triggered. Read more about Falco [rules](rules)
 
  - Parse
  - Assert
@@ -55,13 +55,13 @@ By default Falco ships with a mature set of rules that will check the kernel for
 
 These are the items that Falco will assert against. They are defined in the Falco configuration, and represent the things you will be looking for on your system.
 
-See the section on [rules](../rules) for more information on writing, managing, and deploying Falco rules.
+See the section on [rules](rules) for more information on writing, managing, and deploying Falco rules.
 
 ## What are Falco alerts?
 
 These are configurable downstream actions that can be as simple as logging to `STDOUT` or as complex as delivering a gRPC call to a client. 
 
-See the section on [alerts](../alerts) for more information on configuring, understanding, and developing Falco alerts.
+See the section on [alerts](alerts) for more information on configuring, understanding, and developing Falco alerts.
 
 
 ## Falco Components 
@@ -89,4 +89,4 @@ Currently the Falco project has support for the following drivers
  
 ### Falco configuration 
 
-This defines how Falco is run, what rules to assert, and how to perform alerts. See the section on [configuration](../configuration) for more information on how to configure Falco. 
+This defines how Falco is run, what rules to assert, and how to perform alerts. See the section on [configuration](configuration) for more information on how to configure Falco. 
