@@ -54,7 +54,7 @@ This is an unsupported way to run Falco.
 
 {{< /info >}}
 
-### Falco with Docker
+## Docker {#docker}
 
 This is how the Falco userspace process can be ran in a container. 
 
