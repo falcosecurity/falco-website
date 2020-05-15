@@ -95,7 +95,7 @@ Alternatively, it is also possible to use a binary package as [explained below](
     yum erase falco
     ```
 
-### Linux (binary package) {#linux-binary}
+### Linux generic (binary package) {#linux-binary}
 
 1. Download the latest binary:
 
@@ -110,17 +110,20 @@ Alternatively, it is also possible to use a binary package as [explained below](
     cp -R falco-{{< latest >}}-x86_64/* /
     ```
 
-Finally, you need to install kernel headers for your distribution and install the driver as explained below.
-Once the driver has been installed, you can manually run Falco.
+Finally, you need to install kernel headers for your distribution and the driver as explained below.
+Once the driver has been installed, you can manually run `falco`.
 
 #### Installing the driver
 
 The easiest way to install the driver is as follows:
 
-1. Use the `falco-driver-loader` script on Falco to build the driver.
+1. Use the `falco-driver-loader` script to build the driver.
 2. The script tries to locally build the driver, if not possible, then it tries to download a prebuilt one. 
-3. By default, the driver is copied to `/root/.falco/`.
+3. By default, the driver is copied to `/root/.falco/` and, if a kernel module, loaded.
 
+Optionally:
+
+`FALCO_BPF_PROBE` - Set this environment variable (ie. `FALCO_BPF_PROBE=""`) to use the eBPF probe, instead of a kernel module.
 `DRIVERS_REPO` - Set this environment variable to override the default base URL for prebuilt kernel modules and eBPF probes, without the trailing slash. - ie., `https://myhost.mydomain.com` or if the server has a subdirectories structure `https://myhost.mydomain.com/drivers`. `ko` and `o` stands for Kernel module and `eBPF` probe respectively.
 The drivers will need to be hosted with the following structure:
 `/${driver_version}/falco_${target}_${kernelrelease}_${kernelversion}.[ko|o]`.

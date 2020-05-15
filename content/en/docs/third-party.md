@@ -1,8 +1,63 @@
 ---
 title: Third-Party Integrations
-description: These are unsupported community driven integrations
+description: These are unsupported community-driven integrations
 weight: 5
 ---
+
+## Scripted install {#scripted}
+
+To install Falco on Linux, you can download a shell script that takes care of the necessary steps:
+
+```shell
+curl -o install_falco -s https://falco.org/script/install
+```
+
+Then verify the [SHA256](https://en.wikipedia.org/wiki/SHA-2) checksum of the script using the `sha256sum` tool (or something analogous):
+
+```shell
+sha256sum install_falco
+```
+
+It should be `{{< sha256sum >}}`.
+
+Then run the script either as root or with sudo:
+
+```shell
+sudo bash install_falco
+```
+
+## Docker {#docker}
+
+This is how the Falco userspace process can be ran in a container. 
+
+Once a kernel driver has been installed directly on the host system, it can be used from within a container.
+
+1. Install the driver:
+
+    - You can use an official [installation method](installation) directly on the host
+    - Alternatively, you can temporarily use a privileged container to install the driver on the host:
+
+    ```shell
+    docker pull falcosecurity/falco-driver-loader:latest
+    docker run --rm -i -t \
+        --privileged \
+        -v /root/.falco:/root/.falco \
+        -v /proc:/host/proc:ro \
+        -v /boot:/host/boot:ro \
+        -v /lib/modules:/host/lib/modules:ro \
+        -v /usr:/host/usr:ro \
+        -v /etc:/host/etc:ro \
+        falcosecurity/falco-driver-loader:latest
+    ``` 
+
+2. Run Falco in a non privileged container using Docker:
+
+    ```shell
+    docker pull falcosecurity/falco-no-driver:latest
+    docker run --rm -i -t \
+        TODO
+        falcosecurity/falco-no-driver:lastest
+    ``` 
 
 ## Minikube 
 
@@ -10,7 +65,7 @@ The easiest way to use Falco on Kubernetes in a local environment is on [Minikub
 
 When running `minikube` with the default `--driver` arguments, Minikube creates a VM that runs the various Kubernetes services and a container framework to run Pods, etc. Generally, it's not possible to build the Falco kernel module directly on the Minikube VM, as the VM doesn't include the kernel headers for the running kernel.
 
-To address this, starting with falco 0.13.1 we pre-build kernel modules for the last 10 Minikube versions and make them available at https://s3.amazonaws.com/download.draios.com. This allows the download fallback step to succeed with a loadable kernel module.
+To address this, starting with Falco 0.13.1 we pre-build kernel modules for the last 10 Minikube versions and make them available at https://s3.amazonaws.com/download.draios.com. This allows the download fallback step to succeed with a loadable kernel module.
 
 Going forward, we'll continue to support 10 most recent versions of Minikube with each new Falco release. We currently retain previously-built kernel modules for download, so we will continue to provide limited historical support as well.
 
@@ -41,7 +96,6 @@ kind create cluster --config=./kind-config.yaml
 4. [Install](../installation) Falco in your Kubernetes cluster with kind.
 
 
-
 ## Helm
 
 Helm is a way to install Falco in Kubernetes. The documentation can be found here at [the default helm chart](https://github.com/helm/charts/tree/master/stable/falco#falco).
@@ -53,57 +107,6 @@ The Helm chart uses a privileged container to install the Falco driver on the ho
 This is an unsupported way to run Falco.
 
 {{< /info >}}
-
-## Docker {#docker}
-
-This is how the Falco userspace process can be ran in a container. 
-
-Once Falco has been installed directly on the host system (above) the kernel driver can be used from within a container.
-
-1. Stop the Falco daemon
-
-    ```shell
-    systemctl stop falco
-    ```
-
-2. Run Falco in a non privileged container using Docker:
-
-    ```shell
-    docker pull falcosecurity/falco:master-slim
-    docker run --rm -i -t \
-        -v /var/run/docker.sock:/host/var/run/docker.sock \
-        -v /dev:/host/dev \
-        -v /proc:/host/proc:ro \
-        -v /boot:/host/boot:ro \
-        -v /lib/modules:/host/lib/modules:ro \
-        -v /usr:/host/usr:ro \
-        falcosecurity/falco:master-slim
-    ```
-
-    See [running](../running) for information on how to manage, run, and debug with Falco. 
-
-
-## Scripted install {#scripted}
-
-To install Falco on Linux, you can download a shell script that takes care of the necessary steps:
-
-```shell
-curl -o install_falco -s https://falco.org/script/install
-```
-
-Then verify the [SHA256](https://en.wikipedia.org/wiki/SHA-2) checksum of the script using the `sha256sum` tool (or something analogous):
-
-```shell
-sha256sum install_falco
-```
-
-It should be `{{< sha256sum >}}`.
-
-Then run the script either as root or with sudo:
-
-```shell
-sudo bash install_falco
-```
 
 ## Puppet
 
@@ -148,7 +151,7 @@ When using the official container images, setting this environment variable will
 sudo FALCO_VERSION="{{< latest >}}" FALCO_BPF_PROBE="" falco-driver-loader
 ```
 
-To execute the script above succesfully, you will need `clang` and `llvm` installed.
+To execute the script above successfully, you will need `clang` and `llvm` installed.
 
 If you are installing Falco from packages, you will need to edit the `falco` systemd unit.
 
