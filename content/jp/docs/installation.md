@@ -27,8 +27,14 @@ HTTPを使用してカーネルモジュールを事前に構築し、Falcoポ�
 3. カーネルモジュールをポッドまたはコンテナから移動します。
     デフォルトでは、カーネルモジュールは `/root/.falco/`にコピーされます。
 
-`PROBE_URL`-Falcoポッドにこの環境変数を設定して、事前に構築されたカーネルモジュールのデフォルトホストをオーバーライドします。これは、末尾のスラッシュなしのURLのホスト部分のみである必要があります。つまり、「https://myhost.mydomain.com」です。 カーネルモジュールを `/stable/sysdig-probe-binaries/`ディレクトリにコピーし、次のように名前を付けます：
-`falco-probe-${falco_version}-$(uname -i)-$(uname -r)-{md5sum of kernel config}.ko`
+`DRIVERS_REPO` - Falcoポッドのこの環境変数を設定して、ビルド済みカーネルモジュールおよびeBPFプローブのデフォルトのベースURLを、スラッシュなしで上書きします。 - つまり、`https://myhost.mydomain.com`、またはサーバーにサブディレクトリ構造`https://myhost.mydomain.com/drivers`がある場合。 `ko`と`o` はそれぞれカーネルモジュールと`eBPF`プローブを表します。
+ドライバは、次の構造でホストされる必要があります:
+`/${driver_version}/falco_${target}_${kernelrelease}_${kernelversion}.[ko|o]`.
+
+例：
+- `/a259b4bf49c3330d9ad6c3eed9eb1a31954259a6/:falco_amazonlinux2_4.14.128-112.105.amzn2.x86_64_1.ko`
+
+
 
 `falco-driver-loader`スクリプトは、デフォルトでこの形式でモジュールに名前を付けます。
 
