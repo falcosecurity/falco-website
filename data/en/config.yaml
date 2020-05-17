@@ -134,7 +134,7 @@
     List containing the following sub-keys:
 
     * `enabled: [true|false]`
-    * `bind_address`: [address:port]
+    * `bind_address`: [address:port|unix://<path>.sock]
     * `threadiness`: <integer>
     * `private_key: <path>`
     * `cert_chain: <path>`

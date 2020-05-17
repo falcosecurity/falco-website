@@ -32,7 +32,26 @@ grpc:
   private_key: "/tmp/server.key"
   cert_chain: "/tmp/server.crt"
   root_certs: "/tmp/ca.crt"
+```
 
+As you can see, binding to a network address requires you to generate and specify a set of TLS certificates
+as show in the next section.
+
+Alternatively, if you want something simpler, you can tell Falco to bind the gRPC server to a local unix socket,
+this does not require you to generate certificates for mTLS but also comes without any authentication mechanism.
+
+```
+# gRPC server using an unix socket
+grpc:
+  enabled: true
+  bind_address: "unix:///var/run/falco.sock"
+  threadiness: 8
+```
+
+
+Now, remember to enable the services you need, otherwise the gRPC server won't expose anything, for the outputs use:
+
+```
 # gRPC output service.
 # By default it is off.
 # By enabling this all the output events will be kept in memory until you read them with a gRPC client.
@@ -43,7 +62,7 @@ grpc_output:
 
 ### Certificates
 
-The Falco gRPC server works only with mutual TLS by design. Therefore, you have to generate the certificates and update the paths in the above configuration.
+When configured to bind to a network address, the Falco gRPC server works only with mutual TLS by design. Therefore, you have to generate the certificates and update the paths in the above configuration.
 
 The Falco authors plan to automate the certificates generation soon.
 
