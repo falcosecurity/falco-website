@@ -59,7 +59,7 @@ Alternatively, it is also possible to use a binary package as [explained below](
     apt-get remove falco
     ```
 
-### CentOS/RHEL/EC2 Linux/Fedora {#centos-rhel}
+### CentOS/RHEL/Fedora/Amazon Linux 2 {#centos-rhel}
 
 1. Trust the falcosecurity GPG key and configure the yum repository:
 
