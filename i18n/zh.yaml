@@ -1,5 +1,9 @@
-integrations_and_platforms:
-  other: 平台集成
+end-users:
+  other: 最终用户
+vendors:
+  other: 供应商
+integrations:
+  other: 整合
 copyright:
   other: 版权信息
 

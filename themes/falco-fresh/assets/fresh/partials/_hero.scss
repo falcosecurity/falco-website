@@ -31,9 +31,11 @@ Hero styles
 
 .hero-foot {
     img.partner-logo {
-        height: 80px;
+        max-width: 250px;
+        max-height: 150px;
         @include tablet() {
-            height: 100px;
+            max-width: 250px;
+            max-height: 150px;
         }
     }
 }
@@ -43,7 +45,6 @@ Hero styles
     width: 70%;
     margin-left: auto;
     margin-right: auto;
-
     @include tablet() {
         width: 100%;
     }

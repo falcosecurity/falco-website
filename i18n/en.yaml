@@ -1,5 +1,9 @@
-integrations_and_platforms:
-  other: Integrations & Platforms
+end-users:
+  other: End-Users
+vendors:
+  other: Vendors
+integrations:
+  other: Integrations
 copyright:
   other: Copyright
 
