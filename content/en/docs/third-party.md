@@ -65,15 +65,7 @@ kind create cluster --config=./kind-config.yaml
 
 ## Helm
 
-Helm is a way to install Falco in Kubernetes. The documentation can be found here at [the default helm chart](https://github.com/helm/charts/tree/master/stable/falco#falco).
-
-{{< info >}}
-
-The Helm chart uses a privileged container to install the Falco driver on the host system. This is a security concern and is not possible in all environments. 
-
-This is an unsupported way to run Falco.
-
-{{< /info >}}
+Helm is a way to install Falco in Kubernetes. The Falco community has decided to port the Helm chart from the [stable repository](https://github.com/helm/charts/tree/master/stable/falco#falco) to the [charts](https://github.com/falcosecurity/charts) repository.
 
 ## Puppet
 
