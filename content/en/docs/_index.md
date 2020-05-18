@@ -4,14 +4,6 @@ description: Cloud Native Runtime Security
 weight: 1
 ---
 
-{{< info >}}
-
-The Falco Project does not suggest running Falco on top of Kubernetes but rather beside Kubernetes on the Linux host with systemd. 
-
-See this [blog post](https://falco.org/blog/falco-and-kubernetes/) for more information.
-
-{{< /info >}}
-
 ## What is Falco?
 
 The Falco Project is an open source runtime security tool originally built by [Sysdig, Inc](https://sysdig.com). Falco was [donated to the CNCF and is now a CNCF incubating project](https://www.cncf.io/blog/2020/01/08/toc-votes-to-move-falco-into-cncf-incubator/).
