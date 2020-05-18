@@ -35,6 +35,12 @@ falco --help
 
 ## Run within Docker {#docker}
 
+Falco ships a set of official [docker images](/docs/download#images). 
+The images can be used in two ways as follows:
+- [Least privileged](#docker-least-privileged)
+- [Fully privileged](#docker-privileged)
+
+### Least privileged {#docker-least-privileged}
 This is how the Falco userspace process can be ran in a container. 
 
 Once the kernel module has been installed directly on the host system, it can be used from within a container.
@@ -67,6 +73,22 @@ Once the kernel module has been installed directly on the host system, it can be
         falcosecurity/falco-no-driver:latest
     ```
 
+### Fully privileged {#docker-privileged}
+
+To run Falco in a container using Docker with full privileges:
+
+```shell
+docker pull falcosecurity/falco:latest
+docker run --rm -i -t \
+    --privileged \
+    -v /dev:/host/dev \
+    -v /proc:/host/proc:ro \
+    -v /boot:/host/boot:ro \
+    -v /lib/modules:/host/lib/modules:ro \
+    -v /usr:/host/usr:ro \
+    -v /etc:/host/etc:ro \
+    falcosecurity/falco:latest
+```
 
 ## Hot Reload
 

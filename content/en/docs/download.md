@@ -14,7 +14,7 @@ The Falco Project community only supports two ways for downloading and running F
 Below you can find artifacts for both. 
 
 
-### Download for Linux
+### Download for Linux {#packages}
 
 |        | development                                                                                                                 | stable                                                                                                              |
 |--------|-----------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
@@ -26,7 +26,7 @@ The list of all available artifacts can be found [here](https://bintray.com/falc
 
 ---
 
-### Download container images
+### Download container images {#images}
 
 {{< info >}}
 
