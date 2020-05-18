@@ -275,27 +275,119 @@ params:
     # Hero image (from /images/___)
     image: illustrations/falco-hero-1.png
     # Footer logos (from /images/logos/clients/___.svg)
-    clientlogos:
-    - src: kubernetes.svg
-      alt: Kubernetes
-    - src: docker.svg
-      alt: Docker
-    - src: red-hat-openshift-logo-grayscale.svg
-      alt: Red Hat Openshift
-    - src: cri-o-logo-grayscale.svg
-      alt: CRI-O
-    - src: helm.svg
+
+    # ------------------------------------------------------------------------------------------------------------------
+    #
+    # [ END-USERS ]
+    #
+    end-users:
+    - src: bah.png
+      alt: Booz Allen Hamilton
+      url: https://www.boozallen.com/
+    - src: coveo.png
+      alt: Coveo
+      url: https://www.coveo.com/en
+    - src: frameio.png
+      alt: Frame.io
+      url: https://frame.io/
+    - src: league.png
+      alt: League
+      url: https://league.com/us/
+    - src: preferral.png
+      alt: Preferral
+      url: https://www.preferral.com/
+    - src: shopify.png
+      alt: Shopify
+      url: https://shopify.com
+    - src: sightmachine.png
+      alt: Sight Machine
+      url: https://sightmachine.com/
+    - src: skyscanner.png
+      alt: Sky Scanner
+      url: https://medium.com/@SkyscannerEng/kubernetes-security-monitoring-at-scale-with-sysdig-falco-a60cfdb0f67a
+
+
+    # ------------------------------------------------------------------------------------------------------------------
+    #
+    # [ VENDORS ]
+    #
+    vendors:
+    - src: logzio.png
+      alt: Logz.io
+      url: https://logz.io/
+    - src: shujinko.png
+      alt: Shujinko
+      url: https://www.shujinko.io/products/
+    - src: sumologic.png
+      alt: Sumo Logic
+      url: https://www.sumologic.com/
+    - src: sysdig.png
+      alt: Sysdig
+      url: https://sysdig.com
+
+
+    # ------------------------------------------------------------------------------------------------------------------
+    #
+    # [ Integrations ]
+    #
+    integrations:
+      # -------------------------------------------------
+      # CNCF Projects
+      #
+    - src: helm.png
       alt: Helm
-    - src: fluentd.svg
-      alt: Fluentd
-    - src: kubeless.svg
-      alt: Kubeless
-    - src: slack.svg
+      url: https://helm.sh
+    - src: kubernetes.png
+      alt: Kubernetes
+      url: https://kubernetes.io
+    - src: opa.png
+      alt: Open Policy Agent1
+      url: https://www.openpolicyagent.org/
+    - src: prometheus.png
+      alt: Prometheus
+      url: https://prometheus.io/
+
+      # -------------------------------------------------
+      # Third Party Integrations
+      #
+    - src: aws.png
+      alt: Amazon Web Services
+      url: https://aws.amazon.com/
+    - src: azure.png
+      alt: Azure
+      url: https://azure.microsoft.com
+    - src: datadog.png
+      alt: Datadog
+      url: https://www.datadoghq.com/
+    - src: elasticsearch.png
+      alt: Elastic Search
+      url: https://www.elastic.co/elasticsearch
+    - src: google.png
+      alt: Google Cloud
+      url: https://cloud.google.com/
+    - src: ibmcloud.png
+      alt: IBM Cloud
+      url: https://www.ibm.com/cloud
+    - src: influx.png
+      alt: InfluxDB
+      url: https://www.influxdata.com/
+    - src: loki.png
+      alt: Grafana Loki
+      url: https://grafana.com/oss/loki/
+    - src: opsgenie.png
+      alt: Opsgenie
+      url: https://www.atlassian.com/software/opsgenie
+    - src: redhat.png
+      alt: Red Hat
+      url: https://www.redhat.com
+    - src: slack.png
       alt: Slack
-    - src: splunk-logo-grayscale.svg
-      alt: Splunk
-    - src: pagerduty-logo-grayscale.svg
-      alt: PagerDuty
+      url: https://slack.com/
+    - src: statsd.png
+      alt: StatsD
+      url: https://github.com/statsd/statsd
+
+    # ------------------------------------------------------------------------------------------------------------------
 
   # Customizable navbar. For a dropdown, add a "sublinks" list.
   navbar:

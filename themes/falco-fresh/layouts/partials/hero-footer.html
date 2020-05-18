@@ -1,16 +1,56 @@
 {{- $hero        := .Site.Params.hero }}
-{{- $clientLogos := index $hero "clientlogos" }}
+{{- $endUsers := index $hero "end-users" }}
+{{- $vendors := index $hero "vendors" }}
+{{- $integrations := index $hero "integrations" }}
+
 <div class="hero-foot mb-20">
   <div class="container">
     <div class="title-wrapper has-text-centered">
-      <h2 class="subtitle is-3 is-muted">{{ T "integrations_and_platforms" }}</h2>
+      <h2 class="subtitle is-3 is-muted">{{ T "end-users" }}</h2>
     </div>
+    <hr>
     <ul class="c-logo-grid">
-      {{- range $clientLogos }}
-      <li class="c-logo-grid__item">
-        <img class="partner-logo" src="{{ printf "/images/logos/clients/%s" .src | relURL }}" alt="{{ .alt }}">
-      </li>
+      {{- range $endUsers }}
+        <li class="c-logo-grid__item">
+          <a href="{{ .url }}"><img class="partner-logo" src="{{ printf "/images/logos/clients/%s" .src | relURL }}" alt="{{ .alt }}"></a>
+        </li>
       {{- end }}
     </ul>
   </div>
 </div>
+
+
+<div class="hero-foot mb-20">
+  <div class="container">
+    <div class="title-wrapper has-text-centered">
+      <h2 class="subtitle is-3 is-muted">{{ T "vendors" }}</h2>
+    </div>
+    <hr>
+    <ul class="c-logo-grid">
+      {{- range $vendors }}
+        <li class="c-logo-grid__item">
+          <a href="{{ .url }}"><img class="partner-logo" src="{{ printf "/images/logos/clients/%s" .src | relURL }}" alt="{{ .alt }}"></a>
+        </li>
+      {{- end }}
+    </ul>
+  </div>
+</div>
+
+<div class="hero-foot mb-20">
+  <div class="container">
+    <div class="title-wrapper has-text-centered">
+      <h2 class="subtitle is-3 is-muted">{{ T "integrations" }}</h2>
+    </div>
+    <hr>
+    <ul class="c-logo-grid">
+      {{- range $integrations }}
+        <li class="c-logo-grid__item">
+          <a href="{{ .url }}"><img class="partner-logo" src="{{ printf "/images/logos/clients/%s" .src | relURL }}" alt="{{ .alt }}"></a>
+        </li>
+      {{- end }}
+    </ul>
+  </div>
+</div>
+
+<br>
+<br>
