@@ -63,6 +63,14 @@ Once the kernel module has been installed directly on the host system, it can be
         falcosecurity/falco-driver-loader:latest
     ``` 
 
+{{< info >}}
+
+The `falcosecurity/falco-driver-loader` image just wraps the `falco-driver-loader` script. 
+You can find more about its usage [here](/docs/installation#install-driver)
+
+{{< /info >}}
+
+
 2. Run Falco in a container using Docker with the [principle of least privilege](https://en.wikipedia.org/wiki/Principle_of_least_privilege):
 
     ```shell
@@ -72,6 +80,7 @@ Once the kernel module has been installed directly on the host system, it can be
         -v /var/run/docker.sock:/var/run/docker.sock \
         falcosecurity/falco-no-driver:latest
     ```
+
 {{< info >}}
 
 Note that `ls /dev/falco* | xargs -I {} echo --device {}` outputs a `--device /dev/falcoX` option per CPU (ie. just the devices created by the Falco's kernel module).
