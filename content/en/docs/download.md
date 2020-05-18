@@ -35,6 +35,8 @@ Falco depends on having a driver installed on the host system to get information
 The preferred installation method is to install the driver using the native artifacts defined above or 
 temporarily run the `falcosecurity/falco-driver-loader` image as privileged, then using the `falcosecurity/falco-no-driver`.
 
+For more details, see the [Run within Docker section](/docs/running#docker).
+
 {{< /info >}}
 
 |tag | pull command | description |
