@@ -37,10 +37,10 @@ falco --help
 
 Falco ships a set of official [docker images](/docs/download#images). 
 The images can be used in two ways as follows:
-- [Least privileged](#docker-least-privileged)
+- [Least privileged (recommended)](#docker-least-privileged)
 - [Fully privileged](#docker-privileged)
 
-### Least privileged {#docker-least-privileged}
+### Least privileged (recommended) {#docker-least-privileged}
 This is how the Falco userspace process can be ran in a container. 
 
 Once the kernel module has been installed directly on the host system, it can be used from within a container.
@@ -72,6 +72,11 @@ Once the kernel module has been installed directly on the host system, it can be
         -v /var/run/docker.sock:/var/run/docker.sock \
         falcosecurity/falco-no-driver:latest
     ```
+{{< info >}}
+
+Note that `ls /dev/falco* | xargs -I {} echo --device {}` outputs a `--device /dev/falcoX` option per CPU (ie. just the devices created by the Falco's kernel module).
+
+{{< /info >}}
 
 ### Fully privileged {#docker-privileged}
 
