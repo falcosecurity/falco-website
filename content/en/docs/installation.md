@@ -115,7 +115,7 @@ Alternatively, it is also possible to use a binary package as [explained below](
 
 Once the driver has been installed, you can manually run `falco`.
 
-#### Installing the driver {#install-driver}
+### Installing the driver {#install-driver}
 
 The easiest way to install the driver is using the `falco-driver-loader` script.
 
