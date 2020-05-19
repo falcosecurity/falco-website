@@ -1,6 +1,6 @@
 ---
 title: Third-Party Integrations
-description: These are unsupported community-driven integrations
+description: Community driven integrations built on the Falco core
 weight: 5
 ---
 
