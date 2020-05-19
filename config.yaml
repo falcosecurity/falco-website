@@ -31,7 +31,7 @@ languages:
         closing: Even when processes are in place for vulnerability scanning and implementing pod security and network policies, not every risk will be addressed. You still need mechanisms to confirm these security barriers are effective, help configure them, and provide with a last line of defense when they fail.
       whyfalco:
         title: The Falco Project
-        subtitle: Cloud-Native Runtime Security
+        subtitle: Cloud-Native runtime security from the kernel up
         tiles:
         - title: Access
           icon: fas fa-terminal
@@ -39,29 +39,17 @@ languages:
         - title: Assert
           icon: fas fa-search
           text: Describe security rules against for your system. Protect your system against unknown or unwanted behavior.
-        - title: Alarm
-          icon: fas fa-exclamation-triangle
-          text: In the event of a rule violation take action with event driven alerting.
+        - title: Action
+          icon: fas fa-exclamation-circle
+          text: Take action during an security violation. Build powerful response applications in the case of malicious behaviour.
       syscalls:
         title: System calls deliver deep visibility
         summary: Falco efficiently leverages Extended Berkeley Packet Filter (eBPF), a secure mechanism, to capture system calls and gain deep visibility. By adding Kubernetes application context and Kubernetes API audit events, teams can understand who did what.
       resources:
-        title: Development
-        subtitle: Build your application with Falco security at it's core.
-        detail: Use Falco to secure applications running in Kubernetes, Linux, or Serverless.
+        title: Develop
+        subtitle: Build secure applications with Falco at the core.
+        detail: Use Falco with Kubernetes, Linux, and Serveless applications.
         items:
-        - title: SDKs
-          text: Falco leverages gRPC and supports several SDKs to build with Falco
-          # Icon (from /images/illustrations/icons/___.svg)
-          icon: fas fa-file-code
-          buttonText1:  Go
-          buttonLink1: https://github.com/falcosecurity/client-go
-          buttonText2:  Rust
-          buttonLink2: https://github.com/falcosecurity/client-rs
-          buttonText3:  C++
-          buttonLink3: https://github.com/falcosecurity/falco
-          buttonText4:  Python
-          buttonLink4: https://github.com/falcosecurity/client-py
         - title: Install
           text: Set up Falco to begin development
           icon: fas fa-server
@@ -73,13 +61,41 @@ languages:
           buttonLink3: https://falco.org/docs/download/#images
           buttonText4: Integrations
           buttonLink4: https://falco.org/docs/third-party/
+        - title: Build
+          text: Falco leverages gRPC and supports several SDKs to build with Falco
+          # Icon (from /images/illustrations/icons/___.svg)
+          icon: fas fa-file-code
+          buttonText1:  Go
+          buttonLink1: https://github.com/falcosecurity/client-go
+          buttonText2:  Rust
+          buttonLink2: https://github.com/falcosecurity/client-rs
+          buttonText3:  C++
+          buttonLink3: https://github.com/falcosecurity/falco
+          buttonText4:  Python
+          buttonLink4: https://github.com/falcosecurity/client-py
+        - title: Configure
+          text: Falco leverages gRPC and supports several SDKs to build with Falco
+          # Icon (from /images/illustrations/icons/___.svg)
+          icon: fas fa-file-alt
+          buttonText1:  Configuration
+          buttonLink1: http://falco.org/docs/configuration/
+          buttonText2:  Rules
+          buttonLink2: https://falco.org/docs/rules/
+          buttonText3:  Alerts
+          buttonLink3: https://falco.org/docs/alerts/
+          buttonText4:  Examples
+          buttonLink4: https://falco.org/docs/examples/
       signup:
         title: Join the community
         subtitle: Sign up for the development mailing list
         buttonText: Submit
-        slackText: Join the slack channels and the meet the team.
+        slackText: Falco Slack Channels
         slackLink: https://slack.sysdig.com
-        privacyText: The Falco Community is bound to The Linux Foundation privacy policy.
+        mailingListText: Developer Mailing List
+        mailingListLink: https://lists.cncf.io/g/cncf-falco-dev
+        communityText: Github Community
+        communityLink: https://github.com/falcosecurity/community
+        privacyText: The Falco Community is bound to The Linux Foundation privacy policy. When you communicate with us (via email, phone, through the Sites or otherwise), we may maintain a record of your communication.
         privacyLink: https://www.linuxfoundation.org/privacy/
     menu:
       navbar:

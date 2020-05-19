@@ -6,41 +6,39 @@
 {{- $buttonLink := index $signup "buttonlink" }}
 {{- $slackText := index $signup "slackText" }}
 {{- $slackLink := index $signup "slackLink" }}
+{{- $mailingListText := index $signup "mailingListText" }}
+{{- $mailingListLink := index $signup "mailingListLink" }}
+{{- $communityText := index $signup "communityText" }}
+{{- $communityLink := index $signup "communityLink" }}
 {{- $privacyText := index $signup "privacyText" }}
 {{- $privacyLink := index $signup "privacyLink" }}
 
 <section class="section section-feature-grey is-medium">
   <div class="container has-text-centered">
-    <div class="columns">
-      <div class="column is-10 is-offset-1">
-        <!-- <div class="has-text-centered">
-          <img class="pushed-image" src="{{ printf "/images/%s" $image | relURL }}">
-        </div> -->
-      </div>
-    </div>
 
-    <div class="title-wrapper">
-      <h2 class="title is-3 has-text-weight-normal section-title">{{ $title }}</h2>
-      <h3 class="subtitle is-5 is-muted">{{ $subtitle }}</h3>
-    </div>
-    <div class="title-wrapper">
-      <p class="has-text-centered mt-20">
-          <form id="signup" method="POST" action="https://lists.cncf.io/g/cncf-falco-dev/join">
-            <input type="hidden" name="su" value="">
-
-            <div class="form-group has-error">
-              <input name="email" type="text" required placeholder="email address" class="input is-medium rounded">
-            </div>
-        <br>
-        <button class="button rounded" id="submit" type="submit" name="doit" value="yes">
-          {{ $buttonText }}
-        </button>
-        </form>
-      </p>
-    </div>
-    <br>
     <div class="subtitle is-5 is-muted">
-      <p><a href=" {{ $slackLink }}">{{ $slackText }}</a></p>
+      <div class="columns">
+        <div class="column is-one-third">
+        <a href=" {{ $slackLink }}"><i class="fab fa-slack fa-2x"></i> </a>
+          <br>
+          {{ $slackText }}
+        </div>
+        <div class="column is-one-third">
+        <a href=" {{ $mailingListLink }}"><i class="far fa-envelope fa-2x"></i> </a>
+          <br>
+          {{ $mailingListText }}
+      </div>
+        <div class="column is-one-third">
+          <a href=" {{ $communityLink }}"><i class="fas fa-child fa-2x"></i> </a>
+          <br>
+          {{ $communityText }}
+        </div>
+      </div>
+    <p>
+      <h3 class="subtitle is-6 is-muted">The Falco Community is bound to <a href="https://www.linuxfoundation.org/privacy/">The Linux Foundation privacy policy</a>. When you communicate with us (via email, phone, through the Sites or otherwise), we may maintain a record of your communication.</h3>
+
+
+      </p>
     </div>
   </div>
 </section>
