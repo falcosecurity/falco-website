@@ -90,7 +90,7 @@ languages:
         subtitle: Sign up for the development mailing list
         buttonText: Submit
         slackText: Falco Slack Channels
-        slackLink: https://slack.sysdig.com
+        slackLink: https://slack.k8s.io/
         mailingListText: Developer Mailing List
         mailingListLink: https://lists.cncf.io/g/cncf-falco-dev
         communityText: Github Community
