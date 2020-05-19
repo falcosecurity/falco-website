@@ -32,7 +32,7 @@
 
         <div class="navbar-item">
           <div class="buttons">
-            <a class="button is-black" href="https://github.com/falcosecurity/falco" target="_blank">
+            <a class="button is-white" href="https://github.com/falcosecurity/falco" target="_blank">
               <span class="icon">
                 <i class="fab fa-github"></i>
               </span>
@@ -45,7 +45,7 @@
               {{ end }}
             </a>
   
-            <a class="button is-twitter-blue" href="https://twitter.com/falco_org" target="_blank">
+            <a class="button is-white" href="https://twitter.com/falco_org" target="_blank">
               <span class="icon">
                 <i class="fab fa-twitter"></i>
               </span>
@@ -57,12 +57,26 @@
               </span>
               {{ end }}
             </a>
+
+            <a class="button is-twitter-blue" href="https://falco.org/docs/download/" target="_blank">
+              <span class="icon">
+                <i class="fas fa-download"></i>
+              </span>
+              <span>
+              <strong> Download </strong>
+
+              </span>
+            </a>
+
+
+
+
+
+
+
           </div>
         </div>
 
-        <a class="navbar-item" href="https://cncf.io/">
-          <img class="c-cncf__img" src="{{ printf "/images/logos/%s" $cncf.logo | relURL }}">
-        </a>
       </div>
     </div>
   {{ if $isThin }}</div>{{ end }}
