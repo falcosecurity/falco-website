@@ -1,6 +1,7 @@
 {{- $resources := .Site.Params.resources }}
 {{- $title    := index $resources "title" }}
 {{- $subtitle := index $resources "subtitle" }}
+{{- $detail := index $resources "detail" }}
 {{- $items := index $resources "items" }}
 <a id="resources"></a>
 <section class="section is-medium">
@@ -11,27 +12,36 @@
 
           <div class="column is-centered-tablet-portrait">
             <h2 class="title is-3 has-text-weight-normal section-title">{{ $title }}</h2>
+            <p class="mt-40">
+              <a class="github-button" href="https://github.com/falcosecurity/falco" data-icon="octicon-star" data-show-count="true" data-size="large" aria-label="Star falcosecurity/falco on GitHub">Star</a>
+              <a class="github-button" href="https://github.com/falcosecurity/falco/subscription" data-icon="octicon-eye" data-show-count="true" data-size="large" aria-label="Watch falcosecurity/falco on GitHub">Watch</a>
+              <a class="github-button" href="https://github.com/falcosecurity/falco/fork" data-icon="octicon-repo-forked" data-show-count="true" data-size="large" aria-label="Fork falcosecurity/falco on GitHub">Fork</a>
+            </p>
+            <br>
+            <p class="mt-40">
             <h3 class="subtitle is-5 is-muted">{{ $subtitle }}</h3>
-            <div class="divider"></div>
+            </p>
+            <p class="mt-40">
+            <h3 class="subtitle is-5 is-muted">{{ $detail }}</h3>
+            </p>
+
           </div>
 
           <div class="column mt-45">
             {{- range $items }}
             <article class="media icon-box">
-              <figure class="media-left">
-                <p>
-                  <img src="{{ printf "/images/illustrations/icons/%s" .icon | relURL }}" width="85" height="85">
-                </p>
-              </figure>
               <div class="media-content">
                 <div class="content">
                   <p>
-                    <span class="icon-box-title">{{ .title }}</span>
-
+                    <span class="icon-box-title"><i class="{{ .icon }} fa-2x"></i>   {{ .title }}</span>
                     <span class="icon-box-text">{{ .text | markdownify }}</span>
-                    <a class="" href="{{ .buttonLink }}">
-                        {{ .buttonText }}
-                      </a>
+                    <a class="" href="{{ .buttonLink1 }}">{{ .buttonText1 }}</a> |
+                    <a class="" href="{{ .buttonLink2 }}">{{ .buttonText2 }}</a> |
+                    <a class="" href="{{ .buttonLink3 }}">{{ .buttonText3 }}</a> |
+                    <a class="" href="{{ .buttonLink4 }}">{{ .buttonText4 }}</a>
+
+                  </li>
+
                   </p>
                 </div>
               </div>

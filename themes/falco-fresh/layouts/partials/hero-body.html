@@ -1,11 +1,15 @@
 {{- $hero       := .Site.Params.hero }}
 {{- $heroText   := .Site.Params.heroText }}
 {{- $title      := $heroText.title }}
-{{- $subtitle   := $heroText.subtitle }}
+{{- $detail1   := $heroText.detail1 }}
+{{- $detail2   := $heroText.detail2 }}
+{{- $detail3   := $heroText.detail3 }}
+{{- $detail4   := $heroText.detail4 }}
 {{- $buttonText := $heroText.buttontext }}
 {{- $buttonLink := $hero.buttonlink }}
 {{- $image      := $hero.image }}
 {{- $falcoCNCF  := $heroText.falcoCNCF }}
+
 <div class="hero-body">
   <div class="container">
     <div class="columns u-logo-offset">
@@ -20,27 +24,24 @@
         <figure class="image hero__img is-hidden-tablet">
           <img src="{{ printf "/images/%s" $image | relURL }}" alt="Description">
         </figure>
-        {{ with $subtitle }}
-        <p class="subtitle is-5 is-muted">
-          {{ . }}
-        </p>
-        {{ end }}
-	<p class="subtitle is-5 is-muted">{{ $falcoCNCF }}</p>
-        <p>
-          <a class="button cta rounded primary-btn raised" href="{{ $buttonLink }}">
-            {{ $buttonText }}
-          </a>
-        </p>
+        <div class="subtitle is-5 is-muted">
+          <p>{{ $detail1 }}</p>
+        </div>
+        <div class="subtitle is-5 is-muted">
+          <p>{{ $detail2 }}</p>
+        </div>
+      <div class="subtitle is-5 is-muted">
+        <p>{{ $detail3 }}</p>
+      </div>
+        <div class="subtitle is-5 is-muted">
+          <p>{{ $detail4 }}</p>
+        </div>
+        <p class="subtitle is-5 is-muted">{{ $falcoCNCF }}</p>
         <p class="mt-40">
           <a class="github-button" href="https://github.com/falcosecurity/falco" data-icon="octicon-star" data-show-count="true" data-size="large" aria-label="Star falcosecurity/falco on GitHub">Star</a>
           <a class="github-button" href="https://github.com/falcosecurity/falco/subscription" data-icon="octicon-eye" data-show-count="true" data-size="large" aria-label="Watch falcosecurity/falco on GitHub">Watch</a>
           <a class="github-button" href="https://github.com/falcosecurity/falco/fork" data-icon="octicon-repo-forked" data-show-count="true" data-size="large" aria-label="Fork falcosecurity/falco on GitHub">Fork</a>
         </p>
-      </div>
-      <div class="column is-6 is-5-widescreen is-offset-1-widescreen">
-        <figure class="image hero__img is-hidden-mobile">
-          <img src="{{ printf "/images/%s" $image | relURL }}" alt="Description">
-        </figure>
       </div>
     </div>
   </div>

@@ -10,18 +10,15 @@ enableInlineShortcodes: true
 languages:
   en:
     languageName: English
-    title: Falco — Cloud-Native Runtime Security
+    title: The Falco Project
     contentDir: content/en
     params:
       heroText:
-        # Main hero title
-        title: Cloud-Native Runtime Security
-        # Hero subtitle (optional)
-        subtitle: Falco, the open source cloud-native runtime security project, is the defacto Kubernetes threat detection engine. Falco detects unexpected application behavior and alerts on threats at runtime.
-        # Button text
-        buttontext: Get started
-        # Falco joins CNCF
-        falcoCNCF: Falco is the first runtime security project to join CNCF Incubating stage.
+        title: The Falco Project
+        detail1: Trace system calls in the Linux kernel.
+        detail2: Enrich the kernel events with container meta information.
+        detail3: Assert the events against security rules.
+        detail4: Alert during security incidents.
       runtime:
         title: Why Runtime Security?
         intro: >-
@@ -33,58 +30,59 @@ languages:
           - example: Insider threats
         closing: Even when processes are in place for vulnerability scanning and implementing pod security and network policies, not every risk will be addressed. You still need mechanisms to confirm these security barriers are effective, help configure them, and provide with a last line of defense when they fail.
       whyfalco:
-        title: Why Falco for Runtime Detection?
-        subtitle:
+        title: The Falco Project
+        subtitle: Cloud-Native Runtime Security
         tiles:
-        - title: Strengthen security
-          icon: check.png
-          text: Create security rules driven by a context-rich and flexible engine to define unexpected application behavior.
-        - title: Reduce risk
-          icon: box.png
-          text: Immediately respond to policy violation alerts by plugging Falco into your current security response workflows and processes.
-        - title: Leverage up-to-date rules
-          icon: scalable.png
-          text: Alert using community-sourced detections of malicious activity and CVE exploits.
+        - title: Access
+          icon: fas fa-terminal
+          text: Deep kernel tracing built on the Linux kernel, eBPF, and ptrace. Enrich kernel events with Kubernetes and container metainformation.
+        - title: Assert
+          icon: fas fa-search
+          text: Describe security rules against for your system. Protect your system against unknown or unwanted behavior.
+        - title: Alarm
+          icon: fas fa-exclamation-triangle
+          text: In the event of a rule violation take action with event driven alerting.
       syscalls:
         title: System calls deliver deep visibility
         summary: Falco efficiently leverages Extended Berkeley Packet Filter (eBPF), a secure mechanism, to capture system calls and gain deep visibility. By adding Kubernetes application context and Kubernetes API audit events, teams can understand who did what.
       resources:
-        title: Downloads + Resources
-        subtitle: Get started today, contribute to the open source project & learn more.
+        title: Development
+        subtitle: Build your application with Falco security at it's core.
+        detail: Use Falco to secure applications running in Kubernetes, Linux, or Serverless.
         items:
-        - title: Contribute
-          text: Jump over to our GitHub page to contribute to our open source ecosystem.
+        - title: SDKs
+          text: Falco leverages gRPC and supports several SDKs to build with Falco
           # Icon (from /images/illustrations/icons/___.svg)
-          icon: group.png
-          buttonText:  Falco Github
-          buttonLink: https://github.com/falcosecurity/falco
-        - title: Download
-          text: Get started with our Falco installation guide.
-          icon: download.png
-          buttonText: Falco Install Guide
-          buttonLink: /docs/installation
-        - title: Documentation
-          text: In the official docs, you can find information about [installing Falco](/docs/installation), [configuration options](/docs/configuration), and writing [custom rules](/docs/rules).
-          icon: documentation-2.png
-          buttonText: Falco Documentation
-          buttonLink: /docs
-        - title: Connect
-          text: Join our Slack team to interact with other users and developers.
-          icon: chat.png
-          buttonText: Falco Slack
-          buttonLink: https://slack.sysdig.com/
+          icon: fas fa-file-code
+          buttonText1:  Go
+          buttonLink1: https://github.com/falcosecurity/client-go
+          buttonText2:  Rust
+          buttonLink2: https://github.com/falcosecurity/client-rs
+          buttonText3:  C++
+          buttonLink3: https://github.com/falcosecurity/falco
+          buttonText4:  Python
+          buttonLink4: https://github.com/falcosecurity/client-py
+        - title: Install
+          text: Set up Falco to begin development
+          icon: fas fa-server
+          buttonText1: On Linux
+          buttonLink1: https://falco.org/docs/installation/#installing
+          buttonText2: In Kubernetes
+          buttonLink2: https://falco.org/docs/third-party/
+          buttonText3: Container Images
+          buttonLink3: https://falco.org/docs/download/#images
+          buttonText4: Integrations
+          buttonLink4: https://falco.org/docs/third-party/
       signup:
-        title: Join the mailing list
-        subtitle: Get involved with the community
+        title: Join the community
+        subtitle: Sign up for the development mailing list
         buttonText: Submit
+        slackText: Join the slack channels and the meet the team.
+        slackLink: https://slack.sysdig.com
+        privacyText: The Falco Community is bound to The Linux Foundation privacy policy.
+        privacyLink: https://www.linuxfoundation.org/privacy/
     menu:
       navbar:
-      - name: Why Falco?
-        url: "/#whyfalco"
-        weight: 2
-      - name: Get started
-        url: "/#resources"
-        weight: 3
       - name: Documentation
         url: "/docs"
         weight: 4
@@ -269,12 +267,11 @@ params:
     sizes: [400 700]
   secondaryFont:
     name: "MaaxMono"
+
   hero:
-    # Where the main hero button links to
     buttonlink: "#resources"
-    # Hero image (from /images/___)
-    image: illustrations/falco-hero-1.png
-    # Footer logos (from /images/logos/clients/___.svg)
+    image: illustrations/dark-terminal.jpg
+
 
     # ------------------------------------------------------------------------------------------------------------------
     #

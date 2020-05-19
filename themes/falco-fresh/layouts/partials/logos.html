@@ -3,12 +3,15 @@
 {{- $vendors := index $hero "vendors" }}
 {{- $integrations := index $hero "integrations" }}
 
+<br><br>
+
 <div class="hero-foot mb-20">
   <div class="container">
     <div class="title-wrapper has-text-centered">
       <h2 class="subtitle is-3 is-muted">{{ T "end-users" }}</h2>
     </div>
     <hr>
+    <br><br>
     <ul class="c-logo-grid">
       {{- range $endUsers }}
         <li class="c-logo-grid__item">
@@ -26,6 +29,9 @@
       <h2 class="subtitle is-3 is-muted">{{ T "vendors" }}</h2>
     </div>
     <hr>
+
+    <br><br>
+
     <ul class="c-logo-grid">
       {{- range $vendors }}
         <li class="c-logo-grid__item">
@@ -42,6 +48,9 @@
       <h2 class="subtitle is-3 is-muted">{{ T "integrations" }}</h2>
     </div>
     <hr>
+
+    <br><br>
+
     <ul class="c-logo-grid">
       {{- range $integrations }}
         <li class="c-logo-grid__item">

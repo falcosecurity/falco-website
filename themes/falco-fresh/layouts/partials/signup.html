@@ -4,6 +4,11 @@
 {{- $image      := index $signup "image" }}
 {{- $buttonText := index $signup "buttontext" }}
 {{- $buttonLink := index $signup "buttonlink" }}
+{{- $slackText := index $signup "slackText" }}
+{{- $slackLink := index $signup "slackLink" }}
+{{- $privacyText := index $signup "privacyText" }}
+{{- $privacyLink := index $signup "privacyLink" }}
+
 <section class="section section-feature-grey is-medium">
   <div class="container has-text-centered">
     <div class="columns">
@@ -32,6 +37,10 @@
         </button>
         </form>
       </p>
+    </div>
+    <br>
+    <div class="subtitle is-5 is-muted">
+      <p><a href=" {{ $slackLink }}">{{ $slackText }}</a></p>
     </div>
   </div>
 </section>

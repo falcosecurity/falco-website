@@ -8,6 +8,7 @@
     <div class="title-wrapper has-text-centered">
       <h2 class="title is-3 has-text-weight-normal">{{ $title }}</h2>
       <div class="divider is-centered"></div>
+      <br><br>
       <h3 class="subtitle is-5 is-muted">{{ $subtitle }}</h3>
     </div>
 
@@ -20,9 +21,11 @@
               <h4>{{ .title }}</h4>
             </div>
             <div class="card-icon">
-              <img src="{{ printf "/images/illustrations/icons/%s" .icon | relURL }}">
+                <i class="{{ .icon }} fa-2x"></i>
             </div>
+            <br><br>
             <div class="card-text">
+
               <p>{{ .text }}</p>
             </div>
           </div>
