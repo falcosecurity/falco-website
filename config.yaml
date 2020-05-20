@@ -31,7 +31,7 @@ languages:
         closing: Even when processes are in place for vulnerability scanning and implementing pod security and network policies, not every risk will be addressed. You still need mechanisms to confirm these security barriers are effective, help configure them, and provide with a last line of defense when they fail.
       whyfalco:
         title: The Falco Project
-        subtitle: Cloud-Native runtime security from the kernel up
+        subtitle: Cloud-Native runtime security
         tiles:
         - title: Access
           icon: fas fa-terminal
