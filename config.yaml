@@ -90,7 +90,7 @@ languages:
         subtitle: Sign up for the development mailing list
         buttonText: Submit
         slackText: Falco Slack Channels
-        slackLink: https://slack.k8s.io/
+        slackLink: https://kubernetes.slack.com/archives/falco
         mailingListText: Developer Mailing List
         mailingListLink: https://lists.cncf.io/g/cncf-falco-dev
         communityText: Github Community
@@ -190,7 +190,7 @@ languages:
         subtitle: Sign up for the development mailing list
         buttonText: Submit
         slackText: Falco Slack Channels
-        slackLink: https://slack.k8s.io/
+        slackLink: https://kubernetes.slack.com/archives/falco
         mailingListText: Developer Mailing List
         mailingListLink: https://lists.cncf.io/g/cncf-falco-dev
         communityText: Github Community
@@ -296,7 +296,7 @@ languages:
         subtitle: Sign up for the development mailing list
         buttonText: Submit
         slackText: Falco Slack Channels
-        slackLink: https://slack.k8s.io/
+        slackLink: https://kubernetes.slack.com/archives/falco
         mailingListText: Developer Mailing List
         mailingListLink: https://lists.cncf.io/g/cncf-falco-dev
         communityText: Github Community
