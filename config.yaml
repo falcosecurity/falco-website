@@ -333,6 +333,11 @@ params:
     image: illustrations/dark-terminal.jpg
 
 
+    created-by:
+      - src: sysdig.png
+        alt: Sysdig
+        url: https://www.sysdig.com/
+
     # ------------------------------------------------------------------------------------------------------------------
     #
     # [ END-USERS ]
