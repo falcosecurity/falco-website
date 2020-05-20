@@ -38,7 +38,7 @@ languages:
           text: Deep kernel tracing built on the Linux kernel, eBPF, and ptrace. Enrich kernel events with Kubernetes and container metainformation. See everything.
         - title: Assert
           icon: fas fa-search
-          text: Describe security rules against your system. Protect your system against unknown or unwanted behavior. 
+          text: Describe security rules against your system. Protect against unknown or unwanted behavior. Detect 0 day vulnerabilities, CVEs, anomalies, and threats.
         - title: Action
           icon: fas fa-exclamation-circle
           text: Take action during an security violation. Build powerful response applications on the Falco APIs in the case of malicious behaviour.
