@@ -150,31 +150,53 @@ languages:
         title: 下载+资源
         subtitle: 从今天开始，为开源项目作出贡献并学习更多。
         items:
-        - title: 贡献
-          text: 请转到我们的GitHub主页来为我们的开源生态作出贡献。
+        - title: Install
+          text: Set up Falco to begin development
+          icon: fas fa-server
+          buttonText1: On Linux
+          buttonLink1: https://falco.org/docs/installation/#installing
+          buttonText2: In Kubernetes
+          buttonLink2: https://falco.org/docs/third-party/
+          buttonText3: Container Images
+          buttonLink3: https://falco.org/docs/download/#images
+          buttonText4: Integrations
+          buttonLink4: https://falco.org/docs/third-party/
+        - title: Build
+          text: Falco leverages gRPC and supports several SDKs to build with Falco
           # Icon (from /images/illustrations/icons/___.svg)
-          icon: group.png
-          buttonText:  Falco Github
-          buttonLink: https://github.com/falcosecurity/falco
-        - title: 下载
-          text: 从我们的Falco安装指导开始。
-          icon: download.png
-          buttonText: Falco安装指导
-          buttonLink: /zh/docs/installation
-        - title: 文档
-          text: 通过官方文档，您可以找到更多关于[安装Falco](/docs/installation)的信息，[配置选项](/docs/configuration)，和编写[自定义规则](/docs/rules).
-          icon: documentation-2.png
-          buttonText: Falco文档
-          buttonLink: /zh/docs
-        - title: 连接
-          text: 加入我们的Slack团队，和其他用户和开发者沟通交流。
-          icon: chat.png
-          buttonText: Falco Slack
-          buttonLink: https://slack.sysdig.com/
+          icon: fas fa-file-code
+          buttonText1:  Go
+          buttonLink1: https://github.com/falcosecurity/client-go
+          buttonText2:  Rust
+          buttonLink2: https://github.com/falcosecurity/client-rs
+          buttonText3:  C++
+          buttonLink3: https://github.com/falcosecurity/falco
+          buttonText4:  Python
+          buttonLink4: https://github.com/falcosecurity/client-py
+        - title: Configure
+          text: Falco leverages gRPC and supports several SDKs to build with Falco
+          # Icon (from /images/illustrations/icons/___.svg)
+          icon: fas fa-file-alt
+          buttonText1:  Configuration
+          buttonLink1: http://falco.org/docs/configuration/
+          buttonText2:  Rules
+          buttonLink2: https://falco.org/docs/rules/
+          buttonText3:  Alerts
+          buttonLink3: https://falco.org/docs/alerts/
+          buttonText4:  Examples
+          buttonLink4: https://falco.org/docs/examples/
       signup:
-        title: 加入CNCF官方邮件列表。
-        subtitle: 从这注册
-        buttonText: 加入
+        title: Join the community
+        subtitle: Sign up for the development mailing list
+        buttonText: Submit
+        slackText: Falco Slack Channels
+        slackLink: https://slack.k8s.io/
+        mailingListText: Developer Mailing List
+        mailingListLink: https://lists.cncf.io/g/cncf-falco-dev
+        communityText: Github Community
+        communityLink: https://github.com/falcosecurity/community
+        privacyText: The Falco Community is bound to The Linux Foundation privacy policy. When you communicate with us (via email, phone, through the Sites or otherwise), we may maintain a record of your communication.
+        privacyLink: https://www.linuxfoundation.org/privacy/
     menu:
       navbar:
       - name: 为什么需要Falco？
@@ -234,31 +256,53 @@ languages:
         title: ダウンロード + リソース
         subtitle: 今日、始めましょう。オープンソースプロジェクトにコントリビュート＆詳細をご覧ください。
         items:
-        - title: コントリビュート
-          text: GitHubページにジャンプして、オープンソースエコシステムにコントリビュートしてください。
+        - title: Install
+          text: Set up Falco to begin development
+          icon: fas fa-server
+          buttonText1: On Linux
+          buttonLink1: https://falco.org/docs/installation/#installing
+          buttonText2: In Kubernetes
+          buttonLink2: https://falco.org/docs/third-party/
+          buttonText3: Container Images
+          buttonLink3: https://falco.org/docs/download/#images
+          buttonText4: Integrations
+          buttonLink4: https://falco.org/docs/third-party/
+        - title: Build
+          text: Falco leverages gRPC and supports several SDKs to build with Falco
           # Icon (from /images/illustrations/icons/___.svg)
-          icon: group.png
-          buttonText:  Falco Github
-          buttonLink: https://github.com/falcosecurity/falco
-        - title: ダウンロード
-          text: Falcoインストールガイドで始めましょう。
-          icon: download.png
-          buttonText: Falcoインストールガイド
-          buttonLink: /jp/docs/installation
-        - title: ドキュメンテーション
-          text: 公式ドキュメントでは、[Falcoのインストール]（/docs/installation）、[設定オプション]（/docs/configuration）、および[カスタムルール]（/docs/rules）の記述に関する情報を見つけることができます。
-          icon: documentation-2.png
-          buttonText: Falcoドキュメンテーション
-          buttonLink: /jp/docs
-        - title: コネクト
-          text: Slackチームに参加して、他のユーザーやデベロッパーと交流してください。
-          icon: chat.png
-          buttonText: Falco Slack
-          buttonLink: https://slack.sysdig.com/
+          icon: fas fa-file-code
+          buttonText1:  Go
+          buttonLink1: https://github.com/falcosecurity/client-go
+          buttonText2:  Rust
+          buttonLink2: https://github.com/falcosecurity/client-rs
+          buttonText3:  C++
+          buttonLink3: https://github.com/falcosecurity/falco
+          buttonText4:  Python
+          buttonLink4: https://github.com/falcosecurity/client-py
+        - title: Configure
+          text: Falco leverages gRPC and supports several SDKs to build with Falco
+          # Icon (from /images/illustrations/icons/___.svg)
+          icon: fas fa-file-alt
+          buttonText1:  Configuration
+          buttonLink1: http://falco.org/docs/configuration/
+          buttonText2:  Rules
+          buttonLink2: https://falco.org/docs/rules/
+          buttonText3:  Alerts
+          buttonLink3: https://falco.org/docs/alerts/
+          buttonText4:  Examples
+          buttonLink4: https://falco.org/docs/examples/
       signup:
-        title: メーリングリストに参加する
-        subtitle: コミュニティに参加する
-        buttonText: 送信
+        title: Join the community
+        subtitle: Sign up for the development mailing list
+        buttonText: Submit
+        slackText: Falco Slack Channels
+        slackLink: https://slack.k8s.io/
+        mailingListText: Developer Mailing List
+        mailingListLink: https://lists.cncf.io/g/cncf-falco-dev
+        communityText: Github Community
+        communityLink: https://github.com/falcosecurity/community
+        privacyText: The Falco Community is bound to The Linux Foundation privacy policy. When you communicate with us (via email, phone, through the Sites or otherwise), we may maintain a record of your communication.
+        privacyLink: https://www.linuxfoundation.org/privacy/
     menu:
       navbar:
       - name: Falcoを選ぶ理由
