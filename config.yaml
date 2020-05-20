@@ -381,6 +381,9 @@ params:
     - src: sysdig.png
       alt: Sysdig
       url: https://sysdig.com
+    - src: rancher.png
+      alt: Rancher
+      url: https://rancher.com
 
 
     # ------------------------------------------------------------------------------------------------------------------
