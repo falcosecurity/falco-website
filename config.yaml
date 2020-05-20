@@ -377,6 +377,9 @@ params:
     - src: logzio.png
       alt: Logz.io
       url: https://logz.io/
+    - src: rancher.png
+      alt: Rancher
+      url: https://rancher.com
     - src: shujinko.png
       alt: Shujinko
       url: https://www.shujinko.io/products/
@@ -386,9 +389,6 @@ params:
     - src: sysdig.png
       alt: Sysdig
       url: https://sysdig.com
-    - src: rancher.png
-      alt: Rancher
-      url: https://rancher.com
 
 
     # ------------------------------------------------------------------------------------------------------------------
