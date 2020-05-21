@@ -1,56 +1,71 @@
-{{- $resources := .Site.Params.resources }}
-{{- $title    := index $resources "title" }}
-{{- $subtitle := index $resources "subtitle" }}
-{{- $detail := index $resources "detail" }}
+{{- $resources := .Site.Params.resources }} {{- $title := index $resources "title" }}
+{{- $subtitle := index $resources "subtitle" }} {{- $detail := index $resources "detail" }}
 {{- $items := index $resources "items" }}
 <a id="resources"></a>
-<section class="section is-medium">
+<section class="section is-medium has-text-centered">
+  <h2 class="title is-2 has-text-weight-normal has-text-centered section-title">{{ $title }}</h2>
 
-<h2 class="title is-3 has-text-weight-normal has-text-centered section-title">{{ $title }}</h2>
+  <a class="github-button" href="https://github.com/falcosecurity/falco" data-icon="octicon-star" data-show-count="true"
+    data-size="large" aria-label="Star falcosecurity/falco on GitHub">Star</a>
+
+  <a class="github-button" href="https://github.com/falcosecurity/falco/subscription" data-icon="octicon-eye"
+    data-show-count="true" data-size="large" aria-label="Watch falcosecurity/falco on GitHub">Watch</a>
+
+  <a class="github-button" href="https://github.com/falcosecurity/falco/fork" data-icon="octicon-repo-forked"
+    data-show-count="true" data-size="large" aria-label="Fork falcosecurity/falco on GitHub">Fork</a>
+
+  <div class="column is-centered-tablet-portrait">
+    <p class="mt-50">
+
+    </p>
+    <p class="mt-20">
+      <h3 class="subtitle is-5 has-text-weight-semibold">{{ $subtitle }}</h3>
+    </p>
+    <p class="mt-30">
+      <h3 class="subtitle is-5 is-muted">{{ $detail }}</h3>
+    </p>
+
+  </div>
   <div class="container">
+
     <div class="columns">
-      <div class="column is-10 is-offset-1">
-        <div class="columns">
+      {{- range $items }}
+      <div class="column is-flex">
+        <div class="feature-card has-text-centered">
+          <div class="card-title">
 
-          <div class="column is-centered-tablet-portrait">
-            <p class="mt-40">
-              <a class="github-button" href="https://github.com/falcosecurity/falco" data-icon="octicon-star" data-show-count="true" data-size="large" aria-label="Star falcosecurity/falco on GitHub">Star</a>
-              <a class="github-button" href="https://github.com/falcosecurity/falco/subscription" data-icon="octicon-eye" data-show-count="true" data-size="large" aria-label="Watch falcosecurity/falco on GitHub">Watch</a>
-              <a class="github-button" href="https://github.com/falcosecurity/falco/fork" data-icon="octicon-repo-forked" data-show-count="true" data-size="large" aria-label="Fork falcosecurity/falco on GitHub">Fork</a>
+
+            <span><i class="{{ .icon }} fa-4x"></i>
+              <h4>{{ .title }}</h4>
+            </span>
+          </div>
+          <div class="card-text">
+            <p>
+              <span class="icon-box-text">{{ .text | markdownify }}</span>
             </p>
-            <br>
-            <p class="mt-40">
-            <h3 class="subtitle is-5 is-muted">{{ $subtitle }}</h3>
-            </p>
-            <p class="mt-40">
-            <h3 class="subtitle is-5 is-muted">{{ $detail }}</h3>
-            </p>
+            <ol type=""></ol>
+            <li>
+              <a class="" href="{{ .buttonLink1 }}">{{ .buttonText1 }}</a>
+            </li>
+            <li>
+              <a class="" href="{{ .buttonLink2 }}">{{ .buttonText2 }}</a>
+            </li>
+            <li>
+              <a class="" href="{{ .buttonLink3 }}">{{ .buttonText3 }}</a>
+            </li>
+            <li>
+              <a class="" href="{{ .buttonLink4 }}">{{ .buttonText4 }}</a>
+            </li>
+            </ol>
 
           </div>
-
-          <div class="column mt-45">
-            {{- range $items }}
-            <article class="media icon-box">
-              <div class="media-content">
-                <div class="content">
-                  <p>
-                    <span class="icon-box-title"><i class="{{ .icon }} fa-2x"></i>   {{ .title }}</span>
-                    <span class="icon-box-text">{{ .text | markdownify }}</span>
-                    <a class="" href="{{ .buttonLink1 }}">{{ .buttonText1 }}</a> |
-                    <a class="" href="{{ .buttonLink2 }}">{{ .buttonText2 }}</a> |
-                    <a class="" href="{{ .buttonLink3 }}">{{ .buttonText3 }}</a> |
-                    <a class="" href="{{ .buttonLink4 }}">{{ .buttonText4 }}</a>
-
-                  </li>
-
-                  </p>
-                </div>
-              </div>
-            </article>
-            {{- end }}
-          </div>
-
         </div>
+      </div>
+      {{- end }}
     </div>
+
+  </div>
+  </div>
+
   </div>
 </section>
