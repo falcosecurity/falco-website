@@ -5,8 +5,9 @@
 <a id="whyfalco"></a>
 <section class="section section--features section-feature-grey">
   <div class="container">
+    <br>
     <div class="title-wrapper has-text-centered">
-      <h2 class="title is-3 has-text-weight-normal">{{ $title }}</h2>
+      <h2 class="title is-medium is-2 has-text-weight-normal">{{ $title }}</h2>
       <br>
       <h3 class="subtitle is-5 is-muted">{{ $subtitle }}</h3>
     </div>
@@ -15,12 +16,13 @@
       <div class="columns">
         {{- range $tiles }}
         <div class="column is-one-third">
-          <div class="feature-card is-bordered has-text-centered delay-1" data-animation="fadeInLeft">
+          <div class="feature-card is-bordered has-text-centered delay-1">
+
             <div class="card-title">
               <h4>{{ .title }}</h4>
             </div>
             <div class="card-icon">
-                <i class="{{ .icon }} fa-2x"></i>
+              <i class="{{ .icon }} fa-2x"></i>
             </div>
             <br>
             <div class="card-text">

@@ -1,0 +1,38 @@
+a>i {
+    padding-right: 10px;
+}
+
+li {
+    list-style-type: none;
+}
+
+
+@keyframes fontFade {
+    10% {
+        color: #000000;
+    }
+
+    25% {
+        color: #00ABC7;
+    }
+
+    50% {
+        color: #00B4C8;
+    }
+
+    100% {
+        color: #000000;
+    }
+}
+
+
+#fade {
+    animation-name: fontFade;
+    animation-duration: 3.5s;
+    animation-timing-function: ease;
+    animation-iteration-count: infinite;
+}
+
+h4 {
+    display: block;
+}
