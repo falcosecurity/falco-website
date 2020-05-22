@@ -19,7 +19,7 @@
 <br><br>
 
 <section class="section section-feature-grey is-medium">
-  <div class="container has-text-centered">
+  <div class="hero-foot mb-20">
     <div class="container">
       <div class="title-wrapper has-text-centered">
         <h2 class="subtitle is-3 is-muted">{{ T "end-users" }}</h2>
@@ -31,7 +31,8 @@
         <li class="c-logo-grid__item">
           <figure class="image is-fluid">
             <a href="{{ .url }}">
-              <img class="partner-logo" src="{{ printf "/images/logos/clients/%s" .src | relURL }}" alt="{{ .alt }}">
+              <img class="partner-logo image" src="{{ printf "/images/logos/clients/%s" .src | relURL }}"
+                alt="{{ .alt }}">
             </a>
           </figure>
         </li>
