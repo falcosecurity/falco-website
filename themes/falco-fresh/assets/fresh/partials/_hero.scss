@@ -29,17 +29,6 @@ Hero styles
     }
 }
 
-.hero-foot {
-    img.partner-logo {
-        max-width: 250px;
-        max-height: 150px;
-        @include tablet() {
-            max-width: 250px;
-            max-height: 150px;
-        }
-    }
-}
-
 .hero__img {
     // Set smaller for narrow screens
     width: 70%;
