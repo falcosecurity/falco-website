@@ -65,8 +65,7 @@ kind create cluster --config=./kind-config.yaml
 
 ## Helm
 
-Helm is a way to install Falco in Kubernetes. The Falco community has decided to port the Helm chart from the [stable repository](https://github.com/helm/charts/tree/master/stable/falco#falco) to the [charts](https://github.com/falcosecurity/charts) repository.
-
+Helm is a way to install Falco in Kubernetes. The Falco community supports a helm chart and documentation on how to use it can [be found here](https://github.com/falcosecurity/charts).
 ## Puppet
 
 A [Puppet](https://puppet.com/) module for Falco, `sysdig-falco`, is available on [Puppet Forge](https://forge.puppet.com/sysdig/falco/readme).
