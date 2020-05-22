@@ -29,8 +29,11 @@
       <ul class="c-logo-grid">
         {{- range $endUsers }}
         <li class="c-logo-grid__item">
-          <a href="{{ .url }}"><img class="partner-logo" src="{{ printf "/images/logos/clients/%s" .src | relURL }}"
-              alt="{{ .alt }}"></a>
+          <figure class="image is-fluid">
+            <a href="{{ .url }}">
+              <img class="partner-logo" src="{{ printf "/images/logos/clients/%s" .src | relURL }}" alt="{{ .alt }}">
+            </a>
+          </figure>
         </li>
         {{- end }}
       </ul>
@@ -50,8 +53,12 @@
       <ul class="c-logo-grid">
         {{- range $vendors }}
         <li class="c-logo-grid__item">
-          <a href="{{ .url }}"><img class="partner-logo" src="{{ printf "/images/logos/clients/%s" .src | relURL }}"
-              alt="{{ .alt }}"></a>
+          <figure class="image is-fluid">
+            <a href="{{ .url }}">
+              <img class="partner-logo image" src="{{ printf "/images/logos/clients/%s" .src | relURL }}"
+                alt="{{ .alt }}">
+            </a>
+          </figure>
         </li>
         {{- end }}
       </ul>
@@ -70,8 +77,12 @@
       <ul class="c-logo-grid">
         {{- range $integrations }}
         <li class="c-logo-grid__item">
-          <a href="{{ .url }}"><img class="partner-logo" src="{{ printf "/images/logos/clients/%s" .src | relURL }}"
-              alt="{{ .alt }}"></a>
+          <figure class="image is-fluid">
+            <a href="{{ .url }}">
+              <img class="partner-logo image" src="{{ printf "/images/logos/clients/%s" .src | relURL }}"
+                alt="{{ .alt }}">
+            </a>
+          </figure>
         </li>
         {{- end }}
       </ul>

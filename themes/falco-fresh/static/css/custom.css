@@ -1,14 +1,11 @@
-a>i {
-    padding-right: 10px;
-}
-
+/* Make the list not show the bullets */
 li {
     list-style-type: none;
 }
 
-
+/* Fancy "Tacky" fontFade Effect to "highligth" Orginally created by section */
 @keyframes fontFade {
-    10% {
+    0% {
         color: #000000;
     }
 
@@ -33,6 +30,7 @@ li {
     animation-iteration-count: infinite;
 }
 
-h4 {
-    display: block;
+/* For making the images not being round*/
+img {
+    border-radius: 0%;
 }
