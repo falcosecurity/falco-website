@@ -1,3 +1,14 @@
+section.section.s-logo-grid {
+  div.hero-foot:first-of-type {
+    .subtitle {
+      margin-top: 0px;
+    }
+  }
+  .subtitle {
+    margin-top: 6rem;
+  }
+}
+
 .c-logo-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
