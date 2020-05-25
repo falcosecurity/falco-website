@@ -436,11 +436,7 @@ You will need the following dependencies for the regression testing framework to
 - The `unzip` and `xargs` commands
 - [Docker CE](https://docs.docker.com/install/)
 
-To install Avocado and its plugins, you can use pip:
-
-```
-pip install avocado-framework==69.0 avocado-framework-plugin-varianter-yaml-to-mux==69.0
-```
+For the python dependencies, you can look at how to setup the virtualenv [here](https://github.com/falcosecurity/falco/tree/master/test/README.md).
 
 ##### Run the tests
 
