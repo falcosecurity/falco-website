@@ -206,4 +206,4 @@ The output string is used to print essential information about the audit event, 
 
 # Enabling Kubernetes Audit Logs
 
-In enable Kubernetes audit logs, you need to change the arguments to the `kube-apiserver` process to add `--audit-policy-file` and `--audit-webhook-config` arguments and provide files that implement an audit policy/webhook configuration. It is beyond the scope of Falco documentation to give a detailed description of how to do this, but the [example files](https://github.com/falcosecurity/falco/blob/master/examples/k8s_audit_config/README.md) show how audit logging is added to minikube.
+In enable Kubernetes audit logs, you need to change the arguments to the `kube-apiserver` process to add `--audit-policy-file` and `--audit-webhook-config` arguments and provide files that implement an audit policy/webhook configuration. It is beyond the scope of Falco documentation to give a detailed description of how to do this, but the [example files](https://github.com/falcosecurity/evolution/blob/master/examples/k8s_audit_config/README.md) show how audit logging is added to minikube.
