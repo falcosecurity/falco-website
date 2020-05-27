@@ -206,4 +206,4 @@ The output string is used to print essential information about the audit event, 
 
 # Kubernetes監査ログを有効にする
 
-Kubernetes監査ログを有効にするには、`kube-apiserver` プロセスの引数を変更して、`--audit-policy-file`および `--audit-webhook-config`引数を追加し、audit policy/webhookを実装するファイルを提供する必要があります。これを行う方法の詳細な説明を提供することはFalcoのドキュメントの範囲外ですが、[サンプルファイル](https://github.com/falcosecurity/falco/blob/master/examples/k8s_audit_config/README.md) 監査ログをminikubeに追加する方法を示します。
+Kubernetes監査ログを有効にするには、`kube-apiserver` プロセスの引数を変更して、`--audit-policy-file`および `--audit-webhook-config`引数を追加し、audit policy/webhookを実装するファイルを提供する必要があります。これを行う方法の詳細な説明を提供することはFalcoのドキュメントの範囲外ですが、[サンプルファイル](https://github.com/falcosecurity/evolution/blob/master/examples/k8s_audit_config/README.md) 監査ログをminikubeに追加する方法を示します。
