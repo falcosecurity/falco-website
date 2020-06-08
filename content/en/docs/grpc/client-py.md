@@ -22,8 +22,7 @@ Currently the Python client has two output formats: the [Response](https://githu
     $ python -m examples.get_events -o json
     ```
 
-    You should see output events starting flowing in depending on the set of rules
-  your Falco instance has.
+    You should see output events starting flowing in depending on the set of rules your Falco instance has.
 
     ```json
     {
