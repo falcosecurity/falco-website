@@ -38,11 +38,18 @@ Otherwise you can manually generate them as explained [here](https://falco.org/d
 Note that in both cases, you have to make sure to set the correct CommonName. In this example, we are using the default hostname used by the Helm chart.
 
 ## Install Falco
-The official [Falco Helm Chart](https://github.com/helm/charts/tree/master/stable/falco) is a straightforward way to deploy Falco. The chart adds Falco to all nodes in your cluster using a DaemonSet.
+The official [Falco Helm Chart](https://github.com/falcosecurity/charts/tree/master/falco) is a straightforward way to deploy Falco. The chart adds Falco to all nodes in your cluster using a DaemonSet.
+
+Enable the falco chart repository:
+
+```
+helm repo add falcosecurity https://falcosecurity.github.io/charts
+helm repo update
+```
 
 Be sure to include TLS cert material and enable the gRPC output:
 ```
-helm install falco stable/falco \
+helm install falco falcosecurity/falco \
     --set-file certs.server.key=/tmp/certs/server.key,certs.server.crt=/tmp/certs/server.crt,certs.ca.crt=/tmp/certs/ca.crt \
     --set falco.grpc.enabled=true,falco.grpcOutput.enabled=true
 ```
