@@ -65,13 +65,14 @@ kubectl get pods --all-namespaces
 Add the Stable chart repository to Helm:
 
 ```bash
-helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+helm repo add falcosecurity https://falcosecurity.github.io/charts
+helm repo update
 ```
 
 Install Falco using Helm:
 
 ```bash
-helm install falco stable/falco
+helm install falco falcosecurity/falco
 ```
 
 It will give something like this:
