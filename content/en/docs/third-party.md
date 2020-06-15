@@ -127,3 +127,9 @@ to the file:
 [Service]
 Environment='FALCO_BPF_PROBE=""'
 ```
+
+If you are [installing Falco with Helm](https://falco.org/docs/third-party/#helm), you will need to set the `ebpf.enabled` option to `true`:
+
+```
+helm install falco falcosecurity/falco --set ebpf.enabled=true
+```
