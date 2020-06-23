@@ -28,7 +28,8 @@ The current list of available `falcosidekick` outputs (version `2.13.0`) is:
 
 Beyond that, it provides metrics about the number of events and let you add custom fields in events, for example *environment*, *region*, etc
 
-In this article, we'll see how to integrate it in a Kubernetes aside `falco` with `helm` (*version 3*). For installing Falco with Helm see the [community chart](https://github.com/falcosecurity/charts):
+In this article, we'll see how to integrate it in a Kubernetes aside `Falco` with `Helm` (*version 3*). 
+For installing `Falco` with `Helm` see the [community chart](https://github.com/falcosecurity/charts):
 
 ```bash
 kubectl -n falco get pods
@@ -114,9 +115,9 @@ curl "http://localhost:2801/" -d'{"output":"A more realistic test event","priori
 ```
 ![falcosidekick slack test 2](/img/falcosidekick-slack-test2.png)
 
-Last but not least, it's time to use `falcosidekick` as output processor for our beloved Falco.
+Last but not least, it's time to use `falcosidekick` as output processor for our beloved `Falco`.
 
-In the chart helm folder for `falco`, edit *values.yaml*:
+In the chart helm folder `falco`, edit *values.yaml*:
 ```bash
 json_output: true
 json_include_output_property: true
