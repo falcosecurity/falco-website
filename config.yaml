@@ -352,6 +352,9 @@ params:
     - src: frameio.png
       alt: Frame.io
       url: https://frame.io/
+    - src: gitlab.png
+      alt: GitLab
+      url: https://https://about.gitlab.com/
     - src: league.png
       alt: League
       url: https://league.com/us/
