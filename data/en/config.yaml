@@ -126,7 +126,7 @@
 
     `listen_port` specifies the port on which the web server will listen. The default is 8765.
 
-    `k8s_audit_endpoint` specifies the URI on which to listen for Kubernetes audit events. The default is `/k8s_audit`.
+    `k8s_audit_endpoint` specifies the URI on which to listen for Kubernetes audit events. The default is `/k8s-audit`.
 
     `ssl_enabled` enables SSL support for the webserver, using the certificate specified in `ssl_certificate`. The specified `ssl_certificate` file should contain the server's certificate as well as the key as [documented by civitweb](https://github.com/civetweb/civetweb/blob/master/docs/OpenSSL.md#creating-a-self-signed-certificate).
 - name: grpc
