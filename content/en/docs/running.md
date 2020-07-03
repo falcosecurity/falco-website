@@ -76,12 +76,9 @@ Once the kernel module has been installed directly on the host system, it can be
         falcosecurity/falco-driver-loader:latest
     ``` 
 
-{{< info >}}
 
 The `falcosecurity/falco-driver-loader` image just wraps the `falco-driver-loader` script. 
 You can find more about its usage [here](/docs/installation#install-driver)
-
-{{< /info >}}
 
 
 2. Run Falco in a container using Docker with the [principle of least privilege](https://en.wikipedia.org/wiki/Principle_of_least_privilege):
@@ -94,7 +91,7 @@ You can find more about its usage [here](/docs/installation#install-driver)
         falcosecurity/falco-no-driver:latest
     ```
 
-{{< warning >}}
+{{< info >}}
 
 If you are running Falco on a system with the AppArmor LSM enabled (e.g Ubuntu), you will also need to pass `--security-opt apparmor:unconfined` to
 the `docker run` command above.
@@ -105,7 +102,7 @@ You can verify if you have AppArmor enabled using the command below:
 docker info | grep -i apparmor
 ```
 
-{{< /warning >}}
+{{< /info >}}
 
 {{< info >}}
 
