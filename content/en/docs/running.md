@@ -91,7 +91,7 @@ You can find more about its usage [here](/docs/installation#install-driver)
         falcosecurity/falco-no-driver:latest
     ```
 
-{{< info >}}
+{{< warning >}}
 
 If you are running Falco on a system with the AppArmor LSM enabled (e.g Ubuntu), you will also need to pass `--security-opt apparmor:unconfined` to
 the `docker run` command above.
@@ -102,7 +102,7 @@ You can verify if you have AppArmor enabled using the command below:
 docker info | grep -i apparmor
 ```
 
-{{< /info >}}
+{{< /warning >}}
 
 {{< info >}}
 
