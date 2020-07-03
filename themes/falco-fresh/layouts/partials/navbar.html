@@ -18,7 +18,7 @@
         <span aria-hidden="true"></span>
       </a>
     </div>
-    
+
     <div id="navbar-menu" class="navbar-menu is-static">
       <div class="navbar-end">
         {{ range $menu }}
@@ -44,7 +44,7 @@
               </span>
               {{ end }}
             </a>
-  
+
             <a class="button is-white" href="https://twitter.com/falco_org" target="_blank">
               <span class="icon">
                 <i class="fab fa-twitter"></i>
@@ -58,12 +58,12 @@
               {{ end }}
             </a>
 
-            <a class="button is-twitter-blue" href="https://falco.org/docs/download/" target="_blank">
+            <a class="button is-cyan" href="https://falco.org/docs/download/" target="_blank">
               <span class="icon">
                 <i class="fas fa-download"></i>
               </span>
               <span>
-              <strong> Download </strong>
+                <strong> Download </strong>
 
               </span>
             </a>
@@ -79,5 +79,6 @@
 
       </div>
     </div>
-  {{ if $isThin }}</div>{{ end }}
+    {{ if $isThin }}
+  </div>{{ end }}
 </nav>

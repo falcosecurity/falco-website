@@ -3,9 +3,8 @@
 @import "bulma/sass/utilities/initial-variables"
 @import "bulma/sass/utilities/functions"
 
-$primary: #00b4c8
+$primary: $cyan
 $secondary: #444f60
-$twitter-blue: #00aced
 
 $success: #00C851
 
@@ -21,7 +20,7 @@ $card-shadow: none
 
 @import "bulma/sass/utilities/derived-variables"
 
-$colors: mergeColorMaps(("twitter-blue": ($twitter-blue, $white), "orange": ($orange, $white)), $colors)
+$colors: mergeColorMaps(("cyan": ($cyan, $white), "orange": ($orange, $white)), $colors)
 
 @import "bulma/bulma"
 
