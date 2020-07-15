@@ -1,8 +1,3 @@
-/* Make the list not show the bullets */
-li {
-    list-style-type: none;
-}
-
 /* Fancy "Tacky" fontFade Effect to "highligth" Orginally created by section */
 @keyframes fontFade {
     0% {
