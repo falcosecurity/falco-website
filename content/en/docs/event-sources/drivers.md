@@ -49,7 +49,7 @@ is yet to be defined we don't have setup instructions in the official [running](
 list of high level items you can follow to get your hands on it:
 
 - Start Falco with the `--userspace` flag. This will tell Falco to look at userspace instrumentation instead of looking at the Kernel module (the default).
-- Select an userspace instrumentation implementation you want to use (let's take [pdig](https://github.com/falcosecurity/pdig) as it is the only one available now )
+- Select an userspace instrumentation implementation you want to use (let's take [pdig](https://github.com/falcosecurity/pdig) as it is the only one available now)
 - Now, since pdig is still [incubating](https://github.com/falcosecurity/evolution#incubating) - a very early stage - it's not included in our [release process](https://github.com/falcosecurity/falco/blob/master/RELEASE.md). This, for you means that to install it, you will need to compile it yourself. Follow the instructions [here](https://github.com/falcosecurity/pdig#instructions).
 - Now that you have pdig installed, you will need to start it. Remember, in the case of pdig, it does not know the root process tree you want to instrument by itself. You have to specify that via the  `-p` flag or start the process with pdig itself. It's very similar to running a debugger against a binary. You can run a process directly using it or instrument an existing process. Full instructions [here](https://github.com/falcosecurity/pdig#how-to-run-it).
 
