@@ -443,7 +443,7 @@ pip install avocado-framework==69.0 avocado-framework-plugin-varianter-yaml-to-m
 `$PWD/build`が異なる場合はFalcoを組み込んだディレクトリに変更します。
 
 ```bash
-./test/run_regression_tests.sh $PWD/build
+./test/run_regression_tests.sh -d $PWD/build
 ```
 
 #### falco-testerコンテナを使用してテストする
