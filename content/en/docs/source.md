@@ -434,16 +434,18 @@ You will need the following dependencies for the regression testing framework to
 - [Avocado Yaml to Mux plugin](https://avocado-framework.readthedocs.io/en/69.0/optional_plugins/varianter_yaml_to_mux.html)
 - [JQ](https://github.com/stedolan/jq)
 - The `unzip` and `xargs` commands
-- [Docker CE](https://docs.docker.com/install/)
+- [Docker CE](https://docs.docker.com/install)
 
-For the python dependencies, you can look at how to setup the virtualenv [here](https://github.com/falcosecurity/falco/tree/master/test/README.md).
+You will also need to obtain some test fixtures from the internet for the regression test suites to work.
+
+For the python dependencies, how to setup the virtualenv, how to obtain test fixtures, read more [here](https://github.com/falcosecurity/falco/tree/master/test/README.md).
 
 ##### Run the tests
 
 Change `$PWD/build` with the directory you built Falco in, if different.
 
 ```bash
-./test/run_regression_tests.sh $PWD/build
+./test/run_regression_tests.sh -d $PWD/build
 ```
 
 #### Test using falco-tester container
