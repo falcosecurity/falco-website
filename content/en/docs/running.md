@@ -33,6 +33,12 @@ If you'd like to run Falco by hand, you can find the full usage description for 
 falco --help
 ```
 
+{{< info >}}
+
+Are you looking for userpace instrumentation? Please see [this page](/docs/event-sources/drivers/).
+
+{{< /info >}}
+
 ## Run within Docker {#docker}
 
 Falco ships a set of official [docker images](/docs/download#images). 

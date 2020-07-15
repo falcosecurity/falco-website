@@ -61,23 +61,26 @@ See the section on [alerts](alerts) for more information on configuring, underst
 Falco is composed of 3 main components
 
  - Userspace program
- - Driver
- - Configuration
+ - [Driver](/docs/event-sources/drivers/)
+ - [Configuration](configuration)
 
 ### Falco userspace program
 
 This is the CLI tool `falco`. This is the program a user interacts with. The userspace program is responsible for handling signals, parsing information from a Falco driver, and alerting.
 
-### Falco driver
+### Falco drivers
 
-This is a piece of software that adheres to the Falco driver spec and can send a stream of system call information from the kernel.
+This is a piece of software that adheres to the Falco driver spec and can send a stream of system call information.
+
 Falco cannot run without a driver installed.
 
 Currently the Falco project has support for the following drivers
 
- - (Default) A kernel module built on `libscap` and `libsinsp` C++ libraries
- - A BPF probe built from the same modules
- - A new BPF probe being built out by the Falco community 
+ - (Default) Kernel module built on `libscap` and `libsinsp` C++ libraries
+ - BPF probe built from the same modules
+ - Userspace instrumentation
+
+ Please read more about the drivers [here](/docs/event-sources/drivers/).
  
 ### Falco configuration 
 
