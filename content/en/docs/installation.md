@@ -68,7 +68,7 @@ Alternatively, it is also possible to use a binary package as [explained below](
     curl -s -o /etc/yum.repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
     ```
 
-    > **Note** — The following command is required only if DKMS and `make` are not available in the distribution. You can verify if DKMS is available using `yum list make dkms`. If necessary install it using: `yum install epel-release`, then `yum install make dkms`. Rebooting the system may be required.
+    > **Note** — The following command is required only if DKMS and `make` are not available in the distribution. You can verify if DKMS is available using `yum list make dkms`. If necessary install it using: `yum install epel-release`, then `yum install make dkms`.
 
 2. Install kernel headers:
 
@@ -76,7 +76,7 @@ Alternatively, it is also possible to use a binary package as [explained below](
     yum -y install kernel-devel-$(uname -r)
     ```
 
-    > **Note** — If the package was not found by the above command, you might need to run `yum distro-sync` in order to fix it.
+    > **Note** — If the package was not found by the above command, you might need to run `yum distro-sync` in order to fix it. Rebooting the system may be required.
 
 3. Install Falco:
 
