@@ -5,7 +5,7 @@ weight: 1
 
 Falco depends on a driver that taps into the stream of system calls on a machine and passes those system calls to user space.
 
-The kernel module called `falco` is the default driver. Alternatively, an eBPF probe can be used. 
+The kernel module called `falco` is the default driver. Alternatively, an eBPF probe can be used.
 
 The Falco project has three different kind of drivers.
 
@@ -34,19 +34,15 @@ To enable the eBPF support in Falco set the `FALCO_BPF_PROBE` environment variab
 Differently from the other drivers, as the name suggests, userspace instrumentations happens 100% in userspace.
 
 The Falco community, in 0.24.0 promoted the userspace instrumentation feature to **[official support](https://github.com/falcosecurity/evolution#official-support)** to be included in Falco.
-However, there's a difference between userspace instrumentation and the other drivers: it is a contract and not an implementation.
 
-That means that when we are talking about userspace instrumentation for Falco we are talking about an API defined in Falco
-that can be used by many implementations to input syscalls data to the engine.
+However, there's a difference between userspace instrumentation and the other drivers. At the moment of writing, the Falco project does not have any officially supported userspace instrumentation implementation.
 
-At the moment of writing, the Falco project does not have any officially supported userspace instrumentation implementation.
+To summarize: the code that defines the contracts to do userspace instrumentation in Falco itself is stable and under **[official support](https://github.com/falcosecurity/evolution#official-support)**. While there's
+no implementation that rached the status of **[official support](https://github.com/falcosecurity/evolution#official-support)** yet
 
-However, the community is working on an implementation based on PTRACE(2)
-that you can find [falcosecurity/pdig](https://github.com/falcosecurity/pdig).
+The community is working on an implementation based on PTRACE(2) that you can find [falcosecurity/pdig](https://github.com/falcosecurity/pdig).
 
-Since, as we said, the implementation of userspace instrumentation is not coupled with Falco, and our official implementation
-is yet to be defined we don't have setup instructions in the official [running](/docs/running/) docs. However, here is a
-list of high level items you can follow to get your hands on it:
+How to enable userspace instrumentation in Falco:
 
 - Start Falco with the `--userspace` flag. This will tell Falco to look at userspace instrumentation instead of looking at the Kernel module (the default).
 - Select an userspace instrumentation implementation you want to use (let's take [pdig](https://github.com/falcosecurity/pdig) as it is the only one available now)
