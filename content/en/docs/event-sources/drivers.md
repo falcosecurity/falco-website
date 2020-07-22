@@ -15,7 +15,7 @@ The Falco project has three different kind of drivers.
 
 ## Kernel module
 
-By default, the kernel module will be installed when installing the Falco [debian/rpm](/docs/installation) package, when running the `falco-driver-loader` script shipped within the [binary pagacke](/docs/installation#linux-binary), or when running the `falcosecurity/falco-driver-loader` docker image (that just wraps the aforementioned script). 
+By default, the kernel module will be installed when installing the Falco [debian/rpm](/docs/installation) package, when running the `falco-driver-loader` script shipped within the [binary package](/docs/installation#linux-binary), or when running the `falcosecurity/falco-driver-loader` docker image (that just wraps the aforementioned script). 
 
 To install the kernel module, please refer to the [installation](/docs/installation/#install-driver) page.
 
