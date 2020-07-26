@@ -1,256 +1,34 @@
 ---
-title: Falcoをインストールする
-description: Linuxおよび、さまざまなコンテナプラットフォームで起動して実行する
-weight: 2
+title: インストール
+description: LinuxシステムでのFalcoのセットアップ
+weight: 3
 ---
 
-次のいずれかの方法を使用して、Falcoをインストールします。 特定のインフラストラクチャ要件によって、選択するインストール方法が決まります。
+Falcoは、システムコールを使用してシステムを保護および監視するLinuxセキュリティツールです。
 
-- FalcoをKubernetesクラスターにインストールします。そのためには、DaemonSetをKubernetesクラスターにデプロイします。 KubernetesにFalcoをインストールすると、クラスター、そのワーカーノード、および実行中のコンテナーで異常なビヘイビアが監視されます。
-- FalcoをLinuxホストに直接インストールします。 これにはさまざまな理由があります。
-    - Kubernetes内で実行されているコンテナを監視するため。ワーカーノードOSに直接インストールすると、Kubernetesで実行されているアプリケーションやKubernetes APIのユーザーからの分離レベルがさらに高まります。
-    - Linuxホストで直接実行されているコンテナ、またはCloud FoundryやMesosphere DC/OSなどの別のプラットフォームで実行されているコンテナを監視するため。
-    - Linuxホストで直接実行されているアプリケーション(つまり、コンテナ化されていないワークロード)を監視するため。
+{{< info >}}
+FalcoはKubernetesランタイムセキュリティに使用できます。
+Falcoを実行する最も安全な方法は、ホストシステムにFalcoを直接インストールすることです。これにより、侵害された場合にFalcoがKubernetesから分離されます。
+その後、Falcoアラートは、Kubernetesで実行されている読み取り専用エージェントを介して使用できます。
 
-## Kubernetes
+分離が問題にならない場合は、FalcoをKubernetesで直接実行することもできます。
+Kind、Minikube、Helmなどのツールを使用してKubernetesで直接Falcoを実行する場合は、[サードパーティ統合](../third-party)をご覧ください。
+{{< /info >}}
 
-KubernetesでFalcoを実行するデフォルトの方法は、DaemonSetを使用することです。 Falcoは、選択したデプロイメント方法と基盤となるKubernetesバージョンに応じて、さまざまなインストール方法をサポートしています。デフォルトのインストールには、カーネルモジュールを介したシステムコールイベントのサポートが含まれているため、ワーカーノードの基盤となるオペレーティングシステムに依存しています。ワーカーノードに適切なカーネルヘッダーをインストールすると、Falcoはポッドの起動時にカーネルモジュールを動的に構築(および「insmod」)できます。Falcoはまた、一般的なディストリビューションとカーネル用にいくつかのビルド済みモジュールを提供します。Falcoは、モジュールのコンパイルが失敗した場合、事前に構築されたモジュールを自動的にダウンロードしようとします。
 
-基盤となるカーネルへのアクセスが制限されているGoogleのContainer Optimized OS＆GKEなどのプラットフォームについては、以下の[GKEセクション](#gke)を参照してください。
+以下のパッケージマネージャーアーティファクトを使用してFalcoがインストールされている場合は、次のものが用意されています:
 
-### HTTPs経由のカーネルモジュールのダウンロード
+ - Falcoがユーザースペースプログラムでスケジュールされ、`systemd`を介してウォッチされる
+ - パッケージマネージャーを介してインストールされたFalcoドライバー（ホストに応じてカーネルモジュールまたはeBPFのいずれか）
+ - `/etc/falco`にインストールされた健全でデフォルトの設定ファイル
 
-HTTPsを使用してカーネルモジュールを事前に構築し、Falcoポッドに提供します。カーネルモジュールを構築する最も簡単な方法は次のとおりです：
+あるいは、[以下で説明する](#linux-binary)のように、バイナリパッケージを使用することもできます。
 
-1. 必要なカーネルヘッダーを持つノードにFalcoをデプロイします。
-2. Falcoで `falco-driver-loader`スクリプトを使用して、カーネルモジュールをビルドします。
-3. カーネルモジュールをポッドまたはコンテナから移動します。
-    デフォルトでは、カーネルモジュールは `/root/.falco/`にコピーされます。
+## インストール
 
-`DRIVERS_REPO` - Falcoポッドのこの環境変数を設定して、ビルド済みカーネルモジュールおよびeBPFプローブのデフォルトのベースURLを、スラッシュなしで上書きします。 - つまり、`https://myhost.mydomain.com`、またはサーバーにサブディレクトリ構造`https://myhost.mydomain.com/drivers`がある場合。 `ko`と`o` はそれぞれカーネルモジュールと`eBPF`プローブを表します。
-ドライバは、次の構造でホストされる必要があります:
-`/${driver_version}/falco_${target}_${kernelrelease}_${kernelversion}.[ko|o]`.
+### Debian/Ubuntu {#debian}
 
-例：
-- `/a259b4bf49c3330d9ad6c3eed9eb1a31954259a6/:falco_amazonlinux2_4.14.128-112.105.amzn2.x86_64_1.ko`
-
-
-
-`falco-driver-loader`スクリプトは、デフォルトでこの形式でモジュールに名前を付けます。
-
-### Helm
-
-Helmは、FalcoをKubernetesにインストールするための推奨される方法の1つです。 [Falco Helm chart](https://github.com/helm/charts/tree/master/stable/falco)は、広範なセットである[設定値](https://github.com/helm/charts/tree/master/stable/falco#configuration)を提供し、異なる構成でFalcoを起動できます。
-
-Helmがデプロイされているクラスターにデフォルト構成でFalcoをデプロイするには、次を実行します。
-
-```shell
-helm install --name falco stable/falco
-```
-
-クラスターからFalcoを削除するには、次を実行します：
-```
-helm delete falco
-```
-
-#### Kubernetes レスポンスエンジン
-
-Falco Helmチャートを使用することは、[Falco Kubernetes Response Engine(KRE)](https://github.com/falcosecurity/kubernetes-response-engine)をデプロイする最も簡単な方法です。KREは、NATS、AWS SNS、Google Pub/SubなどのメッセージングサービスにFalcoアラートを送信する機能を提供します。これにより、各メッセージングサービスのサブスクライバーがFalcoアラートを処理できます。 この統合を有効にするには、Helmチャートの `integrations ** [構成オプション](https://github.com/helm/charts/tree/master/stable/falco#configuration)を参照してください。
-
-KREを使用すると、Falcoルールに違反した場合にアクションを実行できるセキュリティプレイブックを(サーバーレス機能を介して)デプロイすることもできます。付属のプレイブックをデプロイする方法については、[Response Engine documentation](https://github.com/falcosecurity/kubernetes-response-engine/tree/master/playbooks)を参照してください。
-
-### DaemonSet マニフェスト
-FalcoをKubernetes [DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)として実行するには、以下の手順に従ってください。 これらはKubernetesの「一般的な」手順です。 プラットフォーム固有の手順については、それぞれのセクションを参照してください。
-
-1. [Falcoリポジトリ](https://github.com/falcosecurity/falco/)のクローンを作成し、マニフェストのあるディレクトリに移動します。
-```shell
-git clone https://github.com/falcosecurity/falco/
-cd falco/integrations/k8s-using-daemonset
-```
-2. サービスアカウントを作成し、必要なRBAC権限を付与します。Falcoはこのサービスアカウントを使用してKubernetes APIサーバーに接続し、リソースメタデータを取得します。
-```shell
-kubectl apply -f k8s-with-rbac/falco-account.yaml
-```
-3. Falcoポッド用のサービスを作成します。これにより、Falcoは[Kubernetes Audit Log Events](event-sources / kubernetes-audit)を受信できるようになります。この機能を使用する予定がない場合は、この手順をスキップできます。
-```shell
-kubectl apply -f k8s-with-rbac/falco-service.yaml
-```
-
-4. DaemonSetはKubernetes ConfigMapにFalcoの設定を保存し、設定をFalcoポッドで使用できるようにします。 これにより、基になるPodを再ビルドおよび再デプロイすることなく、カスタム構成を管理できます。 ConfigMapを作成するには：
-
-  1. `k8s-with-rbac/falco-config`ディレクトリを作成します。
-  2. このGitHubリポジトリから必要な設定を `k8s-with-rbac/falco-config/`ディレクトリにコピーします。
-
-元のファイルを変更しないでください。 コピーしたファイルを使用して、設定を変更します。
-
-```shell
-mkdir -p k8s-with-rbac/falco-config
-k8s-using-daemonset$ cp ../../falco.yaml k8s-with-rbac/falco-config/
-k8s-using-daemonset$ cp ../../rules/falco_rules.* k8s-with-rbac/falco-config/
-k8s-using-daemonset$ cp ../../rules/k8s_audit_rules.yaml k8s-with-rbac/falco-config/
-```
-
-5. 環境のカスタムルールを `falco_rules.local.yaml`ファイルに追加すると、開始時にFalcoによって読み込まれます。`falco.yaml`ファイルを変更して、デプロイメントに必要な[設定オプション](configuration /)を変更することもできます。次のようにconfigMapを作成します：
-```shell
-kubectl create configmap falco-config --from-file=k8s-with-rbac/falco-config
-```
-
-6. configMapの依存関係を作成したら、DaemonSetを作成できます。
-```shell
-kubectl apply -f k8s-with-rbac/falco-daemonset-configmap.yaml
-```
-
-7. Falcoが正しく起動したことを確認します。これを行うには、対応するログファイルでFalcoポッドのステータスを確認します。
-```shell
-kubectl logs -l app=falco-example
-```
-
-### Minikube
-
-ローカル環境のKubernetesでFalcoを使用する最も簡単な方法は、[Minikube](https://kubernetes.io/docs/tutorials/hello-minikube/)です。Kubernetes YAMLマニフェストとHelmチャートの両方が、Minikubeで定期的にテストされています。
-
-#### Minikube カーネルモジュール
-
-デフォルトの `--driver`引数で` minikube`を実行すると、MinikubeはさまざまなKubernetesサービスを実行するVMとPodなどを実行するコンテナフレームワークを作成します。一般に、FalcoカーネルモジュールをMinikube VMで直接ビルドすることはできません。実行中のカーネルのカーネルヘッダーがVMに含まれていないためです。
-
-これに対処するためfalco 0.13.1から、最新のMinikube 10バージョンのカーネルモジュールを事前にビルドし、https://s3.amazonaws.com/download.draios.comで利用できるようにしています。これにより、ロード可能なカーネルモジュールでダウンロードフォールバックステップを成功させることができます。
-
-今後、Falcoの新しいリリースごとに、Minikubeの最新バージョンを10バージョンをサポートします。 現在、ダウンロード用にプレビルドしたカーネルモジュールを保持しているため、引き続き限定的に履歴サポートを提供します。
-
-### GKE
-
-Google Kubernetes Engine(GKE)は、ワーカーノードプールのデフォルトのオペレーティングシステムとしてContainer-Optimized OS(COS)を使用します。COSは、基盤となるOSの特定の部分へのアクセスを制限するセキュリティが強化されたオペレーティングシステムです。このセキュリティ上の制約のため、Falcoはカーネルモジュールを挿入してシステムコールのイベントを処理できません。ただし、COSは、eBPF(extended Berkeley Packet Filter)を活用して、システムコールのストリームをFalcoエンジンに提供する機能を提供します。
-
-
-## eBPFサポートの有効化
-
-Falcoは、最小限の構成変更でeBPFを使用できます。それには、 `FALCO_BPF_PROBE`環境変数を空の値に設定します：` FALCO_BPF_PROBE = "" `。
-
-eBPFは現在GKEとCOSでのみサポートされていますが、ここでは幅広いプラットフォームのインストールの詳細を提供します
-
-**重要**: プローブファイルの代替パスを指定する場合、`FALCO_BPF_PROBE`を既存のeBPFプローブのパスに設定することもできます。
-
-### プローブの入手
-
-公式のコンテナイメージを使用する場合、この環境変数を設定すると、`falco-driver-loader`スクリプトがトリガーされ、適切なバージョンのCOSのカーネルヘッダーがダウンロードされ、適切なeBPFプローブがコンパイルされます。他のすべての環境では、 `falco-driver-loader`スクリプトを自分で呼び出してこの方法で取得できます：
-
-```bash
-sudo FALCO_VERSION="{{< latest >}}" FALCO_BPF_PROBE="" falco-driver-loader
-```
-
-上記のスクリプトを正常に実行するには、`clang`と` llvm`がインストールされている必要があります。
-
-### KubernetesにおけるHelmの使用
-Helmを使用している場合、`ebpf.enable`設定オプションを設定することでeBPFを有効にできます。
-
-```shell
-helm install --name falco stable/falco --set ebpf.enabled=true
-```
-
-### Kubernetesにおけるyamlファイルの使用
-
-提供されているDaemonSetマニフェストを使用している場合は、対応するYAMLファイルの次の行のコメントを解除します。
-
-```yaml
-          env:
-          - name: FALCO_BPF_PROBE
-            value: ""
-```
-
-### パッケージからローカル
-
-パッケージからFalcoをインストールする場合、 `falco` systemdユニットを編集する必要があります。
-
-それには、次のコマンドを実行します：
-
-```bash
-systemctl edit falco
-```
-
-エディターが開きます。この時点で、このコンテンツをファイルに追加することでユニットの環境変数を設定できます：
-
-```
-[Service]
-Environment='FALCO_BPF_PROBE=""'
-```
-
-### Falcoバイナリをローカルで使用する
-
-Falcoバイナリを直接使用している場合、次の方法でBPFプローブを有効にできます：
-
-```bash
-sudo FALCO_BPF_PROBE="" falco
-```
-
-## Linux
-
-スクリプト化されたインストール、パッケージマネージャー、またはAnsibleなどの構成管理ツールを使用して、LinuxにFalcoを直接インストールします。Falcoをホストに直接インストールすると、以下が提供されます：
-
-- Linuxホストの異常を監視する機能。 Falcoの多くのユースケースはコンテナ化されたワークロードの実行に焦点を合わせていますが、Falcoは任意のLinuxホストで異常なアクティビティを監視できます。コンテナ(およびKubernetes)はオプションです。
-- コンテナスケジューラ(Kubernetes)およびコンテナランタイムからの分離。ホストで実行されているFalcoは、Falco構成およびFalcoデーモンの管理からコンテナスケジューラを削除します。これは、コンテナスケジューラが悪意のある攻撃者によって侵害された場合に、Falcoが改ざんされるのを防ぐのに役立ちます。
-
-### スクリプトインストール{#scripted}
-
-LinuxにFalcoをインストールするには、必要な手順を実行するシェルスクリプトをダウンロードできます：
-
-```shell
-curl -o install_falco -s https://falco.org/script/install
-```
-
-次に、 `sha256sum`ツール(または類似のもの)を使用して、スクリプトの[SHA256](https://en.wikipedia.org/wiki/SHA-2)チェックサムを確認します：
-
-```shell
-sha256sum install_falco
-```
-
-`{{<sha256sum>}}`でなければなりません。
-
-次に、ルートとして、またはsudoを使用してスクリプトを実行します：
-
-```shell
-sudo bash install_falco
-```
-
-### パッケージインストール {#package}
-
-#### CentOS/RHEL/Amazon Linux {#centos-rhel}
-
-1. falcosecurity GPGキーを信頼し、yumリポジトリを設定します:
-
-    ```shell
-    rpm --import https://falco.org/repo/falcosecurity-3672BA8F.asc
-    curl -s -o /etc/yum.repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
-    ```
-
-    > **ノート** - 現在のマスターのFalcoパッケージを使用する場合は、[falcosecurity-rpm-dev](https://falco.org/repo/falcosecurity-rpm-dev.repo)ファイルを使用します。
-
-2. EPELリポジトリをインストールする:
-
-    > **ノート** — 次のコマンドは、DKMSがディストリビューションで利用できない場合にのみ必要です。「yum list dkms」を使用して、DKMSが利用可能かどうかを確認できます。 必要に応じて、次を使用してインストールします:
-
-    ```shell
-    yum install epel-release
-    ```
-
-3. カーネルヘッダーをインストールする:
-
-    > **注意** — 次のコマンドは、どのカーネルでも機能しない可能性があります。 パッケージの名前を適切にカスタマイズしてください。
-
-    ```shell
-    yum -y install kernel-devel-$(uname -r)
-    ```
-
-4. Falcoをインストールする:
-
-    ```shell
-    yum -y install falco
-    ```
-
-    アンインストールするには、'yum erase falco'を実行します。
-
-#### Debian/Ubuntu {#debian}
-
-1. falcosecurity GPGキーを信頼し、aptリポジトリーを構成し、パッケージリストを更新します:
+1. falcosecurity GPGキーを信頼し、aptリポジトリを構成して、パッケージリストを更新します:
 
     ```shell
     curl -s https://falco.org/repo/falcosecurity-3672BA8F.asc | apt-key add -
@@ -258,96 +36,105 @@ sudo bash install_falco
     apt-get update -y
     ```
 
-    > **ノート** - 現在のマスターからFalcoパッケージを使用する場合は、https://dl.bintray.com/falcosecurity/deb-dev URLをfalcosecurity.listファイルにエコーします。
-
-2. カーネルヘッダーをインストールする:
-
-    > **注意** — 次のコマンドは、どのカーネルでも機能しない可能性があります。 パッケージの名前を適切にカスタマイズしてください。
+2. カーネルヘッダのインストール:
 
     ```shell
     apt-get -y install linux-headers-$(uname -r)
     ```
 
-3. Falcoをインストールする:
+3. Falcoのインストール:
 
     ```shell
     apt-get install -y falco
     ```
 
-    アンインストールするには、'apt-get remove falco'を実行します。
+    カーネルモジュールドライバのFalcoとデフォルト設定がインストールされました。
+    Falco は systemd ユニットとして実行されています。
 
-### Docker
+    Falcoでの管理、実行、デバッグの方法については、[running](../running)を参照してください。
 
-**ノート:** これらの手順は、LinuxホストでFalcoコンテナーを直接実行するためのものです。KubernetesでFalcoコンテナーを実行する手順については、[Kubernetes固有のドキュメント](#kubernetes)を参照してください。
+4. Falcoのアンインストール:
 
-ホストオペレーティングシステムを完全に制御できる場合は、通常のインストール方法を使用してFalcoをインストールすることをお勧めします。 この方法により、ホストOS上のすべてのコンテナーを完全に可視化できます。 標準の自動/手動インストール手順を変更する必要はありません。
+    ```shell
+    apt-get remove falco
+    ```
 
-ただし、Falcoは[Docker](https://docker.com)コンテナー内で実行することもできます。 スムーズなデプロイメントを確実にするには、Falcoを実行する前にカーネルヘッダーをホストオペレーティングシステムにインストールする必要があります。
+### CentOS/RHEL/Fedora/Amazon Linux {#centos-rhel}
 
-これは通常、`apt-get`を使用してDebianのようなディストリビューションで実行できます：
+1. falcosecurityのGPGキーを信頼してyumリポジトリを設定する:
 
-```shell
-apt-get -y install linux-headers-$(uname -r)
-```
+    ```shell
+    rpm --import https://falco.org/repo/falcosecurity-3672BA8F.asc
+    curl -s -o /etc/yum.repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
+    ```
 
-RHELのようなディストリビューションの場合：
+    > **注** - 以下のコマンドは、DKMS と `make` がディストリビューションで利用できない場合にのみ必要です。DKMSが利用可能かどうかは、`yum list make dkms`を使って確認できます。必要であれば、以下のようにしてインストールしてください。必要であれば、`yum install epel-release`、`yum install make dkms`を使ってインストールしてください。
 
-```shell
-yum -y install kernel-devel-$(uname -r)
-```
+2. カーネルヘッダのインストール:
 
-その後、FalcoはDockerを使用して実行できます：
+    ```shell
+    yum -y install kernel-devel-$(uname -r)
+    ```
 
-```shell
-docker pull falcosecurity/falco
-docker run -i -t \
-    --name falco \
-    --privileged \
-    -v /var/run/docker.sock:/host/var/run/docker.sock \
-    -v /dev:/host/dev \
-    -v /proc:/host/proc:ro \
-    -v /boot:/host/boot:ro \
-    -v /lib/modules:/host/lib/modules:ro \
-    -v /usr:/host/usr:ro \
-    falcosecurity/falco
-```
+    > **注意** - 上記のコマンドでパッケージが見つからなかった場合、パッケージを修正するために `yum distro-sync` を実行する必要があるかもしれません。システムの再起動が必要になるかもしれません。
 
-動作を確認するには、[イベントジェネレータ](../ event-sources/sample-events)を実行して、Falcoのルールセットをトリガーするアクションを実行します：
+3. Falcoのインストール:
 
-```shell
-docker pull sysdig/falco-event-generator
-docker run -it --name falco-event-generator sysdig/falco-event-generator
-```
+    ```shell
+    yum -y install falco
+    ```
+    カーネルモジュールドライバのFalcoとデフォルト設定がインストールされました。
+    Falco は systemd ユニットとして実行されています。
 
-#### Dockerコンテナでカスタムルールを使用する
-
-Falcoイメージには、 `/etc/falco/falco_rules.yaml`にある組み込みのルールセットがあり、ほとんどの目的に適しています。ただし、独自のルールファイルを提供し、Falcoイメージを引き続き使用することもできます。その場合、 `-v path-to-falco-rules.yaml:/etc/falco/を追加して、コンテナ内の` /etc/falco/falco_rules.yaml`に外部ルールファイルをマッピングするボリュームマッピングを追加する必要があります。 falco_rules.yaml`を `docker run`コマンドに追加します。 これにより、ユーザーが指定したバージョンでデフォルトのルールが上書きされます
-
-デフォルトの `falco_rules.yaml`に加えてカスタムルールを使用するには、ローカルディレクトリにカスタムルールを配置できます。 次に、 `-v path-to-custom-rules/:/etc/falco/rules.d`を` docker run`コマンドに追加して、このディレクトリをマウントします。
+    Falcoでの管理、実行、デバッグの方法については、[running](../running)を参照してください。
 
 
-### 構成管理システム
+4. Falcoのアンインストール:
 
-[Puppet](#puppet)や[Ansible](#ansible)などの構成管理システムを使用してFalcoをインストールすることもできます。
+    ```shell
+    yum erase falco
+    ```
 
-#### Puppet
+### Linux generic (バイナリーパッケージ) {#linux-binary}
 
-Falco用の[Puppet](https://puppet.com/)モジュールである `sysdig-falco`は、[Puppet Forge](https://forge.puppet.com/sysdig/falco/readme)で入手できます。
+1. 最新のバイナリをダウンロード:
 
-#### Ansible
+    ```shell
+    curl -L -O https://dl.bintray.com/falcosecurity/bin/x86_64/falco-{{< latest >}}-x86_64.tar.gz
+    ```
 
-[@ juju4](https://github.com/juju4/)は、Falcoの[Ansible](https://ansible.com)の役割である `juju4.falco`を有益に書いています。 [GitHub](https://github.com/juju4/ansible-falco/)および[Ansible Galaxy](https://galaxy.ansible.com/juju4/falco/)で入手できます。Ansible Galaxy(v0.7)の最新バージョンはFalco 0.9では動作しませんが、GitHubのバージョンは動作します。
+2. Falcoのインストール:
 
-### CoreOS
+    ```shell
+    tar -xvf falco-{{< latest >}}-x86_64.tar.gz
+    cp -R falco-{{< latest >}}-x86_64/* /
+    ```
+3. 以下の依存関係をインストールします:
+    - `libyaml`
+    - kernel headers for your distribution
 
-CoreOSでFalcoを実行する推奨方法は、上記の[Dockerセクション](#docker)のインストールコマンドを使用して、独自のDockerコンテナー内で実行することです。この方法により、ホストOS上のすべてのコンテナーを完全に可視化できます。
+4. [下記](#install-driver)のようにドライバをインストールしてください。
 
-この方法は自動的に更新され、自動セットアップやbash補完などの優れた機能が含まれています。また、CoreOS以外の他のディストリビューションでも使用できる一般的なアプローチです。
+ドライバがインストールされたら、手動で `falco` を実行することができます。
 
-ただし、一部のユーザーはCoreOSツールボックスでFalcoを実行することを好む場合があります。推奨される方法ではありませんが、これは通常のインストール方法を使用してツールボックス内にFalcoをインストールしてから、手動で `falco-driver-loader`スクリプトを実行することで実現できます：
+### ドライバのインストール {#install-driver}
 
-```shell
-toolbox --bind=/dev --bind=/var/run/docker.sock
-curl -s https://falco.org/script/install | bash
-falco-driver-loader
-```
+ドライバをインストールする最も簡単な方法は、`falco-driver-loader` スクリプトを使うことです。
+
+デフォルトでは、まず `dkms` でカーネルモジュールをローカルに構築しようとします。それが不可能な場合は、ビルド済みのものを `~/.falco/` にダウンロードしようとします。カーネルモジュールが見つかれば、それを挿入します。
+
+eBPFプローブドライバをインストールしたい場合は、`falco-driver-loader bpf`を実行します。
+最初にeBPFプローブをローカルにビルドしようとしますが、そうでない場合は `~/.falco/` にビルド済みのものをダウンロードします。
+
+設定可能なオプション:
+
+- `DRIVERS_REPO` - この環境変数を設定して、ビルド済みカーネルモジュールと eBPF プローブのデフォルトのリポジトリ URL をオーバーライドします。
+
+    例えば、`https://myhost.mydomain.com` や、サーバが `https://myhost.mydomain.com/drivers` のようなサブディレクトリ構造を持っている場合には、`https://myhost.mydomain.com/drivers` となります。
+
+    ドライバは以下のような構造でホストされる必要があります:
+     `/${driver_version}/falco_${target}_${kernelrelease}_${kernelversion}. [ko|o]` ここで、`ko` と `o` はそれぞれカーネルモジュール、`eBPF` プローブを表します。
+
+    例、 `/a259b4bf49c3330d9ad6c3eed9eb1a31954259a6/falco_amazonlinux2_4.14.128-112.105.amzn2.x86_64_1.ko`.
+
+    `falco-driver-loader` スクリプトは、上記のフォーマットを用いてドライバをフェッチします。

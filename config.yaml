@@ -214,18 +214,15 @@ languages:
 
   jp:
     languageName: 日本語 Japanese
-    title: Falco — クラウドネイティブランタイムセキュリティ
+    title: The Falco Project
     contentDir: content/jp
     params:
       heroText:
-        # Main hero title
-        title: クラウドネイティブ ランタイムセキュリティ
-        # Hero subtitle (optional)
-        subtitle: オープンソースのクラウドネイティブランタイムセキュリティプロジェクトであるFalcoは、デファクトのKubernetes脅威検出エンジンです。 Falcoは、予期しないアプリケーションのビヘイビアを検出し、ランタイム時に脅威を警告します。
-        # Button text
-        buttontext: 始めましょう
-        # Falco joins CNCF
-        falcoCNCF: Falcoは、CNCFインキュベーションステージに参加した初のランタイムセキュリティプロジェクトです。
+        title: The Falco Project
+        detail1: Linuxカーネルのシステムコールをトレースします。
+        detail2: コンテナメタ情報を使用してカーネルイベントを強化します。
+        detail3: セキュリティルールに対してイベントをアサートします。
+        detail4: セキュリティインシデントにおけるアラート。
       runtime:
         title: なぜランタイムセキュリティなのか？
         intro: >-
@@ -237,38 +234,39 @@ languages:
           - example: インサイダー脅威
         closing: 脆弱性スキャンおよびポッドセキュリティとネットワークポリシーを実装するためのプロセスが整っている場合でも、すべてのリスクに対処できるわけではありません。これらのセキュリティバリアが効果的であることを確認し、設定を支援し、障害が発生した場合に最後の防御線を提供するメカニズムが必要です。
       whyfalco:
-        title: なぜランタイム検出においてFalcoなのか？
-        subtitle:
+        title: The Falco Project
+        subtitle: クラウドネイティブランタイムセキュリティ
         tiles:
-        - title: セキュリティを強化する
-          icon: check.png
-          text: 豊富なコンテキストと柔軟なエンジンによって駆動されるセキュリティルールを作成して、予期しないアプリケーションのビヘイビアを定義します。
-        - title: リスクの低減
-          icon: box.png
-          text: Falcoをセキュリティレスポンスワークフローとプロセスに組み込むことにより、ポリシー違反アラートに対して即座に対応します。
-        - title: 最新のルールを活用する
-          icon: scalable.png
-          text: コミュニティをソースとした悪意のあるアクティビティの検出とCVEエクスプロイトからアラートします。
+        - title: アクセス
+          icon: fas fa-terminal
+          text: Linuxカーネル、eBPF、およびptraceに基づいて構築された詳細なカーネルトレース。 Kubernetesとコンテナメタ情報を使用してカーネルイベントを強化します。すべて見えます。
+        - title: アサート
+          icon: fas fa-search
+          text: システムに対するセキュリティルールを記述します。未知または不要な動作から保護します。 ゼロデイ脆弱性、CVE、異常、脅威を検出します。
+        - title: アクション
+          icon: fas fa-exclamation-circle
+          text: セキュリティ違反時にアクションを実行します。悪意のある振る舞いが発生した場合に、Falco APIでパワフルなレスポンスアプリケーションを構築します。
       syscalls:
         title: システムコールがディープな可視性をもたらす
         summary: Falcoは、セキュアな仕組みであるExtended Berkeley Packet Filter（eBPF）を効率的に活用して、システムコールをキャプチャし、ディープな可視性を獲得します。KubernetesアプリケーションコンテキストとKubernetes API auditイベントを追加することにより、チームは誰が何をしたかを理解できます。
       resources:
-        title: ダウンロード + リソース
-        subtitle: 今日、始めましょう。オープンソースプロジェクトにコントリビュート＆詳細をご覧ください。
+        title: デベロップ
+        subtitle: Falcoをコアにして安全なアプリケーションを構築しましょう。
+        detail: FalcoはKubernetes、Linux、Servelessアプリケーションで使用できます。
         items:
-        - title: Install
-          text: Set up Falco to begin development
+        - title: インストール
+          text: Falcoをセットアップして開発を開始する
           icon: fas fa-server
-          buttonText1: On Linux
+          buttonText1: Linux上で
           buttonLink1: https://falco.org/docs/installation/#installing
-          buttonText2: In Kubernetes
+          buttonText2: Kubernetes上で
           buttonLink2: https://falco.org/docs/third-party/
-          buttonText3: Container Images
+          buttonText3: コンテナイメージ
           buttonLink3: https://falco.org/docs/download/#images
-          buttonText4: Integrations
+          buttonText4: 統合
           buttonLink4: https://falco.org/docs/third-party/
-        - title: Build
-          text: Falco leverages gRPC and supports several SDKs to build with Falco
+        - title: ビルド
+          text: FalcoはgRPCを活用し、FalcoでビルドするいくつかのSDKをサポートしています
           # Icon (from /images/illustrations/icons/___.svg)
           icon: fas fa-file-code
           buttonText1:  Go
@@ -279,27 +277,27 @@ languages:
           buttonLink3: https://github.com/falcosecurity/falco
           buttonText4:  Python
           buttonLink4: https://github.com/falcosecurity/client-py
-        - title: Configure
-          text: Falco leverages gRPC and supports several SDKs to build with Falco
+        - title: 設定
+          text: FalcoはgRPCを活用し、FalcoでビルドするいくつかのSDKをサポートしています
           # Icon (from /images/illustrations/icons/___.svg)
           icon: fas fa-file-alt
-          buttonText1:  Configuration
-          buttonLink1: http://falco.org/docs/configuration/
-          buttonText2:  Rules
-          buttonLink2: https://falco.org/docs/rules/
-          buttonText3:  Alerts
-          buttonLink3: https://falco.org/docs/alerts/
-          buttonText4:  Examples
-          buttonLink4: https://falco.org/docs/examples/
+          buttonText1:  設定
+          buttonLink1: http://falco.org/jp/docs/configuration/
+          buttonText2:  ルール
+          buttonLink2: https://falco.org/jp/docs/rules/
+          buttonText3:  アラート
+          buttonLink3: https://falco.org/jp/docs/alerts/
+          buttonText4:  例
+          buttonLink4: https://falco.org/jp/docs/examples/
       signup:
-        title: Join the community
-        subtitle: Sign up for the development mailing list
-        buttonText: Submit
-        slackText: Falco Slack Channels
+        title: コミュニティへ参加
+        subtitle: 開発メーリングリストにサインアップする
+        buttonText: サブミット
+        slackText: Falco Slack チャンネル
         slackLink: https://slack.k8s.io/
-        mailingListText: Developer Mailing List
+        mailingListText: デベロッパーメーリングリスト
         mailingListLink: https://lists.cncf.io/g/cncf-falco-dev
-        communityText: Github Community
+        communityText: Github コミュニティ
         communityLink: https://github.com/falcosecurity/community
         privacyText: The Falco Community is bound to The Linux Foundation privacy policy. When you communicate with us (via email, phone, through the Sites or otherwise), we may maintain a record of your communication.
         privacyLink: https://www.linuxfoundation.org/privacy/
