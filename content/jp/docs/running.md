@@ -7,7 +7,7 @@ weight: 4
 
 ## サービスとしてのFalcoを実行
 
-[deb もしくは rpm](./installation)パッケージを使用してFalcoをインストールした場合は、サービスを開始することができます：
+[deb もしくは rpm](../installation)パッケージを使用してFalcoをインストールした場合は、サービスを開始することができます：
 
 ```bash
 service falco start
@@ -83,7 +83,7 @@ Kernel >= 5.8 を実行している場合は、ステップ 2 の docker run コ
 
 
 `falcosecurity/falco-driver-loader` イメージは単に `falco-driver-loader` スクリプトをラップしているだけです。
-その使用法についての詳細は[こちらをご覧ください](/docs/install#install-driver)
+その使用法についての詳細は[こちらをご覧ください](jp/docs/install#install-driver)
 
 
 2. Dockerを使ってコンテナ内のFalcoを[最小特権の原則]で実行する(https://en.wikipedia.org/wiki/Principle_of_least_privilege):
