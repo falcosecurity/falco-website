@@ -1,42 +1,86 @@
 ---
-title: ドキュメンテーション ホーム
-description: Falcoコンテナセキュリティシステムの概要
+title: The Falco Project
+description: クラウドネイティブランタイムセキュリティ
 weight: 1
 ---
 
-## Falcoについて
+## Falcoとは?
 
-Falcoは、アプリケーションの異常なアクティビティを検出するように設計されたビヘイビアアクティビティモニタです。もともとSysdigによって構築されたパワフルな[システムコールキャプチャ](https://sysdig.com/blog/fascinating-world-linux-system-calls/)テクノロジーを使用します。Falcoでは、1組の[ルール]（ルール）を使用して、コンテナ、アプリケーション、ホスト、およびネットワークアクティビティを1か所で、1つのデータソースから継続的に監視および検出できます。
+Falcoプロジェクトは、元々[Sysdig, Inc](https://sysdig.com)によって構築されたオープンソースのランタイムセキュリティツールです。Falcoは[CNCFに寄贈され、現在はCNCFのインキュベーションプロジェクトとなっています](https://www.cncf.io/blog/2020/01/08/toc-votes-to-move-falco-into-cncf-incubator/)。
 
-### Falcoはどのようなビヘイビアを検出できますか？
+## Falcoは何をしますか？
 
-Falcoは、[Linuxシステムコール](http://man7.org/linux/man-pages/man2/syscalls.2.html)の作成に関連するすべてのビヘイビアを検出およびアラートできます。Falcoアラートは、特定のシステムコールとその引数の使用、および呼び出しプロセスのプロパティによってトリガーできます。たとえば、次の場合に簡単に検出できます。
+Falcoは実行時にカーネルからのLinuxシステムコールを解析し、強力なルールエンジンに対してストリームをアサートします。
+ルールに違反した場合は、Falcoのアラートが発せられます。Falco [rules](rules)についてもっと読む
 
-* コンテナ内でシェルが実行する
-* サーバープロセスが、予期しないタイプの子プロセスを生成する
-* `/etc/shadow`などの機密ファイルが予期せずに読み取られる
-* 非デバイスファイルが `/dev`に書き込まれる
-* 標準システムバイナリ（ `ls`など）がアウトバウンドネットワーク接続を作成する
+ - Parse
+ - Assert
+ - Alert
 
-## Falcoと他のツールの比較
+## ファルコは何を見ているのか？
 
-Falcoが[SELinux](https://en.wikipedia.org/wiki/Security-Enhanced_Linux)、[AppArmor](https://wiki.ubuntu.com/AppArmor)、[Auditd](https://linux.die.net/man/8/auditd)、およびLinuxセキュリティポリシーに関連するその他のツールとどのように異なるかをよく聞かれます。[Sysdig blog](https://sysdig.com/blog/selinux-seccomp-falco-technical-discussion/)でFalcoを他のツールと比較する[ブログ投稿]を作成しました。
+デフォルトでは、Falco には成熟したルールのセットが同梱されています。
 
-## Falcoの使用方法
+- 特権コンテナを使用した特権のエスカレーション 
+ - `setns` のようなツールを使ったネームスペースの変更 
+ - `/etc`, `/usr/bin`, `/usr/sbin` などのよく知られたディレクトリへの読み込み/書き込み
+ - シンボリックリンクの作成 
+ - 所有権とモードの変更 
+ - 予期しないネットワーク接続またはソケットの変異
+ - `execve` を使ってプロセスをSpawnした
+ - `sh`, `bash`, `csh`, `zsh` などのシェルバイナリの実行
+ - SSH バイナリ `ssh`, `scp`, `sftp` などを実行する
+ - Linux の `coreutils` 実行ファイルを変異させる
+ - ログインバイナリの変異 
+ - `shadowutil` や `passwd` の実行ファイルを変異させる  
+    - `shadowconfig`
+    - `pwck`
+    - `chpasswd`
+    - `getpasswd`
+    - `change`
+    - `useradd`
+    - etc
 
-Falcoは、長時間実行されるデーモンとしてデプロイされます。通常のホストまたはコンテナホストに[deb](../docs/installation#debian)/[rpm](../docs/installation#centos-rhel)パッケージとしてインストールするか、[container](./installation#docker)としてデプロイするか、または [ソースから](../docs/source) をビルドします。
+...などなど。
 
-Falcoは、（1）監視するビヘイビアとイベントを定義する[ルールファイル](../docs/rules) 、および（2）[一般設定ファイル](../docs/configuration) で構成されます。ルールは、ハイレベルで人間が読める言語で表現されます。サンプルのルールファイル[`./rules/falco_rules.yaml`](https://github.com/falcosecurity/falco/blob/master/rules/falco_rules.yaml)を出発点として、あなたの環境に適応させる（そしておそらく望むでしょう！）ことができます。
+## Falcoルールとは?
 
-ルールを開発する際の便利な機能の1つは、`scap`形式で保存されたトレースファイルを読み取るFalcoの機能です。これにより、問題のあるビヘイビアを1回「レコード」し、ルールを調整しながら必要な回数だけFalcoでリプレイできます。
+これらは、Falcoがアサートする項目です。これらは、Falcoの設定で定義されており、システム上で探しているものを表しています。
 
-デプロイされると、FalcoはカーネルモジュールとeBPFプローブを使用して、イベントをユーザースペースに持ってきます。Falcoは、ルールファイルで定義された条件のいずれかに一致するイベントを監視します。一致するイベントが発生すると、設定された出力に通知が書き込まれます。
+Falcoルールの作成、管理、デプロイの詳細については、[ルール](rules)のセクションを参照してください。
 
-## Falco アラート
+## Falco アラートとは?
 
-Falcoは疑わしいビヘイビアを検出すると、1つ以上のチャネルを介して[アラート]（アラート）を送信します。
+これらは設定可能なダウンストリームアクションで、`STDOUT`へのロギングのような単純なものから、クライアントへのgRPCコールの配信のような複雑なものまであります。
 
-* 標準エラーへの書き込み
-* ファイルへの書き込み
-* syslogへの書き込み
-* 生成されたプログラムへのパイプ。この出力タイプの一般的な使用法は、Falco通知ごとに電子メールを送信することです。
+Falcoアラートの設定、理解、開発の詳細については、[alerts](alerts)のセクションを参照してください。
+
+## Falcoコンポーネント 
+
+Falcoは3つの主要コンポーネントで構成されています。
+
+ - ユーザスペースプログラム
+ - [ドライバー](/docs/event-sources/drivers/)
+ - [設定](configuration)
+
+### Falcoユーザスペースプログラム
+
+これはCLIツール `falco` です。これはユーザが対話するプログラムです。ユーザスペースプログラムは、シグナルの処理、Falcoドライバからの情報の解析、およびアラートを担当します。
+
+### Falcoドライバー
+
+Falcoのドライバー仕様に準拠し、システムコール情報をストリーム送信することができるソフトウェアです。
+
+ドライバーがインストールされていないと、Falcoは動作しません。
+
+現在、Falcoプロジェクトは以下のドライバをサポートしています。
+
+ - (デフォルト) C++ ライブラリ `libscap` および `libsinsp` 上に構築されたカーネルモジュール
+ - 同じモジュールから構築されたBPFプローブ
+ - ユーザスペースの計装
+
+ドライバーの詳細はこちらをご覧ください[こちら](/docs/event-sources/drivers/)。
+ 
+### Falco設定 
+
+これは、Falcoがどのように実行されるか、どのようなルールをアサートするか、アラートをどのように実行するかを定義します。Falcoを設定する方法の詳細については、[設定](configuration)のセクションを参照してください。
