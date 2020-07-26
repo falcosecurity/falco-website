@@ -24,7 +24,7 @@ Falcoが[SELinux](https://en.wikipedia.org/wiki/Security-Enhanced_Linux)、[AppA
 
 ## Falcoの使用方法
 
-Falcoは、長時間実行されるデーモンとしてデプロイされます。通常のホストまたはコンテナホストに[deb](../docs/installation#debian)/[rpm](../docs/installation#centos-rhel)パッケージとしてインストールするか、[container](../docs/installation#docker)としてデプロイするか、または [ソースから](../docs/source) をビルドします。
+Falcoは、長時間実行されるデーモンとしてデプロイされます。通常のホストまたはコンテナホストに[deb](../docs/installation#debian)/[rpm](../docs/installation#centos-rhel)パッケージとしてインストールするか、[container](./installation#docker)としてデプロイするか、または [ソースから](../docs/source) をビルドします。
 
 Falcoは、（1）監視するビヘイビアとイベントを定義する[ルールファイル](../docs/rules) 、および（2）[一般設定ファイル](../docs/configuration) で構成されます。ルールは、ハイレベルで人間が読める言語で表現されます。サンプルのルールファイル[`./rules/falco_rules.yaml`](https://github.com/falcosecurity/falco/blob/master/rules/falco_rules.yaml)を出発点として、あなたの環境に適応させる（そしておそらく望むでしょう！）ことができます。
 
