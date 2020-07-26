@@ -1,7 +1,7 @@
 ---
 title: 設定
 description: Falco デーモンの設定
-weight: 5
+weight: 4
 notoc: true
 ---
 
