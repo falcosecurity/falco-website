@@ -258,13 +258,13 @@ languages:
           text: Falcoをセットアップして開発を開始する
           icon: fas fa-server
           buttonText1: Linux上で
-          buttonLink1: https://falco.org/docs/installation/#installing
+          buttonLink1: https://falco.org/jp/docs/installation/#installing
           buttonText2: Kubernetes上で
-          buttonLink2: https://falco.org/docs/third-party/
+          buttonLink2: https://falco.org/jp/docs/third-party/
           buttonText3: コンテナイメージ
-          buttonLink3: https://falco.org/docs/download/#images
+          buttonLink3: https://falco.org/jp/docs/download/#images
           buttonText4: 統合
-          buttonLink4: https://falco.org/docs/third-party/
+          buttonLink4: https://falco.org/jp/docs/third-party/
         - title: ビルド
           text: FalcoはgRPCを活用し、FalcoでビルドするいくつかのSDKをサポートしています
           # Icon (from /images/illustrations/icons/___.svg)
