@@ -152,7 +152,7 @@ docker run --rm -i -t \
 
 その他の設定可能なオプション:
 
-- DRIVER_REPO` - [ドライバのインストール](https://falco.org/docs/installation/#install-driver) を参照してください。
+- `DRIVER_REPO` - [ドライバのインストール](https://falco.org/docs/installation/#install-driver) を参照してください。
 - `SKIP_DRIVER_LOADER` - この環境変数を設定することで、`falcosecurity/falco` イメージの起動時に `falco-driver-loader` を実行しないようにします。ドライバが既に他の方法でホストにインストールされている場合に便利です。
 
 ## ホットリロード
