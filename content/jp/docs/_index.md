@@ -39,7 +39,6 @@ Falcoは実行時にカーネルからのLinuxシステムコールを解析し�
     - `getpasswd`
     - `change`
     - `useradd`
-    - etc
 
 ...などなど。
 
