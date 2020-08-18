@@ -76,6 +76,7 @@ make package
 
 ## Debian / Ubuntu
 
+
 ### Dependencies
 
 ```bash
@@ -84,9 +85,13 @@ apt install git cmake build-essential
 
 ### Build Falco
 
+You can skip this on Ubuntu 18.04.
+
 ```bash
 apt install libssl-dev libyaml-dev libncurses-dev libc-ares-dev libprotobuf-dev protobuf-compiler libjq-dev libyaml-cpp-dev libgrpc++-dev protobuf-compiler-grpc libcurl4-openssl-dev libelf-dev
 ```
+
+If you are on Ubuntu 18.04, instead of `cmake ..` do `cmake -DUSE_BUNDLED_DEPS=ON ..`.
 
 ```bash
 git clone https://github.com/falcosecurity/falco.git
