@@ -16,16 +16,15 @@ CentOS 7 is the reference build environment we use to compile release artifacts.
 
 ```bash
 dnf install 'dnf-command(config-manager)'
-dnf config-manager --set-enabled PowerTools # needed for libyaml-devel
 dnf install gcc gcc-c++ git make cmake autoconf automake pkg-config patch
-dnf install libcurl-devel zlib-devel libyaml-devel ncurses-devel libtool glibc-static libstdc++-static elfutils-libelf-devel -y
+dnf install libcurl-devel zlib-devel ncurses-devel libtool glibc-static libstdc++-static elfutils-libelf-devel -y
 ```
 
 **CentOS 7 / RHEL 7**
 
 ```
 yum install gcc gcc-c++ git make autoconf automake pkg-config patch
-yum install libcurl-devel zlib-devel libyaml-devel ncurses-devel libtool glibc-static libstdc++-static elfutils-libelf-devel -y
+yum install libcurl-devel zlib-devel ncurses-devel libtool glibc-static libstdc++-static elfutils-libelf-devel -y
 ```
 
 You will also need `cmake` version `3.5.1` or higher which is not included in CentOS 7. You can follow the [official guide](https://cmake.org/install/) or look at how that is done
@@ -80,7 +79,7 @@ make package
 ### Dependencies
 
 ```bash
-apt install git cmake build-essential
+apt install git cmake build-essential libncurses-dev pkg-config autoconf libtool libelf-dev -y
 ```
 
 ### Build Falco
@@ -88,7 +87,7 @@ apt install git cmake build-essential
 You can skip this on Ubuntu 18.04.
 
 ```bash
-apt install libssl-dev libyaml-dev libncurses-dev libc-ares-dev libprotobuf-dev protobuf-compiler libjq-dev libyaml-cpp-dev libgrpc++-dev protobuf-compiler-grpc libcurl4-openssl-dev libelf-dev
+apt install libssl-dev libc-ares-dev libprotobuf-dev protobuf-compiler libjq-dev libgrpc++-dev protobuf-compiler-grpc libcurl4-openssl-dev
 ```
 
 If you are on Ubuntu 18.04, instead of `cmake ..` do `cmake -DUSE_BUNDLED_DEPS=ON ..`.
