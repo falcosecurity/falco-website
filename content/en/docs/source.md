@@ -15,16 +15,13 @@ CentOS 7 is the reference build environment we use to compile release artifacts.
 **CentOS 8 / RHEL 8**
 
 ```bash
-dnf install 'dnf-command(config-manager)'
-dnf install gcc gcc-c++ git make cmake autoconf automake pkg-config patch
-dnf install libcurl-devel zlib-devel ncurses-devel libtool glibc-static libstdc++-static elfutils-libelf-devel -y
+dnf install gcc gcc-c++ git make cmake autoconf automake pkg-config patch ncurses-devel libtool elfutils-libelf-devel diffutils which
 ```
 
 **CentOS 7 / RHEL 7**
 
 ```
-yum install gcc gcc-c++ git make autoconf automake pkg-config patch
-yum install libcurl-devel zlib-devel ncurses-devel libtool glibc-static libstdc++-static elfutils-libelf-devel -y
+yum install gcc gcc-c++ git make autoconf automake pkg-config patch ncurses-devel libtool glibc-static libstdc++-static elfutils-libelf-devel
 ```
 
 You will also need `cmake` version `3.5.1` or higher which is not included in CentOS 7. You can follow the [official guide](https://cmake.org/install/) or look at how that is done
