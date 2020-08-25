@@ -4,7 +4,7 @@
   <head>
     {{ partial "ga.html"}}
     {{ partial "meta.html" . }}
-    <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
+    <title>{{ if eq .URL "/" }}{{ .Site.Title }}{{ else if eq .URL "/blog/" }}All Entries &middot; {{ .Site.Title }}{{ else }}{{ .Title }} - {{.Site.Title}}{{ end }}</title>
     {{ partial "css.html" . }}
   </head>
   <body{{ if $standard }} class="page has-navbar-fixed-top"{{ end }}>
