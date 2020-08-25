@@ -54,7 +54,7 @@ Many thanks to [@Kaizhe](https://github.com/Kaizhe),  [@nvanheuverzwijn](https:/
 
 
 ## What's next?
-We just created the milestone for [0.26.0](https://github.com/falcosecurity/falco/milestone/12)  due by September 15, 2020
+We just created the milestone for [0.26.0](https://github.com/falcosecurity/falco/milestone/12)  due by September 15, 2020.
 As always, you have a chance to be part of this release by joining our [community calls](https://github.com/falcosecurity/community)!
 
 See you soon!
