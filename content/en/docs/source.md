@@ -262,7 +262,7 @@ Do the build folder and cmake setup, then:
 make sinsp
 ```
 
-#### Build the probe / kernel driver only
+#### Build the eBPF probe / kernel driver only
 
 Do the build folder and cmake setup, then:
 
@@ -275,8 +275,8 @@ make driver
 Once Falco is built, the three interesting things that you will find in your `build` folder are:
 
 - `userspace/falco/falco`: the actual Falco binary
-- `driver/src/falco-probe.ko`: the Falco kernel driver
-- `driver/bpf/probe.o`: if you built Falco with [BPF support](#enable-bpf-support)
+- `driver/src/falco.ko`: the Falco kernel driver
+- `driver/bpf/falco.o`: if you built Falco with [BPF support](#enable-bpf-support)
 
 If you'd like to build a debug version, run cmake as `cmake -DCMAKE_BUILD_TYPE=Debug ..` instead, see the [CMake Options](#cmake-options) section for further customizations.
 
@@ -383,30 +383,30 @@ It's also possible to explicitly provide the `FALCO_VERSION` environment variabl
 Otherwise the docker image will use the default `FALCO_VERSION`.
 
 
-## Load latest falco-probe kernel module
+## Load latest falco kernel module
 
 If you have a binary version of Falco installed, an older Falco kernel module may already be loaded. To ensure you are using the latest version, you should unload any existing Falco kernel module and load the locally built version.
 
 Unload any existing kernel module via:
 
 ```bash
-rmmod falco_probe
+rmmod falco
 ```
 
 To load the locally built version, assuming you are in the `build` dir, use:
 
 ```bash
-insmod driver/falco-probe.ko
+insmod driver/falco.ko
 ```
 
 ```bash
-rmmod falco_probe
+rmmod falco
 ```
 
 To load the locally built version, assuming you are in the `build` dir, use:
 
 ```bash
-insmod driver/falco-probe.ko
+insmod driver/falco.ko
 ```
 
 ## Run falco
