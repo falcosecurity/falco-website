@@ -9,6 +9,7 @@ Falco can send alerts to one or more channels:
 * Syslog
 * A spawned program
 * A HTTP[s] end point
+* A client via the gRPC API
 
 The channels are configured via the falco configuration file `falco.yaml`. See the [Falco Configuration](../configuration) page for more details. Here are details on each of those channels.
 
@@ -167,6 +168,6 @@ Here's the same output, pretty-printed:
 }
 ```
 
+## gRPC Output
 
-
-
+If you'd like to send alerts to an external program connected via gRPC API (for example, the [falco-exporter](https://github.com/falcosecurity/falco-exporter)), you need to enable both the `grpc` and `grpc_output` options as described under the [gRPC Configuration section](/docs/grpc/#configuration).
