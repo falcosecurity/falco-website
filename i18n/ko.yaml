@@ -1,6 +1,8 @@
-integrations_and_platforms:
-  other: 사례 & 플랫폼
+end-users:
+  other: End-Users
+vendors:
+  other: Vendors
+integrations:
+  other: Integrations
 copyright:
   other: Copyright
-falco_authors:
-  other: The Falco authors
