@@ -316,6 +316,110 @@ languages:
       #  url: "/blog"
       #  weight: 5
 
+  ko:
+    languageName: 한국어 Korean
+    title: The Falco Project
+    contentDir: content/ko
+    params:
+      heroText:
+        title: The Falco Project
+        detail1: 리눅스 커널 시스템 호출을 추적합니다.
+        detail2: 컨테이너 메타 정보로 커널 이벤트를 보완합니다.
+        detail3: 보안 규칙에 대한 이벤트를 지정합니다.
+        detail4: 보안 사고 발생 시 알림을 지원합니다.
+      runtime:
+        title: 왜 런타임 보안인가?
+        intro: >-
+          쿠버네티스 보안을 위해 악의적인 예상치 못한 동작을 탐지 할 수 있도록 제어해야 합니다. 예제:
+        items:
+          - example: 패치전(unpatched) 및 신규 취약점 공격
+          - example: 보안에 취약한 설정
+          - example: 노출되었거나 약한 자격 증명(credentials)
+          - example: 내부 위협
+        closing: 취약점 스캔, 파드 보안 및 네트워크 정책 구현에 대한 프로세스가 있더라도 모든 위협에서 자유롭지는 않습니다. 해당 보안 장벽의 효과를 확인하는 메커니즘 및 설정 방안, 그리고 이 방안들이 실패했을 경우 최후의 방어 수단을 가지고 있어야 합니다.
+      whyfalco:
+        title: The Falco Project
+        subtitle: 클라우드 네이티브 런타임 보안
+        tiles:
+        - title: Access
+          icon: fas fa-terminal
+          text: 리눅스 커널, eBPF, ptrace를 이용해 심층적으로 커널을 추적합니다. 쿠버네티스와 컨테이너 메타 정보를 이용해 커널 이벤트를 보완합니다. 모든 것을 볼 수 있습니다.
+        - title: Assert
+          icon: fas fa-search
+          text: 시스템에 대한 보안 규칙을 작성합니다. 알 수 없거나 원하지 않는 동작으로부터 시스템을 보호합니다. 제로 데이 취약점, CVE, 이상 및 위협을 탐지합니다.
+        - title: Action
+          icon: fas fa-exclamation-circle
+          text: 보안 위반 시 조치를 취합니다. Falco API를 이용해 악의적인 행동에 대해 강력한 대응 애플리케이션을 구축합니다.
+      syscalls:
+        title: 시스템 콜(System calls)을 활용한 확장된 가시성
+        summary: Falco는 보안 메커니즘인 Extended Berkeley Packet Filter (eBPF)를 효율적으로 사용하여 시스템 콜(system call)을 캡처하여 더 많은 가시성을 제공합니다. 쿠버네티스 애플리케이션 컨텍스트와 쿠버네티스 API 감사(audit) 이벤트를 추가하여 팀은 어떤 사용자가 어떤 행위를 했는지 파악할 수 있습니다.
+      resources:
+        title: 개발
+        subtitle: Falco를 중심으로 안전한 애플리케이션을 구축합니다.
+        detail: Falco는 쿠버네티스, 리눅스, 서버리스 애플리케이션에서 사용할 수 있습니다.
+        items:
+        - title: 설치
+          text: Falco를 설정하고 개발을 시작합니다.
+          icon: fas fa-server
+          buttonText1: 리눅스
+          buttonLink1: https://falco.org/ko/docs/installation/#installing
+          buttonText2: 쿠버네티스
+          buttonLink2: https://falco.org/ko/docs/third-party/
+          buttonText3: 컨테이너 이미지
+          buttonLink3: https://falco.org/ko/docs/download/#images
+          buttonText4: 통합
+          buttonLink4: https://falco.org/ko/docs/third-party/
+        - title: 빌드
+          text: Falco는 gRPC를 활용해 Falco를 빌드하는 여러 SDK를 지원합니다.
+          # Icon (from /images/illustrations/icons/___.svg)
+          icon: fas fa-file-code
+          buttonText1:  Go
+          buttonLink1: https://github.com/falcosecurity/client-go
+          buttonText2:  Rust
+          buttonLink2: https://github.com/falcosecurity/client-rs
+          buttonText3:  C++
+          buttonLink3: https://github.com/falcosecurity/falco
+          buttonText4:  Python
+          buttonLink4: https://github.com/falcosecurity/client-py
+        - title: 설정
+          text: Falco는 gRPC를 활용해 Falco를 빌드하는 여러 SDK를 지원합니다.
+          # Icon (from /images/illustrations/icons/___.svg)
+          icon: fas fa-file-alt
+          buttonText1:  설정
+          buttonLink1: https://falco.org/ko/docs/configuration/
+          buttonText2:  규칙
+          buttonLink2: https://falco.org/ko/docs/rules/
+          buttonText3:  알림
+          buttonLink3: https://falco.org/ko/docs/alerts/
+          buttonText4:  예제
+          buttonLink4: https://falco.org/ko/docs/examples/
+      signup:
+        title: 커뮤니티 활동에 참여하기
+        subtitle: 메일링 리스트 가입하기
+        buttonText: 제출하기
+        slackText: Falco 슬랙 채널
+        slackLink: https://slack.k8s.io/
+        mailingListText: 개발자 메일링 리스트
+        mailingListLink: https://lists.cncf.io/g/cncf-falco-dev
+        communityText: 깃헙(Github) 커뮤니티
+        communityLink: https://github.com/falcosecurity/community
+        privacyText: The Falco Community is bound to The Linux Foundation privacy policy. When you communicate with us (via email, phone, through the Sites or otherwise), we may maintain a record of your communication.
+        privacyLink: https://www.linuxfoundation.org/privacy/
+    menu:
+      navbar:
+        - name: 왜 Falco인가?
+          url: "/#whyfalco"
+          weight: 2
+        - name: 시작하기
+          url: "/#resources"
+          weight: 3
+        - name: 문서화
+          url: "/docs"
+          weight: 4
+        # - name: 블로그
+        #   url: "/blog"
+        #   weight: 5
+
 params:
   version: v0.24.0
   githubRepository : falcosecurity/falco
