@@ -41,6 +41,14 @@ Are you looking for userpace instrumentation? Please see [this page](/docs/event
 
 ## Run within Docker {#docker}
 
+{{< info >}}
+
+Even using container images, Falco needs kernel headers installed on the host as prerequisite to correctly build the driver (the [kernel module](/docs/event-sources/drivers/#kernel-module) or the [eBPF probe](/docs/event-sources/drivers/#ebpf-probe)) on the fly. This step is not needed when a prebuilt driver is already available. 
+
+You can find instructions on how to install the kernel headers for your system under the [Install section](/docs/installation).
+
+{{< /info >}}
+
 Falco ships a set of official [docker images](/docs/download#images). 
 The images can be used in two ways as follows:
 - [Least privileged (recommended)](#docker-least-privileged)
