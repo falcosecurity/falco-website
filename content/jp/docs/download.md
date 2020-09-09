@@ -43,10 +43,10 @@ Falcoは、実行中のシステムコールに関する情報を取得するた
 |----|----------|-----------------|
 |[latest](https://hub.docker.com/r/falcosecurity/falco-no-driver/tags)| `docker pull falcosecurity/falco-no-driver:latest` | 最新バージョン |
 |[*version*](https://hub.docker.com/r/falcosecurity/falco-no-driver/tags)| `docker pull falcosecurity/falco-no-driver:<version>` | `{{< latest >}}`などの特定のバージョンのFalco |
-|[latest](https://hub.docker.com/r/falcosecurity/falco-driver-loader/tags)| `docker pull falcosecurity/falco-driver-loader:latest` | ビルドツールチェーンを備えた `falco-script-loader`の最新バージョン |
+|[latest](https://hub.docker.com/r/falcosecurity/falco-driver-loader/tags)| `docker pull falcosecurity/falco-driver-loader:latest` | ビルドツールチェーンを備えた `falco-driver-loader`の最新バージョン |
 |[*version*](https://hub.docker.com/r/falcosecurity/falco-driver-loader/tags)| `docker pull falcosecurity/falco-driver-loader:<version>` | ビルドツールチェーンを備えた`{{< latest >}}`などの  `falco-driver-loader`の特定のバージョン |
-|[latest](https://hub.docker.com/r/falcosecurity/falco/tags)| `docker pull falcosecurity/falco:latest` | `falco-script-loader`が含まれる最新バージョン |
-|[*version*](https://hub.docker.com/r/falcosecurity/falco/tags)| `docker pull falcosecurity/falco:<version>` |  `{{< latest >}}`のような、`falco-script-loader`が含まれた特定バージョンのFalco |
+|[latest](https://hub.docker.com/r/falcosecurity/falco/tags)| `docker pull falcosecurity/falco:latest` | `falco-driver-loader`が含まれる最新バージョン |
+|[*version*](https://hub.docker.com/r/falcosecurity/falco/tags)| `docker pull falcosecurity/falco:<version>` |  `{{< latest >}}`のような、`falco-driver-loader`が含まれた特定バージョンのFalco |
 
 利用可能なすべてのイメージのリストは、[こちら](https://github.com/falcosecurity/falco/tree/master/docker)にあります。
 
