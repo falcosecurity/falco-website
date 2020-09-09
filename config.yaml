@@ -408,7 +408,7 @@ languages:
         title: 시스템 콜(System calls)을 활용한 확장된 가시성
         summary: Falco는 보안 메커니즘인 Extended Berkeley Packet Filter (eBPF)를 효율적으로 사용하여 시스템 콜(system call)을 캡처하여 더 많은 가시성을 제공합니다. 쿠버네티스 애플리케이션 컨텍스트와 쿠버네티스 API 감사(audit) 이벤트를 추가하여 팀은 어떤 사용자가 어떤 행위를 했는지 파악할 수 있습니다.
       resources:
-        title: 개발
+        title: 개발하기
         subtitle: Falco를 중심으로 안전한 애플리케이션을 구축합니다.
         detail: Falco는 쿠버네티스, 리눅스, 서버리스 애플리케이션에서 사용할 수 있습니다.
         items:

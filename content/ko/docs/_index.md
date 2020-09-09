@@ -1,87 +1,86 @@
 ---
 title: The Falco Project
-description: Cloud Native Runtime Security
+description: 클라우드 네이티브 런타임 보안
 weight: 1
 ---
 
-## What is Falco?
+## Falco는 무엇인가요?
 
-The Falco Project is an open source runtime security tool originally built by [Sysdig, Inc](https://sysdig.com). Falco was [donated to the CNCF and is now a CNCF incubating project](https://www.cncf.io/blog/2020/01/08/toc-votes-to-move-falco-into-cncf-incubator/).
+Falco Project는 [Sysdig, Inc](https://sysdig.com)가 개발한 오픈 소스 런타임 보안 도구입니다. Falco는 [CNCF에 기부되었고 현재 CNCF 인큐베이팅 프로젝트입니다](https://www.cncf.io/blog/2020/01/08/toc-votes-to-move-falco-into-cncf-incubator/).
 
-## What does Falco do?
+## Falco는 어떤 일을 하나요?
 
-Falco parses Linux system calls from the kernel at runtime, and asserts the stream against a powerful rules engine. 
-If a rule is violated a Falco alert is triggered. Read more about Falco [rules](rules)
+Falco는 런타임에 커널의 리눅스 시스템 호출을 분석하고, 강력한 규칙 엔진에 대한 스트림을 어썰션합니다.
+규칙이 위반될 경우, Falco 알림이 실행됩니다. 상세한 내용은 Falco [규칙](https://falco.org/docs/rules/)을 참고하세요.
 
  - Parse
  - Assert
  - Alert
 
-## What does Falco look for?
+## Falco는 무엇을 찾습니까?
 
-By default Falco ships with a mature set of rules that will check the kernel for unusual behavior such as
+기본적으로 Falco는 커널에서 비정상적인 동작을 확인하는 규칙을 제공합니다. 예를 들면,
 
- - Privilege escalation using privileged containers 
- - Namespace changes using tools like `setns` 
- - Read/Writes to well-known directories such as `/etc`, `/usr/bin`, `/usr/sbin`, etc
- - Creating symlinks 
- - Ownership and Mode changes 
- - Unexpected network connections or socket mutations
- - Spawned processes using `execve`
- - Executing shell binaries such as `sh`, `bash`, `csh`, `zsh`, etc
- - Executing SSH binaries such as `ssh`, `scp`, `sftp`, etc
- - Mutating Linux `coreutils` executables
- - Mutating login binaries 
- - Mutating `shadowutil` or `passwd` executables 
-    - `shadowconfig`
+ - 특권을 가진(Privileged) 컨테이너를 이용한 권한 에스컬레이션(Privilege escalation)
+ - `setns`와 같은 도구를 이용한 네임스페이스를 변경
+ - 잘 알려진 디렉토리(`/etc`, `/usr/bin`, `/usr/sbin` 등)에 읽기/쓰기
+ - 심볼릭링크를 생성
+ - 소유권(Ownership)과 권한(Mode)을 변경
+ - 예상치 못한 네트워크 연결 또는 소켓 변형
+ - `execve`를 이용한 프로세스 생성
+ - 쉘 바이너리(`sh`, `bash`, `csh`, `zsh` 등) 실행
+ - SSH 바이너리(`ssh`, `scp`, `sftp` 등) 실행
+ - 리눅스 `coreutils` 실행 파일 변형
+ - 로그인 바이너리 변형
+ - `shadowutil` 또는 `passwd` 실행 파일 변형
+	- `shadowconfig`
     - `pwck`
     - `chpasswd`
     - `getpasswd`
     - `change`
     - `useradd`
-    - etc
+    - 기타
 
-...and many more. 
+...이밖에도 많습니다.
 
-## What are Falco rules?
+## Falco 규칙은 무엇입니까?
 
-These are the items that Falco will assert against. They are defined in the Falco configuration, and represent the things you will be looking for on your system.
+Falco가 어썰션할 항목입니다. Falco 설정에 정의되어 있고, 시스템에서 찾고자 하는 것을 나타냅니다.
 
-See the section on [rules](rules) for more information on writing, managing, and deploying Falco rules.
+Falco 규칙 작성, 관리, 배포에 대한 자세한 정보는 [규칙](https://falco.org/docs/rules/)을 참고하세요.
 
-## What are Falco alerts?
+## Falco 알림은 무엇입니까?
 
-These are configurable downstream actions that can be as simple as logging to `STDOUT` or as complex as delivering a gRPC call to a client. 
+`STDOUT` 로깅을 남기는 것처럼 간단한 것부터 gRPC 호출을 클라이언트에 전달하는 것처럼 복잡한 것까지 설정할 수 있는 후속 조치입니다.
 
-See the section on [alerts](alerts) for more information on configuring, understanding, and developing Falco alerts.
+Falco 알림 설정, 이해, 개발에 대한 자세한 정보는 [알림](https://falco.org/docs/alerts/)을 참고하세요.
 
+## Falco 구성 요소
 
-## Falco Components 
+Falco는 3가지 주요 구성 요소로 이루어져 있습니다.
 
-Falco is composed of 3 main components
+ - 사용자 공간 프로그램
+ - [드라이버](https://falco.org/docs/event-sources/drivers/)
+ - [설정](https://falco.org/docs/configuration/)
 
- - Userspace program
- - [Driver](/docs/event-sources/drivers/)
- - [Configuration](configuration)
+### Falco 사용자 공간 프로그램
 
-### Falco userspace program
+CLI 도구인 `falco`입니다. 이는 사용자와 상호 작용하는 프로그램입니다. 사용자 공간 프로그램은 신호를 처리하고, Falco 드라이버에서 오는 정보를 분석하고, 알림을 담당합니다.
 
-This is the CLI tool `falco`. This is the program a user interacts with. The userspace program is responsible for handling signals, parsing information from a Falco driver, and alerting.
+### Falco 드라이버
 
-### Falco drivers
+Falco 드라이버 스펙을 준수하고 시스템 호출 스트림을 보낼 수 있는 하나의 소프트웨어입니다.
 
-This is a piece of software that adheres to the Falco driver spec and can send a stream of system call information.
+Falco는 드라이버 설치 없이는 실행할 수 없습니다.
 
-Falco cannot run without a driver installed.
+현재 Falco 프로젝트는 다음 드라이버를 지원합니다.
 
-Currently the Falco project has support for the following drivers
+ - (기본값) `libscap`와 `libsinsp` C++ 라이브러리로 빌드된 커널 모듈
+ - 동일한 모듈로 빌드된 BPF probe
+ - 사용자 공간 계측(Userspace instrumentation)
 
- - (Default) Kernel module built on `libscap` and `libsinsp` C++ libraries
- - BPF probe built from the same modules
- - Userspace instrumentation
+드라이버에 대한 자세한 정보는 [해당 페이지](/docs/event-sources/drivers/)를 참고하세요.
 
- Please read more about the drivers [here](/docs/event-sources/drivers/).
- 
-### Falco configuration 
+### Falco 설정
 
-This defines how Falco is run, what rules to assert, and how to perform alerts. See the section on [configuration](configuration) for more information on how to configure Falco. 
+Falco가 어떻게 실행되는지, 어떤 규칙을 어썰션하는지, 경고를 어떻게 실행할 것인지를 정의합니다. Falco를 설정하는 자세한 정보는 [설정](https://falco.org/docs/configuration/)을 참고하세요.
