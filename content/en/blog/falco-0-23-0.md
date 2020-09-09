@@ -24,10 +24,10 @@ Do you rather prefer using the docker images? No problem!
 ```bash
 docker pull falcosecurity/falco-no-driver:latest # The most recent version
 docker pull falcosecurity/falco-no-driver:0.23.0 # A specific version of Falco such as 0.23.0
-docker pull falcosecurity/falco-driver-loader:latest # The most recent version of falco-script-loader with the building toolchain
+docker pull falcosecurity/falco-driver-loader:latest # The most recent version of falco-driver-loader with the building toolchain
 docker pull falcosecurity/falco-driver-loader:0.23.0 # A specific version of falco-driver-loader such as 0.23.0 with the building toolchain
-docker pull falcosecurity/falco:latest # The most recent version with the falco-script-loader included
-docker pull falcosecurity/falco:0.23.0 # A specific version of Falco such as 0.23.0 with falco-script-loader included
+docker pull falcosecurity/falco:latest # The most recent version with the falco-driver-loader included
+docker pull falcosecurity/falco:0.23.0 # A specific version of Falco such as 0.23.0 with falco-driver-loader included
 ```
 
 **Please be aware that**: we now recommend that instead of using `falcosecurity/falco:latest` directly, you use the `falcosecurity/falco-driver-loader` image first, then
