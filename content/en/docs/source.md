@@ -168,6 +168,29 @@ cmake -DBUILD_BPF=ON ..
 make bpf
 ```
 
+## Alpine
+
+Since Alpine ships with `musl` instead of `glibc`, to build on Alpine, we need to pass the `-DMUSL_OPTIMIZED_BUILD=On` CMake option. 
+
+If that option is used along with the `-DUSE_BUNDLED_DEPS=On` option, then the final build will be 100% statically-linked and portable across different Linux distributions.
+
+### Dependencies
+
+```bash
+apk add g++ gcc cmake cmake make ncurses-dev git bash perl linux-headers autoconf automake m4 libtool elfutils-dev libelf-static patch binutils
+```
+
+### Build Falco
+
+```bash
+git clone https://github.com/falcosecurity/falco.git
+cd falco
+mkdir -p build
+cd build
+cmake -DUSE_BUNDLED_DEPS=On -DMUSL_OPTIMIZED_BUILD=On ..
+make falco
+```
+
 ## Dependencies
 
 By default Falco build bundles **most of** its runtime dependencies **dynamically**.
