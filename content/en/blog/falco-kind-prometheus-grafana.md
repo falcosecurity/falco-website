@@ -40,7 +40,7 @@ Note that in both cases, you have to make sure to set the correct CommonName. In
 ## Install Falco
 The official [Falco Helm Chart](https://github.com/falcosecurity/charts/tree/master/falco) is a straightforward way to deploy Falco. The chart adds Falco to all nodes in your cluster using a DaemonSet.
 
-Enable the falco chart repository:
+Enable the Falco charts repository:
 
 ```
 helm repo add falcosecurity https://falcosecurity.github.io/charts
@@ -55,25 +55,14 @@ helm install falco falcosecurity/falco \
 ```
 
 ## Install falco-exporter
-[falco-exporter](https://github.com/falcosecurity/falco-exporter) is the Prometheus metrics exporter for Falco output events. Again here, using [the provided Helm chart](https://github.com/falcosecurity/falco-exporter/blob/master/deploy/helm/falco-exporter) is the easiest way to deploy it.
+[falco-exporter](https://github.com/falcosecurity/falco-exporter) is the Prometheus metrics exporter for Falco output events. Again here, using [the provided Helm chart](https://github.com/falcosecurity/charts/tree/master/falco-exporter) is the easiest way to deploy it.
 
-So you only have to clone the [falco-exporter](https://github.com/falcosecurity/falco-exporter) repo and run helm install command:
+So you only have to run the helm install command:
 
 ```
-$ git clone https://github.com/falcosecurity/falco-exporter.git
-Cloning into 'falco-exporter'...
-remote: Enumerating objects: 178, done.
-remote: Counting objects: 100% (178/178), done.
-remote: Compressing objects: 100% (103/103), done.
-remote: Total 178 (delta 64), reused 129 (delta 38), pack-reused 0
-Receiving objects: 100% (178/178), 693.25 KiB | 1.92 MiB/s, done.
-Resolving deltas: 100% (64/64), done.
-
-$ cd falco-exporter
-
-$ helm install falco-exporter \
+helm install falco-exporter \ 
     --set-file certs.ca.crt=/tmp/certs/ca.crt,certs.client.key=/tmp/certs/client.key,certs.client.crt=/tmp/certs/client.crt \
-    ./deploy/helm/falco-exporter
+    falcosecurity/falco-exporter 
 ```
 
 ## Install Prometheus
@@ -191,5 +180,5 @@ You can find more information on generating sample events in [the official docum
 For a quick example, you can run the following command to begin generating events
 
 ```bash
-docker run -it --rm falcosecurity/falco-event-generator event_generator
+docker run -it --rm falcosecurity/event-generator run syscall --loop
 ```
