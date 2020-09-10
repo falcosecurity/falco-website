@@ -49,7 +49,7 @@ yum -y install kernel-devel-$(uname -r)
 make driver
 ```
 
-### Build eBFP driver
+### Build eBPF driver
 
 If you do not want to use the kernel module driver you can, alternatively, build the eBPF driver as follows.
 
@@ -156,7 +156,7 @@ In the build directory:
 make driver
 ```
 
-### Build eBFP driver
+### Build eBPF driver
 
 If you do not want to use the kernel module driver you can, alternatively, build the eBPF driver as follows.
 
@@ -189,6 +189,48 @@ mkdir -p build
 cd build
 cmake -DUSE_BUNDLED_DEPS=On -DMUSL_OPTIMIZED_BUILD=On ..
 make falco
+```
+
+## openSUSE
+
+### Dependencies
+
+```bash
+zypper -n install gcc gcc-c++ git-core cmake libjq-devel ncurses-devel yaml-cpp-devel libopenssl-devel libcurl-devel c-ares-devel protobuf-devel grpc-devel patch which automake autoconf libtool libelf-devel
+```
+
+### Build Falco
+
+```bash
+git clone https://github.com/falcosecurity/falco.git
+cd falco
+mkdir -p build
+cd build
+cmake -DUSE_BUNDLED_DEPS=ON ..
+make falco
+```
+
+More details [here](#build-directly-on-host).
+
+### Build kernel module driver
+
+In the build directory:
+
+```bash
+zypper -n install kernel-default-devel
+make driver
+```
+
+### Build eBPF driver
+
+If you do not want to use the kernel module driver you can, alternatively, build the eBPF driver as follows.
+
+In the build directory:
+
+```bash
+zypper -n install clang llvm
+cmake -DBUILD_BPF=ON ..
+make bpf
 ```
 
 ## Dependencies
