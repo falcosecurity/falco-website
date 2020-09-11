@@ -95,6 +95,38 @@ Alternatively, it is also possible to use a binary package as [explained below](
     yum erase falco
     ```
 
+### openSUSE {#suse}
+
+1. Trust the falcosecurity GPG key and configure the zypper repository:
+
+    ```shell
+    rpm --import https://falco.org/repo/falcosecurity-3672BA8F.asc
+    curl -s -o /etc/zypp/repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
+    ```
+
+2. Install kernel headers:
+
+    ```shell
+    zypper -n install kernel-default-devel
+    ```
+
+3. Install Falco:
+
+    ```shell
+    zypper -n install falco
+    ```
+    Falco, the kernel module driver, and a default configuration are now installed.
+    Falco is being ran as a systemd unit.
+
+    See [running](../running) for information on how to manage, run, and debug with Falco.
+
+
+4. Uninstall Falco:
+
+    ```shell
+    zypper rm falco
+    ```
+
 ### Linux generic (binary package) {#linux-binary}
 
 1. Download the latest binary:
