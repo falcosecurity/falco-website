@@ -4,7 +4,7 @@ title: Falco Examples
 
 Here are some examples of the types of behavior falco can detect.
 
-For a more comprehnsive set of examples, see the full rules file at `falco_rules.yaml`.
+For a more comprehensive set of examples, see the full rules file at `falco_rules.yaml`.
 
 ## A shell is run in a container
 
