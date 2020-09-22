@@ -40,6 +40,9 @@ Cards and Card content styles
             color: $muted-grey;
         }
     }
+    .card-text > ol {
+        list-style-type: none;
+    }
     .card-action {
         margin-top: 10px;
     }
