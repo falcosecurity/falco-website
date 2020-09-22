@@ -4,7 +4,7 @@
 {{ $isHome    := .IsHome }}
 {{ $isDocs    := eq .Section "docs" }}
 {{ $baseUrl   := site.BaseURL }}
-{{ $isThin    := or (.IsHome) (eq .Section "blog") }}
+{{ $isThin    := or (.IsHome) (eq .Section "blog")  (eq .Section "videos")}}
 <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
   {{ if $isThin }}<div class="container">{{ end }}
     <div class="navbar-brand">
