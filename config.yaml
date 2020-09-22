@@ -42,6 +42,10 @@ languages:
         - title: Action
           icon: fas fa-exclamation-circle
           text: Take action during an security violation. Build powerful response applications on the Falco APIs in the case of malicious behaviour.
+      featuredvideo:
+        title: Featured video
+        subtitle: Designing a gRPC Interface for Kernel Tracing with eBPF
+        youtubeVideoID: "kjOJfNDPVSo"
       syscalls:
         title: System calls deliver deep visibility
         summary: Falco efficiently leverages Extended Berkeley Packet Filter (eBPF), a secure mechanism, to capture system calls and gain deep visibility. By adding Kubernetes application context and Kubernetes API audit events, teams can understand who did what.
@@ -143,6 +147,10 @@ languages:
         - title: 利用最新的规则
           icon: scalable.png
           text: 使用来源于社区的恶意活动和CVE漏洞监测发出警报。
+      featuredvideo:
+        title: Featured video
+        subtitle: Designing a gRPC Interface for Kernel Tracing with eBPF
+        youtubeVideoID: "kjOJfNDPVSo"
       syscalls:
         title: 系统调用提供深入的可见性
         summary: Falco有效地利用Extended Berkeley Packet Filter (eBPF)，这一安全机制，来捕获系统调用并获得深入的可见性。通过添加Kubernetes应用程序上下文和Kubernetes API审计事件，团队可以了解谁做了什么。
@@ -246,6 +254,10 @@ languages:
         - title: アクション
           icon: fas fa-exclamation-circle
           text: セキュリティ違反時にアクションを実行します。悪意のある振る舞いが発生した場合に、Falco APIでパワフルなレスポンスアプリケーションを構築します。
+      featuredvideo:
+        title: Featured video
+        subtitle: Designing a gRPC Interface for Kernel Tracing with eBPF
+        youtubeVideoID: "kjOJfNDPVSo"
       syscalls:
         title: システムコールがディープな可視性をもたらす
         summary: Falcoは、セキュアな仕組みであるExtended Berkeley Packet Filter（eBPF）を効率的に活用して、システムコールをキャプチャし、ディープな可視性を獲得します。KubernetesアプリケーションコンテキストとKubernetes API auditイベントを追加することにより、チームは誰が何をしたかを理解できます。
