@@ -44,8 +44,20 @@ languages:
           text: Take action during an security violation. Build powerful response applications on the Falco APIs in the case of malicious behaviour.
       featuredvideo:
         title: Featured video
-        subtitle: Designing a gRPC Interface for Kernel Tracing with eBPF
-        youtubeVideoID: "kjOJfNDPVSo"
+        subtitle: "Show more videos"
+      videos:
+        - title: Designing a gRPC Interface for Kernel Tracing with eBPF
+          youtubeVideoID: "kjOJfNDPVSo"
+        - title: "Intro to Falco: Intrusion Detection for Containers"
+          youtubeVideoID: "rBqBrYESryY"
+        - title: "Keynote: Open Source Intrusion Detection for Containers at Shopify"
+          youtubeVideoID: "6pVci31Mb6Q"
+        - title: Cloud Native Runtime Security with Falco
+          youtubeVideoID: "Z4POV5IXnHQ"
+        - title: "Deep dive: Falco"
+          youtubeVideoID: "v9wYiGHwVrg"
+        - title: Intro to Falco
+          youtubeVideoID: "zgRFN3o7nJE"
       syscalls:
         title: System calls deliver deep visibility
         summary: Falco efficiently leverages Extended Berkeley Packet Filter (eBPF), a secure mechanism, to capture system calls and gain deep visibility. By adding Kubernetes application context and Kubernetes API audit events, teams can understand who did what.
@@ -148,9 +160,21 @@ languages:
           icon: scalable.png
           text: 使用来源于社区的恶意活动和CVE漏洞监测发出警报。
       featuredvideo:
-        title: Featured video
-        subtitle: Designing a gRPC Interface for Kernel Tracing with eBPF
-        youtubeVideoID: "kjOJfNDPVSo"
+        title: 精选视频
+        subtitle: "显示更多影片"
+      videos:
+        - title: Designing a gRPC Interface for Kernel Tracing with eBPF
+          youtubeVideoID: "kjOJfNDPVSo"
+        - title: "Intro to Falco: Intrusion Detection for Containers"
+          youtubeVideoID: "rBqBrYESryY"
+        - title: "Keynote: Open Source Intrusion Detection for Containers at Shopify"
+          youtubeVideoID: "6pVci31Mb6Q"
+        - title: Cloud Native Runtime Security with Falco
+          youtubeVideoID: "Z4POV5IXnHQ"
+        - title: "Deep dive: Falco"
+          youtubeVideoID: "v9wYiGHwVrg"
+        - title: Intro to Falco
+          youtubeVideoID: "zgRFN3o7nJE"
       syscalls:
         title: 系统调用提供深入的可见性
         summary: Falco有效地利用Extended Berkeley Packet Filter (eBPF)，这一安全机制，来捕获系统调用并获得深入的可见性。通过添加Kubernetes应用程序上下文和Kubernetes API审计事件，团队可以了解谁做了什么。
@@ -255,9 +279,21 @@ languages:
           icon: fas fa-exclamation-circle
           text: セキュリティ違反時にアクションを実行します。悪意のある振る舞いが発生した場合に、Falco APIでパワフルなレスポンスアプリケーションを構築します。
       featuredvideo:
-        title: Featured video
-        subtitle: Designing a gRPC Interface for Kernel Tracing with eBPF
-        youtubeVideoID: "kjOJfNDPVSo"
+        title: 注目のビデオ
+        subtitle: "他の動画を表示"
+      videos:
+        - title: Designing a gRPC Interface for Kernel Tracing with eBPF
+          youtubeVideoID: "kjOJfNDPVSo"
+        - title: "Intro to Falco: Intrusion Detection for Containers"
+          youtubeVideoID: "rBqBrYESryY"
+        - title: "Keynote: Open Source Intrusion Detection for Containers at Shopify"
+          youtubeVideoID: "6pVci31Mb6Q"
+        - title: Cloud Native Runtime Security with Falco
+          youtubeVideoID: "Z4POV5IXnHQ"
+        - title: "Deep dive: Falco"
+          youtubeVideoID: "v9wYiGHwVrg"
+        - title: Intro to Falco
+          youtubeVideoID: "zgRFN3o7nJE"
       syscalls:
         title: システムコールがディープな可視性をもたらす
         summary: Falcoは、セキュアな仕組みであるExtended Berkeley Packet Filter（eBPF）を効率的に活用して、システムコールをキャプチャし、ディープな可視性を獲得します。KubernetesアプリケーションコンテキストとKubernetes API auditイベントを追加することにより、チームは誰が何をしたかを理解できます。

@@ -1,0 +1,35 @@
+{{- $videos := .Site.Params.videos }}
+{{ $hasVideos := gt (len $videos) 0 }}
+
+<section class="section">
+  <div class="container">
+    {{ if $hasVideos }}
+    <div class="columns is-multiline is-variable is-2">
+      {{ range $videos }}
+      <div class="column is-full">
+        <a target="_blank" href="https://www.youtube.com/watch?v={{ .youtubeVideoID }}">
+          <div class="card">
+            <div class="card-content content">
+              <h2 class="has-text-primary">
+                {{ .title }}
+              </h2>
+
+              <iframe width="100%" height="500" src="https://www.youtube-nocookie.com/embed/{{ .youtubeVideoID }}"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            </div>
+          </div>
+        </a>
+      </div>
+      {{ end }}
+    </div>
+    {{ else }}
+    <div class="content">
+      <h4>
+        No videos just yet. Stay tuned!
+      </h4>
+    </div>
+    {{ end }}
+  </div>
+</section>
