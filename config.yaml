@@ -46,12 +46,12 @@ languages:
         title: Featured video
         subtitle: "Show more videos"
       videos:
+        - title: "Keynote: Open Source Intrusion Detection for Containers at Shopify"
+          youtubeVideoID: "6pVci31Mb6Q"
         - title: Designing a gRPC Interface for Kernel Tracing with eBPF
           youtubeVideoID: "kjOJfNDPVSo"
         - title: "Intro to Falco: Intrusion Detection for Containers"
           youtubeVideoID: "rBqBrYESryY"
-        - title: "Keynote: Open Source Intrusion Detection for Containers at Shopify"
-          youtubeVideoID: "6pVci31Mb6Q"
         - title: Cloud Native Runtime Security with Falco
           youtubeVideoID: "Z4POV5IXnHQ"
         - title: "Deep dive: Falco"
@@ -163,12 +163,12 @@ languages:
         title: 精选视频
         subtitle: "显示更多影片"
       videos:
+        - title: "Keynote: Open Source Intrusion Detection for Containers at Shopify"
+          youtubeVideoID: "6pVci31Mb6Q"
         - title: Designing a gRPC Interface for Kernel Tracing with eBPF
           youtubeVideoID: "kjOJfNDPVSo"
         - title: "Intro to Falco: Intrusion Detection for Containers"
           youtubeVideoID: "rBqBrYESryY"
-        - title: "Keynote: Open Source Intrusion Detection for Containers at Shopify"
-          youtubeVideoID: "6pVci31Mb6Q"
         - title: Cloud Native Runtime Security with Falco
           youtubeVideoID: "Z4POV5IXnHQ"
         - title: "Deep dive: Falco"
@@ -282,12 +282,12 @@ languages:
         title: 注目のビデオ
         subtitle: "他の動画を表示"
       videos:
+        - title: "Keynote: Open Source Intrusion Detection for Containers at Shopify"
+          youtubeVideoID: "6pVci31Mb6Q"
         - title: Designing a gRPC Interface for Kernel Tracing with eBPF
           youtubeVideoID: "kjOJfNDPVSo"
         - title: "Intro to Falco: Intrusion Detection for Containers"
           youtubeVideoID: "rBqBrYESryY"
-        - title: "Keynote: Open Source Intrusion Detection for Containers at Shopify"
-          youtubeVideoID: "6pVci31Mb6Q"
         - title: Cloud Native Runtime Security with Falco
           youtubeVideoID: "Z4POV5IXnHQ"
         - title: "Deep dive: Falco"
