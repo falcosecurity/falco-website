@@ -180,6 +180,6 @@ The `pdig` tool is the most unique of all the drivers, and enables functionality
 | IBM Cloud            | Kernel Module               | [Helm Chart](https://falco.org/docs/third-party/#helm)                                                 |
 | OpenShift            | Kernel Module               | [Helm Chart](https://falco.org/docs/third-party/#helm)                                                 |
 | AWS ECS              | pdig                        | [pdig](https://github.com/falcosecurity/pdig) [falco-trace](https://github.com/kris-nova/falco-trace)  |
-| AWS EKS (Fargate)    | pdig                        | [pdig](https://github.com/falcosecurity/pdig) [falco-trace](https://github.com/kris-nova/falco-trace)  |
+| AWS EKS (Fargate)    | pdig                        | [pdig](https://github.com/falcosecurity/pdig) [falco-inject](https://github.com/fntlnz/falco-inject)  |
 | ARM/Raspberry PI     | eBPF Probe *Kernel specific |                                                                                                        |
 
