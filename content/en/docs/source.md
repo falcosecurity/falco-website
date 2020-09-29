@@ -422,16 +422,6 @@ To load the locally built version, assuming you are in the `build` dir, use:
 insmod driver/falco.ko
 ```
 
-```bash
-rmmod falco
-```
-
-To load the locally built version, assuming you are in the `build` dir, use:
-
-```bash
-insmod driver/falco.ko
-```
-
 ## Run falco
 
 Once Falco is built and the kernel module is loaded, assuming you are in the `build` dir, you can run falco as:
