@@ -30,6 +30,7 @@
 
 > /area documentation
 
+> /area videos
 
 **What this PR does / why we need it**:
 
