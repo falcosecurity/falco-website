@@ -1,7 +1,7 @@
 - name: rules_file
   type: List
   description: |
-    The location of the rules file(s). This can contain one or more paths to separate rules files. The following examples are equivalent:
+    The location of the rules file(s). This may contain one or more paths to separate rules file(s). The following examples are equivalent:
 
     ```yaml
     rules_file:
@@ -11,11 +11,11 @@
     rules_file: [path1, path2]
     ```
 
-    You can also specify multiple rules files on the command line via one or more `-r` options.
+    You could also specify multiple rules files on the command line via one or more `-r` options.
 - name: time_format_iso_8601
   type: Boolean
   description: |
-    If `true` (default is `false`), the times displayed in log messages and output messages will be in ISO 8601. By default, times are displayed in the local time zone, as governed by /etc/localtime.
+    If `true` (default is `false`), the times displayed in log messages and output messages will be in ISO 8601. By default, times are displayed in the local time zone , as governed by /etc/localtime.
 - name: json_output
   type: Boolean
   description: Whether to use JSON output for alert messages.
@@ -26,7 +26,7 @@
 - name: log_stderr
   type: Boolean
   description: |
-    If `true`, log messages describing Falco's activity will be logged to stderr. Note these are *not* alert messages---these are log messages for Falco itself.
+    If `true`, log messages that  describe Falco's activity will be logged to stderr. Note these are *not* alert messages---these are log messages for Falco itself.
 - name: log_syslog
   type: Boolean
   description: |
