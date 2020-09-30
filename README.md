@@ -2,7 +2,7 @@
 
 ## Contributing logos
 
-In order to contribute a logo you must meet one of the following adopter types.
+In order to contribute a logo you must Follw one of the following adopter types.
 
  - End-user, with a contribution to [ADOPTERS.md](https://github.com/falcosecurity/falco/blob/master/ADOPTERS.md)
  - Vendor, with a contribution to [ADOPTERS.md](https://github.com/falcosecurity/falco/blob/master/ADOPTERS.md)
