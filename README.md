@@ -1,4 +1,4 @@
-# falco-website
+# falco-website - An Epitome Project
 
 ## Contributing logos
 
