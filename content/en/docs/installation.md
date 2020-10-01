@@ -109,8 +109,8 @@ Alternatively, it is also possible to use a binary package as [explained below](
     tar -xvf falco-{{< latest >}}-x86_64.tar.gz
     cp -R falco-{{< latest >}}-x86_64/* /
     ```
+
 3. Install the following dependencies:
-    - `libyaml`
     - kernel headers for your distribution
 
 4. Install the driver as explained [below](#install-driver).
