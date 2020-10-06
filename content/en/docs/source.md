@@ -206,7 +206,7 @@ git clone https://github.com/falcosecurity/falco.git
 cd falco
 mkdir -p build
 cd build
-cmake -DUSE_BUNDLED_DEPS=ON ..
+cmake ..
 make falco
 ```
 
