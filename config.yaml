@@ -405,8 +405,8 @@ languages:
           icon: fas fa-exclamation-circle
           text: 보안 위반 시 조치를 취합니다. Falco API를 이용해 악의적인 행동에 대해 강력한 대응 애플리케이션을 구축합니다.
       featuredvideo:
-        title: 인기있는 영상
-        subtitle: "더 많은 비디오보기"
+        title: 인기 있는 영상
+        subtitle: "더 많은 영상 보기"
       videos:
         - title: "Falco: runtime security analysis through syscalls"
           youtubeVideoID: "8o804koab2g"
@@ -479,13 +479,7 @@ languages:
         privacyLink: https://www.linuxfoundation.org/privacy/
     menu:
       navbar:
-        - name: 왜 Falco인가?
-          url: "/#whyfalco"
-          weight: 2
-        - name: 시작하기
-          url: "/#resources"
-          weight: 3
-        - name: 문서화
+        - name: 문서
           url: "/docs"
           weight: 4
         # - name: 블로그
