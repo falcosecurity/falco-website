@@ -84,7 +84,7 @@ apt install git cmake build-essential libncurses-dev pkg-config autoconf libtool
 You can skip this on Ubuntu 18.04.
 
 ```bash
-apt install libssl-dev libc-ares-dev libprotobuf-dev protobuf-compiler libjq-dev libgrpc++-dev protobuf-compiler-grpc libcurl4-openssl-dev
+apt install libssl-dev libc-ares-dev libprotobuf-dev protobuf-compiler libjq-dev libgrpc++-dev protobuf-compiler-grpc libcurl4-openssl-dev libyaml-cpp-dev
 ```
 
 If you are on Ubuntu 18.04, instead of `cmake ..` do `cmake -DUSE_BUNDLED_DEPS=ON ..`.
