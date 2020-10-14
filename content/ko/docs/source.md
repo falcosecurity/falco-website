@@ -84,7 +84,7 @@ apt install git cmake build-essential libncurses-dev pkg-config autoconf libtool
 Ubuntu 18.04에서는 이 단계를 건너뛸 수 있다.
 
 ```bash
-apt install libssl-dev libc-ares-dev libprotobuf-dev protobuf-compiler libjq-dev libgrpc++-dev protobuf-compiler-grpc libcurl4-openssl-dev
+apt install libssl-dev libc-ares-dev libprotobuf-dev protobuf-compiler libjq-dev libgrpc++-dev protobuf-compiler-grpc libcurl4-openssl-dev libyaml-cpp-dev
 ```
 
 Ubuntu 18.04를 사용한다면, `cmake ..` 대신 `cmake -DUSE_BUNDLED_DEPS=ON ..` 을 사용한다.
