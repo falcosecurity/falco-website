@@ -158,7 +158,7 @@ docker run --rm -i -t \
     falcosecurity/falco:latest
 ```
 
-기타 구성 가능한 옵션:
+기타 구성 가능한 옵션은 다음과 같다.
 
 - `DRIVER_REPO` - [드라이버 설치하기](https://falco.org/docs/installation/#install-driver) 섹션을 확인한다.
 - `SKIP_DRIVER_LOADER` - `falcosecurity/falco` 이미지가 시작될 때 `falco-driver-loader` 실행을 방지하려면 이 환경변수를 설정한다. 드라이버가 다른 방법으로 호스트에 이미 설치된 경우 유용하다.
