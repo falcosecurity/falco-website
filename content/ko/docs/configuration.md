@@ -9,7 +9,7 @@ notoc: true
 
 이것은 팔코 데몬의 구성 옵션이다.
 
-이러한 옵션을 보려면 [규칙](../rules) 또는 [알림](../alerts)을 방문하자.
+이러한 옵션을 보려면 [규칙](https://falco.org/docs/rules/) 또는 [알림](https://falco.org/docs/alerts/)을 방문하자.
 
 {{< /info >}}
 
