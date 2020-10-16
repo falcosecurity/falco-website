@@ -42,16 +42,16 @@
   description: 로드(load) 및 실행할 최소 규칙의 우선순위 수준. 이 수준보다 더 심각한 우선 순위를 가진 모든 규칙이 불려지고 실행된다.
 - name: syscall_event_drops
   type: |
-    List containing the following sub-keys:
+    다음의 하위 키가 포함된 목록:
 
-    * `actions`: A list containing one or more of these boolean sub-keys:
-      * `ignore`: do nothing. If an empty list is provided, ignore is assumed.
-      * `log`: log a CRITICAL message noting that the buffer was full.
-      * `alert`: emit a Falco alert noting that the buffer was full.
-      * `exit`: exit Falco with a non-zero rc.
-    * `rate`: The steady-state rate at which actions can be taken. Units of actions/second. Default 0.03333 (one action per 30 seconds).
-    * `max_burst`: The maximum number of actions that can be taken before the steady-state rate is applied.
-  description: Controls [Actions For Dropped System Call Events](https://falco.org/docs/event-sources/dropped-events/).
+    * `actions`: 다음 부울 하위 키 중 하나 이상을 포함하는 목록:
+      * `ignore`: 아무것도 하지 않는다. 빈 목록이 제공되면 무시로 간주된다.
+      * `log`: 버퍼가 꽉 찼음을 알리는 CRITICAL 메시지를 기록한다.
+      * `alert`: 버퍼가 꽉 찼음을 알리는 팔코 알림을 내보낸다.
+      * `exit`: 0이 아닌 rc 값으로 팔코를 종료한다.
+    * `rate`: 조치를 취할 수 있는 정상 상태의 비율. 초당 작업 단위이며, 기본값은 0.03333(30초당 하나의 작업)이다.
+    * `max_burst`: 정상 상태 비율이 적용되기 전에 취할 수 있는 최대 조치의 수이다.
+  description: [삭제된 시스템 호출 이벤트에 대한 작업](https://falco.org/docs/event-sources/dropped-events/)을 제어한다.
 - name: buffered_outputs
   type: 불리언
   description: 아래 출력 채널 중 하나에 대한 출력이 버퍼링 되는지의 여부. 기본 값은 false 이다.
