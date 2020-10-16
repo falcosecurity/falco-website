@@ -11,7 +11,7 @@ title: 팔코 알림
 * HTTP[s] 엔드포인트
 * gRPC API를 경유하는 클라이언트
 
-채널은 팔코 구성 파일인 `falco.yaml` 을 통하여 구성된다. 자세한 내용은 [팔코 설정](../configuration)페이지를 참조한다. 각 채널에 대한 세부 정보는 다음과 같다.
+채널은 팔코 구성 파일인 `falco.yaml` 을 통하여 구성된다. 자세한 내용은 [팔코 설정](https://falco.org/docs/configuration/)페이지를 참조한다. 각 채널에 대한 세부 정보는 다음과 같다.
 
 ## 표준 출력
 
