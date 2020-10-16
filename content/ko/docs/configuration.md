@@ -23,5 +23,5 @@ notoc: true
 ## 현재의 설정 옵션들
 
 
-[comment]: <> (@kris-nova: This data is loaded from the YAML file in data/en/config.yaml)
+[comment]: <> (@kris-nova: This data is loaded from the YAML file in data/ko/config.yaml)
 {{< config >}}
