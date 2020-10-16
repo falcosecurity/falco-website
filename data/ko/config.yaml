@@ -43,7 +43,6 @@
 - name: syscall_event_drops
   type: |
     다음의 하위 키가 포함된 목록:
-
     * `actions`: 다음 부울 하위 키 중 하나 이상을 포함하는 목록:
       * `ignore`: 아무것도 하지 않는다. 빈 목록이 제공되면 무시로 간주된다.
       * `log`: 버퍼가 꽉 찼음을 알리는 CRITICAL 메시지를 기록한다.
