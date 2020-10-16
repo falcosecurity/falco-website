@@ -51,7 +51,7 @@
       * `exit`: 0이 아닌 rc 값으로 팔코를 종료한다.
     * `rate`: 조치를 취할 수 있는 정상 상태의 비율. 초당 작업 단위이며, 기본값은 0.03333(30초당 하나의 작업)이다.
     * `max_burst`: 정상 상태 비율이 적용되기 전에 취할 수 있는 최대 조치의 수이다.
-  description: Controls [Actions For Dropped System Call Events](https://falco.org/docs/event-sources/dropped-events/).
+  description: 삭제된 [시스템 호출 이벤트에 대한 작업](https://falco.org/docs/event-sources/dropped-events/) 의 제어.
 - name: buffered_outputs
   type: 불리언
   description: 아래 출력 채널 중 하나에 대한 출력이 버퍼링 되는지의 여부. 기본 값은 false 이다.
