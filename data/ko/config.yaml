@@ -51,7 +51,7 @@
       * `exit`: exit Falco with a non-zero rc.
     * `rate`: The steady-state rate at which actions can be taken. Units of actions/second. Default 0.03333 (one action per 30 seconds).
     * `max_burst`: The maximum number of actions that can be taken before the steady-state rate is applied.
-  description: Controls [Actions For Dropped System Call Events](../event-sources/dropped-events/).
+  description: Controls [Actions For Dropped System Call Events](https://falco.org/docs/event-sources/dropped-events/).
 - name: buffered_outputs
   type: 불리언
   description: 아래 출력 채널 중 하나에 대한 출력이 버퍼링 되는지의 여부. 기본 값은 false 이다.
