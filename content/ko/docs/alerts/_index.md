@@ -118,7 +118,7 @@ program_output:
   program: "nc host.example.com 1234"
 ```
 
-네트워크 연결을 지속적으로 유지하려는 경우 `keep_alive: true` 를 사용하도록 한다.
+네트워크 연결을 지속적으로 유지하려는 경우 `keep_alive: true` 를 사용한다.
 
 ## HTTP[s] 출력: HTTP[s] 엔드 포인트에 알림 보내기
 
