@@ -269,7 +269,7 @@ Tag | Description
 `container` | The rule *only* works inside containers
 `cis` | The rule is related to the CIS Docker benchmark
 `users` | The rule relates to management of users or changing the identity of a running process
-`network` |Tthe rule relates to network activity
+`network` |The rule relates to network activity
 
 Rules can have multiple tags if they relate to multiple of the above. Every rule in the falco ruleset currently has at least one tag.
 
