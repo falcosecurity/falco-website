@@ -79,7 +79,7 @@ container.id != host and proc.name = bash
 
 이 매크로를 정의하면 위 규칙의 조건을 `in_container and proc.name = bash` 로 다시 작성할 수 있다.
 
-규칙 및 매크로의 더 많은 예에 대하여는 [기본 매크로](./default-macros) 또는 `rules/falco_rules.yaml` 파일에 대한 문서를 참조하라.
+규칙 및 매크로의 더 많은 예에 대하여는 [기본 매크로](https://falco.org/docs/rules/default-macros/) 또는 `rules/falco_rules.yaml` 파일에 대한 문서를 참조하라.
 
 ## 리스트
 
