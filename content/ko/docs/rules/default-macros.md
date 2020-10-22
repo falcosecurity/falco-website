@@ -50,7 +50,7 @@ weight: 2
   condition: evt.type in (rename, renameat)
 ```
 
-### 새로운 디렉토리가 생성
+### 새로운 디렉토리가 생성됨
 
 ```yaml
 - macro: mkdir
