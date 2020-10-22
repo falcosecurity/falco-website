@@ -40,7 +40,7 @@ If a rules file has an `engine_version` greater than the Falco engine version, t
 `condition` | yes | 규칙과 일치하는지 확인하기 위해 이벤트에 적용되는 필터링 표현식 |
 `desc` | yes | 규칙이 감지하는 내용에 대한 자세한 설명 |
 `output` | yes | [출력 형식 구문](http://www.sysdig.com/wiki/sysdig-user-guide/#output-formatting)에 따라 일치하는 이벤트가 발생하는 경우, 출력되어야 하는 메세지를 지정 |
-`priority` | yes | 이벤트의 심각도에 대한, 대소문자를 구분하지 않는 표현. 다음 중 하나여야 한다: `emergency`, `alert`, `critical`, `error`, `warning`, `notice`, `informational`, `debug`. |
+`priority` | yes | 이벤트의 심각도에 대한, 대소문자를 구분하지 않는 표현. 다음 중 하나여야 한다. `emergency`, `alert`, `critical`, `error`, `warning`, `notice`, `informational`, `debug`. |
 `enabled` | no | `false` 로 설정하면, 어떠한 이벤트에도 규칙이 로드되지 않으며 일치하지도 않는다. | `true`
 `tags` | no | 규칙에 적용된 태그 목록(자세한 내용은 [아래](#tags)). |
 `warn_evttypes` | no | `false` 로 설정하면, 팔코는 이벤트 유형이 없는 규칙과 관련된 경고를 표시하지 않는다(자세한 내용은 [아래](#규칙-조건의-모범-사례)). | `true`
