@@ -48,7 +48,7 @@ If a rules file has an `engine_version` greater than the Falco engine version, t
 
 ## 조건
 
-규칙의 핵심 부분은 _condition_ 필드이다. 조건은 단순히 Sysdig [필터 구문](http://www.sysdig.com/wiki/sysdig-user-guide/#filtering)을 사용하여 표현된 Sysdig 이벤트에 대한 부울 술어이다. 모든 Sysdig 필터는 유효한 팔코 조건(아래에서 설명하는 특정 제외된 시스템 호출 제외)이다. 또한 팔코 조건에는 매크로 용어가 포함될 수 있다(이 기능은 Sysdig 구문에는 존재하지 않는다.)
+규칙의 핵심 부분은 _condition_ 필드이다. 조건은 단순히 Sysdig [필터 구문](http://www.sysdig.com/wiki/sysdig-user-guide/#filtering)을 사용하여 표현된 Sysdig 이벤트에 대한 부울 술어이다. 모든 Sysdig 필터는 유효한 팔코 조건(아래에서 설명하는 특정 제외된 시스템 호출 제외)이다. 또한 팔코 조건에는 매크로 용어가 포함될 수 있다(이 기능은 Sysdig 구문에는 존재하지 않는다).
 
 다음은 bash 셸이 컨테이너 내부에서 실행될 때마다 알리는 조건의 예이다.
 
