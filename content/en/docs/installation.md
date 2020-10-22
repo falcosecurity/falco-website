@@ -124,7 +124,7 @@ The easiest way to install the driver is using the `falco-driver-loader` script.
 By default, it first tries to locally build the kernel module with `dkms`. If not possible, then it tries to download a prebuilt one into `~/.falco/`. If a kernel module is found, then it gets inserted.
 
 In case you want to install the eBPF probe driver, run `falco-driver-loader bpf`.
-It first tries to build the eBPF probe locally, otherwise to download a prebuilt into into `~/.falco/`.
+It first tries to build the eBPF probe locally, otherwise to download a prebuilt into `~/.falco/`.
 
 Configurable options:
 
