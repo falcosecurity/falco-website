@@ -25,7 +25,7 @@ weight: 2
 
 ### 팔코 규칙 파일 버저닝
 
-팔코에 포함된 팔코 규칙 파일에는 이 규칙 파일을 읽는 데 필요한 최소 엔진 버전을 지정하는 새로운 최상위 객체인 `required_engine_version: N`  이 포함되어 있다. 포함되지 않는 경우 규칙파일을 읽을 때 버전을 확인하지 않는다.
+팔코에 포함된 팔코 규칙 파일에는 이 규칙 파일을 읽는 데 필요한 최소 엔진 버전을 지정하는 새로운 최상위 객체인 `required_engine_version: N` 이 포함되어 있다. 포함되지 않는 경우 규칙 파일을 읽을 때 버전을 확인하지 않는다.
 
 규칙 파일의 `engine_version` 이 팔코 엔진 버전보다 큰 경우 규칙 파일이 로드되고 오류가 반환 된다.
 If a rules file has an `engine_version` greater than the Falco engine version, the rules file is be loaded and an error is returned.
