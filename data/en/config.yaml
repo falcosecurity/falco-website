@@ -134,27 +134,32 @@
     List containing the following sub-keys:
 
     * `enabled: [true|false]`
-    * `bind_address`: [address:port|unix://<path>.sock]
-    * `threadiness`: <integer>
+    * `bind_address: [unix://<path>.sock|address:port]`
+    * `threadiness: <integer>`
     * `private_key: <path>`
     * `cert_chain: <path>`
     * `root_certs: <path>`
   description: |
-    If `enabled` is set to `true`, Falco will embed a gRPC server to expose its gRPC API. The default is false
+    If `enabled` is set to `true`, Falco will embed a gRPC server to expose its gRPC API. The default is `false`.
 
-    The gRPC server can only be used with [mutual authentication](https://en.wikipedia.org/wiki/Mutual_authentication) between the clients and the server using TLS certificates. How to generate the certificates is [documented here](/docs/grpc/#generate-valid-ca).
+    Falco supports running a gRPC server with two main binding types:
 
-    Please always remember that the only common thing between server and clients is the root certificate. Every client will  need to generate their own certificates signed by the same root CA as the server.
+    * Over a local unix socket with no authentication
+    * Over the network with mandatory mutual TLS authentication (mTLS)
+    
+    `bind_address` specifies either the unix socket path or the address and port on which the gRPC server will listen. The default is `unix:///var/run/falco.sock`.
 
-    `bind_address` specifies the address and port on which the gRPC server will listen. The default is 0.0.0.0:5060
+    `threadiness` defines the number of threads to use to serve gRPC requests. When `threadiness` is `0`, Falco automatically guesses it depending on the number of online cores. The default is `0`.
 
-    `threadiness` defines the number of threads to use to serve gRPC requests. It will also affect the number of contexts with a 10x factor per threadiness unit. The default is 8
+    The gRPC server over the network can only be used with [mutual authentication](https://en.wikipedia.org/wiki/Mutual_authentication) between the clients and the server using TLS certificates, and the following options should be provided:
 
-    `private_key` path of the private key for server authentication. The default is /etc/falco/certs/server.key
+    `private_key` path of the private key for server authentication. The default is `/etc/falco/certs/server.key`.
 
-    `cert_chain` path of the public cert for server authentication. The default is /etc/falco/certs/server.crt
+    `cert_chain` path of the public cert for server authentication. The default is `/etc/falco/certs/server.crt`.
 
-    `root_certs` path of the CA certificate (or chain) common between the server and all the clients. The default is /etc/falco/certs/ca.crt
+    `root_certs` path of the CA certificate (or chain) common between the server and all the clients. The default is `/etc/falco/certs/ca.crt`.
+    
+    How to generate the certificates is [documented here](/docs/grpc/#generate-valid-ca). Please always remember that the only common thing between server and clients is the root certificate. Every client will need to generate their own certificates signed by the same root CA as the server.
 
 - name: grpc_output
   type: |
@@ -162,4 +167,4 @@
 
     * `enabled: [true|false]`
   description: |
-    If `enabled` is set to `true`, Falco will start collecting outputs for the gRPC server. It's important to consume them with an output client. Example of output client [here](https://github.com/falcosecurity/client-go/tree/master/examples/output)
+    If `enabled` is set to `true`, Falco will start collecting outputs for the gRPC server. It's important to consume them with an output client. Example of output client [here](https://github.com/falcosecurity/client-go/tree/master/examples/output).
