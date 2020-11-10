@@ -27,7 +27,7 @@ You can read more about running Falco with Docker in the [docs](https://falco.or
 
 When you install Falco, you will either use a Kernel module, an eBPF probe or userspace instrumentation driver as described in the [documentation](https://falco.org/docs/event-sources/drivers/).
 
-As a service to our community, the [Falco Infrastructure WG](https://) publishes pre-built drivers for all the current driver versions using the [driverkit build grid](https://github.com/falcosecurity/test-infra/tree/master/driverkit).
+As a service to our community, the [Falco Infrastructure WG](https://lists.cncf.io/g/cncf-falco-dev/message/137) publishes pre-built drivers for all the current driver versions using the [driverkit build grid](https://github.com/falcosecurity/test-infra/tree/master/driverkit).
 
 Due to a spike in adoption in the month of October 2020, we had to come up with a better strategy for distributing our pre-built drivers.
 
