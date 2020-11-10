@@ -29,7 +29,7 @@ When you install Falco, you will either use a Kernel module, an eBPF probe or us
 
 As a service to our community, the [Falco Infrastructure WG](https://) publishes pre-built drivers for all the current driver versions using the [driverkit build grid](https://github.com/falcosecurity/test-infra/tree/master/driverkit).
 
-Due to a spike in adoption in the month of October 2020, we had to come with a better strategy for distributing our pre-built drivers.
+Due to a spike in adoption in the month of October 2020, we had to come up with a better strategy for distributing our pre-built drivers.
 
 ![Spike in Falco drivers adoption](https://raw.githubusercontent.com/falcosecurity/falco/662c82b82a1f8cbc65505f8240c1f21872c1669d/proposals/20201025-drivers-storage-s3_downloads.png)
 
