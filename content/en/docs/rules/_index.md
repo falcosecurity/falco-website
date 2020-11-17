@@ -114,6 +114,8 @@ Lists *can* contain other lists.
 
 If you use multiple Falco rules files, you might want to append new items to an existing list, rule, or macro. To do that, define an item with the same name as an existing item and add an `append: true` attribute to the list. When appending lists, items are added to the **end** of the list. When appending rules/macros, the additional text is appended to the condition: field of the rule/macro.
 
+Note that when appending to lists, rules or macros, the order of the rule configuration files matters! For example if you append to an existing default rule (e.g. `Terminal shell in container`), you must ensure your custom configuration file (e.g. `/etc/falco/rules.d/custom-rules.yaml`) is loaded **after** the default configuration file (`/etc/falco/falco_rules.yaml`). This can be configured with multiple `-r` parameters in the right order, directly inside the falco configuration file (`falco.yaml`) via `rules_file` or if you use the official Helm chart, via the `falco.rulesFile` value.
+
 ### Examples
 
 In all of the examples below, it's assumed one is running Falco via `falco -r /etc/falco/falco_rules.yaml -r /etc/falco/falco_rules.local.yaml`, or has the default entries for `rules_file` in falco.yaml, which has `/etc/falco/falco.yaml` first and `/etc/falco/falco_rules.local.yaml` second.
@@ -211,6 +213,44 @@ Remember that when appending rules and macros, the text of the second rule/macro
 Should `proc.name=nginx` be interpreted as relative to the `and proc.name=apache`, that is to allow either apache/nginx to open files, or relative to the `evt.type=open`, that is to allow apache to open files or to allow nginx to do anything?
 
 In cases like this, be sure to scope the logical operators of the original condition with parentheses when possible, or avoid appending conditions when not possible.
+
+## Disable Default Rules
+Even though falco provides a quite powerful default ruleset, you sometimes need to disable some of these default rules since they do not work properly in your environment. Luckily falco offers you multiple possibilities to do so.
+
+### Via existing consider_* Macros
+Most of the default rules offer some kind of `consider_*` macros which are already part of the rule conditions. These `consider_*` macros are usually set to `(never_true)` or `(always_true)` which basically enables or disabled the regarding rule. Now if you want to enable a by default disabled rule (e.g. `Unexpected outbound connection destination`), you just have to override the rule's `consider_*` macro (`consider_all_outbound_conns` in this case) inside your custom falco configuration.
+
+Example for your custom falco configuration (note the `(always_true)` condition):
+```yaml
+- macro: consider_all_outbound_conns
+  condition: (always_true)
+```
+
+Please note again that the order of the specified configuration file matters! The last defined macro with the same name wins.
+
+### Via Falco Parameters
+Falco offers the following parameters to limit which default rules should be enabled/used and which not:
+```bash
+-D <substring>                Disable any rules with names having the substring <substring>. Can be specified multiple times.
+
+-T <tag>                      Disable any rules with a tag=<tag>. Can be specified multiple times.
+                               Can not be specified with -t.
+-t <tag>                      Only run those rules with a tag=<tag>. Can be specified multiple times.
+                               Can not be specified with -T/-D.
+```
+
+These parameters can also be specified as Helm chart value (`extraArgs`) if you are deploying Falco via the official Helm chart.
+
+### Via Custom Rule Definition
+Last but not least, it's also possible to just disable a by default enabled rule using the `append: true` and `enabled: false` rule properties in combination. Here an example to disable the `User mgmt binaries` default rule:
+
+```yaml
+- rule: User mgmt binaries
+  append: true
+  enabled: false
+```
+
+This is especially useful for rules which do not provide a `consider_*` macro in it's default condition. Again, ensure the falco configuration files are loaded in the right order.
 
 ## Rule Priorities
 
