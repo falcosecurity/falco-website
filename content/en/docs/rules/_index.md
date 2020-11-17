@@ -217,7 +217,7 @@ In cases like this, be sure to scope the logical operators of the original condi
 ## Disable Default Rules
 Even though falco provides a quite powerful default ruleset, you sometimes need to disable some of these default rules since they do not work properly in your environment. Luckily falco offers you multiple possibilities to do so.
 
-### Via existing consider_* Macros
+### Via existing Macros
 Most of the default rules offer some kind of `consider_*` macros which are already part of the rule conditions. These `consider_*` macros are usually set to `(never_true)` or `(always_true)` which basically enables or disabled the regarding rule. Now if you want to enable a by default disabled rule (e.g. `Unexpected outbound connection destination`), you just have to override the rule's `consider_*` macro (`consider_all_outbound_conns` in this case) inside your custom falco configuration.
 
 Example for your custom falco configuration (note the `(always_true)` condition):
@@ -235,6 +235,7 @@ Falco offers the following parameters to limit which default rules should be ena
 
 -T <tag>                      Disable any rules with a tag=<tag>. Can be specified multiple times.
                                Can not be specified with -t.
+
 -t <tag>                      Only run those rules with a tag=<tag>. Can be specified multiple times.
                                Can not be specified with -T/-D.
 ```
