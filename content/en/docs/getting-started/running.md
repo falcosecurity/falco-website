@@ -100,6 +100,7 @@ You can find more about its usage [here](/docs/getting-started/installation#inst
     ```shell
     docker pull falcosecurity/falco-no-driver:latest
     docker run --rm -i -t \
+        -e HOST_ROOT=/ \
         --cap-add SYS_PTRACE --pid=host $(ls /dev/falco* | xargs -I {} echo --device {}) \
         -v /var/run/docker.sock:/var/run/docker.sock \
         falcosecurity/falco-no-driver:latest
@@ -120,7 +121,7 @@ docker info | grep -i apparmor
 
 {{< info >}}
 
-Note that `ls /dev/falco* | xargs -I {} echo --device {}` outputs a `--device /dev/falcoX` option per CPU (ie. just the devices created by the Falco's kernel module).
+Note that `ls /dev/falco* | xargs -I {} echo --device {}` outputs a `--device /dev/falcoX` option per CPU (ie. just the devices created by the Falco's kernel module). Also, `-e HOST_ROOT=/` is necessary since with `--device` there is no way to remap devices to `/host/dev/`.
 
 {{< /info >}}
 
