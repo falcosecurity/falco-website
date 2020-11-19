@@ -119,11 +119,11 @@ Last but not least, it's time to use `falcosidekick` as output processor for our
 
 In the chart helm folder `falco`, edit *values.yaml*:
 ```bash
-json_output: true
-json_include_output_property: true
-http_output:
+jsonOutput: true
+jsonIncludeOutputProperty: true
+httpOutput:
   enabled: true
-  url: http://falcosidekick:2801/"
+  url: "http://falcosidekick:2801/"
 ```
 ```bash
 helm upgrade falco . --namespace falco
