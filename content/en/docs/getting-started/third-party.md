@@ -51,8 +51,12 @@ apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
 - role: control-plane
   extraMounts:
-  - hostPath: /dev
-    containerPath: /dev
+    # allow Falco to use devices provided by the kernel module
+    - hostPath: /dev
+      containerPath: /dev
+    # allow Falco to use the Docker unix socket
+    - hostPath: /var/run/docker.sock
+      containerPath: /var/run/docker.sock
 ```
 
 3. Create the cluster by specifying the configuration file:
