@@ -135,6 +135,7 @@ If you want to use Falco with the Kernel module driver
 docker pull falcosecurity/falco:latest
 docker run --rm -i -t \
     --privileged \
+    -v /var/run/docker.sock:/host/var/run/docker.sock \
     -v /dev:/host/dev \
     -v /proc:/host/proc:ro \
     -v /boot:/host/boot:ro \
@@ -151,6 +152,7 @@ docker pull falcosecurity/falco:latest
 docker run --rm -i -t \
     --privileged \
     -e FALCO_BPF_PROBE="" \
+    -v /var/run/docker.sock:/host/var/run/docker.sock \
     -v /dev:/host/dev \
     -v /proc:/host/proc:ro \
     -v /boot:/host/boot:ro \
