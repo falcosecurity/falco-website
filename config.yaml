@@ -111,7 +111,7 @@ languages:
         slackLink: https://slack.k8s.io/
         mailingListText: Developer Mailing List
         mailingListLink: https://lists.cncf.io/g/cncf-falco-dev
-        communityText: Github Community
+        communityText: GitHub Community
         communityLink: https://github.com/falcosecurity/community
         privacyText: The Falco Community is bound to The Linux Foundation privacy policy. When you communicate with us (via email, phone, through the Sites or otherwise), we may maintain a record of your communication.
         privacyLink: https://www.linuxfoundation.org/privacy/
@@ -229,7 +229,7 @@ languages:
         slackLink: https://slack.k8s.io/
         mailingListText: Developer Mailing List
         mailingListLink: https://lists.cncf.io/g/cncf-falco-dev
-        communityText: Github Community
+        communityText: GitHub Community
         communityLink: https://github.com/falcosecurity/community
         privacyText: The Falco Community is bound to The Linux Foundation privacy policy. When you communicate with us (via email, phone, through the Sites or otherwise), we may maintain a record of your communication.
         privacyLink: https://www.linuxfoundation.org/privacy/
@@ -351,7 +351,7 @@ languages:
         slackLink: https://slack.k8s.io/
         mailingListText: デベロッパーメーリングリスト
         mailingListLink: https://lists.cncf.io/g/cncf-falco-dev
-        communityText: Github コミュニティ
+        communityText: GitHub コミュニティ
         communityLink: https://github.com/falcosecurity/community
         privacyText: The Falco Community is bound to The Linux Foundation privacy policy. When you communicate with us (via email, phone, through the Sites or otherwise), we may maintain a record of your communication.
         privacyLink: https://www.linuxfoundation.org/privacy/
@@ -473,7 +473,7 @@ languages:
         slackLink: https://slack.k8s.io/
         mailingListText: 개발자 메일링 리스트
         mailingListLink: https://lists.cncf.io/g/cncf-falco-dev
-        communityText: 깃헙(Github) 커뮤니티
+        communityText: 깃헙(GitHub) 커뮤니티
         communityLink: https://github.com/falcosecurity/community
         privacyText: The Falco Community is bound to The Linux Foundation privacy policy. When you communicate with us (via email, phone, through the Sites or otherwise), we may maintain a record of your communication.
         privacyLink: https://www.linuxfoundation.org/privacy/
