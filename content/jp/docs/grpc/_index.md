@@ -100,10 +100,10 @@ $ openssl rsa -passin pass:1234 -in client.key -out client.key
 
 設定が完了すると、FalcoはgRPCサーバーとその出力APIを公開する準備が整います。
 
-これを行うには、シンプルににFalcoを実行します。 例えば：
+これを行うには、シンプルにFalcoを実行します。 例えば：
 
 ```bash
 $ falco -c falco.yaml -r rules/falco_rules.yaml -r rules/falco_rules.local.yaml -r rules/k8s_audit_rules.yaml
 ```
 
-[Output](./outputs)イベントを受信して使用する方法については、[Go client](./client-go)または[[Python client](./client-python)のドキュメントを参照してください。
+[Output](./outputs)イベントを受信して使用する方法については、[Go client](./client-go)または[Python client](./client-python)のドキュメントを参照してください。
