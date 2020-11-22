@@ -20,7 +20,7 @@ Additional examples for various APIs are located in the [examples directory](htt
     $ go run examples/output/main.go | jq
     ```
 
-    You should see output events starting flowing in depending on the set of rules in the Falco instance.
+    The output events starting flowing in depending on the set of rules in the Falco instance.
 
     ```json
     {
