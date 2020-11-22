@@ -53,8 +53,8 @@ One of the rules in `k8s_audit_rules.yaml` is as follows:
 - macro: kevt
   condition: (jevt.value[/stage] in (k8s_audit_stages))
 
-- macro: create
-  condition: ka.verb=create
+- macro: kmodify
+  condition: (ka.verb in (create,update,patch))
 
 - macro: configmap
   condition: ka.target.resource=configmaps
@@ -187,7 +187,7 @@ When the ConfigMap contains private credentials, the rule uses the following fie
 
 2. `configmap`: Checks whether the value of the `objectRef > resource` property equals to "configmap".
 
-3. `modify`: Checks whether the value of `verb` is one of the following: `create`,`update`,`patch`.
+3. `kmodify`: Checks whether the value of `verb` is one of the following: `create`,`update`,`patch`.
 
 4. `contains-private-credentials`: Search the ConfigMap contents at `requestObject > data` for any of the sensitive strings named in the `contains_private_credentials` macro.
 
@@ -208,4 +208,4 @@ The output string is used to print essential information about the audit event, 
 
 To enable Kubernetes audit logs, you need to change the arguments to the `kube-apiserver` process to add `--audit-policy-file` and `--audit-webhook-config` arguments and provide files that implement an audit policy/webhook configuration. It is beyond the scope of Falco documentation to give a detailed description of how to do this, but the [example files](https://github.com/falcosecurity/evolution/blob/master/examples/k8s_audit_config/README.md) show how audit logging is added to minikube. Managed Kubernetes providers will usually provide a mechanism to configure the audit system.
 
-> Note: Dynamic Audit Webhooks were [removed](https://github.com/kubernetes/kubernetes/pull/91502) from Kubernetes. However, static audit configuration continues to work. 
+> Note: Dynamic Audit Webhooks were [removed](https://github.com/kubernetes/kubernetes/pull/91502) from Kubernetes. However, static audit configuration continues to work.
