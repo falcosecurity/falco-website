@@ -6,14 +6,14 @@ weight: 3
 
 Falcoは、システムコールを使用してシステムを保護および監視するLinuxセキュリティツールです。
 
-{{< info >}}
+{{% pageinfo color="primary" %}}
 FalcoはKubernetesランタイムセキュリティに使用できます。
 Falcoを実行する最も安全な方法は、ホストシステムにFalcoを直接インストールすることです。これにより、侵害された場合にFalcoがKubernetesから分離されます。
 その後、Falcoアラートは、Kubernetesで実行されている読み取り専用エージェントを介して使用できます。
 
 分離が問題にならない場合は、FalcoをKubernetesで直接実行することもできます。
 Kind、Minikube、Helmなどのツールを使用してKubernetesで直接Falcoを実行する場合は、[サードパーティ統合](../third-party)をご覧ください。
-{{< /info >}}
+{{% /pageinfo %}}
 
 
 以下のパッケージマネージャーアーティファクトを使用してFalcoがインストールされている場合は、次のものが用意されています:

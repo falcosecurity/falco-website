@@ -28,8 +28,7 @@ The list of all available artifacts can be found [here](https://bintray.com/falc
 
 ### Download container images {#images}
 
-{{< info >}}
-
+{{% pageinfo color="primary" %}}
 Falco depends on having a driver installed on the host system to get information about the running system calls.
 
 The preferred installation method is to install the driver using the native artifacts defined above or
@@ -37,7 +36,7 @@ temporarily run the `falcosecurity/falco-driver-loader` image as privileged, the
 
 For more details, see the [Run within Docker section](/docs/getting-started/running#docker).
 
-{{< /info >}}
+{{% /pageinfo %}}
 
 |tag | pull command | description |
 |----|----------|-----------------|

@@ -98,11 +98,11 @@ falco-driver-loader
 
 eBPF 는 현재 GKE 와 COS 만 지원하지만, 여기에서는 다양한 플랫폼에 대한 설치 세부 정보를 소개한다.
 
-{{< info >}}
+{{% pageinfo color="primary" %}}
  
  프로브 파일의 대체 경로를 지정하려면, `FALCO_BPF_PROBE`를 기존 eBPF 프로브 경로로 설정할 수도 있다.
 
-{{< /info >}}
+{{% /pageinfo %}}
 
 공식 컨테이너 이미지 사용 시 이 환경 변수를 설정하면, `falco-driver-loader` 스크립트가 실행되어 적절한 버전의 COS 커널 헤더를 다운로드한 다음 적절한 eBPF 프로브를 컴파일한다. 다른 모든 환경에서는 다음 방법으로 `falco-driver-loader` 를 직접 실행할 수 있다.
 

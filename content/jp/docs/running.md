@@ -33,11 +33,10 @@ journalctl -fu falco
 falco --help
 ```
 
-{{< info >}}
-
+{{% pageinfo color="primary" %}}
 ユーザースペースのインストルメントをお探しですか？[このページ](/docs/event-sources/drivers/)をご覧ください。
 
-{{< /info >}}
+{{% /pageinfo %}}
 
 ## Dockerでの実行 {#docker}
 
@@ -49,7 +48,7 @@ Falcoは公式の[docker images](/docs/getting-started/download#images)のセッ
 ### 最少特権（推奨） {#docker-least-privileged}
 
 
-{{< info >}}
+{{% pageinfo color="primary" %}}
 
 少なくともKernel 5.8以上でないと、eBPFプローブドライバでLeast privilegedモードを使用することはできません。
 これは `--privileged` が `bpf` のシステムコールを行うために必要だからです。
@@ -57,7 +56,7 @@ Kernel >= 5.8 を実行している場合は、ステップ 2 の docker run コ
 そして、カーネルモジュールのインストールセクションは完全に無視してください。
 
 詳しくはこちらをご覧ください[こちら](https://github.com/falcosecurity/falco/issues/1299#issuecomment-653448207)
-{{< /info >}}
+{{% /pageinfo %}}
 
 このようにして、Falco ユーザスペースプロセスをコンテナ内で実行することができます。
 
@@ -96,8 +95,7 @@ Kernel >= 5.8 を実行している場合は、ステップ 2 の docker run コ
         falcosecurity/falco-no-driver:latest
     ```
 
-{{< warning >}}
-
+{{% pageinfo color="warning" %}}
 AppArmor LSMを有効にしたシステム（例：Ubuntu）でFalcoを実行している場合、`--security-opt apparmor:unconfined`を次のように渡す必要があります。
 上記の `docker run` コマンドを実行します。
 
@@ -107,13 +105,13 @@ AppArmorが有効になっているかどうかは、以下のコマンドを使
 docker info | grep -i apparmor
 ```
 
-{{< /warning >}}
+{{% /pageinfo %}}
 
-{{< info >}}
+{{% pageinfo color="primary" %}}
 
 `ls /dev/falco* | xargs -I {} echo --device {}` は CPU ごとに `--dev/dev/falcoX` オプションを出力することに注意してください (つまり、Falco のカーネルモジュールによって作成されたデバイスだけです)。
 
-{{< /info >}}
+{{% /pageinfo %}}
 
 ### 完全特権 {#docker-privileged}
 

@@ -28,7 +28,7 @@ Falcoプロジェクトコミュニティは、Falcoをダウンロードして�
 
 ### Download container images {#images}
 
-{{< info >}}
+{{% pageinfo color="primary" %}}
 
 Falcoは、実行中のシステムコールに関する情報を取得するために、ホストシステムにドライバーをインストールすることに依存しています。
 
@@ -37,7 +37,7 @@ Falcoは、実行中のシステムコールに関する情報を取得するた
 
 詳細については、[Dockerセクション内で実行](/docs/getting-started/running#docker)を参照してください。
 
-{{< /info >}}
+{{% /pageinfo %}}
 
 |tag | pull command | description |
 |----|----------|-----------------|
