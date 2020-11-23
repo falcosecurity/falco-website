@@ -3,7 +3,13 @@ publish = "public"
 command = "make production-build"
 
 [build.environment]
-HUGO_VERSION = "0.68.1"
+HUGO_VERSION = "0.74.3"
+NODE_VERSION = "10.20.0"
+
+[context.production.environment]
+HUGO_BASEURL = "https://falco.org/"
+HUGO_ENV = "production"
+HUGO_ENABLEGITINFO = "true"
 
 [context.deploy-preview]
 command = "make preview-build"
