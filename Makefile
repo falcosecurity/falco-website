@@ -2,7 +2,7 @@ clean:
 	rm -rf public
 
 dependencies:
-	(cd themes/falco-fresh && npm install)
+	(cd themes/docsy && git submodule update -f --init && cd ../..)
 
 serve: dependencies
 	hugo server \
