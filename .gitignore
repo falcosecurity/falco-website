@@ -9,3 +9,6 @@ resources/
 # Link checker
 bin/
 tmp/
+
+# node
+node_modules/

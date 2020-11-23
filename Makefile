@@ -2,7 +2,7 @@ clean:
 	rm -rf public
 
 dependencies:
-	(cd themes/docsy && git submodule update -f --init && cd ../..)
+	(cd themes/docsy && git submodule update -f --init && cd ../.. && npm install)
 
 serve: dependencies
 	hugo server \
