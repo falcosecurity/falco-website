@@ -10,7 +10,7 @@ weight: 10
 - [schema definition](outputs): Falco出力イベントをサブスクライブします。
 - schema definition: Falcoバージョンを取得します。現在のバージョンは**{{< latest >}}**です。
 
-これらのAPIと対話するために、falcosecurity組織は[Go](./client-go)および[Python](./client-python)クライアントを提供しています。
+これらのAPIと対話するために、falcosecurity組織は[Go](./client-go), [Python](./client-python)および[Rust](./client-rust)クライアントを提供しています。
 
 ## 設定
 
@@ -106,4 +106,4 @@ $ openssl rsa -passin pass:1234 -in client.key -out client.key
 $ falco -c falco.yaml -r rules/falco_rules.yaml -r rules/falco_rules.local.yaml -r rules/k8s_audit_rules.yaml
 ```
 
-[Output](./outputs)イベントを受信して使用する方法については、[Go client](./client-go)または[Python client](./client-python)のドキュメントを参照してください。
+[Output](./outputs)イベントを受信して使用する方法については、[Go client](./client-go), [Python client](./client-python)または[Rust client](./client-rust)のドキュメントを参照してください。
