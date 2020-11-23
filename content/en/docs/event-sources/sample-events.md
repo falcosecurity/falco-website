@@ -24,11 +24,10 @@ The full command line documentation is [here](https://github.com/falcosecurity/e
 
 ### System Call Activity
 
-{{< info >}}
-
+{{% pageinfo color="primary" %}}
 **Warning** — We strongly recommend that you run the program within Docker (see below), since some commands might alter your system. For example, some actions modify files and directories below `/bin`, `/etc`, `/dev`, etc.
 
-{{< /info >}}
+{{% /pageinfo %}}
 
 The `syscall` collection performs a variety of suspect actions that are detected by the [default Falco ruleset](https://github.com/falcosecurity/falco/blob/master/rules/falco_rules.yaml).
 

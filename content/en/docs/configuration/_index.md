@@ -5,13 +5,12 @@ weight: 3
 notoc: true
 ---
 
-{{< info >}}
-
+{{% pageinfo color="primary" %}}
 This is for the Falco daemon configuration options.
 
 Please visit [rules](../rules) or [alerts](../alerts) for those options.
 
-{{< /info >}}
+{{% /pageinfo %}}
 
 
 Falco's configuration file is a [YAML](http://www.yaml.org/start.html) file containing a collection of `key: value` or `key: [value list]` pairs.

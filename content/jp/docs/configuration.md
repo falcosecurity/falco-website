@@ -5,13 +5,13 @@ weight: 4
 notoc: true
 ---
 
-{{< info >}}
+{{% pageinfo color="primary" %}}
 
 これはFalcoデーモンの設定オプションのためのものです。
 
 これらのオプションについては、[rules](/jp/docs/rules)または[alerts](/jp/docs/alerts)を参照してください。
 
-{{< /info >}}
+{{% /pageinfo %}}
 
 
 Falcoの設定ファイルは[YAML](http://www.yaml.org/start.html)ファイルで、`key: value` または `key: [value list]` のペアのコレクションを含むファイルです。

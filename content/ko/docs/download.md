@@ -27,7 +27,7 @@ weight: 2
 
 ### 컨테이너 이미지 다운로드 {#images}
 
-{{< info >}}
+{{% pageinfo color="primary" %}}
 
 팔코는 실행 중인 시스템 호출 정보를 얻기 위해 호스트 시스템에 드라이버를 설치해야 한다.
 
@@ -35,7 +35,7 @@ weight: 2
 
 자세한 내용은 [Docker 섹션 내에서 실행](https://falco.org/docs/getting-started/running/#docker)을 참고한다.
 
-{{< /info >}}
+{{% /pageinfo %}}
 
 |tag | pull command | description |
 |----|----------|-----------------|

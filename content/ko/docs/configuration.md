@@ -5,13 +5,14 @@ weight: 5
 notoc: true
 ---
 
-{{< info >}}
+{{% pageinfo color="primary" %}}
 
 이 문서는 팔코 데몬 구성 옵션을 위한 것이다.
 
 이들 옵션을 보려면 [규칙](/docs/rules) 또는 [경고](/docs/alerts)를 확인한다.
 
-{{< /info >}}
+{{% /pageinfo %}}
+
 
 
 팔코의 구성 파일은 `key: value` 또는 `key: [value list]` 쌍의 모음을 포함하는 [YAML](http://www.yaml.org/start.html) 파일이다.
@@ -24,4 +25,5 @@ notoc: true
 
 
 [comment]: <> (@kris-nova: This data is loaded from the YAML file in data/ko/config.yaml)
-{{< config >}}
+
+TODO-PRINT-CONFIG

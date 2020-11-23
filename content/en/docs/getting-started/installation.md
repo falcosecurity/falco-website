@@ -6,14 +6,14 @@ weight: 3
 
 Falco is a Linux security tool that uses system calls to secure and monitor a system.
 
-{{< info >}}
+{{% pageinfo color="primary" %}}
 Falco can be used for Kubernetes runtime security.
 The most secure way to run Falco is to install Falco directly on the host system so that Falco is isolated from Kubernetes in the case of compromise.
 Then the Falco alerts can be consumed via read-only agents running in Kubernetes.
 
 Falco can also be ran directly in Kubernetes if isolation is not a concern.
 If you would like to run Falco directly in Kubernetes with a tool like Kind, Minikube, or Helm please see the [third party integrations](../third-party)
-{{< /info >}}
+{{% /pageinfo %}}
 
 
 If Falco is installed using the package manager artifacts below, you will have the following in place:

@@ -1,6 +1,6 @@
 baseURL: /
 languageCode: en-us
-theme: falco-fresh
+theme: docsy
 disableKinds: ["taxonomy", "taxonomyTerm"]
 pygmentsCodefences: true
 pygmentsStyle: monokai
@@ -482,8 +482,26 @@ languages:
 
 params:
   version: v0.26.2
+
   githubRepository : falcosecurity/falco
   sha256sum: 21e8053c37e32f95d91c9393d961af1c63b5839d795c8cac314d05daadea9779
+  offlineSearch: true
+  ui:
+    navbar_logo: true
+    sidebar_search_disable: false
+    sidebar_menu_compact: false
+    breadcrumb_disable: false
+    feedback:
+      enable: true
+      'yes': >-
+        Glad to hear it! Please <a
+        href="https://github.com/falcosecurity/falco-website/issues/new">tell us how we
+        can improve</a>.
+      'no': >-
+        Sorry to hear that. Please <a
+        href="https://github.com/falcosecurity/falco-website/issues/new">tell us how we
+        can improve</a>.
+
   primaryFont:
     name: "Karla"
     sizes: [400 700]

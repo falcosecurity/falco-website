@@ -24,11 +24,10 @@ event-generator run [regexp]
 
 ### システムコールアクティビティ
 
-{{< info >}}
-
+{{% pageinfo color="primary" %}}
 **注意** — 一部のコマンドはシステムを変更する可能性があるため、Docker(下記参照)内でプログラムを実行することを強くお勧めします。たとえば、一部のアクションは、`/bin`, `/etc`, `/dev`などの下のファイルとディレクトリを変更します。
 
-{{< /info >}}
+{{% /pageinfo %}}
 
 `syscall`コレクションは、[デフォルトのFalcoルールセット](https://github.com/falcosecurity/falco/blob/master/rules/falco_rules.yaml)によって検出されるさまざまな疑わしいアクションを実行します。
 

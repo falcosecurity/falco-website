@@ -15,9 +15,9 @@ Element | Description
 
 From time to time, we make changes to the rules file format that are not backwards-compatible with older versions of Falco. Similarly, the Sysdig libraries incorporated into Falco may define new filtercheck fields, operators, etc. We want to denote that a given set of rules depends on the fields/operators from those Sysdig libraries.
 
-{{< info >}}
+{{% pageinfo color="primary" %}}
 As of Falco version **0.14.0**, the Falco rules support explicit versioning of both the Falco engine and the Falco rules file.
-{{< /info >}}
+{{% /pageinfo %}}
 
 ### Falco Engine Versioning
 

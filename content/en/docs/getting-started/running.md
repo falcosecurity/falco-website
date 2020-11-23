@@ -33,21 +33,23 @@ If you'd like to run Falco by hand, you can find the full usage description for 
 falco --help
 ```
 
-{{< info >}}
+{{% pageinfo color="primary" %}}
 
 Are you looking for userpace instrumentation? Please see [this page](/docs/event-sources/drivers/).
 
-{{< /info >}}
+{{% /pageinfo %}}
+
 
 ## Run within Docker {#docker}
 
-{{< info >}}
+
+{{% pageinfo color="primary" %}}
 
 Even using container images, Falco needs kernel headers installed on the host as prerequisite to correctly build the driver (the [kernel module](/docs/event-sources/drivers/#kernel-module) or the [eBPF probe](/docs/event-sources/drivers/#ebpf-probe)) on the fly. This step is not needed when a prebuilt driver is already available.
 
 You can find instructions on how to install the kernel headers for your system under the [Install section](/docs/getting-started/installation).
 
-{{< /info >}}
+{{% /pageinfo %}}
 
 Falco ships a set of official [docker images](/docs/getting-started/download#images).
 The images can be used in two ways as follows:
@@ -57,7 +59,8 @@ The images can be used in two ways as follows:
 ### Least privileged (recommended) {#docker-least-privileged}
 
 
-{{< info >}}
+
+{{% pageinfo color="primary" %}}
 
 You cannot use the Least privileged mode with the eBPF probe driver unless you have at least Kernel 5.8,
 this is because `--privileged` is needed to do the `bpf` syscall.
@@ -66,7 +69,7 @@ and ignore the Install the kernel module section completely.
 
 You can read more details about this [here](https://github.com/falcosecurity/falco/issues/1299#issuecomment-653448207)
 
-{{< /info >}}
+{{% /pageinfo %}}
 
 This is how the Falco userspace process can be ran in a container.
 
@@ -106,8 +109,8 @@ You can find more about its usage [here](/docs/getting-started/installation#inst
         falcosecurity/falco-no-driver:latest
     ```
 
-{{< warning >}}
 
+{{% pageinfo color="warning" %}}
 If you are running Falco on a system with the AppArmor LSM enabled (e.g Ubuntu), you will also need to pass `--security-opt apparmor:unconfined` to
 the `docker run` command above.
 
@@ -117,13 +120,14 @@ You can verify if you have AppArmor enabled using the command below:
 docker info | grep -i apparmor
 ```
 
-{{< /warning >}}
+{{% /pageinfo %}}
 
-{{< info >}}
+
+{{% pageinfo color="primary" %}}
 
 Note that `ls /dev/falco* | xargs -I {} echo --device {}` outputs a `--device /dev/falcoX` option per CPU (ie. just the devices created by the Falco's kernel module). Also, `-e HOST_ROOT=/` is necessary since with `--device` there is no way to remap devices to `/host/dev/`.
 
-{{< /info >}}
+{{% /pageinfo %}}
 
 ### Fully privileged {#docker-privileged}
 

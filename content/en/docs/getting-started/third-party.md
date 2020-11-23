@@ -102,11 +102,9 @@ Falco can use eBPF with minimal configuration changes. To do so, set the `FALCO_
 
 eBPF is currently supported only on GKE and COS, however here we provide installation details for a wider set of platforms
 
-{{< info >}}
-
+{{% pageinfo color="primary" %}} 
  If you want to specify an alternative path for the probe file, you can also set `FALCO_BPF_PROBE` to the path of an existing eBPF probe.
-
-{{< /info >}}
+{{% /pageinfo %}}
 
 When using the official container images, setting this environment variable will trigger the `falco-driver-loader` script to download the kernel headers for the appropriate version of COS, and then compile the appropriate eBPF probe. In all the other environments you can call the `falco-driver-loader` script yourself to obtain it in this way:
 
