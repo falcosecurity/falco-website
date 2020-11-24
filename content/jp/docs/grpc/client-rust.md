@@ -3,17 +3,17 @@ title: Rustクライアント
 weight: 4
 ---
 
-[client-rust](https://github.com/falcosecurity/client-rust)Rustライブラリは以下を提供します：
+[client-rs](https://github.com/falcosecurity/client-rs)Rustライブラリは以下を提供します：
 
 
-- Falco gRPC APIの[タイプとサービスのマッピング](https://godoc.org/github.com/falcosecurity/client-rust/src/api/output.rs) 。詳細については、[出力スキーマ](../outputs)を参照してください。
+- Falco gRPC APIの[タイプとサービスのマッピング](https://godoc.org/github.com/falcosecurity/client-rs/src/api/output.rs) 。詳細については、[出力スキーマ](../outputs)を参照してください。
 - gRPCサーバーへの接続を簡略化することを目的とした`Client`および`FalcoConnect`クラス。
 
-[完全に機能する例]（(https://github.com/falcosecurity/client-rust/blob/master/examples/output.rs)を参照して、RustクライアントがFalco gRPC出力APIに接続する方法と、イベントをJSONで表示します。
+[完全に機能する例]（(https://github.com/falcosecurity/client-rs/blob/master/examples/output.rs)を参照して、RustクライアントがFalco gRPC出力APIに接続する方法と、イベントをJSONで表示します。
 
 1. 例のパスの`/tmp/{client.crt,client.key,ca.crt}`に証明書があることを確認します。
 
-2. [client-rust](https://github.com/falcosecurity/client-rust)ルートディレクトリから、次のコマンドを実行します：
+2. [client-rs](https://github.com/falcosecurity/client-rs)ルートディレクトリから、次のコマンドを実行します：
 
     ```bash
     $ cargo run --example outputs
