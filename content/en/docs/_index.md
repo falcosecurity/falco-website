@@ -45,7 +45,7 @@ Rules are the items that Falco asserts against. They are defined in the Falco co
 Alerts are configurable downstream actions that can be as simple as logging to `STDOUT` or as complex as delivering a gRPC call to a client. For more information about configuring, understanding, and developing alerts, see [Falco Alerts](alerts).
 
 
-## Falco Components
+## What are the Components of Falco?
 
 Falco is composed of three main components:
 
