@@ -1,7 +1,7 @@
 ---
 title: Install
 description: Setting up Falco on a Linux system
-weight: 3
+weight: 5
 ---
 
 Falco is a Linux security tool that uses system calls to secure and monitor a system.

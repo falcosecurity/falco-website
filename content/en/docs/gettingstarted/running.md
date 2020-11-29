@@ -1,7 +1,7 @@
 ---
-title: Running 
+title: Running
 description: Operating and Managing Falco
-weight: 4
+weight: 5
 ---
 
 
@@ -21,7 +21,7 @@ It works because `systemd-sysv-generator` wraps `init.d` scripts into `systemd` 
 
 You can also view the Falco logs using `journalctl`.
 
-```bash 
+```bash
 journalctl -fu falco
 ```
 
@@ -43,13 +43,13 @@ Are you looking for userpace instrumentation? Please see [this page](/docs/event
 
 {{< info >}}
 
-Even using container images, Falco needs kernel headers installed on the host as prerequisite to correctly build the driver (the [kernel module](/docs/event-sources/drivers/#kernel-module) or the [eBPF probe](/docs/event-sources/drivers/#ebpf-probe)) on the fly. This step is not needed when a prebuilt driver is already available. 
+Even using container images, Falco needs kernel headers installed on the host as prerequisite to correctly build the driver (the [kernel module](/docs/event-sources/drivers/#kernel-module) or the [eBPF probe](/docs/event-sources/drivers/#ebpf-probe)) on the fly. This step is not needed when a prebuilt driver is already available.
 
 You can find instructions on how to install the kernel headers for your system under the [Install section](/docs/installation).
 
 {{< /info >}}
 
-Falco ships a set of official [docker images](/docs/download#images). 
+Falco ships a set of official [docker images](/docs/download#images).
 The images can be used in two ways as follows:
 - [Least privileged (recommended)](#docker-least-privileged)
 - [Fully privileged](#docker-privileged)
@@ -68,7 +68,7 @@ You can read more details about this [here](https://github.com/falcosecurity/fal
 
 {{< /info >}}
 
-This is how the Falco userspace process can be ran in a container. 
+This is how the Falco userspace process can be ran in a container.
 
 Once the kernel module has been installed directly on the host system, it can be used from within a container.
 
@@ -88,10 +88,10 @@ Once the kernel module has been installed directly on the host system, it can be
         -v /usr:/host/usr:ro \
         -v /etc:/host/etc:ro \
         falcosecurity/falco-driver-loader:latest
-    ``` 
+    ```
 
 
-The `falcosecurity/falco-driver-loader` image just wraps the `falco-driver-loader` script. 
+The `falcosecurity/falco-driver-loader` image just wraps the `falco-driver-loader` script.
 You can find more about its usage [here](/docs/installation#install-driver)
 
 

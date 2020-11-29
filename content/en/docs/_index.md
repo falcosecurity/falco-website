@@ -10,7 +10,7 @@ The Falco Project is an open source runtime security tool originally built by [S
 
 ## What does Falco do?
 
-Falco parses Linux system calls from the kernel at runtime, and asserts the stream against a powerful rules engine. 
+Falco parses Linux system calls from the kernel at runtime, and asserts the stream against a powerful rules engine.
 If a rule is violated a Falco alert is triggered. Read more about Falco [rules](rules)
 
  - Parse
@@ -21,18 +21,18 @@ If a rule is violated a Falco alert is triggered. Read more about Falco [rules](
 
 By default Falco ships with a mature set of rules that will check the kernel for unusual behavior such as
 
- - Privilege escalation using privileged containers 
- - Namespace changes using tools like `setns` 
+ - Privilege escalation using privileged containers
+ - Namespace changes using tools like `setns`
  - Read/Writes to well-known directories such as `/etc`, `/usr/bin`, `/usr/sbin`, etc
- - Creating symlinks 
- - Ownership and Mode changes 
+ - Creating symlinks
+ - Ownership and Mode changes
  - Unexpected network connections or socket mutations
  - Spawned processes using `execve`
  - Executing shell binaries such as `sh`, `bash`, `csh`, `zsh`, etc
  - Executing SSH binaries such as `ssh`, `scp`, `sftp`, etc
  - Mutating Linux `coreutils` executables
- - Mutating login binaries 
- - Mutating `shadowutil` or `passwd` executables 
+ - Mutating login binaries
+ - Mutating `shadowutil` or `passwd` executables
     - `shadowconfig`
     - `pwck`
     - `chpasswd`
@@ -41,7 +41,7 @@ By default Falco ships with a mature set of rules that will check the kernel for
     - `useradd`
     - etc
 
-...and many more. 
+...and many more.
 
 ## What are Falco rules?
 
@@ -51,12 +51,12 @@ See the section on [rules](rules) for more information on writing, managing, and
 
 ## What are Falco alerts?
 
-These are configurable downstream actions that can be as simple as logging to `STDOUT` or as complex as delivering a gRPC call to a client. 
+These are configurable downstream actions that can be as simple as logging to `STDOUT` or as complex as delivering a gRPC call to a client.
 
 See the section on [alerts](alerts) for more information on configuring, understanding, and developing Falco alerts.
 
 
-## Falco Components 
+## Falco Components
 
 Falco is composed of 3 main components
 
@@ -81,7 +81,7 @@ Currently the Falco project has support for the following drivers
  - Userspace instrumentation
 
  Please read more about the drivers [here](/docs/event-sources/drivers/).
- 
-### Falco configuration 
 
-This defines how Falco is run, what rules to assert, and how to perform alerts. See the section on [configuration](configuration) for more information on how to configure Falco. 
+### Falco configuration
+
+This defines how Falco is run, what rules to assert, and how to perform alerts. See the section on [configuration](configuration) for more information on how to configure Falco.

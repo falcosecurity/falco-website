@@ -1,18 +1,13 @@
 ---
 title: Download
 description: Officially supported Falco artifacts
-weight: 2
+weight: 3
 ---
 
-## Downloading
+The Falco Project community currently, supports two ways to download and run Falco:
 
-The Falco Project community only supports two ways for downloading and running Falco:
-
- - Running Falco directly on a Linux host
- - Running the Falco userspace program in a container, with a driver installed on the underlying host.
- 
-Below you can find artifacts for both. 
-
+- Run Falco directly on a Linux host
+- Run Falco userspace program in a container, with a driver installed on the underlying host.
 
 ### Download for Linux {#packages}
 
@@ -22,7 +17,7 @@ Below you can find artifacts for both.
 | deb    | [![deb-dev](https://img.shields.io/bintray/v/falcosecurity/deb-dev/falco?label=Falco&color=%2300aec7&style=flat-square)][3] | [![deb](https://img.shields.io/bintray/v/falcosecurity/deb/falco?label=Falco&color=%23005763&style=flat-square)][4] |
 | binary | [![bin-dev](https://img.shields.io/bintray/v/falcosecurity/bin-dev/falco?label=Falco&color=%2300aec7&style=flat-square)][5] | [![bin](https://img.shields.io/bintray/v/falcosecurity/bin/falco?label=Falco&color=%23005763&style=flat-square)][6] |
 
-The list of all available artifacts can be found [here](https://bintray.com/falcosecurity).
+For more information, see the list of all [available artifacts](https://bintray.com/falcosecurity).
 
 ---
 
@@ -32,7 +27,7 @@ The list of all available artifacts can be found [here](https://bintray.com/falc
 
 Falco depends on having a driver installed on the host system to get information about the running system calls.
 
-The preferred installation method is to install the driver using the native artifacts defined above or 
+The preferred installation method is to install the driver using the native artifacts defined above or
 temporarily run the `falcosecurity/falco-driver-loader` image as privileged, then using the `falcosecurity/falco-no-driver`.
 
 For more details, see the [Run within Docker section](/docs/running#docker).
@@ -48,7 +43,7 @@ For more details, see the [Run within Docker section](/docs/running#docker).
 |[latest](https://hub.docker.com/r/falcosecurity/falco/tags)| `docker pull falcosecurity/falco:latest` | The most recent version with the `falco-driver-loader` included |
 |[*version*](https://hub.docker.com/r/falcosecurity/falco/tags)| `docker pull falcosecurity/falco:<version>` | A specific version of Falco such as `{{< latest >}}` with `falco-driver-loader` included |
 
-The list of all available images can be found [here](https://github.com/falcosecurity/falco/tree/master/docker).
+For more information, see the list of all [available images](https://github.com/falcosecurity/falco/tree/master/docker).
 
 [1]: https://dl.bintray.com/falcosecurity/rpm-dev
 [2]: https://dl.bintray.com/falcosecurity/rpm

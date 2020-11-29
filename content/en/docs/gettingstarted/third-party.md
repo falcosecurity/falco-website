@@ -26,7 +26,7 @@ Then run the script either as root or with sudo:
 sudo bash install_falco
 ```
 
-## Minikube 
+## Minikube
 
 The easiest way to use Falco on Kubernetes in a local environment is on [Minikube](https://kubernetes.io/docs/tutorials/hello-minikube/). Both the Kubernetes YAML manifests and the Helm chart are regularly tested with Minikube.
 
@@ -99,7 +99,7 @@ Falco can use eBPF with minimal configuration changes. To do so, set the `FALCO_
 eBPF is currently supported only on GKE and COS, however here we provide installation details for a wider set of platforms
 
 {{< info >}}
- 
+
  If you want to specify an alternative path for the probe file, you can also set `FALCO_BPF_PROBE` to the path of an existing eBPF probe.
 
 {{< /info >}}

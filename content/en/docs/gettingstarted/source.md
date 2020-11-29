@@ -1,6 +1,6 @@
 ---
-title: Build Falco from source
-weight: 6
+title: Build from source
+weight: 4
 ---
 
 Welcome to the guide on how to build Falco yourself! You are very brave! Since you are already
@@ -170,7 +170,7 @@ make bpf
 
 ## Alpine
 
-Since Alpine ships with `musl` instead of `glibc`, to build on Alpine, we need to pass the `-DMUSL_OPTIMIZED_BUILD=On` CMake option. 
+Since Alpine ships with `musl` instead of `glibc`, to build on Alpine, we need to pass the `-DMUSL_OPTIMIZED_BUILD=On` CMake option.
 
 If that option is used along with the `-DUSE_BUNDLED_DEPS=On` option, then the final build will be 100% statically-linked and portable across different Linux distributions.
 
