@@ -33,7 +33,7 @@ Falco ships with a default set of rules that check the kernel for unusual behavi
  - Executing SSH binaries such as `ssh`, `scp`, `sftp`, etc
  - Mutating Linux `coreutils` executables
  - Mutating login binaries
- - Mutating `shadowutil` or `passwd` executables such as `shadowconfig`, `pwck`, `chpasswd`, `getpasswd`, `change`, `useradd` and others.
+ - Mutating `shadowutil` or `passwd` executables such as `shadowconfig`, `pwck`, `chpasswd`, `getpasswd`, `change`, `useradd`, `etc`, and others.
 
 
 ## What are Falco rules?
@@ -42,7 +42,14 @@ Rules are the items that Falco asserts against. They are defined in the Falco co
 
 ## What are Falco alerts?
 
-Alerts are configurable downstream actions that can be as simple as logging to `STDOUT` or as complex as delivering a gRPC call to a client. For more information about configuring, understanding, and developing alerts, see [Falco Alerts](alerts).
+Alerts are configurable downstream actions that can be as simple as logging to `STDOUT` or as complex as delivering a gRPC call to a client. For more information about configuring, understanding, and developing alerts, see [Falco Alerts](alerts). Falco can send alerts to :
+
+- Standard Output
+- A file
+- Syslog
+- A spawned program
+- A HTTP[s] end point
+- A client through the gRPC API
 
 
 ## What are the Components of Falco?
