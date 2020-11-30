@@ -1,6 +1,6 @@
 ---
 title: Event Sources
-weight: 3
+weight: 5
 ---
 
 Falco can consume events from different sources, and apply rules to these events to detect abnormal behavior. Currently Falco supports the following event sources:

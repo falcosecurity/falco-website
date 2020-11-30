@@ -10,8 +10,8 @@ The Falco Project community only supports two ways for downloading and running F
 
  - Running Falco directly on a Linux host
  - Running the Falco userspace program in a container, with a driver installed on the underlying host.
- 
-Below you can find artifacts for both. 
+
+Below you can find artifacts for both.
 
 
 ### Download for Linux {#packages}
@@ -32,10 +32,10 @@ The list of all available artifacts can be found [here](https://bintray.com/falc
 
 Falco depends on having a driver installed on the host system to get information about the running system calls.
 
-The preferred installation method is to install the driver using the native artifacts defined above or 
+The preferred installation method is to install the driver using the native artifacts defined above or
 temporarily run the `falcosecurity/falco-driver-loader` image as privileged, then using the `falcosecurity/falco-no-driver`.
 
-For more details, see the [Run within Docker section](/docs/running#docker).
+For more details, see the [Run within Docker section](/docs/getting-started/running#docker).
 
 {{< /info >}}
 
