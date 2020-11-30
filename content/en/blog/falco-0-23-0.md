@@ -16,8 +16,8 @@ You can take a look at the whole set of changes here:
 
 In case you just want to try out the stable Falco 0.23, you can install its packages following the usual process outlined in the docs:
 
-- [CentOS/Amazon Linux](https://falco.org/docs/installation/#centos-rhel)
-- [Debian/Ubuntu](https://falco.org/docs/installation/#debian)
+- [CentOS/Amazon Linux](https://falco.org/docs/getting-started/installation/#centos-rhel)
+- [Debian/Ubuntu](https://falco.org/docs/getting-started/installation/#debian)
 
 Do you rather prefer using the docker images? No problem!
 

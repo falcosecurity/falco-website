@@ -41,7 +41,7 @@ falco --help
 
 ## Dockerでの実行 {#docker}
 
-ファルコは公式の[docker images](/docs/download#images)のセットを提供しています。
+ファルコは公式の[docker images](/docs/getting-started/download#images)のセットを提供しています。
 イメージは以下の2つの方法で使用できます：
 - [最少特権（推奨）](#docker-least-privileged)
 - [完全特権](#docker-privileged)
@@ -65,7 +65,7 @@ Kernel >= 5.8 を実行している場合は、ステップ 2 の docker run コ
 
 1. カーネルモジュールのインストール:
 
-    - 公式の[インストール方法](/docs/installation)をホスト上で直接使用することができます。
+    - 公式の[インストール方法](/docs/getting-started/installation)をホスト上で直接使用することができます。
     - あるいは、特権コンテナを一時的に使用してホストにドライバをインストールすることもできます：
 
     ```shell
@@ -83,7 +83,7 @@ Kernel >= 5.8 を実行している場合は、ステップ 2 の docker run コ
 
 
 `falcosecurity/falco-driver-loader` イメージは単に `falco-driver-loader` スクリプトをラップしているだけです。
-その使用法についての詳細は[こちらをご覧ください](/jp/docs/installation#install-driver)
+その使用法についての詳細は[こちらをご覧ください](//docs/installation#install-driver)
 
 
 2. Dockerを使ってコンテナ内のFalcoを[最小特権の原則]で実行する(https://en.wikipedia.org/wiki/Principle_of_least_privilege):
@@ -152,7 +152,7 @@ docker run --rm -i -t \
 
 その他の設定可能なオプション:
 
-- `DRIVER_REPO` - [ドライバのインストール](https://falco.org/docs/installation/#install-driver) を参照してください。
+- `DRIVER_REPO` - [ドライバのインストール](https://falco.org/docs/getting-started/installation/#install-driver) を参照してください。
 - `SKIP_DRIVER_LOADER` - この環境変数を設定することで、`falcosecurity/falco` イメージの起動時に `falco-driver-loader` を実行しないようにします。ドライバが既に他の方法でホストにインストールされている場合に便利です。
 
 ## ホットリロード

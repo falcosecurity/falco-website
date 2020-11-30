@@ -59,7 +59,7 @@ The Falco Project core components are intentionally designed to be small, fundam
 
 Because of the complexity and security requirements of running Falco in production these artifacts are clearly labeled and can be composed for various use cases.
 
-For instance. The Falco Project core supports various [container images](https://falco.org/docs/download/#images) which require different access to the system in order to run effectively.
+For instance. The Falco Project core supports various [container images](https://falco.org/docs/getting-started/download/#images) which require different access to the system in order to run effectively.
 These container images can be composed with YAML manifests or other management tools like Helm or Kustomize.
 The higher level compositions are not currently considered part of Falco core, as they make assumptions on behalf of the user.
 

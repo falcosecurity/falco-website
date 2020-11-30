@@ -33,7 +33,7 @@ weight: 2
 
 권장하는 방법은 위에서 명시한 네이티브 아티팩트로 드라이버를 설치하거나, `falcosecurity/falco-driver-loader` 이미지를 임시로 특권을 이용해(as privileged) 실행한 다음 `falcosecurity/falco-no-driver` 이미지를 사용하는 것이다.
 
-자세한 내용은 [Docker 섹션 내에서 실행](https://falco.org/docs/running/#docker)을 참고한다.
+자세한 내용은 [Docker 섹션 내에서 실행](https://falco.org/docs/getting-started/running/#docker)을 참고한다.
 
 {{< /info >}}
 
