@@ -26,7 +26,7 @@ Then run the script either as root or with sudo:
 sudo bash install_falco
 ```
 
-## Minikube 
+## Minikube
 
 The easiest way to use Falco on Kubernetes in a local environment is on [Minikube](https://kubernetes.io/docs/tutorials/hello-minikube/). Both the Kubernetes YAML manifests and the Helm chart are regularly tested with Minikube.
 
@@ -77,7 +77,7 @@ A [Puppet](https://puppet.com/) module for Falco, `sysdig-falco`, is available o
 
 ## CoreOS
 
-The recommended way to run Falco on CoreOS is inside of its own Docker container using the install commands in the [Docker section](/docs/running#docker). This method allows full visibility into all containers on the host OS.
+The recommended way to run Falco on CoreOS is inside of its own Docker container using the install commands in the [Docker section](/docs/gettingstarted/running#docker). This method allows full visibility into all containers on the host OS.
 
 This method is automatically updated, includes some nice features such as automatic setup and bash completion, and is a generic approach that can be used on other distributions outside CoreOS as well.
 
@@ -99,7 +99,7 @@ Falco can use eBPF with minimal configuration changes. To do so, set the `FALCO_
 eBPF is currently supported only on GKE and COS, however here we provide installation details for a wider set of platforms
 
 {{< info >}}
- 
+
  If you want to specify an alternative path for the probe file, you can also set `FALCO_BPF_PROBE` to the path of an existing eBPF probe.
 
 {{< /info >}}

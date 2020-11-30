@@ -15,9 +15,9 @@ The Falco project has three different kind of drivers.
 
 ## Kernel module
 
-By default, the kernel module will be installed when installing the Falco [debian/rpm](/docs/installation) package, when running the `falco-driver-loader` script shipped within the [binary package](/docs/installation#linux-binary), or when running the `falcosecurity/falco-driver-loader` docker image (that just wraps the aforementioned script). 
+By default, the kernel module will be installed when installing the Falco [debian/rpm](/docs/installation) package, when running the `falco-driver-loader` script shipped within the [binary package](/docs/gettingstarted/installation#linux-binary), or when running the `falcosecurity/falco-driver-loader` docker image (that just wraps the aforementioned script).
 
-To install the kernel module, please refer to the [installation](/docs/installation/#install-driver) page.
+To install the kernel module, please refer to the [installation](/docs/gettingstarted/installation/#install-driver) page.
 
 Falco tries to use the kernel module driver by default.
 
@@ -25,7 +25,7 @@ Falco tries to use the kernel module driver by default.
 
 The eBPF probe is an alternative to the one described above. Note that eBPF is a feature supported only by recent kernels.
 
-To install the eBPF probe, please refer to the [installation](/docs/installation/#install-driver) page.
+To install the eBPF probe, please refer to the [installation](/docs/gettingstarted/installation/#install-driver) page.
 
 To enable the eBPF support in Falco set the `FALCO_BPF_PROBE` environment variable to an empty value (ie. `FALCO_BPF_PROBE=""`) or otherwise explicitly set it to the path where the eBPF probe resides.
 
