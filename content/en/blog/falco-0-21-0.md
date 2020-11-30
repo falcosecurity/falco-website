@@ -21,8 +21,8 @@ In case you just want Falco 0.21.0, you can find its packages at the following r
 
 Instructions to install using them are already updated on the Falco website:
 
-- [CentOS/Amazon Linux](https://falco.org/docs/installation/#centos-rhel-amazon-linux)
-- [Debian/Ubuntu](https://falco.org/docs/installation/#debian-ubuntu)
+- [CentOS/Amazon Linux](https://falco.org/docs/getting-started/installation/#centos-rhel-amazon-linux)
+- [Debian/Ubuntu](https://falco.org/docs/getting-started/installation/#debian-ubuntu)
 
 Instead, for people preferring docker images... 🐳
 

@@ -57,7 +57,7 @@ sudo falco
 The kernel module is the most commonly used driver for Falco and can be used in any environment where loading a kernel module is trusted and viable.
 
  - The module can be built, hosted, and installed directly onto a hosted system.
- - The Falco community offers [limited support](https://falco.org/docs/installation/) for pre-building kernel modules.
+ - The Falco community offers [limited support](https://falco.org/docs/getting-started/installation/) for pre-building kernel modules.
  - Will work regardless of kernel version (as compared to eBPF below)
 
 #### Cons

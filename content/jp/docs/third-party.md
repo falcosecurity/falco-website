@@ -77,7 +77,7 @@ Falco用の [Puppet](https://puppet.com/)モジュール、 `sysdig-falco`は[Pu
 
 ## CoreOS
 
-CoreOSでFalcoを実行するための推奨される方法は、[Dockerセクション](/docs/running#docker)のインストールコマンドを使用して、自身のDockerコンテナ内で行うことです。 この方法では、ホストOS上のすべてのコンテナを完全に可視化できます。
+CoreOSでFalcoを実行するための推奨される方法は、[Dockerセクション](/docs/getting-started/running#docker)のインストールコマンドを使用して、自身のDockerコンテナ内で行うことです。 この方法では、ホストOS上のすべてのコンテナを完全に可視化できます。
 
 この方法は自動的に更新され、自動セットアップやbash completionなどの優れた機能が含まれています。また、CoreOS以外の他のディストリビューションでも使用できる一般的な方法です。
 

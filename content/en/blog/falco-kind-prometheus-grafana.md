@@ -7,7 +7,7 @@ author: Leonardo Grasso
 Kind is a tool for running local Kubernetes clusters using Docker container "nodes", that may be used for local development or CI. It also offers a convenient and easy way to install Falco in a Kubernetes cluster and play with it locally. We will use Kind to show how to export Falco metrics to Prometheus and Grafana.
 
 ## Create a Kind cluster
-Running Falco in a Kind cluster is easy, as explained in the [documentation](https://falco.org/docs/running/#running-falco-in-a-kind-cluster). 
+Running Falco in a Kind cluster is easy, as explained in the [documentation](https://falco.org/docs/getting-started/running/#running-falco-in-a-kind-cluster). 
 
 If you want to use the kernel module, basically, you only have to mount `/dev`.
 

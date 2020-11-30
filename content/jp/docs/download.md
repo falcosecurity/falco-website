@@ -35,7 +35,7 @@ Falcoは、実行中のシステムコールに関する情報を取得するた
 推奨されるインストール方法は、上記で定義されたネイティブアーティファクトを使用してドライバーをインストールするか、
 特権として `falcosecurity/falco-driver-loader`イメージを一時的に実行してから、`falcosecurity/falco-no-driver`を使用します。
 
-詳細については、[Dockerセクション内で実行](/docs/running#docker)を参照してください。
+詳細については、[Dockerセクション内で実行](/docs/getting-started/running#docker)を参照してください。
 
 {{< /info >}}
 

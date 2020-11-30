@@ -161,7 +161,7 @@ docker run --rm -i -t \
 
 Other configurable options:
 
-- `DRIVER_REPO` - See the [Installing the driver](https://falco.org/docs/installation/#install-driver) section.
+- `DRIVER_REPO` - See the [Installing the driver](https://falco.org/docs/getting-started/installation/#install-driver) section.
 - `SKIP_DRIVER_LOADER` - Set this environment variable to avoid running `falco-driver-loader` when the `falcosecurity/falco` image starts. Useful when the driver has been already installed on the host by other means.
 
 ## Hot Reload

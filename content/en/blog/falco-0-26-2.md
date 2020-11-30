@@ -14,14 +14,14 @@ You can take a look at the set of changes here:
 
 As usual, in case you just want to try out the stable Falco 0.26.2, you can install its packages following the process outlined in the docs:
 
-- [CentOS/Amazon Linux](https://falco.org/docs/installation/#centos-rhel)
-- [Debian/Ubuntu](https://falco.org/docs/installation/#debian)
-- [openSUSE](https://falco.org/docs/installation/#suse)
-- [Linux binary package](https://falco.org/docs/installation/#linux-binary)
+- [CentOS/Amazon Linux](https://falco.org/docs/getting-started/installation/#centos-rhel)
+- [Debian/Ubuntu](https://falco.org/docs/getting-started/installation/#debian)
+- [openSUSE](https://falco.org/docs/getting-started/installation/#suse)
+- [Linux binary package](https://falco.org/docs/getting-started/installation/#linux-binary)
 
 Do you rather prefer using the docker images? No problem!
 
-You can read more about running Falco with Docker in the [docs](https://falco.org/docs/running/#docker).
+You can read more about running Falco with Docker in the [docs](https://falco.org/docs/getting-started/running/#docker).
 
 ## Why this release?
 

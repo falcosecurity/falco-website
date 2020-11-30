@@ -50,7 +50,7 @@ Kind, Minikube, Helm 같은 도구를 이용해 팔코를 쿠버네티스에서 
     이제 팔코, 커널 모듈 드라이버, 기본 설정 파일이 설치되었다.
 	 팔코는 systemd 유닛으로 실행 중이다.
 
-	 팔코를 관리하고, 실행하고, 디버깅하는 방법은 [실행](https://falco.org/docs/running/)을 참고한다.
+	 팔코를 관리하고, 실행하고, 디버깅하는 방법은 [실행](https://falco.org/docs/getting-started/running/)을 참고한다.
 
 4. 팔코를 삭제한다.
 
@@ -86,7 +86,7 @@ Kind, Minikube, Helm 같은 도구를 이용해 팔코를 쿠버네티스에서 
 	 이제 팔코, 커널 모듈 드라이버, 기본 설정 파일이 설치되었다.
 	 팔코는 systemd 유닛으로 실행 중이다.
 
-	 팔코를 관리하고, 실행하고, 디버깅하는 방법은 [실행](https://falco.org/docs/running/)을 참고한다.
+	 팔코를 관리하고, 실행하고, 디버깅하는 방법은 [실행](https://falco.org/docs/getting-started/running/)을 참고한다.
 
 4. 팔코 삭제하기
 
