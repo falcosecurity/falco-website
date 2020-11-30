@@ -1,6 +1,6 @@
 ---
 title: K8s Pod Security Policy (PSP) Support
-weight: 3
+weight: 6
 ---
 
 ## Support for Pod Security Policies in Falco
