@@ -5,19 +5,20 @@ dependencies:
 	(npm install && cd themes/docsy && git submodule update -f --init && cd ../..)
 
 serve: dependencies
-	hugo server \
+	hugo server --minify \
 		--buildDrafts \
 		--buildFuture
 
 production-build: dependencies
-	hugo # --minify can be readded when hugo has minify >= 2.7.3
+	hugo --minify
 	make check-links
 
 preview-build: dependencies
 	hugo \
 		--baseURL $(DEPLOY_PRIME_URL) \
 		--buildDrafts \
-		--buildFuture # --minify can be readded when hugo has minify >= 2.7.3
+		--buildFuture \
+		--minify 
 	make check-links
 
 link-checker-setup:
