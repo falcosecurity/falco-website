@@ -72,13 +72,13 @@ languages:
           text: Set up Falco to begin development
           icon: fas fa-server
           buttonText1: On Linux
-          buttonLink1: https://falco.org/docs/installation/#installing
+          buttonLink1: https://falco.org/docs/getting-started/installation/#installing
           buttonText2: In Kubernetes
-          buttonLink2: https://falco.org/docs/third-party/
+          buttonLink2: https://falco.org/docs/getting-started/third-party/
           buttonText3: Container Images
-          buttonLink3: https://falco.org/docs/download/#images
+          buttonLink3: https://falco.org/docs/getting-started/download/#images
           buttonText4: Integrations
-          buttonLink4: https://falco.org/docs/third-party/
+          buttonLink4: https://falco.org/docs/getting-started/third-party/
         - title: Build
           text: Falco leverages gRPC and supports several SDKs to build with Falco
           # Icon (from /images/illustrations/icons/___.svg)
