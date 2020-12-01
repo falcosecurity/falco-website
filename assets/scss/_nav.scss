@@ -56,15 +56,14 @@
                 top: 0;
                 left: 5px;
                 z-index: 33;
-                padding: 10px;
-                height: 65px;
+                padding: 8px;
+                height: 100%;
                 width: 200px;
 
                 @include media-breakpoint-down(md) {
                     left: 16px;
                     width: 80px;
-                    height: auto;
-                    padding: 6px;
+                    padding: 0px;
                 }
             }
         }
