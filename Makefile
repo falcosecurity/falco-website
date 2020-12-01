@@ -10,15 +10,14 @@ serve: dependencies
 		--buildFuture
 
 production-build: dependencies
-	hugo --minify
+	hugo # --minify can be readded when hugo has minify >= 2.7.3
 	make check-links
 
 preview-build: dependencies
 	hugo \
 		--baseURL $(DEPLOY_PRIME_URL) \
 		--buildDrafts \
-		--buildFuture \
-		--minify
+		--buildFuture # --minify can be readded when hugo has minify >= 2.7.3
 	make check-links
 
 link-checker-setup:
