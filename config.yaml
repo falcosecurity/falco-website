@@ -92,7 +92,7 @@ languages:
           buttonText4:  Python
           buttonLink4: https://github.com/falcosecurity/client-py
         - title: Configure
-          text: Falco leverages gRPC and supports several SDKs to build with Falco
+          text: Configure Falco using rules, alerts, and other options
           # Icon (from /images/illustrations/icons/___.svg)
           icon: fas fa-file-alt
           buttonText1:  Configuration
