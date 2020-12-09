@@ -34,9 +34,6 @@ I chose to move from my Field CTO position to Falco because I believe in the tec
 
 <p id="gdcalert3" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image3.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert4">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
-
-<img src="images/image3.png" width="" alt="alt_text" title="image_tooltip">
-
 </p>
 <p>
 Falco has made tremendous progress.  Contributions and committers have increased 280 percent from external companies' contributions.  Overall contributors in 10 months has seen 74 percent growth with Github Stars increasing over 287 percent since moving to an incubation-level hosted project. The Sysdig team dedicated to Falco has completely overhauled and moved everything to conventions required by the CNCF for Incubation, including migrating to a new build and contribution paradigm.  They created and optimized code for easier deployment and better performance of the underlying Falco Engine and Rules.  The Falco Community, including the amazing contributions from Leonardo Di Donato, Lorenzo Fontana, Leonardo Grasso, and many others, has made HUGE strides!  We’ve had over 600% growth in integrations spearheaded by Falcosidekick, an amazing piece of tech created by <a href="https://app.slack.com/team/U013UTJ9MRU">Thomas Labarussias</a>, a contributor who has laid the foundation for others to contribute even further. And huge contributions from AWS (Jonah Jones) and IBM (Spencer Krum) in the Falco build process and overall community leadership have made this THE CNCF project to be a part of.
