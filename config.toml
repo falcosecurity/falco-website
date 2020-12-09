@@ -120,11 +120,11 @@ id = "UA-00000000-0"
 [[menu.main]]
     name = "Documentation"
     weight = 40
-    url = "https://falco.org/docs/"
+    url = "/docs/"
 [[menu.main]]
     name = "Blog"
     weight = 50
-    url = "https://falco.org/blog/"
+    url = "/blog/"
 
 
 
