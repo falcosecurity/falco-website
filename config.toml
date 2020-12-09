@@ -135,8 +135,7 @@ id = "UA-00000000-0"
 
 [params]
 copyright = "The Falco Authors"
-copyright_linux =  "Copyright © 2020 The Linux Foundation ®."
-privacy_policy = "https://policies.google.com/privacy"
+copyright_linux =  "The Linux Foundation ®."
 
 # Menu title if your navbar has a versions selector to access old versions of your site.
 # This menu appears only if you have at least one [params.versions] set.

@@ -6,3 +6,7 @@ integrations:
   other: Integrations
 copyright:
   other: Copyright
+documentation_copyright_notice:
+  other: Documentation Distributed under CC BY 4.0
+main_copyright_notice:
+  other: The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our <a href="https://www.linuxfoundation.org/trademark-usage">Trademark Usage page</a>
