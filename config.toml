@@ -125,7 +125,10 @@ id = "UA-00000000-0"
     name = "Blog"
     weight = 50
     url = "/blog/"
-
+[[menu.main]]
+    name = "Community"
+    weight = 60
+    url = "/community/"
 
 
 # Language configuration
@@ -244,10 +247,15 @@ enable = false
 	icon = "fab fa-slack"
         desc = "Chat with other project developers"
 [[params.links.developer]]
-	# name = "Developer mailing list"
-	# url = "https://lists.cncf.io/g/cncf-falco-dev"
-	# icon = "fa fa-envelope"
-        # desc = "Discuss development issues around the project"
+	name = "Developer mailing list"
+	url = "https://lists.cncf.io/g/cncf-falco-dev"
+	icon = "fa fa-envelope"
+        desc = "Discuss development issues around the project"
+[[params.links.developer]]
+	name = "Contributor of the Month"
+	url = "/docs/contribute/contributor-of-the-month/"
+	icon = "fa fa-star"
+        desc = "View the contributors of the month"
 
 [params.mermaid]
 enable = true
