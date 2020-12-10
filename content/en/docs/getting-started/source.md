@@ -6,28 +6,60 @@ weight: 5
 Welcome to the guide on how to build Falco yourself! You are very brave! Since you are already
 doing all this, chances that you are willing to contribute are high! Please read our [contributing guide](https://github.com/falcosecurity/.github/blob/master/CONTRIBUTING.md).
 
-## CentOS / RHEL
+1. Install the dependencies
 
-CentOS 7 is the reference build environment we use to compile release artifacts.
+{{< tabs name="Dependencies" >}}
+{{% tab name="CentOS / RHEL " %}}
 
-### Dependencies
+CentOS 7 / RHEL 7
 
-**CentOS 8 / RHEL 8**
+```bash
+yum install gcc gcc-c++ git make autoconf automake pkg-config patch ncurses-devel libtool glibc-static libstdc++-static elfutils-libelf-devel
+```
+
+You will also need `cmake` version `3.5.1` or higher which is not included in CentOS 7. You can follow the [official guide](https://cmake.org/install/) or look at how that is done in the [Falco builder Dockerfile](https://github.com/falcosecurity/falco/blob/master/docker/builder/Dockerfile).
+
+CentOS 8 / RHEL 8
 
 ```bash
 dnf install gcc gcc-c++ git make cmake autoconf automake pkg-config patch ncurses-devel libtool elfutils-libelf-devel diffutils which
 ```
+{{< /tab >}}}
 
-**CentOS 7 / RHEL 7**
-
+{{% tab name="Debian/ Ubuntu" %}}
+```bash
+apt install git cmake build-essential libncurses-dev pkg-config autoconf libtool libelf-dev -y
 ```
-yum install gcc gcc-c++ git make autoconf automake pkg-config patch ncurses-devel libtool glibc-static libstdc++-static elfutils-libelf-devel
+{{< /tab >}}}
+
+{{% tab name="Arch Linux" %}}
+```bash
+pacman -S git cmake make gcc wget
+pacman -S zlib jq ncurses yaml-cpp openssl curl c-ares protobuf grpc libyaml
 ```
+{{< /tab >}}}
 
-You will also need `cmake` version `3.5.1` or higher which is not included in CentOS 7. You can follow the [official guide](https://cmake.org/install/) or look at how that is done
-in the [Falco builder Dockerfile](https://github.com/falcosecurity/falco/blob/master/docker/builder/Dockerfile).
+{{% tab name="Alpine" %}}
+Since Alpine ships with `musl` instead of `glibc`, to build on Alpine, we need to pass the `-DMUSL_OPTIMIZED_BUILD=On` CMake option.
 
-### Build Falco
+If that option is used along with the `-DUSE_BUNDLED_DEPS=On` option, then the final build will be 100% statically-linked and portable across different Linux distributions.
+
+```bash
+apk add g++ gcc cmake cmake make ncurses-dev git bash perl linux-headers autoconf automake m4 libtool elfutils-dev libelf-static patch binutils
+```
+{{< /tab >}}}
+
+{{% tab name="openSUSE" %}}
+```bash
+zypper -n install gcc gcc-c++ git-core cmake libjq-devel ncurses-devel yaml-cpp-devel libopenssl-devel libcurl-devel c-ares-devel protobuf-devel grpc-devel patch which automake autoconf libtool libelf-devel libyaml-devel
+```
+{{< /tab >}}}
+{{< /tabs >}}
+
+2. Build Falco
+
+{{< tabs name="Build" >}}
+{{% tab name="CentOS / RHEL " %}}
 
 ```bash
 git clone https://github.com/falcosecurity/falco.git
@@ -40,46 +72,9 @@ make falco
 
 More details [here](#build-directly-on-host).
 
-### Build kernel module driver
+{{< /tab >}}}
 
-In the build directory:
-
-```bash
-yum -y install kernel-devel-$(uname -r)
-make driver
-```
-
-### Build eBPF driver
-
-If you do not want to use the kernel module driver you can, alternatively, build the eBPF driver as follows.
-
-In the build directory:
-
-```bash
-dnf install clang llvm
-cmake -DBUILD_BPF=ON ..
-make bpf
-```
-
-### Build DEB/RPM packages
-
-In the build directory:
-
-```bash
-yum install rpm-build createrepo
-make package
-```
-
-## Debian / Ubuntu
-
-
-### Dependencies
-
-```bash
-apt install git cmake build-essential libncurses-dev pkg-config autoconf libtool libelf-dev -y
-```
-
-### Build Falco
+{{% tab name="Debian/ Ubuntu" %}}
 
 You can skip this on Ubuntu 18.04.
 
@@ -100,7 +95,68 @@ make falco
 
 More details [here](#build-directly-on-host).
 
-### Build kernel module driver
+{{< /tab >}}}
+
+{{% tab name="Arch Linux" %}}
+
+```bash
+git clone https://github.com/falcosecurity/falco.git
+cd falco
+mkdir -p build
+cd build
+cmake ..
+make falco
+```
+
+More details [here](#build-directly-on-host).
+
+
+{{< /tab >}}}
+{{% tab name="Alpine" %}}
+```bash
+git clone https://github.com/falcosecurity/falco.git
+cd falco
+mkdir -p build
+cd build
+cmake -DUSE_BUNDLED_DEPS=On -DMUSL_OPTIMIZED_BUILD=On ..
+make falco
+```
+{{< /tab >}}}
+
+{{% tab name="openSUSE" %}}
+```bash
+git clone https://github.com/falcosecurity/falco.git
+cd falco
+mkdir -p build
+cd build
+cmake ..
+make falco
+```
+
+More details [here](#build-directly-on-host).
+
+{{< /tab >}}}
+{{< /tabs >}}
+
+
+
+3. Build kernel module driver
+
+{{< tabs name="KernelModule" >}}
+{{% tab name="CentOS / RHEL " %}}
+
+In the build directory:
+
+```bash
+yum -y install kernel-devel-$(uname -r)
+make driver
+```
+
+More details [here](#build-directly-on-host).
+
+{{< /tab >}}}
+
+{{% tab name="Debian/ Ubuntu" %}}
 
 Kernel headers are required to build the driver.
 
@@ -113,8 +169,52 @@ In the build directory:
 ```bash
 make driver
 ```
+{{< /tab >}}}
 
-### Build eBPF driver
+{{% tab name="Arch Linux" %}}
+
+In the build directory:
+
+```bash
+make driver
+```
+
+More details [here](#build-directly-on-host).
+
+
+{{< /tab >}}}
+{{% tab name="Alpine" %}}
+NO STEP
+{{< /tab >}}}
+
+{{% tab name="openSUSE" %}}
+In the build directory:
+
+```bash
+zypper -n install kernel-default-devel
+make driver
+```
+{{< /tab >}}}
+{{< /tabs >}}
+
+4. Build eBPF driver (optional)
+
+{{< tabs name="eBPFdriver" >}}
+{{% tab name="CentOS / RHEL " %}}
+
+If you do not want to use the kernel module driver you can, alternatively, build the eBPF driver as follows.
+
+In the build directory:
+
+```bash
+dnf install clang llvm
+cmake -DBUILD_BPF=ON ..
+make bpf
+```
+
+{{< /tab >}}}
+
+{{% tab name="Debian/ Ubuntu" %}}
 
 If you do not want to use the kernel module driver you can, alternatively, build the eBPF driver as follows.
 
@@ -125,38 +225,9 @@ apt install llvm clang
 cmake -DBUILD_BPF=ON ..
 make bpf
 ```
+{{< /tab >}}}
 
-## Arch Linux
-
-### Dependencies
-
-```bash
-pacman -S git cmake make gcc wget
-pacman -S zlib jq ncurses yaml-cpp openssl curl c-ares protobuf grpc libyaml
-```
-
-### Build Falco
-
-```bash
-git clone https://github.com/falcosecurity/falco.git
-cd falco
-mkdir -p build
-cd build
-cmake ..
-make falco
-```
-
-More details [here](#build-directly-on-host).
-
-### Build kernel module driver
-
-In the build directory:
-
-```bash
-make driver
-```
-
-### Build eBPF driver
+{{% tab name="Arch Linux" %}}
 
 If you do not want to use the kernel module driver you can, alternatively, build the eBPF driver as follows.
 
@@ -168,61 +239,13 @@ cmake -DBUILD_BPF=ON ..
 make bpf
 ```
 
-## Alpine
 
-Since Alpine ships with `musl` instead of `glibc`, to build on Alpine, we need to pass the `-DMUSL_OPTIMIZED_BUILD=On` CMake option.
+{{< /tab >}}}
+{{% tab name="Alpine" %}}
+NO STEP
+{{< /tab >}}}
 
-If that option is used along with the `-DUSE_BUNDLED_DEPS=On` option, then the final build will be 100% statically-linked and portable across different Linux distributions.
-
-### Dependencies
-
-```bash
-apk add g++ gcc cmake cmake make ncurses-dev git bash perl linux-headers autoconf automake m4 libtool elfutils-dev libelf-static patch binutils
-```
-
-### Build Falco
-
-```bash
-git clone https://github.com/falcosecurity/falco.git
-cd falco
-mkdir -p build
-cd build
-cmake -DUSE_BUNDLED_DEPS=On -DMUSL_OPTIMIZED_BUILD=On ..
-make falco
-```
-
-## openSUSE
-
-### Dependencies
-
-```bash
-zypper -n install gcc gcc-c++ git-core cmake libjq-devel ncurses-devel yaml-cpp-devel libopenssl-devel libcurl-devel c-ares-devel protobuf-devel grpc-devel patch which automake autoconf libtool libelf-devel libyaml-devel
-```
-
-### Build Falco
-
-```bash
-git clone https://github.com/falcosecurity/falco.git
-cd falco
-mkdir -p build
-cd build
-cmake ..
-make falco
-```
-
-More details [here](#build-directly-on-host).
-
-### Build kernel module driver
-
-In the build directory:
-
-```bash
-zypper -n install kernel-default-devel
-make driver
-```
-
-### Build eBPF driver
-
+{{% tab name="openSUSE" %}}
 If you do not want to use the kernel module driver you can, alternatively, build the eBPF driver as follows.
 
 In the build directory:
@@ -232,6 +255,8 @@ zypper -n install clang llvm
 cmake -DBUILD_BPF=ON ..
 make bpf
 ```
+{{< /tab >}}}
+{{< /tabs >}}
 
 ## Dependencies
 
