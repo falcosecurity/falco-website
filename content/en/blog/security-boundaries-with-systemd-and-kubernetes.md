@@ -5,12 +5,16 @@ date: 2020-12-10
 author: Kris Nóva
 ---
 
-Imagine install a security tool that requires privileged access using the Kubernetes API. 
+# A familiar scenario
+
+Imagine installing a security tool that requires privileged access using the Kubernetes API. 
 Now imagine our cluster is compromised. 
 As an attacker, the first thing I would do would be to ensure that whatever security tool you were running in Kubernetes - was turned off.
 Fortunately if I compromised your cluster there is a very lush toolchain that would make that very easy for me.
 
 ---
+
+# Why I run Falco directly on Linux
 
 Fundamentally I disagree with running a security tool in the same layer of the stack that it hopes to protect.
 That is effectively like keeping the keys to your front door conveniently hung on the outside of a locked door.
@@ -28,6 +32,8 @@ Yes they have gained access to unwanted parts of my cluster.
 The [Helm chart](https://github.com/falcosecurity/charts) is a great place to get started! 
 
 ---
+
+# How I do it
 
 Here is how I install and run Falco in production.
 
@@ -78,15 +84,14 @@ systemctl start falco
 
 ---
 
-Yeah -- I run Falco on Linux with eBPF - and it works great.
+# Conclusion
+
+Yes -- I run Falco on Linux with eBPF - and it works great.
 If my cluster ever gets attacked I know that I have good Linux security in place to prevent any more escalation.
-I figure out what happened.
+I understand out what happened.
 I fix the problem.
 
-
----
-
-In conclusion we get this question a lot. 
+In conclusion, we see this question a lot. 
 Having a boundary between your cluster and your host is wise.
 Installing Falco using Kubernetes breaks that boundary.
 This is how I do things.
