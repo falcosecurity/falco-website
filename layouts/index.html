@@ -1,7 +1,45 @@
 {{ define "main" }}
 {{ with .Content }}
-{{ . }}
 
+
+<section id="td-cover-block-0"
+    class="row td-cover-block td-cover-block--height-auto js-td-cover td-overlay td-overlay--primary -bg-primary">
+    <div class="container td-overlay__inner">
+        <div class="row">
+            <div class="col-12">
+                <div class="text-center">
+                    <h1 class="display-1 mt-0 mt-md-5 pb-4">The Falco Project</h1>
+
+                    <div class="pt-3 lead">
+                        Cloud-Native runtime security
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="row relative td-box--gradient td-box--height-auto">
+    <div class="container td-arrow-down">
+        <div class="row">
+            <div class="h4 mb-0 col-md-6">
+
+                <b>Falco</b>, the cloud-native runtime security project, is the de facto <b>Kubernetes threat
+                    detection
+                    engine</b><br /><br />
+                <small>Falco was created by Sysdig in 2016 and is the first runtime security project to join CNCF as an
+                    incubation-level project. Falco detects unexpected application behavior and alerts on threats at
+                    runtime.</small>
+
+            </div>
+            <div class="col-md-6">
+                <img width="100%" src="/img/diagram-home.png" />
+            </div>
+        </div>
+    </div>
+</section>
+
+{{ . }}
 <section id="cncf">
     <p>{{ T "cncf_status_statement" | markdownify }}</p>
 </section>
