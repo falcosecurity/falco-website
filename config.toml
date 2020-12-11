@@ -129,6 +129,10 @@ id = "UA-00000000-0"
     name = "Community"
     weight = 60
     url = "/community/"
+[[menu.main]]
+    name = "Partners"
+    weight = 70
+    url = "/partners/"
 
 
 # Specify a value here if your content directory is not in your repo's root directory
