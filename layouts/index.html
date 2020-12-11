@@ -1,0 +1,10 @@
+{{ define "main" }}
+{{ with .Content }}
+{{ . }}
+
+<section id="cncf">
+    <p>{{ T "cncf_status_statement" | markdownify }}</p>
+</section>
+
+{{ end }}
+{{ end }}
