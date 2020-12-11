@@ -1,9 +1,5 @@
 ---
 title: Falco
-linkTitle: Home
-menu:
-  main:
-    weight: 10
 ---
 
 {{% blocks/cover title="The Falco Project" height="auto" %}}
