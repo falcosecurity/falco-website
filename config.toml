@@ -171,13 +171,15 @@ version = "0.26.2"
 # point people to the main doc site.
 url_latest_version = "https://falco.org"
 
+# Repository links (https://www.docsy.dev/docs/adding-content/repository-links)
 # Repository configuration (URLs for in-page links to opening issues and suggesting changes)
 github_repo = "https://github.com/falcosecurity/falco-website"
-# An optional link to a related project repo. For example, the sibling repository where your product code lives.
-github_project_repo = "https://github.com/falcosecurity/falco-website"
-
 # Specify a value here if your content directory is not in your repo's root directory
 # github_subdir = "userguide"
+# An optional link to a related project repo. For example, the sibling repository where your product code lives.
+github_project_repo = "https://github.com/falcosecurity/falco-website"
+# Specify a value here if you have would like to reference a different branch for the other github settings
+# github_branch =
 
 time_format_blog = "Monday, January 02, 2006"
 time_format_default = "January 2, 2006"
