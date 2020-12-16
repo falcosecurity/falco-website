@@ -6,4 +6,9 @@ integrations:
   other: Integrations
 copyright:
   other: Copyright
-
+deprecation_title:
+  other: "You are viewing documentation for Falco version:"
+deprecation_warning:
+  other: " documentation is no longer actively maintained. The version you are currently viewing is a static snapshot. For up-to-date documentation, see the "
+latest_version:
+  other: "latest version"

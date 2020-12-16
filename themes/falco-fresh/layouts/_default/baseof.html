@@ -9,6 +9,7 @@
   </head>
   <body{{ if $standard }} class="page has-navbar-fixed-top"{{ end }}>
     {{ if $standard }}<main class="main">{{ end }}
+    {{ partial "deprecation-warning.html" . }}
     {{ block "main" . }}
     {{ end }}
     {{ if $standard }}</main>{{ end }}
