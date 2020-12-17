@@ -165,7 +165,7 @@ archived_version = false
 # The version number for the version of the docs represented in this doc set.
 # Used in the "version-banner" partial to display a version number for the
 # current doc set.
-version = "0.26.2"
+version = "v0.27.0"
 
 # A link to latest version of the docs. Used in the "version-banner" partial to
 # point people to the main doc site.
@@ -328,15 +328,15 @@ time_format_blog = "2006.01.02"
 language_alternatives = ["en"]
 
 [[params.versions]]
-fullversion = "v0.26.2"
-version = "v0.26.2"
-githubbranch = "v0.26.2"
+fullversion = "v0.27.0"
+version = "v0.27"
+githubbranch = "master"
 docsbranch = "master"
 url = "https://falco.org"
 
 [[params.versions]]
-fullversion = "v0.26.3"
-version = "v0.26.3"
-githubbranch = "v0.26.3"
-docsbranch = "master"
-url = "https://falco.org/v3"
+fullversion = "v0.26.2"
+version = "v0.26"
+githubbranch = "0.26.2"
+docsbranch = "v0.26"
+url = "https://v0-26.falco.org/"
