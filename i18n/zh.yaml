@@ -12,3 +12,9 @@ main_copyright_notice:
   other: The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our <a href="https://www.linuxfoundation.org/trademark-usage">Trademark Usage page</a>
 cncf_status_statement:
   other: We are a <a href="https://cncf.io/">CNCF</a> incubated Project
+version_banner_title:
+  other: "You are viewing documentation for Falco version:"
+version_banner_warning:
+  other: " documentation is no longer actively maintained. The version you are currently viewing is a static snapshot. For up-to-date documentation, see the "
+latest_version:
+  other: "latest version"

@@ -1,0 +1,21 @@
+<!-- Check the variable that indicates whether this is an archived doc set.
+  If yes, display a banner. -->
+{{ if .Site.Params.archived_version }}
+{{ $color := "primary" }}
+{{ $latest_version := .Site.Params.url_latest_version }}
+{{ $current_version := .Site.Params.version }}
+<div class="version-banner">
+  <div class="pageinfo pageinfo-warning">
+    {{ with $current_version }}
+    <h3>
+      {{ T "version_banner_title" }} {{ . | markdownify }}
+    </h3>
+    <p>Falco {{ . | markdownify }} {{ T "version_banner_warning" }}
+      {{ with $latest_version }}
+      <a href="{{ $latest_version | safeURL }}" target="_blank">{{ T "latest_version" }}</a>.
+    </p>
+    {{ end }}
+    {{ end }}
+  </div>
+</div>
+{{ end }}
