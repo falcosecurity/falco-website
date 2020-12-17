@@ -160,7 +160,7 @@ version_menu = "Releases"
 # Flag used in the "version-banner" partial to decide whether to display a
 # banner on every page indicating that this is an archived version of the docs.
 # Set this flag to "true" if you want to display the banner.
-archived_version = false
+archived_version = true
 
 # The version number for the version of the docs represented in this doc set.
 # Used in the "version-banner" partial to display a version number for the
@@ -328,15 +328,15 @@ time_format_blog = "2006.01.02"
 language_alternatives = ["en"]
 
 [[params.versions]]
-fullversion = "v0.27.0"
-version = "v0.27"
-githubbranch = "master"
-docsbranch = "master"
-url = "https://falco.org"
-
-[[params.versions]]
 fullversion = "v0.26.2"
 version = "v0.26"
 githubbranch = "0.26.2"
 docsbranch = "v0.26"
 url = "https://v0-26.falco.org/"
+
+[[params.versions]]
+fullversion = "v0.27.0"
+version = "v0.27"
+githubbranch = "master"
+docsbranch = "master"
+url = "https://falco.org"
