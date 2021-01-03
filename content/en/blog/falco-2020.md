@@ -54,7 +54,7 @@ To not mention [falcosidekick](https://github.com/falcosecurity/falcosidekick). 
 
 What [Thomas](https://github.com/issif) did here to enhance Falco output alerts is just awesome. Listing here all the tools he integrated with the Falco outputs alerts would make this post even longer.
 
-So, please go read [this blog post](https://www.cncf.io/blog/2020/08/17/falco-update-whats-new-in-falco-0-25) (part #4 🔗) by POP to know more about them.
+So, please go read [this blog post](https://www.cncf.io/blog/2020/12/14/join-pop-falco-org/) (part #4 🔗) by POP to know more about them.
 
 Since I just mentioned him, and in case you still don't know: [POP](https://github.com/danpopsd), my big ItaloAmericano friend, joined us with the intent to help the Falco community and ecosystem shine to unprecedented levels. Make no mistake: he's a great addition to the Falco community.
 
