@@ -40,6 +40,7 @@ Key | Required | Description | Default
 `desc` | yes | A longer description of what the rule detects. |
 `output` | yes | Specifies the message that should be output if a matching event occurs, following the Sysdig [output format syntax](http://www.sysdig.com/wiki/sysdig-user-guide/#output-formatting). |
 `priority` | yes | A case-insensitive representation of the severity of the event. Should be one of the following: `emergency`, `alert`, `critical`, `error`, `warning`, `notice`, `informational`, `debug`. |
+`exceptions` | no | A set of [exceptions](/docs/rules/exceptions) that cause the rule to not generate an alert. |
 `enabled` | no | If set to `false`, a rule is neither loaded nor matched against any events. | `true`
 `tags` | no | A list of tags applied to the rule (more on this [below](#tags)). |
 `warn_evttypes` | no | If set to `false`, Falco suppresses warnings related to a rule not having an event type (more on this [below](#rule-condition-best-practices)). | `true`
