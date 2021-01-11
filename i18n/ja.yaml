@@ -18,3 +18,10 @@ version_banner_warning:
   other: " documentation is no longer actively maintained. The version you are currently viewing is a static snapshot. For up-to-date documentation, see the "
 latest_version:
   other: "latest version"
+cloud-native-runtime-security:
+  other: クラウドネイティブランタイムセキュリティ
+home_falco_description: |
+  クラウドネイティブのランタイムセキュリティプロジェクトである<b>Falco</b>は、事実上のKubernetes脅威検出エンジンです。</b><br /><br />
+  <small>Falcoは2016年にSysdigによって作成され、CNCFに参加した最初のランタイムセキュリティプロジェクトです。
+       インキュベーションレベルのプロジェクト。 Falcoは、予期しないアプリケーションの動作を検出し、脅威についてアラートを出します。
+       ランタイム。</small>
