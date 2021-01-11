@@ -181,14 +181,11 @@ time_format_default = "January 2, 2006"
 # Sections to publish in the main RSS feed.
 rss_sections = ["blog"]
 
-# Google Custom Search Engine ID. Remove or comment out to disable search.
-gcs_engine_id = "011217106833237091527:la2vtv2emlw"
-
 # Enable Algolia DocSearch
 algolia_docsearch = false
 
 #Enable offline search with Lunr.js
-offlineSearch = false
+offlineSearch = true
 offlineSearchSummaryLength = 70
 offlineSearchMaxResults = 10
 
