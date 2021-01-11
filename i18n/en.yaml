@@ -28,3 +28,5 @@ home_falco_description:
     <small>Falco was created by Sysdig in 2016 and is the first runtime security project to join CNCF as an
         incubation-level project. Falco detects unexpected application behavior and alerts on threats at
         runtime.</small>
+home_featured_videos:
+  other: Featured Videos
