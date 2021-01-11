@@ -1,5 +1,5 @@
 {{ define "main" }}
-{{ with .Content }}
+
 
 
 <section id="td-cover-block-0"
@@ -31,9 +31,9 @@
         </div>
     </div>
 </section>
-
+{{ with .Content }}
 {{ . }}
-
+{{ end }}
 
 <section class="row relative td-box--gradient position-relative td-box--1 td-box--height-auto">
     <div class="container td-arrow-down">
@@ -46,6 +46,7 @@
     </div>
 </section>
 
+{{ partial "logos.html" . }}
 
 <section id="cncf">
     <p>{{ T "cncf_status_statement" | markdownify }}</p>
@@ -53,5 +54,5 @@
 
 
 
-{{ end }}
+
 {{ end }}
