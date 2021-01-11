@@ -41,7 +41,7 @@ falco --help
 
 ## Dockerでの実行 {#docker}
 
-ファルコは公式の[docker images](/docs/getting-started/download#images)のセットを提供しています。
+Falcoは公式の[docker images](/docs/getting-started/download#images)のセットを提供しています。
 イメージは以下の2つの方法で使用できます：
 - [最少特権（推奨）](#docker-least-privileged)
 - [完全特権](#docker-privileged)
