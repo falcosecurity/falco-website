@@ -26,3 +26,5 @@ home_falco_description:
     <small>Falco는 2016 년 Sysdig에 의해 생성되었으며 CNCF에 합류 한 최초의 런타임 보안 프로젝트입니다.
         인큐베이션 수준 프로젝트. Falco는 예상치 못한 애플리케이션 동작을 감지하고 위협에 대해 경고합니다.
         실행 시간.</small>
+home_featured_videos:
+  other: 추천 동영상
