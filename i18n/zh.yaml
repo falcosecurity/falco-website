@@ -20,8 +20,9 @@ latest_version:
   other: "latest version"
 cloud-native-runtime-security:
   other: 云原生运行时安全性
-home_falco_description: |
-  云原生运行时安全项目<b>Falco</b>是事实上的<b>Kubernetes</b>威胁检测引擎</b><br /><br />
-  <small>Falco由Sysdig于2016年创建，是第一个以其身份加入CNCF的运行时安全项目
-       孵化级项目。 Falco检测到意外的应用程序行为并在以下情况下发出威胁警报
-       运行。</small>
+home_falco_description:
+  other: |
+    云原生运行时安全项目<b>Falco</b>是事实上的<b>Kubernetes</b>威胁检测引擎</b><br /><br />
+    <small>Falco由Sysdig于2016年创建，是第一个以其身份加入CNCF的运行时安全项目
+        孵化级项目。 Falco检测到意外的应用程序行为并在以下情况下发出威胁警报
+        运行。</small>

@@ -20,8 +20,9 @@ latest_version:
   other: "latest version"
 cloud-native-runtime-security:
   other: 클라우드 네이티브 런타임 보안
-home_falco_description: |
-  <b>클라우드 네이티브 런타임 보안 프로젝트 인 <b>Falco</b>는 사실상 <b>Kubernetes</b> 위협 탐지 엔진입니다.</b><br /><br />
-  <small>Falco는 2016 년 Sysdig에 의해 생성되었으며 CNCF에 합류 한 최초의 런타임 보안 프로젝트입니다.
-       인큐베이션 수준 프로젝트. Falco는 예상치 못한 애플리케이션 동작을 감지하고 위협에 대해 경고합니다.
-       실행 시간.</small>
+home_falco_description:
+  other: |
+    <b>클라우드 네이티브 런타임 보안 프로젝트 인 <b>Falco</b>는 사실상 <b>Kubernetes</b> 위협 탐지 엔진입니다.</b><br /><br />
+    <small>Falco는 2016 년 Sysdig에 의해 생성되었으며 CNCF에 합류 한 최초의 런타임 보안 프로젝트입니다.
+        인큐베이션 수준 프로젝트. Falco는 예상치 못한 애플리케이션 동작을 감지하고 위협에 대해 경고합니다.
+        실행 시간.</small>
