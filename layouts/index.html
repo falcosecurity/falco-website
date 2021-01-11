@@ -11,7 +11,7 @@
                     <h1 class="display-1 mt-0 mt-md-5 pb-4">The Falco Project</h1>
 
                     <div class="pt-3 lead">
-                        Cloud-Native runtime security
+                        {{ T "cloud-native-runtime-security" | markdownify }}
                     </div>
                 </div>
             </div>
@@ -20,17 +20,10 @@
 </section>
 
 <section class="row relative td-box--gradient td-box--height-auto">
-    <div class="container td-arrow-down">
+    <div class="container">
         <div class="row">
             <div class="h4 mb-0 col-md-6">
-
-                <b>Falco</b>, the cloud-native runtime security project, is the de facto <b>Kubernetes threat
-                    detection
-                    engine</b><br /><br />
-                <small>Falco was created by Sysdig in 2016 and is the first runtime security project to join CNCF as an
-                    incubation-level project. Falco detects unexpected application behavior and alerts on threats at
-                    runtime.</small>
-
+                {{ T "home_falco_description" | markdownify }}
             </div>
             <div class="col-md-6">
                 <img width="100%" src="/img/diagram-home.png" />
@@ -40,9 +33,25 @@
 </section>
 
 {{ . }}
+
+
+<section class="row relative td-box--gradient position-relative td-box--1 td-box--height-auto">
+    <div class="container td-arrow-down">
+        <div class="row">
+            <div class="col text-center">
+                <h3 class="display-1 mt-0 mt-md-3 pb-3">Featured Videos</h3>
+                {{ partial "videos.html" .}}
+            </div>
+        </div>
+    </div>
+</section>
+
+
 <section id="cncf">
     <p>{{ T "cncf_status_statement" | markdownify }}</p>
 </section>
+
+
 
 {{ end }}
 {{ end }}
