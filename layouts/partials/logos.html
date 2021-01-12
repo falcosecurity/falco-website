@@ -5,11 +5,11 @@
 
 <section class="row relative td-box--gradient td-box--height-auto">
     <div class="container text-center">
-        <h2 class="subtitle is-3 is-muted">{{ T "end-users" }}</h2>
+        <h1 class="subtitle is-3 is-muted">{{ T "end-users" }}</h1>
         <br />
         <div class="row h-30">
             {{- range $endUsers }}
-            <div class="col-xs-12 col-sm-4 col-md-2 offset-md-1 my-auto">
+            <div class="col-xs-12 col-sm-6 col-md-3 px-5 pb-3 my-auto">
             <figure>
                 <a href="{{ .url }}">
                 <img class="img-fluid mb-4" src="{{ printf "/img/adopters/%s" .src | relURL }}"
@@ -20,11 +20,11 @@
             {{- end }}
         </div>
 
-        <h2 class="subtitle is-3 is-muted">{{ T "vendors" }}</h2>
+        <h1 class="subtitle is-3 is-muted">{{ T "vendors" }}</h1>
         <br />
         <div class="row h-30">
             {{- range $vendors }}
-            <div class="col-xs-12 col-sm-4 col-md-2 offset-md-1 my-auto">
+            <div class="col-xs-12 col-sm-6 col-md-3 px-5 pb-3 my-auto">
             <figure>
                 <a href="{{ .url }}">
                 <img class="img-fluid mb-4" src="{{ printf "/img/adopters/%s" .src | relURL }}"
@@ -36,11 +36,11 @@
         </div>
 
 
-        <h2 class="subtitle is-3 is-muted">{{ T "integrations" }}</h2>
+        <h1 class="subtitle is-3 is-muted">{{ T "integrations" }}</h1>
         <br />
         <div class="row h-30">
             {{- range $integrations }}
-            <div class="col-xs-12 col-sm-4 col-md-2 offset-md-1 my-auto">
+            <div class="col-xs-12 col-sm-6 col-md-3 px-5 pb-3 my-auto">
             <figure>
                 <a href="{{ .url }}">
                 <img class="img-fluid mb-4" src="{{ printf "/img/adopters/%s" .src | relURL }}"
