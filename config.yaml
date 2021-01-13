@@ -66,7 +66,7 @@ languages:
       resources:
         title: Develop
         subtitle: Build secure applications with Falco at the core.
-        detail: Use Falco with Kubernetes, Linux, and Serveless applications.
+        detail: Use Falco with Kubernetes, Linux, and Serverless applications.
         items:
         - title: Install
           text: Set up Falco to begin development
@@ -306,7 +306,7 @@ languages:
       resources:
         title: デベロップ
         subtitle: Falcoをコアにして安全なアプリケーションを構築しましょう。
-        detail: FalcoはKubernetes、Linux、Servelessアプリケーションで使用できます。
+        detail: FalcoはKubernetes、Linux、Serverlessアプリケーションで使用できます。
         items:
         - title: インストール
           text: Falcoをセットアップして開発を開始する
@@ -357,18 +357,12 @@ languages:
         privacyLink: https://www.linuxfoundation.org/privacy/
     menu:
       navbar:
-      - name: Falcoを選ぶ理由
-        url: "/#whyfalco"
-        weight: 2
-      - name: 始めましょう
-        url: "/#resources"
-        weight: 3
       - name: ドキュメンテーション
         url: "/docs"
         weight: 4
-      #- name: ブログ
-      #  url: "/blog"
-      #  weight: 5
+      - name: ブログ
+        url: "/blog"
+        weight: 5
 
   ko:
     languageName: 한국어 Korean
