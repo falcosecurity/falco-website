@@ -151,7 +151,7 @@ $ kubectl run kuberecon --tty -i --image octarinesec/kube-recon
 18:21:22.657590195: Warning Docker or kubernetes client executed in container (user=root user_loginuid=-1 k8s.ns=default k8s.pod=kuberecon container=4f63870599d0 parent=kube-recon cmdline=kubectl get pods image=octarinesec/kube-recon:latest) k8s.ns=default k8s.pod=kuberecon container=4f63870599d0
 18:21:22.723707794: Notice Unexpected connection to K8s API Server from container (command=kubectl get pods k8s.ns=default k8s.pod=kuberecon container=4f63870599d0 image=octarinesec/kube-recon:latest connection=172.17.0.5:56972->10.96.0.1:443) k8s.ns=default k8s.pod=kuberecon container=4f63870599d0
 ```
-blog
+
 ### Checking if shell is a container environment (Change thread namespace)
 Description: amicontained is a tool to check whether the shell is a containerized environment. The rule detects an attempt to change a program/thread's namespace.
 
