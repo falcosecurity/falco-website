@@ -4,7 +4,7 @@ date: 2021-01-12
 author: Thomas Labarussias
 ---
 
-This fantastic post from [@leodido](https://github.com/leodido) about how has been the previous year 2020 for falco inspired me ([link]](https://falco.org/blog/falco-2020/))  I wanted to bring everyone up to speed on what we built for `falcosidekick` in 2020
+This fantastic post from [@leodido](https://github.com/leodido) about how has been the previous year 2020 for falco inspired me ([link](https://falco.org/blog/falco-2020/))  I wanted to bring everyone up to speed on what we built for `falcosidekick` in 2020
 
 Aside a lot of improvments and bug fixes, 8 new outputs have been integrated:
 * **Rocketchat**
