@@ -42,17 +42,11 @@ falco-d4mgr   1/1     Running   0          3m10s
 
 We'll send the events in a **Slack** channel for this tutorial, so [get your webhook URL]([https://](https://api.slack.com/messaging/webhooks#create_a_webhook) first.
 
-Download the `falcosidekick` helm chart:
+Install `falcosidekick` with `helm`:
 
 ```bash
-git clone https://github.com/falcosecurity/falcosidekick.git
-cd falcosidekick/deploy/helm/falcosidekick
-```
-
-Install `falcosidekick` :
-
-```bash
-helm install falcosidekick . --namespace falco --set config.slack.webhookurl="https://hooks.slack.com/services/XXXX"
+helm repo add falcosecurity https://falcosecurity.github.io/charts
+helm install falcosidekick falcosecurity/falcosidekick --namespace falco --set config.slack.webhookurl="https://hooks.slack.com/services/XXXX"
 ```
 ```bash
 kubectl -n falco get pods
