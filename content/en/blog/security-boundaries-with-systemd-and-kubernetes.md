@@ -3,6 +3,7 @@ title: Security boundaries with Kubernetes and systemd
 description: Understanding why I do not run Falco in Kubernetes
 date: 2020-12-10
 author: Kris Nóva
+slug: security-boundaries-with-systemd-and-kubernetes
 ---
 
 # A familiar scenario

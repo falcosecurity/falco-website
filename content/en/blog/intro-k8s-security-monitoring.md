@@ -4,6 +4,7 @@ description: A quick introduction to Kubernetes security monitoring using Falco
 date: 2021-01-07
 author: Frederick Fernando
 canonical_url: https://www.infracloud.io/blogs/introduction-kubernetes-security-falco/
+slug: intro-k8s-security-monitoring
 ---
 
 ## Let’s talk about Kubernetes security

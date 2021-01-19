@@ -2,6 +2,7 @@
 Title: falcosidekick joins the falcosecurity organization
 Date: 2019-09-03
 Author: The Falco Authors
+slug: falcosideckick-joins-falcosecurity
 ---
 
 We are pleased to announce that [falcosidekick](https://github.com/falcosecurity/falcosidekick), a Go project aimed to forward [Falco](https://github.com/falcosecurity/falco) outputs to a number of services, joined the falcosecurity organization on GitHub.

@@ -2,6 +2,7 @@
 title: Falco 0.22 a.k.a. "the hard fixes release"
 date: 2020-04-17
 author: Leonardo Di Donato, Lorenzo Fontana
+slug: falco-0-22-x
 ---
 
 Another month has passed and Falco continues to grow!

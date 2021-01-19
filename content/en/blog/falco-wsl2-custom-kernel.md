@@ -3,6 +3,7 @@ title: Falco on WSL2 with a custom kernel
 description: How to enable Falco kernel module on WSL2
 date: 2021-01-05
 author: Nuno do Carmo
+slug: falco-wsl2-custom-kernel
 ---
 
 # Falco on WSL2

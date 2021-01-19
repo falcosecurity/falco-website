@@ -2,6 +2,7 @@
 title: Falco on Kind with Prometheus and Grafana
 date: 2020-03-19
 author: Leonardo Grasso
+slug: falco-kind-prometheus-grafana
 ---
 
 Kind is a tool for running local Kubernetes clusters using Docker container "nodes", that may be used for local development or CI. It also offers a convenient and easy way to install Falco in a Kubernetes cluster and play with it locally. We will use Kind to show how to export Falco metrics to Prometheus and Grafana.

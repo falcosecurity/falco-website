@@ -3,6 +3,7 @@ title: The Scope of Falco
 description: Understanding the scope of the Falco project
 date: 2020-04-20
 author: Kris Nóva
+slug: falco-scope
 ---
 
 As The Falco Project continues to grow, we are begining to understand the differences in engagement and support for our tooling.

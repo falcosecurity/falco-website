@@ -2,6 +2,7 @@
 title: Cloud Native Security Hub
 date: 2019-11-18
 author: Kris Nova
+slug: cloud-native-security-hub
 ---
 # Falco rules management 
 
