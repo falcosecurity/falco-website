@@ -3,6 +3,7 @@ title: Falco in 2020
 description: Reviewing the progress of Falco and its community during the pandemic year
 date: 2021-01-03
 author: Leonardo Di Donato
+slug: falco-2020
 ---
 
 The scope of this post is to review the progress of Falco and its community during the pandemic year. A year will never forget.

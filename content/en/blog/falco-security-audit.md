@@ -2,6 +2,7 @@
 title: Falco Security Audit
 date: 2019-12-16
 author: Michael Ducy
+slug: falco-security-audit
 ---
 Regularly auditing a code base is an important process in releasing secure software. Audits can be particularly important for open source projects that rely on code from a wide variety of contributors. We are happy to announce the release of Falco’s first [security audit](https://github.com/falcosecurity/falco/blob/master/audits/SECURITY_AUDIT_2019_07.pdf) which was performed through Falco’s participation as a [CNCF](https://www.cncf.io) Sandbox project. A big thanks to the CNCF for sponsoring the audit, and to the [Cure53](https://cure53.de/) team who performed the audit. 
 

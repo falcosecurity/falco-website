@@ -3,6 +3,7 @@ title: Choosing a Falco driver
 description: Understanding which Falco driver is right for you
 date: 2020-09-23
 author: Kris Nóva
+slug: choosing-a-driver
 ---
 
 Falco works by taking Linux system call information at runtime, and rebuilding the state of the kernel in memory.

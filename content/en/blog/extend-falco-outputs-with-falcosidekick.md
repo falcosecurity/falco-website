@@ -2,6 +2,7 @@
 Title: Extend Falco outputs with falcosidekick
 Date: 2020-06-22
 Author: Thomas Labarussias
+slug: extend-falco-outputs-with-falcosidekick
 ---
 By default, Falco has 5 outputs for its events: **stdout**, **file**, **gRPC**, **shell** and **http**. As you see in the following diagram:
 

@@ -2,6 +2,7 @@
 title: Falco 0.24.0 a.k.a. "the huge release"
 date: 2020-07-16
 author: Leonardo Di Donato, Leonardo Grasso
+slug: falco-0-24-0
 ---
 
 After two long months, look who's back!

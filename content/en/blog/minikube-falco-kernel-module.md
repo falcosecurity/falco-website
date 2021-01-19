@@ -2,6 +2,7 @@
 title: Minikube 1.8.0 packages the Falco Kernel Module
 date: 2020-03-08
 author: Lorenzo Fontana
+slug: minikube-falco-kernel-module
 ---
 
 Minikube is a tool that implements a local Kubernetes cluster on macOS, Linux and Windows via a simple command line, it is
