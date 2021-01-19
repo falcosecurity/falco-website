@@ -57,12 +57,12 @@ To translate other parts of the site:
 
 There is currently scaffolding in place for a Japanese translation of the site.
 
-To translate docs into Japanese, create Japanese-language Markdown files in the `content/jp/docs` directory.
+To translate docs into Japanese, create Japanese-language Markdown files in the `content/ja/docs` directory.
 
 To translate other parts of the site:
 
-1. See the `languages.jp` block in the site's [`config.yaml`](./config.yaml) configuration file and translate those items from the current English.
-1. See [`i18n/jp.yaml`](./i18n/jp.yaml) for a handful of language snippets that need to be translated from the current English. Translate the `other` block of each term.
+1. See the `languages.ja` block in the site's [`config.yaml`](./config.yaml) configuration file and translate those items from the current English.
+1. See [`i18n/ja.yaml`](./i18n/ja.yaml) for a handful of language snippets that need to be translated from the current English. Translate the `other` block of each term.
 
 ### Korean
 
