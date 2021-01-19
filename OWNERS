@@ -1,6 +1,7 @@
 approvers:
   - fntlnz
   - leodido
+  - danpopsd
   - kris-nova
   - mfdii
   - lucperkins
@@ -10,6 +11,7 @@ approvers:
 reviewers:
   - fntlnz
   - leodido
+  - danpopsd
   - kris-nova
   - mfdii
   - lucperkins
