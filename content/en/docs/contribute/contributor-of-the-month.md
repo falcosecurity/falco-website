@@ -11,4 +11,6 @@ The title of “Contributor of the Month” is awarded to an outstanding contrib
 
 Month of the Year  | Contributor of the Month
 -------------------- | ---
+November, 2020       | [Thomas Labarussias](https://github.com/Issif)
 December, 2020       | [Massimiliano Giovagnoli](https://github.com/maxgio92), and [Jonah Jones](https://github.com/jonahjon)
+January, 2021        | [Carlos Panato](https://github.com/cpanato), [KeisukeYamashita](https://github.com/KeisukeYamashita), and [Rajakavitha Kodhandapani](https://github.com/Rajakavitha1)
