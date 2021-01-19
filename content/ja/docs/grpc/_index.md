@@ -8,7 +8,7 @@ weight: 10
 現在のAPIは次のとおりです：
 
 - [schema definition](outputs): Falco出力イベントをサブスクライブします。
-- schema definition: Falcoバージョンを取得します。現在のバージョンは**{{< latest >}}**です。
+- [schema definition](version): Falcoバージョンを取得します。現在のバージョンは**{{< latest >}}**です。
 
 これらのAPIと対話するために、falcosecurity組織は[Go](./client-go)および[Python](./client-python)クライアントを提供しています。
 
