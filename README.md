@@ -11,7 +11,7 @@ In order to contribute a logo you must meet one of the following adopter types.
 Then open a pull request to this repository that contains:
 
  - A `.png` or `.svg` file in [clients](https://github.com/falcosecurity/falco-website/tree/master/themes/falco-fresh/static/images/logos/clients)
- - A change to [config.yaml](https://github.com/falcosecurity/falco-website/blob/master/config.yaml) that includes your logo alphabetically
+ - A change to [config.toml](https://github.com/falcosecurity/falco-website/blob/master/config.toml) that includes your logo alphabetically
  - Links and references to demonstrate you meet the criteria above.
 
 We try not to duplicate logos, and would prefer more encompassing logos over granular logos. For instance we prefer AWS over AWS EC2.
@@ -50,7 +50,7 @@ To translate docs into Chinese, create Chinese-language Markdown files in the `c
 
 To translate other parts of the site:
 
-1. See the `languages.zh` block in the site's [`config.yaml`](./config.yaml) configuration file and translate those items from the current English.
+1. See the `languages.zh` block in the site's [`config.toml`](./config.toml) configuration file and translate those items from the current English.
 1. See [`i18n/zh.yaml`](./i18n/zh.yaml) for a handful of language snippets that need to be translated from the current English. Translate the `other` block of each term.
 
 ### Japanese
@@ -61,7 +61,7 @@ To translate docs into Japanese, create Japanese-language Markdown files in the 
 
 To translate other parts of the site:
 
-1. See the `languages.ja` block in the site's [`config.yaml`](./config.yaml) configuration file and translate those items from the current English.
+1. See the `languages.ja` block in the site's [`config.toml`](./config.toml) configuration file and translate those items from the current English.
 1. See [`i18n/ja.yaml`](./i18n/ja.yaml) for a handful of language snippets that need to be translated from the current English. Translate the `other` block of each term.
 
 ### Korean
@@ -72,5 +72,5 @@ To translate docs into Korean, create Korean Markdown file(s) in the `content/ko
 
 To translate other parts of the site:
 
-1. See the `languages.ko` block in the site's [`config.yaml`](./config.yaml) configuration file and translate those items from the current English.
+1. See the `languages.ko` block in the site's [`config.toml`](./config.toml) configuration file and translate those items from the current English.
 1. See [`i18n/ko.yaml`](./i18n/ko.yaml) for a handful of language snippets that need to be translated from the current English. Translate the `other` block of each term.
