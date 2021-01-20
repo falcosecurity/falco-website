@@ -239,7 +239,7 @@ enable = false
         desc = "Practical questions and curated answers"
 [[params.links.user]]
 	name = "Calendar"
-	url = "https://lists.cncf.io/g/cncf-falco-dev/ics/4188901/1750099167/feed.ics"
+	url = "https://lists.cncf.io/g/cncf-falco-dev/calendar"
 	icon = "fas fa-calendar-alt"
         desc = "Subscribe to the Falco calendar, through this ics feed"
 # Developer relevant links. These will show up on right side of footer and in the community page if you have one.
