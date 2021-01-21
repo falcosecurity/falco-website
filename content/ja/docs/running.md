@@ -85,7 +85,7 @@ Kernel >= 5.8 を実行している場合は、ステップ 2 の docker run コ
 その使用法についての詳細は[こちらをご覧ください](//docs/installation#install-driver)
 
 
-2. Dockerを使ってコンテナ内のFalcoを[最小特権の原則](https://en.wikipedia.org/wiki/Principle_of_least_privilege)で実行する::
+2. Dockerを使ってコンテナ内のFalcoを[最小特権の原則](https://en.wikipedia.org/wiki/Principle_of_least_privilege)で実行する:
 
     ```shell
     docker pull falcosecurity/falco-no-driver:latest
