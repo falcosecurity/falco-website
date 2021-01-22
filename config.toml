@@ -162,6 +162,9 @@ archived_version = false
 # current doc set.
 version = "v0.27.0"
 
+# SHA256 checksum variable
+sha256sum = "21e8053c37e32f95d91c9393d961af1c63b5839d795c8cac314d05daadea9779"
+
 # A link to latest version of the docs. Used in the "version-banner" partial to
 # point people to the main doc site.
 url_latest_version = "https://falco.org"

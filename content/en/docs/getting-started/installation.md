@@ -11,8 +11,7 @@ Falco can be used for Kubernetes runtime security.
 The most secure way to run Falco is to install Falco directly on the host system so that Falco is isolated from Kubernetes in the case of compromise.
 Then the Falco alerts can be consumed via read-only agents running in Kubernetes.
 
-Falco can also be ran directly in Kubernetes if isolation is not a concern.
-If you would like to run Falco directly in Kubernetes with a tool like Kind, Minikube, or Helm please see the [third party integrations](../third-party)
+You can also run Falco directly in Kubernetes as a daemonset using Helm, see the [third party integrations](../third-party)
 {{% /pageinfo %}}
 
 
