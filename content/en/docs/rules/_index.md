@@ -215,12 +215,12 @@ Should `proc.name=nginx` be interpreted as relative to the `and proc.name=apache
 In cases like this, be sure to scope the logical operators of the original condition with parentheses when possible, or avoid appending conditions when not possible.
 
 ## Disable Default Rules
-Even though falco provides a quite powerful default ruleset, you sometimes need to disable some of these default rules since they do not work properly in your environment. Luckily falco offers you multiple possibilities to do so.
+Even though Falco provides a quite powerful default ruleset, you sometimes need to disable some of these default rules since they do not work properly in your environment. Luckily Falco offers you multiple possibilities to do so.
 
 ### Via existing Macros
-Most of the default rules offer some kind of `consider_*` macros which are already part of the rule conditions. These `consider_*` macros are usually set to `(never_true)` or `(always_true)` which basically enables or disabled the regarding rule. Now if you want to enable a by default disabled rule (e.g. `Unexpected outbound connection destination`), you just have to override the rule's `consider_*` macro (`consider_all_outbound_conns` in this case) inside your custom falco configuration.
+Most of the default rules offer some kind of `consider_*` macros which are already part of the rule conditions. These `consider_*` macros are usually set to `(never_true)` or `(always_true)` which basically enables or disabled the regarding rule. Now if you want to enable a by default disabled rule (e.g. `Unexpected outbound connection destination`), you just have to override the rule's `consider_*` macro (`consider_all_outbound_conns` in this case) inside your custom Falco configuration.
 
-Example for your custom falco configuration (note the `(always_true)` condition):
+Example for your custom Falco configuration (note the `(always_true)` condition):
 ```yaml
 - macro: consider_all_outbound_conns
   condition: (always_true)
@@ -251,11 +251,20 @@ Last but not least, it's also possible to just disable a by default enabled rule
   enabled: false
 ```
 
-This is especially useful for rules which do not provide a `consider_*` macro in it's default condition. Again, ensure the falco configuration files are loaded in the right order.
+This is especially useful for rules which do not provide a `consider_*` macro in it's default condition. Again, ensure the Falco configuration files are loaded in the right order.
+
+{{% pageinfo color="warning" %}}
+There appears to be a bug with this feature that we are looking into. If `enabled: false` doesn't work, you can use the following workaround as an alternative:
+```yaml
+- rule: User mgmt binaries
+  condition: and (never_true)
+  append: true
+```
+{{% /pageinfo %}}
 
 ## Rule Priorities
 
-Every falco rule has a priority which indicates how serious a violation of the rule is. The priority is included in the message/JSON output/etc. Here are the available priorities:
+Every Falco rule has a priority which indicates how serious a violation of the rule is. The priority is included in the message/JSON output/etc. Here are the available priorities:
 
 * `EMERGENCY`
 * `ALERT`
