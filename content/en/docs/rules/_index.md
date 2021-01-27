@@ -215,9 +215,11 @@ Should `proc.name=nginx` be interpreted as relative to the `and proc.name=apache
 In cases like this, be sure to scope the logical operators of the original condition with parentheses when possible, or avoid appending conditions when not possible.
 
 ## Disable Default Rules
+
 Even though Falco provides a quite powerful default ruleset, you sometimes need to disable some of these default rules since they do not work properly in your environment. Luckily Falco offers you multiple possibilities to do so.
 
 ### Via existing Macros
+
 Most of the default rules offer some kind of `consider_*` macros which are already part of the rule conditions. These `consider_*` macros are usually set to `(never_true)` or `(always_true)` which basically enables or disabled the regarding rule. Now if you want to enable a by default disabled rule (e.g. `Unexpected outbound connection destination`), you just have to override the rule's `consider_*` macro (`consider_all_outbound_conns` in this case) inside your custom Falco configuration.
 
 Example for your custom Falco configuration (note the `(always_true)` condition):
@@ -229,6 +231,7 @@ Example for your custom Falco configuration (note the `(always_true)` condition)
 Please note again that the order of the specified configuration file matters! The last defined macro with the same name wins.
 
 ### Via Falco Parameters
+
 Falco offers the following parameters to limit which default rules should be enabled/used and which not:
 ```bash
 -D <substring>                Disable any rules with names having the substring <substring>. Can be specified multiple times.
@@ -243,7 +246,13 @@ Falco offers the following parameters to limit which default rules should be ena
 These parameters can also be specified as Helm chart value (`extraArgs`) if you are deploying Falco via the official Helm chart.
 
 ### Via Custom Rule Definition
-Last but not least, it's also possible to just disable a by default enabled rule using the `append: true` and `enabled: false` rule properties in combination. Here an example to disable the `User mgmt binaries` default rule:
+
+Last but not the least, you can just disable a rule that is enabled by default using a combination of the `append: true` and `enabled: false` rule properties.
+This is especially useful for rules which do not provide a `consider_*` macro in the default condition.
+
+Ensure that the custom configuration file loads after the default configuration file. You can configure the right order using multiple `-r` parameters, directly inside the falco configuration file `falco.yaml` through `rules_file`. If you are using the official Helm chart, then configure the order with the `falco.rulesFile` value.
+
+For example to disable the `User mgmt binaries` default rule in `/etc/falco/falco_rules.yaml` define a custom rule in `/etc/falco/rules.d/custom-rules.yaml`:
 
 ```yaml
 - rule: User mgmt binaries
@@ -251,16 +260,16 @@ Last but not least, it's also possible to just disable a by default enabled rule
   enabled: false
 ```
 
-This is especially useful for rules which do not provide a `consider_*` macro in it's default condition. Again, ensure the Falco configuration files are loaded in the right order.
 
-{{% pageinfo color="warning" %}}
-There appears to be a bug with this feature that we are looking into. If `enabled: false` doesn't work, you can use the following workaround as an alternative:
-```yaml
-- rule: User mgmt binaries
-  condition: and (never_true)
-  append: true
-```
-{{% /pageinfo %}}
+ {{% pageinfo color="warning" %}}
+ There appears to be a bug with this feature that we are looking into. If `enabled: false` doesn't work, you can use the following workaround as an alternative:
+ ```yaml
+ - rule: User mgmt binaries
+   condition: and (never_true)
+   append: true
+ ```
+ {{% /pageinfo %}}
+
 
 ## Rule Priorities
 
