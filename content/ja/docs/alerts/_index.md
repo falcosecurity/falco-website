@@ -41,7 +41,7 @@ file_output:
 
 `keep_alive`がfalse（デフォルト）の場合、アラートごとにファイルが追加のために開かれ、単一のアラートが書き込まれ、ファイルが閉じられます。ファイルはローテーションまたは切り捨てられません。`keep_alive`がtrueに設定されている場合、ファイルは最初のアラートの前に開かれ、その後のすべてのアラートに対して開かれたままになります。出力はバッファリングされ、閉じるときにのみフラッシュされます。（これは`--unbuffered`で変更できます）。
 
-[logrotate](https://github.com/logrotate/logrotate)のようなプログラムを使用して出力ファイルをローテーションする場合は、サンプルのlogrotate設定を利用できます[こちら](https://github.com/draios/falco/blob/master/examples/logrotate/falco)。
+[logrotate](https://github.com/logrotate/logrotate)のようなプログラムを使用して出力ファイルをローテーションする場合は、サンプルのlogrotate設定を利用できます[こちら](https://github.com/falcosecurity/falco/blob/ffd8747ec0943db2546c3270826e1700dc4df75f/examples/logrotate/falco)。
 
 Falco 0.10.0以降、`SIGUSR1`で通知されると、falcoはファイル出力を閉じて再度開きます。上記のlogrotateの例はそれに依存しています。
 
