@@ -42,7 +42,7 @@ file_output:
 
 When `keep_alive` is false (the default), for each alert the file is opened for appending, the single alert is written, and the file is closed. The file is not rotated or truncated. If `keep_alive` is set to true, the file is opened before the first alert and kept open for all subsequent alerts. Output is buffered and will be flushed only on close. (This can be changed with `--unbuffered`).
 
-If you'd like to use a program like [logrotate](https://github.com/logrotate/logrotate) to rotate the output file, an example logrotate config is available [here](https://github.com/draios/falco/blob/master/examples/logrotate/falco).
+If you'd like to use a program like [logrotate](https://github.com/logrotate/logrotate) to rotate the output file, an example logrotate config is available [here](https://github.com/falcosecurity/falco/blob/ffd8747ec0943db2546c3270826e1700dc4df75f/examples/logrotate/falco).
 
 As of Falco 0.10.0, falco will close and reopen its file output when signaled with `SIGUSR1`. The logrotate example above depends on it.
 
