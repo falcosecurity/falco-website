@@ -1,6 +1,6 @@
 ---
 title: gRPC API
-weight: 10
+weight: 7
 ---
 
 Starting from version [0.18.0](https://github.com/falcosecurity/falco/releases/tag/0.18.0), Falco has its own gRPC server which provides a set of gRPC APIs.

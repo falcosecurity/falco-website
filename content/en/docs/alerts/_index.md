@@ -1,5 +1,6 @@
 ---
 title: Falco Alerts
+weight: 8
 ---
 
 Falco can send alerts to one or more channels:
@@ -25,7 +26,7 @@ stdout_output:
 ```
 10:20:05.408091526: Warning Sensitive file opened for reading by non-trusted program (user=root command=cat /etc/shadow file=/etc/shadow)
 ```
-Standard output is useful when using Fluentd or Logstash to capture logs from containers. Alerts can then be stored in Elasticsearch, and dashboards can be created to visualize the alerts. For more information, read [this blog post](https://sysdig.com/blog/kubernetes-security-logging-fluentd-falco/). 
+Standard output is useful when using Fluentd or Logstash to capture logs from containers. Alerts can then be stored in Elasticsearch, and dashboards can be created to visualize the alerts. For more information, read [this blog post](https://sysdig.com/blog/kubernetes-security-logging-fluentd-falco/).
 
 When run in the background via the `-d/--daemon` command line option, standard output messages are discarded.
 
@@ -85,7 +86,7 @@ program_output:
 
 When `keep_alive` is false (the default), for each alert falco will run the program `mail -s ...` and write the alert to the program. The program is run via a shell, so it's possible to specify a command pipeline if you wish to add additional formatting.
 
-If `keep_alive` is set to true, before the first alert falco will spawn the program and write the alert. The program pipe will be kept open for subsequent alerts.  Output is buffered and will be flushed only on close. (This can be changed with --unbuffered). 
+If `keep_alive` is set to true, before the first alert falco will spawn the program and write the alert. The program pipe will be kept open for subsequent alerts.  Output is buffered and will be flushed only on close. (This can be changed with --unbuffered).
 
 *Note*: the program spawned by falco is in the same process group as falco and will receive all signals that falco receives. If you want to, say, ignore SIGTERM to allow for a clean shutdown in the face of buffered outputs, you must override the signal handler yourself.
 
@@ -132,7 +133,7 @@ http_output:
   url: http://some.url/some/path/
 ```
 
-Currently only unencrypted HTTP endpoints or valid, secure HTTPs endpoints are supported (ie invalid or self signed certificates are not supported). 
+Currently only unencrypted HTTP endpoints or valid, secure HTTPs endpoints are supported (ie invalid or self signed certificates are not supported).
 
 ## JSON Output
 
@@ -148,7 +149,7 @@ Here's an example:
 
 ```javascript
 {"output":"16:31:56.746609046: Error File below a known binary directory opened for writing (user=root command=touch /bin/hack file=/bin/hack)","priority":"Error","rule":"Write below binary dir","time":"2017-10-09T23:31:56.746609046Z", "output_fields": {"evt.t\
-ime":1507591916746609046,"fd.name":"/bin/hack","proc.cmdline":"touch /bin/hack","user.name":"root"}} 
+ime":1507591916746609046,"fd.name":"/bin/hack","proc.cmdline":"touch /bin/hack","user.name":"root"}}
 ```
 
 Here's the same output, pretty-printed:

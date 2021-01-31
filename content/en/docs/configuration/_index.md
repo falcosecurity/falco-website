@@ -1,7 +1,7 @@
 ---
 title: Configuration
 description: Configuration for the Falco daemon
-weight: 10
+weight: 4
 notoc: true
 ---
 

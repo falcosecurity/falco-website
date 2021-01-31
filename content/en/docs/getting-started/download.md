@@ -4,8 +4,6 @@ description: Officially supported Falco artifacts
 weight: 2
 ---
 
-## Downloading
-
 The Falco Project community only supports two ways for downloading and running Falco:
 
  - Running Falco directly on a Linux host
