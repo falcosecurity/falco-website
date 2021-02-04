@@ -176,6 +176,7 @@ make driver
 In the build directory:
 
 ```bash
+pacman -S linux-headers
 make driver
 ```
 
