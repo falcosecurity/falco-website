@@ -1,5 +1,6 @@
 ---
 title: Falco Examples
+weight: 9
 ---
 
 Here are some examples of the types of behavior falco can detect.

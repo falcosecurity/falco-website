@@ -1,7 +1,7 @@
 ---
 title: Contribute
-description: Contribution guidelines and recognitions
-weight: 10
+description: Contribution recognitions
+weight: 11
 notoc: true
 ---
 
