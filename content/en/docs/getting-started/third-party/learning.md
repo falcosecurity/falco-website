@@ -17,7 +17,7 @@ You can follow the official
 
 <a class="btn btn-primary" href="https://minikube.sigs.k8s.io/docs/start/" role="button" aria-label="View minikube Get Started! Guide">View minikube Get Started! Guide</a>
 
-**Note**: Esure that you have [installed kubectl](/docs/getting-started/install-tools/#kubectl).
+**Note**: Esure that you have [installed kubectl](/docs/getting-started/third-party/install-tools/#kubectl).
 
 To set up Falco with minikube:
 
