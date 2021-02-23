@@ -70,3 +70,10 @@ You are now all set to open a PR on https://github.com/falcosecurity/libs. As us
 The contribution of such fantastic software will help not only Falco but also other projects to have a more secure Cloud-Native environment. More information about this contribution is in Loris Degioanni’s CNCF blog post (to be linked soon).
 
 Aside from Falco, also the [sysdig cli-tool](https://github.com/draios/sysdig) was refactored to use these libraries. From now on, also other projects can benefit from them! We are thrilled to see what folks will build upon these libraries!
+
+If you would like to find out more about Falco:
+
+- Check out the [Falco project in GitHub](https://github.com/falcosecurity/falco)
+- Get involved in the [Falco community](https://falco.org/community/)
+- Meet the maintainers on the [#falco channel (Kubernetes Slack)](https://kubernetes.slack.com/?redir=%2Fmessages%2Ffalco)
+- Follow [@falco_org](https://twitter.com/falco_org) on Twitter
