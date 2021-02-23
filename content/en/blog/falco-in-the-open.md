@@ -4,7 +4,7 @@ date: 2019-08-27
 author: Kris Nova
 slug: falco-in-the-open
 ---
-<center>
+
 One of the most successful aspects of Kubernetes is how functional the open source community was able to operate. Kubernetes broke itself down in smaller sections called special interest groups, that operate similarly to subsections of the kernel. Each group is responsible for a single domain, and sets their own pace. One of the most important things to a [Kubernetes SIG](https://github.com/kubernetes/community/blob/master/sig-list.md), is the residual SIG calls. These are important opportunities for engineers across the industry to come together regardless of their employment status to work on building software. The structure of a SIG call varies from group to group, but all calls exist to [organize the engineers working in a particular space](https://kubernetes.io/docs/contribute/participating/).
 
 
@@ -31,4 +31,3 @@ This is an open ended call where we discuss feature work and open issues from th
 ## Repository planning
 
 These calls are structured for engineers working on Falco. This is where we discuss the future of Falco, and assign items to engineers. All of our roadmap planning happens on these calls. This is the best way to get feature work out of Falco.
-</center>

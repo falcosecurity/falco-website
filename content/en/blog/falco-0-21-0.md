@@ -10,9 +10,7 @@ Such a bad guy!
 
 Notably, this is the first release that happens with the new build & release process. 🚀
 
-<center>
 ![The new release process!](/img/release-0210.png)
-</center>
 
 In case you just want Falco 0.21.0, you can find its packages at the following repositories:
 
@@ -104,6 +102,4 @@ You can read the full changelog [here](https://github.com/falcosecurity/falco/bl
 
 Stay tuned for the upcoming [drivers build grid](https://github.com/falcosecurity/test-infra/tree/master/driverkit) which, using [driverkit](https://github.com/falcosecurity/driverkit) - a quarantine project by [me](https://github.com/leodido) and [Lorenzo](https://github.com/fntlnz) - will pre-build and release (in the open too!) the Falco kernel modules and the Falco eBPF probes for a set of predefined target systems and kernel releases.
 
-<center>
 ![Pre-built Falco kernel modules and Falco eBPF probes available in the open, soon!](/img/upcoming-drivers.png)
-</center>
