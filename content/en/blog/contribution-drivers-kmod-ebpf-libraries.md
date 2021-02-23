@@ -7,7 +7,7 @@ slug: contribution-drivers-kmod-ebpf-libraries
 
 ![Contribution of the drivers and the libraries to the CNCF!](/img/falco-contributes-libraries-cncf-featured.png)
 
-We are excited to announce the contribution from Sysdig Inc. of the kernel module, the eBPF probe, and the libraries to the Cloud Native Computing Foundation. The source code of these components has been moved into the Falco organization. You can already find it in the [falcosecurity/libs](https://github.com/falcosecurity/libs) repository.
+We are excited to announce the contribution from Sysdig Inc. of the **kernel module**, the **eBPF** probe, and the **libraries** to the Cloud Native Computing Foundation. The source code of these components has been moved into the Falco organization. You can already find it in the [falcosecurity/libs](https://github.com/falcosecurity/libs) repository.
 
 This contribution is an initial - yet fundamental - part of a broader process outlined in a [proposal](https://github.com/falcosecurity/falco/blob/master/proposals/2021019-libraries-donation.md) that the Falco Authors presented and discussed with the Falco community during the past months.
 
@@ -17,7 +17,7 @@ As you all already know, Falco mainly operates on top of a data source: system c
 
 ## Future plans
 
-In the coming months, we planned the following efforts to make these components even more awesome and consumable by the community.
+In the coming months, we planned to make these components even more awesome and consumable by the community.
 
 - Improve the build mechanism by modernizing the CMake files
 - Define a SemVer 2.0 versioning mechanism
@@ -36,29 +36,29 @@ regarding these components, we provide the following instructions to move them t
 
 Assuming you already have a fork of https://github.com/falcosecurity/libs and a fork of https://github.com/draios/sysdig under your GitHub handle, and assuming they are in sync with their respective upstreams:
 
-- Clone your `falcosecurity/libs` fork locally:
+Clone your `falcosecurity/libs` fork locally:
 ```console
 git clone https://github.com/<your_handle>/libs
 cd libs
 ```
 
-- Add the a remote for your `draios/sysdig` fork:
+Add the a remote for your `draios/sysdig` fork:
 ```console
 git remote add sysdig-fork https://github.com/<username>/sysdig.git
 git fetch --all
 ```
 
-- Checkout your pull request's branch:
+Checkout your pull request's branch:
 ```console
 git checkout --no-track -b <branch> sysdig-fork/<branch>
 ```
 
-- Rebase it on top the `master` branch:
+Rebase it on top the `master` branch:
 ```console
 git rebase -i --exec 'git commit --amend --no-edit -n -s -S' master
 ```
 
-- Then, push it to your `<your_handle>/libs` repository:
+Then, push it to your `<your_handle>/libs` repository:
 ```console
 git push -u origin <branch>
 ```
