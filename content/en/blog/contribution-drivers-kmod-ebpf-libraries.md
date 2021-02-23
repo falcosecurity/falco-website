@@ -5,9 +5,7 @@ author: Leonardo Di Donato, Leonardo Grasso
 slug: contribution-drivers-kmod-ebpf-libraries
 ---
 
-<center>
 ![Contribution of the drivers and the libraries to the CNCF!](/img/falco-contributes-libraries-cncf-featured.png)
-</center>
 
 We are excited to announce the contribution from Sysdig Inc. of the kernel module, the eBPF probe, and the libraries to the Cloud Native Computing Foundation. The source code of these components has been moved into the Falco organization. You can already find it in the [falcosecurity/libs](https://github.com/falcosecurity/libs) repository.
 
@@ -15,9 +13,7 @@ This contribution is an initial - yet fundamental - part of a broader process ou
 
 As you all already know, Falco mainly operates on top of a data source: system calls. This data source is collected using either a kernel module or an eBPF probe, which we call drivers. The two drivers are equivalent in functionality. On the performance side, the kernel module is a tiny bit more efficient, while the eBPF approach is safer and more modern. Before being consumed by Falco, the collected data needs to be enriched (for example, a file descriptor number needs to be converted into a file name or an IP address). The enrichment is accomplished by two libraries: `libsinsp` and `libscap`.
 
-<center>
 ![The complete Falco architecture with drivers and libraries!](/img/falco-diagram-blog-contribution.png)
-</center>
 
 ## Future plans
 

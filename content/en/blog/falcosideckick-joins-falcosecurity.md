@@ -7,9 +7,7 @@ slug: falcosideckick-joins-falcosecurity
 
 We are pleased to announce that [falcosidekick](https://github.com/falcosecurity/falcosidekick), a Go project aimed to forward [Falco](https://github.com/falcosecurity/falco) outputs to a number of services, joined the falcosecurity organization on GitHub.
 
-<center>
 ![The falcosidekick gopher](/img/falcosidekick.png)
-</center>
 
 Along with the project, we also want to welcome [Thomas Labarussias](https://github.com/issif), the creator of **falcosidekick** joining us as maintainer of the Falco project starting from now on.
 
