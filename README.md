@@ -74,3 +74,21 @@ To translate other parts of the site:
 
 1. See the `languages.ko` block in the site's [`config.toml`](./config.toml) configuration file and translate those items from the current English.
 1. See [`i18n/ko.yaml`](./i18n/ko.yaml) for a handful of language snippets that need to be translated from the current English. Translate the `other` block of each term.
+
+To translate docs into Japanese, create Japanese-language Markdown files in the `content/ja/docs` directory.
+
+To translate other parts of the site:
+
+1. See the `languages.ja` block in the site's [`config.toml`](./config.toml) configuration file and translate those items from the current English.
+1. See [`i18n/ja.yaml`](./i18n/ja.yaml) for a handful of language snippets that need to be translated from the current English. Translate the `other` block of each term.
+
+### Bengali
+
+There is currently scaffolding in place for a Bengali translation of the site.
+
+To translate docs into Korean, create Bengali Markdown file(s) in the `content/bn/docs` directory.
+
+To translate other parts of the site:
+
+1. See the `languages.bn` block in the site's [`config.toml`](./config.toml) configuration file and translate those items from the current English.
+1. See [`i18n/bn.yaml`](./i18n/ko.yaml) for a handful of language snippets that need to be translated from the current English. Translate the `other` block of each term.
