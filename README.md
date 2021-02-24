@@ -82,7 +82,7 @@ To translate other parts of the site:
 1. See the `languages.ja` block in the site's [`config.toml`](./config.toml) configuration file and translate those items from the current English.
 1. See [`i18n/ja.yaml`](./i18n/ja.yaml) for a handful of language snippets that need to be translated from the current English. Translate the `other` block of each term.
 
-### Bengali
+### Bengali (Bangla)
 
 There is currently scaffolding in place for a Bengali translation of the site.
 
