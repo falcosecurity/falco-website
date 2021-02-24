@@ -84,7 +84,7 @@ To translate other parts of the site:
 
 ### Bengali (Bangla)
 
-There is currently scaffolding in place for a Bengali translation of the site.
+There is currently scaffolding in place for a Bengali translation of the site and still in progress
 
 To translate docs into Korean, create Bengali Markdown file(s) in the `content/bn/docs` directory.
 
