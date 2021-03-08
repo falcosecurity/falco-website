@@ -17,29 +17,39 @@ You can follow the official
 
 <a class="btn btn-primary" href="https://minikube.sigs.k8s.io/docs/start/" role="button" aria-label="View minikube Get Started! Guide">View minikube Get Started! Guide</a>
 
-**Note**: Esure that you have [installed kubectl](/docs/getting-started/third-party/install-tools/#kubectl).
+**Note**: Ensure that you have [installed kubectl](/docs/getting-started/third-party/install-tools/#kubectl).
 
 To set up Falco with minikube:
 
 1. Create the cluster with Minikube using a VM driver, in this case Virtualbox:
 
-    ```minikube start --driver=virtualbox```
+    ```shell
+    minikube start --driver=virtualbox
+    ```
 
 2. Check that all pods are running:
 
-    ```kubectl get pods --all-namespaces```
+    ```shell
+    kubectl get pods --all-namespaces
+    ```
 
 3. Add the stable chart to Helm repository:
 
-    ```helm repo add falcosecurity https://falcosecurity.github.io/charts```
-```helm repo update```
+    ```shell
+    helm repo add falcosecurity https://falcosecurity.github.io/charts
+    helm repo update
+    ```
 
 4. Install Falco using Helm:
 
-    ``` helm install falco falcosecurity/falco```
+    ```shell
+    helm install falco falcosecurity/falco
+    ```
 
     The output is similar to:
-```NAME: falco
+
+```
+NAME: falco
 LAST DEPLOYED: Wed Jan 20 18:24:08 2021
 NAMESPACE: default
 STATUS: deployed
@@ -60,13 +70,17 @@ Full list of outputs: https://github.com/falcosecurity/charts/falcosidekick.
 You can enable its deployment with `--set falcosidekick.enabled=true` or in your values.yaml.
 See: https://github.com/falcosecurity/charts/blob/master/falcosidekick/values.yaml for configuration values.
 ```
+
 5. Check the logs to ensure that Falco is running:
 
-    ```kubectl logs -l app=falco -f```
+    ```shell
+    kubectl logs -l app=falco -f
+    ```
 
     The output is similar to:
 
-```* Trying to dkms install falco module with GCC /usr/bin/gcc-5
+```
+* Trying to dkms install falco module with GCC /usr/bin/gcc-5
 DIRECTIVE: MAKE="'/tmp/falco-dkms-make'"
 * Running dkms build failed, couldn't find /var/lib/dkms/falco/5c0b863ddade7a45568c0ac97d037422c9efb750/build/make.log (with GCC /usr/bin/gcc-5)
 * Trying to load a system falco driver, if present
@@ -94,29 +108,28 @@ To run Falco on a `kind` cluster is as follows:
 1. Create a configuration file. For example: `kind-config.yaml`
 
 2. Add the following to the file:
-```yaml
-kind: Cluster
-apiVersion: kind.x-k8s.io/v1alpha4
-nodes:
-- role: control-plane
-  extraMounts:
-    # allow Falco to use devices provided by the kernel module
-    - hostPath: /dev
-      containerPath: /dev
-    # allow Falco to use the Docker unix socket
-    - hostPath: /var/run/docker.sock
-      containerPath: /var/run/docker.sock
-```
+
+    ```yaml
+    kind: Cluster
+    apiVersion: kind.x-k8s.io/v1alpha4
+    nodes:
+    - role: control-plane
+    extraMounts:
+        # allow Falco to use devices provided by the kernel module
+        - hostPath: /dev
+        containerPath: /dev
+        # allow Falco to use the Docker unix socket
+        - hostPath: /var/run/docker.sock
+        containerPath: /var/run/docker.sock
+    ```
 
 3. Create the cluster by specifying the configuration file:
-```
-kind create cluster --config=./kind-config.yaml
-```
+
+    ```shell
+    kind create cluster --config=./kind-config.yaml
+    ```
 
 4. [Install](/docs/getting-started/installation) Falco on a node in the kind cluster. To install Falco as a daemonset on a Kubernetes cluster use Helm. For more information about the configuration of Falco charts, see https://github.com/falcosecurity/charts/tree/master/falco.
-
-
-
 
 ## MicroK8s
 
