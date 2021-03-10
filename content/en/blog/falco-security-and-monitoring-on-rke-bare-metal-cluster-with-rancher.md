@@ -1,7 +1,7 @@
 ---
 title: Falco Security and Monitoring on RKE Bare Metal Cluster with Rancher
-description: How to use Falco and its components to improve Kubernetes Cluster Security on runtime on a RKE bare netal cluster.
-date: 2021-02-15
+description: How to use Falco and its components to improve Kubernetes Cluster Security on runtime on a RKE bare metal cluster.
+date: 2021-03-10
 author: Frank Jogeleit
 slug: falco-on-rke-with-rancher
 ---
