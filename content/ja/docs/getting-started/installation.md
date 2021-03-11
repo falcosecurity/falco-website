@@ -32,7 +32,7 @@ Kind、Minikube、Helmなどのツールを使用してKubernetesで直接Falco�
 
     ```shell
     curl -s https://falco.org/repo/falcosecurity-3672BA8F.asc | apt-key add -
-    echo "deb https://dl.bintray.com/falcosecurity/deb stable main" | tee -a /etc/apt/sources.list.d/falcosecurity.list
+    echo "deb https://download.falco.org/packages/deb stable main" | tee -a /etc/apt/sources.list.d/falcosecurity.list
     apt-get update -y
     ```
 
@@ -100,7 +100,7 @@ Kind、Minikube、Helmなどのツールを使用してKubernetesで直接Falco�
 1. 最新のバイナリをダウンロード:
 
     ```shell
-    curl -L -O https://dl.bintray.com/falcosecurity/bin/x86_64/falco-{{< latest >}}-x86_64.tar.gz
+    curl -L -O https://download.falco.org/packages/bin/x86_64/falco-{{< latest >}}-x86_64.tar.gz
     ```
 
 2. Falcoのインストール:

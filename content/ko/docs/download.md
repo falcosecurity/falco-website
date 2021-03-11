@@ -48,9 +48,9 @@ weight: 2
 
 사용 가능한 전체 이미지 목록은 [여기](https://github.com/falcosecurity/falco/tree/master/docker)에서 확인할 수 있다.
 
-[1]: https://dl.bintray.com/falcosecurity/rpm-dev
-[2]: https://dl.bintray.com/falcosecurity/rpm
-[3]: https://dl.bintray.com/falcosecurity/deb-dev/stable
-[4]: https://dl.bintray.com/falcosecurity/deb/stable
-[5]: https://dl.bintray.com/falcosecurity/bin-dev/x86_64
-[6]: https://dl.bintray.com/falcosecurity/bin/x86_64
+[1]: https://download.falco.org/packages/rpm-dev
+[2]: https://download.falco.org/packages/rpm
+[3]: https://download.falco.org/packages/deb-dev/stable
+[4]: https://download.falco.org/packages/deb/stable
+[5]: https://download.falco.org/packages/bin-dev/x86_64
+[6]: https://download.falco.org/packages/bin/x86_64

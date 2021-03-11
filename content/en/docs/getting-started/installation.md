@@ -31,7 +31,7 @@ Alternatively, it is also possible to use a binary package as [explained below](
 
     ```shell
     curl -s https://falco.org/repo/falcosecurity-3672BA8F.asc | apt-key add -
-    echo "deb https://dl.bintray.com/falcosecurity/deb stable main" | tee -a /etc/apt/sources.list.d/falcosecurity.list
+    echo "deb https://download.falco.org/packages/deb stable main" | tee -a /etc/apt/sources.list.d/falcosecurity.list
     apt-get update -y
     ```
 
@@ -131,7 +131,7 @@ Alternatively, it is also possible to use a binary package as [explained below](
 1. Download the latest binary:
 
     ```shell
-    curl -L -O https://dl.bintray.com/falcosecurity/bin/x86_64/falco-{{< latest >}}-x86_64.tar.gz
+    curl -L -O https://download.falco.org/packages/bin/x86_64/falco-{{< latest >}}-x86_64.tar.gz
     ```
 
 2. Install Falco:

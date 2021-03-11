@@ -32,7 +32,7 @@ Kind, Minikube, Helm 같은 도구를 이용해 팔코를 쿠버네티스에서 
 
     ```shell
     curl -s https://falco.org/repo/falcosecurity-3672BA8F.asc | apt-key add -
-    echo "deb https://dl.bintray.com/falcosecurity/deb stable main" | tee -a /etc/apt/sources.list.d/falcosecurity.list
+    echo "deb https://download.falco.org/packages/deb stable main" | tee -a /etc/apt/sources.list.d/falcosecurity.list
     apt-get update -y
     ```
 
@@ -100,7 +100,7 @@ Kind, Minikube, Helm 같은 도구를 이용해 팔코를 쿠버네티스에서 
 1. 최신 바이너리를 다운로드한다.
 
     ```shell
-    curl -L -O https://dl.bintray.com/falcosecurity/bin/x86_64/falco-{{< latest >}}-x86_64.tar.gz
+    curl -L -O https://download.falco.org/packages/bin/x86_64/falco-{{< latest >}}-x86_64.tar.gz
     ```
 
 2. 팔코를 설치한다.

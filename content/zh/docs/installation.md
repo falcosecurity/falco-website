@@ -249,11 +249,11 @@ sudo bash install_falco
 
    ```shell
     curl -s https://falco.org/repo/falcosecurity-3672BA8F.asc | apt-key add -
-    echo "deb https://dl.bintray.com/falcosecurity/deb stable main" | tee -a /etc/apt/sources.list.d/falcosecurity.list
+    echo "deb https://download.falco.org/packages/deb stable main" | tee -a /etc/apt/sources.list.d/falcosecurity.list
     apt-get update -y
     ```
 
-    > **注意** - 如果您希望使用来自当前主服务器的Falco包将https://dl.bintray.com/falcosecurity/deb-dev地址输入到falcosecurity.list文件中。
+    > **注意** - 如果您希望使用来自当前主服务器的Falco包将https://download.falco.org/packages/deb-dev地址输入到falcosecurity.list文件中。
 
 2. 安装内核头：
 
