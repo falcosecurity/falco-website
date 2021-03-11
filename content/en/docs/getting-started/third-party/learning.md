@@ -114,12 +114,12 @@ To run Falco on a `kind` cluster is as follows:
     apiVersion: kind.x-k8s.io/v1alpha4
     nodes:
     - role: control-plane
-    extraMounts:
+      extraMounts:
         # allow Falco to use devices provided by the kernel module
-        - hostPath: /dev
+      - hostPath: /dev
         containerPath: /dev
         # allow Falco to use the Docker unix socket
-        - hostPath: /var/run/docker.sock
+      - hostPath: /var/run/docker.sock
         containerPath: /var/run/docker.sock
     ```
 
