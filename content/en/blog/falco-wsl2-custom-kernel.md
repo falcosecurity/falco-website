@@ -202,7 +202,7 @@ cd
 
 # Run the step 1 of the Falco documentation: add the repo
 curl -s https://falco.org/repo/falcosecurity-3672BA8F.asc | sudo apt-key add -
-echo "deb https://dl.bintray.com/falcosecurity/deb stable main" | sudo tee -a /etc/apt/sources.list.d/falcosecurity.list
+echo "deb https://download.falco.org/packages/deb stable main" | sudo tee -a /etc/apt/sources.list.d/falcosecurity.list
 sudo apt update
 
 # As stated above, for the step 2, let's download the Kernel headers packages
