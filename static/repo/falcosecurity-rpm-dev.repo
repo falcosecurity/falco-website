@@ -1,7 +1,7 @@
 # falcosecurity-rpm-dev - dev packages by falcosecurity
 [falcosecurity-rpm-dev]
 name=falcosecurity-rpm
-baseurl=https://dl.bintray.com/falcosecurity/rpm-dev
+baseurl=https://download.falco.org/packages/rpm-dev
 gpgcheck=1
 gpgkey=https://falco.org/repo/falcosecurity-3672BA8F.asc
 repo_gpgcheck=0
