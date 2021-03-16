@@ -179,3 +179,5 @@ filenamesは、単一のフィールドと単一の比較演算子を指定す�
 例外がどのように機能するのかについては、[ドキュメント](https://falco.org/docs/rules/exceptions) に、ルールに例外を追加するためのベストプラクティスとともに、より完全な説明があります。また、オリジナルの [proposal](https://github.com/falcosecurity/falco/blob/master/proposals/20200828-structured-exception-handling.md) には、例外の利点をより詳細に説明しています。
 
 例外を試してみたい場合は、Falco 0.27.0-15+8c4040b ([deb](https://bintray.com/falcosecurity/deb-dev/falco/0.27.0-15%2B8c4040b), [rpm](https://bintray.com/falcosecurity/rpm-dev/falco/0.27.0-15%2B8c4040b), [tarball](https://bintray.com/falcosecurity/bin-dev/falco/0.27.0-15%2B8c4040b))が必要です。
+
+**March 2021 update**: All packages are now published to [download.falco.org](https://download.falco.org/?prefix=packages/).
