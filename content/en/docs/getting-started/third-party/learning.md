@@ -97,7 +97,7 @@ Wed Jan 20 12:55:49 2021: Starting internal webserver, listening on port 8765
 [`kind`](https://kind.sigs.k8s.io/docs/) lets you run Kubernetes on
 your local computer. This tool requires that you have
 [Docker](https://docs.docker.com/get-docker/) installed and configured. 
-*Currently not working directly on Mac with Linuxkit, but these directions work on Linux guest OS running kind
+Currently not working directly on Mac with Linuxkit, but these directions work on Linux guest OS running `kind`.
 
 The kind [Quick Start](https://kind.sigs.k8s.io/docs/user/quick-start/) page
 shows you what you need to do to get up and running with kind.
