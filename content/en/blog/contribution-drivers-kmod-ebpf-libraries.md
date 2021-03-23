@@ -67,7 +67,7 @@ You are now all set to open a PR on https://github.com/falcosecurity/libs. As us
 
 ## Conclusions
 
-The contribution of such fantastic software will help not only Falco but also other projects to have a more secure Cloud-Native environment. More information about this contribution is in Loris Degioanni’s CNCF blog post (to be linked soon).
+The contribution of such fantastic software will help not only Falco but also other projects to have a more secure Cloud-Native environment. More information about this contribution is in Loris Degioanni’s [CNCF blog post](https://www.cncf.io/blog/2021/02/24/sysdig-contributes-falcos-kernel-module-ebpf-probe-and-libraries-to-the-cncf/).
 
 Aside from Falco, also the [sysdig cli-tool](https://github.com/draios/sysdig) was refactored to use these libraries. From now on, also other projects can benefit from them! We are thrilled to see what folks will build upon these libraries!
 
