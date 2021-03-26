@@ -2,5 +2,5 @@ approvers:
   - radhikapc
   - sreedaum
 reviewers:
-- sreedaum
-- radhikapc
+  - sreedaum
+  - radhikapc
