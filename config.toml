@@ -322,6 +322,18 @@ languagedirection = "ltr"
 time_format_blog = "2006.01.02"
 language_alternatives = ["en"]
 
+[languages.ml]
+title = "Falco"
+description = "റൺടൈം സെക്യൂരിറ്റി"
+languageName = "മലയാളം Malayalam"
+weight = 4
+contentDir = "content/ml"
+languagedirection = "ltr"
+
+[languages.ml.params]
+time_format_blog = "2006.01.02"
+language_alternatives = ["en"]
+
 [[params.versions]]
 fullversion = "v0.26.2"
 version = "v0.26"

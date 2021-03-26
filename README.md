@@ -74,3 +74,14 @@ To translate other parts of the site:
 
 1. See the `languages.ko` block in the site's [`config.toml`](./config.toml) configuration file and translate those items from the current English.
 1. See [`i18n/ko.yaml`](./i18n/ko.yaml) for a handful of language snippets that need to be translated from the current English. Translate the `other` block of each term.
+
+### Malayalam
+
+There is currently scaffolding in place for a Malayalam translation of the site.
+
+To translate docs into Malayalam, create Malayalam Markdown file(s) in the `content/ml/docs` directory.
+
+To translate other parts of the site:
+
+1. See the `languages.ml` block in the site's [`config.toml`](./config.toml) configuration file and translate those items from the current English.
+1. See [`i18n/ml.yaml`](./i18n/ml.yaml) for a handful of language snippets that need to be translated from the current English. Translate the `other` block of each term.
