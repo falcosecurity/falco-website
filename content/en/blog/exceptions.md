@@ -178,6 +178,4 @@ Along with this code change, we've also revamped the rules to migrate as many ru
 
 We have a more complete description of how exceptions work in the [documentation](https://falco.org/docs/rules/exceptions) along with best practices for adding exceptions to rules. You can also read the original [proposal](https://github.com/falcosecurity/falco/blob/master/proposals/20200828-structured-exception-handling.md) describes the benefits of exceptions in more detail.
 
-In case you prefer to just try them out please notice you need Falco 0.27.0-15+8c4040b ([deb](https://bintray.com/falcosecurity/deb-dev/falco/0.27.0-15%2B8c4040b), [rpm](https://bintray.com/falcosecurity/rpm-dev/falco/0.27.0-15%2B8c4040b), [tarball](https://bintray.com/falcosecurity/bin-dev/falco/0.27.0-15%2B8c4040b)).
-
-**March 2021 update**: All packages are now published to [download.falco.org](https://download.falco.org/?prefix=packages/).
+In case you prefer to just try them out please notice you need Falco 0.27.0-15+8c4040b ([deb](https://download.falco.org/packages/deb-dev/stable/falco-0.27.0-15%2B8c4040b-x86_64.deb), [rpm](https://download.falco.org/packages/rpm-dev/falco-0.27.0-15%2B8c4040b-x86_64.rpm), [tarball](https://download.falco.org/packages/bin-dev/x86_64/falco-0.27.0-19%2B959811a-x86_64.tar.gz)).
