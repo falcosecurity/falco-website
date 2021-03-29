@@ -260,15 +260,14 @@ make bpf
 {{< /tab >}}}
 {{< /tabs >}}
 
-## Dependencies
+## ഡിപെൻഡൻസികൾ
 
-By default Falco build bundles **most of** its runtime dependencies **dynamically**.
+സാധാരണയായി ഫാൽകോ അതിന്റെ റൺടൈം ഡിപൻഡൻസികളിൽ ഭൂരിഭാഗവും പാക്കേജ് ചെയ്യുന്നു.
+`USE_BUNDLED_DEPS` ഓപ്ഷൻ സ്ഥിരസ്ഥിതിയായി `OFF` ആണെന്ന് നിങ്ങൾക്ക് കാണാം. ഇതിനർത്ഥം, ബാധകമാണെങ്കിൽ, നിങ്ങളുടെ മെഷീനിൽ ഇതിനകം നിലവിലുള്ള ലൈബ്രറികളുമായി ബന്ധിപ്പിക്കാൻ ഫാൽകോ ബിൽഡ് ശ്രമിക്കും.
 
-You can notice this observing that the option `USE_BUNDLED_DEPS` is `OFF` by default. Which means that, whether applicable, Falco build will try to link against libraries already existing into your machine.
+അത്തരം ഓപ്‌ഷൻ‌ `ON` ഓണിലേക്ക് മാറ്റുന്നത് ഫാൽ‌കോ ബിൽ‌ഡ് എല്ലാ ഡിപൻ‌ഡൻസികളെയും സ്റ്റാറ്റിറ്റിക്കായി കൂട്ടിച്ചേർക്കുന്നു.
 
-Changing such option to `ON` causes Falco build to bundle all the dependencies statically.
-
-For the sake of completeness this is the complete list of Falco dependencies:
+ഇത് ഫാൽക്കോ ഡിപൻഡൻസികളുടെ പൂർണ്ണമായ പട്ടികയാണ്:
 
 - b64
 - cares
@@ -290,28 +289,26 @@ For the sake of completeness this is the complete list of Falco dependencies:
 - libscap
 - libsinsp
 
-## Build Falco
+## ഫാൽക്കോ നിർമ്മിക്കുക
 
 There are two supported ways to build Falco
 
-- [Build directly on host](#build-directly-on-host)
-- [Build using a container](#build-using-falco-builder-container)
+- [ഹോസ്റ്റിൽ നേരിട്ട് നിർമ്മിക്കുക](#build-directly-on-host)
+- [ഒരു കണ്ടെയ്നർ ഉപയോഗിച്ച് നിർമ്മിക്കുക](#build-using-falco-builder-container)
 
-### Build directly on host
+### ഹോസ്റ്റിൽ നേരിട്ട് നിർമ്മിക്കുക
 
-To build Falco, you will need to create a `build` directory.
-It's common to have the `build` directory in the Falco working copy itself, however it can be
-anywhere in your filesystem.
+ഫാൽക്കോ നിർമ്മിക്കുന്നതിന്, നിങ്ങൾ ഒരു `build` ഡയറക്ടറി സൃഷ്ടിക്കേണ്ടതുണ്ട്.
+ഫാൽക്കോ വർക്കിംഗ് കോപ്പിയിൽ തന്നെ `build` ഡയറക്ടറി ഉണ്ടായിരിക്കുന്നത് സാധാരണമാണ്, എന്നിരുന്നാലും ഇത് നിങ്ങളുടെ ഫയൽസിസ്റ്റത്തിൽ എവിടെയും ആകാം.
 
-There are **three main steps to compile** Falco.
+** ഫാൽക്കോ സമാഹരിക്കുന്നതിന് ** മൂന്ന് പ്രധാന ഘട്ടങ്ങളുണ്ട്.
 
-1. Create the build directory and enter in it
-2. Use cmake in the build directory to create the build files for Falco. `..` was used because the source directory
-is a parent of the current directory, you can also use the absolute path for the Falco source code instead
-3. Build using make
+1. ബിൽഡ് ഡയറക്ടറി സൃഷ്ടിച്ച് അതിൽ പ്രവേശിക്കുക.
+2. ഫാൽക്കോയ്‌ക്കായി ബിൽഡ് ഫയലുകൾ സൃഷ്‌ടിക്കാൻ ബിൽഡ് ഡയറക്‌ടറിയിൽ `cmake` ഉപയോഗിക്കുക. `..` ഉപയോഗിച്ചതിന് കാരണം ഉറവിട ഡയറക്‌ടറി നിലവിലെ ഡയറക്‌ടറിയുടെ പാരന്റ് ആയതിനാലാണ്. പകരം നിങ്ങൾക്ക് ഫാൽകോ സോഴ്‌സ് കോഡിനായി കേവല പാത ഉപയോഗിക്കാം.
+3. `make` ഉപയോഗിച്ച് നിർമ്മിക്കുക.
 
 
-#### Build all
+#### എല്ലാം നിർമ്മിക്കുക
 
 ```bash
 mkdir build
@@ -320,110 +317,108 @@ cmake ..
 make
 ```
 
-You can also build only specific targets:
+നിർദ്ദിഷ്ട ടാർഗെറ്റുകൾ മാത്രം നിർമ്മിക്കാനും നിങ്ങൾക്ക് കഴിയും:
 
-#### Build Falco only
+#### ഫാൽക്കോ മാത്രം നിർമ്മിക്കുക
 
-Do the build folder and cmake setup, then:
+ബിൽഡ് ഫോൾഡറും `cmake` സജ്ജീകരണവും ചെയ്യുക, തുടർന്ന്:
 
 ```bash
 make falco
 ```
 
-#### Build the Falco engine only
+#### ഫാൽകോ എഞ്ചിൻ മാത്രം നിർമ്മിക്കുക
 
-Do the build folder and cmake setup, then:
+ബിൽഡ് ഫോൾഡറും `cmake` സജ്ജീകരണവും ചെയ്യുക, തുടർന്ന്:
 
 ```bash
 make falco_engine
 ```
 
-#### Build libscap only
+#### libscap മാത്രം നിർമ്മിക്കുക
 
-Do the build folder and cmake setup, then:
+ബിൽഡ് ഫോൾഡറും `cmake` സജ്ജീകരണവും ചെയ്യുക, തുടർന്ന്:
 
 ```bash
 make scap
 ```
 
-#### Build libsinsp only
+#### libsinsp മാത്രം നിർമ്മിക്കുക
 
-Do the build folder and cmake setup, then:
+ബിൽഡ് ഫോൾഡറും `cmake` സജ്ജീകരണവും ചെയ്യുക, തുടർന്ന്:
 
 ```bash
 make sinsp
 ```
 
-#### Build the eBPF probe / kernel driver only
+#### eBPF probe / kernel driver മാത്രം നിർമ്മിക്കുക
 
-Do the build folder and cmake setup, then:
+ബിൽഡ് ഫോൾഡറും `cmake` സജ്ജീകരണവും ചെയ്യുക, തുടർന്ന്:
 
 ```bash
 make driver
 ```
 
-#### Build results
+#### results നിർമ്മിക്കുക
 
-Once Falco is built, the three interesting things that you will find in your `build` folder are:
+ഫാൽക്കോ നിർമ്മിച്ചുകഴിഞ്ഞാൽ, നിങ്ങളുടെ `build` ഫോൾഡറിൽ നിങ്ങൾ കണ്ടെത്തുന്ന മൂന്ന് കാര്യങ്ങൾ ഇവയാണ്:
 
-- `userspace/falco/falco`: the actual Falco binary
-- `driver/src/falco.ko`: the Falco kernel driver
-- `driver/bpf/falco.o`: if you built Falco with [BPF support](#enable-bpf-support)
+- `userspace/falco/falco`: യഥാർത്ഥ ഫാൽക്കോ ബൈനറി
+- `driver/src/falco.ko`: ഫാൽകോ കേർണൽ ഡ്രൈവർ
+- `driver/bpf/falco.o`: [BPF support](#enable-bpf-support) ഉപയോഗിച്ച് നിങ്ങൾ ഫാൽക്കോ നിർമ്മിച്ചിട്ടുണ്ടെങ്കിൽ
 
-If you'd like to build a debug version, run cmake as `cmake -DCMAKE_BUILD_TYPE=Debug ..` instead, see the [CMake Options](#cmake-options) section for further customizations.
+ഒരു ഡീബഗ് പതിപ്പ് നിർമ്മിക്കാൻ നിങ്ങൾ ആഗ്രഹിക്കുന്നുവെങ്കിൽ, `cmake -DCMAKE_BUILD_TYPE = Debug ..` ആയി പ്രവർത്തിപ്പിക്കുക. കൂടുതൽ ഇഷ്‌ടാനുസൃതമാക്കലുകൾക്കായി[CMake Options](#cmake-options) കാണുക.
 
-### CMake Options
+### CMake ഓപ്ഷനുകൾ
 
-When doing the `cmake` command, we can pass additional parameters to change the behavior of the build files.
+`cmake` കമാൻഡ് ചെയ്യുമ്പോൾ, ബിൽഡ് ഫയലുകളുടെ സ്വഭാവം മാറ്റുന്നതിന് ഞങ്ങൾക്ക് അധിക പാരാമീറ്ററുകൾ നൽകാം.
+ഇവിടെ തന്നിരിക്കുന്ന  ഉദാഹരണങ്ങൾ നോക്കുക. എല്ലായ്പ്പോഴും നിങ്ങളുടെ `build` ഫോൾഡർ ഫാൽകോ വർക്കിംഗ് കോപ്പിക്കുള്ളിൽ ആണെന്ന് കരുതുക.
 
-Here'are some examples, always assuming your `build` folder is inside the Falco working copy.
-
-#### Generate verbose makefiles
+#### വെർബോസ് മെയ്ക്ക് ഫയലുകൾ സൃഷ്ടിക്കുക
 
 ```bash
 -DCMAKE_VERBOSE_MAKEFILE=On
 ```
 
-#### Specify C and CXX compilers
+#### C, CXX കംപൈലറുകൾ വ്യക്തമാക്കുക
 
 ```
 -DCMAKE_C_COMPILER=$(which gcc) -DCMAKE_CXX_COMPILER=$(which g++)
 ```
 
-#### Enforce bundled dependencies
+#### ബണ്ടിൽഡ് ഡിപൻഡൻസികൾ നടപ്പിലാക്കുക
 
 ```
 -DUSE_BUNDLED_DEPS=True
 ```
 
-Read more about Falco dependencies [here](#dependencies).
+ഫാൽകോ [ഡിപൻഡൻസികളെക്കുറിച്ച്](#dependencies) കൂടുതൽ വായിക്കുക.
 
 
-#### Treat warnings as errors
+#### മുന്നറിയിപ്പുകളെ പിശകുകളായി പരിഗണിക്കുക
 
 ```
 -DBUILD_WARNINGS_AS_ERRORS=True
 ```
 
-#### Specify the build type
+#### ബിൽഡ് തരം വ്യക്തമാക്കുക
 
-Debug build type
+ബിൽഡ് ടൈപ്പ് ഡീബഗ് ചെയ്യുക
 
 ```
 -DCMAKE_BUILD_TYPE=Debug
 ```
 
-Release build type
+ബിൽഡ് ടൈപ്പ് റിലീസ് ചെയ്യുക
 
 ```
 -DCMAKE_BUILD_TYPE=Release
 ```
+ഈ വേരിയബിൾ കേസ്-സെൻസിറ്റീവ് ആണെന്നും ഇത് സാധാരണയായി റിലീസ് ആയാണ് ക്രമീകരിച്ചിരിക്കുന്നത്.
 
-Notice this variable is case-insensitive and it defaults to release.
+#### ഫാൽകോ പതിപ്പ് വ്യക്തമാക്കുക
 
-#### Specify the Falco version
-
-Optionally the user can specify the version he wants Falco to have. Eg.,
+ഓപ്ഷണലായി ഉപയോക്താവിന് ആഗ്രഹിക്കുന്ന ഫാൽക്കോ പതിപ്പ് വ്യക്തമാക്കാം
 
 ```
  -DFALCO_VERSION={{< latest >}}-dirty
