@@ -1,12 +1,11 @@
 ---
-title: Build Falco from source
+title: സോഴ്സിൽ നിന്ന് ഫാൽക്കോ നിർമ്മിക്കുക
 weight: 5
 ---
 
-Welcome to the guide on how to build Falco yourself! You are very brave! Since you are already
-doing all this, chances that you are willing to contribute are high! Please read our [contributing guide](https://github.com/falcosecurity/.github/blob/master/CONTRIBUTING.md).
+ഫാൽകോ സ്വയം എങ്ങനെ നിർമ്മിക്കാം എന്നതിനെക്കുറിച്ചുള്ള ഗൈഡിലേക്ക് സ്വാഗതം! ഫാൽക്കോ ഉപയോഗിക്കാൻ തീരുമാനിച്ചത്തിലൂടെ നിങ്ങളുടെ സംഭാവനകൾക്ക് തുടക്കമായിരിക്കുകയാണ്. എങ്ങനെ ഫാൽക്കോ പ്രോജെക്ടിനെ സഹായിക്കാം എന്നറിയാൻ ദയവായി ഞങ്ങളുടെ [contributing guide](https://github.com/falcosecurity/.github/blob/master/CONTRIBUTING.md) വായിക്കുക.
 
-1. Install the dependencies
+1. ഡിപൻഡൻസികൾ ഇൻസ്റ്റാൾ ചെയ്യുക:
 
 {{< tabs name="Dependencies" >}}
 {{% tab name="CentOS / RHEL " %}}
@@ -17,7 +16,7 @@ CentOS 7 / RHEL 7
 yum install gcc gcc-c++ git make autoconf automake pkg-config patch ncurses-devel libtool glibc-static libstdc++-static elfutils-libelf-devel
 ```
 
-You will also need `cmake` version `3.5.1` or higher which is not included in CentOS 7. You can follow the [official guide](https://cmake.org/install/) or look at how that is done in the [Falco builder Dockerfile](https://github.com/falcosecurity/falco/blob/master/docker/builder/Dockerfile).
+CentOS 7 ൽ ഉൾപ്പെടുത്തിയിട്ടില്ലാത്തതിനാൽ  `cmake` ` 3.5.1`-ഓ  ഉയർന്നതോ ആയ പതിപ്പ്  നിങ്ങൾക്ക് ആവശ്യമാണ്. നിങ്ങൾക്ക് ഔദ്യോഗിക ഗൈഡ് [official guide](https://cmake.org/install/) പിന്തുടരാം. അല്ലെങ്കിൽ ഫാൽകോ ബിൽഡർ ഡോക്കർ ഫയലിൽ [Falco builder Dockerfile](https://github.com/falcosecurity/falco/blob/master/docker/builder/Dockerfile) ഇത് എങ്ങനെ ചെയ്യാമെന്ന് നോക്കാം.
 
 CentOS 8 / RHEL 8
 
@@ -40,9 +39,10 @@ pacman -S zlib jq ncurses yaml-cpp openssl curl c-ares protobuf grpc libyaml
 {{< /tab >}}}
 
 {{% tab name="Alpine" %}}
-Since Alpine ships with `musl` instead of `glibc`, to build on Alpine, we need to pass the `-DMUSL_OPTIMIZED_BUILD=On` CMake option.
+നിർമ്മാണ കാര്യങ്ങൾക്കായി `glib`-നുപകരം `musl`  ഉള്ള ആൽപൈൻ ലഭ്യമായതിനാൽ, `-DMUSL_OPTIMIZED_BUILD = On` CMake ഓപ്ഷൻ പാസ് ചെയ്യുന്നു.
 
-If that option is used along with the `-DUSE_BUNDLED_DEPS=On` option, then the final build will be 100% statically-linked and portable across different Linux distributions.
+`-DUSE_BUNDLED_DEPS = On` ഓപ്ഷനുമൊത്ത് ആ ഓപ്ഷൻ ഉപയോഗിച്ചിട്ടുണ്ടെങ്കിൽ, അന്തിമ ബിൽഡ് 100% സ്റ്റാറ്റിക്ക്-ലിങ്ക്ഡ് ആകുകയും വ്യത്യസ്ത ലിനക്സ് വിതരണങ്ങളിലുടനീളം പോർട്ടബിൾ ആകുകയും ചെയ്യും.
+
 
 ```bash
 apk add g++ gcc cmake cmake make ncurses-dev git bash perl linux-headers autoconf automake m4 libtool elfutils-dev libelf-static patch binutils
@@ -56,7 +56,7 @@ zypper -n install gcc gcc-c++ git-core cmake libjq-devel ncurses-devel yaml-cpp-
 {{< /tab >}}}
 {{< /tabs >}}
 
-2. Build Falco
+2. ഫാൽക്കോ നിർമ്മിക്കുക:
 
 {{< tabs name="Build" >}}
 {{% tab name="CentOS / RHEL " %}}
@@ -70,19 +70,19 @@ cmake -DUSE_BUNDLED_DEPS=ON ..
 make falco
 ```
 
-More details [here](#build-directly-on-host).
+കൂടുതൽ വിവരങ്ങൾക്ക് [ഈ ടോപ്പിക്ക്](#build-directly-on-host) കാണുക.
 
 {{< /tab >}}}
 
 {{% tab name="Debian/ Ubuntu" %}}
 
-You can skip this on Ubuntu 18.04.
+ഉബുണ്ടു 18.04 ൽ നിങ്ങൾക്ക് ഇത് ഒഴിവാക്കാം.
 
 ```bash
 apt install libssl-dev libc-ares-dev libprotobuf-dev protobuf-compiler libjq-dev libgrpc++-dev protobuf-compiler-grpc libcurl4-openssl-dev libyaml-cpp-dev
 ```
+നിങ്ങൾ ഉബുണ്ടു 18.04 ൽ ആണെങ്കിൽ `cmake` എന്നതിനുപകരം `cmake -DUSE_BUNDLED_DEPS=ON ..` ഉപയോഗിക്കുക.
 
-If you are on Ubuntu 18.04, instead of `cmake ..` do `cmake -DUSE_BUNDLED_DEPS=ON ..`.
 
 ```bash
 git clone https://github.com/falcosecurity/falco.git
@@ -93,7 +93,7 @@ cmake ..
 make falco
 ```
 
-More details [here](#build-directly-on-host).
+കൂടുതൽ വിവരങ്ങൾക്ക് [ഈ ടോപ്പിക്ക്](#build-directly-on-host) കാണുക.
 
 {{< /tab >}}}
 
@@ -108,8 +108,7 @@ cmake ..
 make falco
 ```
 
-More details [here](#build-directly-on-host).
-
+കൂടുതൽ വിവരങ്ങൾക്ക് [ഈ ടോപ്പിക്ക്](#build-directly-on-host) കാണുക.
 
 {{< /tab >}}}
 {{% tab name="Alpine" %}}
@@ -133,38 +132,38 @@ cmake ..
 make falco
 ```
 
-More details [here](#build-directly-on-host).
+കൂടുതൽ വിവരങ്ങൾക്ക് [ഈ ടോപ്പിക്ക്](#build-directly-on-host) കാണുക.
 
 {{< /tab >}}}
 {{< /tabs >}}
 
 
 
-3. Build kernel module driver
+3. കേർണൽ മൊഡ്യൂൾ ഡ്രൈവർ നിർമ്മിക്കുക:
 
 {{< tabs name="KernelModule" >}}
 {{% tab name="CentOS / RHEL " %}}
 
-In the build directory:
+ബിൽഡ് ഡയറക്ടറിയിൽ:
 
 ```bash
 yum -y install kernel-devel-$(uname -r)
 make driver
 ```
 
-More details [here](#build-directly-on-host).
+കൂടുതൽ വിവരങ്ങൾക്ക് [ഈ ടോപ്പിക്ക്](#build-directly-on-host) കാണുക.
 
 {{< /tab >}}}
 
 {{% tab name="Debian/ Ubuntu" %}}
 
-Kernel headers are required to build the driver.
+ഡ്രൈവർ നിർമ്മിക്കുന്നതിന് കേർണൽ തലക്കെട്ടുകൾ ആവശ്യമാണ്.
 
 ```bash
 apt install linux-headers-$(uname -r)
 ```
 
-In the build directory:
+ബിൽഡ് ഡയറക്ടറിയിൽ:
 
 ```bash
 make driver
@@ -173,14 +172,14 @@ make driver
 
 {{% tab name="Arch Linux" %}}
 
-In the build directory:
+ബിൽഡ് ഡയറക്ടറിയിൽ:
 
 ```bash
 pacman -S linux-headers
 make driver
 ```
 
-More details [here](#build-directly-on-host).
+കൂടുതൽ വിവരങ്ങൾക്ക് [ഈ ടോപ്പിക്ക്](#build-directly-on-host) കാണുക.
 
 
 {{< /tab >}}}
@@ -189,7 +188,8 @@ NO STEP
 {{< /tab >}}}
 
 {{% tab name="openSUSE" %}}
-In the build directory:
+
+ബിൽഡ് ഡയറക്ടറിയിൽ:
 
 ```bash
 zypper -n install kernel-default-devel
@@ -203,9 +203,9 @@ make driver
 {{< tabs name="eBPFdriver" >}}
 {{% tab name="CentOS / RHEL " %}}
 
-If you do not want to use the kernel module driver you can, alternatively, build the eBPF driver as follows.
+നിങ്ങൾക്ക് കേർണൽ മൊഡ്യൂൾ ഡ്രൈവർ ഉപയോഗിക്കാൻ താൽപ്പര്യമില്ലെങ്കിൽ, നിങ്ങൾക്ക് ഇബിപിഎഫ് ഡ്രൈവർ ഇനിപ്പറയുന്ന രീതിയിൽ നിർമ്മിക്കാം.
 
-In the build directory:
+ബിൽഡ് ഡയറക്ടറിയിൽ:
 
 ```bash
 dnf install clang llvm
@@ -217,9 +217,9 @@ make bpf
 
 {{% tab name="Debian/ Ubuntu" %}}
 
-If you do not want to use the kernel module driver you can, alternatively, build the eBPF driver as follows.
+നിങ്ങൾക്ക് കേർണൽ മൊഡ്യൂൾ ഡ്രൈവർ ഉപയോഗിക്കാൻ താൽപ്പര്യമില്ലെങ്കിൽ, നിങ്ങൾക്ക് ഇബിപിഎഫ് ഡ്രൈവർ ഇനിപ്പറയുന്ന രീതിയിൽ നിർമ്മിക്കാം.
 
-In the build directory:
+ബിൽഡ് ഡയറക്ടറിയിൽ:
 
 ```bash
 apt install llvm clang
@@ -230,9 +230,9 @@ make bpf
 
 {{% tab name="Arch Linux" %}}
 
-If you do not want to use the kernel module driver you can, alternatively, build the eBPF driver as follows.
+നിങ്ങൾക്ക് കേർണൽ മൊഡ്യൂൾ ഡ്രൈവർ ഉപയോഗിക്കാൻ താൽപ്പര്യമില്ലെങ്കിൽ, നിങ്ങൾക്ക് ഇബിപിഎഫ് ഡ്രൈവർ ഇനിപ്പറയുന്ന രീതിയിൽ നിർമ്മിക്കാം.
 
-In the build directory:
+ബിൽഡ് ഡയറക്ടറിയിൽ:
 
 ```bash
 pacman -S llvm clang
@@ -247,9 +247,10 @@ NO STEP
 {{< /tab >}}}
 
 {{% tab name="openSUSE" %}}
-If you do not want to use the kernel module driver you can, alternatively, build the eBPF driver as follows.
 
-In the build directory:
+നിങ്ങൾക്ക് കേർണൽ മൊഡ്യൂൾ ഡ്രൈവർ ഉപയോഗിക്കാൻ താൽപ്പര്യമില്ലെങ്കിൽ, നിങ്ങൾക്ക് ഇബിപിഎഫ് ഡ്രൈവർ ഇനിപ്പറയുന്ന രീതിയിൽ നിർമ്മിക്കാം.
+
+ബിൽഡ് ഡയറക്ടറിയിൽ:
 
 ```bash
 zypper -n install clang llvm
