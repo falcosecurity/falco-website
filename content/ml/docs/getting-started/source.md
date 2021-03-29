@@ -418,23 +418,22 @@ make driver
 
 #### ഫാൽകോ പതിപ്പ് വ്യക്തമാക്കുക
 
-ഓപ്ഷണലായി ഉപയോക്താവിന് ആഗ്രഹിക്കുന്ന ഫാൽക്കോ പതിപ്പ് വ്യക്തമാക്കാം
+ഓപ്ഷണലായി ഉപയോക്താവിന് ആഗ്രഹിക്കുന്ന ഫാൽക്കോ പതിപ്പ് വ്യക്തമാക്കാം.
 
 ```
  -DFALCO_VERSION={{< latest >}}-dirty
 ```
 
-When not explicitly specifying it the build system will compute the `FALCO_VERSION` value from the git history.
+ബിൽഡ് വ്യക്തമായി വ്യക്തമാക്കാത്തപ്പോൾ, Git ഹിസ്റ്ററിയിൽ നിന്നുള്ള `FALCO_VERSION` കണക്കാക്കും.
 
-In case the current git revision has a git tag, the Falco version will be equal to it (without the leading "v" character). Otherwise the Falco version will be in the form `0.<commit hash>[.dirty]`.
+നിലവിലെ ഗിറ്റ് പുനരവലോകനത്തിന് ഒരു ഗിറ്റ് ടാഗ് ഉണ്ടെങ്കിൽ, ഫാൽകോ പതിപ്പ് അതിന് തുല്യമായിരിക്കും (മുൻ‌നിര "വി" കാരക്ടർ ഇല്ലാതെ). അല്ലെങ്കിൽ ഫാൽക്കോ പതിപ്പ് `0.<commit hash>[.dirty]` രൂപത്തിലായിരിക്കും.
 
 #### Enable BPF support
 
 ```
 -DBUILD_BPF=True
 ```
-
-When enabling this you will be able to make the `bpf` target after:
+`bpf` ടാർഗെറ്റ് ചെയ്യാൻ ഇത് പ്രവർത്തനക്ഷമമാക്കുക:
 
 ```bash
 make bpf
@@ -442,45 +441,39 @@ make bpf
 
 ### Build using falco-builder container
 
-An alternative way to build Falco is to run the [falco-builder](https://hub.docker.com/r/falcosecurity/falco-builder) container.
-It contains the reference toolchain that can be used to build packages and all the dependencies are already satisfied.
+[falco-builder](https://hub.docker.com/r/falcosecurity/falco-builder) കണ്ടെയ്നർ പ്രവർത്തിപ്പിക്കുക എന്നതാണ് ഫാൽക്കോ നിർമ്മിക്കാനുള്ള മറ്റൊരു മാർഗ്ഗം.
+പാക്കേജുകൾ നിർമ്മിക്കാൻ ഉപയോഗിക്കാവുന്ന റഫറൻസ് ടൂൾചെയിൻ ഇതിൽ അടങ്ങിയിരിക്കുന്നു. കൂടാതെ എല്ലാ ഡിപൻഡൻസികളും ഇതിനകം തൃപ്തികരമാണ്.
 
-The image depends on the following parameters:
+ഇമേജ്  ഇനിപ്പറയുന്ന പാരാമീറ്ററുകളെ ആശ്രയിച്ചിരിക്കുന്നു:
 
-* `BUILD_TYPE`: debug or release (case-insensitive, defaults to release)
-* `BUILD_DRIVER`: whether or not to build the kernel module when
-building. This should usually be OFF, as the kernel module would be
-built for the files in the centos image, not the host.
-* `BUILD_BPF`: Like `BUILD_DRIVER` but for the ebpf program.
-* `BUILD_WARNINGS_AS_ERRORS`: consider all build warnings fatal
-* `MAKE_JOBS`: passed to the -j argument of make
+* `BUILD_TYPE`: ഡീബഗ് അല്ലെങ്കിൽ റിലീസ് (case-insensitive, defaults to release)
+* `BUILD_DRIVER`: കേർണൽ മൊഡ്യൂൾ നിർമ്മിക്കണോ വേണ്ടയോ. എപ്പോൾ നിർമ്മിക്കണം. കേർണൽ മൊഡ്യൂൾ പോലെ ഇത് സാധാരണയായി ഓഫായിരിക്കണം കാരണം സെന്റോസ് ഇമേജിലെ ഫയലുകൾക്കായി ആണിത് നിർമ്മിച്ചത്. ഹോസ്റ്റിനു വേണ്ടി അല്ല.
+* `BUILD_BPF`: `BUILD_DRIVER` പോലെ, പക്ഷേ ebpf പ്രോഗ്രാമിനായി.
+* `BUILD_WARNINGS_AS_ERRORS`: എല്ലാ ബിൽഡ് മുന്നറിയിപ്പുകളും മാരകമാണെന്ന് പരിഗണിക്കുക.
+* `MAKE_JOBS`: `make` -j ആർഗ്യുമെന്റിലേക്ക് കൈമാറി.
 
-A typical way to run this builder is the following. Assuming you have
-checked out Falco and Sysdig to directories below /home/user/src, and
-want to use a build directory of /home/user/build/falco, you would run
-the following:
+ഈ ബിൽഡർ പ്രവർത്തിപ്പിക്കുന്നതിനുള്ള ഒരു സാധാരണ മാർഗ്ഗം ഇനിപ്പറയുന്നവയാണ്. നിങ്ങൾ `/home/user/src`- ന് താഴെയുള്ള ഡയറക്ടറികളിലേക്ക് ഫാൽക്കോയും Sysdig-ഉം  ചെക്ക് ഔട്ട് ചെയ്തു എന്നും `/home/user/build/falco`- ന്റെ ഒരു ബിൽഡ് ഡയറക്ടറി ഉപയോഗിക്കാൻ ആഗ്രഹിക്കുന്നു എന്നും വിചാരിക്കുക. അതിനു വേണ്ടി ചെയ്യേണ്ടത് ഇനിപ്പറയുന്നവ:
+
 
 ```bash
 docker run --user $(id -u):$(id -g) -v /etc/passwd:/etc/passwd:ro -it -v /home/user/src:/source -v /home/user/build/falco:/build falcosecurity/falco-builder cmake
 docker run --user $(id -u):$(id -g) -v /etc/passwd:/etc/passwd:ro -it -v /home/user/src:/source -v /home/user/build/falco:/build falcosecurity/falco-builder package
 ```
+ഏതെങ്കിലും ബിൽറ്റ് പാക്കേജിന്റെ പതിപ്പായി ഉപയോഗിക്കാൻ `FALCO_VERSION` എൻ‌വയോൺ‌മെൻറ് വേരിയബിൾ‌ ആയി നൽ‌കാനും കഴിയും.
 
-It's also possible to explicitly provide the `FALCO_VERSION` environment variable to use it as the version for any built package.
-
-Otherwise the docker image will use the default `FALCO_VERSION`.
+അല്ലെങ്കിൽ ഡോക്കർ ഇമേജ് ഡീഫോൾട് ആയ `FALCO_VERSION` ഉപയോഗിക്കും.
 
 
-## Load latest falco kernel module
+## ഏറ്റവും പുതിയ ഫാൽക്കോ കേർണൽ മൊഡ്യൂൾ ലോഡുചെയ്യുക
 
-If you have a binary version of Falco installed, an older Falco kernel module may already be loaded. To ensure you are using the latest version, you should unload any existing Falco kernel module and load the locally built version.
+ഫാൽക്കോയുടെ ഒരു ബൈനറി പതിപ്പ് ഇൻസ്റ്റാൾ ചെയ്തിട്ടുണ്ടെങ്കിൽ, ഒരു പഴയ ഫാൽക്കോ കേർണൽ മൊഡ്യൂൾ ഇതിനകം ലോഡ് ചെയ്തേക്കാം. നിങ്ങൾ ഏറ്റവും പുതിയ പതിപ്പാണ് ഉപയോഗിക്കുന്നതെന്ന് ഉറപ്പാക്കാൻ, നിലവിലുള്ള ഏതെങ്കിലും ഫാൽക്കോ കേർണൽ മൊഡ്യൂൾ അൺലോഡുചെയ്‌ത് പ്രാദേശികമായി നിർമ്മിച്ച പതിപ്പ് ലോഡുചെയ്യണം.
 
-Unload any existing kernel module via:
+നിലവിലുള്ള ഏതെങ്കിലും കേർണൽ മൊഡ്യൂൾ ഇതിലൂടെ അൺലോഡുചെയ്യുക:
 
 ```bash
 rmmod falco
 ```
-
-To load the locally built version, assuming you are in the `build` dir, use:
+പ്രാദേശികമായി നിർമ്മിച്ച പതിപ്പ് ലോഡുചെയ്യാൻ, നിങ്ങൾ `build ` ഡയറക്ടറിയിലാണെന്നു  കരുതുക. ശേഷം:
 
 ```bash
 insmod driver/falco.ko
@@ -490,69 +483,64 @@ insmod driver/falco.ko
 rmmod falco
 ```
 
-To load the locally built version, assuming you are in the `build` dir, use:
+പ്രാദേശികമായി നിർമ്മിച്ച പതിപ്പ് ലോഡുചെയ്യാൻ, നിങ്ങൾ `build ` ഡയറക്ടറിയിലാണെന്നു  കരുതുക. ശേഷം:
 
 ```bash
 insmod driver/falco.ko
 ```
 
-## Run falco
+## ഫാൽക്കോ പ്രവർത്തിപ്പിക്കുക
 
-Once Falco is built and the kernel module is loaded, assuming you are in the `build` dir, you can run falco as:
+ഫാൽക്കോ നിർമ്മിച്ച് കേർണൽ മൊഡ്യൂൾ ലോഡുചെയ്തുകഴിഞ്ഞാൽ, നിങ്ങൾ `build ` ഡയറക്ടറിയിലാണെന് കരുതുക.  ശേഷം നിങ്ങൾക്ക് ഫാൽക്കോ ഇങ്ങനെ പ്രവർത്തിപ്പിക്കാൻ കഴിയും:
 
 ```bash
 sudo ./userspace/falco/falco -c ../falco.yaml -r ../rules/falco_rules.yaml
 ```
+സ്ഥിരസ്ഥിതിയായി, ഫാൽക്കോ ഇവന്റുകൾ സ്റ്റാൻഡേർഡ് എരറിലേക്ക് ലോഗ് ചെയ്യുന്നു.
 
-By default, falco logs events to standard error.
 
+### റിഗ്രഷൻ ടെസ്റ്റുകൾ പ്രവർത്തിപ്പിക്കുക
 
-### Run regression tests
+#### ഹോസ്റ്റിൽ നേരിട്ട് പരിശോധിക്കുക
 
-#### Test directly on host
+റിഗ്രഷൻ ടെസ്റ്റുകൾ പ്രവർത്തിപ്പിക്കുന്നതിന്, ഫാൽക്കോ നിർമ്മിച്ച ശേഷം, നിങ്ങൾ ഫാൽകോ റൂട്ട് ഡയറക്ടറിയിൽ, `test/run_regression_tests.sh` സ്ക്രിപ്റ്റ് പ്രവർത്തിപ്പിക്കേണ്ടതുണ്ട്.
 
-To run regression tests, after building Falco, in the Falco root directory, you need to run the `test/run_regression_tests.sh` script.
+##### ഡിപെൻഡൻസികൾ
 
-##### Dependencies
-
-You will need the following dependencies for the regression testing framework to work.
+റിഗ്രഷൻ ടെസ്റ്റിംഗ് ഫ്രെയിംവർക്ക് പ്രവർത്തിക്കുന്നതിന് നിങ്ങൾക്ക് ഇനിപ്പറയുന്ന ഡിപൻഡൻസികൾ ആവശ്യമാണ്.
 
 - Python 3
 - [Avocado Framework](https://github.com/avocado-framework/avocado), version 69
 - [Avocado Yaml to Mux plugin](https://avocado-framework.readthedocs.io/en/69.0/optional_plugins/varianter_yaml_to_mux.html)
 - [JQ](https://github.com/stedolan/jq)
-- The `unzip` and `xargs` commands
+- `unzip`, `xargs` കമാന്റുകൾ
 - [Docker CE](https://docs.docker.com/install)
 
-You will also need to obtain some test fixtures from the internet for the regression test suites to work.
+റിഗ്രഷൻ ടെസ്റ്റ് സ്യൂട്ടുകൾ പ്രവർത്തിക്കുന്നതിന് നിങ്ങൾ ഇന്റർനെറ്റിൽ നിന്ന് ചില ടെസ്റ്റ് ഫിക്ചറുകളും നേടേണ്ടതുണ്ട്.
 
-For the python dependencies, how to setup the virtualenv, how to obtain test fixtures, read more [here](https://github.com/falcosecurity/falco/tree/master/test/README.md).
+പൈത്തൺ ഡിപൻഡൻസികൾക്കായി, `virtenv` എങ്ങനെ സജ്ജീകരിക്കാം, ടെസ്റ്റ് ഫിക്ചറുകൾ എങ്ങനെ നേടാം എന്നിവയെകുറിച്ചു  കൂടുതൽ [വായിക്കുക](https://github.com/falcosecurity/falco/tree/master/test/README.md).
 
-##### Run the tests
-
-Change `$PWD/build` with the directory you built Falco in, if different.
+##### ടെസ്റ്റുകൾ പ്രവർത്തിപ്പിക്കുക
+വ്യത്യസ്‌തമാണെങ്കിൽ, ഫാൽക്കോ നിർമ്മിച്ച ഡയറക്‌ടറി ഉപയോഗിച്ച് `$PWD/build` മാറ്റുക.
 
 ```bash
 ./test/run_regression_tests.sh -d $PWD/build
 ```
 
-#### Test using falco-tester container
+#### ഫാൽക്കോ-ടെസ്റ്റർ കണ്ടെയ്നർ ഉപയോഗിച്ച് പരീക്ഷിക്കുക
 
-If you'd like to run the regression test suite against your build, you can use the [falco-tester](https://hub.docker.com/r/falcosecurity/falco-tester) container. Like the builder image, it contains the necessary environment to run the regression tests, but relies on a source directory and build directory that are mounted into the image. It's a different image than `falco-builder` as it doesn't need a compiler and needs a different base image to include the test runner framework [avocado](http://avocado-framework.github.io/).
+നിങ്ങളുടെ ബിൽഡിനെതിരെ റിഗ്രഷൻ ടെസ്റ്റ് സ്യൂട്ട് പ്രവർത്തിപ്പിക്കാൻ നിങ്ങൾ ആഗ്രഹിക്കുന്നുവെങ്കിൽ, [falco-tester] (https://hub.docker.com/r/falcosecurity/falco-tester) കണ്ടെയ്നർ ഉപയോഗിക്കാം. ബിൽഡർ ഇമേജ് പോലെ, റിഗ്രഷൻ ടെസ്റ്റുകൾ പ്രവർത്തിപ്പിക്കുന്നതിന് ആവശ്യമായ അന്തരീക്ഷം ഇതിൽ അടങ്ങിയിരിക്കുന്നു. എങ്കിലും ഇത് ഇമേജിലേക്ക് മൌണ്ട്  ചെയ്തിട്ടുള്ള ഒരു സോഴ്സ് ഡയറക്ടറിയെയും ബിൽഡ് ഡയറക്ടറിയെയും ആശ്രയിക്കുന്നു. കംപൈലർ ആവശ്യമില്ലാത്തതിനാലും ടെസ്റ്റ് റണ്ണർ ഫ്രെയിംവർക്ക് [avocado] (http://avocado-framework.github.io/) ഉൾപ്പെടുത്തുന്നതിന് മറ്റൊരു അടിസ്ഥാന ഇമേജ് ആവശ്യമുള്ളതിനാലും  ഇത് `falco-builder` എന്നതിനേക്കാൾ വ്യത്യസ്തമായ ഒരു ഇമേജ് ആണ്.
 
-It does build a new container image `falcosecurity/falco:test` (which source is into `docker/local` directory into Falco GitHub repository) to test the process of buillding and running a container with the Falco packages built during the build step.
+`falcosecurity/falco:test` എന്ന പുതിയൊരു കണ്ടെയ്നർ ഇമേജ് നിർമ്മിക്കുന്നു. ഇത് ഗിറ്റ് ഹബിലെ  `docker/local` ഡിറക്ടറിയിലേക്കാണ് സോഴ്സ് ചെയ്യുന്നത്.  നിർമ്മാണ സമയത് നിർമ്മിതമായ, ഫാൽക്കോ പാക്കേജുകളുള്ള, കണ്ടെയ്നർ നിർമ്മിക്കുന്നതിനും പ്രവർത്തിപ്പിക്കുന്നതിനുമുള്ള പ്രക്രിയ പരിശോധിക്കുക എന്ന ലക്ഷ്യത്തോടെയാണ് ഈ ഇമേജ് നിർമ്മിക്കപ്പെട്ടിരിക്കുന്നത്
 
-The image depends on the following parameters:
+ഈ ഇമേജ് ഇനിപ്പറയുന്ന പാരാമീറ്ററുകളെ ആശ്രയിച്ചിരിക്കുന്നു:
 
-* `FALCO_VERSION`: The version of the Falco package to include in the test container image. It must match the version of the built packages.
+* `FALCO_VERSION`: ടെസ്റ്റ് കണ്ടെയ്നർ ഇമേജിൽ ഉൾപ്പെടുത്താനുള്ള ഫാൽകോ പാക്കേജിന്റെ പതിപ്പ്. ഇത് അന്തർനിർമ്മിത പാക്കേജുകളുടെ പതിപ്പുമായി പൊരുത്തപ്പെടണം.
 
-A typical way to run this builder is the following. Assuming you have
-checked out Falco and Sysdig to directories below `/home/user/src`, and
-want to use a build directory of `/home/user/build/falco`, you would run
-the following:
+ഈ ബിൽഡർ പ്രവർത്തിപ്പിക്കുന്നതിനുള്ള ഒരു സാധാരണ മാർഗ്ഗം ഇനിപ്പറയുന്നവയാണ്. നിങ്ങൾ `/ home/user/src`- ന് താഴെയുള്ള ഡയറക്ടറികളിലേക്ക് ഫാൽക്കോയും Sysdig-ഉം  ചെക്ക് ഔട്ട് ചെയ്തു എന്നും `/home/user/build/falco`- ന്റെ ഒരു ബിൽഡ് ഡയറക്ടറി ഉപയോഗിക്കാൻ ആഗ്രഹിക്കുന്നു എന്നും വിചാരിക്കുക. അതിനു വേണ്ടി ചെയ്യേണ്ടത് ഇനിപ്പറയുന്നവ:
 
 ```bash
 docker run --user $(id -u):$(id -g) -v $HOME:$HOME:ro -v /boot:/boot:ro -v /var/run/docker.sock:/var/run/docker.sock -v /etc/passwd:/etc/passwd:ro -e FALCO_VERSION=${FALCO_VERSION} -v /home/user/src:/source -v /home/user/build/falco:/build falcosecurity/falco-tester
 ```
 
-Mounting `$HOME` allows the test execution framework to run. You may need to replace `$(id -g)` with the right gid of the group that is allowed to access the docker socket (often the `docker` group).
+`HOME` മൗണ്ട് ചെയ്യുന്നത് ടെസ്റ്റ് എക്സിക്യൂഷൻ ഫ്രെയിംവർക്ക് പ്രവർത്തിപ്പിക്കാൻ അനുവദിക്കുന്നു. ഡോക്കർ സോക്കറ്റിലേക്ക് (പലപ്പോഴും `docker` ഗ്രൂപ്പ്) പ്രവേശിക്കാൻ അനുവദിച്ചിരിക്കുന്ന ഗ്രൂപ്പിന്റെ ശരിയായ ഗിഡ് ഉപയോഗിച്ച് നിങ്ങൾ `$(id -g)` മാറ്റിസ്ഥാപിക്കേണ്ടതുണ്ട്.  
