@@ -13,7 +13,7 @@ weight: 4
 service falco start
 ```
 
-Or, for `systemd`:
+ `systemd` ക്ക് വേണ്ടി:
 ```bash
 systemctl start falco
 ```
