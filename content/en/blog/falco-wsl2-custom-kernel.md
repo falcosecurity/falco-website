@@ -68,8 +68,9 @@ cd
 sudo apt install -y build-essential flex bison libssl-dev libelf-dev
 
 # Get the latest stable Linux Kernel
+# Save lots of space and bandwith by fetching only the latest version of each file on the linux-rolling-stable branch
 # git needs to be installed
-git clone https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+git clone --depth 1 --branch linux-rolling-stable https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 
 # Ensure the "stable" branch is the active one
 cd linux
