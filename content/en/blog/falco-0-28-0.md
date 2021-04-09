@@ -2,6 +2,7 @@
 title: Falco 0.28.0 a.k.a. Falco 2021.04
 date: 2021-04-09
 author: Leonardo Di Donato
+slug: falco-0-28-0
 ---
 
 Today we announce the spring release of Falco 0.28.0 🌱
