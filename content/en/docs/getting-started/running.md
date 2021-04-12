@@ -7,21 +7,15 @@ weight: 4
 
 ## Run Falco as a service
 
-If you installed Falco by using [the deb or the rpm](/docs/getting-started/installation) package, you can start the service:
+If you installed Falco by using [the DEB or the RPM](/docs/getting-started/installation) package, you can start the service by running:
 
-```bash
-service falco start
-```
-
-Or, for `systemd`:
-```bash
+```console
 systemctl start falco
 ```
-It works because `systemd-sysv-generator` wraps `init.d` scripts into `systemd` units.
 
 You can also view the Falco logs using `journalctl`.
 
-```bash
+```console
 journalctl -fu falco
 ```
 
@@ -29,7 +23,7 @@ journalctl -fu falco
 
 If you'd like to run Falco by hand, you can find the full usage description for Falco by typing:
 
-```
+```console
 falco --help
 ```
 
