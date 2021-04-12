@@ -21,14 +21,15 @@ Finally, once a snapshot for the previous version has been created, you need to 
 
 The following instructions assume **`v0.x.y` is the version to be archived**.
 
-1. Create the new `v0.x` branch from the current `master` branch.
-2. Within the `v0.x` branch, edit the [config.toml](config.toml) file:
+1. Configure [the branch deploy control on Netlify](https://docs.netlify.com/site-deploys/overview/#branch-deploy-controls) by adding the newly created branch `v0.x`.
+2. Create the new `v0.x` branch from the current `master` branch.
+3. Within the `v0.x` branch, edit the [config.toml](config.toml) file:
     - set `archived_version` to `true`,
     - make sure `version` is equal to `v0.x.y`,
     - finally, commit and push to `v0.x`.
-3. Configure [the branch deploy control on Netlify](https://docs.netlify.com/site-deploys/overview/#branch-deploy-controls) by adding the newly created branch `v0.x`.
-4. Add a new [branch subdomain on Netilify](https://docs.netlify.com/domains-https/custom-domains/multiple-domains/#branch-subdomains) by selecting the branch deploy configured in the previous step.
+4. Once the Netlify branch build is done, add a new [branch subdomain on Netilify](https://docs.netlify.com/domains-https/custom-domains/multiple-domains/#branch-subdomains) by selecting the branch deploy configured in the previous step.
 5. Open a [PR in falcosecurity/test-infra](https://github.com/falcosecurity/test-infra/edit/master/config/config.yaml) to add `v0.x` as protected branch to the `prow/config.yaml`, for example:
+
     ```yaml
             falco-website:
               branches:
@@ -39,11 +40,12 @@ The following instructions assume **`v0.x.y` is the version to be archived**.
                 ...
                 v0.x:
                   protect: true
-    ``` 
+    ```
 
 ### Bump the version on the current website
+
 > **N.B.** Do not update the minor version until a snapshot for the previous one has been created!
-> 
+>
 The following instructions assume **`v0.X.Y` is the new version** and **v0.x.y** is the previous already-archived version.
 
 1. Open a [PR in falcosecurity/falco-website](https://github.com/falcosecurity/falco-website/edit/update/master/config.toml) to modifiy the [config.toml](config.toml) file on the `master` branch:
