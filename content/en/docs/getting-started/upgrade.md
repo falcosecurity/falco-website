@@ -59,3 +59,27 @@ If you installed Falco by following the [provided instructions](../installation/
     ```shell
     yum update falco
     ```
+
+### openSUSE {#suse}
+
+{{% pageinfo color="warning" %}}
+If you configured the `zypper` repository by having followed the instructions for Falco 0.27.0 or older,
+you may need to update the repository URL:
+
+```shell
+sed -i 's,https://dl.bintray.com/falcosecurity/rpm,https://download.falco.org/packages/rpm,' /etc/zypp/repos.d/falcosecurity.repo
+zypper refresh
+```
+
+Then check that the `falcosecurity-rpm` repository is pointing to `https://download.falco.org/packages/rpm/`:
+
+```shell
+zypper lr falcosecurity-rpm
+```
+{{% /pageinfo %}}
+
+If you installed Falco by following the [provided instructions](../installation/#suse):
+
+```shell
+zypper update falco
+```
