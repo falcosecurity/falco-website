@@ -177,6 +177,18 @@ You now have access in your browser with the URL: [http://localhost:2802/ui](htt
 
 ![falcosidekick slack test 2](/img/falcosidekick-ui-2.png)
 
+## Get involved
+
+If you would like to find out more about Falco:<br />
+
+<ul>
+<li>Get started in <a target="_blank" href="http://falco.org/">Falco.org</a>.</li>
+<li>Check out the <a target="_blank" href="https://github.com/falcosecurity/falco">Falco project on GitHub</a>.</li>
+<li>Get involved <a target="_blank" href="https://falco.org/community/">Falco community</a>.</li>
+<li>Meet the maintainers on the <a target="_blank" href="https://kubernetes.slack.com/?redir=%2Farchives%2FCMWH3EH32">Falco Slack</a>.</li>
+<li>Follow <a target="_blank" href="https://twitter.com/falco_org">@falco_org on Twitter</a>.</li>
+</ul>
+
 And that's it!
 
 ![falco extendend architecture](/img/falcosidekick-color.png)
