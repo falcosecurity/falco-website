@@ -4,16 +4,16 @@ description: Integrations built on the Falco core in a production environment
 weight: 3
 ---
 
-## CoreOS
+## Flatcar Linux
 
-The recommended way to run Falco on CoreOS is inside of its own Docker container using the install commands in the [Docker section](/docs/getting-started/running#docker). This method allows full visibility into all containers on the host OS.
+The recommended way to run Falco on Flatcar Linux is inside of its own Docker container using the install commands in the [Docker section](/docs/getting-started/running#docker). This method allows full visibility into all containers on the host OS.
 
-This method is automatically updated, includes some nice features such as automatic setup and bash completion, and is a generic approach that can be used on other distributions outside CoreOS as well.
+This method is automatically updated, includes some nice features such as automatic setup and bash completion, and is a generic approach that can be used on other distributions outside Flatcar Linux as well.
 
-However, some users may prefer to run Falco in the CoreOS toolbox. While not the recommended method, this can be achieved by installing Falco inside the toolbox using the normal installation method, and then manually running the `falco-driver-loader` script:
+However, some users may prefer to run Falco in the Flatcar Linux toolbox. While not the recommended method, this can be achieved by installing Falco inside the toolbox using the normal installation method, and then manually running the `falco-driver-loader` script:
 
 ```shell
-toolbox --bind=/dev --bind=/var/run/docker.sock
+toolbox 
 curl -s https://falco.org/script/install | bash
 falco-driver-loader
 ```
