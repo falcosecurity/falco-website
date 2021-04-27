@@ -200,7 +200,7 @@ by passing arguments to `helm install` command line:
 ```shell
 $ helm upgrade --install falco falcosecurity/falco --namespace falco \
 --set falcosidekick.enabled=true \
---set falcosidekick.config.openfaas.functionname="falco-pod-delete" \
+--set falcosidekick.config.openfaas.functionname="falco-pod-delete"
 ```
 
 You should get this output:
@@ -247,7 +247,7 @@ be in the same namespace, it can directly use the name of the service (`falco-fa
 We check the logs:
 
 ```shell
-$ kubectl logs deployment/falcosidekick -n falco
+$ kubectl logs deployment/falco-falcosidekick -n falco
 Found 2 pods, using pod/falcosidekick-5c696d7fd8-9bnnj
 2021/04/10 19:21:55 [INFO]  : Enabled Outputs : [OpenFaaS]
 2021/04/10 19:21:55 [INFO]  : Falco Sidekick is up and listening on :2801
@@ -406,6 +406,8 @@ type Alert struct {
   } `json:"output_fields"`
 }
 
+var CriticalNamespaces = []string{"kube-system", "kube-public", "kube-node-lease", "falco", "openfaas", "openfaas-fn"}
+
 func Handle(w http.ResponseWriter, r *http.Request) {
   var alert Alert
 
@@ -418,9 +420,19 @@ func Handle(w http.ResponseWriter, r *http.Request) {
 
     podName := alert.OutputFields.K8SPodName
     namespace := alert.OutputFields.K8SNsName
+    
+    var critical bool
+    for _ , ns := range CriticalNamespaces {
+        if ns == namespace {
+            critical = true
+            break
+        }
+    }
 
-    log.Printf("Deleting pod %s from namespace %s", podName, namespace)
-    kubeClient.CoreV1().Pods(namespace).Delete(context.Background(), podName, metaV1.DeleteOptions{})
+    if !critical {
+      log.Printf("Deleting pod %s from namespace %s", podName, namespace)
+      kubeClient.CoreV1().Pods(namespace).Delete(context.Background(), podName, metaV1.DeleteOptions{})
+    }
   }
 
   w.WriteHeader(http.StatusOK)
