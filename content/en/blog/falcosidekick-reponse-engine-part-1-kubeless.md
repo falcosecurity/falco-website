@@ -1,9 +1,17 @@
 ---
-title: Falcosidekick + Kubeless = a Kubernetes Response Engine
+title: "Kubernetes Response Engine, Part 1: Falcosidekick + Kubeless"
 date: 2021-01-15
 author: Thomas Labarussias
-slug: falcosidekick-kubeless
+slug: falcosidekick-reponse-engine-part-1-kubeless
 ---
+
+> *This blog post is part of a series of articles about how to create a `Kubernetes` response engine with `Falco`, `Falcosidekick` and a `FaaS`.*
+> 
+> See other posts:
+> * [Kubernetes Response Engine, Part 1 : Falcosidekick + Kubeless]({{< ref "/blog/falcosidekick-reponse-engine-part-1-kubeless" >}})
+> * [Kubernetes Response Engine, Part 2 : Falcosidekick + OpenFaas]({{< ref "/blog/falcosidekick-reponse-engine-part-2-openfass" >}})
+
+----
 
 Two years ago, we presented to you a `Kubernetes Response Engine` based on `Falco`. The idea was to trigger [`Kubeless`](https://kubeless.io) serverless functions for deleting infected pod, start a `Sysdig` capture or forward the `events` to `GCP PubSub`. See the [README](https://github.com/falcosecurity/kubernetes-response-engine).
 

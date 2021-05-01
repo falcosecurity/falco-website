@@ -1,9 +1,17 @@
 ---
-title: Falcosidekick + OpenFaas = a Kubernetes Response Engine, Part 2
+title: "Kubernetes Response Engine, Part 2: Falcosidekick + OpenFaas"
 date: 2021-04-11
 author: Batuhan Apaydın
-slug: falcosidekick-openfaas
+slug: falcosidekick-reponse-engine-part-2-openfaas
 ---
+
+> *This blog post is part of a series of articles about how to create a `Kubernetes` response engine with `Falco`, `Falcosidekick` and a `FaaS`.*
+> 
+> See other posts:
+> * [Kubernetes Response Engine, Part 1 : Falcosidekick + Kubeless]({{< ref "/blog/falcosidekick-reponse-engine-part-1-kubeless" >}})
+> * [Kubernetes Response Engine, Part 2 : Falcosidekick + OpenFaas]({{< ref "/blog/falcosidekick-reponse-engine-part-2-openfass" >}})
+
+----
 
 We recently talked about a concept called _"Kubernetes Response Engine"_, and we achieved this by using `Falco`
 + `Falcosidekick` + `Kubeless`. But as you might guess, `Falcosidekick` project is evolving day after day, which means
