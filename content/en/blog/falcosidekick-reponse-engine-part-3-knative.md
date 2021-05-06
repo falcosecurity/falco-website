@@ -1,10 +1,17 @@
 ---
-title: Falcosidekick + Knative = a Kubernetes Response Engine, Part 3
+title: Kubernetes Response Engine, Part 3: Falcosidekick + Knative
 date: 2021-04-28
 author: Scott Nichols and Dan Papandrea
-slug: falcosidekick-knative
+slug: falcosidekick-reponse-engine-part-3-knative
 ---
 
+> *This blog post is part of a series of articles about how to create a `Kubernetes` response engine with `Falco`, `Falcosidekick` and a `FaaS`.*
+> 
+> See other posts:
+> * [Kubernetes Response Engine, Part 1 : Falcosidekick + Kubeless]({{< ref "/blog/falcosidekick-reponse-engine-part-1-kubeless" >}})
+> * [Kubernetes Response Engine, Part 2 : Falcosidekick + OpenFaas]({{< ref "/blog/falcosidekick-reponse-engine-part-2-openfass" >}})
+
+----
 As the Cloud Native ecosystem grows and the idea that an integrator can browse
 the offerings and slap them together like an a la carte menu resonates. We call
 this _Thinking Cloud Native_.
@@ -86,7 +93,7 @@ shell creations and delete that pod.
 
 - [multipass](https://multipass.run/)
 - [Kubernetes](https://kubernetes.io/),
-  [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
 - [Helm](https://helm.sh/docs/intro/install/)
 
 ### K3s Cluster
@@ -165,7 +172,7 @@ EOF
 
 See also
 [knative.dev install instructions](https://knative.dev/docs/install/any-kubernetes-cluster/)
-for installed these into your own cluster.
+for installing these into your own cluster.
 
 ### Falco/Falcosidekick/sidekick UI
 
@@ -317,6 +324,9 @@ spec:
       name: drop
 ```
 
+> Note: the `kind: Service, name: drop` resource is the Knative Service we
+> created above.
+
 Here we are requesting that the broker only deliver events that have the
 attributes (CloudEvent attributes) of `source=falco.org` and
 `type=falco.rule.output.v1`. These events are delivered to our subscriber
@@ -330,7 +340,7 @@ Want to learn how that `spec.subscriber.ref` works?! It is
 [you](https://docs.google.com/document/d/e/2PACX-1vQeYowntWI4U8yN19Esf0mK8HiY0Cf1XhbbfzLpnLzGcWqhWHwpqNFH7FqDQGTIAHqz4iFP7dPIBKvG/pub)
 [can](https://github.com/knative/pkg/tree/master/apis/duck#duck-types)
 [learn](https://www.youtube.com/watch?v=Mb8c5SP-Sw0)
-[more](https://www.youtube.com/watch?v=kldVg63Utuw), but td;dr: it is basically
+[more](https://www.youtube.com/watch?v=kldVg63Utuw), but tl;dr: it is basically
 doing this (except fancy),
 
 ```
@@ -360,8 +370,8 @@ Next, we will execute a command in that `alpine` pod:
 kubectl exec -i --tty alpine --namespace default -- sh -c "uptime"
 ```
 
-But both cases, the `alpine` pod will be terminiated by the drop function once
-the events are processed:
+The `alpine` pod will be terminated by the drop function once the events are
+processed:
 
 ```shell
 (╯°□°)╯︵  kubectl exec -i --tty alpine --namespace default -- sh -c "uptime"
@@ -434,7 +444,7 @@ Thinking Cloud Native is a mindset of picking the right tool for the job and
 assembling these tools into something greater than their parts. Falco is a great
 tool for detection and alerts, it gets really interesting once we can react to
 those events in ways we never imagined, because integrators are creative and
-inivative.
+innovative.
 
 What will you build?
 
