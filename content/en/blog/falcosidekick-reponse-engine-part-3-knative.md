@@ -228,7 +228,7 @@ The arguments
 `--set falcosidekick.enabled=true --set falcosidekick.webui.enabled=true`
 enables Falcosidekick and the UI as the below shows:
 
-![](https://i.imgur.com/ZR25hRW.png)
+![falcosidekick ui](/img/falcosidekick-ui-colors.png)
 
 You can now test it with a typical port-forwarding:
 
