@@ -337,7 +337,7 @@ attributes (CloudEvent attributes) of `source=falco.org` and
 `type=falco.rule.output.v1`. These events are delivered to our subscriber
 KService.
 
-![Eventing Topology](https://github.com/n3wscott/falco-drop/raw/main/img/graph.png)
+![Eventing Topology](/img/knative-drop-graph.png)
 
 Want to learn how that `spec.subscriber.ref` works?! It is
 [duck typing](https://en.wikipedia.org/wiki/Duck_typing)
