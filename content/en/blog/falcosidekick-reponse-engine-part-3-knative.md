@@ -1,17 +1,22 @@
 ---
-title: Kubernetes Response Engine, Part 3: Falcosidekick + Knative
+title: "Kubernetes Response Engine, Part 3: Falcosidekick + Knative"
 date: 2021-04-28
 author: Scott Nichols and Dan Papandrea
 slug: falcosidekick-reponse-engine-part-3-knative
 ---
 
-> *This blog post is part of a series of articles about how to create a `Kubernetes` response engine with `Falco`, `Falcosidekick` and a `FaaS`.*
-> 
+> _This blog post is part of a series of articles about how to create a
+> `Kubernetes` response engine with `Falco`, `Falcosidekick` and a `FaaS`._
+>
 > See other posts:
-> * [Kubernetes Response Engine, Part 1 : Falcosidekick + Kubeless]({{< ref "/blog/falcosidekick-reponse-engine-part-1-kubeless" >}})
-> * [Kubernetes Response Engine, Part 2 : Falcosidekick + OpenFaas]({{< ref "/blog/falcosidekick-reponse-engine-part-2-openfass" >}})
+>
+> - [Kubernetes Response Engine, Part 1 : Falcosidekick +
+>   Kubeless]({{< ref "/blog/falcosidekick-reponse-engine-part-1-kubeless" >}})
+> - [Kubernetes Response Engine, Part 2 : Falcosidekick +
+>   OpenFaas]({{< ref "/blog/falcosidekick-reponse-engine-part-2-openfass" >}})
 
-----
+---
+
 As the Cloud Native ecosystem grows and the idea that an integrator can browse
 the offerings and slap them together like an a la carte menu resonates. We call
 this _Thinking Cloud Native_.
