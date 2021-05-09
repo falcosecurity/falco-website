@@ -8,12 +8,13 @@ slug: falcosidekick-reponse-engine-part-4-tekton
 > *This blog post is part of a series of articles about how to create a `Kubernetes` response engine with `Falco`, `Falcosidekick` and a `FaaS`.*
 >
 > See other posts:
-> * [Kubernetes Response Engine, Part 1 : Falcosidekick + Kubeless]({{< ref "/blog/falcosidekick-reponse-engine-part-1-kubeless" >}})
-> * [Kubernetes Response Engine, Part 2 : Falcosidekick + OpenFaas]({{< ref "/blog/falcosidekick-reponse-engine-part-2-openfass" >}})
+>
+> - [Kubernetes Response Engine, Part 1 : Falcosidekick + Kubeless]({{< ref "/blog/falcosidekick-reponse-engine-part-1-kubeless" >}})
+> - [Kubernetes Response Engine, Part 2 : Falcosidekick + OpenFaas]({{< ref "/blog/falcosidekick-reponse-engine-part-2-openfass" >}})
 
 ----
 
-# Falcosidekick + Tekton
+## Falcosidekick + Tekton
 
 Earler in this series we have seen how to use [Kubeless](https://kubeless.io/), [OpenFaas](https://www.openfaas.com/)
 and [Knative](https://knative.dev/) to trigger a pod after getting input from faclosidekick to delete a compromised pod.
@@ -37,7 +38,7 @@ But we will use it to listen for Falco events.
 
 You can find all the yaml and code in my [repo](https://github.com/NissesSenap/falcosidekick-tekton/tree/falco).
 
-## Prerequisites
+### Prerequisites
 
 As always within Kubernetes we need a few tools, I have used the following versions of Helm, Minikube and kubectl in my setup.
 
@@ -45,7 +46,7 @@ As always within Kubernetes we need a few tools, I have used the following versi
 - Helm v3.4.2
 - kubectl v1.20.5
 
-## Provision local Kubernetes Cluster
+### Provision local Kubernetes Cluster
 
 I'm sure you can use a [kind](https://github.com/kubernetes-sigs/kind) cluster as well to follow along,
 but falco complained a bit when I tried and I was to lazy to check out what extra flags I need so I went with minikube.
@@ -54,7 +55,7 @@ but falco complained a bit when I tried and I was to lazy to check out what extr
 minikube start --cpus 3 --memory 8192 --vm-driver virtualbox
 ```
 
-## Install Tekton
+### Install Tekton
 
 Install Tekton pipelines and triggers.
 When doing this in production I recommend the [Tekton operator](https://github.com/tektoncd/operator) but for now lets use some pure yaml.
@@ -78,7 +79,7 @@ tekton-triggers-webhook-748fb7778c-w6zxv      1/1     Running   0          1h
 
 If you want a deeper understanding how Tekton triggers work check out the [getting-started guide](https://github.com/tektoncd/triggers/tree/v0.13.0/docs/getting-started).
 
-## Install Falco + Falcosidekick
+### Install Falco + Falcosidekick
 
 Create the falco namespace and add the helm repo:
 
@@ -127,7 +128,7 @@ falco-falcosidekick-779b87f446-8zf9m   1/1     Running   0          2h
 falco-falcosidekick-779b87f446-fdk55   1/1     Running   0          2h
 ```
 
-## Protect me Falco
+### Protect me Falco
 
 My current setup is rather harsh and will delete any pods that breaks any falco rule.
 In the future I plan to make both the go code and the tekton setup better and more flexible, hopefully this is something that we can do in the community.
@@ -145,7 +146,7 @@ So how does all this work?
 
 So lets look at some yaml.
 
-### The go code
+#### The go code
 
 I have adapted the code that Batuhan Apaydın wrote in [Falcosidekick + OpenFaas = a Kubernetes Response Engine, Part 2](https://falco.org/blog/falcosidekick-openfaas/) to listen for json in a environment variable instead of a http request.
 
@@ -263,7 +264,7 @@ If you rather see it in [github](https://raw.githubusercontent.com/NissesSenap/f
 
 Now that you know what I will make run in your cluster lets take a look at the Tekton yaml.
 
-### Tekton pipeline
+#### Tekton pipeline
 
 Create the falcoresponse namespace to do our tests in.
 
@@ -271,7 +272,7 @@ Create the falcoresponse namespace to do our tests in.
 kubectl create ns falcoresponse
 ```
 
-#### Task
+##### Task
 
 So lets start with the smallest part, the task.
 
@@ -299,7 +300,7 @@ EOF
 - The step called pod-delete uses the poddeleter image.
 - Step pod-delete sets the environment BODY from the input parameter called falco-event.
 
-#### Pipeline
+##### Pipeline
 
 Here you can see the reusability of tekton.
 This pipeline can easily add more tasks and other pipelines can use the exact same task as this one.
@@ -327,7 +328,7 @@ spec:
 EOF
 ```
 
-#### RBAC
+##### RBAC
 
 We will be using two separate serviceAccounts, one for the event-listener and one for the poddeleter it self.
 
@@ -441,7 +442,7 @@ subjects:
 EOF
 ```
 
-#### Event listener
+##### Event listener
 
 Finally time to configure the tekton webhook receiver.
 Just like rest of Tekton the event listener builds on multiple parts.
@@ -536,7 +537,7 @@ NAME                                                 READY   STATUS      RESTART
 el-falco-listener-557786f598-zdmw2                   1/1     Running     0          2h
 ```
 
-## Trigger job
+### Trigger job
 
 Finally it's time to test our setup.
 
@@ -598,11 +599,11 @@ kubectl logs -f $(kubectl get pods -l tekton.dev/task=pod-delete -o jsonpath="{.
 2021/05/02 18:11:00 Deleting pod alpine from namespace falcoresponse
 ```
 
-## Conclusion
+### Conclusion
 
 This was a rather simple example on how we can use the power of tekton together with Falco to protect us from bad actors that is trying to take over pods in our cluster.
 
-As noted during this post there are allot of potential improvements before this is production ready:
+As noted during this post there are a lot of potential improvements before this is production ready:
 
 - The criticalNamepsaces in our go code is currently hard-coded and needs to be input variable of some kind.
 - We need to be able to delete pods depending on priority level, rule or something similar.
