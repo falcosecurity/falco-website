@@ -1,6 +1,6 @@
 ---
 title: "Kubernetes Response Engine, Part 4: Falcosidekick + Tekton"
-date: 2021-04-11
+date: 2021-05-10
 author: Edvin Norling
 slug: falcosidekick-reponse-engine-part-4-tekton
 ---
@@ -11,13 +11,14 @@ slug: falcosidekick-reponse-engine-part-4-tekton
 >
 > - [Kubernetes Response Engine, Part 1 : Falcosidekick + Kubeless]({{< ref "/blog/falcosidekick-reponse-engine-part-1-kubeless" >}})
 > - [Kubernetes Response Engine, Part 2 : Falcosidekick + OpenFaas]({{< ref "/blog/falcosidekick-reponse-engine-part-2-openfass" >}})
+> - [Kubernetes Response Engine, Part 3 : Falcosidekick + Knative]({{< ref "/blog/falcosidekick-reponse-engine-part-3-knative" >}})
 
 ----
 
 ## Falcosidekick + Tekton
 
 Earler in this series we have seen how to use [Kubeless](https://kubeless.io/), [OpenFaas](https://www.openfaas.com/)
-and [Knative](https://knative.dev/) to trigger a pod after getting input from faclosidekick to delete a compromised pod.
+and [Knative](https://knative.dev/) to trigger a pod after getting input from falcosidekick to delete a compromised pod.
 
 In this part I will showcase how we can use [Tekton](https://tekton.dev) and not have to add any extra complexity to your cluster by adding a serverless runtime.
 
@@ -32,7 +33,7 @@ But here is the crash course:
 - A **pipeline** consist of one or multiple tasks.
 - To trigger a pipeline to actually run you need a **pipelinerun** or a **trigger-template**.
 
-Tekton also supports eventlisterners that is used to listen for webhooks.
+Tekton also supports eventlisteners that is used to listen for webhooks.
 Normally these webhooks listen for incoming changes to a git repo, for example a PR.
 But we will use it to listen for Falco events.
 
@@ -49,7 +50,7 @@ As always within Kubernetes we need a few tools, I have used the following versi
 ### Provision local Kubernetes Cluster
 
 I'm sure you can use a [kind](https://github.com/kubernetes-sigs/kind) cluster as well to follow along,
-but falco complained a bit when I tried and I was to lazy to check out what extra flags I need so I went with minikube.
+but falco complained a bit when I tried and I was too lazy to check out what extra flags I need so I went with minikube.
 
 ```shell
 minikube start --cpus 3 --memory 8192 --vm-driver virtualbox
@@ -529,7 +530,7 @@ EOF
 We define the serviceAccount to use in our pipeline/task, point to the pipeline that we should use.
 And what parameter to send down to the pipeline, notice the **tt** in front of parma. This is special syntax for TriggerBindings.
 
-The triggerTemplate was the final pice needed and you should see a pod spinning up in the falcoresponse namespace.
+The triggerTemplate was the final piece needed and you should see a pod spinning up in the falcoresponse namespace.
 
 ```shell
 kubectl get pdos -n falcoresponse
@@ -605,7 +606,7 @@ This was a rather simple example on how we can use the power of tekton together 
 
 As noted during this post there are a lot of potential improvements before this is production ready:
 
-- The criticalNamepsaces in our go code is currently hard-coded and needs to be input variable of some kind.
+- The criticalNamespaces in our go code is currently hard-coded and needs to be input variable of some kind.
 - We need to be able to delete pods depending on priority level, rule or something similar.
 - To be able to debug pods we might need to shell in to them, we need a way to ignore pods temporary without the pod getting restarted. Probably a annotation to look for in the pod before deleting it.
 - And probably many other needs that you can come up with.
