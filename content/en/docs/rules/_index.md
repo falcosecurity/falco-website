@@ -27,7 +27,7 @@ The `falco` executable and the `falco_engine` C++ object now support returning a
 
 The Falco rules files included with Falco include a new top-level object, `required_engine_version: N`, that specifies the minimum engine version required to read this rules file. If not included, no version check is performed when reading the rules file.
 
-If a rules file has an `engine_version` greater than the Falco engine version, the rules file is be loaded and an error is returned.
+If a rules file has an `engine_version` greater than the Falco engine version, the rules file is loaded and an error is returned.
 
 ## Rules
 
