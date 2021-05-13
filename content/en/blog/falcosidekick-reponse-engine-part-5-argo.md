@@ -1,6 +1,6 @@
 ---
 title: "Kubernetes Response Engine, Part 5: Falcosidekick + Argo"
-date: 2021-01-13
+date: 2021-05-13
 author: Thomas Labarussias
 slug: falcosidekick-reponse-engine-part-5-argo
 ---
