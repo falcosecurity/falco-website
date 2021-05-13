@@ -281,7 +281,7 @@ spec:
 EOF
 ```
 
-`Argo Workflow` runs all workflow steps inside their own pods, we'll use for this tutorial a *Golang* image developped by [@developer-guy](https://github.com/developer-guy) (who wrote the [Part 2]({{< ref "/blog/falcosidekick-reponse-engine-part-2-openfass" >}}) of this serie 😄).
+`Argo Workflow` runs all workflow steps inside their own pods, we'll use for this tutorial a *Golang* image developped by [@developer-guy](https://github.com/developer-guy) (who wrote the [Part 2]({{< ref "/blog/falcosidekick-reponse-engine-part-2-openfass" >}}) of this serie 😄), the source are [there](https://github.com/developer-guy/kubernetes-response-engine-based-on-event-driven-workflow/blob/master/main.go).
 
 
 At this stage, everything is ready to receive events from `Falco` and protect our cluster.
