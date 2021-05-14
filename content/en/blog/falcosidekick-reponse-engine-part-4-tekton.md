@@ -1,6 +1,6 @@
 ---
 title: "Kubernetes Response Engine, Part 4: Falcosidekick + Tekton"
-date: 2021-05-10
+date: 2021-05-14
 author: Edvin Norling
 slug: falcosidekick-response-engine-part-4-tekton
 ---
@@ -612,3 +612,24 @@ As noted during this post there are a lot of potential improvements before this 
 - And probably many other needs that you can come up with.
 
 If you have any ideas/issues come and share them in the falco slack [https://kubernetes.slack.com](https://kubernetes.slack.com) #falco.
+
+#### Tekton
+
+If you would like to find out more about Knative:
+
+- Get started in [tekton.dev](https://tekton.dev/).
+- Check out the [Tekton Project in GitHub](https://github.com/tektoncd).
+- Meet the maintainers on the [TektonCD Slack](https://tektoncd.slack.com//).
+- Follow [@tektoncd on Twitter](https://twitter.com/tektoncd).
+
+#### Falco
+
+If you would like to find out more about Falco:
+
+- Get started in [Falco.org](https://falco.org/).
+- Check out the
+  [Falco project in GitHub](https://github.com/falcosecurity/falco).
+- Get involved in the [Falco community](https://falco.org/community/).
+- Meet the maintainers on the
+  [Falco Slack](https://kubernetes.slack.com/?redir=%2Farchives%2FCMWH3EH32).
+- Follow [@falco_org on Twitter](https://twitter.com/falco_org).
