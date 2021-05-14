@@ -2,7 +2,7 @@
 title: "Kubernetes Response Engine, Part 4: Falcosidekick + Tekton"
 date: 2021-05-10
 author: Edvin Norling
-slug: falcosidekick-reponse-engine-part-4-tekton
+slug: falcosidekick-response-engine-part-4-tekton
 ---
 
 > *This blog post is part of a series of articles about how to create a `Kubernetes` response engine with `Falco`, `Falcosidekick` and a `FaaS`.*
