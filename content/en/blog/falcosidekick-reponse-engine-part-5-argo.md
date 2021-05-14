@@ -14,14 +14,14 @@ slug: falcosidekick-reponse-engine-part-5-argo
 
 ----
 
-The Open Source ecosystem is so vibrant, we can propose another way to create a Kubernetes Response Engine based on our magic duo, `Falco` + `Falcosidekick`.
-Today, we'll use two components of the CNCF project `Argo`:
+The Open Source ecosystem is very vibrant, there are many ways to create a Kubernetes Response Engine based on our dynamic duo, `Falco` + `Falcosidekick`.
+Today, we will use two components of the CNCF project `Argo`:
 * [`Argo Events`](https://argoproj.github.io/projects/argo-events), will receive events from `Falcosidekick` and push into it event bus. 
-* [`Argo Workflow`](https://argoproj.github.io/projects/argo), will listen the event bus and then trigger the workflow if some criterias are encountered.
+* [`Argo Workflow`](https://argoproj.github.io/projects/argo), will listen the event bus and then trigger the workflow if certain criteria are encountered.
 
-Like for previous examples with `Kubeless`, `OpenFaas` and `Knative`, we'll address the situation where a shell is spawned in a pod and we want to remediate that by deleting it.
+Like we did for previous examples with `Kubeless`, `OpenFaas` and `Knative`, we'll address the situation where a shell is spawned in a pod and we want to remediate that by deleting it.
 
-Basically, we'll set up this:
+This is how we will set this up:
 
 ```shell+
 ┌─────────────┐           ┌─────────┐          ┌────────────────┐
@@ -109,7 +109,7 @@ spec:
 EOF
 ```
 
-As expected, we do have a new service which will listen events from `Falcosidekick` on port **12000**:
+As expected, we now have a new service which will listen events from `Falcosidekick` on port **12000**:
 
 ```shell+
 kubetcl get svc -n argo-events
@@ -120,13 +120,13 @@ webhook-falco-eventsource-svc   ClusterIP   10.43.117.26    <none>        12000/
 
 ## Creation of the Sensor
 
-In `Argo Events` architecture, `Sensors` are responsible to listen the Event Bus and triggers *something* if the criterias we set match. 
+In `Argo Events` architecture, `Sensors` are responsible for listening to the Event Bus and triggering *something* should the criteria we set match.
 In our case, our `Sensor`:
-* listen only events pushed by **webhoo-falco** `Event Source`
+* listen only events for pushed by **webhoo-falco** `Event Source`
 * consider only events where the **body** (in JSON) contains the value **Terminal shell in container** for field with key **rule**, we want to match for only this **Falco** rule in one word.
 * trigger a **workflow** based on a template with our event as input
 
-First, create the **Service Account** which allows our `Sensor` to create workflows.
+First, create the **Service Account** which allows our `Sensor` will.
 
 ```shell+
 cat <<EOF | kubectl apply -n argo-events -f -
@@ -221,7 +221,7 @@ EOF
 
 ## Creation of the Workflow Template
 
-One piece is missing in our `Argo` stack, we mentionned a template above, we logically need to create it too, with the service account it needs.
+There is one piece missing in our `Argo` stack, we mentioned a template above, we logically need to create it too, with the service account it needs.
 
 ```shell+
 cat <<EOF | kubectl apply -n argo -f -
@@ -293,7 +293,7 @@ If you go in `Argo Workflow` UI you will find the architecture we described at b
 
 Last but not least, it's time to install our beloved `Falco` and `Falcosidekick` and connect them to our shiny new Response Engine.
 
-Like for other posts of this serie we'll use `Helm` as conveniant installation method.
+As with other posts of this series we'll use `Helm` as conveniant installation method.
 
 ```shell+
 kubectl create ns falco
@@ -306,7 +306,7 @@ helm install falco falcosecurity/falco \
   --set falcosidekick.config.webhook.address=http://webhook-falco-eventsource-svc.argo-events.svc.cluster.local:12000/falco
 ```
 
-You remember the service we mentionned earlier? This is it we use, in its FQDN format, as endpoint.
+Remember the service we "mentioned" earlier? This is it in its FQDN format as an endpoint.
 
 ## Test our Response Engine
 
