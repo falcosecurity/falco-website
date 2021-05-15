@@ -62,7 +62,7 @@ kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-
 
 ## Installation of Argo Workflow
 
-Again, the [official documentation](https://argoproj.github.io/argo-workflows/installation/) will help us.argo
+Again, the [official documentation](https://argoproj.github.io/argo-workflows/installation/) will help us.
 
 ```shell+
 kubectl create namespace argo
@@ -70,9 +70,9 @@ kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo-workflo
 kubectl patch -n argo cm workflow-controller-configmap -p '{"data": {"containerRuntimeExecutor": "pns"}}'
 ```
 
-The `kubectl patch` is there for allowing the workflows to run in `minikube`, `kind`, etc. See [docs](https://argoproj.github.io/argo-workflows/workflow-executors/) about Workflow Executors.
+The `kubectl patch` is there for allowing the workflows to run in `minikube`, `kind`, etc. See [docs](https://argoproj.github.io/argo-workflows/workflow-executors/) about Workflow Executors to learn more about.
 
-After a while, you should have access to `Argo Workflow` UI through a port-forward:
+After a while, you should have access to `Argo Workflow` UI through a  dport-forward:
 
 ```shell+
 kubectl port-forward svc/argo-server -n argo 2746:2746 &
@@ -110,10 +110,10 @@ spec:
 EOF
 ```
 
-As expected, we now have a new service which will listen events from `Falcosidekick` on port **12000**:
+As expected, we now have a new service which will listen events from `Falcosidekick` on port **12000** and endpoint **/falco**:
 
 ```shell+
-kubetcl get svc -n argo-events
+kubectl get svc -n argo-events
 
 NAME                            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE
 webhook-falco-eventsource-svc   ClusterIP   10.43.117.26    <none>        12000/TCP                    11m
@@ -123,7 +123,7 @@ webhook-falco-eventsource-svc   ClusterIP   10.43.117.26    <none>        12000/
 
 In `Argo Events` architecture, `Sensors` are responsible for listening to the Event Bus and triggering *something* should the criteria we set match.
 In our case, our `Sensor`:
-* listen only events for pushed by **webhoo-falco** `Event Source`
+* listen only events for pushed by **webhook-falco** `Event Source`
 * consider only events where the **body** (in JSON) contains the value **Terminal shell in container** for field with key **rule**, we want to match for only this **Falco** rule in one word.
 * trigger a **workflow** based on a template with our event as input
 
@@ -282,7 +282,7 @@ spec:
 EOF
 ```
 
-`Argo Workflow` runs all workflow steps inside their own pods, we'll use for this tutorial a *Golang* image developped by [@developer-guy](https://github.com/developer-guy) (who wrote the [Part 2]({{< ref "/blog/falcosidekick-reponse-engine-part-2-openfass" >}}) of this serie 😄), the source are [there](https://github.com/developer-guy/kubernetes-response-engine-based-on-event-driven-workflow/blob/master/main.go).
+`Argo Workflow` runs all workflow steps inside their own pods, we'll use for this tutorial a *Golang* image developped by [@developer-guy](https://github.com/developer-guy) (who wrote the [Part 2]({{< ref "/blog/falcosidekick-reponse-engine-part-2-openfass" >}}) of this series 😄), the sources are [there](https://github.com/developer-guy/kubernetes-response-engine-based-on-event-driven-workflow/blob/master/main.go).
 
 
 At this stage, everything is ready to receive events from `Falco` and protect our cluster.
