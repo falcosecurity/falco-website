@@ -140,7 +140,7 @@ So how does all this work?
 
 - We start a random pod and perform a simple exec.
 - Falco will notice that a pod have broken the rule
-- Sends a event to Falcosidekick
+- Sends an event to Falcosidekick
 - Sends a webhook to tekton event-listener
 - Tekton triggers a new pipeline
 - A task is started with a small go program that deletes the pod
@@ -149,7 +149,7 @@ So lets look at some yaml.
 
 #### The go code
 
-I have adapted the code that Batuhan Apaydın wrote in [Falcosidekick + OpenFaas = a Kubernetes Response Engine, Part 2](https://falco.org/blog/falcosidekick-openfaas/) to listen for json in a environment variable instead of a http request.
+I have adapted the code that Batuhan Apaydın wrote in [Falcosidekick + OpenFaas = a Kubernetes Response Engine, Part 2](https://falco.org/blog/falcosidekick-openfaas/) to listen for json in an environment variable instead of a http request.
 
 Below you can see the code, in short it does the following:
 
@@ -376,6 +376,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: tekton-triggers-example-binding
+  namespace: falcoresponse
 subjects:
   - kind: ServiceAccount
     name: tekton-triggers-example-sa
@@ -533,7 +534,7 @@ And what parameter to send down to the pipeline, notice the **tt** in front of p
 The triggerTemplate was the final piece needed and you should see a pod spinning up in the falcoresponse namespace.
 
 ```shell
-kubectl get pdos -n falcoresponse
+kubectl get pods -n falcoresponse
 NAME                                                 READY   STATUS      RESTARTS   AGE
 el-falco-listener-557786f598-zdmw2                   1/1     Running     0          2h
 ```
