@@ -59,7 +59,7 @@ minikube start --cpus 3 --memory 8192 --vm-driver virtualbox
 ### Install Tekton
 
 Install Tekton pipelines and triggers.
-When doing this in production I recommend the [Tekton operator](https://github.com/tektoncd/operator) but for now lets use some pure yaml.
+When doing this in production I recommend the [Tekton operator](https://github.com/tektoncd/operator) but for now let us use some pure yaml.
 
 ```shell
 kubectl apply --filename https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
@@ -90,7 +90,7 @@ helm repo add falcosecurity https://falcosecurity.github.io/charts
 helm repo update
 ```
 
-For simplicity and long term usability lets create a custom values file and start falco.
+For simplicity and long term usability let us create a custom values file and start falco.
 
 ```shell
 cat <<'EOF' >> values.yaml
@@ -145,7 +145,7 @@ So how does all this work?
 - Tekton triggers a new pipeline
 - A task is started with a small go program that deletes the pod
 
-So lets look at some yaml.
+So let us look at some yaml.
 
 #### The go code
 
@@ -263,7 +263,7 @@ func deletePod(kubeClient *kubernetes.Clientset, falcoEvent Alert, criticalNames
 
 If you rather see it in [github](https://raw.githubusercontent.com/NissesSenap/falcosidekick-tekton/falco/main.go).
 
-Now that you know what I will make run in your cluster lets take a look at the Tekton yaml.
+Now that you know what I will make run in your cluster let us take a look at the Tekton yaml.
 
 #### Tekton pipeline
 
@@ -275,7 +275,7 @@ kubectl create ns falcoresponse
 
 ##### Task
 
-So lets start with the smallest part, the task.
+So let us start with the smallest part, the task.
 
 ```shell
 cat <<EOF | kubectl apply -f -
@@ -333,7 +333,7 @@ EOF
 
 We will be using two separate serviceAccounts, one for the event-listener and one for the poddeleter it self.
 
-So lets create these serviceAccounts and give them some access.
+So let us create these serviceAccounts and give them some access.
 
 Below you can find the event listener RBAC config.
 
@@ -477,9 +477,9 @@ For example one way to improve this tekton pipeline could be to check for a spec
 This could be done with a [cel interceptor](https://tekton.dev/docs/triggers/eventlisteners/#cel-interceptors)
 and filter on body.Priority.
 
-But for now lets just trigger on everything.
+But for now let us just trigger on everything.
 
-The triggerBinding lets you define what data should be gathered from the incoming webhook.
+The triggerBinding let us you define what data should be gathered from the incoming webhook.
 In this case I take the entire request body.
 
 ```shell
@@ -551,7 +551,7 @@ I would recommend that you start a second terminal for this part.
 kubectl logs -f $(kubectl get pods -l app=falco -o jsonpath="{.items[0].metadata.name}" -n falco) -n falco
 ```
 
-**Terminal 2** lets trigger the Terminal Shell in container falco rule
+**Terminal 2** let us trigger the Terminal Shell in container falco rule
 
 ```shell
 # Start a alpine pod
