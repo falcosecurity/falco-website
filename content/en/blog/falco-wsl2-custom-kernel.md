@@ -67,9 +67,9 @@ cd
 # Source: https://github.com/microsoft/WSL2-Linux-Kernel/blob/7015d6023d60b29c3be4c6a398bed923b48b4341/README-Microsoft.WSL2
 sudo apt install -y build-essential flex bison libssl-dev libelf-dev
 
-# Get the latest stable Linux Kernel
+# Get the latest stable Linux Kernel, but only the latest version of each file and only the specific branch we want
 # git needs to be installed
-git clone https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+git clone --depth 1 --branch linux-rolling-stable https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 
 # Ensure the "stable" branch is the active one
 cd linux
@@ -202,7 +202,7 @@ cd
 
 # Run the step 1 of the Falco documentation: add the repo
 curl -s https://falco.org/repo/falcosecurity-3672BA8F.asc | sudo apt-key add -
-echo "deb https://dl.bintray.com/falcosecurity/deb stable main" | sudo tee -a /etc/apt/sources.list.d/falcosecurity.list
+echo "deb https://download.falco.org/packages/deb stable main" | sudo tee -a /etc/apt/sources.list.d/falcosecurity.list
 sudo apt update
 
 # As stated above, for the step 2, let's download the Kernel headers packages

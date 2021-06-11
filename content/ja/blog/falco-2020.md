@@ -25,7 +25,7 @@ author: Leonardo Di Donato
 - Falcoドライバー版とFalco版を分ける
 - ドライバーの名前をより一貫性のある方法で変更します。
 - アーティファクトを再構築する
-- マスターブランチでのマージと新しいリリースのたびに、自動的に Falco パッケージを作成し、[Bintray](https://bintray.com/falcosecurity) のパッケージリポジトリ (tarball, DEB, RPM) にプッシュするようになりました。📦
+- マスターブランチでのマージと新しいリリースのたびに、自動的に Falco パッケージを作成し、[download.falco.org](https://download.falco.org/?prefix=packages) のパッケージリポジトリ (tarball, DEB, RPM) にプッシュするようになりました。📦
 - コンテナのイメージを再編成する
 - マスターブランチへのマージや新しいリリースのたびに、コンテナイメージを自動的にビルドして [DockerHub](https://hub.docker.com/u/falcosecurity) 🐳に公開します。
 - AWS ECR Gallery](https://gallery.ecr.aws/falcosecurity/falco)にも近日公開予定です ([1512](https://github.com/falcosecurity/falco/pull/1512)にも近日中に統合予定です)

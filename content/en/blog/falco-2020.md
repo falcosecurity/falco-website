@@ -26,7 +26,7 @@ While moving the release process in the open, we also took the chance to:
 - separate the Falco drivers version from the Falco version
 - rename the drivers in a more coherent way
 - reorganize its artifacts
-- every merge on the master branch and every new release create Falco packages automatically now and push them to package repositories (tarball, DEB, and RPM) on [Bintray](https://bintray.com/falcosecurity) 📦
+- every merge on the master branch and every new release create Falco packages automatically now and push them to package repositories (tarball, DEB, and RPM) on [download.falco.org](https://download.falco.org/?prefix=packages) 📦
 - reorganize its container images
 - every merge on the master branch and every new release, automatically build and publish container images on the [DockerHub](https://hub.docker.com/u/falcosecurity) 🐳
 - soon on the [AWS ECR Gallery](https://gallery.ecr.aws/falcosecurity/falco), too ([1512](https://github.com/falcosecurity/falco/pull/1512) soon to be merged in!)

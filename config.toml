@@ -160,7 +160,7 @@ archived_version = false
 # The version number for the version of the docs represented in this doc set.
 # Used in the "version-banner" partial to display a version number for the
 # current doc set.
-version = "v0.27.0"
+version = "v0.28.0"
 
 # SHA256 checksum variable
 sha256sum = "21e8053c37e32f95d91c9393d961af1c63b5839d795c8cac314d05daadea9779"
@@ -344,6 +344,13 @@ url = "https://v0-26.falco.org/"
 [[params.versions]]
 fullversion = "v0.27.0"
 version = "v0.27"
+githubbranch = "0.27.0"
+docsbranch = "v0.27"
+url = "https://v0-27.falco.org"
+
+[[params.versions]]
+fullversion = "v0.28.0"
+version = "v0.28"
 githubbranch = "master"
 docsbranch = "master"
 url = "https://falco.org"

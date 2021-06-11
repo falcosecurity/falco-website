@@ -59,6 +59,8 @@ When one of these two conditions happen:
    1. `falcosecurity/falco:master`, `falcosecurity/falco:master-slim`, `falcosecurity/falco:master-minimal` for _development_ versions
    2. `falcosecurity/falco:latest`, `falcosecurity/falco:latest-slim`, `falcosecurity/falco:latest-minimal` for _stable_ versions
 
+**March 2021 update**: All packages are now published to [download.falco.org](https://download.falco.org/?prefix=packages/).
+
 ### FALCO_BPF_PROBE
 
 Thanks to [Lorenzo](https://github.com/fntlnz) contribution (PR [1050](https://github.com/falcosecurity/falco/pull/1050)),
