@@ -30,12 +30,11 @@ The files and directories associated with internationalization are:
 * OWNERS file: There is an [OWNERS](https://github.com/falcosecurity/falco-website/blob/master/OWNERS) file for the Falco website, listing the reviewers and approvers of the project. Similarly, create an OWNERS for your language project. See the [OWNERS](https://github.com/falcosecurity/falco-website/blob/master/content/ml/OWNERS) file for Malayalam for reference.
 
 
-
 ## i18n Tools
 
 Choose your favorite language keyboard. Make sure that it works with the markup editor. If not simply use a google doc and its language option, then copy the content to the markup editor.
 
-## Contributing a localization from scratch
+## Contributing to i18n
 
 
 1. Fork the [Falco Website](https://github.com/falcosecurity/falco-website) repository.
