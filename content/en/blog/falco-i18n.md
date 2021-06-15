@@ -35,18 +35,20 @@ The files and directories associated with internationalization are:
 
 Choose your favorite language keyboard. Make sure that it works with the markup editor. If not simply use a google doc and its language option, then copy the content to the markup editor.
 
-## Contributing a localization from scratch
+## Contributing to i18n
+
+This section helps you start a i18n effort from scratch.
 
 
 1. Fork the [Falco Website](https://github.com/falcosecurity/falco-website) repository.
 
 2. Create a branch for your translation project.
-  For example: `git checkout -b new/language-<lang code>`
+    For example: `git checkout -b new/language-<lang code>`
 
   Replace `language-<lang code>` with your language and locale code.
 
 3. Create the `<lang code>.yaml` file in the [i18n](https://github.com/falcosecurity/falco-website/tree/master/i18n) directory.
-  In this file, you mainly include the translated content of the home page. 
+    In this file, you mainly include the translated content of the home page. 
 
 
 4. Add another `[language]` sub-section in the https://github.com/falcosecurity/falco-website/blob/master/config.toml file.
