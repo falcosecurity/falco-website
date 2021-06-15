@@ -2,15 +2,15 @@
 title: "Internationalizing Falco"
 date: 2021-06-11
 author: Radhika Puthiyetath
-slug: i18n-falco
+slug: i18n-falco-website
 ---
 
-# Internationalizing Falco
-Diversity and inclusion are the core values of the CNCF ecosystem. As its incubation project, Falco aligns and functions in the fullest expression of these principles. As we recognize internationalization as a powerful tool to facilitate openness and participation by breaking language barriers, Falco encourages and stands for i18n efforts. With three i18n projects nearing completion and one underway, Falco is leading the way.
+# Internationalize Falco Website
+Diversity and inclusion are the core values of the CNCF ecosystem. As its incubation project, Falco aligns and functions in the fullest expression of these principles. As we recognize internationalization as a powerful tool to facilitate openness and participation by breaking language barriers, Falco encourages and stands for internationalization (i18n) efforts. With three i18n projects nearing completion and one underway, Falco is leading the way.
 
-This page gives you a broad overview of the  internationalization (i18n) workflow followed by the Falco Community while internationalizing the Falco website. The goal of i18n is to make Falco easier to use for as many people as possible.
+The goal of i18n is to make Falco easier to use for as many people as possible. To facilitate a smoother initialization into the Falco i18n workflow, we have put together this page.  It gives you a broad overview of the i18n process followed by the Falco Community while internationalizing the Falco website. 
 
-## Initializing New Language Contributors
+## Initialize New Language Contributors
 
 Before you start make sure that nobody else is proceeding with your language translation. If there are, please join them. If you are the first one to start the project, review the general [Contribution Guidelines](https://github.com/falcosecurity/.github/blob/master/CONTRIBUTING.md).
 
@@ -35,9 +35,9 @@ The files and directories associated with internationalization are:
 
 Choose your favorite language keyboard. Make sure that it works with the markup editor. If not simply use a google doc and its language option, then copy the content to the markup editor.
 
-## Contributing to i18n
+## Contribute to i18n
 
-This section helps you start a i18n effort from scratch.
+This section helps you start an i18n effort from scratch.
 
 
 1. Fork the [Falco Website](https://github.com/falcosecurity/falco-website) repository.
