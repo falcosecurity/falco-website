@@ -17,4 +17,5 @@ January, 2021        | [Carlos Panato](https://github.com/cpanato), [KeisukeYama
 February, 2021       | [Scott Nichols](https://github.com/n3wscott)
 March, 2021          | [Frank Jogeleit](https://github.com/fjogeleit)
 April, 2021          | [Batuhan Apaydın](https://github.com/developer-guy) and [Yuvraj](https://github.com/evalsocket)
-May, 2021          | [Batuhan Apaydın](https://github.com/developer-guy) and [Yuvraj](https://github.com/evalsocket)
+May, 2021            | [Batuhan Apaydın](https://github.com/developer-guy) and [Yuvraj](https://github.com/evalsocket)
+June, 2021           | [Ismail Yenigul](https://github.com/ismailyenigul)
