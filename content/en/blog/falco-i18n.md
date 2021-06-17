@@ -99,6 +99,6 @@ This section helps you start an i18n effort for Falco from scratch.
 
 ## Become a Maintainer
 
-Falco i18n members can review and approve their own PRs. For example, review and approval permissions for English are found in the [OWNERS](https://github.com/falcosecurity/falco-website/blob/master/OWNERS) file at the root of the [Falco-website]( https://github.com/falcosecurity/falco-website) repository.
+Falco i18n members can review and approve their own PRs. For example, review and approval permissions for English are found in the [OWNERS](https://github.com/falcosecurity/falco-website/blob/master/OWNERS) file at the root of the [falco-website](https://github.com/falcosecurity/falco-website) repository. See [GOVERNANCE](https://github.com/falcosecurity/.github/blob/master/GOVERNANCE.md) for more information. 
 
-As a contributor, make sure that you create an OWNER file inside the `content/<lang code>` directory in order to become a maintainer for that localization.
+As a contributor, make sure that you create an OWNERS file inside the `content/<lang code>` directory in order to become a maintainer for that localization.
