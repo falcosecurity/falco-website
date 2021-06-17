@@ -67,12 +67,20 @@ Starting in 0.28.0, falco supports an optional `exceptions` property to rules. T
   exceptions:
    - name: proc_writer
      fields: [proc.name, fd.directory]
+     comps: [=, =]
+     values:
+       - [my-custom-yum, /usr/bin]
+       - [my-custom-apt, /usr/local/bin]
+   - name: cmdline_writer
+     fields: [proc.cmdline, fd.directory]
+     comps: [startswith, =]
    - name: container_writer
      fields: [container.image.repository, fd.directory]
-     comps: [=, startswith]
    - name: proc_filenames
      fields: [proc.name, fd.name]
      comps: [=, in]
+     values:
+       - [my-custom-dpkg, [/usr/bin, /bin]]
    - name: filenames
      fields: fd.filename
      comps: in
@@ -80,19 +88,74 @@ Starting in 0.28.0, falco supports an optional `exceptions` property to rules. T
 
 This rule defines four kinds of exceptions:
   * proc_writer: uses a combination of proc.name and fd.directory
+  * cmdline_writer: uses a combination of proc.cmeline and fd.directory
   * container_writer: uses a combination of container.image.repository and fd.directory
   * proc_filenames: uses a combination of process and list of filenames.
   * filenames: uses a list of filenames
 
-The specific strings "proc_writer"/"container_writer"/"proc_filenames"/"filenames" are arbitrary strings and don't have a special meaning to the rules file parser. They're only used to link together the list of field names with the list of field values that exist in the exception object.
-
-proc_writer does not have any comps property, so the fields are directly compared to values using the = operator. container_writer does have a comps property, so each field will be compared to the corresponding exception items using the corresponding comparison operator.
-
-proc_filenames uses the in comparison operator, so the corresponding values entry should be a list of filenames.
-
-filenames differs from the others in that it names a single field and single comp operator. This changes how the exception condition snippet is constructed (see below).
+The specific strings "proc_writer"/"container_writer"/"proc_filenames"/"filenames" are arbitrary strings and don't have a special meaning to the rules file parser. They're only used to provide a handy name, and to potentially link together values in a later rule that has append: true (more on that below).
 
 Notice that exceptions are defined as a part of the rule. This is important because the author of the rule defines what construes a valid exception to the rule. In this case, an exception can consist of a process and file directory (actor and target), but not a process name only (too broad).
+
+The `fields` property contains one or more fields that will extract a value from the syscall/k8s_audit events. The `comps` property contains comparison operators that align 1-1 with the items in the fields property. The `values` property contains tuples of values. Each item in the tuple should align 1-1 with the corresponding field and comparison operator. Together, each tuple of values is combined with the fields/comps to modify the condition to add an exclusion to the rule's condition.
+
+For example, for the exception "proc_writer" above, the fields/comps/values are the equivalent of adding the following to the rule's condition:
+
+```
+... and not ((proc.name=my-custom-yum and fd.directory=/usr/bin) or (proc.name=my-custom-apt and fd.directory=/usr/local/bin))
+```
+
+Note that when a comparison operator is "in", the corresponding values tuple item should be a list. "proc_filenames" above uses that syntax, and is the equivalent of:
+
+```
+... and not (proc.name=my-custom-dpkg and fd.name in (/usr/bin, /bin))
+```
+
+## Exception Syntax Shortcuts
+
+In general, the value for an exceptions fields properly should always be a list of fields. The comps property must be an equal-length list of comparison operators, and the values property must be a list of tuples, where each tuple has the same length as the fields/comps list.
+
+However, there are a few shortcuts that can be used when defining an exception:
+
+### Values are Optional
+
+A rule may define fields and comps, but not define values. This allows a later rule with "append: true" to add values to an exception (more on that below). The exception "cmdline_writer" above has this format:
+
+```
+   - name: cmdline_writer
+     fields: [proc.cmdline, fd.directory]
+     comps: [startswith, =]
+```
+
+### Fields/Comps Can Be a Single Value, Not a List
+
+An alternate way to define an exception is to have fields contain a single field and comps contain a single comparison operator (which must be one of "in", "pmatch", "intersects"). In this format, values is a list of values rather than list of tuples. The exception "filenames" above has this format:
+
+```
+   - name: filenames
+     fields: fd.filename
+     comps: in
+```
+
+In this case, the exception is the equivalent of:
+
+```
+... and not (fd.filename in (...))
+```
+
+### Comps is Optional
+
+If comps is not provided, a default value is filled in. When fields is a list, comps will be set to an equal-length list of =. The exception "container_writer" above has that format, and is equivalent to:
+
+```
+   - name: container_writer
+     fields: [container.image.repository, fd.directory]
+     comps: [=, =]
+```
+
+When fields is a single field, comps is set to the single field "in".
+
+## Appending Exception Values
 
 Exception values will most commonly be defined in rules with append: true. Here's an example:
 
@@ -111,34 +174,27 @@ Exception values will most commonly be defined in rules with append: true. Here'
     - [docker.io/alpine, /usr/libexec/alpine]
   - name: proc_filenames
     values:
-    - [apt, apt_files]
+    - [apt, [apt_files]]
     - [rpm, [/bin/cp, /bin/pwd]]
   - name: filenames
     values: [python, go]
   append: true
 ```
 
-A rule exception applies if for a given event, the fields in a rule.exception match all of the values in some exception.item. For example, if a program `apk` writes to a file below `/usr/lib/alpine`, the rule will not trigger, even if the condition is met.
+In this case, the values are appended to any values for the base rule, and then the fields/comps/values are added to the rule's condition.
 
-Notice that an item in a values list can be a list. This allows building exceptions with operators like "in", "pmatch", etc. that work on a list of items. The item can also be a name of an existing list. If not present surrounding parantheses will be added.
-
-Finally, note that the structure of the values property differs between the items where fields is a list of fields (proc_writer/container_writer/proc_filenames) and when it is a single field (procs_only). This changes how the condition snippet is constructed.
-
-## Exceptions: Syntatic Sugar For Conditions
-
-For exception items where the fields property is a list of field names, each exception can be thought of as an implicit "and not (field1 cmp1 val1 and field2 cmp2 val2 and...)" appended to the rule's condition. For exception items where the fields property is a single field name, the exception can be thought of as an implict "and not field cmp (val1, val2, ...)". That's how exceptions are implemented--when parsing rules, exceptions are converted to a string like the above and appended to the condition, before the condition is compiled.
-
-When a rule is parsed, the original condition is wrapped in an extra layer of parentheses and all exception values are appended to the condition. For example, using the example above, the resulting condition is:
+Putting it all together, the effective rule condition for this rule is:
 
 ```
-(<Write below binary dir condition>) and not (
-    (proc.name = apk and fd.directory = /usr/lib/alpine) or (proc.name = npm and fd.directory = /usr/node/bin) or
-	(container.image.repository = docker.io/alpine and fd.directory startswith /usr/libexec/alpine) or
-	(proc.name=apt and fd.name in (apt_files))) or
-	(fd.filename in (python, go))))
+... and not ((proc.name=my-custom-yum and fd.directory=/usr/bin) or                             # proc_writer
+             (proc.name=my-custom-apt and fd.directory=/usr/local/bin) or
+	     (proc.name=apk and fd.directory=/usr/lib/alpine) or
+	     (proc.name=npm and fd.directory=/usr/node/bin) or
+	     (container.image.repository=docker.io/alpine and fd.name=/usr/libexec/alpine) or   # container_writer
+	     (proc.name=apt and fd.name in (apt_files)) or                                      # proc_filenames
+	     (proc.name=rpm and fd.name in (/bin/cp, /bin/pwd)) or
+	     (fd.filename in (python, go))                                                      # filenames
 ```
-
-The exceptions are effectively syntatic sugar that allows expressing sets of exceptions in a concise way.
 
 # Guidelines For Adding Exceptions To Rules
 
