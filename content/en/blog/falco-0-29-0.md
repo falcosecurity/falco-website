@@ -15,7 +15,7 @@ Let's now review some of the new things Falco 0.29.0 brings.
 
 ### New libraries repository!
 
-First of all, as per [this proposal](https://github.com/falcosecurity/falco/blob/master/proposals/20210119-libraries-contribution.md), the repo [falcosecurity/libs](https://github.com/falcosecurity/libs) is the new home for [`libscap`](https://github.com/falcosecurity/libs/tree/master/userspace/libscap), [`libsinsp`](https://github.com/falcosecurity/libs/tree/master/userspace/libsinsp), and the Falco [drivers](https://github.com/falcosecurity/libs/tree/master/driver).
+As per [this proposal](https://github.com/falcosecurity/falco/blob/master/proposals/20210119-libraries-contribution.md) - and as many of you probably already know - the repo [falcosecurity/libs](https://github.com/falcosecurity/libs) is the new home for [`libscap`](https://github.com/falcosecurity/libs/tree/master/userspace/libscap), [`libsinsp`](https://github.com/falcosecurity/libs/tree/master/userspace/libsinsp), and the Falco [drivers](https://github.com/falcosecurity/libs/tree/master/driver).
 
 With this release the building system is updated to point to the [new location](https://download.falco.org/?prefix=driver/13ec67ebd23417273275296813066e07cb85bc91/) and also the [driver version](https://download.falco.org/?prefix=driver/13ec67ebd23417273275296813066e07cb85bc91/) is updated.
 
