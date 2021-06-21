@@ -7,7 +7,7 @@ slug: falco-0-29-0
 
 Today we announce the summer release of Falco 0.29.0 🌱
 
-This is a minor version which brings new features and fixes!
+This version brings a lot of new features and fixes!
 
 ## Novelties 🆕
 
