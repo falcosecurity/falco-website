@@ -180,7 +180,7 @@ docker run --rm -i -t \
     falcosecurity/falco-driver-loader:latest
 ```
 
-Once this has been done, or if you have installed the driver on the host permanently via the `falco-driver-loader` script (not the Docker image), then you can simply load up the `falco-no-driver` image in privileged mode:
+Once this has been done, or if you have installed the driver on the host permanently via the `falco-driver-loader` script instead of the Docker image, then you can simply load up the `falco-no-driver` image in privileged mode:
 
 ```shell
 docker pull falcosecurity/falco-no-driver:latest
