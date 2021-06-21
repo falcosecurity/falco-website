@@ -160,6 +160,44 @@ docker run --rm -i -t \
     falcosecurity/falco:latest
 ```
 
+It is also possible to use `falco-no-driver` and `falco-driver-loader` images in fully privileged mode.
+This may be desirable in environments which do not allow the full falco image due to space, resource, security or policy constraints.
+You can load the eBPF probe or kernel module in its own temporary container as below:
+
+```shell
+docker pull falcosecurity/falco-driver-loader:latest
+docker run --rm -i -t \
+    --privileged \
+    # Uncomment the below to use the eBPF probe or delete it if using the kernel module
+    #-e FALCO_BPF_PROBE="" \
+    -v /var/run/docker.sock:/host/var/run/docker.sock \
+    -v /dev:/host/dev \
+    -v /proc:/host/proc:ro \
+    -v /boot:/host/boot:ro \
+    -v /lib/modules:/host/lib/modules:ro \
+    -v /usr:/host/usr:ro \
+    -v /etc:/host/etc:ro \
+    falcosecurity/falco-driver-loader:latest
+```
+
+Once this has been done, or if you have installed the driver on the host permanently via the `falco-driver-loader` script (not the Docker image), then you can simply load up the `falco-no-driver` image in privileged mode:
+
+```shell
+docker pull falcosecurity/falco-no-driver:latest
+docker run --rm -i -t \
+    --privileged \
+    # Uncomment the below to use the eBPF probe or delete it if using the kernel module
+    #-e FALCO_BPF_PROBE="" \
+    -v /var/run/docker.sock:/host/var/run/docker.sock \
+    -v /dev:/host/dev \
+    -v /proc:/host/proc:ro \
+    -v /boot:/host/boot:ro \
+    -v /lib/modules:/host/lib/modules:ro \
+    -v /usr:/host/usr:ro \
+    -v /etc:/host/etc:ro \
+    falcosecurity/falco-no-driver:latest
+```
+
 Other configurable options:
 
 - `DRIVER_REPO` - See the [Installing the driver](https://falco.org/docs/getting-started/installation/#install-driver) section.
