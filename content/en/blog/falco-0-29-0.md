@@ -25,8 +25,8 @@ The update to the [drivers](https://github.com/falcosecurity/libs/tree/master/dr
 - [support](https://github.com/falcosecurity/libs/pull/50) for tracing the [userfaultd](https://www.kernel.org/doc/html/latest/admin-guide/mm/userfaultfd.html) system calls
 - [improvements](https://github.com/falcosecurity/libs/pull/32) to how [`libsinsp`](https://github.com/falcosecurity/libs/tree/master/userspace/libsinsp) gathers Kubernetes pod resources limits and pod IP from the container runtime
 - [improvement](https://github.com/falcosecurity/libs/pull/15) in [`libsinsp`](https://github.com/falcosecurity/libs/tree/master/userspace/libsinsp) on pod metadata and namespace retrieval for large cluster scenarios, by getting them directly from container labels which is more efficient and use the K8s API server as a fallback
-- https://github.com/falcosecurity/libs/pull/22
-- https://github.com/falcosecurity/libs/pull/42
+- [fixes](https://github.com/falcosecurity/libs/pull/22) to the issues reported by many users on Falco where you can't have a working BPF probe when compiling with Clang >= 10.0.0
+- [fixes](https://github.com/falcosecurity/libs/pull/42) to correctly read, when loading the eBPF probe, the license from the BPF binary instead of always reading it from the libscap loader
 
 ### Improvements on building system
 
