@@ -24,7 +24,7 @@ With this release, also the last missing piece of the libs contribution is done:
 The update to the [drivers](https://github.com/falcosecurity/libs/tree/master/driver) version [17f5d](https://github.com/falcosecurity/libs) brings new features/fixes:
 - [support](https://github.com/falcosecurity/libs/pull/50) for tracing the [userfaultd](https://www.kernel.org/doc/html/latest/admin-guide/mm/userfaultfd.html) system calls
 - [improvements](https://github.com/falcosecurity/libs/pull/32) to how [`libsinsp`](https://github.com/falcosecurity/libs/tree/master/userspace/libsinsp) gathers Kubernetes pod resources limits and pod IP from the container runtime
-- [improvement](https://github.com/falcosecurity/libs/pull/15) in [`libsinsp`](https://github.com/falcosecurity/libs/tree/master/userspace/libsinsp) on pod metadata and namespace retrievial for large cluster scenarios, by getting them directly from container labels and bypassing the API server
+- [improvement](https://github.com/falcosecurity/libs/pull/15) in [`libsinsp`](https://github.com/falcosecurity/libs/tree/master/userspace/libsinsp) on pod metadata and namespace retrieval for large cluster scenarios, by getting them directly from container labels which is more efficient and use the K8s API server as a fallback
 
 ### Improvements on building system
 
