@@ -25,6 +25,8 @@ The update to the [drivers](https://github.com/falcosecurity/libs/tree/master/dr
 - [support](https://github.com/falcosecurity/libs/pull/50) for tracing the [userfaultd](https://www.kernel.org/doc/html/latest/admin-guide/mm/userfaultfd.html) system calls
 - [improvements](https://github.com/falcosecurity/libs/pull/32) to how [`libsinsp`](https://github.com/falcosecurity/libs/tree/master/userspace/libsinsp) gathers Kubernetes pod resources limits and pod IP from the container runtime
 - [improvement](https://github.com/falcosecurity/libs/pull/15) in [`libsinsp`](https://github.com/falcosecurity/libs/tree/master/userspace/libsinsp) on pod metadata and namespace retrieval for large cluster scenarios, by getting them directly from container labels which is more efficient and use the K8s API server as a fallback
+- https://github.com/falcosecurity/libs/pull/22
+- https://github.com/falcosecurity/libs/pull/42
 
 ### Improvements on building system
 
@@ -40,6 +42,13 @@ Improvements have been made also for anti-miner detection, by [adding additional
 
 
 For a complete list please visit [the changelog](https://github.com/falcosecurity/falco/releases/tag/0.29.0).
+
+### On the future
+
+Now that the [libscap](https://github.com/falcosecurity/libs/tree/master/userspace/libscap), [libsinsp](https://github.com/falcosecurity/libs/tree/master/userspace/libsinsp), and the two Falco [drivers](https://github.com/falcosecurity/libs/tree/master/driver) have been contributed to the CNCF, we're moving in the direction of enabling people to benefit from those libraries by using them directly in their OSS projects, as now done by Falco.
+
+For this reason we introduced a [proposal](https://github.com/falcosecurity/libs/pull/44) (thanks to [@leodido](https://github.com/leodido)) about the versioning and the release process of the libs artifacts.
+
 
 ---
 
