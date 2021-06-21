@@ -36,7 +36,7 @@ As usual, we keep improving the existing rules and we added new ones, like [remo
 
 Other false positives has been removed by [ignoring](https://github.com/falcosecurity/falco/pull/1659) additional known Kubernetes service account when watching for service accounts creted in `kube-system` namespace.
 
-Improvments have been made also for anti-miner detection, by [adding additional domains](https://github.com/falcosecurity/falco/pull/1676) to be detected.
+Improvements have been made also for anti-miner detection, by [adding additional domains](https://github.com/falcosecurity/falco/pull/1676) to be detected.
 
 
 For a complete list please visit [the changelog](https://github.com/falcosecurity/falco/releases/tag/0.29.0).
