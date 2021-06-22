@@ -65,7 +65,7 @@ The following instructions assume **`v0.X.Y` is the new version** and **v0.x.y**
     fullversion = "v0.x.y"
     version = "v0.x"
     githubbranch = "0.x.y"
-    docsbranch = "0.x"
+    docsbranch = "v0.x"
     url = "https://v0-x.falco.org"
     ```
 2. Once the PR gets approved and merged, the website will be updated shortly, and no other actions are needed.
