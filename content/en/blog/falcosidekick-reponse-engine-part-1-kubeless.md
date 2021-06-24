@@ -129,7 +129,7 @@ That's it, we really tried to get a nice UX 😉.
 
 We'll not explain how to write or how to work `Kubeless` functions, please read the official [docs](https://kubeless.io/docs/) for more information.
 
-Our basic function will receive events from `Falco` thanks to `Falcosidekick`, check if the triggered rule is *Terminal Shell in container* (See [rule](https://github.com/falcosecurity/falco/blob/0d7068b048772b1e2d3ca5c86c30b3040eac57df/rules/falco_rules.yaml#L2063)), extract the *namespace* and *pod name* from fields of events and delete the according pod:
+Our basic function will receive events from `Falco`, thanks to `Falcosidekick`. Check if the triggered rule is *Terminal Shell in container*. See [rule](https://github.com/falcosecurity/falco/blob/0d7068b048772b1e2d3ca5c86c30b3040eac57df/rules/falco_rules.yaml#L2063), extract the *namespace* and *pod name* from fields of events, and delete the according pod:
 
 ```python
 from kubernetes import client,config
