@@ -6,7 +6,7 @@ slug: falcosidekick-reponse-engine-part-1-kubeless
 ---
 
 > *This blog post is part of a series of articles about how to create a `Kubernetes` response engine with `Falco`, `Falcosidekick` and a `FaaS`.*
-> 
+>
 > See other posts:
 > * [Kubernetes Response Engine, Part 2 : Falcosidekick + OpenFaas]({{< ref "/blog/falcosidekick-reponse-engine-part-2-openfass" >}})
 > * [Kubernetes Response Engine, Part 3 : Falcosidekick + Knative]({{< ref "/blog/falcosidekick-reponse-engine-part-3-knative" >}})
@@ -17,7 +17,7 @@ slug: falcosidekick-reponse-engine-part-1-kubeless
 
 Two years ago, we presented to you a `Kubernetes Response Engine` based on `Falco`. The idea was to trigger [`Kubeless`](https://kubeless.io) serverless functions for deleting infected pod, start a `Sysdig` capture or forward the `events` to `GCP PubSub`. See the [README](https://github.com/falcosecurity/kubernetes-response-engine).
 
-To avoid maintaining this custom stack, we worked hard with the community to integrate all components into [`Falcosidekick`](https://github.com/falcosecurity/falcosidekick) and to improve the UX. 
+To avoid maintaining this custom stack, we worked hard with the community to integrate all components into [`Falcosidekick`](https://github.com/falcosecurity/falcosidekick) and to improve the UX.
 With the last release [`2.20.0`](https://github.com/falcosecurity/falcosidekick/releases/tag/2.20.0) we have the finale piece, the integration of `Kubeless` as native output. More details in [our retrospective of 2020](https://falco.org/blog/falcosidekick-2020/).
 
 In this blog post, we will explain the basic concepts for integrating your own Response Engine into K8S with the stack `Falco` + `Falcosidekick` + `Kubeless`.
@@ -46,7 +46,7 @@ kubeless-controller-manager-99459cb67-tb99d   3/3     Running   3          2m34s
 
 ## Install Falco
 
-Firstly, we'll create the namespace that will both `Falco` and `Falcosidekick`:
+Firstly, we'll create the namespace that will use both `Falco` and `Falcosidekick`:
 
 ```shell
 kubectl create ns falco
@@ -58,7 +58,7 @@ Add the `helm` repo:
 helm repo add falcosecurity https://falcosecurity.github.io/charts
 ```
 
-In a real project, you should get the whole chart with `helm pull falcosecurity/falco --untar` and then configure the `values.yaml`. For this tutorial, will try to keep thing as easy as possible and set configs directly by `helm install` command:
+In a real project, you should get the whole chart with `helm pull falcosecurity/falco --untar` and then configure the `values.yaml`. For this tutorial, we will try to keep things as easy as possible and set configs directly by `helm install` command:
 
 ```shell
 helm install falco falcosecurity/falco --set falco.jsonOutput=true --set falco.httpOutput.enabled=true --set falco.httpOutput.url=http://falcosidekick:2801 -n falco
@@ -117,23 +117,19 @@ NOTES:
 We check the logs:
 ```shell
 kubectl logs deployment/falcosidekick -n falco
-2021/01/14 22:55:31 [INFO]  : Enabled Outputs : Kubeless 
+2021/01/14 22:55:31 [INFO]  : Enabled Outputs : Kubeless
 2021/01/14 22:55:31 [INFO]  : Falco Sidekick is up and listening on port 2801
 ````
 
 `Kubeless` is displayed as enabled output, everything is good 👍.
 
-A brief explanation of parameters:
-- `config.kubeless.namespace`: is the namespace where our `Kubeless` will run
-- `config.kubeless.function`: is the name of our `Kubeless function`
-
 That's it, we really tried to get a nice UX 😉.
 
 ## Install our Kubeless function
 
-We'll not explain how to write or how work `Kubeless` functions, please read the official [docs](https://kubeless.io/docs/) for more information.
+We'll not explain how to write or how to work `Kubeless` functions, please read the official [docs](https://kubeless.io/docs/) for more information.
 
-Our really basic function will receive events from `Falco` thanks to `Falcosidekick`, check if the triggered rule is *Terminal Shell in container* (See [rule](https://github.com/falcosecurity/falco/blob/0d7068b048772b1e2d3ca5c86c30b3040eac57df/rules/falco_rules.yaml#L2063)), extract the *namespace* and *pod name* from fields of events and delete the according pod:
+Our basic function will receive events from `Falco`, thanks to `Falcosidekick`. Check if the triggered rule is *Terminal Shell in container*. See [rule](https://github.com/falcosecurity/falco/blob/0d7068b048772b1e2d3ca5c86c30b3040eac57df/rules/falco_rules.yaml#L2063), extract the *namespace* and *pod name* from fields of events, and delete the according pod:
 
 ```python
 from kubernetes import client,config
@@ -252,9 +248,6 @@ EOF
 ```shell
 function.kubeless.io/delete-pod created
 ```
-
-Here we are, after a few moments, we have a `Kubeless` function running in namespace *kubeless* and that can be triggered by its service *delete-pod* on port *8080*:
-
 ```shell
 kubectl get pods -n kubeless
 
@@ -290,7 +283,7 @@ kubectl exec -i --tty alpine -n default -- sh -c "uptime"
 23:44:25 up 1 day, 19:11,  load average: 0.87, 0.77, 0.77
 ```
 
-As expected we got the result of our command, but, if get the status of the pod now:
+As expected, we got the result of our command, but, to get the status of the pod now:
 
 ```shell
 kubectl get pods -n default
@@ -314,7 +307,7 @@ For `Falcosidekick`:
 kubectl logs deployment/falcosidekick -n falco
 
 2021/01/14 23:39:45 [INFO]  : Kubeless - Post OK (200)
-2021/01/14 23:39:45 [INFO]  : Kubeless - Function Response : 
+2021/01/14 23:39:45 [INFO]  : Kubeless - Function Response :
 2021/01/14 23:39:45 [INFO]  : Kubeless - Call Function "delete-pod" OK
 ```
 
@@ -330,7 +323,7 @@ Deleting pod "alpine" in namespace "default"
 
 ## Conclusion
 
-With this really simple example, we only scratched the surface of possibilities, everything is possible now, so don't hesitate to share with us on Slack (https://kubernetes.slack.com #falco) your comments, ideas and successes. You're also always welcome to [contribute](https://github.com/falcosecurity/.github/blob/master/CONTRIBUTING.md).
+With this simple example, we only scratched the surface of possibilities. Everything is possible now, so don't hesitate to share with us on Slack (https://kubernetes.slack.com #falco) your comments, ideas and successes. You're  always welcome to [contribute](https://github.com/falcosecurity/.github/blob/master/CONTRIBUTING.md).
 
 *Bonus: You're running `Falcosidekick` outside `Kubernetes` but still want to use the `Kubeless` output? No problem, you can declare a kubeconfig file to use. See [README](https://github.com/falcosecurity/falcosidekick/blob/master/README.md).*
 
