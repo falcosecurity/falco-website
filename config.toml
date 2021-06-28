@@ -382,7 +382,7 @@ url = "https://frame.io/"
 [[params.adopters.end-users]]
 src = "gitlab.png"
 alt = "GitLab"
-url = "https://https://about.gitlab.com/"
+url = "https://about.gitlab.com/"
 
 [[params.adopters.end-users]]
 src = "league.png"
