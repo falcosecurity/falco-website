@@ -85,3 +85,4 @@ To translate other parts of the site:
 
 1. See the `languages.ml` block in the site's [`config.toml`](./config.toml) configuration file and translate those items from the current English.
 1. See [`i18n/ml.yaml`](./i18n/ml.yaml) for a handful of language snippets that need to be translated from the current English. Translate the `other` block of each term.
+
