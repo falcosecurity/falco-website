@@ -340,7 +340,7 @@ $ kubectl exec -it busybox -- sh -c "uptime"
 
 We can check the logs of the `Falco`, and `Falcosidekick` to see what happened:
 
-![cloud_function_output](/docs/images/cloud_function_outout.png)
+![cloud_function_output](/docs/images/cloud_function_output.png)
 
 For `Falcosidekick`:
 
