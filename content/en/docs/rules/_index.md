@@ -321,7 +321,7 @@ We've also gone through the default ruleset and tagged all the rules with an ini
 Tag | Description
 :---|:-----------
 `filesystem` | The rule relates to reading/writing files
-`sofware_mgmt` | The rule relates to any software/package management tool like rpm, dpkg, etc.
+`software_mgmt` | The rule relates to any software/package management tool like rpm, dpkg, etc.
 `process` | The rule relates to starting a new process or changing the state of a current process
 `database` | The rule relates to databases
 `host` | The rule *only* works outside of containers
