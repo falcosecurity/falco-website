@@ -261,7 +261,7 @@ container.id != host and proc.name = bash
 태그 | 설명
 :---|:-----------
 `filesystem` | 이 규칙은 파일 읽기/쓰기와 관련이 있다.
-`sofware_mgmt` | 이 규칙은 rpm, dpkg 등과 같은 소프트웨어/패키지 관리 도구와 관련이 있다.
+`software_mgmt` | 이 규칙은 rpm, dpkg 등과 같은 소프트웨어/패키지 관리 도구와 관련이 있다.
 `process` | 이 규칙은 새 프로세스를 시작하거나 현재 프로세스의 상태를 변경하는 것고 관련이 있다.
 `database` | 이 규칙은 데이터베이스와 관련이 있다.
 `host` | 이 규칙은 컨테이너 외부에서*만* 동작한다.
