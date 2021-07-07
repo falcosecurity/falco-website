@@ -163,7 +163,7 @@ archived_version = false
 version = "v0.29.0"
 
 # SHA256 checksum variable
-sha256sum = "21e8053c37e32f95d91c9393d961af1c63b5839d795c8cac314d05daadea9779"
+sha256sum = "711c2c19be846839a2e0bd9386adf3fd92933c99588ec05b75530d795c767c3c"
 
 # A link to latest version of the docs. Used in the "version-banner" partial to
 # point people to the main doc site.
