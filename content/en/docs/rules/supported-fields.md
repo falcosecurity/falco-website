@@ -3,32 +3,37 @@ title: Supported Fields for Conditions and Outputs
 weight: 3
 ---
 
-# Introduction
-
 Here are the fields supported by Falco. These fields can be used in the `condition` key of a Falco rule and well as the `output` key. Any fields included in the `output` key of a rule will also be included in the alert's `output_fields` object when [`json_output`](../../alerts#json-output) is set to `true`.
 
-You can also see this set of fields via `falco --list=<source>`, with `<source>` being one of the sources below.
+You can also see this set of fields via `falco --list=<source>`, with `<source>` being one of the supported sources:
 
-# System Calls (source `syscall`)
+- [syscall](#system-calls-source-syscall)
+- [k8s_audit](#kubernetes-audit-events-source-k8s-audit)
 
-`syscall` event source fields are provided by the [kernel module](/docs/event-sources/drivers/). These fields are identical to the [Sysdig filter fields](https://github.com/draios/sysdig/wiki/Sysdig-User-Guide#all-supported-filters) that can be used to filter Sysdig captures.
+## System Calls (source `syscall`)
+<!-- 
+generated with:
+falco --list=syscall  | sed -E 's/Field Class: (.*)/\n### Field Class: \1\n\n```/g' | sed 's/----------------------/\n```/g'
+-->
+
+`syscall` event source fields are provided by the [Falco Drivers](/docs/event-sources/drivers/).
 
 ```
 # System Kernel Fields
 $ falco --list=syscall
 ```
 
-## `fd` Field Class
+### Field Class: fd
 
-Fields for File Descriptors. Includes networking as well as file/directory fields.
 
 ```
+
 fd.num          the unique number identifying the file descriptor.
 fd.type         type of FD. Can be 'file', 'directory', 'ipv4', 'ipv6', 'unix',
                  'pipe', 'event', 'signalfd', 'eventpoll', 'inotify' or 'signal
                 fd'.
 fd.typechar     type of FD as a single character. Can be 'f' for file, 4 for IP
-                v4 socket, 6 for IPv6 socket, 'u' for unix socket, p for pipe,
+                v4 socket, 6 for IPv6 socket, 'u' for unix socket, p for pipe, 
                 'e' for eventfd, 's' for signalfd, 'l' for eventpoll, 'i' for i
                 notify, 'o' for unknown.
 fd.name         FD full name. If the fd is a file, this field contains the full
@@ -36,7 +41,7 @@ fd.name         FD full name. If the fd is a file, this field contains the full
                  tuple.
 fd.directory    If the fd is a file, the directory that contains it.
 fd.filename     If the fd is a file, the filename without the path.
-fd.ip           (FILTER ONLY) matches the ip address (client or server) of the
+fd.ip           (FILTER ONLY) matches the ip address (client or server) of the 
                 fd.
 fd.cip          client IP address.
 fd.sip          server IP address.
@@ -51,7 +56,7 @@ fd.rport        for TCP/UDP FDs, the remote port.
 fd.l4proto      the IP protocol of a socket. Can be 'tcp', 'udp', 'icmp' or 'ra
                 w'.
 fd.sockfamily   the socket family for socket events. Can be 'ip' or 'unix'.
-fd.is_server    'true' if the process owning this FD is the server endpoint in
+fd.is_server    'true' if the process owning this FD is the server endpoint in 
                 the connection.
 fd.uid          a unique identifier for the FD, created by chaining the FD numb
                 er and the thread ID.
@@ -67,7 +72,7 @@ fd.cproto       for TCP/UDP FDs, the client protocol.
 fd.sproto       for TCP/UDP FDs, server protocol.
 fd.lproto       for TCP/UDP FDs, the local protocol.
 fd.rproto       for TCP/UDP FDs, the remote protocol.
-fd.net          (FILTER ONLY) matches the IP network (client or server) of the
+fd.net          (FILTER ONLY) matches the IP network (client or server) of the 
                 fd.
 fd.cnet         (FILTER ONLY) matches the client IP network of the fd.
 fd.snet         (FILTER ONLY) matches the server IP network of the fd.
@@ -84,19 +89,18 @@ fd.rip.name     Domain name associated with the remote IP address.
 fd.dev          device number (major/minor) containing the referenced file
 fd.dev.major    major device number containing the referenced file
 fd.dev.minor    minor device number containing the referenced file
-```
 
-## `proc` & `thread` Field Class
-
-Fields for running or spawned processes or threads.
 
 ```
-Field Class: process
+
+### Field Class: process
+
+```
 
 proc.pid        the id of the process generating the event.
 proc.exe        the first command line argument (usually the executable name or
                  a custom one).
-proc.name       the name (excluding the path) of the executable generating the
+proc.name       the name (excluding the path) of the executable generating the 
                 event.
 proc.args       the arguments passed on the command line when starting the proc
                 ess generating the event.
@@ -112,21 +116,21 @@ proc.nchilds    the number of child threads that the process generating the eve
 proc.ppid       the pid of the parent of the process generating the event.
 proc.pname      the name (excluding the path) of the parent of the process gene
                 rating the event.
-proc.pcmdline   the full command line (proc.name + proc.args) of the parent of
+proc.pcmdline   the full command line (proc.name + proc.args) of the parent of 
                 the process generating the event.
 proc.apid       the pid of one of the process ancestors. E.g. proc.apid[1] retu
                 rns the parent pid, proc.apid[2] returns the grandparent pid, a
                 nd so on. proc.apid[0] is the pid of the current process. proc.
-                apid without arguments can be used in filters only and matches
+                apid without arguments can be used in filters only and matches 
                 any of the process ancestors, e.g. proc.apid=1234.
-proc.aname      the name (excluding the path) of one of the process ancestors.
+proc.aname      the name (excluding the path) of one of the process ancestors. 
                 E.g. proc.aname[1] returns the parent name, proc.aname[2] retur
                 ns the grandparent name, and so on. proc.aname[0] is the name o
                 f the current process. proc.aname without arguments can be used
                  in filters only and matches any of the process ancestors, e.g.
                  proc.aname=bash.
 proc.loginshellid
-                the pid of the oldest shell among the ancestors of the current
+                the pid of the oldest shell among the ancestors of the current 
                 process, if there is one. This field can be used to separate di
                 fferent user sessions, and is useful in conjunction with chisel
                 s like spy_user.
@@ -179,13 +183,20 @@ proc.vpgid      the process group id of the process generating the event, as se
 proc.is_container_healthcheck
                 true if this process is running as a part of the container's he
                 alth check.
+proc.is_container_liveness_probe
+                true if this process is running as a part of the container's li
+                veness probe.
+proc.is_container_readiness_probe
+                true if this process is running as a part of the container's re
+                adiness probe.
+
+
 ```
 
-## `evt` Field Class
-
-Fields for system call events. Use `evt.type` to specify the system call name. At least one `evt` field is required per Falco `syscall` rule.
+### Field Class: evt
 
 ```
+
 evt.num         event number.
 evt.time        event timestamp as a time string that includes the nanosecond p
                 art.
@@ -201,12 +212,12 @@ evt.reltime     number of nanoseconds from the beginning of the capture.
 evt.reltime.s   number of seconds from the beginning of the capture.
 evt.reltime.ns  fractional part (in ns) of the time from the beginning of the c
                 apture.
-evt.latency     delta between an exit event and the correspondent enter event,
+evt.latency     delta between an exit event and the correspondent enter event, 
                 in nanoseconds.
 evt.latency.s   integer part of the event latency delta.
 evt.latency.ns  fractional part of the event latency delta.
 evt.latency.human
-                delta between an exit event and the correspondent enter event,
+                delta between an exit event and the correspondent enter event, 
                 as a human readable string (e.g. 10.3ms).
 evt.deltatime   delta between this event and the previous event, in nanoseconds
                 .
@@ -223,7 +234,7 @@ evt.type.is     allows one to specify an event type, and returns 1 for events t
                 hat are of that type. For example, evt.type.is.open returns 1 f
                 or open events, 0 for any other event.
 syscall.type    For system call events, the name of the system call (e.g. 'open
-                '). Unset for other events (e.g. switch or Sysdig internal even
+                '). Unset for other events (e.g. switch or sysdig internal even
                 ts). Use this field instead of evt.type if you need to make sur
                 e that the filtered/printed value is actually a system call.
 evt.category    The event category. Example values are 'file' (for file operati
@@ -244,7 +255,7 @@ evt.info        for most events, this field returns the same value as evt.args.
 evt.buffer      the binary data buffer for events that have one, like read(), r
                 ecvfrom(), etc. Use this field in filters with 'contains' to se
                 arch into I/O data buffers.
-evt.buflen      the length of the binary data buffer for events that have one,
+evt.buflen      the length of the binary data buffer for events that have one, 
                 like read(), recvfrom(), etc.
 evt.res         event return value, as a string. If the event failed, the resul
                 t is an error code string (e.g. 'ENOENT'), otherwise the result
@@ -257,7 +268,7 @@ evt.is_io       'true' for events that read or write to FDs, like read(), send,
 evt.is_io_read  'true' for events that read from FDs, like read(), recv(), recv
                 from(), etc.
 evt.is_io_write 'true' for events that write to FDs, like write(), send(), etc.
-evt.io_dir      'r' for events that read from FDs, like read(); 'w' for events
+evt.io_dir      'r' for events that read from FDs, like read(); 'w' for events 
                 that write to FDs, like write().
 evt.is_wait     'true' for events that make the thread wait, e.g. sleep(), sele
                 ct(), poll().
@@ -294,7 +305,7 @@ evt.around      (FILTER ONLY) Accepts the event if it's around the specified ti
                 e returned by %evt.rawtime for the event and D is a delta in mi
                 lliseconds. For example, evt.around[1404996934793590564]=1000 w
                 ill return the events with timestamp with one second before the
-                 timestamp and one second after it, for a total of two seconds
+                 timestamp and one second after it, for a total of two seconds 
                 of capture.
 evt.abspath     Absolute path calculated from dirfd and name during syscalls li
                 ke renameat and symlinkat. Use 'evt.abspath.src' or 'evt.abspat
@@ -305,35 +316,41 @@ evt.is_open_read
 evt.is_open_write
                 'true' for open/openat events where the path was opened for wri
                 ting
+evt.is_open_exec
+                'true' for open/openat or creat events where a file is created 
+                with execute permissions
+
+
 ```
 
-## `user` Field Class
-
-Fields related to the user executing the event.
+### Field Class: user
 
 ```
+
 user.uid        user ID.
 user.name       user name.
 user.homedir    home directory of the user.
 user.shell      user's shell.
 user.loginuid   audit user id (auid).
 user.loginname  audit user name (auid).
-```
 
-## `group` Field Class
-
-Fields related to the group of the user executing the event.
 
 ```
+
+### Field Class: group
+
+```
+
 group.gid       group ID.
 group.name      group name.
-```
 
-## `syslog` Field Class
-
-Fields related to messages sent to syslog. Allows rules to be created based on syslog messages.
 
 ```
+
+### Field Class: syslog
+
+```
+
 syslog.facility.str
                 facility as a string.
 syslog.facility facility as a number (0-23).
@@ -342,12 +359,14 @@ syslog.severity.str
                 t, crit, err, warn, notice, info, debug
 syslog.severity severity as a number (0-7).
 syslog.message  message sent to syslog.
+
+
 ```
 
-## `container` Field Class
+### Field Class: container
 
-Fields related to containers. Allows for filtering based on `container.name`, `container.image`, etc.
 ```
+
 container.id    the container id.
 container.name  the container name.
 container.image the container image name (e.g. sysdig/sysdig:latest for docker,
@@ -365,7 +384,7 @@ container.mount Information about a single mount, specified by number (e.g. con
                  The pathname can be a glob (container.mount[/usr/local/*]), in
                  which case the first matching mount will be returned. The info
                 rmation has the format <source>:<dest>:<mode>:<rdrw>:<propagati
-                on>. If there is no mount with the specified index or matching
+                on>. If there is no mount with the specified index or matching 
                 the provided source, returns the string "none" instead of a NUL
                 L value.
 container.mount.source
@@ -399,13 +418,43 @@ container.healthcheck
                 The container's health check. Will be the null value ("N/A") if
                  no healthcheck configured, "NONE" if configured but explicitly
                  not created, and the healthcheck command line otherwise
+container.liveness_probe
+                The container's liveness probe. Will be the null value ("N/A") 
+                if no liveness probe configured, the liveness probe command lin
+                e otherwise
+container.readiness_probe
+                The container's readiness probe. Will be the null value ("N/A")
+                 if no readiness probe configured, the readiness probe command 
+                line otherwise
+
+
 ```
 
-## `k8s` Field Class
-
-Fields to filter on Kubernetes metadata. Allows rules to apply to particular namespaces (`k8s.ns.name`) or a resource's labels.
+### Field Class: fdlist
 
 ```
+
+fdlist.nums     for poll events, this is a comma-separated list of the FD numbe
+                rs in the 'fds' argument, returned as a string.
+fdlist.names    for poll events, this is a comma-separated list of the FD names
+                 in the 'fds' argument, returned as a string.
+fdlist.cips     for poll events, this is a comma-separated list of the client I
+                P addresses in the 'fds' argument, returned as a string.
+fdlist.sips     for poll events, this is a comma-separated list of the server I
+                P addresses in the 'fds' argument, returned as a string.
+fdlist.cports   for TCP/UDP FDs, for poll events, this is a comma-separated lis
+                t of the client TCP/UDP ports in the 'fds' argument, returned a
+                s a string.
+fdlist.sports   for poll events, this is a comma-separated list of the server T
+                CP/UDP ports in the 'fds' argument, returned as a string.
+
+
+```
+
+### Field Class: k8s
+
+```
+
 k8s.pod.name    Kubernetes pod name.
 k8s.pod.id      Kubernetes pod id.
 k8s.pod.label   Kubernetes pod label. E.g. 'k8s.pod.label.foo'.
@@ -421,7 +470,7 @@ k8s.svc.name    Kubernetes service name (can return more than one value, concat
                 enated).
 k8s.svc.id      Kubernetes service id (can return more than one value, concaten
                 ated).
-k8s.svc.label   Kubernetes service label. E.g. 'k8s.svc.label.foo' (can return
+k8s.svc.label   Kubernetes service label. E.g. 'k8s.svc.label.foo' (can return 
                 more than one value, concatenated).
 k8s.svc.labels  Kubernetes service comma-separated key/value labels. E.g. 'foo1
                 :bar1,foo2:bar2'.
@@ -444,13 +493,14 @@ k8s.deployment.label
 k8s.deployment.labels
                 Kubernetes deployment comma-separated key/value labels. E.g. 'f
                 oo1:bar1,foo2:bar2'.
-```
 
-## `mesos` Field Class
-
-Fields to filter on Mesosphere metadata such as application name, task, etc.
 
 ```
+
+### Field Class: mesos
+
+```
+
 mesos.task.name Mesos task name.
 mesos.task.id   Mesos task id.
 mesos.task.label
@@ -474,9 +524,166 @@ marathon.group.name
                 Marathon group name.
 marathon.group.id
                 Marathon group id.
+
+
 ```
 
-# Kubernetes Audit Events (source `k8s_audit`)
+### Field Class: span
+
+```
+
+span.id         ID of the span. This is a unique identifier that is used to mat
+                ch the enter and exit tracer events for this span. It can also 
+                be used to match different spans belonging to a trace.
+span.time       time of the span's enter tracer as a human readable string that
+                 includes the nanosecond part.
+span.ntags      number of tags that this span has.
+span.nargs      number of arguments that this span has.
+span.tags       dot-separated list of all of the span's tags.
+span.tag        one of the span's tags, specified by 0-based offset, e.g. 'span
+                .tag[1]'. You can use a negative offset to pick elements from t
+                he end of the tag list. For example, 'span.tag[-1]' returns the
+                 last tag.
+span.args       comma-separated list of the span's arguments.
+span.arg        one of the span arguments, specified by name or by 0-based offs
+                et. E.g. 'span.arg.xxx' or 'span.arg[1]'. You can use a negativ
+                e offset to pick elements from the end of the tag list. For exa
+                mple, 'span.arg[-1]' returns the last argument.
+span.enterargs  comma-separated list of the span's enter tracer event arguments
+                . For enter tracers, this is the same as evt.args. For exit tra
+                cers, this is the evt.args of the corresponding enter tracer.
+span.enterarg   one of the span's enter arguments, specified by name or by 0-ba
+                sed offset. For enter tracer events, this is the same as evt.ar
+                g. For exit tracer events, this is the evt.arg of the correspon
+                ding enter event.
+span.duration   delta between this span's exit tracer event and the enter trace
+                r event.
+span.duration.human
+                delta between this span's exit tracer event and the enter event
+                , as a human readable string (e.g. 10.3ms).
+
+
+```
+
+### Field Class: evtin
+
+```
+
+evtin.span.id   accepts all the events that are between the enter and exit trac
+                ers of the spans with the given ID and are generated by the sam
+                e thread that generated the tracers.
+evtin.span.ntags
+                accepts all the events that are between the enter and exit trac
+                ers of the spans with the given number of tags and are generate
+                d by the same thread that generated the tracers.
+evtin.span.nargs
+                accepts all the events that are between the enter and exit trac
+                ers of the spans with the given number of arguments and are gen
+                erated by the same thread that generated the tracers.
+evtin.span.tags accepts all the events that are between the enter and exit trac
+                ers of the spans with the given tags and are generated by the s
+                ame thread that generated the tracers.
+evtin.span.tag  accepts all the events that are between the enter and exit trac
+                ers of the spans with the given tag and are generated by the sa
+                me thread that generated the tracers. See the description of sp
+                an.tag for information about the syntax accepted by this field.
+evtin.span.args accepts all the events that are between the enter and exit trac
+                ers of the spans with the given arguments and are generated by 
+                the same thread that generated the tracers.
+evtin.span.arg  accepts all the events that are between the enter and exit trac
+                ers of the spans with the given argument and are generated by t
+                he same thread that generated the tracers. See the description 
+                of span.arg for information about the syntax accepted by this f
+                ield.
+evtin.span.p.id same as evtin.span.id, but also accepts events generated by oth
+                er threads in the same process that produced the span.
+evtin.span.p.ntags
+                same as evtin.span.ntags, but also accepts events generated by 
+                other threads in the same process that produced the span.
+evtin.span.p.nargs
+                same as evtin.span.nargs, but also accepts events generated by 
+                other threads in the same process that produced the span.
+evtin.span.p.tags
+                same as evtin.span.tags, but also accepts events generated by o
+                ther threads in the same process that produced the span.
+evtin.span.p.tag
+                same as evtin.span.tag, but also accepts events generated by ot
+                her threads in the same process that produced the span.
+evtin.span.p.args
+                same as evtin.span.args, but also accepts events generated by o
+                ther threads in the same process that produced the span.
+evtin.span.p.arg
+                same as evtin.span.arg, but also accepts events generated by ot
+                her threads in the same process that produced the span.
+evtin.span.s.id same as evtin.span.id, but also accepts events generated by the
+                 script that produced the span, i.e. by the processes whose par
+                ent PID is the same as the one of the process generating the sp
+                an.
+evtin.span.s.ntags
+                same as evtin.span.id, but also accepts events generated by the
+                 script that produced the span, i.e. by the processes whose par
+                ent PID is the same as the one of the process generating the sp
+                an.
+evtin.span.s.nargs
+                same as evtin.span.id, but also accepts events generated by the
+                 script that produced the span, i.e. by the processes whose par
+                ent PID is the same as the one of the process generating the sp
+                an.
+evtin.span.s.tags
+                same as evtin.span.id, but also accepts events generated by the
+                 script that produced the span, i.e. by the processes whose par
+                ent PID is the same as the one of the process generating the sp
+                an.
+evtin.span.s.tag
+                same as evtin.span.id, but also accepts events generated by the
+                 script that produced the span, i.e. by the processes whose par
+                ent PID is the same as the one of the process generating the sp
+                an.
+evtin.span.s.args
+                same as evtin.span.id, but also accepts events generated by the
+                 script that produced the span, i.e. by the processes whose par
+                ent PID is the same as the one of the process generating the sp
+                an.
+evtin.span.s.arg
+                same as evtin.span.id, but also accepts events generated by the
+                 script that produced the span, i.e. by the processes whose par
+                ent PID is the same as the one of the process generating the sp
+                an.
+evtin.span.m.id same as evtin.span.id, but accepts all the events generated on 
+                the machine during the span, including other threads and other 
+                processes.
+evtin.span.m.ntags
+                same as evtin.span.id, but accepts all the events generated on 
+                the machine during the span, including other threads and other 
+                processes.
+evtin.span.m.nargs
+                same as evtin.span.id, but accepts all the events generated on 
+                the machine during the span, including other threads and other 
+                processes.
+evtin.span.m.tags
+                same as evtin.span.id, but accepts all the events generated on 
+                the machine during the span, including other threads and other 
+                processes.
+evtin.span.m.tag
+                same as evtin.span.id, but accepts all the events generated on 
+                the machine during the span, including other threads and other 
+                processes.
+evtin.span.m.args
+                same as evtin.span.id, but accepts all the events generated on 
+                the machine during the span, including other threads and other 
+                processes.
+evtin.span.m.arg
+                same as evtin.span.id, but accepts all the events generated on 
+                the machine during the span, including other threads and other 
+                processes.
+```
+
+## Kubernetes Audit Events (source `k8s_audit`)
+
+<!-- 
+generated with:
+falco --list=k8s_audit  | sed -E 's/Field Class: (.*)/\n### Field Class: \1\n\n```/g' | sed 's/----------------------/\n```/g'
+-->
 
 Kubernetes Audit event fields are supported by the Kubernetes Audit event source. For more information please refer to the [Kubernetes Audit event source](../../event-sources/kubernetes-audit) documentation.
 
@@ -485,106 +692,249 @@ Kubernetes Audit event fields are supported by the Kubernetes Audit event source
 $ falco --list=k8s_audit
 ```
 
-## `jevt` Field Class: generic ways to access json events
-```
-jevt.time       json event timestamp as a string that includes the nanosecond p
-                art
-jevt.rawtime    absolute event timestamp, i.e. nanoseconds from epoch.
-jevt.value      General way to access single property from json object. The syn
-                tax is [<json pointer expression>]. The property is returned as
-                 a string
-jevt.obj        The entire json object, stringified
+
+
+### Field Class: jevt (generic ways to access json events)
+
 ```
 
-## `ka` Field Class: Access K8s Audit Log Events
+jevt.time       json event timestamp as a string that includes the nanosecond p
+                art
+
+jevt.time.iso8601
+                json event timestamp in ISO 8601 format, including nanoseconds 
+                and time zone offset (in UTC)
+
+jevt.rawtime    absolute event timestamp, i.e. nanoseconds from epoch.
+
+jevt.value      General way to access single property from json object. The syn
+                tax is [<json pointer expression>]. The property is returned as
+                 a string (IDX_REQUIRED, IDX_KEY)
+
+jevt.obj        The entire json object, stringified
+
 ```
+
+
+### Field Class: ka (Access K8s Audit Log Events)
+
+```
+
+Fields with an IDX_ALLOWED annotation can be indexed (e.g. ka.req.containers.im
+age[k] returns the image for the kth container). The index is optional--without
+ any index the field returns values for all items. The index must be numeric wi
+th an IDX_NUMERIC annotation, and can be any string with an IDX_KEY annotation.
+ Fields with an IDX_REQUIRED annotation require an index.
+
 ka.auditid      The unique id of the audit event
+
 ka.stage        Stage of the request (e.g. RequestReceived, ResponseComplete, e
                 tc.)
+
 ka.auth.decision
                 The authorization decision
+
 ka.auth.reason  The authorization reason
+
 ka.user.name    The user name performing the request
+
 ka.user.groups  The groups to which the user belongs
+
 ka.impuser.name The impersonated user name
+
 ka.verb         The action being performed
+
 ka.uri          The request URI as sent from client to server
+
 ka.uri.param    The value of a given query parameter in the uri (e.g. when uri=
-                /foo?key=val, ka.uri.param[key] is val).
+                /foo?key=val, ka.uri.param[key] is val). (IDX_REQUIRED, IDX_KEY
+                )
+
 ka.target.name  The target object name
+
 ka.target.namespace
                 The target object namespace
+
 ka.target.resource
                 The target object resource
+
 ka.target.subresource
                 The target object subresource
+
 ka.req.binding.subjects
                 When the request object refers to a cluster role binding, the s
                 ubject (e.g. account/users) being linked by the binding
-ka.req.binding.subject.has_name
-                When the request object refers to a cluster role binding, retur
-                n true if a subject with the provided name exists
+
 ka.req.binding.role
                 When the request object refers to a cluster role binding, the r
                 ole being linked by the binding
+
+ka.req.binding.subject.has_name
+                Deprecated, always returns "N/A". Only provided for backwards c
+                ompatibility (IDX_REQUIRED, IDX_KEY)
+
 ka.req.configmap.name
                 If the request object refers to a configmap, the configmap name
+
 ka.req.configmap.obj
                 If the request object refers to a configmap, the entire configm
                 ap object
+
+ka.req.pod.containers.image
+                When the request object refers to a pod, the container's images
+                . (IDX_ALLOWED, IDX_NUMERIC)
+
 ka.req.container.image
-                When the request object refers to a container, the container's
-                images. Can be indexed (e.g. ka.req.container.image[0]). Withou
-                t any index, returns the first image
-ka.req.container.image.repository
+                Deprecated by ka.req.pod.containers.image. Returns the image of
+                 the first container only
+
+ka.req.pod.containers.image.repository
                 The same as req.container.image, but only the repository part (
-                e.g. sysdig/falco)
+                e.g. falcosecurity/falco). (IDX_ALLOWED, IDX_NUMERIC)
+
+ka.req.container.image.repository
+                Deprecated by ka.req.pod.containers.image.repository. Returns t
+                he repository of the first container only
+
+ka.req.pod.host_ipc
+                When the request object refers to a pod, the value of the hostI
+                PC flag.
+
+ka.req.pod.host_network
+                When the request object refers to a pod, the value of the hostN
+                etwork flag.
+
 ka.req.container.host_network
-                When the request object refers to a container, the value of the
-                 hostNetwork flag.
+                Deprecated alias for ka.req.pod.host_network
+
+ka.req.pod.host_pid
+                When the request object refers to a pod, the value of the hostP
+                ID flag.
+
+ka.req.pod.containers.host_port
+                When the request object refers to a pod, all container's hostPo
+                rt values. (IDX_ALLOWED, IDX_NUMERIC)
+
+ka.req.pod.containers.privileged
+                When the request object refers to a pod, the value of the privi
+                leged flag for all containers. (IDX_ALLOWED, IDX_NUMERIC)
+
 ka.req.container.privileged
-                When the request object refers to a container, whether or not a
-                ny container is run privileged. With an index, return whether o
-                r not the ith container is run privileged.
+                Deprecated by ka.req.pod.containers.privileged. Returns true if
+                 any container has privileged=true
+
+ka.req.pod.containers.allow_privilege_escalation
+                When the request object refers to a pod, the value of the allow
+                PrivilegeEscalation flag for all containers (IDX_ALLOWED, IDX_N
+                UMERIC)
+
+ka.req.pod.containers.read_only_fs
+                When the request object refers to a pod, the value of the readO
+                nlyRootFilesystem flag for all containers (IDX_ALLOWED, IDX_NUM
+                ERIC)
+
+ka.req.pod.run_as_user
+                When the request object refers to a pod, the runAsUser uid spec
+                ified in the security context for the pod. See ....containers.r
+                un_as_user for the runAsUser for individual containers
+
+ka.req.pod.containers.run_as_user
+                When the request object refers to a pod, the runAsUser uid for 
+                all containers (IDX_ALLOWED, IDX_NUMERIC)
+
+ka.req.pod.containers.eff_run_as_user
+                When the request object refers to a pod, the initial uid that w
+                ill be used for all containers. This combines information from 
+                both the pod and container security contexts and uses 0 if no u
+                id is specified (IDX_ALLOWED, IDX_NUMERIC)
+
+ka.req.pod.run_as_group
+                When the request object refers to a pod, the runAsGroup gid spe
+                cified in the security context for the pod. See ....containers.
+                run_as_group for the runAsGroup for individual containers
+
+ka.req.pod.containers.run_as_group
+                When the request object refers to a pod, the runAsGroup gid for
+                 all containers (IDX_ALLOWED, IDX_NUMERIC)
+
+ka.req.pod.containers.eff_run_as_group
+                When the request object refers to a pod, the initial gid that w
+                ill be used for all containers. This combines information from 
+                both the pod and container security contexts and uses 0 if no g
+                id is specified (IDX_ALLOWED, IDX_NUMERIC)
+
+ka.req.pod.containers.proc_mount
+                When the request object refers to a pod, the procMount types fo
+                r all containers (IDX_ALLOWED, IDX_NUMERIC)
+
 ka.req.role.rules
                 When the request object refers to a role/cluster role, the rule
                 s associated with the role
+
 ka.req.role.rules.apiGroups
-                When the request object refers to a role/cluster role, the api
-                groups associated with the role's rules. With an index, return
-                only the api groups from the ith rule. Without an index, return
-                 all api groups concatenated
+                When the request object refers to a role/cluster role, the api 
+                groups associated with the role's rules (IDX_ALLOWED, IDX_NUMER
+                IC)
+
 ka.req.role.rules.nonResourceURLs
-                When the request object refers to a role/cluster role, the non
-                resource urls associated with the role's rules. With an index,
-                return only the non resource urls from the ith rule. Without an
-                 index, return all non resource urls concatenated
+                When the request object refers to a role/cluster role, the non 
+                resource urls associated with the role's rules (IDX_ALLOWED, ID
+                X_NUMERIC)
+
 ka.req.role.rules.verbs
                 When the request object refers to a role/cluster role, the verb
-                s associated with the role's rules. With an index, return only
-                the verbs from the ith rule. Without an index, return all verbs
-                 concatenated
+                s associated with the role's rules (IDX_ALLOWED, IDX_NUMERIC)
+
 ka.req.role.rules.resources
                 When the request object refers to a role/cluster role, the reso
-                urces associated with the role's rules. With an index, return o
-                nly the resources from the ith rule. Without an index, return a
-                ll resources concatenated
+                urces associated with the role's rules (IDX_ALLOWED, IDX_NUMERI
+                C)
+
+ka.req.pod.fs_group
+                When the request object refers to a pod, the fsGroup gid specif
+                ied by the security context.
+
+ka.req.pod.supplemental_groups
+                When the request object refers to a pod, the supplementalGroup 
+                gids specified by the security context.
+
+ka.req.pod.containers.add_capabilities
+                When the request object refers to a pod, all capabilities to ad
+                d when running the container. (IDX_ALLOWED, IDX_NUMERIC)
+
 ka.req.service.type
                 When the request object refers to a service, the service type
+
 ka.req.service.ports
                 When the request object refers to a service, the service's port
-                s. Can be indexed (e.g. ka.req.service.ports[0]). Without any i
-                ndex, returns all ports
+                s (IDX_ALLOWED, IDX_NUMERIC)
+
+ka.req.pod.volumes.hostpath
+                When the request object refers to a pod, all hostPath paths spe
+                cified for all volumes (IDX_ALLOWED, IDX_NUMERIC)
+
 ka.req.volume.hostpath
-                If the request object contains volume definitions, whether or n
-                ot a hostPath volume exists that mounts the specified path from
-                 the host (...hostpath[/etc]=true if a volume mounts /etc from
-                the host). The index can be a glob, in which case all volumes a
-                re considered to find any path matching the specified glob (...
-                hostpath[/usr/*] would match either /usr/local or /usr/bin)
+                Deprecated by ka.req.pod.volumes.hostpath. Return true if the p
+                rovided (host) path prefix is used by any volume (IDX_ALLOWED, 
+                IDX_KEY)
+
+ka.req.pod.volumes.flexvolume_driver
+                When the request object refers to a pod, all flexvolume drivers
+                 specified for all volumes (IDX_ALLOWED, IDX_NUMERIC)
+
+ka.req.pod.volumes.volume_type
+                When the request object refers to a pod, all volume types for a
+                ll volumes (IDX_ALLOWED, IDX_NUMERIC)
+
 ka.resp.name    The response object name
+
 ka.response.code
                 The response code
+
 ka.response.reason
                 The response reason (usually present only for failures)
+
+ka.useragent    The useragent of the client who made the request to the apiserv
+                er
+
 ```
