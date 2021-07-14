@@ -19,8 +19,8 @@ function install_rpm {
 		echo "* Installing curl"
 		yum -q -y install curl
 	fi
-
-	if ! yum -q list dkms > /dev/null 2>&1; then
+	
+	if ! rpm -qa | grep epel > /dev/null 2>&1; then
 		echo "* Installing EPEL repository (for DKMS)"
 		if [ "$VERSION" -eq 8 ]; then
 			rpm --quiet -i https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
@@ -30,7 +30,7 @@ function install_rpm {
 			rpm --quiet -i https://mirrors.kernel.org/fedora-epel/6/i386/epel-release-6-8.noarch.rpm
 		fi
 	fi
-
+	
 	echo "* Installing Falco public GPG key"
 	rpm --quiet --import https://falco.org/repo/falcosecurity-3672BA8F.asc
 	echo "* Installing Falco repository"
@@ -62,13 +62,38 @@ function install_deb {
 	echo "* Installing Falco public GPG key"
 	curl -s https://falco.org/repo/falcosecurity-3672BA8F.asc | apt-key add -
 	echo "* Installing Falco repository"
-	echo "deb https://download.falco.org/packages/deb stable main" | tee -a /etc/apt/sources.list.d/falcosecurity.list
+	echo "deb https://download.falco.org/packages/deb stable main" | tee /etc/apt/sources.list.d/falcosecurity.list
 	apt-get -qq update < /dev/null
 	echo "* Installing kernel headers"
 	apt-get -qq -y install "linux-headers-$(uname -r)" < /dev/null || kernel_warning
 	echo "* Installing Falco"
 	apt-get -qq -y install falco < /dev/null
 }
+
+function install_suse {
+	if ! hash curl > /dev/null 2>&1; then
+		echo "* Installing curl"
+		zypper -q -n install curl
+	fi
+	
+	rpm --import https://falco.org/repo/falcosecurity-3672BA8F.asc
+	curl -s -o /etc/zypp/repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
+	
+	KERNEL_VERSION=$(uname -r)
+	if [[ $KERNEL_VERSION == *PAE* ]]; then
+		zypper -q -n install "kernel-PAE-devel-${KERNEL_VERSION%.PAE}" || kernel_warning
+	elif [[ $KERNEL_VERSION == *stab* ]]; then
+		# It's OpenVZ kernel and we should install another package
+		zypper -q -n install "vzkernel-devel-$KERNEL_VERSION" || kernel_warning
+	elif [[ $KERNEL_VERSION == *uek* ]]; then
+		zypper -q -n install "kernel-uek-devel-$KERNEL_VERSION" || kernel_warning
+	else
+		zypper -q -n install kernel-default-devel || kernel_warning
+	fi
+	echo "* Installing Falco"
+	zypper -q -n install falco
+}
+
 
 function unsupported {
 	echo 'Unsupported operating system. Please consider writing to the mailing list at'
@@ -188,9 +213,8 @@ elif [ -f /etc/system-release-cpe ]; then
 			;;
 
 	esac
-
+elif [ -z $(cat /etc/os-release  | grep ^SUSE) ]; then
+	install_suse
 else
 	unsupported
 fi
-
-modprobe -r falco_probe
