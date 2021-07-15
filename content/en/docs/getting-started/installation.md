@@ -47,12 +47,17 @@ Alternatively, it is also possible to use a binary package as [explained below](
     apt-get install -y falco
     ```
 
+4. Reload systemd manager configuration
+   ```shell
+   systemctl daemon-reload
+   ```
+
     Falco, the kernel module driver, and a default configuration are now installed.
     Falco is being ran as a systemd unit.
 
     See [running](../running) for information on how to manage, run, and debug with Falco.
 
-4. Uninstall Falco:
+5. Uninstall Falco:
 
     ```shell
     apt-get remove falco
@@ -82,13 +87,20 @@ Alternatively, it is also possible to use a binary package as [explained below](
     ```shell
     yum -y install falco
     ```
+    
+4. Reload systemd manager configuration
+   ```shell
+   systemctl daemon-reload
+   ```
+   
     Falco, the kernel module driver, and a default configuration are now installed.
     Falco is being ran as a systemd unit.
 
     See [running](../running) for information on how to manage, run, and debug with Falco.
 
 
-4. Uninstall Falco:
+
+5. Uninstall Falco:
 
     ```shell
     yum erase falco
@@ -114,13 +126,18 @@ Alternatively, it is also possible to use a binary package as [explained below](
     ```shell
     zypper -n install falco
     ```
+
+4. Reload systemd manager configuration
+   ```shell
+   systemctl daemon-reload
+   ```
     Falco, the kernel module driver, and a default configuration are now installed.
     Falco is being ran as a systemd unit.
 
     See [running](../running) for information on how to manage, run, and debug with Falco.
 
 
-4. Uninstall Falco:
+5. Uninstall Falco:
 
     ```shell
     zypper rm falco
