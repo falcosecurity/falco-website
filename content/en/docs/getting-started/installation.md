@@ -106,8 +106,10 @@ Alternatively, it is also possible to use a binary package as [explained below](
 2. Install kernel headers:
 
     ```shell
-    zypper -n install kernel-default-devel
+    zypper -n install kernel-default-devel-$(uname -r | sed s/\-default//g)
     ```
+
+    > **Note** — If the package was not found by the above command, you might need to run `zypper -n dist-upgrade` in order to fix it. Rebooting the system may be required.
 
 3. Install Falco:
 
