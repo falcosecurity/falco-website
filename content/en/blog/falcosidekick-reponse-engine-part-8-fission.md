@@ -14,7 +14,7 @@ slug: falcosidekick-reponse-engine-part-8-fission
 > * [Kubernetes Response Engine, Part 4 : Falcosidekick + Tekton]({{< ref "/blog/falcosidekick-reponse-engine-part-4-tekton" >}})
 > * [Kubernetes Response Engine, Part 5 : Falcosidekick + Argo]({{< ref "/blog/falcosidekick-reponse-engine-part-5-argo" >}})
 > * [Kubernetes Response Engine, Part 6 : Falcosidekick + Cloud Run]({{< ref "/blog/falcosidekick-reponse-engine-part-6-cloud-run" >}})
-> * [Kubernetes Response Engine, Part 7: Falcosidekick + Cloud Functions]({{< ref "/blog/falcosidekick-reponse-engine-part-7-cloud-functions" >}})
+> * [Kubernetes Response Engine, Part 7 : Falcosidekick + Cloud Functions]({{< ref "/blog/falcosidekick-reponse-engine-part-7-cloud-functions" >}})
 
 ----
 
