@@ -1,6 +1,6 @@
 ---
 title: "Kubernetes Response Engine, Part 8: Falcosidekick + Fission"
-date: 2021-07-22
+date: 2021-08-19
 author: Gaurav Gahlot
 slug: falcosidekick-reponse-engine-part-8-fission
 ---
@@ -21,7 +21,7 @@ slug: falcosidekick-reponse-engine-part-8-fission
 The earlier posts in this series, show how to use Kubeless, Argo, Knative, and others to trigger a resource after getting input from Falcosidekick.
 Recently, Falcosidekick received a new output type support for [Fission](https://github.com/falcosecurity/falcosidekick/pull/255).
 
-In this blog post, we will cover using `Falcosidekick` and `Fission` to detect and delete a compromised pod in Kubernetes cluster.
+In this blog post, we will cover using `Falcosidekick` and `Fission` to detect and delete a compromised pod in a Kubernetes cluster.
 We will briefly talk about Fission in this blog, however, you can check the complete documentation [here](https://fission.io/).
 
 ## Prerequisites
@@ -35,7 +35,7 @@ We need tools with the following minimum versions to achieve this demo:
 
 ### Provision local Kubernetes Cluster
 
-There are various ways to provision a local Kubernetes cluster such as, KinD, k3s, k0s, Minikube etc. We are going to
+There are various ways to provision a local Kubernetes cluster such as, KinD, k3s, k0s, Minikube, etc. We are going to
 use Minikube in this walkthrough.
 
 Let's get provisioned a local Kubernetes cluster:
@@ -245,7 +245,7 @@ $ git clone https://github.com/fission/examples.git && cd examples/sample/falco
 
 The function we are going to deploy basically receives events for an infected pod from the _Falcosidekick_ and deletes it immediately.
 Before deploying the function we need some permissions to delete Pod.
-We create a `ServiceAccount` with right to delete a Pod in any namespace, and we'll associate it to our function:
+We create a `ServiceAccount` with rights to delete a Pod in any namespace, and we'll associate it to our function:
 
 ```yaml
 apiVersion: v1
@@ -488,7 +488,7 @@ $ fission function logs -f --name falco-pod-delete
 
 ## Conclusion
 
-With this really simple example, we got another way to create a Response Engine with amazing pieces of software from Open Source world.
+With this really simple example, we got another way to create a Response Engine with amazing pieces of software from the Open Source world.
 We only scratched the surface of possibilities, so don't hesitate to share with us your comments, ideas and successes.
 
 ----
