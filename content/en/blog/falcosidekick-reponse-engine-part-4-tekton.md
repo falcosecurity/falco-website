@@ -618,7 +618,7 @@ If you have any ideas/issues come and share them in the falco slack [https://kub
 
 #### Tekton
 
-If you would like to find out more about Knative:
+If you would like to find out more about Tekton:
 
 - Get started in [tekton.dev](https://tekton.dev/).
 - Check out the [Tekton Project in GitHub](https://github.com/tektoncd).
