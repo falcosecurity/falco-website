@@ -13,7 +13,7 @@ Element | Description
 
 ## Versioning
 
-From time to time, we make changes to the rules file format that are not backwards-compatible with older versions of Falco. Similarly, the Sysdig libraries incorporated into Falco may define new filtercheck fields, operators, etc. We want to denote that a given set of rules depends on the fields/operators from those Sysdig libraries.
+From time to time, we make changes to the rules file format that are not backwards-compatible with older versions of Falco. Similarly, libsinsp and libscap may define new filtercheck fields, operators, etc. We want to denote that a given set of rules depends on the fields/operators from those libraries.
 
 {{% pageinfo color="primary" %}}
 As of Falco version **0.14.0**, the Falco rules support explicit versioning of both the Falco engine and the Falco rules file.
@@ -38,7 +38,7 @@ Key | Required | Description | Default
 `rule` | yes | A short, unique name for the rule. |
 `condition` | yes | A filtering expression that is applied against events to check whether they match the rule. |
 `desc` | yes | A longer description of what the rule detects. |
-`output` | yes | Specifies the message that should be output if a matching event occurs, following the Sysdig [output format syntax](http://www.sysdig.com/wiki/sysdig-user-guide/#output-formatting). |
+`output` | yes | Specifies the message that should be output if a matching event occurs. See [output](#output). |
 `priority` | yes | A case-insensitive representation of the severity of the event. Should be one of the following: `emergency`, `alert`, `critical`, `error`, `warning`, `notice`, `informational`, `debug`. |
 `exceptions` | no | A set of [exceptions](/docs/rules/exceptions) that cause the rule to not generate an alert. |
 `enabled` | no | If set to `false`, a rule is neither loaded nor matched against any events. | `true`
@@ -48,7 +48,7 @@ Key | Required | Description | Default
 
 ## Conditions
 
-The key part of a rule is the _condition_ field. A condition is simply a Boolean predicate on Sysdig events expressed using the Sysdig [filter syntax](http://www.sysdig.com/wiki/sysdig-user-guide/#filtering). Any Sysdig filter is a valid Falco condition (with the exception of certain excluded system calls, discussed below). In addition, Falco conditions can contain macro terms (this capability is not present in Sysdig syntax).
+The key part of a rule is the _condition_ field. A condition is a Boolean predicate expressed using the [condition syntax](/docs/rules/conditions). It is possible to express conditions on [all supported events](/docs/rules/supported-events) using their respective [supported fields](/docs/rules/supported-fields).
 
 Here's an example of a condition that alerts whenever a bash shell is run inside a container:
 
@@ -56,30 +56,43 @@ Here's an example of a condition that alerts whenever a bash shell is run inside
 container.id != host and proc.name = bash
 ```
 
-The first clause checks that the event happened in a container (Sysdig events have a `container` field that is equal to `"host"` if the event happened on a regular host). The second clause checks that the process name is `bash`. Note that this condition does not even include a clause with a system call! It only checks event metadata. Because of that, if a bash shell does start up in a container, Falco outputs events for every syscall that is performed by that shell.
+The first clause checks that the event happened in a container (where `container.id` is equal to `"host"` if the event happened on a regular host). The second clause checks that the process name is `bash`. Since this condition does not include a clause with a system call it will only check event metadata. Because of that, if a bash shell does start up in a container, Falco outputs events for every syscall that is performed by that shell.
 
-A complete rule using the above condition might be:
+If we only want to be alerted for each successful spawn of a shell in a container we can add the appropriate event type and direction to our condition:
+
+```
+evt.type = execve and evt.dir=< and container.id != host and proc.name = bash
+```
+
+And so, a complete rule using the above condition might be:
 
 ```yaml
 - rule: shell_in_container
   desc: notice shell activity within a container
-  condition: container.id != host and proc.name = bash
+  condition: evt.type = execve and evt.dir=< and container.id != host and proc.name = bash
   output: shell in a container (user=%user.name container_id=%container.id container_name=%container.name shell=%proc.name parent=%proc.pname cmdline=%proc.cmdline)
   priority: WARNING
 ```
 
+Conditions allow us to check for many aspects of each supported event. To learn more, check out our more in-depth discussion about the [condition language](/docs/rules/conditions).
+
 ## Macros
 
-As noted above, macros provide a way to define common sub-portions of rules in a reusable way. As a very simple example, if we had many rules for events happening in containers, we might to define an `in_container` macro:
+As noted above, macros provide a way to define common sub-portions of rules in a reusable way. By looking at the condition above it looks like both `evt.type = execve and evt.dir=<` and `container.id != host` would be used many by other rules, so to make our job easier we can easily define macros for both:
 
 ```yaml
-- macro: in_container
+- macro: container
   condition: container.id != host
 ```
 
-With this macro defined, we can then rewrite the above rule's condition as `in_container and proc.name = bash`.
+```yaml
+- macro: spawned_process
+  condition: evt.type = execve and evt.dir=<
+```
 
-For many more examples of rules and macros, take a look the documentation on [default macros](./default-macros) or the `rules/falco_rules.yaml` file.
+With this macro defined, we can then rewrite the above rule's condition as `spawned_process and container and proc.name = bash`.
+
+For many more examples of rules and macros, take a look the documentation on [default macros](./default-macros) and the `rules/falco_rules.yaml` file. In fact, both the macros above are part of the default list!
 
 ## Lists
 
@@ -133,7 +146,7 @@ Here's an example of appending to lists:
 
 - rule: my_programs_opened_file
   desc: track whenever a set of programs opens a file
-  condition: proc.name in (my_programs) and evt.type=open
+  condition: proc.name in (my_programs) and (evt.type=open or evt.type=openat)
   output: a tracked program opened a file (user=%user.name command=%proc.cmdline file=%fd.name)
   priority: INFO
 ```
@@ -272,6 +285,22 @@ For example to disable the `User mgmt binaries` default rule in `/etc/falco/falc
  {{% /pageinfo %}}
 
 
+## Output
+
+A rule output is a string that can use the same [fields](/docs/rules/supported-fields) that conditions can use prepended by `%` to perform interpolation, akin to `printf`. For example:
+
+```
+Disallowed SSH Connection (command=%proc.cmdline connection=%fd.name user=%user.name user_loginuid=%user.loginuid container_id=%container.id image=%container.image.repository)
+```
+
+could output:
+
+```
+Disallowed SSH Connection (command=sshd connection=127.0.0.1:34705->10.0.0.120:22 user=root user_loginuid=-1 container_id=host image=<NA>)
+```
+
+Note that it's not necessary that all fields are set in the specific event. As you can see in the example above if the connection happens outside a container the field `%container.image.repository` would not be set and `<NA>` is displayed instead.
+
 ## Rule Priorities
 
 Every Falco rule has a priority which indicates how serious a violation of the rule is. The priority is included in the message/JSON output/etc. Here are the available priorities:
@@ -360,7 +389,7 @@ evt.type!=execve
 
 In some cases, rules may need to contain special characters like `(`, spaces, etc. For example, you may need to look for a `proc.name` of `(systemd)`, including the surrounding parentheses.
 
-Falco, like Sysdig, allows you to use `"` to capture these special characters. Here's an example:
+You can use `"` to capture these special characters. Here's an example:
 
 ```yaml
 - rule: Any Open Activity by Systemd
@@ -385,12 +414,4 @@ When including items in lists, ensure that the double quotes are not interpreted
 
 ## Ignored system calls
 
-For performance reasons, some system calls are currently discarded before Falco processes them. Here is the current list:
-
-```
-access alarm brk capget clock_getres clock_gettime clock_nanosleep clock_settime close container cpu_hotplug drop epoll_create epoll_create1 epoll_ctl epoll_pwait epoll_wait eventfd eventfd2 exit_group fcntl fcntl64 fdatasync fgetxattr flistxattr fstat fstat64 fstatat64 fstatfs fstatfs64 fsync futex get_robust_list get_thread_area getcpu getcwd getdents getdents64 getegid geteuid getgid getgroups getitimer getpeername getpgid getpgrp getpid getppid getpriority getresgid getresuid getrlimit getrusage getsid getsockname getsockopt gettid gettimeofday getuid getxattr infra io_cancel io_destroy io_getevents io_setup io_submit ioprio_get ioprio_set k8s lgetxattr listxattr llistxattr llseek lseek lstat lstat64 madvise mesos mincore mlock mlockall mmap mmap2 mprotect mq_getsetattr mq_notify mq_timedreceive mq_timedsend mremap msgget msgrcv msgsnd munlock munlockall munmap nanosleep newfstatat newselect notification olduname page_fault pause poll ppoll pread pread64 preadv procinfo pselect6 pwrite pwrite64 pwritev read readv recv recvmmsg remap_file_pages rt_sigaction rt_sigpending rt_sigprocmask rt_sigsuspend rt_sigtimedwait sched_get_priority_max sched_get_priority_min sched_getaffinity sched_getparam sched_getscheduler sched_yield select semctl semget semop send sendfile sendfile64 sendmmsg setitimer setresgid setrlimit settimeofday sgetmask shutdown signaldeliver signalfd signalfd4 sigpending sigprocmask sigreturn splice stat stat64 statfs statfs64 switch sysdigevent tee time timer_create timer_delete timer_getoverrun timer_gettime timer_settime timerfd_create timerfd_gettime timerfd_settime times ugetrlimit umask uname ustat vmsplice wait4 waitid waitpid write writev
-```
-
-When run with `-i`, Falco prints the set of events/syscalls ignored and exits. If you'd like to run Falco against all events, including system calls in the above list, you can run Falco with the `-A` flag.
-
-
+For performance reasons, some system calls are currently discarded before Falco processes them. You can see the complete list by running falco with `-i`. If you'd like to run Falco against all events, including system calls in the above list, you can run Falco with the `-A` flag. For more information, see [supported events](/docs/rules/supported-events).
