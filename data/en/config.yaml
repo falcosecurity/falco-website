@@ -146,7 +146,7 @@
 
     * Over a local unix socket with no authentication
     * Over the network with mandatory mutual TLS authentication (mTLS)
-    
+
     `bind_address` specifies either the unix socket path or the address and port on which the gRPC server will listen. The default is `unix:///var/run/falco.sock`.
 
     `threadiness` defines the number of threads to use to serve gRPC requests. When `threadiness` is `0`, Falco automatically guesses it depending on the number of online cores. The default is `0`.
@@ -158,7 +158,7 @@
     `cert_chain` path of the public cert for server authentication. The default is `/etc/falco/certs/server.crt`.
 
     `root_certs` path of the CA certificate (or chain) common between the server and all the clients. The default is `/etc/falco/certs/ca.crt`.
-    
+
     How to generate the certificates is [documented here](/docs/grpc/#generate-valid-ca). Please always remember that the only common thing between server and clients is the root certificate. Every client will need to generate their own certificates signed by the same root CA as the server.
 
 - name: grpc_output
@@ -168,3 +168,42 @@
     * `enabled: [true|false]`
   description: |
     If `enabled` is set to `true`, Falco will start collecting outputs for the gRPC server. It's important to consume them with an output client. Example of output client [here](https://github.com/falcosecurity/client-go/tree/master/examples/output).
+
+
+- name: plugins
+  type: |
+    A list of objects. Each object has the following sub-keys:
+
+    * `name: <string>`
+    * `library_path: <path>`
+    * `init_config: <string>`
+    * `init_config_file: <path>`
+    * `open_params: <string>`
+    * `open_params_file: <path>`
+
+  description: |
+    Defines the set of plugins Falco can load.
+
+    `name` provides the plugin name. This is only used for load_plugins, but by convention should be the same as the value returned by the plugin_get_name() api function.
+
+    `library_path` is path to the shared library. The path can be relative, in which case it is relative to Falco's "share" directory under a "plugins" subdirectory e.g. /usr/share/falco/plugins.
+
+    If `init_config` is present, it contains the exact configuration text that will be provided as an argument to the init() function.
+
+    Alternatively, if `init_config_file` is present, the provided file will be read and the contents will be provided as an argument to the init() function.
+
+    if `open_params`: is present, it contains the exact params text that will be provided as an argument to the open() function.
+
+    Alternatively, if `open_params_file` is present, the provided file will be read and the contents will be provided as an argument to the open() function.
+
+    For a given yaml object in the plugins list, only one of init_config/init_config_file and one of open_params/open_params_file can be provided at a time.
+
+- name: load_plugins
+  type: |
+    A list of plugin names, corresponding to the name sub-key from the plugins config item. Example:
+
+    `load_plugins: [cloudtrail, json]`
+  description: Defines the set of plugins that will actually be loaded. This is optional--if the property is not present, all plugins named in the plugins list will be loaded.
+
+
+
