@@ -69,5 +69,7 @@ Currently, Falco supports the following drivers:
 
     For more information, see [Falco Drivers](/docs/event-sources/drivers/).
 
+ - Plugins - allow users to extend the functionality of falco libraries/falco executable by adding new event sources and new fields that can extract information from events. For more information, see [Plugins](plugins).
+
 
 
