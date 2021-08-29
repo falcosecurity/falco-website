@@ -1,6 +1,6 @@
 ---
 title: "Kubernetes Response Engine, Part 8: Falcosidekick + Fission"
-date: 2021-08-19
+date: 2021-08-29
 author: Gaurav Gahlot
 slug: falcosidekick-reponse-engine-part-8-fission
 ---
