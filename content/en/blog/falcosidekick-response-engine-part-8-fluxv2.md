@@ -1,6 +1,6 @@
 ---
 title: "Kubernetes Response Engine, Part 8: Falcosidekick + Flux v2"
-date: 2021-07-04
+date: 2021-08-31
 author: Batuhan Apaydın
 slug: falcosidekick-reponse-engine-part-8-fluxv2
 ---
