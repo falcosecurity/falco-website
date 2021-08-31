@@ -1,8 +1,8 @@
 ---
-title: "Kubernetes Response Engine, Part 8: Falcosidekick + Fission"
+title: "Kubernetes Response Engine, Part 9: Falcosidekick + Fission"
 date: 2021-08-29
 author: Gaurav Gahlot
-slug: falcosidekick-reponse-engine-part-8-fission
+slug: falcosidekick-reponse-engine-part-9-fission
 ---
 
 > *This blog post is part of a series of articles about how to create a `Kubernetes` response engine with `Falco`, `Falcosidekick` and a `FaaS`.*
@@ -15,6 +15,7 @@ slug: falcosidekick-reponse-engine-part-8-fission
 > * [Kubernetes Response Engine, Part 5 : Falcosidekick + Argo]({{< ref "/blog/falcosidekick-reponse-engine-part-5-argo" >}})
 > * [Kubernetes Response Engine, Part 6 : Falcosidekick + Cloud Run]({{< ref "/blog/falcosidekick-reponse-engine-part-6-cloud-run" >}})
 > * [Kubernetes Response Engine, Part 7 : Falcosidekick + Cloud Functions]({{< ref "/blog/falcosidekick-reponse-engine-part-7-cloud-functions" >}})
+> * [Kubernetes Response Engine, Part 8: Falcosidekick + Flux v2]({{< ref "/blog/falcosidekick-reponse-engine-part-8-fluxv2" >}})
 
 ----
 
