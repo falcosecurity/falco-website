@@ -2,18 +2,18 @@
 title: "Kubernetes Response Engine, Part 5: Falcosidekick + Argo"
 date: 2021-05-23
 author: Thomas Labarussias
-slug: falcosidekick-reponse-engine-part-5-argo
+slug: falcosidekick-response-engine-part-5-argo
 ---
 
 > *This blog post is part of a series of articles about how to create a `Kubernetes` response engine with `Falco`, `Falcosidekick` and a `FaaS`.*
 > 
 > See other posts:
-> * [Kubernetes Response Engine, Part 1 : Falcosidekick + Kubeless]({{< ref "/blog/falcosidekick-reponse-engine-part-1-kubeless" >}})
-> * [Kubernetes Response Engine, Part 2 : Falcosidekick + OpenFaas]({{< ref "/blog/falcosidekick-reponse-engine-part-2-openfass" >}})
-> * [Kubernetes Response Engine, Part 3 : Falcosidekick + Knative]({{< ref "/blog/falcosidekick-reponse-engine-part-3-knative" >}})
-> * [Kubernetes Response Engine, Part 4 : Falcosidekick + Tekton]({{< ref "/blog/falcosidekick-reponse-engine-part-4-tekton" >}})
-> * [Kubernetes Response Engine, Part 6 : Falcosidekick + Cloud Run]({{< ref "/blog/falcosidekick-reponse-engine-part-6-cloud-run" >}})
-> * [Kubernetes Response Engine, Part 7: Falcosidekick + Cloud Functions]({{< ref "/blog/falcosidekick-reponse-engine-part-7-cloud-functions" >}})
+> * [Kubernetes Response Engine, Part 1 : Falcosidekick + Kubeless]({{< ref "/blog/falcosidekick-response-engine-part-1-kubeless" >}})
+> * [Kubernetes Response Engine, Part 2 : Falcosidekick + OpenFaas]({{< ref "/blog/falcosidekick-response-engine-part-2-openfass" >}})
+> * [Kubernetes Response Engine, Part 3 : Falcosidekick + Knative]({{< ref "/blog/falcosidekick-response-engine-part-3-knative" >}})
+> * [Kubernetes Response Engine, Part 4 : Falcosidekick + Tekton]({{< ref "/blog/falcosidekick-response-engine-part-4-tekton" >}})
+> * [Kubernetes Response Engine, Part 6 : Falcosidekick + Cloud Run]({{< ref "/blog/falcosidekick-response-engine-part-6-cloud-run" >}})
+> * [Kubernetes Response Engine, Part 7: Falcosidekick + Cloud Functions]({{< ref "/blog/falcosidekick-response-engine-part-7-cloud-functions" >}})
 
 ----
 
@@ -284,7 +284,7 @@ spec:
 EOF
 ```
 
-`Argo Workflow` runs all workflow steps inside their own pods, we'll use for this tutorial a *Golang* image developped by [@developer-guy](https://github.com/developer-guy) (who wrote the [Part 2]({{< ref "/blog/falcosidekick-reponse-engine-part-2-openfass" >}}) of this series 😄), the sources are [there](https://github.com/developer-guy/kubernetes-response-engine-based-on-event-driven-workflow/blob/master/main.go).
+`Argo Workflow` runs all workflow steps inside their own pods, we'll use for this tutorial a *Golang* image developped by [@developer-guy](https://github.com/developer-guy) (who wrote the [Part 2]({{< ref "/blog/falcosidekick-response-engine-part-2-openfass" >}}) of this series 😄), the sources are [there](https://github.com/developer-guy/kubernetes-response-engine-based-on-event-driven-workflow/blob/master/main.go).
 
 
 At this stage, everything is ready to receive events from `Falco` and protect our cluster.
