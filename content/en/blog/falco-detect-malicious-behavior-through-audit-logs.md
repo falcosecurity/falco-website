@@ -9,11 +9,11 @@ slug: detect-malicious-behaviour-on-kubernetes-api-server-through-audit-logs
 
 We might not know that Falco is not just for detecting malicious behavior that involves making Linux system calls, in addition to that, Falco v0.13.0 adds Kubernetes Audit Events to the list of supported event sources. That means that, once your cluster is configured with audit log enabled, you can send audit logs as events to Falco, then, you can write Falco rules that can read these events and detect malicious or other notable activity. After that, you can send notifications about the malicious activities or set up a `Kubernetes Response Engine` to take any action based on them. If you want to take a look at the rules which Falco provides for Kubernetes Audit logs, you can refer to this [link](https://falco.org/docs/event-sources/kubernetes-audit). Also, if you want to learn more about that `Kubernetes Response Engine` is, there is series of articles about how to create a Kubernetes response engine with Falco, Falcosidekick and a FaaS.
 
-* [Kubernetes Response Engine, Part 1 : Falcosidekick + Kubeless](https://falco.org/blog/falcosidekick-reponse-engine-part-1-kubeless/)
-* [Kubernetes Response Engine, Part 2 : Falcosidekick + OpenFaas](https://falco.org/blog/falcosidekick-reponse-engine-part-2-openfaas/)
-* [Kubernetes Response Engine, Part 3 : Falcosidekick + Knative](https://falco.org/blog/falcosidekick-reponse-engine-part-3-knative/)
+* [Kubernetes Response Engine, Part 1 : Falcosidekick + Kubeless](https://falco.org/blog/falcosidekick-response-engine-part-1-kubeless/)
+* [Kubernetes Response Engine, Part 2 : Falcosidekick + OpenFaas](https://falco.org/blog/falcosidekick-response-engine-part-2-openfaas/)
+* [Kubernetes Response Engine, Part 3 : Falcosidekick + Knative](https://falco.org/blog/falcosidekick-response-engine-part-3-knative/)
 * [Kubernetes Response Engine, Part 4: Falcosidekick + Tekton](https://falco.org/blog/falcosidekick-response-engine-part-4-tekton/)
-* [Kubernetes Response Engine, Part 5: Falcosidekick + Argo](https://falco.org/blog/falcosidekick-reponse-engine-part-5-argo/)
+* [Kubernetes Response Engine, Part 5: Falcosidekick + Argo](https://falco.org/blog/falcosidekick-response-engine-part-5-argo/)
 
 Without further ado, let's explain what `Audit Logs` are, and which useful pieces of information that they have for us.
 
