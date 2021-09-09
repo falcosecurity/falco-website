@@ -9,7 +9,7 @@ A condition is a boolean expression related to a single event that has been dete
 evt.type = execve and evt.dir = < and (proc.name = cat or proc.name = grep)
 ```
 
-This will trigger for each execution of `cat` or `grep`. You can take a closer look at what is the meaning of those fields such as `evt.dir`, how to discover the types of events available, and which fields go with which event type.
+This will trigger for each execution of `cat` or `grep`. Below you can take a closer look at what is the meaning of those fields such as `evt.dir`, how to discover the types of events available, and which fields are present with which event type.
 
 # Syscall event types, direction and args
 
