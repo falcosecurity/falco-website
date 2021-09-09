@@ -55,5 +55,16 @@ Note that you don't even have to look at the `execve` args. That is because once
 
 # Operators
 
-You can use the following operators in Falco conditions: `=`, `!=`, `<=`, `<`, `>=`, `>`, `contains`, `icontains`, `startswith`, `endswith`, `glob`, `in`, `intersects`, `pmatch`, `exists`.
+You can use the following operators in conditions:
+
+Operators | Description
+:---------|:-----------
+`=`, `!=` | Equality and inequality operators.
+`<=`, `<`, `>=`, `>` | Comparison operators for numeric values.
+`contains`, `icontains` | For strings will evaluate to true if a string contains another, and `icontains` is the case insensitive version. For flags it will evaluate to true if the flag is set. Examples: `proc.cmdline contains "-jar"`, `evt.arg.flags contains O_TRUNC`.
+`startswith`, `endswith` | Check prefix or suffix of strings.
+`glob` | Evaluate standard glob patterns. Example: `fd.name glob "/home/*/.ssh/*"`.
+`in`, `intersects` | Set operations.
+`pmatch` | Compare a file path against a set of file or directory prefixes. Example: `fd.name pmatch (/tmp/hello)` will evaluate to true against `/tmp/hello`, `/tmp/hello/world` but not `/tmp/hello_world`.
+`exists` | Check if a field is set. Example: `k8s.pod.name exists`.
 
