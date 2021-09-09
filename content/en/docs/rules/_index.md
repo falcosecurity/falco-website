@@ -58,13 +58,14 @@ container.id != host and proc.name = bash
 
 The first clause checks that the event happened in a container (where `container.id` is equal to `"host"` if the event happened on a regular host). The second clause checks that the process name is `bash`. Since this condition does not include a clause with a system call it will only check event metadata. Because of that, if a bash shell does start up in a container, Falco outputs events for every syscall that is performed by that shell.
 
-If we only want to be alerted for each successful spawn of a shell in a container we can add the appropriate event type and direction to our condition:
+
+If you want to be alerted only for each successful spawn of a shell in a container, add the appropriate event type and direction to the condition:
 
 ```
 evt.type = execve and evt.dir=< and container.id != host and proc.name = bash
 ```
 
-And so, a complete rule using the above condition might be:
+Therefore, a complete rule using the above condition might be:
 
 ```yaml
 - rule: shell_in_container
@@ -74,7 +75,7 @@ And so, a complete rule using the above condition might be:
   priority: WARNING
 ```
 
-Conditions allow us to check for many aspects of each supported event. To learn more, check out our more in-depth discussion about the [condition language](/docs/rules/conditions).
+Conditions allow you to check for many aspects of each supported event. To learn more, see the [condition language](/docs/rules/conditions).
 
 ## Macros
 
