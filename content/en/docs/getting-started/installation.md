@@ -159,6 +159,15 @@ By default, it first tries to locally build the kernel module with `dkms`. If no
 In case you want to install the eBPF probe driver, run `falco-driver-loader bpf`.
 It first tries to build the eBPF probe locally, otherwise to download a prebuilt into `~/.falco/`.
 
+{{% pageinfo color="warning" %}}
+
+If you are using the eBPF probe, in order to ensure that performance is not degraded, make sure that
+* Your kernel has `CONFIG_BPF_JIT` enabled
+* `net.core.bpf_jit_enable` is set to 1 (enable the jit)
+
+{{% /pageinfo %}}
+
+
 Configurable options:
 
 - `DRIVERS_REPO` - Set this environment variable to override the default repository URL for prebuilt kernel modules and eBPF probes, without the trailing slash.
@@ -171,3 +180,4 @@ Configurable options:
     Eg., `/a259b4bf49c3330d9ad6c3eed9eb1a31954259a6/falco_amazonlinux2_4.14.128-112.105.amzn2.x86_64_1.ko`.
 
     The `falco-driver-loader` script fetches the drivers using the above format.
+
