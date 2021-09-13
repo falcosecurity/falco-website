@@ -163,7 +163,7 @@ It first tries to build the eBPF probe locally, otherwise to download a prebuilt
 
 If you are using the eBPF probe, in order to ensure that performance is not degraded, make sure that
 * Your kernel has `CONFIG_BPF_JIT` enabled
-* `net.core.bpf_jit_enable` is set to 1 (enable the jit)
+* `net.core.bpf_jit_enable` is set to 1 (enable the BPF JIT Compiler)
 
 {{% /pageinfo %}}
 
