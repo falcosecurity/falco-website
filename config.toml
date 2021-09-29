@@ -129,6 +129,10 @@ id = "UA-40398182-19"
     name = "Community"
     weight = 60
     url = "/community/"
+[[menu.main]]
+    name = "Training"
+    weight = 70
+    url = "/labs/"
 
 # Specify a value here if your content directory is not in your repo's root directory
 #github_subdir = "userguide"
