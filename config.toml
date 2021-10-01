@@ -360,8 +360,15 @@ docsbranch = "v0.28"
 url = "https://v0-28.falco.org"
 
 [[params.versions]]
-fullversion = "v0.29.0"
+fullversion = "v0.29.1"
 version = "v0.29"
+githubbranch = "0.29.1"
+docsbranch = "v0.29"
+url = "https://v0-29.falco.org/"
+
+[[params.versions]]
+fullversion = "v0.30.0"
+version = "v0.30"
 githubbranch = "master"
 docsbranch = "master"
 url = "https://falco.org"
