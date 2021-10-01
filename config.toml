@@ -159,12 +159,12 @@ version_menu = "Releases"
 # Flag used in the "version-banner" partial to decide whether to display a
 # banner on every page indicating that this is an archived version of the docs.
 # Set this flag to "true" if you want to display the banner.
-archived_version = false
+archived_version = true
 
 # The version number for the version of the docs represented in this doc set.
 # Used in the "version-banner" partial to display a version number for the
 # current doc set.
-version = "v0.29.0"
+version = "v0.29.1"
 
 # SHA256 checksum variable
 sha256sum = "59201c1339cc53e86edcd7d2e7273e52f784b3cf7d4a3142059112b3b9062f6d"
