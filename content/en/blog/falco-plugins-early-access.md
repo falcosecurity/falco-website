@@ -2,7 +2,7 @@
 title: Falco Plugins Early Access
 date: 2021-10-12
 author: Mark Stemm
-slug: plugins-early-access
+slug: falco-plugins-early-access
 ---
 
 One of the upcoming features in Falco that we're really excited about is the ability to extend Falco's functionality by using [plugins](https://deploy-preview-493--falcosecurity.netlify.app/docs/plugins/). We'll be demoing this capability during Kubecon North America 2021. Specifically, we'll be showing the support for [AWS Cloudtrail](https://aws.amazon.com/cloudtrail/) logs in Falco, with a [Cloudtrail](https://github.com/falcosecurity/plugins/tree/master/plugins/cloudtrail) plugin and related falco rules that can do the following:
