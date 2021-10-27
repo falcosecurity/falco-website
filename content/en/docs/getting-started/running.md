@@ -29,7 +29,7 @@ falco --help
 
 {{% pageinfo color="primary" %}}
 
-Are you looking for userpace instrumentation? Please see [this page](/docs/event-sources/drivers/).
+Are you looking for userspace instrumentation? Please see [this page](/docs/event-sources/drivers/).
 
 {{% /pageinfo %}}
 
