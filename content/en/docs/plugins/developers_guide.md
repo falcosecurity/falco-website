@@ -5,7 +5,7 @@ weight: 1
 
 # Introduction
 
-This page is a guide for developers who want to write their own Falco/Falco libs plugins. It provides full details on the plugins API, walks through the source code of two example plugins to show how the API is used, and presents some best practices on how to use the API.
+This page is a guide for developers who want to write their own Falco/Falco libs plugins. It starts with an overview of the plugins API and some general best practices for authoring plugins. We then walk through the [Go](https://github.com/falcosecurity/plugin-sdk-go) and [C++](https://github.com/falcosecurity/plugins/tree/master/sdk/cpp) SDKs, which provide the preferred streamlined interface to plugin authors, as well as two reference plugins written in Go and C++. If you prefer to directly use the plugin API functions instead, you can consult the [Plugin API Reference](plugin_api_reference.md) for documentation on each API function.
 
 If you're not interested in writing your own plugin, or modifying one of the existing plugins, you can skip this page.
 
@@ -37,11 +37,9 @@ The plugins API is versioned with a [semver](https://semver.org/)-style version 
 
 Some API functions are required, while others are optional. If a function is optional, the plugin can choose to not define the function at all. The framework will note that the function is not defined and use a default behavior. For optional functions, the default behavior is described below.
 
-## Every String or Struct Must Be Allocated
+## Memory Returned Across the API is Owned By the Plugin
 
-Every API function that returns or populates a string or struct pointer must point to memory allocated by the plugin (typically `malloc()`). The plugin framework will free the allocated memory with calls to `plugin_free_mem()`. In the typical case where memory was allocated via `malloc()`, the implementation of `plugin_free_mem(void *ptr)` should just call `free(ptr)`.
-
-For plugins written in Go, the [plugin-sdk-go](https://github.com/falcosecurity/plugin-sdk-go) module provides utility functions that handle the conversion between Go types (e.g. `string`) and C types (e.g. `char *`), as well as a package `plugin-sdk-go/free` that defines a version of `plugin_free_mem()` that calls `free()`.
+Every API function that returns or populates a string or struct pointer must point to memory allocated by the plugin and must remain valid for use by the plugin framework. When using the SDKs, this is generally handled automatically. Keep it in mind if using the plugin API functions directly, however.
 
 ## Cgo Pitfalls with Packages
 
@@ -65,9 +63,9 @@ For example, if a plugin fetches URLs, whether or not to allow self-signed certi
 
 ## What Goes In An Event?
 
-Similarly, it may be confusing to distinguish between state for a plugin (e.g. `ss_plugin_t`/`ss_instance_t`) as compared to the actual data that ends up in an event. This is especially important when thinking about fields and what they represent. A good rule of thumb to follow is that fields should *only* extract data from events, and not internal state. This behavior is encouraged by *not* providing a `ss_instance_t` handle as an argument to `plugin_extract_fields` (see below).
+Similarly, it may be confusing to distinguish between state for a plugin (e.g. `ss_plugin_t`/`ss_instance_t`) as compared to the actual data that ends up in an event. This is especially important when thinking about fields and what they represent. A good rule of thumb to follow is that fields should *only* extract data from events, and not internal state. For example, this behavior is encouraged by *not* providing a `ss_instance_t` handle as an argument to `plugin_extract_fields`.
 
-For example, assume some plugin returned a sample of a metric in events, and the internal state also held the maximum value seen so far. It would be fine to have a field `plugin.sample` that returned the value in a given event. It would *not* be fine to have a field `plugin.max_sample` that returned the maximum value seen, because that information is held in the internal state and not in events. If events *also* saved the current max sample so far, then it would be fine to have a field `plugin.max_sample`, as that can be retrieved directly from a single event.
+For example, assume some plugin returned a sample of a metric in events, and the internal state also held the maximum value seen so far. It would be a good practice to have a field `plugin.sample` that returned the value in a given event. It would *not* be a good practice to have a field `plugin.max_sample` that returned the maximum value seen, because that information is held in the internal state and not in events. If events *also* saved the current max sample so far, then it would be fine to have a field `plugin.max_sample`, as that can be retrieved directly from a single event.
 
 A question to ask when deciding what to put in an event is "if this were written to a `.scap` capture file and reread, would this plugin return the same values for fields as it did when the events were first generated?".
 
@@ -91,214 +89,60 @@ With every release, you should check for an updated Plugin API Version and if ne
 
 With each new release, make sure the contact information provided by the plugin is up-to-date.
 
-# Plugin API Functions
+# Go Plugin SDK Walkthrough
 
-Here is the full list of plugin API functions. At a high level, they can be grouped into three sections:
+# C++ Plugin SDK Walkthrough
 
-* Functions that provide info about the plugin, its events, and its fields.
-* Functions that create/destroy instances of the plugin and capture sessions.
-* Functions that provide events and extract information from events.
+The [C++](https://github.com/falcosecurity/plugins/tree/master/sdk/cpp) SDK, in the form of a single header file `falcosecurity_plugin.h`, provides abstract base classes for a plugin and plugin instance. Plugin authors write classes that derive from those base classes and implement methods to provide plugin info, init/destroy plugins, open/close instances, return events, and extract fields from events. All classes, structs, enums, etc are below the `falcosecurity` namespace.
 
-Remember that there are two kinds of plugins: source plugins and extractor plugins. We'll go through the API functions for both kinds of plugins.
+The SDK also declares a preprocessor `#define` to generate C `plugin_xxx` functions for the plugins API, using the derived classes.
 
-The C header file [plugin_info.h](https://github.com/falcosecurity/libs/blob/new/plugin-system-api-additions/userspace/libscap/plugin_info.h) enumerates all the API functions and associated structs/types, as they are used by the plugins framework. It can be included in your source code when writing your own plugin, to take advantage of values like `PLUGIN_API_VERSION_XXX`, `ss_plugin_type`, etc.
+This section documents the SDK.
 
-Remember, however, that from the perspective of the plugin, each function name has a prefix `plugin_` e.g. `plugin_get_required_api_version()`, `plugin_get_type()`, etc.
+## `falcosecurity::source_plugin`: Base Class for Plugins
 
-## Conventions For All Functions
+The `falcosecurity::source_plugin` class provides the base implementation for a source plugin. An object is created every time the plugin is initialized via `plugin_init()` and the object is deleted on `plugin_destroy()`. A separate static global object is also used to provide the demographic functions `plugin_get_name()`, `plugin_get_description()`, etc.
 
-The following conventions apply for all of the below API functions:
+The abstract interface for plugin authors is in the `falcosecurity::source_plugin_iface` class and has the following methods:
 
-* Every function that returns or populates a `char *` must return a null-terminated C string.
-* Every function that returns or populates a `char *` or a struct pointer must allocate the memory for the string/struct (typically `malloc()`). The plugin framework will free the allocated memory using `plugin_free_mem()`.
-* For every function that returns an error, if the function returns an error, the plugin framework will assume that no strings/structs were allocated and will not call `plugin_free_mem()` on any values.
+### `virtual void get_info(plugin_info &info) = 0`
 
-## Source Plugin API Functions
+Return info about the plugin. The `falcosecurity::plugin_info` struct should be filled in by the plugin author, and is the following:
 
-### Info Functions
+```C++
+typedef struct plugin_field {
+	ss_plugin_field_type ftype;
+	std::string name;
+	bool arg_required;
+	std::string description;
+} plugin_field;
 
-#### `char* plugin_get_required_api_version() [Required: yes]`
-
-This function returns a string containing a [semver](https://semver.org/) version number e.g. "1.0.0", reflecting the version of the plugin API framework that this plugin requires. This is different than the version of the plugin itself, and should only have to change when the plugin API changes.
-
-This is the first function the framework calls when loading a plugin. If the returned value is not semver-compatible with the version of the plugin API framework, the plugin will not be loaded.
-
-For example, if the code implementing the plugin framework has version 1.1.0, and a plugin's `plugin_get_required_api_version()` function returns 1.0.0, the plugin API is compatible and the plugin will be loaded. If the code implementing the plugin framework has version 2.0.0, and a plugin's `plugin_get_required_api_version()` function returns 1.0.0, the API is not compatible and the plugin will not be loaded.
-
-#### `uint32_t plugin_get_type() [Required: yes]`
-
-This function returns the plugin type. The enum `ss_plugin_type` in `plugin_info.h` defines the possible plugin types:
-
-```C
-typedef enum ss_plugin_type
-{
-	TYPE_SOURCE_PLUGIN = 1,
-	TYPE_EXTRACTOR_PLUGIN = 2
-}ss_plugin_type;
+typedef struct plugin_info {
+	uint32_t id;
+	std::string name;
+	std::string description;
+	std::string contact;
+	std::string version;
+	std::string event_source;
+	std::list<plugin_field> fields;
+} plugin_info;
 ```
 
-For source plugins, this function should always return the value `TYPE_SOURCE_PLUGIN` e.g. 1.
+### `virtual ss_plugin_rc init(const char* config) = 0`
 
-#### `uint32_t plugin_get_id() [Required: yes]`
+Initialize a plugin. This is *not* the constructor, but is called shortly after the plugin object has been allocated. The config is the config provided in the `plugin_initialize()` function. The plugin can parse this config and save it in the object.
 
-This should return the [event ID](../../plugins#plugin-event-ids) allocated to your plugin. During development and before receiving an official event ID, you can use the "Test" value of 999.
+### `virtual void destroy() = 0`
 
-#### `char * plugin_get_{name,description,contact,version} [Required: yes]`
+Destroy a plugin. This is *not* the destructor, but is called shortly before the object is deleted. The plugin can use this method to clean up any state that it does not want to clean up in the destructor.
 
-These functions all return an allocated C string that describe the plugin:
+### `virtual plugin_instance *create_instance(source_plugin &plugin) = 0`
 
-* `plugin_get_name`: Return the name of the plugin.
-* `plugin_get_description`: Return a short description of the plugin.
-* `plugin_get_contact`: Return a contact url/email/twitter account for the plugin authors.
-* `plugin_get_version`: Return the version of the plugin itself.
+Create an object that derives from `falcosecurity::plugin_instance` and return a pointer to the object. This is called during `plugin_open()`. The derived instance's `open()` method will be called by the SDK after receiving the derived instance pointer from this function.
 
-The recommended format for `plugin_get_contact` is a url to a repository that contains the plugin source code (e.g. `github.com/falcosecurity/plugins`) if at all possible.
+### `virtual std::string event_to_string(const uint8_t *data, uint32_t datalen) = 0`
 
-#### `char * plugin_get_event_source() [Required: yes]`
-
-This function returns an allocated C string containing the plugin's [event source](../../plugins/#plugin-event-sources-and-interoperability). This event source is used for:
-
-* Associating Falco rules with plugin events--A Falco rule with a `source: gizmo` property will run on all events returned by the gizmo plugin's `next()` function.
-* Linking together extractor plugins and source plugins. An extractor plugin can list a given event source like "gizmo" in its `get_extract_event_sources()` function, and the extractor plugin will get an opportunity to extract fields from all events returned by the gizmo plugin.
-* Ensuring that only one plugin at a time is loaded for a given source.
-
-When defining a source, make sure it accurately describes the events from your plugin (e.g. use "cloudtrail" for aws cloudtrail events, not "json" or "logs") and doesn't overlap with the source of any other source plugin.
-
-The only time where duplicate sources make sense are when a group of plugins can use a standard data format for a given event. For example, plugins might extract k8s_audit events from multiple cloud sources like gcp, azure, aws, etc. If they all format their events as json objects that have identical formats as one could obtain by using [K8s Audit](https://kubernetes.io/docs/tasks/debug-application-cluster/audit/) hooks, then it would make sense for the plugins to use the same source.
-
-#### `char *plugin_get_fields() [Required: no]`
-
-This function should return the set of fields supported by the plugin. Remember, a field is a name (e.g. `proc.name`) that can extract a value (e.g. `nginx`) from an event (e.g. a syscall event involving a process). The format is a json string which contains an array of objects. Each object describes one field. Here's an example:
-
-```json
-[
-   {"type": "string", "name": "gizmo.field1", "argRequired": true, "desc": "Describing field 1"},
-   {"type": "uint64", "name": "gizmo.field2", "desc": "Describing field 2"}
-]
-```
-
-Although uncommon, this function is not required--a source plugin might inject events but not define any fields that extract values from events. This might be common if the extraction could be performed by extraction plugins.
-
-Each object has the following properties:
-
-* `type`: one of "string", "uint64"
-* `name`: a string with a name for the field. By convention, this is a dot-separated path of names. Use a consistent first name e.g. "ct.xxx" to help filter authors associate the field with a given plugin.
-* `argRequired`: (optional) If present and set to true, notes that the field requires an argument e.g. `field[arg]`.
-* `display`: (optional) If present, a string that will be used to display the field instead of the name. Used in tools like wireshark.
-* `desc`: a string with a short description of the field. This will be used in help output so be concise and descriptive.
-
-When defining fields, keep the following guidelines in mind:
-
-* Field names should generally have the plugin name/event source as the first component, and usually have one or two additional components. For example, `gizmo.pid` is preferred over `gizmo.process.id.is`. If a plugin has a moderately large set of fields, using components to group fields may make sense (e.g. `cloudtrail.s3.bytes.in` and `cloudtrail.s3.bytes.out`).
-* Fields should be idempotent: for a given event, the value for a field should be the same regardless of when/where the event was generated.
-* Fields should be neutral: define fields that extract properties of the event (e.g. "source ip address") rather than judgements (e.g. "source ip address is associated with a botnet").
-
-### Instance/Capture Management Functions
-
-#### `ss_plugin_t* plugin_init(char *config, int32_t* rc) [Required: yes]`
-
-This function passes plugin-level configuration to the plugin to create its plugin-level state. The plugin then returns a pointer to that state, as a `ss_plugin_t *` handle. The handle is never examined by the plugin framework and is never freed. It is only provided as the argument to later API functions.
-
-When managing plugin-level state, keep the following in mind:
-
-* It is the plugin's responsibility to allocate plugin state (memory, open files, etc) and free that state later in `plugin_destroy`.
-* The plugin state should be the *only* location for state (e.g. no globals, no per-thread state). Although unlikely, the framework may choose to call `plugin_init` multiple times for the same plugin, and this should be supported by the plugin.
-* The returned rc value should be `SS_PLUGIN_SUCCESS` (0) on success, `SS_PLUGIN_FAILURE` (1) on failure.
-* On failure, make sure to return a meaningful error message in the next call to `plugin_get_last_error()`.
-* On failure, the plugin framework will *not* call plugin_destroy, so do not return any allocated state.
-
-The format of the config string is entirely determined by the plugin author, and is passed unchanged from Falco/the application using the plugin framework to the plugin. Given that, semi-structured formats like JSON/YAML are preferable to free-form text.
-
-#### `void plugin_destroy(ss_plugin_t *s) [Required: yes]`
-
-This function frees any resources held in the `ss_plugin_t` struct. Afterwards, the handle should be considered destroyed and no further API functions will be called with that handle.
-
-#### `ss_instance_t* plugin_open(ss_plugin_t* s, char* params, int32_t* rc) [Required: yes]`
-
-This function is called to "open" a stream of events. The interpretation of a stream of events is up to the plugin author, but think of `plugin_init` as initializing the plugin software, and `plugin_open` as configuring the software to return events. Using a streaming audio analogy, `plugin_init` turns on the app, and `plugin_open` starts a streaming audio channel.
-
-The same general guidelines apply for `plugin_open` as do for `plugin_init`:
-
-* All state related to sourcing a stream of events should be in the returned `ss_instance_t` pointer.
-* Return 0 on success, 1 on error. Be ready to return an error via `plugin_get_last_error()` on error.
-* The plugin should support concurrent open sessions at once. Unlike plugin-level state, it's very likely that the plugin framework might call `plugin_open` multiple times for a given plugin.
-* On error, do not return any state, as the plugin framework will not call `plugin_close`.
-
-#### `void plugin_close(ss_plugin_t* s, ss_instance_t* h) [Required: yes]`
-
-This function closes a stream of events previously started via a call to `plugin_open`. Afterwards, the stream should be considered closed and the framework will not call `plugin_next`/`plugin_extract_fields` with the same `ss_instance_t` pointer.
-
-### Misc Functions
-
-#### `void plugin_get_last_error(ss_plugin_t* s)`
-
-This function is called by the framework after a prior call returned an error. The plugin should return a meaningful error string providing more information about the most recent error.
-
-#### `void plugin_free_mem(void *ptr)`
-
-This function is called by the framework to free any allocated memory (string, structs, event payloads) passed from the plugin to the framework.
-
-### Events/Fields Related Functions
-
-#### `int32_t plugin_next(ss_plugin_t* s, ss_instance_t* h, ss_plugin_event **evt) [Required: yes]`
-
-This function is used to return the next event to the plugin framework, given a plugin state and open instance.
-
-An event is represented by a `ss_plugin_event` struct, which is the following:
-
-```C
-typedef struct ss_plugin_event
-{
-	uint64_t evtnum;
-	uint8_t *data;
-	uint32_t datalen;
-	uint64_t ts;
-} ss_plugin_event;
-````
-
-The struct has the following members:
-
-* `evtnum`: incremented for each event returned. Might not be contiguous.
-* `data`: pointer to a memory buffer pointer allocated by the plugin. The plugin will set it to point to the memory containing the next event. Once returned, the memory is owned by the plugin framework and will be freed via a call to `plugin_free_mem()`.
-* `datalen`: pointer to a 32bit integer. The plugin will set it the size of the buffer pointed by data.
-* `ts`: the event timestamp, in nanoseconds since the epoch. Can be (uint64_t)-1, in which case the engine will automatically fill the event time with the current time.
-
-Remember that *both* the event data in `data` as well as the surrounding struct in `evt` must be allocated by the plugin and will be freed by the plugin framework.
-
-It is not necessary to fill in the evtnum struct member when returning events via plugin_next/plugin_next_batch. Event numbers are allocated by the plugin framework.
-
-This function should return:
-
-* `SS_PLUGIN_SUCCESS` (0) on success
-* `SS_PLUGIN_FAILURE` (1) on failure
-* `SS_PLUGIN_TIMEOUT` (-1) on non-error but there are no events to return.
-* `SS_PLUGIN_EOF` (6) when the stream of events is complete.
-
-If the plugin receives a SS_PLUGIN_FAILURE, it will close the stream of events by calling `plugin_close`.
-
-SS_PLUGIN_TIMEOUT should be returned whenever an event can not be returned immediately. This ensures that the plugin framework is not stalled waiting for a response from `plugin_next`. When the framework receives a SS_PLUGIN_TIMEOUT, it will keep the stream of events open and call `plugin_next` again later.
-
-#### `int32_t plugin_next_batch(ss_plugin_t* s, ss_instance_t* h, uint32_t *nevts, ss_plugin_event **evts) [Required: no]`
-
-This function is the batched version of `plugin_next` and allows the plugin to return multiple events at once. The behavior and return values are the same as `plugin_next`. In this case, the array is a contiguous block of `ss_plugin_event` structs that should be allocated by the plugin.
-
-This function is optional. If not defined the plugin framework will only call `plugin_next()` to retrieve events.
-
-If your plugin is written in Go, the [plugin-sdk-go](https://github.com/falcosecurity/plugin-sdk-go) module provides a utility function `sinsp.NextBatch` that can wrap a plugin's `next()` function and take care of the conversion/allocation from Go types to C types. That package is described in more detail below.
-
-#### `char* plugin_get_progress(ss_plugin_t* s, ss_instance_t* h, uint32_t* progress_pct) [Required: no]`
-
-This function is optional. If the plugin exports it, the framework will periodically call it after open to return how much of the event stream has been read. If a plugin does not provide a bounded stream of events (for example, events coming from a file or other source that has an ending), it should not export this function.
-
-If not exported, the plugin framework will not print meaningful process indicators while processing event streams.
-
-When called, the progress_pct pointer should be updated with the read progress, as a number between 0 (no data has been read) and 10000 (100% of the data has been read). This encoding allows the engine to print progress decimals without requiring to deal with floating point numbers (which could cause incompatibility problems with some languages).
-
-The return value is an allocated string representation of the read progress. This might include the progress percentage combined with additional context added by the plugin. The plugin can return NULL. In this case, the framework will use the progress_pct value instead.
-
-#### `char * plugin_event_to_string(ss_plugin_t *s, const uint8_t *data, uint32_t datalen) [Required: yes]`
-
-This function is used to return a printable representation of an event. It is used in filtering/output expressions as the built-in field `evt.plugininfo`.
+Return a string representation of an event. The returned string will be held in the base class and passed back in `plugin_event_to_string()`.
 
 The string representation should be on a single line and contain important information about the event. It is not necessary to return all information from the event. Simply return the most important fields/properties of the event that provide a useful default representation.
 
@@ -308,77 +152,59 @@ Here is an example output, from the [cloudtrail](https://github.com/falcosecurit
 us-east-1 masters.some-demo.k8s.local s3 GetObject Size=0 URI=s3://some-demo-env/some-demo.k8s.local/backups/etcd/events/control/etcd-cluster-created
 ```
 
-#### `int32_t plugin_extract_fields(ss_plugin_t *s, const ss_plugin_event *evt, uint32_t num_fields, ss_plugin_extract_field *fields) [Required: no]`
+### `virtual bool extract_str(const ss_plugin_event &evt, const std::string &field, const std::string &arg, std::string &extract_val) = 0`
 
-This function is used to return the value for one or more field names that were returned in `plugin_get_fields()`. The framework provides an event and an array of `ss_plugin_extract_field` structs. Each struct has one field name/type, and the plugin fills in each struct with the corresponding value for that field.
+Extract a single string field from an event. This is called during `plugin_extract_fields` as the base class loops over the provided set of fields. If the event has a meaningful value for the provided field, the derived class should return true and fill in `&extract_val` with the extracted value from the event. If the event does not have a meaningful value, the derived class should return false.
 
-This function is required if `plugin_get_fields` is defined. If not defined, the plugin framework will not extract any values for events from this plugin.
+### `virtual bool extract_u64(const ss_plugin_event &evt, const std::string &field, const std::string &arg, uint64_t &extract_val) = 0`
 
-The format of the `ss_plugin_extract_field` struct is the following:
+Identical to `extract_str` but for uint64_t values.
 
-```C
-// The noncontiguous numbers are to maintain equality with underlying
-// falcosecurity libs types.
-typedef enum ss_plugin_field_type
-{
-	FTYPE_UINT64 = 8,
-	FTYPE_STRING = 9
-}ss_plugin_field_type;
+## `falcosecurity::plugin_instance`: Base Class for Plugin Instances
 
-typedef struct ss_plugin_extract_field
-{
-	const char *field;
-	const char *arg;
-	uint32_t ftype;      // Has value from ss_plugin_field_type enum
+The `falcosecurity::plugin_instance` class provides the base implementation for a plugin instance. An object is created (via `source_plugin::create_instance`) via `plugin_open()` and the object is deleted on `plugin_close()`.
 
-	bool field_present;
-	char *res_str;
-	uint64_t res_u64;
-} ss_plugin_extract_field;
-```
+The abstract interface for plugin authors is in the `falcosecurity::plugin_instance_iface` class and has the following methods:
 
-For each struct, the plugin fills in `field`/`arg`/`ftype` with the field. The plugin should fill in `field_present` and either `res_str`/`res_u64` with the value for the field, depending on the field type `ftype`. If the field type is `FTYPE_STRING`, res_str should be updated to point to an allocated string with the string value. The plugin framework will free the string value afterwards via a call to `plugin_free_mem()`.
+### `virtual ss_plugin_rc open(const char* params) = 0`
 
-If `field_present` is set to false, the plugin framework assumes that `res_str`/`res_u64` is undefined and will not use or free it.
+Create necessary state to open a stream of events. This is called during `plugin_open()` shortly after calling `source_plugin::create_instance`. The provided params are the params provided to `plugin_open()`.
 
-Similar to `next_batch()`, the [plugin-sdk-go](https://github.com/falcosecurity/plugin-sdk-go) module provides a utility function `sinsp.WrapExtractFuncs` that can wrap simpler functions that extract individual values and handle the type conversion/iteration over fields. That package is described in more detail below.
+### `virtual void close() = 0`
 
-## Extractor Plugin API Functions
+Tear down any state created in `open()`. The object will be deleted shortly afterward.
 
-With the exception of `plugin_get_extract_event_sources`, almost all functions used by the Extractor Plugin API interface are identical to those in the Source Plugin API. See above for the definition and use of:
+### `virtual ss_plugin_rc next(plugin_event &evt) = 0`
 
-* `plugin_get_required_api_version`
-* `plugin_get_type`: for extractor plugins, this should return `TYPE_EXTRACTOR_PLUGIN` e.g. 1.
-* `plugin_init`
-* `plugin_destroy`
-* `plugin_get_last_error`
-* `plugin_free_mem`
-* `plugin_get_name`
-* `plugin_get_description`
-* `plugin_get_contact`
-* `plugin_get_version`
-* `plugin_get_fields`
-* `plugin_extract_fields`
+Return a single event to the sdk. The sdk will handle managing memory for the events and passing them up to the framework in `plugin_next_batch()`. This method should return one of the following:
 
-The only difference is that for Extractor plugins, `plugin_get_fields`/`plugin_extract_fields` are both required.
+* `SS_PLUGIN_SUCCESS`: event ready and returned
+* `SS_PLUGIN_FAILURE`: some error, no event returned. framework will close instance.
+* `SS_PLUGIN_TIMEOUT`: no event ready. framework will try again later.
+* `SS_PLUGIN_EOF`: no more events. framework will close instance.
 
-### `char* get_extract_event_sources() [Required: no]`
+### `virtual std::string get_progress(uint32_t &progress_pct)`
 
-This function allows an extractor plugin to restrict the kinds of events where the plugin's `get_fields()` method will be called. The return value should be an allocated string containing a json array of compatible event sources. Here's an example:
+Return the read progress, as a number between 0 (no data has been read) and 10000 (100% of the data has been read). This encoding allows the engine to print progress decimals without requiring to deal with floating point numbers (which could cause incompatibility problems with some languages).
 
-```json
-["aws_cloudtrail", "gcp_cloudtrail"]
-```
+`progress_pct` should be filled in with the read progress as a number. The returned string should be a string representation of the read progress. This might include the progress percentage along with additional context provided by the plugin.
 
-This implies that the extractor plugin can potentially extract values from events that have a source `aws_cloudtrail` or `gce_cloudtrail`.
+This method does not have to be overridden--the base implementation simply returns a read progress of zero.
 
-This function is optional. If the plugin does not export this function the framework will assume the extractor plugin can potentially extract values from all events. The extractor plugin's `extract_fields()` function will be called for all events for any field returned by the plugin's `get_fields()` function.
+## `#define GEN_SOURCE_PLUGIN_API_HOOKS`: Generate C Plugin API Hooks
+
+After creating derived classes and implementing the above methods, use this preprocessor define to generate C code that implements the plugin API functions. The preprocessor takes two arguments:
+
+* `source_plugin_class_name`: the name of the class that derives from `falcosecurity::source_plugin` that represents a plugin.
+* `source_plugin_instance_name`: the name of the class that derives from `falcosecurity::plugin_instance` that represents a plugin instance.
+
+This preprocessor define should be called exactly once per plugin, to avoid generating duplicate symbols.
 
 # Example Plugins Walkthrough
 
 This section walks through the implementation of two plugins: `dummy` and `dummy_c`. They behave identically, returning artificial dummy information. One is written in Go and one is written in C++.
 
-The dummy plugins return events that are just a number value that increases with each call to `plugin_next`. Each increase is 1 plus a random "jitter" value that ranges from [0:jitter]. The jitter value is provided as configuration to the plugin in `plugin_init`. The starting value and maximum number of events is provided as open parameters to the plugin in `plugin_open`.
+The dummy plugins return events that are just a number value that increases with each call to `next()`. Each increase is 1 plus a random "jitter" value that ranges from [0:jitter]. The jitter value is provided as configuration to the plugin in `plugin_init`. The starting value and maximum number of events is provided as open parameters to the plugin in `plugin_open`.
 
 This will show how the above API functions are actually used in a functional plugin.
 
@@ -916,44 +742,56 @@ The source code for this plugin can be found at [dummy.cpp](https://github.com/f
 
 ### Initial header include
 
-`plugin_info.h` defines structs/enums like `ss_plugin_t`, `ss_instance_t`, `ss_plugin_event`, etc, as well as function return values like SS_PLUGIN_SUCCESS, SS_PLUGIN_FAILURE, etc. The [json](https://github.com/nlohmann/json) header file provides helpful c++ classes to parse/represent json objects.
+`falcosecurity_plugin.h` is the C++ sdk, and declares the base classes and preprocessor define to generate plugin API C functions. It also includes `plugin_info.h`, which defines structs/enums like `ss_plugin_t`, `ss_instance_t`, `ss_plugin_event`, etc, as well as function return values like SS_PLUGIN_SUCCESS, SS_PLUGIN_FAILURE, etc. The [json](https://github.com/nlohmann/json) header file provides helpful c++ classes to parse/represent json objects.
 
 ```c++
 #include <string>
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <nlohmann/json.hpp>
+#include "nlohmann/json.hpp"
 
-#include <plugin_info.h>
+#include <falcosecurity_plugin.h>
 
 using json = nlohmann::json;
 ```
 
-### Info Functions
+### `dummy_plugin` class: plugin object
 
-This plugin defines const strings/values for info properties and uses them in the `plugin_get_xxx` functions. Note that since this plugin was written in C++, all of the `plugin_xxx` functions must be declared with `extern "C"`:
+The `dummy_plugin` class derives from `falcosecurity::source_plugin` and implements the abstract methods from the `falcosecurity::source_plugin_iface` class. It also saves a copy of the config provided to `init()` in `m_config` and the configured jitter in `m_jitter`:
 
 ```c++
-static const char *pl_required_api_version = "1.0.0";
-static uint32_t    pl_type                 = TYPE_SOURCE_PLUGIN;
-static uint32_t    pl_id                   = 4;
-static const char *pl_name                 = "dummy_c";
-static const char *pl_desc                 = "Reference plugin for educational purposes";
-static const char *pl_contact              = "github.com/falcosecurity/plugins";
-static const char *pl_version              = "1.0.0";
-static const char *pl_event_source         = "dummy";
-...
-extern "C"
-char* plugin_get_required_api_version()
-{
-	printf("[%s] plugin_get_required_api_version\n", pl_name);
-	return strdup(pl_required_api_version);
-}
-...
+class dummy_plugin : public falcosecurity::source_plugin {
+public:
+	dummy_plugin();
+	virtual ~dummy_plugin();
+
+	// All of these are from falcosecurity::source_plugin_iface.
+	void get_info(falcosecurity::plugin_info &info) override;
+	ss_plugin_rc init(const char *config) override;
+	void destroy() override;
+	falcosecurity::plugin_instance *create_instance(falcosecurity::source_plugin &plugin) override;
+	std::string event_to_string(const uint8_t *data, uint32_t datalen) override;
+	bool extract_str(const ss_plugin_event &evt, const std::string &field, const std::string &arg, std::string &extract_val) override;
+	bool extract_u64(const ss_plugin_event &evt, const std::string &field, const std::string &arg, uint64_t &extract_val) override;
+
+	// Return the configured jitter.
+	uint64_t jitter();
+
+private:
+	// A copy of the config provided to init()
+	std::string m_config;
+
+	// This reflects potential internal state for the plugin. In
+	// this case, the plugin is configured with a jitter (e.g. a
+	// random amount to add to the sample with each call to next().
+	uint64_t m_jitter;
+};
 ```
 
-### Defining Fields
+### Returning Plugin Info
+
+`dummy_plugin::get_info` returns info about the plugin.
 
 This dummy plugin exports 3 fields:
 
@@ -961,298 +799,281 @@ This dummy plugin exports 3 fields:
 * `dummy.strvalue`: the value in the event, as a string
 * `dummy.divisible`: this field takes an argument and returns 1 if the value in the event is divisible by the argument (a numeric divisor). For example, if the value was 12, `dummy.divisible[3]` would return 1 for that event.
 
-A json string representing these fields is a static const string, and a copy is returned in `plugin_get_fields()`:
-
 ```c++
-static const char *pl_fields               = R"(
-[{"type": "uint64", "name": "dummy.divisible", "argRequired": true, "desc": "Return 1 if the value is divisible by the provided divisor, 0 otherwise"},
-{"type": "uint64", "name": "dummy.value", "desc": "The sample value in the event"},
-{"type": "string", "name": "dummy.strvalue", "desc": "The sample value in the event, as a string"}])";
-...
-extern "C"
-char* plugin_get_fields()
+void dummy_plugin::get_info(falcosecurity::plugin_info &info)
 {
-	printf("[%s] plugin_get_fields\n", pl_name);
-	return strdup(pl_fields);
+	info.name = "dummy_c";
+	info.description = "Reference plugin for educational purposes";
+	info.contact = "github.com/falcosecurity/plugins";
+	info.version = "0.1.0";
+	info.event_source = "dummy";
+	info.fields = {
+		{FTYPE_UINT64, "dummy.divisible", true, "Return 1 if the value is divisible by the provided divisor, 0 otherwise"},
+		{FTYPE_UINT64, "dummy.value", false, "The sample value in the event"},
+		{FTYPE_STRING, "dummy.strvalue", false, "The sample value in the event, as a string"}
+	};
 }
 ```
 
-### Returning Errors
+### Plugin Initialization and Destroy
 
-When the plugin encounters an error, it saves the error string to plugin_state.last_error. `plugin_get_last_error` returns a copy of that string and clears the string.
+`dummy_plugin::init` initializes the plugin. It parses the (JSON) config string and extracts a configured jitter value from the config. `dummy_plugin::destroy` is a no-op.
 
 ```c++
-extern "C"
-char* plugin_get_last_error(ss_plugin_t* s)
+ss_plugin_rc dummy_plugin::init(const char *config)
 {
-	printf("[%s] plugin_get_last_error\n", pl_name);
+	m_config = config;
 
-	plugin_state *state = (plugin_state *) s;
-
-	if(!state->last_error.empty())
+	// Config is optional. In this case defaults are used.
+	if(m_config == "" || m_config == "{}")
 	{
-		char *ret = strdup(state->last_error.c_str());
-		state->last_error = "";
-		return ret;
+		return SS_PLUGIN_SUCCESS;
 	}
-
-	return NULL;
-}
-```
-
-### Freeing Memory
-
-The dummy plugin allocates strings/structs passed to the framework using `malloc()`. In turn, the framework calls `plugin_free_mem()` to free any allocated memory:
-
-```c++
-extern "C"
-void plugin_free_mem(void *ptr)
-{
-    free(ptr);
-}
-```
-
-### Initializing/Destroying the Plugin
-
-The plugin-level state is held in a `plugin_state` struct. `plugin_init` allocates a struct, parses the config argument, and returns a pointer to the allocated struct.
-
-Note that the plugin uses `new()` to allocate the struct. This is allowed because the struct pointer is opaque and not modified/freed by the plugin framework.
-
-`plugin_destroy` uses `delete()` to free the struct.
-
-```c++
-extern "C"
-ss_plugin_t* plugin_init(char* config, int32_t* rc)
-{
-	printf("[%s] plugin_init config=%s\n", pl_name, config);
 
 	json obj;
 
 	try {
-		obj = json::parse(config);
+		obj = json::parse(m_config);
 	}
 	catch (std::exception &e)
 	{
-		return NULL;
+		// No need to call set_last_error() here as the plugin
+		// struct doesn't exist to the framework yet.
+		return SS_PLUGIN_FAILURE;
 	}
 
 	auto it = obj.find("jitter");
 
 	if(it == obj.end())
 	{
-		return NULL;
+		// No need to call set_last_error() here as the plugin
+		// struct doesn't exist to the framework yet.
+		return SS_PLUGIN_FAILURE;
 	}
 
-	// Note: Using new/delete is okay, as long as the plugin
-	// framework is not deleting the memory.
-	plugin_state *ret = new plugin_state();
-	ret->config = config;
-	ret->last_error = "";
-	ret->jitter = *it;
-
-	*rc = SS_PLUGIN_SUCCESS;
-
-	return ret;
-}
-
-extern "C"
-void plugin_destroy(ss_plugin_t* s)
-{
-	printf("[%s] plugin_destroy\n", pl_name);
-
-	plugin_state *ps = (plugin_state *) s;
-
-	delete(ps);
-}
-```
-
-### Opening/Closing a Stream of Events
-
-A plugin instance is held in a `plugin_instance` struct. `plugin_open`/`plugin_close` behave similarly to `plugin_init`/`plugin_destroy`:
-
-* Allocating a `plugin_instance` struct using `new()`.
-* Parsing open params and populating the instance struct.
-* Freeing the `plugin_instance` struct using `delete()` in `plugin_close`.
-
-```c++
-extern "C"
-ss_instance_t* plugin_open(ss_plugin_t* s, char* params, int32_t* rc)
-{
-	printf("[%s] plugin_open params=%s\n", pl_name, params);
-
-	plugin_state *ps = (plugin_state *) s;
-
-	json obj;
-
-	try {
-		obj = json::parse(params);
-	}
-	catch (std::exception &e)
-	{
-		ps->last_error = std::string("Params ") + params + " could not be parsed: " + e.what();
-		*rc = SS_PLUGIN_FAILURE;
-		return NULL;
-	}
-
-	auto start_it = obj.find("start");
-	if(start_it == obj.end())
-	{
-		ps->last_error = std::string("Params ") + params + " did not contain start property";
-		*rc = SS_PLUGIN_FAILURE;
-		return NULL;
-	}
-
-	auto max_events_it = obj.find("maxEvents");
-	if(max_events_it == obj.end())
-	{
-		ps->last_error = std::string("Params ") + params + " did not contain maxEvents property";
-		*rc = SS_PLUGIN_FAILURE;
-		return NULL;
-	}
-
-	// Note: Using new/delete is okay, as long as the plugin
-	// framework is not deleting the memory.
-	instance_state *ret = new instance_state();
-	ret->params = params;
-	ret->counter = 0;
-	ret->max_events = *max_events_it;
-	ret->sample = *start_it;
-
-	*rc = SS_PLUGIN_SUCCESS;
-
-	return ret;
-}
-
-extern "C"
-void plugin_close(ss_plugin_t* s, ss_instance_t* i)
-{
-	printf("[%s] plugin_close\n", pl_name);
-
-	instance_state *istate = (instance_state *) i;
-
-	delete(istate);
-}
-```
-
-### Returning Events
-
-`plugin_next` allocates and returns a `ss_plugin_event` struct. It increments the counter and sample, including a random jitter.
-
-The event data representation is just the sample as a string. The plugin uses `std::to_string()`, `.c_str()`, and `strdup` to return an allocated data buffer in the `ss_plugin_event` struct.
-
-Notice that although the function allocates and returns a `ss_plugin_event` struct, it does *not* fill in the evtnum struct member. This is because event numbers are assigned by the plugin framework. The event number will be returned in calls to extract_fields, however.
-
-```c++
-extern "C"
-int32_t plugin_next(ss_plugin_t* s, ss_instance_t* i, ss_plugin_event **evt)
-{
-	printf("[%s] plugin_next\n", pl_name);
-
-	plugin_state *state = (plugin_state *) s;
-	instance_state *istate = (instance_state *) i;
-
-	istate->counter++;
-
-	if(istate->counter > istate->max_events)
-	{
-		return SS_PLUGIN_EOF;
-	}
-
-	// Increment sample by 1, also add a jitter of [0:jitter]
-	istate->sample = istate->sample + 1 + (random() % (state->jitter + 1));
-
-	// The event payload is simply the sample, as a string
-	std::string payload = std::to_string(istate->sample);
-
-	struct ss_plugin_event *ret = (struct ss_plugin_event *) malloc(sizeof(ss_plugin_event));
-
-	ret->data = (uint8_t *) strdup(payload.c_str());
-	ret->datalen = payload.size();
-
-	// Let the plugin framework assign timestamps
-	ret->ts = (uint64_t) -1;
-
-	*evt = ret;
+	m_jitter = *it;
 
 	return SS_PLUGIN_SUCCESS;
 }
+
+void dummy_plugin::destroy()
+{
+}
 ```
 
-### Printing Events As Strings
+### Creating Plugin Instances
 
-Since a plugin event is simply a C-style null terminated string containing the sample value, `plugin_event_to_string` simply returns that value as a json object:
+`dummy_plugin::create_instance` creates a `dummy_instance` object and returns it. Note that in this case, the constructor takes a reference to a `dummy_plugin` object (cast from `falcosecurity::source_plugin`) so instances can have access back to the plugin.
 
 ```c++
-extern "C"
-char *plugin_event_to_string(ss_plugin_t *s, const uint8_t *data, uint32_t datalen)
+falcosecurity::plugin_instance *dummy_plugin::create_instance(falcosecurity::source_plugin &plugin)
 {
-	printf("[%s] plugin_event_to_string\n", pl_name);
+	return new dummy_instance((dummy_plugin &) plugin);
 
-	plugin_state *state = (plugin_state *) s;
+}
+```
 
+### Returning String Representations of Events
+
+`dummy_plugin::event_to_string` returns a string representation of an event. The exact form of the string representation is up to the plugin author. In this case, the string representation of an event is a json object containing the current sample.
+
+```c++
+std::string dummy_plugin::event_to_string(const uint8_t *data, uint32_t datalen)
+{
 	// The string representation of an event is a json object with the sample
 	std::string rep = "{\"sample\": ";
 	rep.append((char *) data, datalen);
 	rep += "}";
 
-	return strdup(rep.c_str());
+	return rep;
 }
-```
-
-### Extracting Fields
-
-Field extraction is handled in `plugin_extract_fields()`. Unlike the Go plugin, there is no higher-level function and this function handles all the details of iterating over the `ss_plugin_extract_fields *fields` array, finding the field/argument/type in each array element, and filling in the `field_present` and `res_u64`/`res_str` member of each element with the extracted value:
 
 ```
-extern "C"
-int32_t plugin_extract_fields(ss_plugin_t *s, const ss_plugin_event *evt, uint32_t num_fields, ss_plugin_extract_field *fields)
+
+### Extracting Values
+
+`dummy_plugin::extract_str` and `dummy_plugin::extract_u64` extract fields from events. Note that the methods return true only when the field is one of the supported fields.
+
+```c++
+bool dummy_plugin::extract_str(const ss_plugin_event &evt, const std::string &field, const std::string &arg, std::string &extract_val)
 {
-	printf("[%s] plugin_extract_fields\n", pl_name);
+	if (field == "dummy.strvalue")
+	{
+		extract_val.assign((char *) evt.data, evt.datalen);
+		return true;
+	}
 
-	std::string sample((char *) evt->data, evt->datalen);
+	return false;
+}
+
+bool dummy_plugin::extract_u64(const ss_plugin_event &evt, const std::string &field, const std::string &arg, uint64_t &extract_val)
+{
+	std::string sample((char *) evt.data, evt.datalen);
 	uint64_t isample = std::stoi(sample);
 
-	for(uint32_t i=0; i < num_fields; i++)
+	if(field == "dummy.divisible")
 	{
-		ss_plugin_extract_field *field = &(fields[i]);
-
-		if(strcmp(field->field, "dummy.divisible") == 0)
+		uint64_t divisor = std::stoi(arg);
+		if ((isample % divisor) == 0)
 		{
-			field->field_present = 1;
-
-			uint64_t divisor = std::stoi(std::string(field->arg));
-			if ((isample % divisor) == 0)
-			{
-				field->res_u64 = 1;
-			}
-			else
-			{
-				field->res_u64 = 0;
-			}
-		}
-		else if (strcmp(field->field, "dummy.value") == 0)
-		{
-			field->field_present = 1;
-			field->res_u64 = isample;
-		}
-		else if (strcmp(field->field, "dummy.strvalue") == 0)
-		{
-			field->field_present = 1;
-			field->res_str = strdup(sample.c_str());
+			extract_val = 1;
 		}
 		else
 		{
-			field->field_present = 0;
+			extract_val = 0;
 		}
+
+		return true;
 	}
+	else if (field == "dummy.value")
+	{
+		extract_val = isample;
+
+		return true;
+	}
+
+	return false;
+}
+```
+
+### `dummy_instance` class: plugin instance object
+
+The `dummy_instance` class derives from `falcosecurity::plugin_instance` and implements the abstract methods from the `falcosecurity::plugin_instance_iface` class. It saves the parameters provided to `plugin_open()` and holds the current sample, which is modified with each call to `next()`:
+
+```c++
+class dummy_instance : public falcosecurity::plugin_instance {
+public:
+	dummy_instance(dummy_plugin &plugin);
+	virtual ~dummy_instance();
+
+	// All of these are from falcosecurity::plugin_instance_iface.
+	ss_plugin_rc open(const char *params) override;
+	void close() override;
+	ss_plugin_rc next(falcosecurity::plugin_event &evt) override;
+
+private:
+	// The plugin that created this instance
+	dummy_plugin &m_plugin;
+
+	// All of these reflect potential internal state for the
+	// instance.
+
+	// Copy of the init params from plugin_open()
+	std::string m_params;
+
+	// The number of events to return before EOF
+	uint64_t m_max_events;
+
+	// A count of events returned. Used to count against m_max_events
+	uint64_t m_counter;
+
+	// A semi-random numeric value, derived from this value and
+	// jitter. This is put in every event as the data property.
+	uint64_t m_sample;
+};
+```
+
+### Opening/Closing Event Streams
+
+`dummy_instance::open()` opens an event stream. It parses the json configuration in params and extracts `start`/`maxEvents` properties which control the number of events to return before EOF and the initial sample value.
+
+Note that on error, the instance uses `m_plugin::set_last_error` to set an error string if the params string is not json or did not contain the expected values.
+
+`dummy_instance::close()` closes the event stream, and is a no-op.
+
+```c++
+ss_plugin_rc dummy_instance::open(const char *params)
+{
+	m_params = params;
+
+	// Params are optional. In this case defaults are used.
+	if(m_params == "" || m_params == "{}")
+	{
+		return SS_PLUGIN_SUCCESS;
+	}
+
+	json obj;
+
+	try {
+		obj = json::parse(m_params);
+	}
+	catch (std::exception &e)
+	{
+		std::string errstr = std::string("Params ") + m_params + " could not be parsed: " + e.what();
+		m_plugin.set_last_error(errstr);
+		return SS_PLUGIN_FAILURE;
+	}
+
+	auto start_it = obj.find("start");
+	if(start_it == obj.end())
+	{
+		std::string errstr = std::string("Params ") + m_params + " did not contain start property";
+		m_plugin.set_last_error(errstr);
+		return SS_PLUGIN_FAILURE;
+	}
+
+	auto max_events_it = obj.find("maxEvents");
+	if(max_events_it == obj.end())
+	{
+		std::string errstr = std::string("Params ") + m_params + " did not contain maxEvents property";
+		m_plugin.set_last_error(errstr);
+		return SS_PLUGIN_FAILURE;
+	}
+
+	m_counter = 0;
+	m_max_events = *max_events_it;
+	m_sample = *start_it;
+
+	return SS_PLUGIN_SUCCESS;
+}
+
+void dummy_instance::close()
+{
+}
+```
+
+### Returning Events
+
+`dummy_instance::next` fills in the provided event reference with the next event. It increments the counter and sample, including a random jitter.
+
+The event data representation is just the sample as a string, using `std::to_string()`.
+
+Notice that it does *not* fill in the evtnum struct member. This is because event numbers are assigned by the plugin framework.
+
+```c++
+ss_plugin_rc dummy_instance::next(falcosecurity::plugin_event &evt)
+{
+	m_counter++;
+
+	if(m_counter > m_max_events)
+	{
+		return SS_PLUGIN_EOF;
+	}
+
+	// Increment sample by 1, also add a jitter of [0:jitter]
+	m_sample = m_sample + 1 + (random() % (m_plugin.jitter() + 1));
+
+	// The event payload is simply the sample, as a string
+	std::string payload = std::to_string(m_sample);
+
+	// Note that evtnum is not set, as event numbers are
+	// assigned by the plugin framework.
+	evt.data.assign(payload.begin(), payload.end());
+
+	// Let the plugin framework assign timestamps
+	evt.ts = (uint64_t) -1;
 
 	return SS_PLUGIN_SUCCESS;
 }
 ```
 
-### Not Included: Batched Events
+### Generating Plugin API Functions
 
-Note that unlike the Go plugin, this plugin does not implement `plugin_next_batch`. This is allowed--the plugin framework will simply use `plugin_next` to fetch individual events.
+The plugin uses `GEN_SOURCE_PLUGIN_API_HOOKS` to generate plugin API functions, using the name of the derived classes `dummy_plugin` and `dummy_instance`:
+
+```c++
+GEN_SOURCE_PLUGIN_API_HOOKS(dummy_plugin, dummy_instance)
+```
 
 ### Plugin In Action
 
@@ -1280,65 +1101,21 @@ load_plugins: [dummy_c]
 
 ```
 $ ./falco -r ../falco-files/dummy_rules.yaml -c ../falco-files/falco.yaml
-Wed Sep  1 19:19:35 2021: Falco version 0.20.0-737+849fb98 (driver version new/plugin-system-api-additions)
-Wed Sep  1 19:19:35 2021: Falco initialized with configuration file ../falco-files/falco.yaml
-Wed Sep  1 19:19:35 2021: Loading plugin (dummy_c) from file /tmp/my-plugins/dummy_c/libdummy_c.so
-[dummy_c] plugin_get_required_api_version
-[dummy_c] plugin_get_type
-[dummy_c] plugin_get_name
-[dummy_c] plugin_get_description
-[dummy_c] plugin_get_contact
-[dummy_c] plugin_get_version
-[dummy_c] plugin_get_required_api_version
-[dummy_c] plugin_get_fields
-[dummy_c] plugin_get_id
-[dummy_c] plugin_get_event_source
-[dummy_c] plugin_init config={"jitter": 10}
-Wed Sep  1 19:19:35 2021: Loading rules from file ../falco-files/dummy_rules.yaml:
-[dummy_c] plugin_get_name
-[dummy_c] plugin_get_id
-[dummy_c] plugin_open params={"start": 1, "maxEvents": 20}
-Wed Sep  1 19:19:35 2021: Starting internal webserver, listening on port 8765
-[dummy_c] plugin_next
-[dummy_c] plugin_extract_fields
-[dummy_c] plugin_event_to_string
-[dummy_c] plugin_extract_fields
-[dummy_c] plugin_extract_fields
-[dummy_c] plugin_event_to_string
-[dummy_c] plugin_extract_fields
-[dummy_c] plugin_extract_fields
-[dummy_c] plugin_next
-[dummy_c] plugin_extract_fields
-[dummy_c] plugin_next
-[dummy_c] plugin_extract_fields
-[dummy_c] plugin_next
-[dummy_c] plugin_extract_fields
-[dummy_c] plugin_event_to_string
-[dummy_c] plugin_extract_fields
-[dummy_c] plugin_extract_fields
-[dummy_c] plugin_event_to_string
-[dummy_c] plugin_extract_fields
-[dummy_c] plugin_extract_fields
-[dummy_c] plugin_next
-[dummy_c] plugin_extract_fields
-[dummy_c] plugin_next
-[dummy_c] plugin_extract_fields
-[dummy_c] plugin_next
-19:19:35.899897000: Notice A dummy event (event={"sample": 12} sample=12 sample_str=12 num=1)
-[dummy_c] plugin_extract_fields
-[dummy_c] plugin_event_to_string
-[dummy_c] plugin_extract_fields
-[dummy_c] plugin_extract_fields
-[dummy_c] plugin_event_to_string
-[dummy_c] plugin_extract_fields
-[dummy_c] plugin_extract_fields
-[dummy_c] plugin_next
-[dummy_c] plugin_extract_fields
-[dummy_c] plugin_next
-[dummy_c] plugin_next
-[dummy_c] plugin_next
-[dummy_c] plugin_close
-19:19:35.900068000: Notice A dummy event (event={"sample": 24} sample=24 sample_str=24 num=4)
-19:19:35.900135000: Notice A dummy event (event={"sample": 48} sample=48 sample_str=48 num=7)
-[dummy_c] plugin_close
+Fri Oct 29 14:18:53 2021: Falco version 0.30.0-29+2d624a2 (driver version b9d2fccebf0feb94729c78bee0368c70d9c24819)
+Fri Oct 29 14:18:53 2021: Falco initialized with configuration file ../falco-files/falco.yaml
+Fri Oct 29 14:18:53 2021: Loading plugin (dummy_c) from file /mnt/sf_mstemm/Documents/work/src/plugins/plugins/dummy_c/libdummy_c.so
+Fri Oct 29 14:18:53 2021: Loading rules from file ../falco-files/dummy_rules.yaml:
+Fri Oct 29 14:18:53 2021: Starting internal webserver, listening on port 8765
+14:18:53.941207000: Notice A dummy event (event={"sample": 12} sample=12 sample_str=12 num=2)
+14:18:53.942443000: Notice A dummy event (event={"sample": 18} sample=18 sample_str=18 num=4)
+14:18:53.942498000: Notice A dummy event (event={"sample": 39} sample=39 sample_str=39 num=8)
+14:18:53.942526000: Notice A dummy event (event={"sample": 42} sample=42 sample_str=42 num=9)
+Events detected: 4
+Rule counts by severity:
+   INFO: 4
+Triggered rules by rule name:
+   My Dummy Rule: 4
+Syscall event drop monitoring:
+   - event drop detected: 0 occurrences
+   - num times actions taken: 0
 ```
