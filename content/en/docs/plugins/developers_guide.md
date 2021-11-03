@@ -3,7 +3,7 @@ title: Falco Plugins Developers Guide
 weight: 1
 ---
 
-# Introduction
+## Introduction
 
 This page is a guide for developers who want to write their own Falco/Falco libs plugins. It starts with an overview of the plugins API and some general best practices for authoring plugins. We then walk through the [Go](https://github.com/falcosecurity/plugin-sdk-go) and [C++](https://github.com/falcosecurity/plugins/tree/master/sdk/cpp) SDKs, which provide the preferred streamlined interface to plugin authors, as well as two reference plugins written in Go and C++. If you prefer to directly use the plugin API functions instead, you can consult the [Plugin API Reference](plugin_api_reference.md) for documentation on each API function.
 
@@ -13,7 +13,7 @@ Although plugins can be written in many languages, the Plugins API uses C functi
 
 Before reading this page, read the main [plugins](../../plugins) page for an overview of what plugins are and how they are used by Falco/Falco libs.
 
-# High Level Overview
+## High Level Overview
 
 Here is a high level overview of how the plugin framework uses API functions to interact with plugins:
 
@@ -27,27 +27,27 @@ Here is a high level overview of how the plugin framework uses API functions to 
 * **Close a stream of events**: the framework calls `plugin_close()` to close a stream of events. The `ss_instance_t` handle is considered invalid and will not be used again. (source plugins only)
 * **Destroy the plugin**: the framework calls `plugin_destroy()` to destroy a plugin. The `ss_plugin_t` handle is considered invalid and will not be used again.
 
-# General Plugin Development Considerations
+## General Plugin Development Considerations
 
-## API Versioning
+### API Versioning
 
 The plugins API is versioned with a [semver](https://semver.org/)-style version string. The plugins framework checks the plugin's required api version by calling the `plugin_get_required_api_version` API function. In order for the framework to load the plugin, the major number of the plugin framework must match the major number in the version returned by `plugin_get_required_api_version`. Otherwise, the plugin is incompatible and will not be loaded.
 
-## Required vs Optional Functions
+### Required vs Optional Functions
 
 Some API functions are required, while others are optional. If a function is optional, the plugin can choose to not define the function at all. The framework will note that the function is not defined and use a default behavior. For optional functions, the default behavior is described below.
 
-## Memory Returned Across the API is Owned By the Plugin
+### Memory Returned Across the API is Owned By the Plugin
 
 Every API function that returns or populates a string or struct pointer must point to memory allocated by the plugin and must remain valid for use by the plugin framework. When using the SDKs, this is generally handled automatically. Keep it in mind if using the plugin API functions directly, however.
 
-## Cgo Pitfalls with Packages
+### Cgo Pitfalls with Packages
 
 Cgo has a [limitation](https://github.com/golang/go/issues/13467) where generated go types for C types (e.g. `C.ss_plugin_event`) are package-specific and not exported. This means that if you include `plugin_info.h` in your plugin in one package, the go types corresponding to structs/enums/etc in `plugin_info.h` can not be used directly in other packages.
 
 If your plugin needs to use the generated types across packages, you'll have to cast them to an `unsafe.Pointer` across the package boundary. As the generated types all match the same underlying memory layout, this is still safe, as long as the packages were all built from the same plugin API version.
 
-## What Configuration/Internal State Goes Where?
+### What Configuration/Internal State Goes Where?
 
 When the framework calls `plugin_open()`, it provides a configuration string which is used to configure the plugin. When the framework calls `plugin_open()`, it provides a parameters string which is used to source a stream of events. The format of both text blocks is defined by the plugin and is passed directly through by the plugin framework.
 
@@ -61,7 +61,7 @@ For new plugin authors, it may be confusing to determine which state goes in eac
 
 For example, if a plugin fetches URLs, whether or not to allow self-signed certificates would belong in configuration, and the actual URLs to fetch would belong in parameters.
 
-## What Goes In An Event?
+### What Goes In An Event?
 
 Similarly, it may be confusing to distinguish between state for a plugin (e.g. `ss_plugin_t`/`ss_instance_t`) as compared to the actual data that ends up in an event. This is especially important when thinking about fields and what they represent. A good rule of thumb to follow is that fields should *only* extract data from events, and not internal state. For example, this behavior is encouraged by *not* providing a `ss_instance_t` handle as an argument to `plugin_extract_fields`.
 
@@ -69,11 +69,11 @@ For example, assume some plugin returned a sample of a metric in events, and the
 
 A question to ask when deciding what to put in an event is "if this were written to a `.scap` capture file and reread, would this plugin return the same values for fields as it did when the events were first generated?".
 
-## Plugin Authoring Lifecycle
+### Plugin Authoring Lifecycle
 
 Here are some considerations to keep in mind when releasing the initial version of a new plugin and when releasing updated versions of the plugin.
 
-### Initial Version
+#### Initial Version
 
 For source plugins, make sure the event source is distinct, or if the same as existing plugins, that the saved payload is identical. In most cases, each source plugin should define a new event source.
 
@@ -81,7 +81,7 @@ For extractor plugins, if the plugin exports a set of compatible sources, make s
 
 Register this plugin by submitting a PR to [falcosecurity/plugins](https://github.com/falcosecurity/plugins) to update [PLUGINS-REGISTRY.md](https://github.com/falcosecurity/plugins/blob/master/plugins/PLUGINS-REGISTRY.md). This will give an official Plugin ID that can be safely used in capture files, etc., without overlapping with other plugins. It also lets others know that a new plugin is available!
 
-### Updates
+#### Updates
 
 Every new release of a plugin should update the plugin's version number. Following semver conventions, the patch number should always be updated, the minor number should be updated when new fields are added, and the major number should be updated whenever any field is modified/removed or the semantics of a given field changes.
 
@@ -89,9 +89,163 @@ With every release, you should check for an updated Plugin API Version and if ne
 
 With each new release, make sure the contact information provided by the plugin is up-to-date.
 
-# Go Plugin SDK Walkthrough
+## Go Plugin SDK Walkthrough
+The [Go SDK](https://github.com/falcosecurity/plugin-sdk-go) provides prebuilt constructs and definitions that help developing plugins by abstracting all the complexities related to the bridging between the C and the Go runtimes. The Go SDK takes care of satisfying all the plugin framework requirements without having to deal with the low-level details, by also optimizing the most critical code paths.
 
-# C++ Plugin SDK Walkthrough
+The SDK allows developers to choose either from a low-level set of abstractions, or from a more high-level set of packages designed for simplicy and ease of use. The best way to approach the Go SDK is to start by importing few high-level packages, which is enough to satisfy the majority of use cases.
+
+This section documents the Go SDK at a high-level, please refer to the [official Go SDK documentation](https://github.com/falcosecurity/plugin-sdk-go) for deeper details.
+
+### Architecture of the Go SDK
+
+Since Falcosecurity plugins run in a C runtime, the Go SDK has been designed to abstract most of the complexity related to writing C-compliant	 code acceptable by the plugin framework, so that developers can focus on writing Go code only. 
+
+![plugin_sdk_go_architecture](/docs/images/plugin_sdk_go_architecture.png)
+
+At a high level, the SDK is on top of three fundamendal package with different levels of abstractions:
+
+1. Package `sdk` is a container for all the basic types, definitions, and helpers that are reused across all the SDK parts. 
+
+2. Package `sdk/symbols` contains prebuilt implementations for all the C symbols that plugins must export to be accepted by the framework. The prebuilt C symbols are divided in many subpackages, so that each of them can be imported individually to opt-in/opt-out each symbol. 
+
+3. Package `sdk/plugins` provide high-level definition and base types for writing extractor plugins and source plugins. This uses `sdk/symbols` internally and takes care of importing all the prebuilt C symbols required by extractor and source plugins respectively. This is the main entrypoint for developers to write plugins in Go.
+
+Two additional packages `ptr` and `cgo` are used internally to simplify and optimize the state management and the usage of C-allocated memory pointers.
+
+For some use cases, developers can consider using the SDK layers selectively. This is meaningful only if developers wish to manually write part of the low-level C details of the framework in their plugins, but still want to use some parts of the SDK. However, this is discouraged if not for advanced use cases only. Developers are encouraged to use the `sdk/plugins` to build Falcosecurity plugins, which is easier to use and will have less frequent breaking changes.
+
+Further details can be found in the documentation of each package: [`sdk`](https://pkg.go.dev/github.com/falcosecurity/plugin-sdk-go/pkg/sdk), [`sdk/symbols`](https://pkg.go.dev/github.com/falcosecurity/plugin-sdk-go/pkg/sdk/symbols), and [`sdk/plugins`](https://pkg.go.dev/github.com/falcosecurity/plugin-sdk-go/pkg/sdk/plugins).
+
+### Getting Started
+The SDK is built on top a set of minimal composable interfaces describing the behavior of plugins and plugin instances. As such, developing plugins is as easy as defining a struct type representing the plugin itself, ensuring that the mandatory interface methods are defined on it, and then registering it to the SDK.
+
+To use the Go SDK, all you need to import are the `sdk` and `sdk/plugins` packages. The first contains all the core types and definitions used across the rest of the SDK packages, whereas the latter contains built-in constructs to develop plugins. The subpackages `sdk/plugins/source` and `sdk/plugins/extractor` contain specialized definitions for source and extraction functionalities respectively.
+
+Extractor plugins just need to import `sdk/plugins/extractor`. Generally, source plugins should import both `sdk/plugins/source` and `sdk/plugins/extractor`, as they both generate new events and extract fields from them. If needed, the SDK also allows writing source-only plugins without the extraction features, in which case only the `sdk/plugins/source` package would need to be imported.
+
+The `dummy` Go plugin, documented in the [next sections](#example-go-plugin-dummy), is a simple example that helps understanding how to start writing Go plugins with this SDK.
+
+#### Defining Extractor Plugin Functionalities
+In the Go SDK, an extractor Plugin is a type implementing the following interface:
+```go
+// sdk/plugins/extractor
+type Plugin interface {
+	...
+	Info() *sdk.Info
+	Init(config string) error
+	Fields() []sdk.FieldEntry
+	Extract(req sdk.ExtractRequest, evt sdk.EventReader) error
+}
+```
+
+`Info()` returns all the info about the plugin. The returned `plugins.Info` struct should be filled in by the plugin author and contains fields such as the plugin ID, name, description, etc.
+
+`Init()` method is called to initialize a plugin when the framework allocates it. A user-defined configuration string is passed by the framework. This is were the plugin can initialize its internal state and acquire all the resource it needs.
+
+`Fields()` returns an array of `sdk.FieldEntry` representing all the fields supported by a plugin for extraction. The order of the fields is relevant, as their index is used as an identifier during extraction.
+
+`Extract()` extracts the value of one of the supported fields from a given event passed in by the framework. The `sdk.ExtractRequest` argument should be used to set the extracted value.
+
+#### Defining Source Plugin Functionalities
+In the Go SDK, a source Plugin must specify two types, one of the plugin itself and one for the plugin instances, implementing the following interfaces respectively:
+```go
+// sdk/plugins/source
+type Plugin interface {
+	...
+	Info() *sdk.Info
+	Init(config string) error
+	Open(params string) (Instance, error)
+	String(in io.ReadSeeker) (string, error)
+}
+
+// sdk/plugins/source
+type Instance interface {
+	...
+	NextBatch(pState PluginState, evts EventWriters) (int, error)
+}
+```
+The `source.Plugin` interface has many functions in common with `extractor.Plugin`. 
+
+`Open()` creates a new plugin instance to open a new stream of events. The framework provides the user-defined open parameters to customize the event source. The return value must implement the `source.Instance` interface, and its lifecycle ends when the event stream is closed.
+
+`String()` returns a string representation of an event created by the plugin. The string representation should be on a single line and contain important information about the event. 
+
+The `source.Instance` interface represents plugin instances for an opened event stream, and has one mandatory method and few optional ones.
+
+`NextBatch` creates a new batch of events to be pushed in the event stream. The SDK provides a pre-allocated batch to write events into, in order to manage the used memory optimally.
+
+#### Optional Interfaces
+
+On top of the mandatory plugin interface requirements, source and extraction plugins can also implement some additional interface method to enable optional functionalities. All the following interfaces are defined in the `sdk` package.
+
+```go
+type Destroyer interface {
+	Destroy()
+}
+
+type Closer interface {
+	Close()
+}
+
+type Progresser interface {
+	Progress(pState sdk.PluginState) (float64, string)
+}
+```
+
+Source and extrator plugins can optionally implement the `sdk.Destroyer` interface. In that case, `Destroy()` will be called when the plugin gets destroyed and can be used to release any allocated resource.
+
+Source plugin instances can optionally implement the `sdk.Closer` and `sdk.Progresser` interface. If `sdk.Closer` is implemented, the `Close()` method is called while closing the event stream and can be used to release the resources used by the plugin instance. If `sdk.Progresser` is implemented, the 
+`Progress()` method is called by the SDK when the framework requests progress data about the event stream of the plugin instance. `Progress()` must return a `float64` with value between 0 and 1 representing the current progress percentage, and a string representation of the same progress value.
+
+#### Registering a Plugin in the SDK
+
+After defining proper types for the plugin, the only thing remaining is to register it in the SDK so that it can be used in the plugin framework.
+```go
+// sdk/plugins/extractor
+func Register(p extractor.Plugin)
+
+// sdk/plugins/source
+func Register(p source.Plugin)
+```
+The newly created plugin type need to be registered to the SDK in a Go `init` function. The `source.Register()` and `extractor.Register()` functions register plugins for source and extraction functionalities respectively. Extractor plugin should be registered with `extractor.Register()` only. Source plugins need to be registered with both `source.Register()` and `extractor.Register()`, and the order with which the two functions are called is not relevant. If a call to `extractor.Register()` is omitted, source plugins will be interpreted as source-only, with the extraction features disabled.
+
+The defined types are expected to implement a given set of methods. Compilation will fail at the `Register()` functions if any of the required methods is not defined. Developers are encouraged to compose their structs with `plugins.BasePlugin`, and `source.BaseInstance`, which provide prebuilt boilerplate for many of those methods. In this way, developers just need to focus on implementing the few plugin-specific methods remaining.
+
+Besides the interface requirements, the defined types can contain arbitrary fields and methods. State variable that must be maintained during the plugin lifecycle (or in the lifecycle of an opened event stream) must be contained in the defined types. In this way, the SDK can guarantee that the state variables are not disposed by the garbage collector.
+
+#### Interacting with Events
+
+Generating new events, and extracting field values from them, are the hottest path in the plugin framework and can happen at a very high rate. For this reason the Go SDK optimizes the memory usage as much as possible, avoiding reallocations and copies wherever possible. Internally, this sometimes means reading and writing on C-allocated memory from Go code directly, which is efficient but also very unsafe and can lead to unstable code.
+
+As such, the SDK provides the two `sdk.EventReader` and `sdk.EventWriter` interfaces, which enable developers to safely read and write from events while still fully leveraging the underlying memory optimizations. `sdk.EventReader` gives a read-only view of an event, with accessor methods for all the internal fields, and `sdk.EventWriter` does the same in read-only mode. 
+```go
+type EventReader interface {
+	EventNum() uint64
+	Timestamp() uint64
+	Reader() io.ReadSeeker
+}
+
+type EventWriter interface {
+	SetTimestamp(value uint64)
+	Writer() io.Writer
+}
+```
+Event data can either be read or written through the standard `io.SeekReader` and `io.Writer` interfaces, returned by the `Reader()` and `Writer()` methods respectively. The SDK hides behind these interface all the safety and optimzation mechanisms.
+
+For source plugins, a reusable batch of `sdk.EventWriter`s is automatically allocated in each source plugin instance after the `Open()` method returns. This slab-allocator creates reusable event data by using the deafault `sdk.DefaultBatchSize` and `sdk.DefaultEvtSize` constants. Developers can override the automatic allocation to define batches of arbitrary sizes in the `Open()` method, by calling the `SetEvents()` method on the newly opened plugin instance before returning it. The reusable event batch can be created with the `sdk.NewEventWriters` function, that takes the event data size and batch size as arguments.
+```go
+func NewEventWriters(size, dataSize int64) (EventWriters, error)
+```
+Note that the size of the reusable event batch defines the maximum size of each event batch created by the source plugin in `NextBatch`.
+
+#### Compiling Plugins
+After successfully writing a plugin, all you need is to compile it. Go allows compiling binaries as a C-compliant shared library with the `-buildmode=c-shared` flag. The build command will be something looking like:
+```
+go build -buildmode=c-shared -o <outname>.so *.go
+```
+The SDK takes care of generating all the required C exported functions that the plugin framework needs to load the plugin. Once built, your plugin is ready to be used in the Falcosecurity plugin system.
+
+## C++ Plugin SDK Walkthrough
 
 The [C++](https://github.com/falcosecurity/plugins/tree/master/sdk/cpp) SDK, in the form of a single header file `falcosecurity_plugin.h`, provides abstract base classes for a plugin and plugin instance. Plugin authors write classes that derive from those base classes and implement methods to provide plugin info, init/destroy plugins, open/close instances, return events, and extract fields from events. All classes, structs, enums, etc are below the `falcosecurity` namespace.
 
@@ -99,13 +253,13 @@ The SDK also declares a preprocessor `#define` to generate C `plugin_xxx` functi
 
 This section documents the SDK.
 
-## `falcosecurity::source_plugin`: Base Class for Plugins
+### `falcosecurity::source_plugin`: Base Class for Plugins
 
 The `falcosecurity::source_plugin` class provides the base implementation for a source plugin. An object is created every time the plugin is initialized via `plugin_init()` and the object is deleted on `plugin_destroy()`. A separate static global object is also used to provide the demographic functions `plugin_get_name()`, `plugin_get_description()`, etc.
 
 The abstract interface for plugin authors is in the `falcosecurity::source_plugin_iface` class and has the following methods:
 
-### `virtual void get_info(plugin_info &info) = 0`
+#### `virtual void get_info(plugin_info &info) = 0`
 
 Return info about the plugin. The `falcosecurity::plugin_info` struct should be filled in by the plugin author, and is the following:
 
@@ -128,19 +282,19 @@ typedef struct plugin_info {
 } plugin_info;
 ```
 
-### `virtual ss_plugin_rc init(const char* config) = 0`
+#### `virtual ss_plugin_rc init(const char* config) = 0`
 
 Initialize a plugin. This is *not* the constructor, but is called shortly after the plugin object has been allocated. The config is the config provided in the `plugin_initialize()` function. The plugin can parse this config and save it in the object.
 
-### `virtual void destroy() = 0`
+#### `virtual void destroy() = 0`
 
 Destroy a plugin. This is *not* the destructor, but is called shortly before the object is deleted. The plugin can use this method to clean up any state that it does not want to clean up in the destructor.
 
-### `virtual plugin_instance *create_instance(source_plugin &plugin) = 0`
+#### `virtual plugin_instance *create_instance(source_plugin &plugin) = 0`
 
 Create an object that derives from `falcosecurity::plugin_instance` and return a pointer to the object. This is called during `plugin_open()`. The derived instance's `open()` method will be called by the SDK after receiving the derived instance pointer from this function.
 
-### `virtual std::string event_to_string(const uint8_t *data, uint32_t datalen) = 0`
+#### `virtual std::string event_to_string(const uint8_t *data, uint32_t datalen) = 0`
 
 Return a string representation of an event. The returned string will be held in the base class and passed back in `plugin_event_to_string()`.
 
@@ -152,29 +306,29 @@ Here is an example output, from the [cloudtrail](https://github.com/falcosecurit
 us-east-1 masters.some-demo.k8s.local s3 GetObject Size=0 URI=s3://some-demo-env/some-demo.k8s.local/backups/etcd/events/control/etcd-cluster-created
 ```
 
-### `virtual bool extract_str(const ss_plugin_event &evt, const std::string &field, const std::string &arg, std::string &extract_val) = 0`
+#### `virtual bool extract_str(const ss_plugin_event &evt, const std::string &field, const std::string &arg, std::string &extract_val) = 0`
 
 Extract a single string field from an event. This is called during `plugin_extract_fields` as the base class loops over the provided set of fields. If the event has a meaningful value for the provided field, the derived class should return true and fill in `&extract_val` with the extracted value from the event. If the event does not have a meaningful value, the derived class should return false.
 
-### `virtual bool extract_u64(const ss_plugin_event &evt, const std::string &field, const std::string &arg, uint64_t &extract_val) = 0`
+#### `virtual bool extract_u64(const ss_plugin_event &evt, const std::string &field, const std::string &arg, uint64_t &extract_val) = 0`
 
 Identical to `extract_str` but for uint64_t values.
 
-## `falcosecurity::plugin_instance`: Base Class for Plugin Instances
+### `falcosecurity::plugin_instance`: Base Class for Plugin Instances
 
 The `falcosecurity::plugin_instance` class provides the base implementation for a plugin instance. An object is created (via `source_plugin::create_instance`) via `plugin_open()` and the object is deleted on `plugin_close()`.
 
 The abstract interface for plugin authors is in the `falcosecurity::plugin_instance_iface` class and has the following methods:
 
-### `virtual ss_plugin_rc open(const char* params) = 0`
+#### `virtual ss_plugin_rc open(const char* params) = 0`
 
 Create necessary state to open a stream of events. This is called during `plugin_open()` shortly after calling `source_plugin::create_instance`. The provided params are the params provided to `plugin_open()`.
 
-### `virtual void close() = 0`
+#### `virtual void close() = 0`
 
 Tear down any state created in `open()`. The object will be deleted shortly afterward.
 
-### `virtual ss_plugin_rc next(plugin_event &evt) = 0`
+#### `virtual ss_plugin_rc next(plugin_event &evt) = 0`
 
 Return a single event to the sdk. The sdk will handle managing memory for the events and passing them up to the framework in `plugin_next_batch()`. This method should return one of the following:
 
@@ -183,7 +337,7 @@ Return a single event to the sdk. The sdk will handle managing memory for the ev
 * `SS_PLUGIN_TIMEOUT`: no event ready. framework will try again later.
 * `SS_PLUGIN_EOF`: no more events. framework will close instance.
 
-### `virtual std::string get_progress(uint32_t &progress_pct)`
+#### `virtual std::string get_progress(uint32_t &progress_pct)`
 
 Return the read progress, as a number between 0 (no data has been read) and 10000 (100% of the data has been read). This encoding allows the engine to print progress decimals without requiring to deal with floating point numbers (which could cause incompatibility problems with some languages).
 
@@ -191,7 +345,7 @@ Return the read progress, as a number between 0 (no data has been read) and 1000
 
 This method does not have to be overridden--the base implementation simply returns a read progress of zero.
 
-## `#define GEN_SOURCE_PLUGIN_API_HOOKS`: Generate C Plugin API Hooks
+### `#define GEN_SOURCE_PLUGIN_API_HOOKS`: Generate C Plugin API Hooks
 
 After creating derived classes and implementing the above methods, use this preprocessor define to generate C code that implements the plugin API functions. The preprocessor takes two arguments:
 
@@ -200,7 +354,7 @@ After creating derived classes and implementing the above methods, use this prep
 
 This preprocessor define should be called exactly once per plugin, to avoid generating duplicate symbols.
 
-# Example Plugins Walkthrough
+## Example Plugins Walkthrough
 
 This section walks through the implementation of two plugins: `dummy` and `dummy_c`. They behave identically, returning artificial dummy information. One is written in Go and one is written in C++.
 
@@ -208,143 +362,37 @@ The dummy plugins return events that are just a number value that increases with
 
 This will show how the above API functions are actually used in a functional plugin.
 
-## Example Go plugin: `dummy`
+### Example Go Plugin: `dummy`
 
 The source code for this plugin can be found at [dummy.go](https://github.com/falcosecurity/plugins/blob/master/plugins/dummy/dummy.go).
 
-### Initial header include
+#### Initial Imports
 
 ```go
 package main
 
-// #cgo CFLAGS: -I${SRCDIR}/../../
-/*
-#include <plugin_info.h>
-*/
-...
 import (
-	"github.com/falcosecurity/plugin-sdk-go"
-	"github.com/falcosecurity/plugin-sdk-go/state"
-	"github.com/falcosecurity/plugin-sdk-go/wrappers"
-	"github.com/falcosecurity/plugin-sdk-go/free"	
+	...
+
+	"github.com/falcosecurity/plugin-sdk-go/pkg/sdk"
+	"github.com/falcosecurity/plugin-sdk-go/pkg/sdk/plugins"
+	"github.com/falcosecurity/plugin-sdk-go/pkg/sdk/plugins/extractor"
+	"github.com/falcosecurity/plugin-sdk-go/pkg/sdk/plugins/source"
 )
 ```
+Importing the `sdk` and `sdk/plugins` packages is the first step for developing a Falcosecurity plugin in Go. The `sdk` package contains all the core types and definitions used across the other packages of the SDK. The `sdk/plugins` package contains prebuilt constructs for defining new plugins.
 
-Including `plugin_info.h` allows for direct use of generated Go types for C structs/types like `C.ss_plugin_event`, `C.ss_plugin_extract_field`, etc. The plugin-sdk-go module provides utility functions and types that handle some of the conversions between C types and Go types.
+The `sdk/plugins/source` and `sdk/plugins/extractor` packages are required to register the functionalities of source and extractor plugins. `dummy` requires on both of them, as it is an example of source plugin.
 
-`plugin_info.h` is not included with the dummy plugin, but you can retrieve it from [here](https://github.com/falcosecurity/libs/blob/master/userspace/libscap/plugin_info.h). The exact value for CFLAGS will depend on the location of `plugin_info.h` relative to dummy.go. In the plugins repository, `plugin_info.h` is two directories above `dummy.go`, hence the `../../`.
+The Go module `falcosecurity/plugin-sdk-go` has its own [documentation](https://pkg.go.dev/github.com/falcosecurity/plugin-sdk-go), which gives deeper insights about the internal architecture of the SDK.
 
-The go module `falcosecurity/plugin-sdk-go` has its own [documentation](https://pkg.go.dev/falcosecurity/plugin-sdk-go) as well.
+#### Defining the Plugin
 
-Note that because `plugin-sdk-go/wrappers` was imported, `plugin-sdk-go/free` was also imported, to define a `plugin_free_mem()` function that frees memory allocated in the wrapper functions.
-
-### Info Functions
-
-This plugin defines const strings/numbers for info properties and uses them in the exported `plugin_get_xxx` functions:
+In the Go SDK plugins are defined by a set of composable tiny interfaces. To define a new plugin, the first step is to define a new `struct` type representing the plugin itself, and then register it to the SDK. Source plugins, like `dummy`, must define an additional type representing the an opened instance of the plugin event stream.
 
 ```go
-// Plugin consts
-const (
-	PluginRequiredApiVersion        = "1.0.0"
-	PluginID                 uint32 = 3
-	PluginName                      = "dummy"
-	PluginDescription               = "Reference plugin for educational purposes"
-	PluginContact                   = "github.com/falcosecurity/plugins"
-	PluginVersion                   = "1.0.0"
-	PluginEventSource               = "dummy"
-)
-...
-
-//export plugin_get_required_api_version
-func plugin_get_required_api_version() *C.char {
-	log.Printf("[%s] plugin_get_required_api_version\n", PluginName)
-	return C.CString(PluginRequiredApiVersion)
-}
-
-//export plugin_get_type
-func plugin_get_type() uint32 {
-	log.Printf("[%s] plugin_get_type\n", PluginName)
-	return sdk.TypeSourcePlugin
-}
-
-...
-```
-
-Note that each exported function must be prefaced with a commented `//export <NAME>` line, with no whitespace between the commented line and function definition.
-
-Note that each go string is converted into an allocated C string by using `C.CString`.
-
-### Defining Fields
-
-This dummy plugin exports 3 fields:
-
-* `dummy.value`: the value in the event, as a uint64
-* `dummy.strvalue`: the value in the event, as a string
-* `dummy.divisible`: this field takes an argument and returns 1 if the value in the event is divisible by the argument (a numeric divisor). For example, if the value was 12, `dummy.divisible[3]` would return 1 for that event.
-
-Note that fields are represented in Go as `sinsp.FieldEntry` structs, which allows for easy json marshaling. The fields are marshaled to json using the `json` package and an allocated string is returned using `C.CString`.
-
-
-```go
-//export plugin_get_fields
-func plugin_get_fields() *C.char {
-	log.Printf("[%s] plugin_get_fields\n", PluginName)
-
-	flds := []sdk.FieldEntry{
-		{Type: "uint64", Name: "dummy.divisible", ArgRequired: true, Desc: "Return 1 if the value is divisible by the provided divisor, 0 otherwise"},
-		{Type: "uint64", Name: "dummy.value", Desc: "The sample value in the event"},
-		{Type: "string", Name: "dummy.strvalue", Desc: "The sample value in the event, as a string"},
-	}
-
-	b, err := json.Marshal(&flds)
-	if err != nil {
-		return nil
-	}
-
-	return C.CString(string(b))
-}
-```
-
-### Returning Errors
-
-When the plugin encounters an error, it saves the Error object in `pluginState.lastError`. `plugin_get_last_error` converts that error to a string, returns it, and clears the saved Error object.
-
-Note the use of `state.Context` to obtain the wrapped pluginState struct that was originally added via a call to `state.SetContext()`.
-
-```go
-//export plugin_get_last_error
-func plugin_get_last_error(pState unsafe.Pointer) *C.char {
-	log.Printf("[%s] plugin_get_last_error\n", PluginName)
-
-	ps := (*pluginState)(state.Context(pState))
-
-	if ps.lastError != nil {
-		str := C.CString(ps.lastError.Error())
-		ps.lastError = nil
-		return str
-	}
-	return nil
-}
-```
-
-### Initializing/Destroying the Plugin
-
-The plugin-level state is held in a `pluginState` struct. `plugin_init` creates a pluginState struct, parses the config argument, and uses `state.NewStateContainer()/state.SetContext()` to wrap a pointer to the pluginState struct so it can be returned from Cgo.
-
-The wrapping is required as Cgo does not allow passing go pointers directly back to C. These functions behave in a similar way to go 1.17's [Handle](https://pkg.go.dev/runtime/cgo@go1.17#Handle) struct.
-
-`plugin_destroy` frees the wrapped pluginState struct using `sinsp.Free()`:
-
-```go
-type pluginState struct {
-
-	// A copy of the config provided to plugin_init()
-	config string
-
-	// When a function results in an error, this is set and can be
-	// retrieved in plugin_get_last_error().
-	lastError error
-
+type MyPlugin struct {
+	plugins.BasePlugin
 	// This reflects potential internal state for the plugin. In
 	// this case, the plugin is configured with a jitter (e.g. a
 	// random amount to add to the sample with each call to Next()
@@ -354,67 +402,8 @@ type pluginState struct {
 	rand *rand.Rand
 }
 
-//export plugin_init
-func plugin_init(config *C.char, rc *int32) unsafe.Pointer {
-	cfg := C.GoString(config)
-	log.Printf("[%s] plugin_init config=%s\n", PluginName, cfg)
-
-	// The format of cfg is a json object with a single param
-	// "jitter", e.g. {"jitter": 10}
-	var obj map[string]uint64
-	err := json.Unmarshal([]byte(cfg), &obj)
-	if err != nil {
-		*rc = sdk.SSPluginFailure
-		return nil
-	}
-	if _, ok := obj["jitter"]; !ok {
-		*rc = sdk.SSPluginFailure
-		return nil
-	}
-
-	ps := &pluginState{
-		config:    cfg,
-		lastError: nil,
-		jitter:    obj["jitter"],
-		rand:      rand.New(rand.NewSource(time.Now().UnixNano())),
-	}
-
-	// In order to avoid breaking the Cgo pointer passing rules,
-	// we wrap the plugin state in a handle using
-	// state.NewStateContainer()
-	handle := state.NewStateContainer()
-	state.SetContext(handle, unsafe.Pointer(ps))
-
-	// This "wraps" the go-specific simple extraction functions,
-	// taking care of the details of type conversion between go
-	// types and C types.
-	wrappers.RegisterExtractors(extract_str, extract_u64)
-
-	*rc = sdk.SSPluginSuccess
-
-	return handle
-}
-
-//export plugin_destroy
-func plugin_destroy(pState unsafe.Pointer) {
-	log.Printf("[%s] plugin_destroy\n", PluginName)
-
-	// This frees the pluginState struct inside this handle
-	state.Free(pState)
-}
-```
-
-### Opening/Closing a Stream of Events
-
-A plugin instance is represented as an instanceState struct. `plugin_open`/`plugin_close` behave similarly to `plugin_init`/`plugin_destroy`:
-
-* Creating an instanceState struct.
-* Parsing open params and populating the instanceState struct.
-* Wrapping the instanceState struct so it can be returned by cgo.
-* Free()ing the wrapped struct in `plugin_destroy`.
-
-```go
-type instanceState struct {
+type MyInstance struct {
+	source.BaseInstance
 
 	// Copy of the init params from plugin_open()
 	initParams string
@@ -429,13 +418,96 @@ type instanceState struct {
 	// jitter. This is put in every event as the data property.
 	sample uint64
 }
-...
-//export plugin_open
-func plugin_open(pState unsafe.Pointer, params *C.char, rc *int32) unsafe.Pointer {
-	prms := C.GoString(params)
-	log.Printf("[%s] plugin_open, params: %s\n", PluginName, prms)
 
-	ps := (*pluginState)(state.Context(pState))
+func init() {
+	p := &MyPlugin{}
+	source.Register(p)
+	extractor.Register(p)
+}
+```
+
+#### Plugin Info
+
+An `Info()` method is needed to return a data struct containing all the plugin info. `Info()` is a required method for the defined plugin struct type. This plugin defined its info as a set of constants for simplicity, but it's not a requirement.
+
+```go
+// Plugin consts
+const (
+	PluginRequiredApiVersion        = "0.2.0"
+	PluginID                 uint32 = 3
+	PluginName                      = "dummy"
+	PluginDescription               = "Reference plugin for educational purposes"
+	PluginContact                   = "github.com/falcosecurity/plugins"
+	PluginVersion                   = "0.1.0"
+	PluginEventSource               = "dummy"
+)
+
+...
+
+func (m *MyPlugin) Info() *plugins.Info {
+	log.Printf("[%s] Info\n", PluginName)
+	return &plugins.Info{
+		ID:                 PluginID,
+		Name:               PluginName,
+		Description:        PluginDescription,
+		Contact:            PluginContact,
+		Version:            PluginVersion,
+		RequiredAPIVersion: PluginRequiredApiVersion,
+		EventSource:        PluginEventSource,
+	}
+}
+
+...
+```
+
+#### Initializing/Destroying the Plugin
+
+The mandatory `Init()` method serves as an initialization entrypoint for plugins. This is where the user-defined configuration string is passed in by the framework. The internal state of the plugin should be initialized at this level. An error can be returned to abort the plugin initialization.
+
+Defining the `Destroy` method is optional, but can be useful if some resource needs to be released before the plugin gets destroyed.
+
+```go
+func (m *MyPlugin) Init(cfg string) error {
+	log.Printf("[%s] Init, config=%s\n", PluginName, cfg)
+
+	var jitter uint64 = 10
+
+	// The format of cfg is a json object with a single param
+	// "jitter", e.g. {"jitter": 10}
+	//
+	// Empty configs are allowed, in which case the default is
+	// used.
+	if cfg != "" && cfg != "{}" {
+		var obj map[string]uint64
+		err := json.Unmarshal([]byte(cfg), &obj)
+		if err != nil {
+			return err
+		}
+		if _, ok := obj["jitter"]; ok {
+			jitter = obj["jitter"]
+		}
+	}
+
+	m.jitter = jitter
+	m.rand = rand.New(rand.NewSource(time.Now().UnixNano()))
+
+	return nil
+}
+
+func (m *MyPlugin) Destroy() {
+	log.Printf("[%s] Destroy\n", PluginName)
+}
+```
+
+#### Opening/Closing a Stream of Events
+
+A plugin instance is created when the plugin event stream is opened, which can happen more than once during the plugin lifecycle. Source plugins are required to define an `Open()` method that creates a returns a new plugin instance. This is where the framework passes in the user-defined open parameters string.
+
+The plugin instance type returned form `Open()` can define an optional `Close()` method bundling any additional deinitialization logic to run while closing the event stream.
+
+```go
+func (m *MyPlugin) Open(prms string) (source.Instance, error) {
+	log.Printf("[%s] Open, params=%s\n", PluginName, prms)
 
 	// The format of params is a json object with two params:
 	// - "start", which denotes the initial value of sample
@@ -445,197 +517,157 @@ func plugin_open(pState unsafe.Pointer, params *C.char, rc *int32) unsafe.Pointe
 	var obj map[string]uint64
 	err := json.Unmarshal([]byte(prms), &obj)
 	if err != nil {
-		ps.lastError = fmt.Errorf("Params %s could not be parsed: %v", prms, err)
-		*rc = sdk.SSPluginFailure
-		return nil
+		return nil, fmt.Errorf("params %s could not be parsed: %v", prms, err)
 	}
 	if _, ok := obj["start"]; !ok {
-		ps.lastError = fmt.Errorf("Params %s did not contain start property", prms)
-		*rc = sdk.SSPluginFailure
-		return nil
+		return nil, fmt.Errorf("params %s did not contain start property", prms)
 	}
 
 	if _, ok := obj["maxEvents"]; !ok {
-		ps.lastError = fmt.Errorf("Params %s did not contain maxEvents property", prms)
-		*rc = sdk.SSPluginFailure
-		return nil
+		return nil, fmt.Errorf("params %s did not contain maxEvents property", prms)
 	}
 
-	is := &instanceState{
+	return &MyInstance{
 		initParams: prms,
 		maxEvents:  obj["maxEvents"],
 		counter:    0,
 		sample:     obj["start"],
-	}
-
-	handle := state.NewStateContainer()
-	state.SetContext(handle, unsafe.Pointer(is))
-
-	*rc = sdk.SSPluginSuccess
-	return handle
+	}, nil
 }
 
-//export plugin_close
-func plugin_close(pState unsafe.Pointer, iState unsafe.Pointer) {
-	log.Printf("[%s] plugin_close\n", PluginName)
-
-	state.Free(iState)
+func (m *MyInstance) Close() {
+	log.Printf("[%s] Close\n", PluginName)
 }
 ```
 
-### Returning Events
+#### Returning new Events
 
-The plugin does not populate a `ss_plugin_event` struct directly. Instead, a higher-level function `Next()` populates and returns a `sdk.PluginEvent` struct. `plugin_next` is a small wrapper function that calls `Next()` and uses `wrappers.Events()` to convert the `sdk.PluginEvent` struct to a `C.ss_plugin_event` struct.
+New events are generated in batch by the `NextBatch` function. The function is mandatory for source plugins and must be defined as a method of the plugin instance struct type. The `pState` argument is the plugin struct type initialized in `Init()`, passed in by the framework for ease of access. The plugin state is passed as an instance of the `sdk.PluginState` interface, so a manual cast is required to access the internal state variables defined in the struct type.
 
-Similarly, the plugin's `plugin_next_batch` uses a wrapper function `wrappers.NextBatch()`, which calls Next() as needed to prepare a batch of events, and uses `wrappers.Events()` to convert the batch to an array of `C.ss_plugin_event` structs.
+The `evts` parameter is a sdk-managed batch of events to be used for creating new events. For that, the SDK uses a slab allocator and reuses the same event batch at every iteration to improve performance. The lenght of the `evts` list represents the maximum size of each event batch.
+Each element of the batch is an instance of `sdk.EventWriter` that provides handy methods to write the event info and data. Event data can be written with the Go `io.Writer` interface.
 
-For this plugin, the event payload is simply the sample value as a null-terminated C string.
-
-Notice that although the function returns a `sdk.PluginEvent` struct, it does *not* fill in the Evtnum field. This is because event numbers are assigned by the plugin framework. The event number will be returned in calls to extract_fields, however.
+If an error is returned, the SDK returns a failure to the framework and invalidates the current batch. The special errors `sdk.ErrTimeout` and `sdk.ErrEOF` have a special meaning, and are used to either advise the framework that no new events are currently available, or that the event stream is terminated.
 
 ```go
-// This higher-level function will be called by both plugin_next and plugin_next_batch
-func Next(pState unsafe.Pointer, iState unsafe.Pointer) (*sdk.PluginEvent, int32) {
-	log.Printf("[%s] Next\n", PluginName)
+func (m *MyInstance) NextBatch(pState sdk.PluginState, evts sdk.EventWriters) (int, error) {
+	log.Printf("[%s] NextBatch\n", PluginName)
 
-	ps := (*pluginState)(state.Context(pState))
-	is := (*instanceState)(state.Context(iState))
-
-	is.counter++
-
-	// Return eof if reached maxEvents
-	if is.counter >= is.maxEvents {
-		return nil, sdk.SSPluginEOF
+	// Return EOF if reached maxEvents
+	if m.counter >= m.maxEvents {
+		return 0, sdk.ErrEOF
 	}
 
-	// Increment sample by 1, also add a jitter of [0:jitter]
-	is.sample += 1 + uint64(ps.rand.Int63n(int64(ps.jitter+1)))
+	var n int
+	var evt sdk.EventWriter
+	myPlugin := pState.(*MyPlugin)
+	for n = 0; m.counter < m.maxEvents && n < evts.Len(); n++ {
+		evt = evts.Get(n)
+		m.counter++
 
-	// The representation of a dummy event is the sample as a string.
-	str := strconv.Itoa(int(is.sample))
+		// Increment sample by 1, also add a jitter of [0:jitter]
+		m.sample += 1 + uint64(myPlugin.rand.Int63n(int64(myPlugin.jitter+1)))
 
-	// It is not mandatory to set the Timestamp of the event (it
-	// would be filled in by the framework if set to uint_max),
-	// but it's a good practice.
-	//
-	// Also note that the Evtnum is not set, as event numbers are
-	// assigned by the plugin framework.
-	evt := &sdk.PluginEvent{
-		Data:      []byte(str),
-		Timestamp: uint64(time.Now().Unix()) * 1000000000,
+		// The representation of a dummy event is the sample as a string.
+		str := strconv.Itoa(int(m.sample))
+
+		// It is not mandatory to set the Timestamp of the event (it
+		// would be filled in by the framework if set to uint_max),
+		// but it's a good practice.
+		evt.SetTimestamp(uint64(time.Now().UnixNano()))
+
+		_, err := evt.Writer().Write([]byte(str))
+		if err != nil {
+			return 0, err
+		}
 	}
-
-	return evt, sdk.SSPluginSuccess
-}
-
-//export plugin_next
-func plugin_next(pState unsafe.Pointer, iState unsafe.Pointer, retEvt **C.ss_plugin_event) int32 {
-	log.Printf("[%s] plugin_next\n", PluginName)
-
-	evt, res := Next(pState, iState)
-	if res == sdk.SSPluginSuccess {
-		*retEvt = (*C.ss_plugin_event)(wrappers.Events([]*sdk.PluginEvent{evt}))
-	}
-
-	return res
-}
-
-// This wraps the simpler Next() function above and takes care of the
-// details of assembling multiple events.
-
-//export plugin_next_batch
-func plugin_next_batch(pState unsafe.Pointer, iState unsafe.Pointer, nevts *uint32, retEvts **C.ss_plugin_event) int32 {
-	evts, res := wrappers.NextBatch(pState, iState, Next)
-
-	if res == sdk.SSPluginSuccess {
-		*retEvts = (*C.ss_plugin_event)(wrappers.Events(evts))
-		*nevts = (uint32)(len(evts))
-	}
-
-	log.Printf("[%s] plugin_next_batch\n", PluginName)
-
-	return res
+	return n, nil
 }
 ```
 
-### Printing Events As Strings
+#### Printing Events As Strings
 
-Since a plugin event is simply a C-style null terminated string containing the current sample value, `plugin_event_to_string` simply returns that value as a json object, converted to a C string using `C.CString`:
+Source plugins must define a `String()` method to format the contents of events created with a previous call to `NextBatch()`. The event data is readable through an instance of `io.ReadSeeker` provided by the SDK. Internally, this allows a safe memory access and an optimal reusage of the same buffer to maximize the performance of hot framework paths.
 
 ```go
-//export plugin_event_to_string
-func plugin_event_to_string(pState unsafe.Pointer, data *C.uint8_t, datalen uint32) *C.char {
-
-	// This can blindly convert the C.uint8_t to a *C.char, as this
-	// plugin always returns a C string as the event buffer.
-	evtStr := C.GoStringN((*C.char)(unsafe.Pointer(data)), C.int(datalen))
-
-	log.Printf("[%s] plugin_event_to_string %s\n", PluginName, evtStr)
+func (m *MyPlugin) String(in io.ReadSeeker) (string, error) {
+	log.Printf("[%s] String\n", PluginName)
+	evtBytes, err := ioutil.ReadAll(in)
+	if err != nil {
+		return "", err
+	}
+	evtStr := string(evtBytes)
 
 	// The string representation of an event is a json object with the sample
-	s := fmt.Sprintf("{\"sample\": \"%s\"}", evtStr)
-	return C.CString(s)
+	return fmt.Sprintf("{\"sample\": \"%s\"}", evtStr), nil
 }
 ```
 
-### Extracting Fields
+#### Defining Fields
 
-Similar to Next(), the implementation of field extraction is performed by higher-level go functions `extract_str`/`extract_u64` that work on a single field and are type-specific based on the field value (string vs uint64).
+This dummy plugin exports 3 fields:
 
-These higher-level go functions are passed to the `plugin-sdk-go/wrappers` module by calling `wrappers.RegisterExtractors()` in `plugin_init`. Importing `plugin-sdk-go/wrappers` defines a `plugin_extract_fields` function that in turn calls these higher-level go functions and additionally takes care of the conversion between Go types and C types as well as iterating over the list of fields.
+* `dummy.value`: the value in the event, as a uint64
+* `dummy.strvalue`: the value in the event, as a string
+* `dummy.divisible`: this field takes an argument and returns 1 if the value in the event is divisible by the argument (a numeric divisor). For example, if the value was 12, `dummy.divisible[3]` would return 1 for that event.
+
+The `Fields()` method returns a slice of `sdk.FieldEntry` representing all the supported fields.
 
 ```go
-// This plugin only needs to implement simpler single-field versions
-// of extract_str/extract_u64. A utility function will take these
-// functions as arguments and handle the work of conversion/iterating
-// over fields.
-func extract_str(pState unsafe.Pointer, evtnum uint64, data []byte, ts uint64, field string, arg string) (bool, string) {
-	log.Printf("[%s] extract_str\n", PluginName)
-
-	ps := (*pluginState)(state.Context(pState))
-
-	switch field {
-	case "dummy.strvalue":
-		return true, string(data)
-	default:
-		ps.lastError = fmt.Errorf("No known field %s", field)
-		return false, ""
-	}
-}
-
-func extract_u64(pState unsafe.Pointer, evtnum uint64, data []byte, ts uint64, field string, arg string) (bool, uint64) {
-	log.Printf("[%s] extract_str\n", PluginName)
-
-	ps := (*pluginState)(state.Context(pState))
-
-	val, err := strconv.Atoi(string(data))
-	if err != nil {
-		return false, 0
-	}
-
-	switch field {
-	case "dummy.value":
-		return true, uint64(val)
-	case "dummy.divisible":
-		// The argument contains the divisor as a string
-		divisor, err := strconv.Atoi(arg)
-		if err != nil {
-			ps.lastError = fmt.Errorf("Argument to dummy.divisible %s could not be converted to number", arg)
-			return false, 0
-		}
-		if val%divisor == 0 {
-			return true, 1
-		} else {
-			return true, 0
-		}
-	default:
-		ps.lastError = fmt.Errorf("No known field %s", field)
-		return false, 0
+func (m *MyPlugin) Fields() []sdk.FieldEntry {
+	log.Printf("[%s] Fields\n", PluginName)
+	return []sdk.FieldEntry{
+		{Type: "uint64", Name: "dummy.divisible", ArgRequired: true, Desc: "Return 1 if the value is divisible by the provided divisor, 0 otherwise"},
+		{Type: "uint64", Name: "dummy.value", Desc: "The sample value in the event"},
+		{Type: "string", Name: "dummy.strvalue", Desc: "The sample value in the event, as a string"},
 	}
 }
 ```
 
-### Plugin In Action
+#### Extracting Fields
+
+The `Extractor` method extracts any of the supported fields. The `req` parameter allows accessing all the info regarding the field request, such as the field id or name, and the optional user-passed argument. The `evt` parameter is an interface that halps reading the event info and data.
+
+The extracted field value must be set through the `SetValue` method of `sdk.ExtractRequest`. Returning from `Extract` without calling `SetValue` will signal the SDK that the requested field is not present in the given event.
+
+```go
+func (m *MyPlugin) Extract(req sdk.ExtractRequest, evt sdk.EventReader) error {
+	log.Printf("[%s] Extract\n", PluginName)
+	evtBytes, err := ioutil.ReadAll(evt.Reader())
+	if err != nil {
+		return err
+	}
+	evtStr := string(evtBytes)
+	evtVal, err := strconv.Atoi(evtStr)
+	if err != nil {
+		return err
+	}
+
+	switch req.FieldID() {
+	case 0: // dummy.divisible
+		arg := req.Arg()
+		divisor, err := strconv.Atoi(arg)
+		if err != nil {
+			return fmt.Errorf("argument to dummy.divisible %s could not be converted to number", arg)
+		}
+		if evtVal%divisor == 0 {
+			req.SetValue(1)
+		} else {
+			req.SetValue(0)
+		}
+	case 1: // dummy.value
+		req.SetValue(uint64(evtVal))
+	case 2: // dummy.strvalue
+		req.SetValue(evtStr)
+	default:
+		return fmt.Errorf("no known field: %s", req.Field())
+	}
+
+	return nil
+}
+```
+
+#### Plugin In Action
 
 This plugin can be configured in Falco by adding the following to falco.yaml:
 
@@ -646,7 +678,7 @@ plugins:
     init_config: '{"jitter": 10}'
     open_params: '{"start": 1, "maxEvents": 20}'
 
-# Optional
+## Optional
 load_plugins: [dummy]
 ```
 
@@ -665,82 +697,50 @@ Here's what it looks like when run:
 
 ```
 $ ./falco -r ../falco-files/dummy_rules.yaml -c ../falco-files/falco.yaml
-Wed Sep  1 14:41:53 2021: Falco version 0.20.0-737+849fb98 (driver version new/plugin-system-api-additions)
-Wed Sep  1 14:41:53 2021: Falco initialized with configuration file ../falco-files/falco.yaml
-Wed Sep  1 14:41:53 2021: Loading plugin (dummy) from file /tmp/my-plugins/dummy/libdummy.so
-2021/09/01 14:41:53 [dummy] plugin_get_required_api_version
-2021/09/01 14:41:53 [dummy] plugin_get_type
-2021/09/01 14:41:53 [dummy] plugin_get_name
-2021/09/01 14:41:53 [dummy] plugin_get_description
-2021/09/01 14:41:53 [dummy] plugin_get_contact
-2021/09/01 14:41:53 [dummy] plugin_get_version
-2021/09/01 14:41:53 [dummy] plugin_get_required_api_version
-2021/09/01 14:41:53 [dummy] plugin_get_fields
-2021/09/01 14:41:53 [dummy] plugin_get_id
-2021/09/01 14:41:53 [dummy] plugin_get_event_source
-2021/09/01 14:41:53 [dummy] plugin_init config={"jitter": 10}
-Wed Sep  1 14:41:53 2021: Loading rules from file ../falco-files/dummy_rules.yaml:
-2021/09/01 14:41:53 [dummy] plugin_get_name
-2021/09/01 14:41:53 [dummy] plugin_get_id
-2021/09/01 14:41:53 [dummy] plugin_open, params: {"start": 1, "maxEvents": 20}
-Wed Sep  1 14:41:53 2021: Starting internal webserver, listening on port 8765
-2021/09/01 14:41:53 [dummy] Next
-2021/09/01 14:41:53 [dummy] Next
-2021/09/01 14:41:53 [dummy] Next
-2021/09/01 14:41:53 [dummy] Next
-2021/09/01 14:41:53 [dummy] Next
-2021/09/01 14:41:53 [dummy] plugin_next_batch
-2021/09/01 14:41:53 [dummy] plugin_extract_fields
-2021/09/01 14:41:53 [dummy] extract_str
-2021/09/01 14:41:53 [dummy] plugin_extract_fields
-2021/09/01 14:41:53 [dummy] extract_str
-2021/09/01 14:41:53 [dummy] plugin_extract_fields
-2021/09/01 14:41:53 [dummy] extract_str
-2021/09/01 14:41:53 [dummy] plugin_extract_fields
-2021/09/01 14:41:53 [dummy] extract_str
-2021/09/01 14:41:53 [dummy] plugin_event_to_string 24
-2021/09/01 14:41:53 [dummy] plugin_extract_fields
-2021/09/01 14:41:53 [dummy] extract_str
-2021/09/01 14:41:53 [dummy] plugin_extract_fields
-2021/09/01 14:41:53 [dummy] extract_str
-2021/09/01 14:41:53 [dummy] plugin_event_to_string 24
-2021/09/01 14:41:53 [dummy] plugin_extract_fields
-2021/09/01 14:41:53 [dummy] extract_str
-2021/09/01 14:41:53 [dummy] plugin_extract_fields
-2021/09/01 14:41:53 [dummy] extract_str
-2021/09/01 14:41:53 [dummy] plugin_extract_fields
-2021/09/01 14:41:53 [dummy] extract_str
-2021/09/01 14:41:53 [dummy] plugin_extract_fields
-2021/09/01 14:41:53 [dummy] extract_str
-2021/09/01 14:41:53 [dummy] plugin_extract_fields
-2021/09/01 14:41:53 [dummy] extract_str
-2021/09/01 14:41:53 [dummy] plugin_event_to_string 54
-2021/09/01 14:41:53 [dummy] plugin_extract_fields
-2021/09/01 14:41:53 [dummy] extract_str
-2021/09/01 14:41:53 [dummy] plugin_extract_fields
-2021/09/01 14:41:53 [dummy] extract_str
-2021/09/01 14:41:53 [dummy] plugin_event_to_string 54
-14:41:53.000000000: Notice A dummy event (event={"sample": "24"} sample=24 sample_str=24 num=4)
-2021/09/01 14:41:53 [dummy] plugin_extract_fields
-2021/09/01 14:41:53 [dummy] extract_str
-2021/09/01 14:41:53 [dummy] plugin_extract_fields
-2021/09/01 14:41:53 [dummy] extract_str
-2021/09/01 14:41:53 [dummy] plugin_extract_fields
-2021/09/01 14:41:53 [dummy] extract_str
-2021/09/01 14:41:53 [dummy] plugin_extract_fields
-14:41:53.000000000: Notice A dummy event (event={"sample": "54"} sample=54 sample_str=54 num=7)
-2021/09/01 14:41:53 [dummy] extract_str
-2021/09/01 14:41:53 [dummy] Next
-2021/09/01 14:41:53 [dummy] plugin_next_batch
-2021/09/01 14:41:53 [dummy] plugin_close
-2021/09/01 14:41:53 [dummy] plugin_close
+Wed Nov  3 12:46:43 2021: Falco version 0.30.0-35+e9923ae (driver version new/plugin-system-api-additions)
+Wed Nov  3 12:46:43 2021: Falco initialized with configuration file ../falco-files/falco.yaml
+Wed Nov  3 12:46:43 2021: Loading plugin (dummy) from file /tmp/my-plugins/dummy/libdummy.so
+2021/11/03 12:46:43 [dummy] Info
+2021/11/03 12:46:43 [dummy] Info
+2021/11/03 12:46:43 [dummy] Fields
+2021/11/03 12:46:43 [dummy] Init, config={"jitter": 10}
+Wed Nov  3 12:46:43 2021: Loading rules from file ../rules/dummy_rules.yaml:
+2021/11/03 12:46:43 [dummy] Open, params={"start": 1, "maxEvents": 20}
+Wed Nov  3 12:46:43 2021: Starting internal webserver, listening on port 8765
+2021/11/03 12:46:43 [dummy] NextBatch
+2021/11/03 12:46:43 [dummy] Extract
+2021/11/03 12:46:43 [dummy] Extract
+2021/11/03 12:46:43 [dummy] Extract
+2021/11/03 12:46:43 [dummy] Extract
+2021/11/03 12:46:43 [dummy] String
+2021/11/03 12:46:43 [dummy] Extract
+2021/11/03 12:46:43 [dummy] Extract
+2021/11/03 12:46:43 [dummy] String
+2021/11/03 12:46:43 [dummy] Extract
+2021/11/03 12:46:43 [dummy] Extract
+2021/11/03 12:46:43 [dummy] Extract
+2021/11/03 12:46:43 [dummy] Extract
+2021/11/03 12:46:43 [dummy] String
+12:46:43.372769397: Notice A dummy event (event={"sample": "33"} sample=33 sample_str=33 num=4)
+2021/11/03 12:46:43 [dummy] Extract
+2021/11/03 12:46:43 [dummy] Extract
+2021/11/03 12:46:43 [dummy] String
+2021/11/03 12:46:43 [dummy] Extract
+2021/11/03 12:46:43 [dummy] Extract
+2021/11/03 12:46:43 [dummy] Extract
+2021/11/03 12:46:43 [dummy] Extract
+12:46:43.372770027: Notice A dummy event (event={"sample": "45"} sample=45 sample_str=45 num=6)
+2021/11/03 12:46:43 [dummy] Extract
+2021/11/03 12:46:43 [dummy] NextBatch
+2021/11/03 12:46:43 [dummy] Close
+2021/11/03 12:46:43 [dummy] Destroy
 ```
 
-# Example C plugin: `dummy_c`
+### Example C plugin: `dummy_c`
 
 The source code for this plugin can be found at [dummy.cpp](https://github.com/falcosecurity/plugins/blob/master/plugins/dummy_c/dummy.cpp).
 
-### Initial header include
+#### Initial header include
 
 `falcosecurity_plugin.h` is the C++ sdk, and declares the base classes and preprocessor define to generate plugin API C functions. It also includes `plugin_info.h`, which defines structs/enums like `ss_plugin_t`, `ss_instance_t`, `ss_plugin_event`, etc, as well as function return values like SS_PLUGIN_SUCCESS, SS_PLUGIN_FAILURE, etc. The [json](https://github.com/nlohmann/json) header file provides helpful c++ classes to parse/represent json objects.
 
@@ -756,7 +756,7 @@ The source code for this plugin can be found at [dummy.cpp](https://github.com/f
 using json = nlohmann::json;
 ```
 
-### `dummy_plugin` class: plugin object
+#### `dummy_plugin` class: plugin object
 
 The `dummy_plugin` class derives from `falcosecurity::source_plugin` and implements the abstract methods from the `falcosecurity::source_plugin_iface` class. It also saves a copy of the config provided to `init()` in `m_config` and the configured jitter in `m_jitter`:
 
@@ -789,7 +789,7 @@ private:
 };
 ```
 
-### Returning Plugin Info
+#### Returning Plugin Info
 
 `dummy_plugin::get_info` returns info about the plugin.
 
@@ -815,7 +815,7 @@ void dummy_plugin::get_info(falcosecurity::plugin_info &info)
 }
 ```
 
-### Plugin Initialization and Destroy
+#### Plugin Initialization and Destroy
 
 `dummy_plugin::init` initializes the plugin. It parses the (JSON) config string and extracts a configured jitter value from the config. `dummy_plugin::destroy` is a no-op.
 
@@ -861,7 +861,7 @@ void dummy_plugin::destroy()
 }
 ```
 
-### Creating Plugin Instances
+#### Creating Plugin Instances
 
 `dummy_plugin::create_instance` creates a `dummy_instance` object and returns it. Note that in this case, the constructor takes a reference to a `dummy_plugin` object (cast from `falcosecurity::source_plugin`) so instances can have access back to the plugin.
 
@@ -873,7 +873,7 @@ falcosecurity::plugin_instance *dummy_plugin::create_instance(falcosecurity::sou
 }
 ```
 
-### Returning String Representations of Events
+#### Returning String Representations of Events
 
 `dummy_plugin::event_to_string` returns a string representation of an event. The exact form of the string representation is up to the plugin author. In this case, the string representation of an event is a json object containing the current sample.
 
@@ -890,7 +890,7 @@ std::string dummy_plugin::event_to_string(const uint8_t *data, uint32_t datalen)
 
 ```
 
-### Extracting Values
+#### Extracting Values
 
 `dummy_plugin::extract_str` and `dummy_plugin::extract_u64` extract fields from events. Note that the methods return true only when the field is one of the supported fields.
 
@@ -936,7 +936,7 @@ bool dummy_plugin::extract_u64(const ss_plugin_event &evt, const std::string &fi
 }
 ```
 
-### `dummy_instance` class: plugin instance object
+#### `dummy_instance` class: plugin instance object
 
 The `dummy_instance` class derives from `falcosecurity::plugin_instance` and implements the abstract methods from the `falcosecurity::plugin_instance_iface` class. It saves the parameters provided to `plugin_open()` and holds the current sample, which is modified with each call to `next()`:
 
@@ -973,7 +973,7 @@ private:
 };
 ```
 
-### Opening/Closing Event Streams
+#### Opening/Closing Event Streams
 
 `dummy_instance::open()` opens an event stream. It parses the json configuration in params and extracts `start`/`maxEvents` properties which control the number of events to return before EOF and the initial sample value.
 
@@ -1032,7 +1032,7 @@ void dummy_instance::close()
 }
 ```
 
-### Returning Events
+#### Returning Events
 
 `dummy_instance::next` fills in the provided event reference with the next event. It increments the counter and sample, including a random jitter.
 
@@ -1067,7 +1067,7 @@ ss_plugin_rc dummy_instance::next(falcosecurity::plugin_event &evt)
 }
 ```
 
-### Generating Plugin API Functions
+#### Generating Plugin API Functions
 
 The plugin uses `GEN_SOURCE_PLUGIN_API_HOOKS` to generate plugin API functions, using the name of the derived classes `dummy_plugin` and `dummy_instance`:
 
@@ -1075,7 +1075,7 @@ The plugin uses `GEN_SOURCE_PLUGIN_API_HOOKS` to generate plugin API functions, 
 GEN_SOURCE_PLUGIN_API_HOOKS(dummy_plugin, dummy_instance)
 ```
 
-### Plugin In Action
+#### Plugin In Action
 
 `falco.yaml` is slightly different than for the Go plugin, with a different plugin name/library path and a different value for `load_plugins`. However, the rules file is unchanged, as both plugins use the same event source `dummy`, even though the two plugins have different IDs. This works because both plugins use the same representation for event data payloads (the sample as a string).
 
@@ -1086,7 +1086,7 @@ plugins:
     init_config: '{"jitter": 10}'
     open_params: '{"start": 1, "maxEvents": 20}'
 
-# Optional
+## Optional
 load_plugins: [dummy_c]
 ```
 
