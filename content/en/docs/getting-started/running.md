@@ -9,6 +9,11 @@ weight: 4
 
 If you installed Falco by using [the DEB or the RPM](/docs/getting-started/installation) package, you can start the service by running:
 
+
+```console
+systemctl enable falco
+```
+
 ```console
 systemctl start falco
 ```
