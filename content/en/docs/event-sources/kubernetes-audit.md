@@ -27,7 +27,7 @@ To receive Kubernetes audit events, falco embeds a [civetweb](https://github.com
 
 A given rule is tied to either system call events or Kubernetes audit events, via the `source` attribute. If not specified, the source defaults to `syscall`. Rules with source `syscall` are matched against system call events. Rules with source `k8s_audit` are matched against Kubernetes audit events.
 
-See [Auditing with Falco](https://kubernetes.io/docs/tasks/debug-application-cluster/falco/) to get started with Falco.
+See [Auditing with Falco](https://v1-17.docs.kubernetes.io/docs/tasks/debug-application-cluster/falco/) to get started with Falco.
 
 ## Conditions and Fields
 
