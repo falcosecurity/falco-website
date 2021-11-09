@@ -23,8 +23,8 @@ cloud-native-runtime-security:
 home_falco_description:
   other: |
     <b>Falco</b>, the cloud-native runtime security project, is the de facto <b>Kubernetes threat detection engine</b><br /><br />
-    <small>Falco was created by Sysdig in 2016 and is the first runtime security project to join CNCF as an
-        incubation-level project. Falco detects unexpected application behavior and alerts on threats at
-        runtime.</small>
+    <small>Falco is the first runtime security project to join CNCF as an incubation-level project.
+        Falco acts as a security camera detecting unexpected behavior, intrusions, and data theft 
+        in real time.</small>
 home_featured_videos:
   other: Featured Videos
