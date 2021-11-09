@@ -77,7 +77,7 @@ git checkout linux-rolling-stable
 
 # Get a kernel config optimized for WSL2 
 # Source: https://github.com/microsoft/WSL2-Linux-Kernel/pull/176
-wget https://github.com/microsoft/WSL2-Linux-Kernel/blob/7015d6023d60b29c3be4c6a398bed923b48b4341/Microsoft/config-wsl -O .config
+wget https://raw.githubusercontent.com/microsoft/WSL2-Linux-Kernel/7015d6023d60b29c3be4c6a398bed923b48b4341/Microsoft/config-wsl -O .config
 
 # Change the LOCALVERSION value
 sed -i 's/microsoft-standard-WSL2/generic/' ./.config
