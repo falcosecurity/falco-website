@@ -37,6 +37,13 @@ apt install git cmake build-essential libncurses-dev pkg-config autoconf libtool
 pacman -S git cmake make gcc wget
 pacman -S zlib jq ncurses yaml-cpp openssl curl c-ares protobuf grpc libyaml
 ```
+
+You'll also need kernel headers for building and making binaries properly.
+```bash
+pacman -S linux-headers
+```
+
+You can use `uname -r` to determine the kernel version and select the appropriate header.
 {{< /tab >}}}
 
 {{% tab name="Alpine" %}}
@@ -176,7 +183,7 @@ make driver
 In the build directory:
 
 ```bash
-pacman -S linux-headers
+pacman -S --needed linux-headers
 make driver
 ```
 
