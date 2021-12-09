@@ -21,4 +21,4 @@ May, 2021            | [Batuhan Apaydın](https://github.com/developer-guy) and 
 June, 2021           | [Ismail Yenigul](https://github.com/ismailyenigul)
 July, 2021           | [Furkan Türkal](https://github.com/Dentrax)
 August, 2021         | [Teryl Taylor](https://github.com/terylt) and [Frederico Araujo](https://github.com/araujof)
-
+September and Ocrober, 2021         | [Leo Di Donato](https://github.com/leodido)
