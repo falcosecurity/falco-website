@@ -130,9 +130,9 @@ Note that `ls /dev/falco* | xargs -I {} echo --device {}` outputs a `--device /d
 
 ### Fully privileged {#docker-privileged}
 
-To run Falco in a container using Docker with full privileges:
+To run Falco in a container using Docker with full privileges use the following commands.
 
-If you want to use Falco with the Kernel module driver
+If you want to use Falco with the Kernel module driver:
 
 ```shell
 docker pull falcosecurity/falco:latest
@@ -156,7 +156,6 @@ docker run --rm -i -t \
     --privileged \
     -e FALCO_BPF_PROBE="" \
     -v /var/run/docker.sock:/host/var/run/docker.sock \
-    -v /dev:/host/dev \
     -v /proc:/host/proc:ro \
     -v /boot:/host/boot:ro \
     -v /lib/modules:/host/lib/modules:ro \
@@ -173,8 +172,6 @@ You can load the eBPF probe or kernel module in its own temporary container as b
 docker pull falcosecurity/falco-driver-loader:latest
 docker run --rm -i -t \
     --privileged \
-    # Uncomment the below to use the eBPF probe or delete it if using the kernel module
-    #-e FALCO_BPF_PROBE="" -v /root/.falco:/root/.falco \
     -v /var/run/docker.sock:/host/var/run/docker.sock \
     -v /dev:/host/dev \
     -v /proc:/host/proc:ro \
@@ -191,12 +188,15 @@ Once this has been done, or if you have installed the driver on the host permane
 docker pull falcosecurity/falco-no-driver:latest
 docker run --rm -i -t \
     --privileged \
-    # Uncomment the below to use the eBPF probe or delete it if using the kernel module
-    #-e FALCO_BPF_PROBE="" -v /root/.falco:/root/.falco \
     -v /var/run/docker.sock:/host/var/run/docker.sock \
     -v /dev:/host/dev \
     -v /proc:/host/proc:ro \
     falcosecurity/falco-no-driver:latest
+```
+
+To use `falco-no-driver` and `falco-driver-loader` with the eBPF probe you have to remove the `-v /dev:/host/dev` (which is only required by the Kernel Module) and add:
+```shell
+    -e FALCO_BPF_PROBE="" -v /root/.falco:/root/.falco \
 ```
 
 Other configurable options:
