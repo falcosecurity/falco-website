@@ -90,7 +90,7 @@ This function should return the set of fields supported by the plugin. Remember,
 ```json
 [
    {"type": "string", "name": "gizmo.field1", "argRequired": true, "desc": "Describing field 1"},
-   {"type": "uint64", "name": "gizmo.field2", "desc": "Describing field 2"}
+   {"type": "uint64", "name": "gizmo.field2", "desc": "Describing field 2", properties: ["hidden"]}
 ]
 ```
 
@@ -103,6 +103,10 @@ Each object has the following properties:
 * `argRequired`: (optional) If present and set to true, notes that the field requires an argument e.g. `field[arg]`.
 * `display`: (optional) If present, a string that will be used to display the field instead of the name. Used in tools like wireshark.
 * `desc`: a string with a short description of the field. This will be used in help output so be concise and descriptive.
+* `properties`: (optional) If present, an array of additional properties that apply to the field. The value is an array of strings that can be one of the following:
+    * `hidden`: Do not display the field when using programs like `falco --list` to list the set of supported fields.
+    * `conversation`: This field is applicable for use in [wireshark conversations](https://www.wireshark.org/docs/wsug_html_chunked/ChStatConversations.html), and denotes that the field represents one half of a "conversation" that can be shown in the conversations or endpoints view.
+    * `info`: Also applicable for use in wireshark, and denotes that it should be appended to the "info" column in the wireshark event list.
 
 When defining fields, keep the following guidelines in mind:
 
