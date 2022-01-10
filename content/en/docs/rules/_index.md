@@ -3,7 +3,7 @@ title: Rules
 weight: 3
 ---
 
-A Falco *rules file* is a [YAML](http://www.yaml.org/start.html) file containing three types of elements:
+A Falco *rules file* is a [YAML](https://www.yaml.org/) file containing three types of elements:
 
 Element | Description
 :-------|:-----------
