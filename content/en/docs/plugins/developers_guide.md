@@ -284,7 +284,7 @@ typedef struct plugin_info {
 
 #### `virtual ss_plugin_rc init(const char* config) = 0`
 
-Initialize a plugin. This is *not* the constructor, but is called shortly after the plugin object has been allocated. The config is the config provided in the `plugin_initialize()` function. The plugin can parse this config and save it in the object.
+Initialize a plugin. This is *not* the constructor, but is called shortly after the plugin object has been allocated. The config is the config provided in the `plugin_initialize()` function. The plugin can parse this config and save it in the object. This method should return SS_PLUGIN_SUCCESS on success, SS_PLUGIN_FAILURE on failure. In case of failure, an error string can be set via set_last_error().
 
 #### `virtual void destroy() = 0`
 
