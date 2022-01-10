@@ -822,7 +822,7 @@ void dummy_plugin::get_info(falcosecurity::plugin_info &info)
 ```c++
 ss_plugin_rc dummy_plugin::init(const char *config)
 {
-	m_config = config;
+	m_config = config != NULL ? config : "";
 
 	// Config is optional. In this case defaults are used.
 	if(m_config == "" || m_config == "{}")
@@ -837,8 +837,7 @@ ss_plugin_rc dummy_plugin::init(const char *config)
 	}
 	catch (std::exception &e)
 	{
-		// No need to call set_last_error() here as the plugin
-		// struct doesn't exist to the framework yet.
+		set_last_error(e.what());
 		return SS_PLUGIN_FAILURE;
 	}
 
@@ -846,8 +845,7 @@ ss_plugin_rc dummy_plugin::init(const char *config)
 
 	if(it == obj.end())
 	{
-		// No need to call set_last_error() here as the plugin
-		// struct doesn't exist to the framework yet.
+		set_last_error("jitter not defined");
 		return SS_PLUGIN_FAILURE;
 	}
 
