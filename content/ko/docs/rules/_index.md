@@ -3,7 +3,7 @@ title: 규칙
 weight: 2
 ---
 
-팔코의 *규칙 파일*은 세 가지 유형의 요소를 포함하는 [YAML](http://www.yaml.org/start.html) 파일이다.
+팔코의 *규칙 파일*은 세 가지 유형의 요소를 포함하는 [YAML](https://www.yaml.org/) 파일이다.
 
 요소 | 설명
 :-------|:-----------
