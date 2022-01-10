@@ -3,7 +3,7 @@ title: ルール
 weight: 2
 ---
 
-Falco *ルールファイル*は、3種類の要素を含む[YAML](http://www.yaml.org/start.html)ファイルです：
+Falco *ルールファイル*は、3種類の要素を含む[YAML](https://www.yaml.org/)ファイルです：
 
 要素 | 説明
 :-------|:-----------
