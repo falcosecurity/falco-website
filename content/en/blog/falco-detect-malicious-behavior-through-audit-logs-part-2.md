@@ -268,11 +268,15 @@ Now we are ready to test everything.
 
 There is a rule called `Create/Modify Configmap With Private Credentials` in Falco for detecting ConfigMaps that contains private credentials from `Kubernetes Audit Logs`. You can see the details of the rule from this [link](https://github.com/falcosecurity/falco/blob/master/rules/k8s_audit_rules.yaml#L185). To test this, we should create a ConfigMap that contains private credentials.
 
+First, use `kubectl port-forward` to access the Falco Sidekick UI:
+
 ```shell
 $ kubectl --namespace=falco port-forward svc/falco-falcosidekick-ui 2802
 Forwarding from 127.0.0.1:2802 -> 2802
 Forwarding from [::1]:2802 -> 2802
 ```
+
+Open http://localhost:2802/ui/ to load the UI (omitting the `/ui/` portion of the URL will result in an error)
 
 Now, let's create the ConfigMap.
 
