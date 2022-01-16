@@ -51,7 +51,7 @@ How to enable userspace instrumentation in Falco:
 
 There are attempts at making the installation process easier, the community didn't pick one yet and it's likely that many iterations will go into making any one of the below GA. However, here's a list of projects you can look at if you want to get Falco with userspace instrumentation in Kubernetes.
 
-- [Falco Trace](https://github.com/krisnova/falco-trace) - a convenient container image to use as a base to add userspace instrumentation to your images.
+- [Falco Trace](https://github.com/kris-nova/falco-trace) - a convenient container image to use as a base to add userspace instrumentation to your images.
 - [Falco Inject](https://github.com/fntlnz/falco-inject) - a tool that uses Falco Trace artifacts to inject Falco and userspace instrumentation into your containers via the kubernetes API.
 
 As you probably already understood, the userspace instrumentation drivers are a bit different, handle with care!
