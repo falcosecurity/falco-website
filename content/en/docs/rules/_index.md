@@ -276,16 +276,6 @@ For example to disable the `User mgmt binaries` default rule in `/etc/falco/falc
 ```
 
 
- {{% pageinfo color="warning" %}}
- There appears to be a bug with this feature that we are looking into. If `enabled: false` doesn't work, you can use the following workaround as an alternative:
- ```yaml
- - rule: User mgmt binaries
-   condition: and (never_true)
-   append: true
- ```
- {{% /pageinfo %}}
-
-
 ## Output
 
 A rule output is a string that can use the same [fields](/docs/rules/supported-fields) that conditions can use prepended by `%` to perform interpolation, akin to `printf`. For example:
