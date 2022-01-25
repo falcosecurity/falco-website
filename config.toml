@@ -10,6 +10,8 @@ defaultContentLanguageInSubdir = false
 enableRobotsTXT = true
 disableBrowserError = true
 
+ignoreErrors = ["error-remote-getjson"]
+
 disableKinds = ["taxonomy", "taxonomyTerm"]
 
 ignoreFiles = [ "^OWNERS$", "README[-]+[a-z]*\\.md", "^node_modules$", "content/en/docs/doc-contributor-tools" ]
@@ -132,7 +134,7 @@ id = "UA-40398182-19"
 [[menu.main]]
     name = "Training"
     weight = 70
-    url = "/labs/"
+    url = "/training/"
 
 # Specify a value here if your content directory is not in your repo's root directory
 #github_subdir = "userguide"
@@ -384,6 +386,19 @@ version = "v0.31"
 githubbranch = "master"
 docsbranch = "master"
 url = "https://falco.org"
+
+# Training resources provided by the community
+# If you are adding a new resource, remember to include an image in static/img/training/
+[params.training]
+[[params.training.contribution]]
+src = "katacoda.png"
+alt = "Falco & CNCF Training by Katacoda (O'Reilly)"
+url = "https://www.katacoda.com/courses/cloud-native-computing-foundation"
+
+[[params.training.contribution]]
+src = "sysdig.png"
+alt = "Falco 101 course by Sysdig"
+url = "http://learn.sysdig.com/falco-101"
 
 # Adopters
 [params.adopters]
