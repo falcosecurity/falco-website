@@ -28,7 +28,7 @@ There are two kinds of plugins: source plugins and extractor plugins.
 
 ### Plugin SDKs
 
-To make it easier to write plugins, there are [Go](https://github.com/falcosecurity/plugin-sdk-go) and [C++](https://github.com/falcosecurity/plugins/tree/master/sdk/cpp) SDKs that handle the details of memory management and type conversion. These SDKs provide a streamlined way to implement plugins without having to deal with all the details of the lower-level functions that make up the Plugin API.
+To make it easier to write plugins, there are [Go](https://github.com/falcosecurity/plugin-sdk-go) and [C++](https://github.com/falcosecurity/plugin-sdk-cpp) SDKs that handle the details of memory management and type conversion. These SDKs provide a streamlined way to implement plugins without having to deal with all the details of the lower-level functions that make up the Plugin API.
 
 These SDKs are optional, but using them is highly recommended.
 
@@ -57,7 +57,7 @@ Every source plugin requires its own, unique plugin event ID to interoperate wit
 
 The ID must be unique to ensure that events written by a given plugin will be properly associated with that plugin (and its event sources, see below).
 
-Source plugin authors *must* register the plugin with the Falcosecurity organization by creating a PR to modify the [PLUGINS-REGISTRY.md](https://github.com/falcosecurity/plugins/blob/master/plugins/PLUGINS-REGISTRY.md) file with details on the new plugin. This ensures that a given ID is used by exactly one source plugin.
+Source plugin authors *must* register the plugin with the Falcosecurity organization by creating a PR to modify the [plugin registry](https://github.com/falcosecurity/plugins/blob/master/registry.yaml) file with details on the new plugin. This ensures that a given ID is used by exactly one source plugin.
 
 ## Plugin Event Sources and Interoperability
 
@@ -65,7 +65,7 @@ Events returned by source plugins have an "event source" which describes the inf
 
 An extractor plugin optionally provides a set of event sources. When the framework receives an event with an event source in the plugin's set of event sources, fields in expressions/Falco outputs will be extracted from events using the plugin. An extractor plugin can also *not* name a set of event sources. In this case, *all* events will be presented to the extractor plugin, regardless of source. In this case, the extractor plugin must detect the format of arbitrary payloads and be able to return NULL/no value when the payload is not supported.
 
-Extractor plugin authors *should* register the plugin with the Falcosecurity organization by creating a PR to modify the [PLUGINS-REGISTRY.md](https://github.com/falcosecurity/plugins/blob/master/plugins/PLUGINS-REGISTRY.md) file with details on the new plugin. This allows source plugin authors and extractor plugin authors to coordinate about event source formats.
+Extractor plugin authors *should* register the plugin with the Falcosecurity organization by creating a PR to modify the [plugin registry](https://github.com/falcosecurity/plugins/blob/master/registry.yaml) file with details on the new plugin. This allows source plugin authors and extractor plugin authors to coordinate about event source formats.
 
 ## Handling Duplicate/Overlapping Fields in Plugins/Libraries Core
 
@@ -80,7 +80,7 @@ When managing plugins, we only need to ensure the following:
 
 ## Plugin API
 
-Here is an overview of the functions that comprise the plugins API. This list is not complete--the [developer's guide](./developers_guide) has full documentation of the source and extractor plugin APIs.
+Here is an overview of the functions that comprise the plugins API. This list is not complete: the [developer's guide](./developers-guide) has full documentation of the source and extractor plugin APIs.
 
 In almost all cases, a plugin author can use the SDKs which provide a more streamlined interface. This still provides a good overview of the functionality a plugin provides.
 
@@ -121,7 +121,7 @@ Both source and extractor plugins have functions to define the set of fields tha
 
 # How Falco Uses Plugins
 
-Falco loads plugins based on configuration in falco.yaml. Currently, if a source plugin is loaded the *only* events processed are from that plugin--syscall and k8s_audit events are disabled. There are other restrictions on loaded plugins (see below).
+Falco loads plugins based on configuration in falco.yaml. Currently, if a source plugin is loaded the *only* events processed are from that plugin; syscall and k8s_audit events are disabled. There are other restrictions on loaded plugins (see below).
 
 ## Loading plugins in Falco
 
@@ -180,7 +180,7 @@ Falco can load multiple rules files, and each file may contain its own `required
 
 # Plugin Developer's Guide
 
-If you are interested in authoring your own plugin, or modifying an existing plugin to add new functionality, we've written a [developer's guide](./developers_guide) that documents the full plugin APIs and walks through two existing plugins to show how the API is used.
+If you are interested in authoring your own plugin, or modifying an existing plugin to add new functionality, we've written a [developer's guide](./developers-guide) that documents the full plugin APIs and walks through two existing plugins to show how the API is used.
 
 # Where's the Code?
 

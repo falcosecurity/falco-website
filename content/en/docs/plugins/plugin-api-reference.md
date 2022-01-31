@@ -1,11 +1,13 @@
 ---
 title: Falco Plugins API Reference
 weight: 2
+aliases:
+    - /docs/plugins/plugin_api_reference/
 ---
 
 ## Introduction
 
-This page documents the functions that make up the Falco plugins API. In most cases, you will not need to implement these functions directly. There are [Go](https://github.com/falcosecurity/plugin-sdk-go) and [C++](https://github.com/falcosecurity/plugins/tree/master/sdk/cpp) SDKs that provide an easier-to-use interface for plugin authors.
+This page documents the functions that make up the Falco plugins API. In most cases, you will not need to implement these functions directly. There are [Go](https://github.com/falcosecurity/plugin-sdk-go) and [C++](https://github.com/falcosecurity/plugin-sdk-cpp) SDKs that provide an easier-to-use interface for plugin authors.
 
 At a high level, the API functions can be grouped into three sections:
 
