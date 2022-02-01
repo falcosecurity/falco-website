@@ -63,7 +63,7 @@ The images can be used in two ways as follows:
 
 You cannot use the Least privileged mode with the eBPF probe driver unless you have at least Kernel 5.8,
 this is because `--privileged` is needed to do the `bpf` syscall.
-If you are running Kernel >= 5.8 you can pass `--cap-add SYS_BPF` to the docker run command in the step 2
+If you are running Kernel >= 5.8 you can pass `--cap-add BPF` to the docker run command in the step 2
 and ignore the Install the kernel module section completely.
 
 You can read more details about this [here](https://github.com/falcosecurity/falco/issues/1299#issuecomment-653448207)

@@ -52,7 +52,7 @@ Falcoは公式の[docker images](/docs/getting-started/download#images)のセッ
 
 少なくともKernel 5.8以上でないと、eBPFプローブドライバでLeast privilegedモードを使用することはできません。
 これは `--privileged` が `bpf` のシステムコールを行うために必要だからです。
-Kernel >= 5.8 を実行している場合は、ステップ 2 の docker run コマンドに `--cap-add SYS_BPF` を渡すことができます。
+Kernel >= 5.8 を実行している場合は、ステップ 2 の docker run コマンドに `--cap-add BPF` を渡すことができます。
 そして、カーネルモジュールのインストールセクションは完全に無視してください。
 
 詳しくはこちらをご覧ください[こちら](https://github.com/falcosecurity/falco/issues/1299#issuecomment-653448207)
