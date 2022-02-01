@@ -31,7 +31,7 @@ Of course, you may wonder how hard it is to develop a Falco extension for your u
 - **Plugin SDK Go** 👉 https://github.com/falcosecurity/plugin-sdk-go
 - **Plugin SDK C++** 👉 https://github.com/falcosecurity/plugin-sdk-cpp
 
-The SDKs are lightweight and allow you to develop Falco plugins with **few lines of code**! We put special attention to the **Go SDK** since Go is a well-appreciated language in the cloud-native community. Check out our [some examples](https://github.com/falcosecurity/plugin-sdk-go/tree/main/examples) and get started in a few minutes ⌚!
+The SDKs are lightweight and allow you to develop Falco plugins with **few lines of code**! We put special attention to the **Go SDK** since Go is a well-appreciated language in the cloud-native community. Check out [some examples](https://github.com/falcosecurity/plugin-sdk-go/tree/main/examples) and get started in a few minutes ⌚!
 
 The Falco Community also maintains an [**official registry**](https://github.com/falcosecurity/plugins#plugin-registry) 📒 that keeps track of all the plugins acknowledged and recognized across the community. This serves both to make the **plugin ecosystem more accessible** to the community and for technical details such as [reserving a specific plugin ID](https://falco.org/docs/plugins/#plugin-event-ids).
 
