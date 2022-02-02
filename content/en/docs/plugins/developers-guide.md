@@ -411,29 +411,28 @@ The Go module `falcosecurity/plugin-sdk-go` has its own [documentation](https://
 In the Go SDK plugins are defined by a set of composable tiny interfaces. To define a new plugin, the first step is to define a new `struct` type representing the plugin itself, and then register it to the SDK. Source plugins, like `dummy`, must define an additional type representing the an opened instance of the plugin event stream.
 
 ```go
+type MyPluginConfig struct {
+	// This reflects potential internal state for the plugin. In
+	// this case, the plugin is configured with a jitter.
+	Jitter uint64 `json:"jitter" jsonschema:"description=A random amount added to the sample of each event (Default: 10)"`
+}
+
 type MyPlugin struct {
 	plugins.BasePlugin
-	// This reflects potential internal state for the plugin. In
-	// this case, the plugin is configured with a jitter (e.g. a
-	// random amount to add to the sample with each call to Next()
-	jitter uint64
-
 	// Will be used to randomize samples
 	rand *rand.Rand
+	// Contains the init configuration values
+	config MyPluginConfig
 }
 
 type MyInstance struct {
 	source.BaseInstance
-
 	// Copy of the init params from plugin_open()
 	initParams string
-
 	// The number of events to return before EOF
 	maxEvents uint64
-
 	// A count of events returned. Used to count against maxEvents.
 	counter uint64
-
 	// A semi-random numeric value, derived from this value and
 	// jitter. This is put in every event as the data property.
 	sample uint64
@@ -451,21 +450,19 @@ func init() {
 An `Info()` method is needed to return a data struct containing all the plugin info. `Info()` is a required method for the defined plugin struct type. This plugin defined its info as a set of constants for simplicity, but it's not a requirement.
 
 ```go
-// Plugin consts
 const (
-	PluginRequiredApiVersion        = "0.2.0"
+	PluginRequiredApiVersion        = "0.3.0"
 	PluginID                 uint32 = 3
 	PluginName                      = "dummy"
 	PluginDescription               = "Reference plugin for educational purposes"
 	PluginContact                   = "github.com/falcosecurity/plugins"
-	PluginVersion                   = "0.1.0"
+	PluginVersion                   = "0.2.1"
 	PluginEventSource               = "dummy"
 )
 
 ...
 
 func (m *MyPlugin) Info() *plugins.Info {
-	log.Printf("[%s] Info\n", PluginName)
 	return &plugins.Info{
 		ID:                 PluginID,
 		Name:               PluginName,
@@ -477,6 +474,7 @@ func (m *MyPlugin) Info() *plugins.Info {
 	}
 }
 
+
 ...
 ```
 
@@ -484,38 +482,55 @@ func (m *MyPlugin) Info() *plugins.Info {
 
 The mandatory `Init()` method serves as an initialization entrypoint for plugins. This is where the user-defined configuration string is passed in by the framework. The internal state of the plugin should be initialized at this level. An error can be returned to abort the plugin initialization.
 
-Defining the `Destroy` method is optional, but can be useful if some resource needs to be released before the plugin gets destroyed.
+Defining the `Destroy()` method is optional, but can be useful if some resource needs to be released before the plugin gets destroyed. The `InitSchema()` methos is optional too, but it allows the framework to automatically parse the init config, thus avoiding the need of doing it manually inside `Init()`.
 
 ```go
-func (m *MyPlugin) Init(cfg string) error {
-	log.Printf("[%s] Init, config=%s\n", PluginName, cfg)
+// Set the config default values.
+func (p *MyPluginConfig) setDefault() {
+	p.Jitter = 10
+}
 
-	var jitter uint64 = 10
+// This returns a schema representing the configuration expected by the
+// plugin to be passed to the Init() method. Defining InitSchema() allows
+// the framework to automatically validate the configuration, so that the
+// plugin can assume that it to be always be well-formed when passed to Init().
+func (p *MyPlugin) InitSchema() *sdk.SchemaInfo {
+	// We leverage the jsonschema package to autogenerate the
+	// JSON Schema definition using reflection from our config struct.
+	reflector := jsonschema.Reflector{
+		// all properties are optional by default
+		RequiredFromJSONSchemaTags: true,
+		// unrecognized properties don't cause a parsing failures
+		AllowAdditionalProperties:  true,
+	}
+	if schema, err := reflector.Reflect(&MyPluginConfig{}).MarshalJSON(); err == nil {
+		return &sdk.SchemaInfo{
+			Schema: string(schema),
+		}
+	}
+	return nil
+}
+
+// Since this plugin defines the InitSchema() method, we can assume
+// that the configuration is pre-validated by the framework and
+// always well-formed according to the provided schema.
+func (m *MyPlugin) Init(cfg string) error {
+	// initialize state
+	m.rand = rand.New(rand.NewSource(time.Now().UnixNano()))
 
 	// The format of cfg is a json object with a single param
 	// "jitter", e.g. {"jitter": 10}
-	//
-	// Empty configs are allowed, in which case the default is
-	// used.
-	if cfg != "" && cfg != "{}" {
-		var obj map[string]uint64
-		err := json.Unmarshal([]byte(cfg), &obj)
-		if err != nil {
-			return err
-		}
-		if _, ok := obj["jitter"]; ok {
-			jitter = obj["jitter"]
-		}
-	}
-
-	m.jitter = jitter
-	m.rand = rand.New(rand.NewSource(time.Now().UnixNano()))
+	// Empty configs are allowed, in which case the default is used.
+	// Since we provide a schema through InitSchema(), the framework
+	// guarantees that the config is always well-formed json.
+	m.config.setDefault()
+	json.Unmarshal([]byte(cfg), &m.config)
 
 	return nil
 }
 
 func (m *MyPlugin) Destroy() {
-	log.Printf("[%s] Destroy\n", PluginName)
+	// nothing to do here
 }
 ```
 
@@ -527,8 +542,6 @@ The plugin instance type returned form `Open()` can define an optional `Close()`
 
 ```go
 func (m *MyPlugin) Open(prms string) (source.Instance, error) {
-	log.Printf("[%s] Open, params=%s\n", PluginName, prms)
-
 	// The format of params is a json object with two params:
 	// - "start", which denotes the initial value of sample
 	// - "maxEvents": which denotes the number of events to return before EOF.
@@ -556,7 +569,7 @@ func (m *MyPlugin) Open(prms string) (source.Instance, error) {
 }
 
 func (m *MyInstance) Close() {
-	log.Printf("[%s] Close\n", PluginName)
+	// nothing to do here
 }
 ```
 
@@ -571,8 +584,6 @@ If an error is returned, the SDK returns a failure to the framework and invalida
 
 ```go
 func (m *MyInstance) NextBatch(pState sdk.PluginState, evts sdk.EventWriters) (int, error) {
-	log.Printf("[%s] NextBatch\n", PluginName)
-
 	// Return EOF if reached maxEvents
 	if m.counter >= m.maxEvents {
 		return 0, sdk.ErrEOF
@@ -586,7 +597,7 @@ func (m *MyInstance) NextBatch(pState sdk.PluginState, evts sdk.EventWriters) (i
 		m.counter++
 
 		// Increment sample by 1, also add a jitter of [0:jitter]
-		m.sample += 1 + uint64(myPlugin.rand.Int63n(int64(myPlugin.jitter+1)))
+		m.sample += 1 + uint64(myPlugin.rand.Int63n(int64(myPlugin.config.Jitter+1)))
 
 		// The representation of a dummy event is the sample as a string.
 		str := strconv.Itoa(int(m.sample))
@@ -611,7 +622,6 @@ Source plugins must define a `String()` method to format the contents of events 
 
 ```go
 func (m *MyPlugin) String(in io.ReadSeeker) (string, error) {
-	log.Printf("[%s] String\n", PluginName)
 	evtBytes, err := ioutil.ReadAll(in)
 	if err != nil {
 		return "", err
@@ -635,7 +645,6 @@ The `Fields()` method returns a slice of `sdk.FieldEntry` representing all the s
 
 ```go
 func (m *MyPlugin) Fields() []sdk.FieldEntry {
-	log.Printf("[%s] Fields\n", PluginName)
 	return []sdk.FieldEntry{
 		{Type: "uint64", Name: "dummy.divisible", ArgRequired: true, Desc: "Return 1 if the value is divisible by the provided divisor, 0 otherwise"},
 		{Type: "uint64", Name: "dummy.value", Desc: "The sample value in the event"},
@@ -652,7 +661,6 @@ The extracted field value must be set through the `SetValue` method of `sdk.Extr
 
 ```go
 func (m *MyPlugin) Extract(req sdk.ExtractRequest, evt sdk.EventReader) error {
-	log.Printf("[%s] Extract\n", PluginName)
 	evtBytes, err := ioutil.ReadAll(evt.Reader())
 	if err != nil {
 		return err
@@ -671,9 +679,9 @@ func (m *MyPlugin) Extract(req sdk.ExtractRequest, evt sdk.EventReader) error {
 			return fmt.Errorf("argument to dummy.divisible %s could not be converted to number", arg)
 		}
 		if evtVal%divisor == 0 {
-			req.SetValue(1)
+			req.SetValue(uint64(1))
 		} else {
-			req.SetValue(0)
+			req.SetValue(uint64(0))
 		}
 	case 1: // dummy.value
 		req.SetValue(uint64(evtVal))
@@ -695,7 +703,8 @@ This plugin can be configured in Falco by adding the following to falco.yaml:
 plugins:
   - name: dummy
     library_path: /tmp/my-plugins/dummy/libdummy.so
-    init_config: '{"jitter": 10}'
+    init_config:
+      jitter: 10
     open_params: '{"start": 1, "maxEvents": 20}'
 
 ## Optional
@@ -717,43 +726,22 @@ Here's what it looks like when run:
 
 ```
 $ ./falco -r ../falco-files/dummy_rules.yaml -c ../falco-files/falco.yaml
-Wed Nov  3 12:46:43 2021: Falco version 0.30.0-35+e9923ae (driver version new/plugin-system-api-additions)
-Wed Nov  3 12:46:43 2021: Falco initialized with configuration file ../falco-files/falco.yaml
-Wed Nov  3 12:46:43 2021: Loading plugin (dummy) from file /tmp/my-plugins/dummy/libdummy.so
-2021/11/03 12:46:43 [dummy] Info
-2021/11/03 12:46:43 [dummy] Info
-2021/11/03 12:46:43 [dummy] Fields
-2021/11/03 12:46:43 [dummy] Init, config={"jitter": 10}
-Wed Nov  3 12:46:43 2021: Loading rules from file ../rules/dummy_rules.yaml:
-2021/11/03 12:46:43 [dummy] Open, params={"start": 1, "maxEvents": 20}
-Wed Nov  3 12:46:43 2021: Starting internal webserver, listening on port 8765
-2021/11/03 12:46:43 [dummy] NextBatch
-2021/11/03 12:46:43 [dummy] Extract
-2021/11/03 12:46:43 [dummy] Extract
-2021/11/03 12:46:43 [dummy] Extract
-2021/11/03 12:46:43 [dummy] Extract
-2021/11/03 12:46:43 [dummy] String
-2021/11/03 12:46:43 [dummy] Extract
-2021/11/03 12:46:43 [dummy] Extract
-2021/11/03 12:46:43 [dummy] String
-2021/11/03 12:46:43 [dummy] Extract
-2021/11/03 12:46:43 [dummy] Extract
-2021/11/03 12:46:43 [dummy] Extract
-2021/11/03 12:46:43 [dummy] Extract
-2021/11/03 12:46:43 [dummy] String
-12:46:43.372769397: Notice A dummy event (event={"sample": "33"} sample=33 sample_str=33 num=4)
-2021/11/03 12:46:43 [dummy] Extract
-2021/11/03 12:46:43 [dummy] Extract
-2021/11/03 12:46:43 [dummy] String
-2021/11/03 12:46:43 [dummy] Extract
-2021/11/03 12:46:43 [dummy] Extract
-2021/11/03 12:46:43 [dummy] Extract
-2021/11/03 12:46:43 [dummy] Extract
-12:46:43.372770027: Notice A dummy event (event={"sample": "45"} sample=45 sample_str=45 num=6)
-2021/11/03 12:46:43 [dummy] Extract
-2021/11/03 12:46:43 [dummy] NextBatch
-2021/11/03 12:46:43 [dummy] Close
-2021/11/03 12:46:43 [dummy] Destroy
+Wed Feb  2 16:26:35 2022: Falco version 0.31.0 (driver version 319368f1ad778691164d33d59945e00c5752cd27)
+Wed Feb  2 16:26:35 2022: Falco initialized with configuration file ../falco-files/falco.yaml
+Wed Feb  2 16:26:35 2022: Loading plugin (dummy) from file /tmp/my-plugins/dummy/libdummy.so
+Wed Feb  2 16:26:35 2022: Loading rules from file ../rules/dummy_rules.yaml:
+Wed Feb  2 16:26:35 2022: Starting internal webserver, listening on port 8765
+16:26:35.527827816: Notice A dummy event (event={"sample": "6"} sample=6 sample_str=6 num=1)
+16:26:35.527829658: Notice A dummy event (event={"sample": "18"} sample=18 sample_str=18 num=3)
+16:26:35.527831048: Notice A dummy event (event={"sample": "33"} sample=33 sample_str=33 num=8)
+Events detected: 3
+Rule counts by severity:
+   INFO: 3
+Triggered rules by rule name:
+   My Dummy Rule: 3
+Syscall event drop monitoring:
+   - event drop detected: 0 occurrences
+   - num times actions taken: 0
 ```
 
 ### Example C plugin: `dummy_c`
@@ -1114,20 +1102,20 @@ load_plugins: [dummy_c]
   condition: evt.num > 0 and evt.num < 10 and dummy.divisible[3] = 1
   output: A dummy event (event=%evt.plugininfo sample=%dummy.value sample_str=%dummy.strvalue num=%evt.num)
   priority: INFO
-  source: dummy
+  source: dummy_c
 ```
 
 ```
 $ ./falco -r ../falco-files/dummy_rules.yaml -c ../falco-files/falco.yaml
-Fri Oct 29 14:18:53 2021: Falco version 0.30.0-29+2d624a2 (driver version b9d2fccebf0feb94729c78bee0368c70d9c24819)
-Fri Oct 29 14:18:53 2021: Falco initialized with configuration file ../falco-files/falco.yaml
-Fri Oct 29 14:18:53 2021: Loading plugin (dummy_c) from file /mnt/sf_mstemm/Documents/work/src/plugins/plugins/dummy_c/libdummy_c.so
-Fri Oct 29 14:18:53 2021: Loading rules from file ../falco-files/dummy_rules.yaml:
-Fri Oct 29 14:18:53 2021: Starting internal webserver, listening on port 8765
-14:18:53.941207000: Notice A dummy event (event={"sample": 12} sample=12 sample_str=12 num=2)
-14:18:53.942443000: Notice A dummy event (event={"sample": 18} sample=18 sample_str=18 num=4)
-14:18:53.942498000: Notice A dummy event (event={"sample": 39} sample=39 sample_str=39 num=8)
-14:18:53.942526000: Notice A dummy event (event={"sample": 42} sample=42 sample_str=42 num=9)
+Wed Feb  2 16:38:06 2022: Falco version 0.31.0 (driver version 319368f1ad778691164d33d59945e00c5752cd27)
+Wed Feb  2 16:38:06 2022: Falco initialized with configuration file ../falco-files/falco.yaml
+Wed Feb  2 16:38:06 2022: Loading plugin (dummy_c) from file /tmp/my-plugins/dummy_c/libdummy_c.so
+Wed Feb  2 16:38:06 2022: Loading rules from file ../falco-files/dummy_rules.yaml:
+Wed Feb  2 16:38:06 2022: Starting internal webserver, listening on port 8765
+16:38:06.070072000: Notice A dummy event (event={"sample": 9} sample=9 sample_str=9 num=1)
+16:38:06.071105000: Notice A dummy event (event={"sample": 24} sample=24 sample_str=24 num=4)
+16:38:06.071147000: Notice A dummy event (event={"sample": 39} sample=39 sample_str=39 num=7)
+16:38:06.071170000: Notice A dummy event (event={"sample": 48} sample=48 sample_str=48 num=9)
 Events detected: 4
 Rule counts by severity:
    INFO: 4
