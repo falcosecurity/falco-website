@@ -129,17 +129,16 @@ Falco configures plugins via the new "plugins" property in falco.yaml. Here's an
 
 ```yaml
 plugins:
-  - name: aws_cloudtrail
-    library_path: aws_cloudtrail/plugin.so
-    init_config: "..."
-    open_params: "..."
-  - name: http_json
-    library_path: http_json/plugin.so
-    init_config_file: http_json/config.txt
-    open_params_file: http_json/params.txt
+  - name: cloudtrail
+    library_path: libcloudtrail.so
+    init_config: ""
+    open_params: ""
+  - name: json
+    library_path: libjson.so
+    init_config: ""
 
 # Optional
-load_plugins: [aws_cloudtrail]
+load_plugins: [cloudtrail]
 ```
 
 A new "plugins" property in falco.yaml will define the set of plugins that can be loaded by Falco, and a new "load_plugins" property in falco.yaml will control which plugins are actually loaded when Falco starts.
