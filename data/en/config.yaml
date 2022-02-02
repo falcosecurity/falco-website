@@ -177,9 +177,7 @@
     * `name: <string>`
     * `library_path: <path>`
     * `init_config: <string>`
-    * `init_config_file: <path>`
     * `open_params: <string>`
-    * `open_params_file: <path>`
 
   description: |
     Defines the set of plugins Falco can load.
@@ -190,13 +188,7 @@
 
     If `init_config` is present, it contains the exact configuration text that will be provided as an argument to the init() function.
 
-    Alternatively, if `init_config_file` is present, the provided file will be read and the contents will be provided as an argument to the init() function.
-
-    if `open_params`: is present, it contains the exact params text that will be provided as an argument to the open() function.
-
-    Alternatively, if `open_params_file` is present, the provided file will be read and the contents will be provided as an argument to the open() function.
-
-    For a given yaml object in the plugins list, only one of init_config/init_config_file and one of open_params/open_params_file can be provided at a time.
+    if `open_params`: is present, it contains the exact params text that will be provided as an argument to the open() function, which is used in [source plugins](../plugins#source-plugin) only.
 
 - name: load_plugins
   type: |
