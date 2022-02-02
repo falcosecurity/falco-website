@@ -187,12 +187,7 @@ If you are interested in authoring your own plugin, or modifying an existing plu
 
 ## Plugins
 
-Plugins authored by the Falcosecurity community are at the [plugins github repository](https://github.com/falcosecurity/plugins). The current plugins are:
-
-* **cloudtrail**: Reads Cloudtrail JSON logs from files/S3 and injects as events.
-* **dummy**: Reference plugin use to document plugins interface.
-* **dummy_c**: Like dummy, but written in C++.
-* **json**: Extracts values from any JSON payload.
+Plugins authored by the Falcosecurity community are at the [plugins github repository](https://github.com/falcosecurity/plugins). There, you can also find the [plugin registry](https://github.com/falcosecurity/plugins/blob/master/registry.yaml) containing info about all the plugins officially recognized by the Falcosecurity organization.
 
 ## Plugin SDKs
 
