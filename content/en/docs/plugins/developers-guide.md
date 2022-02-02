@@ -43,12 +43,6 @@ Some API functions are required, while others are optional. If a function is opt
 
 Every API function that returns or populates a string or struct pointer must point to memory allocated by the plugin and must remain valid for use by the plugin framework. When using the SDKs, this is generally handled automatically. Keep it in mind if using the plugin API functions directly, however.
 
-### Cgo Pitfalls with Packages
-
-Cgo has a [limitation](https://github.com/golang/go/issues/13467) where generated go types for C types (e.g. `C.ss_plugin_event`) are package-specific and not exported. This means that if you include `plugin_info.h` in your plugin in one package, the go types corresponding to structs/enums/etc in `plugin_info.h` can not be used directly in other packages.
-
-If your plugin needs to use the generated types across packages, you'll have to cast them to an `unsafe.Pointer` across the package boundary. As the generated types all match the same underlying memory layout, this is still safe, as long as the packages were all built from the same plugin API version.
-
 ### What Configuration/Internal State Goes Where?
 
 When the framework calls `plugin_open()`, it provides a configuration string which is used to configure the plugin. When the framework calls `plugin_open()`, it provides a parameters string which is used to source a stream of events. The format of both text blocks is defined by the plugin and is passed directly through by the plugin framework.
