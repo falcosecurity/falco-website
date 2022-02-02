@@ -87,12 +87,12 @@ The only time where duplicate sources make sense are when a group of plugins can
 
 ##### `const char* plugin_get_fields() [Required: no]`
 
-This function should return the set of fields supported by the plugin. Remember, a field is a name (e.g. `proc.name`) that can extract a value (e.g. `nginx`) from an event (e.g. a syscall event involving a process). The format is a json string which contains an array of objects. Each object describes one field. Here's an example:
+This function should return the set of fields supported by the plugin. Remember, a field is a name (e.g. `proc.name`) that can extract a value (e.g. `nginx`) from an event (e.g. a syscall event involving a process). The format is a json string, with memory owned by the plugin, which contains an array of objects. Each object describes one field. Here's an example:
 
 ```json
 [
-   {"type": "string", "name": "gizmo.field1", "argRequired": true, "desc": "Describing field 1"},
-   {"type": "uint64", "name": "gizmo.field2", "desc": "Describing field 2", properties: ["hidden"]}
+    {"type": "string", "name": "gizmo.field1", "argRequired": true, "desc": "Describing field 1"},
+    {"type": "uint64", "name": "gizmo.field2", "desc": "Describing field 2", properties: ["hidden"]}
 ]
 ```
 
@@ -116,6 +116,34 @@ When defining fields, keep the following guidelines in mind:
 * Fields should be idempotent: for a given event, the value for a field should be the same regardless of when/where the event was generated.
 * Fields should be neutral: define fields that extract properties of the event (e.g. "source ip address") rather than judgements (e.g. "source ip address is associated with a botnet").
 
+##### `const char* plugin_get_init_schema(ss_plugin_schema_type* schema_type) [Required: no]`
+
+This function returns a schema that describes the configuration to be passed to `init()` during plugin initialization. The return value is a C string, with memory owned by the plugin, representing the configuration schema. The type of schema returned is compliant with the `ss_plugin_schema_type` enumeration, and is written inside the `schema_type` output argument.
+
+Although this function is non-required, it is common to implement it due to the benefits it brings. If `get_init_schema` is correctly implemented, the `init()` function can assume the passed-in configuration string to always be well-formed. The plugin framework will take care of automatically parsing it against the provided schema and generating ad-hoc errors accordingly. This also serves as a piece of documentation for users about how the plugin needs to be configured.
+
+Currently, the plugin framework only supports the [JSON Schema format](https://json-schema.org/), which is represented by the `SS_PLUGIN_SCHEMA_JSON` enum value. If a plugin defines a JSON Schema, the framework will require the init configuration string to be a valid json-formatted string.
+
+Writing the dummy enum value `SS_PLUGIN_SCHEMA_NONE` inside `schema_type` is equivalent to avoiding implementing the `get_init_schema` function itself, which ends up with the framework treating the init configuration as an opaque string with no additional checks.
+
+##### `const char* plugin_list_open_params(ss_plugin_t* s, ss_plugin_rc* rc) [Required: no]`
+
+This function returns a list of suggested values that are valid parameters for the `open()` plugin function.
+Although non-required, this function is useful to instruct users about potential valid parameters for opening a stream of events. Implementing this function also brings additional usage documentation for the plugin, and allows makes it more usable with automated tools.
+
+The returned value is a json string, with memory owned by the plugin, which contains an array of objects. Each object describes one suggested value for the `open()` function. Here's an example:
+
+```json
+[
+    {"value": "resource1", "desc": "An example of openable resource"},
+    {"value": "resource2", "desc": "Another example of openable resource"}
+]
+```
+
+Each object has the following properties:
+* `value`: a string usable as a parameter for `open()`
+* `desc`: (optional) a string with that describes the meaning of `value`.
+
 #### Instance/Capture Management Functions
 
 ##### `ss_plugin_t* plugin_init(const char* config, int32_t* rc) [Required: yes]`
@@ -130,7 +158,7 @@ When managing plugin-level state, keep the following in mind:
 * On failure, make sure to return a meaningful error message in the next call to `plugin_get_last_error()`.
 * On failure, the plugin framework will *not* call plugin_destroy, so do not return any allocated state.
 
-The format of the config string is entirely determined by the plugin author, and is passed unchanged from Falco/the application using the plugin framework to the plugin. Given that, semi-structured formats like JSON/YAML are preferable to free-form text.
+The format of the config string is entirely determined by the plugin author, and by default is passed unchanged from Falco/the application using the plugin framework to the plugin. However, semi-structured formats like JSON/YAML are preferable to free-form text. In those cases, the plugin author can provide a schema describing the config string contents by implementing the optional `get_init_schema` function. If so, the `init()` function can assume the passed-in configuration string to always be well-formed, and can avoid performing any error handling. The plugin framework will take care of automatically parsing it against the provided schema and generating ad-hoc errors accordingly. Please refer to the documentation of `get_init_schema` for more details.
 
 ##### `void plugin_destroy(ss_plugin_t *s) [Required: yes]`
 
@@ -238,7 +266,7 @@ typedef enum ss_plugin_field_type
 
 typedef struct ss_plugin_extract_field
 {
-        uint32_t fields_id;
+    uint32_t fields_id;
 	const char* field;
 	const char* arg;
 	uint32_t ftype;      // Has value from ss_plugin_field_type enum
@@ -268,6 +296,7 @@ With the exception of `plugin_get_extract_event_sources`, almost all functions u
 * `plugin_get_contact`
 * `plugin_get_version`
 * `plugin_get_fields`
+* `plugin_get_init_schema`
 * `plugin_extract_fields`
 
 The only difference is that for Extractor plugins, `plugin_get_fields`/`plugin_extract_fields` are both required.
