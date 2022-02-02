@@ -77,7 +77,7 @@ The recommended format for `plugin_get_contact` is a url to a repository that co
 
 This function returns a C string, with memory owned by the plugin, containing the plugin's [event source](../../plugins/#plugin-event-sources-and-interoperability). This event source is used for:
 
-* Associating Falco rules with plugin events--A Falco rule with a `source: gizmo` property will run on all events returned by the gizmo plugin's `next()` function.
+* Associating Falco rules with plugin events--A Falco rule with a `source: gizmo` property will run on all events returned by the gizmo plugin's `next_batch()` function.
 * Linking together extractor plugins and source plugins. An extractor plugin can list a given event source like "gizmo" in its `get_extract_event_sources()` function, and the extractor plugin will get an opportunity to extract fields from all events returned by the gizmo plugin.
 * Ensuring that only one plugin at a time is loaded for a given source.
 
@@ -212,7 +212,7 @@ The struct has the following members:
 * `datalen`: pointer to a 32bit integer. The plugin will set it the size of the buffer pointed by data.
 * `ts`: the event timestamp, in nanoseconds since the epoch. Can be (uint64_t)-1, in which case the engine will automatically fill the event time with the current time.
 
-It is not necessary to fill in the evtnum struct member when returning events via plugin_next/plugin_next_batch. Event numbers are assigned by the plugin framework.
+It is not necessary to fill in the evtnum struct member when returning events via plugin_next_batch. Event numbers are assigned by the plugin framework.
 
 This function should return:
 
