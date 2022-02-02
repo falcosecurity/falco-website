@@ -34,7 +34,7 @@ These SDKs are optional, but using them is highly recommended.
 
 ### Source Plugin
 
-A source plugin provides a new sinsp/scap event source. It has the ability to "open" and "close" a stream of events. It also has the ability to return an event to the plugin framework via a next() method.
+A source plugin provides a new sinsp/scap event source. It has the ability to "open" and "close" a stream of events. It also has the ability to return new events to the plugin framework.
 
 Source plugins also have the ability to extract information from events based on fields. For example, a field (e.g. `proc.name`) extracts a value (e.g. process name like `nginx`) from a syscall event. The plugin returns a set of supported fields, and there are functions to extract a value given an event and field. The plugin framework can then build filtering expressions/Falco rule conditions based on these fields combined with relational and/or logical operators. For example, given an expression `ct.name=root and ct.region=us-east-1`, the plugin framework handles parsing the expression, calling the plugin to extract values for fields `ct.name`/`ct.region` for a given event, and determining the result of the expression. In a Falco output string like `An EC2 Node was created (name=%ct.name region=%ct.region)`, the plugin framework handles parsing the output string, calling the plugin to extract values for fields, and building the resolved string, replacing the template field names (e.g. `%ct.region`) with values (e.g. `us-east-1`).
 

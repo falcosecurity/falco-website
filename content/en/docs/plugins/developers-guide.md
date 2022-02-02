@@ -24,7 +24,7 @@ Here is a high level overview of how the plugin framework uses API functions to 
 * **Get supported fields**: the framework calls `plugin_get_fields` to obtain the list of fields supported by the plugin.
 * **Initialize a plugin**: the framework calls `plugin_init()` to initialize a plugin, which returns an opaque `ss_plugin_t` handle. This handle is passed as an argument to later functions.
 * **Open a stream of events**: the framework calls `plugin_open()` the open a stream of events, which returns an opaque `ss_instance_t` handle. This handle is passed as an argument to later functions. (source plugins only)
-* **Obtain events**: the framework calls `plugin_next()` to obtain events from the plugin. (source plugins only)
+* **Obtain events**: the framework calls `plugin_next_batch()` to obtain events from the plugin. (source plugins only)
 * **Extract values**: the framework calls `plugin_extract_fields()` to obtain values for fields for a given event.
 * **Close a stream of events**: the framework calls `plugin_close()` to close a stream of events. The `ss_instance_t` handle is considered invalid and will not be used again. (source plugins only)
 * **Destroy the plugin**: the framework calls `plugin_destroy()` to destroy a plugin. The `ss_plugin_t` handle is considered invalid and will not be used again.
