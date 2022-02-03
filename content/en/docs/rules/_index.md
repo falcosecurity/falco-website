@@ -11,6 +11,13 @@ Element | Description
 [Macros](#macros) | Rule condition snippets that can be re-used inside rules and even other macros. Macros provide a way to name common patterns and factor out redundancies in rules.
 [Lists](#lists) | Collections of items that can be included in rules, macros, or other lists. Unlike rules and macros, lists cannot be parsed as filtering expressions.
 
+There are also two optional elements related to versioning:
+
+Element | Description
+:-------|:-----------
+`required_engine_version` | Used to track compatibility between rules content and the falco [engine version](#falco-engine-versioning).
+`required_plugin_versions` | Used to track compatibility between rules content and [plugin versions](/docs/plugins#plugin-versions-and-falco-rules).
+
 ## Versioning
 
 From time to time, we make changes to the rules file format that are not backwards-compatible with older versions of Falco. Similarly, libsinsp and libscap may define new filtercheck fields, operators, etc. We want to denote that a given set of rules depends on the fields/operators from those libraries.
@@ -25,7 +32,12 @@ The `falco` executable and the `falco_engine` C++ object now support returning a
 
 ### Falco Rules File Versioning
 
-The Falco rules files included with Falco include a new top-level object, `required_engine_version: N`, that specifies the minimum engine version required to read this rules file. If not included, no version check is performed when reading the rules file.
+The Falco rules files included with Falco include a new top-level object, `required_engine_version: N`, that specifies the minimum engine version required to read this rules file. If not included, no version check is performed when reading the rules file. Here's an example:
+
+```yaml
+# This rules file requires a falco with falco engine version 7.
+- required_engine_version: 7
+```
 
 If a rules file has an `engine_version` greater than the Falco engine version, the rules file is loaded and an error is returned.
 
@@ -45,6 +57,7 @@ Key | Required | Description | Default
 `tags` | no | A list of tags applied to the rule (more on this [below](#tags)). |
 `warn_evttypes` | no | If set to `false`, Falco suppresses warnings related to a rule not having an event type (more on this [below](#rule-condition-best-practices)). | `true`
 `skip-if-unknown-filter` | no | If set to `true`, if a rule conditions contains a filtercheck, e.g. `fd.some_new_field`, that is not known to this version of Falco, Falco silently accepts the rule but does not execute it; if set to `false`, Falco repots an error and exists when finding an unknown filtercheck. | `false`
+`source` | no | The event source for which this rule should be evaluated. Typical values are `syscall`, `k8s_audit`, or the source advertised by a source [plugin](../plugins). | `syscall`
 
 ## Conditions
 
