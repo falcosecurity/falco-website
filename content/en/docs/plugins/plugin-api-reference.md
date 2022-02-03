@@ -212,7 +212,7 @@ The struct has the following members:
 * `datalen`: pointer to a 32bit integer. The plugin will set it the size of the buffer pointed by data.
 * `ts`: the event timestamp, in nanoseconds since the epoch. Can be (uint64_t)-1, in which case the engine will automatically fill the event time with the current time.
 
-It is not necessary to fill in the evtnum struct member when returning events via plugin_next_batch. Event numbers are assigned by the plugin framework.
+Filling the `evtnum` struct member when returning events via `plugin_next_batch` has no effect, because event numbers are assigned by the plugin framework.
 
 This function should return:
 
