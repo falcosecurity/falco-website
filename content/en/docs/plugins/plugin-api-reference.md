@@ -87,7 +87,7 @@ The only time where duplicate sources make sense are when a group of plugins can
 
 ##### `const char* plugin_get_fields() [Required: no]`
 
-This function should return the set of fields supported by the plugin. Remember, a field is a name (e.g. `proc.name`) that can extract a value (e.g. `nginx`) from an event (e.g. a syscall event involving a process). The format is a json string, with memory owned by the plugin, which contains an array of objects. Each object describes one field. Here's an example:
+This function should return the set of fields supported by the plugin. Remember, a field is a name (e.g. `proc.name`) that can extract a value (e.g. `nginx`) from an event (e.g. a syscall event involving a process). The return value is a string whose memory is owned by the plugin. The string is json formatted and contains an array of objects. Each object describes one field. Here's an example:
 
 ```json
 [
