@@ -61,7 +61,7 @@ Source plugin authors *must* register the plugin with the Falcosecurity organiza
 
 ## Plugin Event Sources and Interoperability
 
-Events returned by source plugins have an "event source" which describes the information in the event. This is distinct from the plugin name to allow for multiple kinds of plugins to generate the same kind of events. For example, there might be plugins gke-audit-bridge, eks-audit-bridge, ibmcloud-audit-bridge, etc. that all fetch [K8s Audit](https://kubernetes.io/docs/tasks/debug-application-cluster/audit/) information. The plugins would have different names and IDs but would have the same event source k8s_audit.
+Events returned by source plugins have an "event source" that describes the event's information. This is distinct from the plugin name to allow for multiple plugin implementations to generate the same kind of events. For example, there might be plugins gke-audit-bridge, eks-audit-bridge, ibmcloud-audit-bridge, etc. that all fetch [K8s Audit](https://kubernetes.io/docs/tasks/debug-application-cluster/audit/) information. The plugins would have different names and IDs but would have the same event source k8s_audit.
 
 An extractor plugin optionally provides a set of event sources. When the framework receives an event with an event source in the plugin's set of event sources, fields in expressions/Falco outputs will be extracted from events using the plugin. An extractor plugin can also *not* name a set of event sources. In this case, *all* events will be presented to the extractor plugin, regardless of source. In this case, the extractor plugin must detect the format of arbitrary payloads and be able to return NULL/no value when the payload is not supported. As such, given a specific event source such as k8s_audit, there is an implicit contract to honor regarding how data is formatted in each event of that source, such that compatible extractor plugins are able parse events of a certain source even if they are produced by different source plugins.
 
@@ -140,7 +140,7 @@ plugins:
     init_config: ""
 
 # Optional
-load_plugins: [cloudtrail]
+load_plugins: [cloudtrail, json]
 ```
 
 A new "plugins" property in falco.yaml will define the set of plugins that can be loaded by Falco, and a new "load_plugins" property in falco.yaml will control which plugins are actually loaded when Falco starts.

@@ -200,7 +200,7 @@ Source and extrator plugins can optionally implement the `sdk.Destroyer` interfa
 
 Source and extrator plugins can also optionally implement the `sdk.InitSchema` interface. In that case, `InitSchema()` will be used to to return a schema describing the data expected to be passed as a configuration during the plugin initialization. This follows the semantics documented for [`get_init_schema`](../plugin-api-reference/#const-char-plugin-get-init-schema-ss-plugin-schema-type-schema-type-required-no). Currently, the schema must follow the [JSON Schema specific](https://json-schema.org/), which in Go can also be easily auto-generated with external packages (e.g. [alecthomas/jsonschema](https:/github.com/alecthomas/jsonschema)).
 
-Source plugins can optionally implement the `sdk.OpenParams` interface. In that case, `OpenParams()` will be called before opening the event stream to obtains some suggested values that would valid parameters for `Open()`. For more details, see the documentation of [`list_open_params`](../plugin-api-reference/#const-char-plugin-list-open-params-ss-plugin-t-s-ss-plugin-rc-rc-required-no).
+Source plugins can optionally implement the `sdk.OpenParams` interface. If requested by the application, the framework may call `OpenParams()` before opening the event stream to obtains some suggested values that would valid parameters for `Open()`. For more details, see the documentation of [`list_open_params`](../plugin-api-reference/#const-char-plugin-list-open-params-ss-plugin-t-s-ss-plugin-rc-rc-required-no).
 
 Source plugin instances can optionally implement the `sdk.Closer` and `sdk.Progresser` interface. If `sdk.Closer` is implemented, the `Close()` method is called while closing the event stream and can be used to release the resources used by the plugin instance. If `sdk.Progresser` is implemented, the 
 `Progress()` method is called by the SDK when the framework requests progress data about the event stream of the plugin instance. `Progress()` must return a `float64` with value between 0 and 1 representing the current progress percentage, and a string representation of the same progress value.
@@ -482,7 +482,7 @@ func (m *MyPlugin) Info() *plugins.Info {
 
 The mandatory `Init()` method serves as an initialization entrypoint for plugins. This is where the user-defined configuration string is passed in by the framework. The internal state of the plugin should be initialized at this level. An error can be returned to abort the plugin initialization.
 
-Defining the `Destroy()` method is optional, but can be useful if some resource needs to be released before the plugin gets destroyed. The `InitSchema()` methos is optional too, but it allows the framework to automatically parse the init config, thus avoiding the need of doing it manually inside `Init()`.
+Defining the `Destroy()` method is optional but can be useful if some resource needs to be released before the plugin gets destroyed. The `InitSchema()` method is optional too, but it allows the framework to parse the init config automatically, thus avoiding the need of doing it manually inside `Init()`.
 
 ```go
 // Set the config default values.
