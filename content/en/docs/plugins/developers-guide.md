@@ -655,7 +655,7 @@ func (m *MyPlugin) Fields() []sdk.FieldEntry {
 
 #### Extracting Fields
 
-The `Extractor` method extracts any of the supported fields. The `req` parameter allows accessing all the info regarding the field request, such as the field id or name, and the optional user-passed argument. The `evt` parameter is an interface that halps reading the event info and data.
+The `Extractor` method extracts any of the supported fields. The `req` parameter allows accessing all the info regarding the field request, such as the field id or name, and the optional user-passed argument. The `evt` parameter is an interface that helps reading the event info and data.
 
 The extracted field value must be set through the `SetValue` method of `sdk.ExtractRequest`. Returning from `Extract` without calling `SetValue` will signal the SDK that the requested field is not present in the given event.
 
