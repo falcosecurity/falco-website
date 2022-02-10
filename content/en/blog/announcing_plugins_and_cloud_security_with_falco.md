@@ -14,7 +14,7 @@ Plugins are shared libraries that can be loaded by Falco to extend its functiona
 - Source Plugins add new data sources to Falco. They produce input events, from either the local machine or a remote source, that Falco can understand.
 - Extractor Plugins parse the data coming from source plugins and expose new fields that can be used in Falco rules.
 
-The combination of Source and extractors plugins allows users to feed arbitrary data into Falco, parse it in useful ways and create rules and policies from it. Let me give you an example: the Cloudtrail plugin extends Falco to understand Cloudtrail logs (either local or stored on S3) and allows you to write rules like this one:
+The combination of Source and Extractor plugins allows users to feed arbitrary data into Falco, parse it in useful ways and create rules and policies from it. Let me give you an example: the Cloudtrail plugin extends Falco to understand Cloudtrail logs (either local or stored on S3) and allows you to write rules like this one:
 
 ```yaml
 - rule: Console Login Without MFA
@@ -45,15 +45,15 @@ Cloud security is a fertile and constantly evolving space. When implementing clo
 1. Tools that query the cloud APIs or watch cloud data stores to detect misconfigurations or vulnerabilities
 2. Tools that stream cloud logs into a backend, index them and let you query them
 
-To detect threats in cloud-based software, Category 1 is not very useful. Polling is great to detect gaps and validate compliance, but lacks the real time nature required to detect threats and respond quickly. Category 2 is powerful, but it’s also tremendously expensive (especially in environments like the public cloud where tons of logs are produced) and not friendly to deploy and use.
+To detect threats in cloud-based software, Category 1 is not very useful. Polling is great to detect gaps and validate compliance, but lacks the real-time nature required to detect threats and respond quickly. Category 2 is powerful, but it’s also tremendously expensive (especially in environments like the public cloud where tons of logs are produced) and not friendly to deploy and use.
 
-I argue that the Falco runtime security approach is the ideal one. Falco consumes few resources and, most importantly, it analyzes the data in a streaming way. No need to perform expensive copies, no need to wait until the data is indexed. Falco looks at your data in real time and notifies you in seconds.
+I argue that the Falco runtime security approach is the ideal one. Falco consumes few resources and, most importantly, it analyzes the data in a streaming way. No need to perform expensive copies, no need to wait until the data is indexed. Falco looks at your data in real-time and notifies you in seconds.
 
 Getting up and running with Falco takes only a few minutes, and adopting it for both cloud logs and system calls allows a unified approach to threat detection.
 
 ### What is the future for Falco?
 
-V0.31.0 comes with one plugin, Cloudtrail, but expect many more to come in the future. Our vision is making Falco the runtime policy engine for, well, everything. :-) We want to support all the clouds, and include more services from each of them. 
+V0.31.0 comes with one plugin, Cloudtrail, but expect many more to come in the future. Our vision is to make Falco the runtime policy engine for, well, everything. :-) We want to support all the clouds, and include more services from each of them. 
 
 Stay tuned for announcements in the near future, and at the same time, please let us know if there is an area where you would like to see Falco in action in the future. Also, [writing your own plugin is easy](https://falco.org/docs/plugins/) and, as a community, we would love to consider your creative contribution. 
 
@@ -65,5 +65,5 @@ If you would like to find out more about Falco:
 * Get started in [Falco.org](http://falco.org/)
 * Check out the [Falco project in GitHub](https://github.com/falcosecurity/falco).
 * Get involved in the [Falco community](https://falco.org/community/).
-* Meet the maintainers on the [Falco Slack](https://kubernetes.slack.com/?redir=%2Farchives%2FCMWH3EH32).
+* Meet the maintainers on the [Falco Slack](https://kubernetes.slack.com/messages/falco).
 * Follow [@falco_org on Twitter](https://twitter.com/falco_org).
