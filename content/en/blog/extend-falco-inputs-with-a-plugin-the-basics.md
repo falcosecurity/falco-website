@@ -5,27 +5,27 @@ Author: Thomas Labarussias
 slug: extend-falco-inputs-with-a-plugin-the-basics
 ---
 
-> This post is the first of a serie about `How to develop Falco plugins`. It's adressed to anybody who would like to understand how plugins are written and want to contribute
+> This post is the first of a series about `How to develop Falco plugins`. It's adressed to anybody who would like to understand how plugins are written and want to contribute.
 
 - [What are Plugins?](#what-are-plugins)
 - [Developers Guide](#developers-guide)
 - [Our plugin](#our-plugin)
-  - [Requirements](#requirements)
-  - [Pieces of code](#pieces-of-code)
-    - [The imports](#the-imports)
-    - [The structures](#the-structures)
-    - [The functions and methods](#the-functions-and-methods)
-      - [`main()`](#main)
-      - [`init()`](#init)
-      - [`Info()`](#info)
-      - [`Init()`](#init-1)
-      - [`Fields()`](#fields)
-      - [`String()`](#string)
-      - [`Extract()`](#extract)
-      - [`Open()`](#open)
-      - [`NextBatch()`](#nextbatch)
-  - [Complete plugin](#complete-plugin)
-  - [Build](#build)
+	- [Requirements](#requirements)
+	- [Pieces of code](#pieces-of-code)
+		- [The imports](#the-imports)
+		- [The structures](#the-structures)
+		- [The functions and methods](#the-functions-and-methods)
+			- [`main()`](#main)
+			- [`init()`](#init)
+			- [`Info()`](#info)
+			- [`Init()`](#init-1)
+			- [`Fields()`](#fields)
+			- [`String()`](#string)
+			- [`Extract()`](#extract)
+			- [`Open()`](#open)
+			- [`NextBatch()`](#nextbatch)
+	- [Complete plugin](#complete-plugin)
+	- [Build](#build)
 - [Configuration](#configuration)
 - [Rules](#rules)
 - [Test and Results](#test-and-results)
@@ -34,18 +34,19 @@ slug: extend-falco-inputs-with-a-plugin-the-basics
 
 # What are Plugins?
 
-Before starting, you should take look at these posts to know more about what Plugins are, what they can do and what concept are behind:
+Before starting, you should take look at these posts to know more about what Plugins are, what they can do and what concepts are behind them:
+
 * [Falco Plugins Early Access](https://falco.org/blog/falco-plugins-early-access/)
 * [Falco 0.31.0 a.k.a. "the Gyrfalcon"](https://falco.org/blog/falco-0-31-0/)
 * [Announcing Plugins and Cloud Security with Falco](https://falco.org/blog/falco-announcing-plugins/)
 
 # Developers Guide
 
-This post has not for purpose to replace the official documentation, it's a step by step example to get you know minimal requirements for having a running plugin. For details, please read the [developers guide](https://deploy-preview-493--falcosecurity.netlify.app/docs/plugins/developers_guide).
+This post has not for the purpose to replace the official documentation, it's a step-by-step example to get you to know minimal requirements for having a running plugin. For details, please read the [developers guide](https://falco.org/docs/plugins/developers-guide/).
 
 # Our plugin
 
-For this example, we'll create a plugin for [`docker events`](https://docs.docker.com/engine/reference/commandline/events/) from a locale `docker daemon`, this a basic example of an `event stream` with a basic format and without specific authentication.
+For this example, we'll create a plugin for [`docker events`](https://docs.docker.com/engine/reference/commandline/events/) from a local `docker daemon`. It is a basic example of an `event stream` with a basic format and without specific authentication.
 
 See an example of events we'll be able to gather and apply `Falco` rules over:
 ```
@@ -65,8 +66,8 @@ For reducing the complixity to communicate with `docker daemon`, we'll use the o
 For this post and following ones, we'll develop in `Go`, because it's the most common language for that purpose, a lot of member of the `Falco` Community and tools for `Falco` are already using it. We'll also use the [Go Plugin SDK](https://github.com/falcosecurity/plugin-sdk-go/) the maintainer provide for enhancing the experience with plugins.
 
 The only requirements for this examples are:
-* a `docker daemon` running in your locale system
-* `falco 0.31` installed in your locale system
+* a `docker daemon` running in your local system
+* `falco 0.31` installed in your local system
 * `go` >= 1.17
 
 ## Pieces of code
@@ -98,11 +99,11 @@ import (
 )
 ```
 
-In almost everybody plugins we'll write, these different component of `plugin-sdk-go` we'll be imported, they're really convenient and provide a much easier way to deal with `Falco plugin framework`.
+We'll import these different components of `plugin-sdk-go` in almost every plugin we'll write. They're really convenient and provide a much easier way to deal with the *Falco plugin framework*.
 
 ### The structures
 
-2 structures are mandatory and must respect `interfaces` of the `sdk`:
+Two structures are mandatory and must respect `interface`s of the SDK:
 
 ```go
 // DockerPlugin represents our plugin
@@ -117,17 +118,17 @@ type DockerInstance struct {
 }
 ```
 
-* `DockerPlugin` represents our plugin that will be loaded by the framework. Embedding `plugins.BasePlugin` allows to respect the [`Plugin interface`](https://pkg.go.dev/github.com/falcosecurity/plugin-sdk-go@v0.1.0/pkg/sdk/plugins#Plugin) of the `sdk`
-* `DockerInstance` represents a stream of events opened by the framework with the plugin. Embedding `source.BaseInstance` allows to respect the [`Instance interface`](https://pkg.go.dev/github.com/falcosecurity/plugin-sdk-go@v0.1.0/pkg/sdk/plugins/source#Instance) of the `sdk`.
+* `DockerPlugin` represents our plugin that will be loaded by the framework. Embedding `plugins.BasePlugin` allows respecting the [`Plugin interface`](https://pkg.go.dev/github.com/falcosecurity/plugin-sdk-go@v0.1.0/pkg/sdk/plugins#Plugin) of the SDK
+* `DockerInstance` represents a stream of events opened by the framework with the plugin. Embedding `source.BaseInstance` allows to respect the [`Instance interface`](https://pkg.go.dev/github.com/falcosecurity/plugin-sdk-go@v0.1.0/pkg/sdk/plugins/source#Instance) of the SDK.
 
 
-For both `structs` we can extra attributes for any purpose we need, like for configuration. In this example we have `FlushInterval` which represents the frequency events will be sent to the `instance` by the `docker` client we'll create. This attribute will have a default value that can be overridden by `init_config` in `plugins` section, see []().
+We can add extra attributes for both `structs` for any purpose we need, like for configuration. In this example, we have `FlushInterval` that represents the frequency of events sent to the `instance` by the `docker` client we'll create. This attribute will have a default value that can be overridden by `init_config` in `plugins` section.
 
 ### The functions and methods
 
 #### `main()`
 
-The `main()` funcion is mandatoy as for any `go` program but because we'll build the `plugin` as a library for the `Falco plugin framework` which is written in `C`, we can let it empty.
+The `main()` function is mandatory for any `go` program, but because we'll build the `plugin` as a library for the *Falco plugin framework* which is written in `C`, we can let it empty.
 
 ```go
 // main is mandatory but empty, because the plugin will be used as C library by Falco plugin framework
@@ -136,7 +137,7 @@ func main() {}
 
 #### `init()`
 
-The `init()` function is used for regestering our plugin to the `Falco plugin framework`, as a [`source`](https://falco.org/docs/plugins/#source-plugin) and and [`extractor`](https://falco.org/docs/plugins/#extractor-plugin).
+The `init()` function is used for registering our plugin to the `Falco plugin framework`, as a [`source`](https://falco.org/docs/plugins/#source-plugin) and [`extractor`](https://falco.org/docs/plugins/#extractor-plugin).
 
 ```go
 // init function is used for referencing our plugin to the Falco plugin framework
@@ -149,7 +150,7 @@ func init() {
 
 #### `Info()`
 
-This method is mandatory, all plugins must respect, it allows the `Falco plugin framework` to have all intels about the plugin itself:
+This method is mandatory, and all plugins must respect that. It allows the `Falco plugin framework` to have all intel about the plugin itself:
 
 ```go
 // Info displays information of the plugin to Falco plugin framework
@@ -173,7 +174,7 @@ Here some details:
 
 #### `Init()`
 
-This method (:warning: different from the function `init()`) will be the first one called by the `Falco plugin framework`, we use it for setting default values for `DockerPlugin` attributes. In our case, these default values are overridden by the value of `init_config:` from `falco.yaml` config file, see []().
+This method (:warning: different from the function `init()`) will be the first one called by the *Falco plugin framework*, we use it for setting default values for `DockerPlugin` attributes. In our case, these default values are overridden by the value of `init_config:` from `falco.yaml` config file, see []().
  
 ```go
 // Init is called by the Falco plugin framework as first entry
@@ -186,11 +187,11 @@ func (dockerPlugin *DockerPlugin) Init(config string) error {
 }
 ```
 
-The string argument `config` of the method is the content of `init_config`, we use JSON syntax in this example for leveraging the `Go` capacity to map JSON fields with a structure attribute with tags. A simple string may also work, as long your code parses it and set correctly the attributes.
+The string argument `config` of the method is the content of `init_config`, we use JSON syntax in this example for leveraging the `Go` capacity to map JSON fields with a structure attribute with tags. A simple string may also work, as long as your code parses it and correctly sets the attributes.
 
 #### `Fields()`
 
-This method declares all to the `Falco plugin framework` all `fields` that will be available for the rules, with their names and their types.
+This method declares all to the *Falco plugin framework* all `fields` that will be available for the rules, with their names and their types.
 
 ```go
 // Fields exposes to Falco plugin framework all availables fields for this plugin
@@ -214,7 +215,7 @@ func (dockerPlugin *DockerPlugin) Fields() []sdk.FieldEntry {
 
 #### `String()`
 
-Even if this method is mandatorty, it's not used by `Falco` for now, for must be set up for future usages. It simply retrieve the events as string, it can be JSON or any format as long it contains the whole content of the source event.
+Even if this method is mandatory, it's not used by `Falco` for now but must be set up for future usage. It simply retrieves the events, it can be JSON or any format as long it contains the whole content of the source event.
 
 ```go
 // String represents the raw value of on event
@@ -232,10 +233,10 @@ func (dockerPlugin *DockerPlugin) String(in io.ReadSeeker) (string, error) {
 
 #### `Extract()`
 
-This method is called by the `Falco plugin framework` for setting the values of `fields`:
+This method is called by the *Falco plugin framework* for getting the values of `fields`:
 
 ```go
-// Extracts allows Falco plugin framework to get values for all available fields
+// Extract allows Falco plugin framework to get values for all available fields
 func (dockerPlugin *DockerPlugin) Extract(req sdk.ExtractRequest, evt sdk.EventReader) error {
 	var data dockerEvents.Message
 
@@ -280,13 +281,13 @@ func (dockerPlugin *DockerPlugin) Extract(req sdk.ExtractRequest, evt sdk.EventR
 }
 ```
 
-> :warning: try to not overlap the `fields` created by other plugins, for eg, in this example we can use `docker.` prefix because `Falco` libs use `container.` fields which are more generic, so we've not conflict.
+> :warning: try to not overlap the `fields` created by other plugins, for eg, in this example we can use `docker.` prefix because `Falco` libs use `container.` fields which are more generic, so we've not to conflict.
 
 For this plugin, we use the modules provided by `docker sdk`, all retrieved events will be Unmarshaled into the [`events.Message`](https://pkg.go.dev/github.com/docker/docker@v20.10.12+incompatible/api/types/events#Message) struct which simplifies the mapping.
 
 #### `Open()`
 
-This methods is used by the `Falco plugin framework` for opening a new `stream` of events, what is called an `instance`. The current implementation creates only one `instance` per plugin but it's possible in future that same `plugin` allows to open several streams, and so several `instances` at once.
+This methods is used by the *Falco plugin framework* for opening a new `stream` of events, what is called an `instance`. The current implementation creates only one `instance` per plugin but it's possible in future that same `plugin` allows to open several streams, and so several `instances` at once.
 
 ```go
 // Open is called by Falco plugin framework for opening a stream of events, we call that an instance
@@ -297,7 +298,7 @@ func (dockerPlugin *DockerPlugin) Open(params string) (source.Instance, error) {
 
 #### `NextBatch()`
 
-The `Falco plugin framework` will call this method to get a batch of events collected by our `plugin`.
+The *Falco plugin framework* will call this method to get a batch of events collected by our `plugin`.
 
 > :warning: this blog post concerns the creation of a plugin, we'll not describe the logic to get the events from the `docker daemon` with the `docker sdk`.
 
@@ -357,7 +358,7 @@ L:
 ```
 
 * this methods returns the number of events in the batch and an error
-* the **max size** for a batch is `evts.len()`
+* the **max size** for a batch is `evts.Len()`
 * the plugin configuration can be retrieved with `pState.(*DockerPlugin)`
 * for each "slot" of the batch, we have to get it `evt := evts.Get(n)` and then set its value `evt.Writer().Write(i)`
 
@@ -588,7 +589,7 @@ func main() {}
 
 The plugin is built as `c-shared` library, to get a `.so`:
 ```shell
-go build -buildmode=c-shared -o /etc/falco/docker/libdocker.so
+go build -buildmode=c-shared -o /usr/share/falco/plugins/libdocker.so
 ```
 
 # Configuration
@@ -598,7 +599,7 @@ Now we have our plugin, we must declare it to `Falco` in `falco.yaml`:
 ```yaml
 plugins:
   - name: docker
-    library_path: /etc/falco/docker/libdocker.so
+    library_path: /usr/share/falco/plugins/libdocker.so
     init_config: '{"flush_interval": 1}'
 
 load_plugins: [docker]
