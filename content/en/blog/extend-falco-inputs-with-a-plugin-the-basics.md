@@ -202,12 +202,20 @@ func (dockerPlugin *DockerPlugin) Fields() []sdk.FieldEntry {
 		{Type: "string", Name: "docker.from", Desc: "From"},
 		{Type: "string", Name: "docker.type", Desc: "Type"},
 		{Type: "string", Name: "docker.action", Desc: "Action"},
-		{Type: "string", Name: "docker.actor.id", Desc: "Actor ID"},
+		{Type: "string", Name: "docker.stack.namespace", Desc: "Stack Namespace"},
+		{Type: "string", Name: "docker.node.id", Desc: "Swarm Node ID"},
+		{Type: "string", Name: "docker.swarm.task", Desc: "Swarm Task"},
+		{Type: "string", Name: "docker.swarm.taskid", Desc: "Swarm Task ID"},
+		{Type: "string", Name: "docker.swarm.taskname", Desc: "Swarm Task Name"},
+		{Type: "string", Name: "docker.swarm.servicename", Desc: "Swarm Service Name"},
+		{Type: "string", Name: "docker.node.statenew", Desc: "Node New State"},
+		{Type: "string", Name: "docker.node.stateold", Desc: "Node Old State"},
 		{Type: "string", Name: "docker.attributes.container", Desc: "Attribute Container"},
 		{Type: "string", Name: "docker.attributes.image", Desc: "Attribute Image"},
 		{Type: "string", Name: "docker.attributes.name", Desc: "Attribute Name"},
 		{Type: "string", Name: "docker.attributes.type", Desc: "Attribute Type"},
 		{Type: "string", Name: "docker.attributes.exitcode", Desc: "Attribute Exit Code"},
+		{Type: "string", Name: "docker.attributes.signal", Desc: "Attribute Signal"},
 		{Type: "string", Name: "docker.scope", Desc: "Scope"},
 	}
 }
@@ -267,6 +275,24 @@ func (dockerPlugin *DockerPlugin) Extract(req sdk.ExtractRequest, evt sdk.EventR
 		req.SetValue(data.Scope)
 	case "docker.actor.id":
 		req.SetValue(data.Actor.ID)
+	case "docker.stack.namespace":
+		req.SetValue(data.Actor.Attributes["com.docker.stack.namespace"])
+	case "docker.swarm.task":
+		req.SetValue(data.Actor.Attributes["com.docker.swarm.task"])
+	case "docker.swarm.taskid":
+		req.SetValue(data.Actor.Attributes["com.docker.swarm.task.id"])
+	case "docker.swarm.taskname":
+		req.SetValue(data.Actor.Attributes["com.docker.swarm.task.name"])
+	case "docker.swarm.servicename":
+		req.SetValue(data.Actor.Attributes["com.docker.swarm.service.name"])
+	case "docker.node.id":
+		req.SetValue(data.Actor.Attributes["com.docker.swarm.node.id"])
+	case "docker.node.statenew":
+		req.SetValue(data.Actor.Attributes["state.new"])
+	case "docker.node.stateold":
+		req.SetValue(data.Actor.Attributes["state.old"])
+	case "docker.attributes.container":
+		req.SetValue(data.Actor.Attributes["container"])
 	case "docker.attributes.image":
 		req.SetValue(data.Actor.Attributes["image"])
 	case "docker.attributes.name":
