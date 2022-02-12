@@ -59,7 +59,7 @@ For a more comprehensive set of examples, see the full rules file at `falco_rule
 
 - rule: write_binary_dir
   desc: an attempt to write to any file below a set of binary directories
-  condition: evt.dir = < and open_write and not package_mgmt_binaries and bin_dir
+  condition: evt.dir = < and open_write and not evt.dir in (package_mgmt_binaries) and bin_dir
   output: "File below a known binary directory opened for writing (user=%user.name command=%proc.cmdline file=%fd.name)"
   priority: WARNING
 ```
