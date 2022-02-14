@@ -115,6 +115,10 @@ type DockerPlugin struct {
 // DockerInstance represents a opened stream based on our Plugin
 type DockerInstance struct {
 	source.BaseInstance
+	dclient *docker.Client
+	msgC    <-chan dockerEvents.Message
+	errC    <-chan error
+	ctx     context.Context
 }
 ```
 
@@ -318,7 +322,19 @@ This methods is used by the *Falco plugin framework* for opening a new `stream` 
 ```go
 // Open is called by Falco plugin framework for opening a stream of events, we call that an instance
 func (dockerPlugin *DockerPlugin) Open(params string) (source.Instance, error) {
-	return &DockerInstance{}, nil
+	dclient, err := docker.NewClientWithOpts()
+	if err != nil {
+		return nil, err
+	}
+
+	ctx := context.Background()
+	msgC, errC := dclient.Events(ctx, dockerTypes.EventsOptions{})
+	return &DockerInstance{
+		dclient: dclient,
+		msgC:    msgC,
+		errC:    errC,
+		ctx:     ctx,
+	}, nil
 }
 ```
 
@@ -330,63 +346,50 @@ The *Falco plugin framework* will call this method to get a batch of events coll
 
 ```go
 // NextBatch is called by Falco plugin framework to get a batch of events from the instance
-func (dockerInstance *DockerInstance) NextBatch(pState sdk.PluginState, evts sdk.EventWriters) (int, error) {
-	dclient, err := docker.NewClientWithOpts()
+func (dockerPlugin *DockerPlugin) String(in io.ReadSeeker) (string, error) {
+	evtBytes, err := ioutil.ReadAll(in)
 	if err != nil {
-		panic(err)
+		return "", err
 	}
+	evtStr := string(evtBytes)
 
-	ctx := context.Background()
-	defer ctx.Done()
+	return fmt.Sprintf("%v", evtStr), nil
+}
 
-	msg, _ := dclient.Events(ctx, dockerTypes.EventsOptions{})
-
-	e := [][]byte{}
-
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+// NextBatch is called by Falco plugin framework to get a batch of events from the instance
+func (dockerInstance *DockerInstance) NextBatch(pState sdk.PluginState, evts sdk.EventWriters) (int, error) {
 
 	dockerPlugin := pState.(*DockerPlugin)
 
-L:
-	for {
-		expire := time.After(time.Duration(dockerPlugin.FlushInterval) * time.Second)
+	i := 0
+	expire := time.After(time.Duration(dockerPlugin.FlushInterval) * time.Millisecond)
+	for i < evts.Len() {
 		select {
-		case m := <-msg:
+		case m := <-dockerInstance.msgC:
 			s, _ := json.Marshal(m)
-			e = append(e, s)
-			if len(e) >= evts.Len() {
-				break L
+			evt := evts.Get(i)
+			if _, err := evt.Writer().Write(s); err != nil {
+				return i, err
 			}
+			i++
 		case <-expire:
-			if len(e) != 0 {
-				break L
-			}
-		case <-c:
-			return 0, sdk.ErrEOF
+			// Timeout occurred, flush a partial batch
+			return i, sdk.ErrTimeout
+		case err := <-dockerInstance.errC:
+			// todo: this will cause the program to exit. May we want to ignore some kind of error?
+			return i, err
 		}
 	}
 
-	if len(e) == 0 {
-		return 0, nil
-	}
-
-	for n, i := range e {
-		evt := evts.Get(n)
-		_, err := evt.Writer().Write(i)
-		if err != nil {
-			return 0, err
-		}
-	}
-
-	return len(e), nil
+	// The batch is full
+	return i, nil
 }
 ```
 
 * this methods returns the number of events in the batch and an error
 * the **max size** for a batch is `evts.Len()`
 * the plugin configuration can be retrieved with `pState.(*DockerPlugin)`
-* for each "slot" of the batch, we have to get it `evt := evts.Get(n)` and then set its value `evt.Writer().Write(i)`
+* for each "slot" of the batch, we have to get it `evt := evts.Get(n)` and then set its value `evt.Writer().Write(s)`
 
 ## Complete plugin
 
