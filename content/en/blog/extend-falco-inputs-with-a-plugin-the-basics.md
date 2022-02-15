@@ -183,11 +183,7 @@ This method (:warning: different from the function `init()`) will be the first o
 // values from `init_config` (json format for this plugin)
 func (dockerPlugin *DockerPlugin) Init(config string) error {
 	dockerPlugin.FlushInterval = 2
-	err := json.Unmarshal([]byte(config), &dockerPlugin)
-	if err != nil {
-		return err
-	}
-	return nil
+	return json.Unmarshal([]byte(config), &dockerPlugin)
 }
 ```
 
@@ -459,11 +455,7 @@ func (dockerPlugin *DockerPlugin) Info() *plugins.Info {
 // values from `init_config` (json format for this plugin)
 func (dockerPlugin *DockerPlugin) Init(config string) error {
 	dockerPlugin.FlushInterval = 30
-	err := json.Unmarshal([]byte(config), &dockerPlugin)
-	if err != nil {
-		return err
-	}
-	return nil
+	return json.Unmarshal([]byte(config), &dockerPlugin)
 }
 
 // Fields exposes to Falco plugin framework all availables fields for this plugin
