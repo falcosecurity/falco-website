@@ -327,7 +327,7 @@ Every Falco rule has a priority which indicates how serious a violation of the r
 The general guidelines used to assign priorities to rules are the following:
 
 * If a rule is related to writing state (i.e. filesystem, etc.), its priority is `ERROR`.
-* If a rule is related to an unauthorized read of state (i.e. reading sensitive filees, etc.), its priority is `WARNING`.
+* If a rule is related to an unauthorized read of state (i.e. reading sensitive files, etc.), its priority is `WARNING`.
 * If a rule is related to unexpected behavior (spawning an unexpected shell in a container, opening an unexpected network connection, etc.), its priority is `NOTICE`.
 * If a rule is related to behaving against good practices (unexpected privileged containers, containers with sensitive mounts, running interactive commands as root), its priority is `INFO`.
 
