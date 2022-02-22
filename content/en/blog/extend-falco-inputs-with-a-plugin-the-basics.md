@@ -5,7 +5,9 @@ Author: Thomas Labarussias
 slug: extend-falco-inputs-with-a-plugin-the-basics
 ---
 
-> This post is the first of a series about `How to develop Falco plugins`. It's adressed to anybody who would like to understand how plugins are written and want to contribute.
+> This post is is part of a series of articles about `How to develop Falco plugins`. It's adressed to anybody who would like to understand how plugins are written and want to contribute.
+> See other articles:
+> * [Extend Falco inputs by creating a Plugin: Register the plugin]({{< ref "/blog/extend-falco-inputs-with-a-plugin-register" >}})
 
 - [What are Plugins?](#what-are-plugins)
 - [Developers Guide](#developers-guide)
@@ -175,7 +177,7 @@ Here some details:
 
 #### `Init()`
 
-This method (:warning: different from the function `init()`) will be the first one called by the *Falco plugin framework*, we use it for setting default values for `DockerPlugin` attributes. In our case, these default values are overridden by the value of `init_config:` from `falco.yaml` config file, see []().
+This method (different from the function `init()`) will be the first one called by the *Falco plugin framework*, we use it for setting default values for `DockerPlugin` attributes. In our case, these default values are overridden by the value of `init_config:` from `falco.yaml` config file, see []().
  
 ```go
 // Init is called by the Falco plugin framework as first entry
@@ -307,7 +309,7 @@ func (dockerPlugin *DockerPlugin) Extract(req sdk.ExtractRequest, evt sdk.EventR
 }
 ```
 
-> :warning: try to not overlap the `fields` created by other plugins, for eg, in this example we can use `docker.` prefix because `Falco` libs use `container.` fields which are more generic, so we've not to conflict.
+> try to not overlap the `fields` created by other plugins, for eg, in this example we can use `docker.` prefix because `Falco` libs use `container.` fields which are more generic, so we've not to conflict.
 
 For this plugin, we use the modules provided by `docker sdk`, all retrieved events will be Unmarshaled into the [`events.Message`](https://pkg.go.dev/github.com/docker/docker@v20.10.12+incompatible/api/types/events#Message) struct which simplifies the mapping.
 
@@ -338,7 +340,7 @@ func (dockerPlugin *DockerPlugin) Open(params string) (source.Instance, error) {
 
 The *Falco plugin framework* will call this method to get a batch of events collected by our `plugin`.
 
-> :warning: this blog post concerns the creation of a plugin, we'll not describe the logic to get the events from the `docker daemon` with the `docker sdk`.
+> this blog post concerns the creation of a plugin, we'll not describe the logic to get the events from the `docker daemon` with the `docker sdk`.
 
 ```go
 // NextBatch is called by Falco plugin framework to get a batch of events from the instance
