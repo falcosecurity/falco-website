@@ -15,13 +15,13 @@ CentOS 7은 릴리스 아티팩트를 컴파일하는데 사용하는 레퍼런�
 **CentOS 8 / RHEL 8**
 
 ```bash
-dnf install gcc gcc-c++ git make cmake autoconf automake pkg-config patch ncurses-devel libtool elfutils-libelf-devel diffutils which
+dnf install gcc gcc-c++ git make cmake autoconf automake pkg-config patch libtool elfutils-libelf-devel diffutils which
 ```
 
 **CentOS 7 / RHEL 7**
 
 ```
-yum install gcc gcc-c++ git make autoconf automake pkg-config patch ncurses-devel libtool glibc-static libstdc++-static elfutils-libelf-devel
+yum install gcc gcc-c++ git make autoconf automake pkg-config patch libtool glibc-static libstdc++-static elfutils-libelf-devel
 ```
 
 CentOS 7에 포함되지 않은 `cmake` 버전 `3.5.1` 이상도 필요하다. [공식 가이드](https://cmake.org/install/)를 따르거나
@@ -76,7 +76,7 @@ make package
 ### 의존성 패키지
 
 ```bash
-apt install git cmake build-essential libncurses-dev pkg-config autoconf libtool libelf-dev -y
+apt install git cmake build-essential pkg-config autoconf libtool libelf-dev -y
 ```
 
 ### 팔코 빌드
@@ -132,7 +132,7 @@ make bpf
 
 ```bash
 pacman -S git cmake make gcc wget
-pacman -S zlib jq ncurses yaml-cpp openssl curl c-ares protobuf grpc libyaml
+pacman -S zlib jq yaml-cpp openssl curl c-ares protobuf grpc libyaml
 ```
 
 ### 팔코 빌드
@@ -177,7 +177,7 @@ Alpine이 `glibc` 대신 `musl` 을 제공하기 때문에, Alpine에서 빌드�
 ### 의존성 패키지
 
 ```bash
-apk add g++ gcc cmake cmake make ncurses-dev git bash perl linux-headers autoconf automake m4 libtool elfutils-dev libelf-static patch binutils
+apk add g++ gcc cmake cmake make git bash perl linux-headers autoconf automake m4 libtool elfutils-dev libelf-static patch binutils
 ```
 
 ### 팔코 빌드
@@ -196,7 +196,7 @@ make falco
 ### 의존성 패키지
 
 ```bash
-zypper -n install gcc gcc-c++ git-core cmake libjq-devel ncurses-devel yaml-cpp-devel libopenssl-devel libcurl-devel c-ares-devel protobuf-devel grpc-devel patch which automake autoconf libtool libelf-devel
+zypper -n install gcc gcc-c++ git-core cmake libjq-devel yaml-cpp-devel libopenssl-devel libcurl-devel c-ares-devel protobuf-devel grpc-devel patch which automake autoconf libtool libelf-devel
 ```
 
 ### 팔코 빌드
@@ -253,7 +253,6 @@ make bpf
 - lpeg
 - luajit
 - lyaml
-- ncurses
 - njson
 - openssl
 - protobuf

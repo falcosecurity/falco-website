@@ -18,14 +18,14 @@ CentOS 7は、リリースアーティファクトのコンパイルに使用す
 dnf install 'dnf-command(config-manager)'
 dnf config-manager --set-enabled PowerTools # needed for libyaml-devel
 dnf install gcc gcc-c++ git make cmake autoconf automake pkg-config patch
-dnf install libcurl-devel zlib-devel libyaml-devel ncurses-devel libtool glibc-static libstdc++-static elfutils-libelf-devel -y
+dnf install libcurl-devel zlib-devel libyaml-devel libtool glibc-static libstdc++-static elfutils-libelf-devel -y
 ```
 
 **CentOS 7 / RHEL 7**
 
 ```
 yum install gcc gcc-c++ git make autoconf automake pkg-config patch
-yum install libcurl-devel zlib-devel libyaml-devel ncurses-devel libtool glibc-static libstdc++-static elfutils-libelf-devel -y
+yum install libcurl-devel zlib-devel libyaml-devel libtool glibc-static libstdc++-static elfutils-libelf-devel -y
 ```
 
 You will also need `cmake` version `3.5.1` or higher which is not included in CentOS 7. You can follow the [official guide](https://cmake.org/install/) or look at how that is done
@@ -87,7 +87,7 @@ apt install git cmake build-essential
 ### Falcoのビルド
 
 ```bash
-apt install libssl-dev libyaml-dev libncurses-dev libc-ares-dev libprotobuf-dev protobuf-compiler libjq-dev libyaml-cpp-dev libgrpc++-dev protobuf-compiler-grpc libcurl4-openssl-dev libelf-dev
+apt install libssl-dev libyaml-dev libc-ares-dev libprotobuf-dev protobuf-compiler libjq-dev libyaml-cpp-dev libgrpc++-dev protobuf-compiler-grpc libcurl4-openssl-dev libelf-dev
 ```
 
 ```bash
@@ -133,7 +133,7 @@ make bpf
 
 ```bash
 pacman -S git cmake make gcc wget
-pacman -S zlib jq ncurses yaml-cpp openssl curl c-ares protobuf grpc libyaml
+pacman -S zlib jq yaml-cpp openssl curl c-ares protobuf grpc libyaml
 ```
 
 ### Falcoのビルド
@@ -189,7 +189,6 @@ make bpf
 - lpeg
 - luajit
 - lyaml
-- ncurses
 - njson
 - openssl
 - protobuf
