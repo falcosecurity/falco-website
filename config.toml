@@ -249,6 +249,11 @@ enable = false
 	url = "https://lists.cncf.io/g/cncf-falco-dev/calendar"
 	icon = "fas fa-calendar-alt"
         desc = "Subscribe to the Falco calendar, through this ics feed"
+[[params.links.user]]
+	name = "Community Calls records"
+	url = "https://www.youtube.com/playlist?list=PLgVVUpW8NIJAaZtszf1_nxB2y6mQrlY4s"
+	icon = "fa fa-video"
+        desc = "You missed a Community Call? You can watch the record"
 # Developer relevant links. These will show up on right side of footer and in the community page if you have one.
 [[params.links.developer]]
 	name = "GitHub"
