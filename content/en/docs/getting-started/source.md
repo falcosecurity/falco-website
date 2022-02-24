@@ -14,7 +14,7 @@ doing all this, chances that you are willing to contribute are high! Please read
 CentOS 7 / RHEL 7
 
 ```bash
-yum install gcc gcc-c++ git make autoconf automake pkg-config patch ncurses-devel libtool glibc-static libstdc++-static elfutils-libelf-devel
+yum install gcc gcc-c++ git make autoconf automake pkg-config patch libtool glibc-static libstdc++-static elfutils-libelf-devel
 ```
 
 You will also need `cmake` version `3.5.1` or higher which is not included in CentOS 7. You can follow the [official guide](https://cmake.org/install/) or look at how that is done in the [Falco builder Dockerfile](https://github.com/falcosecurity/falco/blob/master/docker/builder/Dockerfile).
@@ -22,20 +22,20 @@ You will also need `cmake` version `3.5.1` or higher which is not included in Ce
 CentOS 8 / RHEL 8
 
 ```bash
-dnf install gcc gcc-c++ git make cmake autoconf automake pkg-config patch ncurses-devel libtool elfutils-libelf-devel diffutils which
+dnf install gcc gcc-c++ git make cmake autoconf automake pkg-config patch libtool elfutils-libelf-devel diffutils which
 ```
 {{< /tab >}}}
 
 {{% tab name="Debian/ Ubuntu" %}}
 ```bash
-apt install git cmake build-essential libncurses-dev pkg-config autoconf libtool libelf-dev -y
+apt install git cmake build-essential pkg-config autoconf libtool libelf-dev -y
 ```
 {{< /tab >}}}
 
 {{% tab name="Arch Linux" %}}
 ```bash
 pacman -S git cmake make gcc wget
-pacman -S zlib jq ncurses yaml-cpp openssl curl c-ares protobuf grpc libyaml
+pacman -S zlib jq yaml-cpp openssl curl c-ares protobuf grpc libyaml
 ```
 
 You'll also need kernel headers for building and making binaries properly.
@@ -52,13 +52,13 @@ Since Alpine ships with `musl` instead of `glibc`, to build on Alpine, we need t
 If that option is used along with the `-DUSE_BUNDLED_DEPS=On` option, then the final build will be 100% statically-linked and portable across different Linux distributions.
 
 ```bash
-apk add g++ gcc cmake cmake make ncurses-dev git bash perl linux-headers autoconf automake m4 libtool elfutils-dev libelf-static patch binutils
+apk add g++ gcc cmake cmake make git bash perl linux-headers autoconf automake m4 libtool elfutils-dev libelf-static patch binutils
 ```
 {{< /tab >}}}
 
 {{% tab name="openSUSE" %}}
 ```bash
-zypper -n install gcc gcc-c++ git-core cmake libjq-devel ncurses-devel yaml-cpp-devel libopenssl-devel libcurl-devel c-ares-devel protobuf-devel grpc-devel patch which automake autoconf libtool libelf-devel libyaml-devel
+zypper -n install gcc gcc-c++ git-core cmake libjq-devel yaml-cpp-devel libopenssl-devel libcurl-devel c-ares-devel protobuf-devel grpc-devel patch which automake autoconf libtool libelf-devel libyaml-devel
 ```
 {{< /tab >}}}
 {{< /tabs >}}
@@ -286,7 +286,6 @@ For the sake of completeness this is the complete list of Falco dependencies:
 - lpeg
 - luajit
 - lyaml
-- ncurses
 - njson
 - openssl
 - protobuf
