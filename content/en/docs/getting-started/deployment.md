@@ -28,3 +28,11 @@ Accordingly, **if you run a recent version of Falco you should not be affected b
 
 As many Falco use cases are out of the scope of Kubernetes, **Falco will keep supporting Docker as a container runtime**. Generally, Falco will keep looking for the Docker socket to obtain container information. If not available, it will automatically attempt using the other supported container runtimes, which include the CRI-compatible ones.
 
+### K3S
+
+If you are using K3S with containerd, you should set the CRI settings because the socket path is different from the default setting configured in Falco.
+
+- Falco installed on host
+  - Append the parameter ```--cri /run/k3s/containerd/containerd.sock``` for the Falco binary.
+- Falco installed on K3S with Helm
+  - Append these options when install with Helm: ```--set containerd.enabled=true --set containerd.socket=/run/k3s/containerd/containerd.sock```
