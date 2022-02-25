@@ -26,13 +26,3 @@ home_falco_description:
     <small>Falcoは2016年にSysdigによって作成され、CNCFにインキュベーションレベルのプロジェクトとして参加した初のランタイムセキュリティプロジェクトです。Falcoは、予期しないアプリケーションの動作を検出し、ランタイムで脅威を警告します。</small>
 home_featured_videos:
   other: おすすめ動画
-home_falco_intro_title:
-  other: クラウドネイティブのランタイムセキュリティプロジェクトである<b>Falcoは、デファクトのKubernetes脅威検知エンジンです</b>。
-home_falco_intro_main:
-  other: アプリケーションとコンテナの動作を監視することにより、実行時の脅威を検出します
-home_falco_intro_plugins:
-  other: Falcoプラグインを使用して、クラウド環境全体に脅威検出を拡張します。
-home_falco_intro_cncf:
-  other: Falcoは、インキュベーションレベルのプロジェクトとしてCNCFに参加した最初のランタイムセキュリティプロジェクトです。
-home_falco_intro_camera:
-  other: Falcoは、予期しない動作、侵入、データの盗難をリアルタイムで検出する防犯カメラとして機能します。

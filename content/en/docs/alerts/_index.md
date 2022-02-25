@@ -30,12 +30,6 @@ Standard output is useful when using Fluentd or Logstash to capture logs from co
 
 When run in the background via the `-d/--daemon` command line option, standard output messages are discarded.
 
-### Standard Output buffering
-
-If the logs are inspected by tailing container logs (e.g. `kubectl logs -f` in Kubernetes) it might look like events can take a long time to appear, sometimes more than 15 minutes.
-This is not an issue with Falco but is simply a side effect of the system output buffering. However, if realtime update of these logs is necessary it can be forced
-with the `-U/--unbuffered` command line option which will ensure the output is flushed for every event at the cost of higher CPU usage.
-
 ## File Output
 
 When configured to send alerts to a file, a message is written to the file for each alert. The format is very similar to the Standard Output format:

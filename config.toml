@@ -10,8 +10,6 @@ defaultContentLanguageInSubdir = false
 enableRobotsTXT = true
 disableBrowserError = true
 
-ignoreErrors = ["error-remote-getjson"]
-
 disableKinds = ["taxonomy", "taxonomyTerm"]
 
 ignoreFiles = [ "^OWNERS$", "README[-]+[a-z]*\\.md", "^node_modules$", "content/en/docs/doc-contributor-tools" ]
@@ -134,7 +132,7 @@ id = "UA-40398182-19"
 [[menu.main]]
     name = "Training"
     weight = 70
-    url = "/training/"
+    url = "/labs/"
 
 # Specify a value here if your content directory is not in your repo's root directory
 #github_subdir = "userguide"
@@ -166,7 +164,7 @@ archived_version = false
 # The version number for the version of the docs represented in this doc set.
 # Used in the "version-banner" partial to display a version number for the
 # current doc set.
-version = "v0.31.1"
+version = "v0.31.0"
 
 # SHA256 checksum variable
 sha256sum = "59201c1339cc53e86edcd7d2e7273e52f784b3cf7d4a3142059112b3b9062f6d"
@@ -381,14 +379,160 @@ docsbranch = "v0.30"
 url = "https://v0-30.falco.org/"
 
 [[params.versions]]
-fullversion = "v0.31.1"
+fullversion = "v0.31.0"
 version = "v0.31"
 githubbranch = "master"
 docsbranch = "master"
 url = "https://falco.org"
 
-# To edit the list of Adopters or Training Providers, go to `./params.toml`
-
-[params.training]
-
+# Adopters
 [params.adopters]
+[[params.adopters.end-users]]
+src = "bah.png"
+alt = "Booz Allen Hamilton"
+url = "https://www.boozallen.com/"
+
+[[params.adopters.end-users]]
+src = "coveo.png"
+alt = "Coveo"
+url = "https://www.coveo.com/en"
+
+[[params.adopters.end-users]]
+src = "frameio.png"
+alt = "Frame.io"
+url = "https://frame.io/"
+
+[[params.adopters.end-users]]
+src = "gitlab.png"
+alt = "GitLab"
+url = "https://about.gitlab.com/"
+
+[[params.adopters.end-users]]
+src = "league.png"
+alt = "League"
+url = "https://league.com/us/"
+
+[[params.adopters.end-users]]
+src = "preferral.png"
+alt = "Preferral"
+url = "https://www.preferral.com/"
+
+[[params.adopters.end-users]]
+src = "shopify.png"
+alt = "Shopify"
+url = "https://shopify.com"
+
+[[params.adopters.end-users]]
+src = "sightmachine.png"
+alt = "Sight Machine"
+url = "https://sightmachine.com/"
+
+[[params.adopters.end-users]]
+src = "skyscanner.png"
+alt = "Sky Scanner"
+url = "https://medium.com/@SkyscannerEng/kubernetes-security-monitoring-at-scale-with-sysdig-falco-a60cfdb0f67a"
+
+[[params.adopters.vendors]]
+src = "logzio.png"
+alt = "Logz.io"
+url = "https://logz.io/"
+
+[[params.adopters.vendors]]
+src = "rancher.png"
+alt = "Rancher"
+url = "https://rancher.com"
+
+[[params.adopters.vendors]]
+src = "shujinko.png"
+alt = "Shujinko"
+url = "https://www.shujinko.io/products/"
+
+[[params.adopters.vendors]]
+src = "sumologic.png"
+alt = "Sumo Logic"
+url = "https://www.sumologic.com/"
+
+[[params.adopters.vendors]]
+src = "sysdig.png"
+alt = "Sysdig"
+url = "https://sysdig.com"
+
+[[params.adopters.integrations]]
+src = "helm.png"
+alt = "Helm"
+url = "https://helm.sh"
+
+[[params.adopters.integrations]]
+src = "kubernetes.png"
+alt = "Kubernetes"
+url = "https://kubernetes.io"
+
+[[params.adopters.integrations]]
+src = "opa.png"
+alt = "Open Policy Agent1"
+url = "https://www.openpolicyagent.org/"
+
+[[params.adopters.integrations]]
+src = "prometheus.png"
+alt = "Prometheus"
+url = "https://prometheus.io/"
+
+[[params.adopters.integrations]]
+src = "aws.png"
+alt = "Amazon Web Services"
+url = "https://aws.amazon.com/"
+
+[[params.adopters.integrations]]
+src = "azure.png"
+alt = "Azure"
+url = "https://azure.microsoft.com"
+
+[[params.adopters.integrations]]
+src = "datadog.png"
+alt = "Datadog"
+url = "https://www.datadoghq.com/"
+
+[[params.adopters.integrations]]
+src = "elasticsearch.png"
+alt = "Elastic Search"
+url = "https://www.elastic.co/elasticsearch"
+
+[[params.adopters.integrations]]
+src = "google.png"
+alt = "Google Cloud"
+url = "https://cloud.google.com/"
+
+[[params.adopters.integrations]]
+src = "ibmcloud.png"
+alt = "IBM Cloud"
+url = "https://www.ibm.com/cloud"
+
+[[params.adopters.integrations]]
+src = "influx.png"
+alt = "InfluxDB"
+url = "https://www.influxdata.com/"
+
+[[params.adopters.integrations]]
+src = "loki.png"
+alt = "Grafana Loki"
+url = "https://grafana.com/oss/loki/"
+
+[[params.adopters.integrations]]
+src = "opsgenie.png"
+alt = "Opsgenie"
+url = "https://www.atlassian.com/software/opsgenie"
+
+[[params.adopters.integrations]]
+src = "redhat.png"
+alt = "Red Hat"
+url = "https://www.redhat.com"
+
+[[params.adopters.integrations]]
+src = "slack.png"
+alt = "Slack"
+url = "https://slack.com/"
+
+[[params.adopters.integrations]]
+src = "statsd.png"
+alt = "StatsD"
+url = "https://github.com/statsd/statsd"

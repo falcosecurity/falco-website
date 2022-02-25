@@ -57,6 +57,19 @@ The images can be used in two ways as follows:
 
 ### Least privileged (recommended) {#docker-least-privileged}
 
+
+
+{{% pageinfo color="primary" %}}
+
+You cannot use the Least privileged mode with the eBPF probe driver unless you have at least Kernel 5.8,
+this is because `--privileged` is needed to do the `bpf` syscall.
+If you are running Kernel >= 5.8 you can pass `--cap-add BPF` to the docker run command in the step 2
+and ignore the Install the kernel module section completely.
+
+You can read more details about this [here](https://github.com/falcosecurity/falco/issues/1299#issuecomment-653448207)
+
+{{% /pageinfo %}}
+
 This is how the Falco userspace process can be ran in a container.
 
 Once the kernel module has been installed directly on the host system, it can be used from within a container.
@@ -115,44 +128,6 @@ Note that `ls /dev/falco* | xargs -I {} echo --device {}` outputs a `--device /d
 
 {{% /pageinfo %}}
 
-To run Falco in least privileged mode with the eBPF driver, we list all the required capabilities: 
-- on kernels <5.8, Falco requires `CAP_SYS_ADMIN`, `CAP_SYS_RESOURCE` and `CAP_SYS_PTRACE`
-- on kernels >=5.8, `CAP_BPF` and `CAP_PERFMON` were separated out of `CAP_SYS_ADMIN`, so the required capabilities are `CAP_BPF`, `CAP_PERFMON`, `CAP_SYS_RESOURCE`, `CAP_SYS_PTRACE`. Unfortunately, Docker does not yet support adding the two newly introduced capabilities with the `--cap-add` option. For this reason, we continue using `CAP_SYS_ADMIN`, given that it still allows performing the same operations granted by `CAP_BPF` and `CAP_PERFMON`. In the near future, Docker will support adding these two capabilities and we will be able to replace `CAP_SYS_ADMIN`.
-
-1. Install the eBPF probe
-    ```shell
-    docker pull falcosecurity/falco-driver-loader:latest
-    docker run --rm -i -t \
-        --privileged \
-        -v /root/.falco:/root/.falco \
-        -v /proc:/host/proc:ro \
-        -v /boot:/host/boot:ro \
-        -v /lib/modules:/host/lib/modules:ro \
-        -v /usr:/host/usr:ro \
-        -v /etc:/host/etc:ro \
-        falcosecurity/falco-driver-loader:latest bpf
-    ```
-2. Then, run Falco
-    ```shell
-    docker pull falcosecurity/falco-no-driver:latest
-    docker run --rm -i -t \
-        --cap-drop all \
-        --cap-add sys_admin \
-        --cap-add sys_resource \
-        --cap-add sys_ptrace \
-        -v /var/run/docker.sock:/host/var/run/docker.sock \
-        -e FALCO_BPF_PROBE="" \
-        -v /root/.falco:/root/.falco \
-        -v /etc:/host/etc \
-        -v /proc:/host/proc:ro \
-        falcosecurity/falco-no-driver:latest
-    ```
-
-{{% pageinfo color="warning" %}}
-
-Again, you will need to add `--security-opt apparmor:unconfined` to the last command if your system has the AppArmor LSM enabled. 
-
-{{% /pageinfo %}}
 ### Fully privileged {#docker-privileged}
 
 To run Falco in a container using Docker with full privileges use the following commands.

@@ -28,13 +28,3 @@ home_falco_description:
         运行。</small>
 home_featured_videos:
   other: 精选视频
-home_falco_intro_title:
-  other: 云原生运行时安全项目<b>Falco</b>是事实上的<b>Kubernetes</b>威胁检测引擎
-home_falco_intro_main:
-  other: 它通过观察应用程序和容器的行为来检测运行时威胁
-home_falco_intro_plugins:
-  other: 使用 Falco 插件跨云环境扩展威胁检测。
-home_falco_intro_cncf:
-  other: Falco 是第一个作为孵化级项目加入 CNCF 的运行时安全项目。
-home_falco_intro_camera:
-  other: Falco 充当安全摄像头，实时检测意外行为、入侵和数据盗窃。

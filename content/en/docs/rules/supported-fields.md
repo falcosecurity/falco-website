@@ -25,7 +25,7 @@ $ falco --list=syscall
 
 ### Field Class: evt
 
-These fields can be used for all event types
+Generic event fields. Note that for syscall events you can access the individual arguments/parameters of each syscall via evt.arg, e.g. evt.arg.filename.
 
 Name | Type | Description
 :----|:-----|:-----------
@@ -34,22 +34,12 @@ Name | Type | Description
 `evt.time.s` | CHARBUF | event timestamp as a time string with no nanoseconds.
 `evt.time.iso8601` | CHARBUF | event timestamp in ISO 8601 format, including nanoseconds and time zone offset (in UTC).
 `evt.datetime` | CHARBUF | event timestamp as a time string that includes the date.
-`evt.datetime.s` | CHARBUF | event timestamp as a datetime string with no nanoseconds.
 `evt.rawtime` | ABSTIME | absolute event timestamp, i.e. nanoseconds from epoch.
 `evt.rawtime.s` | ABSTIME | integer part of the event timestamp (e.g. seconds since epoch).
 `evt.rawtime.ns` | ABSTIME | fractional part of the absolute event timestamp.
 `evt.reltime` | RELTIME | number of nanoseconds from the beginning of the capture.
 `evt.reltime.s` | RELTIME | number of seconds from the beginning of the capture.
 `evt.reltime.ns` | RELTIME | fractional part (in ns) of the time from the beginning of the capture.
-`evt.pluginname` | CHARBUF | if the event comes from a plugin, the name of the plugin that generated it. The plugin must be currently loaded.
-`evt.plugininfo` | CHARBUF | if the event comes from a plugin, a summary of the event as formatted by the plugin. The plugin must be currently loaded.
-
-### Field Class: evt (for system calls)
-
-Event fields applicable to syscall events. Note that for most events you can access the individual arguments/parameters of each syscall via evt.arg, e.g. evt.arg.filename.
-
-Name | Type | Description
-:----|:-----|:-----------
 `evt.latency` | RELTIME | delta between an exit event and the correspondent enter event, in nanoseconds.
 `evt.latency.s` | RELTIME | integer part of the event latency delta.
 `evt.latency.ns` | RELTIME | fractional part of the event latency delta.
@@ -57,6 +47,7 @@ Name | Type | Description
 `evt.deltatime` | RELTIME | delta between this event and the previous event, in nanoseconds.
 `evt.deltatime.s` | RELTIME | integer part of the delta between this event and the previous event.
 `evt.deltatime.ns` | RELTIME | fractional part of the delta between this event and the previous event.
+`evt.outputtime` | CHARBUF | this depends on -t param, default is %evt.time ('h').
 `evt.dir` | CHARBUF | event direction can be either '>' for enter events or '<' for exit events.
 `evt.type` | CHARBUF | The name of the event (e.g. 'open').
 `evt.type.is` | UINT32 | allows one to specify an event type, and returns 1 for events that are of that type. For example, evt.type.is.open returns 1 for open events, 0 for any other event.
@@ -88,9 +79,9 @@ Name | Type | Description
 `evt.count.exit` | UINT32 | This filter field returns 1 for exit events, and can be used to count single events from inside chisels.
 `evt.around` | UINT64 | Accepts the event if it's around the specified time interval. The syntax is evt.around[T]=D, where T is the value returned by %evt.rawtime for the event and D is a delta in milliseconds. For example, evt.around[1404996934793590564]=1000 will return the events with timestamp with one second before the timestamp and one second after it, for a total of two seconds of capture.
 `evt.abspath` | CHARBUF | Absolute path calculated from dirfd and name during syscalls like renameat and symlinkat. Use 'evt.abspath.src' or 'evt.abspath.dst' for syscalls that support multiple paths.
-`evt.is_open_read` | BOOL | 'true' for open/openat/openat2 events where the path was opened for reading
-`evt.is_open_write` | BOOL | 'true' for open/openat/openat2 events where the path was opened for writing
-`evt.is_open_exec` | BOOL | 'true' for open/openat/openat2 or creat events where a file is created with execute permissions
+`evt.is_open_read` | BOOL | 'true' for open/openat events where the path was opened for reading
+`evt.is_open_write` | BOOL | 'true' for open/openat events where the path was opened for writing
+`evt.is_open_exec` | BOOL | 'true' for open/openat or creat events where a file is created with execute permissions
 
 ### Field Class: process
 
@@ -144,7 +135,6 @@ Name | Type | Description
 `proc.is_container_healthcheck` | BOOL | true if this process is running as a part of the container's health check.
 `proc.is_container_liveness_probe` | BOOL | true if this process is running as a part of the container's liveness probe.
 `proc.is_container_readiness_probe` | BOOL | true if this process is running as a part of the container's readiness probe.
-`proc.is_exe_writable` | BOOL | true if this process' executable file is writable by the same user that spawned the process.
 
 ### Field Class: user
 
@@ -269,7 +259,7 @@ Name | Type | Description
 
 ### Field Class: k8s
 
-Kubernetes related context. Available when configured to fetch k8s meta-data from API Server.
+Kubernetes related context.
 
 Name | Type | Description
 :----|:-----|:-----------
@@ -387,74 +377,78 @@ $ falco --list=k8s_audit
 
 ### Field Class: jevt
 
-Name | Type | Description
-:----|:-----|:-----------
-`jevt.time` | CHARBUF | json event timestamp as a string that includes the nanosecond part
-`jevt.time.iso8601` | CHARBUF | json event timestamp in ISO 8601 format, including nanoseconds and time zone offset (in UTC)
-`jevt.rawtime` | CHARBUF | absolute event timestamp, i.e. nanoseconds from epoch.
-`jevt.value` | CHARBUF | General way to access single property from json object. The syntax is [<json pointer expression>]. The property is returned as a string
-`jevt.obj` | CHARBUF | The entire json object, stringified
+generic ways to access json events
+
+Name | Description
+:----|:-----------
+`jevt.time` | json event timestamp as a string that includes the nanosecond part
+`jevt.time.iso8601` | json event timestamp in ISO 8601 format, including nanoseconds and time zone offset (in UTC)
+`jevt.rawtime` | absolute event timestamp, i.e. nanoseconds from epoch.
+`jevt.value` | General way to access single property from json object. The syntax is [<json pointer expression>]. The property is returned as a string (IDX_REQUIRED, IDX_KEY)
+`jevt.obj` | The entire json object, stringified
 
 ### Field Class: ka
 
+Access K8s Audit Log Events
+
 Fields with an IDX_ALLOWED annotation can be indexed (e.g. ka.req.containers.image[k] returns the image for the kth container). The index is optional--without any index the field returns values for all items. The index must be numeric with an IDX_NUMERIC annotation, and can be any string with an IDX_KEY annotation. Fields with an IDX_REQUIRED annotation require an index.
 
-Name | Type | Description
-:----|:-----|:-----------
-`ka.auditid` | CHARBUF | The unique id of the audit event
-`ka.stage` | CHARBUF | Stage of the request (e.g. RequestReceived, ResponseComplete, etc.)
-`ka.auth.decision` | CHARBUF | The authorization decision
-`ka.auth.reason` | CHARBUF | The authorization reason
-`ka.user.name` | CHARBUF | The user name performing the request
-`ka.user.groups` | CHARBUF | The groups to which the user belongs
-`ka.impuser.name` | CHARBUF | The impersonated user name
-`ka.verb` | CHARBUF | The action being performed
-`ka.uri` | CHARBUF | The request URI as sent from client to server
-`ka.uri.param` | CHARBUF | The value of a given query parameter in the uri (e.g. when uri=/foo?key=val, ka.uri.param[key] is val).
-`ka.target.name` | CHARBUF | The target object name
-`ka.target.namespace` | CHARBUF | The target object namespace
-`ka.target.resource` | CHARBUF | The target object resource
-`ka.target.subresource` | CHARBUF | The target object subresource
-`ka.req.binding.subjects` | CHARBUF | When the request object refers to a cluster role binding, the subject (e.g. account/users) being linked by the binding
-`ka.req.binding.role` | CHARBUF | When the request object refers to a cluster role binding, the role being linked by the binding
-`ka.req.binding.subject.has_name` | CHARBUF | Deprecated, always returns "N/A". Only provided for backwards compatibility
-`ka.req.configmap.name` | CHARBUF | If the request object refers to a configmap, the configmap name
-`ka.req.configmap.obj` | CHARBUF | If the request object refers to a configmap, the entire configmap object
-`ka.req.pod.containers.image` | CHARBUF | When the request object refers to a pod, the container's images.
-`ka.req.container.image` | CHARBUF | Deprecated by ka.req.pod.containers.image. Returns the image of the first container only
-`ka.req.pod.containers.image.repository` | CHARBUF | The same as req.container.image, but only the repository part (e.g. falcosecurity/falco).
-`ka.req.container.image.repository` | CHARBUF | Deprecated by ka.req.pod.containers.image.repository. Returns the repository of the first container only
-`ka.req.pod.host_ipc` | CHARBUF | When the request object refers to a pod, the value of the hostIPC flag.
-`ka.req.pod.host_network` | CHARBUF | When the request object refers to a pod, the value of the hostNetwork flag.
-`ka.req.container.host_network` | CHARBUF | Deprecated alias for ka.req.pod.host_network
-`ka.req.pod.host_pid` | CHARBUF | When the request object refers to a pod, the value of the hostPID flag.
-`ka.req.pod.containers.host_port` | CHARBUF | When the request object refers to a pod, all container's hostPort values.
-`ka.req.pod.containers.privileged` | CHARBUF | When the request object refers to a pod, the value of the privileged flag for all containers.
-`ka.req.container.privileged` | CHARBUF | Deprecated by ka.req.pod.containers.privileged. Returns true if any container has privileged=true
-`ka.req.pod.containers.allow_privilege_escalation` | CHARBUF | When the request object refers to a pod, the value of the allowPrivilegeEscalation flag for all containers
-`ka.req.pod.containers.read_only_fs` | CHARBUF | When the request object refers to a pod, the value of the readOnlyRootFilesystem flag for all containers
-`ka.req.pod.run_as_user` | CHARBUF | When the request object refers to a pod, the runAsUser uid specified in the security context for the pod. See ....containers.run_as_user for the runAsUser for individual containers
-`ka.req.pod.containers.run_as_user` | CHARBUF | When the request object refers to a pod, the runAsUser uid for all containers
-`ka.req.pod.containers.eff_run_as_user` | CHARBUF | When the request object refers to a pod, the initial uid that will be used for all containers. This combines information from both the pod and container security contexts and uses 0 if no uid is specified
-`ka.req.pod.run_as_group` | CHARBUF | When the request object refers to a pod, the runAsGroup gid specified in the security context for the pod. See ....containers.run_as_group for the runAsGroup for individual containers
-`ka.req.pod.containers.run_as_group` | CHARBUF | When the request object refers to a pod, the runAsGroup gid for all containers
-`ka.req.pod.containers.eff_run_as_group` | CHARBUF | When the request object refers to a pod, the initial gid that will be used for all containers. This combines information from both the pod and container security contexts and uses 0 if no gid is specified
-`ka.req.pod.containers.proc_mount` | CHARBUF | When the request object refers to a pod, the procMount types for all containers
-`ka.req.role.rules` | CHARBUF | When the request object refers to a role/cluster role, the rules associated with the role
-`ka.req.role.rules.apiGroups` | CHARBUF | When the request object refers to a role/cluster role, the api groups associated with the role's rules
-`ka.req.role.rules.nonResourceURLs` | CHARBUF | When the request object refers to a role/cluster role, the non resource urls associated with the role's rules
-`ka.req.role.rules.verbs` | CHARBUF | When the request object refers to a role/cluster role, the verbs associated with the role's rules
-`ka.req.role.rules.resources` | CHARBUF | When the request object refers to a role/cluster role, the resources associated with the role's rules
-`ka.req.pod.fs_group` | CHARBUF | When the request object refers to a pod, the fsGroup gid specified by the security context.
-`ka.req.pod.supplemental_groups` | CHARBUF | When the request object refers to a pod, the supplementalGroup gids specified by the security context.
-`ka.req.pod.containers.add_capabilities` | CHARBUF | When the request object refers to a pod, all capabilities to add when running the container.
-`ka.req.service.type` | CHARBUF | When the request object refers to a service, the service type
-`ka.req.service.ports` | CHARBUF | When the request object refers to a service, the service's ports
-`ka.req.pod.volumes.hostpath` | CHARBUF | When the request object refers to a pod, all hostPath paths specified for all volumes
-`ka.req.volume.hostpath` | CHARBUF | Deprecated by ka.req.pod.volumes.hostpath. Return true if the provided (host) path prefix is used by any volume
-`ka.req.pod.volumes.flexvolume_driver` | CHARBUF | When the request object refers to a pod, all flexvolume drivers specified for all volumes
-`ka.req.pod.volumes.volume_type` | CHARBUF | When the request object refers to a pod, all volume types for all volumes
-`ka.resp.name` | CHARBUF | The response object name
-`ka.response.code` | CHARBUF | The response code
-`ka.response.reason` | CHARBUF | The response reason (usually present only for failures)
-`ka.useragent` | CHARBUF | The useragent of the client who made the request to the apiserver
+Name | Description
+:----|:-----------
+`ka.auditid` | The unique id of the audit event
+`ka.stage` | Stage of the request (e.g. RequestReceived, ResponseComplete, etc.)
+`ka.auth.decision` | The authorization decision
+`ka.auth.reason` | The authorization reason
+`ka.user.name` | The user name performing the request
+`ka.user.groups` | The groups to which the user belongs
+`ka.impuser.name` | The impersonated user name
+`ka.verb` | The action being performed
+`ka.uri` | The request URI as sent from client to server
+`ka.uri.param` | The value of a given query parameter in the uri (e.g. when uri=/foo?key=val, ka.uri.param[key] is val). (IDX_REQUIRED, IDX_KEY)
+`ka.target.name` | The target object name
+`ka.target.namespace` | The target object namespace
+`ka.target.resource` | The target object resource
+`ka.target.subresource` | The target object subresource
+`ka.req.binding.subjects` | When the request object refers to a cluster role binding, the subject (e.g. account/users) being linked by the binding
+`ka.req.binding.role` | When the request object refers to a cluster role binding, the role being linked by the binding
+`ka.req.binding.subject.has_name` | Deprecated, always returns "N/A". Only provided for backwards compatibility (IDX_REQUIRED, IDX_KEY)
+`ka.req.configmap.name` | If the request object refers to a configmap, the configmap name
+`ka.req.configmap.obj` | If the request object refers to a configmap, the entire configmap object
+`ka.req.pod.containers.image` | When the request object refers to a pod, the container's images. (IDX_ALLOWED, IDX_NUMERIC)
+`ka.req.container.image` | Deprecated by ka.req.pod.containers.image. Returns the image of the first container only
+`ka.req.pod.containers.image.repository` | The same as req.container.image, but only the repository part (e.g. falcosecurity/falco). (IDX_ALLOWED, IDX_NUMERIC)
+`ka.req.container.image.repository` | Deprecated by ka.req.pod.containers.image.repository. Returns the repository of the first container only
+`ka.req.pod.host_ipc` | When the request object refers to a pod, the value of the hostIPC flag.
+`ka.req.pod.host_network` | When the request object refers to a pod, the value of the hostNetwork flag.
+`ka.req.container.host_network` | Deprecated alias for ka.req.pod.host_network
+`ka.req.pod.host_pid` | When the request object refers to a pod, the value of the hostPID flag.
+`ka.req.pod.containers.host_port` | When the request object refers to a pod, all container's hostPort values. (IDX_ALLOWED, IDX_NUMERIC)
+`ka.req.pod.containers.privileged` | When the request object refers to a pod, the value of the privileged flag for all containers. (IDX_ALLOWED, IDX_NUMERIC)
+`ka.req.container.privileged` | Deprecated by ka.req.pod.containers.privileged. Returns true if any container has privileged=true
+`ka.req.pod.containers.allow_privilege_escalation` | When the request object refers to a pod, the value of the allowPrivilegeEscalation flag for all containers (IDX_ALLOWED, IDX_NUMERIC)
+`ka.req.pod.containers.read_only_fs` | When the request object refers to a pod, the value of the readOnlyRootFilesystem flag for all containers (IDX_ALLOWED, IDX_NUMERIC)
+`ka.req.pod.run_as_user` | When the request object refers to a pod, the runAsUser uid specified in the security context for the pod. See ....containers.run_as_user for the runAsUser for individual containers
+`ka.req.pod.containers.run_as_user` | When the request object refers to a pod, the runAsUser uid for all containers (IDX_ALLOWED, IDX_NUMERIC)
+`ka.req.pod.containers.eff_run_as_user` | When the request object refers to a pod, the initial uid that will be used for all containers. This combines information from both the pod and container security contexts and uses 0 if no uid is specified (IDX_ALLOWED, IDX_NUMERIC)
+`ka.req.pod.run_as_group` | When the request object refers to a pod, the runAsGroup gid specified in the security context for the pod. See ....containers.run_as_group for the runAsGroup for individual containers
+`ka.req.pod.containers.run_as_group` | When the request object refers to a pod, the runAsGroup gid for all containers (IDX_ALLOWED, IDX_NUMERIC)
+`ka.req.pod.containers.eff_run_as_group` | When the request object refers to a pod, the initial gid that will be used for all containers. This combines information from both the pod and container security contexts and uses 0 if no gid is specified (IDX_ALLOWED, IDX_NUMERIC)
+`ka.req.pod.containers.proc_mount` | When the request object refers to a pod, the procMount types for all containers (IDX_ALLOWED, IDX_NUMERIC)
+`ka.req.role.rules` | When the request object refers to a role/cluster role, the rules associated with the role
+`ka.req.role.rules.apiGroups` | When the request object refers to a role/cluster role, the api groups associated with the role's rules (IDX_ALLOWED, IDX_NUMERIC)
+`ka.req.role.rules.nonResourceURLs` | When the request object refers to a role/cluster role, the non resource urls associated with the role's rules (IDX_ALLOWED, IDX_NUMERIC)
+`ka.req.role.rules.verbs` | When the request object refers to a role/cluster role, the verbs associated with the role's rules (IDX_ALLOWED, IDX_NUMERIC)
+`ka.req.role.rules.resources` | When the request object refers to a role/cluster role, the resources associated with the role's rules (IDX_ALLOWED, IDX_NUMERIC)
+`ka.req.pod.fs_group` | When the request object refers to a pod, the fsGroup gid specified by the security context.
+`ka.req.pod.supplemental_groups` | When the request object refers to a pod, the supplementalGroup gids specified by the security context.
+`ka.req.pod.containers.add_capabilities` | When the request object refers to a pod, all capabilities to add when running the container. (IDX_ALLOWED, IDX_NUMERIC)
+`ka.req.service.type` | When the request object refers to a service, the service type
+`ka.req.service.ports` | When the request object refers to a service, the service's ports (IDX_ALLOWED, IDX_NUMERIC)
+`ka.req.pod.volumes.hostpath` | When the request object refers to a pod, all hostPath paths specified for all volumes (IDX_ALLOWED, IDX_NUMERIC)
+`ka.req.volume.hostpath` | Deprecated by ka.req.pod.volumes.hostpath. Return true if the provided (host) path prefix is used by any volume (IDX_ALLOWED, IDX_KEY)
+`ka.req.pod.volumes.flexvolume_driver` | When the request object refers to a pod, all flexvolume drivers specified for all volumes (IDX_ALLOWED, IDX_NUMERIC)
+`ka.req.pod.volumes.volume_type` | When the request object refers to a pod, all volume types for all volumes (IDX_ALLOWED, IDX_NUMERIC)
+`ka.resp.name` | The response object name
+`ka.response.code` | The response code
+`ka.response.reason` | The response reason (usually present only for failures)
+`ka.useragent` | The useragent of the client who made the request to the apiserver

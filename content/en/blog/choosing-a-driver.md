@@ -120,7 +120,7 @@ sudo falco
 #### Cons
 
  - The eBPF probe does not work for every system.
- - You need at least Linux kernel version 4.14 but the Falco project suggests an LTS kernel of 4.14/4.19 or above.
+ - You need at least Linux kernel version 4.4 or, preferably, 4.9 to run eBPF. The Falco project suggests a LTS 4.14/4.19 or above.
 
 #### Summary 
 
