@@ -5,7 +5,9 @@ Author: Thomas Labarussias
 slug: extend-falco-inputs-with-a-plugin-the-basics
 ---
 
-> This post is the first of a series about `How to develop Falco plugins`. It's adressed to anybody who would like to understand how plugins are written and want to contribute.
+> This post is is part of a series of articles about `How to develop Falco plugins`. It's adressed to anybody who would like to understand how plugins are written and want to contribute.
+> See other articles:
+> * [Extend Falco inputs by creating a Plugin: Register the plugin]({{< ref "/blog/extend-falco-inputs-with-a-plugin-register" >}})
 
 - [What are Plugins?](#what-are-plugins)
 - [Developers Guide](#developers-guide)
@@ -30,6 +32,7 @@ slug: extend-falco-inputs-with-a-plugin-the-basics
 - [Rules](#rules)
 - [Test and Results](#test-and-results)
 - [Sources](#sources)
+- [To Go further](#to-go-further)
 - [Conclusion](#conclusion)
 
 # What are Plugins?
@@ -678,9 +681,13 @@ Syscall event drop monitoring:
 
 All files of this post can be found on [this repo](https://github.com/Issif/docker-plugin).
 
+# To Go further
+
+Once your plugin is done, you can share it with the community, by registrating it. The next post [Extend Falco inputs by creating a Plugin: Register the plugin]({{< ref "/blog/extend-falco-inputs-with-a-plugin-register" >}}) will guide guide through the process.
+
 # Conclusion
 
-With this first post, you should have now all basics for creating your own plugin. The following posts will describe more advanced use-cases with events from Cloud Services. Stay tuned :wink:.
+With this first post, you should have now all basics for creating your own plugin. The following posts will describe more advanced use-cases like collecting events from Cloud Services. Stay tuned :wink:.
 
 ---
 
