@@ -178,3 +178,41 @@ Here's the same output, pretty-printed:
 ## gRPC Output
 
 If you'd like to send alerts to an external program connected via gRPC API (for example, the [falco-exporter](https://github.com/falcosecurity/falco-exporter)), you need to enable both the `grpc` and `grpc_output` options as described under the [gRPC Configuration section](/docs/grpc/#configuration).
+
+
+{{% pageinfo color="primary" %}}
+
+_SELinux note_: If you have [SELinux](https://en.wikipedia.org/wiki/Security-Enhanced_Linux) enabled you may see the following error while starting Falco with gRPC support enabled:
+
+```shell
+
+May 08 12:14:41 myserver falco[15442]: Falco version X.XX.X (driver version ZZZZ)
+May 08 12:14:41 myserver falco[15442]: Falco initialized with configuration file /etc/falco/falco.yaml
+May 08 12:14:41 myserver falco[15442]: Loading rules from file /etc/falco/falco_rules.yaml:
+May 08 12:14:42 myserver falco[15442]: Loading rules from file /etc/falco/falco_rules.local.yaml:
+May 08 12:14:42 myserver falco[15442]: Loading rules from file /etc/falco/k8s_audit_rules.yaml:
+May 08 12:14:43 myserver falco[15442]: Starting internal webserver, listening on port 8765
+May 08 12:14:43 myserver falco[15442]: gRPC server threadiness equals to 2
+May 08 12:14:43 myserver falco[15442]: grpc: {"created":"@1652026483.513407096","description":"No address added out of total 1 resolved","file":"/build/release/grpc-prefix/src/grpc/src/core/e>
+May 08 12:14:43 myserver falco[15442]: Error starting gRPC server
+```
+
+You may want to run SELinux in 'permissive' mode while you figure out how to give Falco the proper permission to create the gRPC server on startup:
+
+```shell
+sudo setenforce 0
+```
+
+To make this permanent across reboots (if you have Grubby installed):
+
+```shell
+sudo grubby --default-kernel
+/boot/vmlinuz-5.6.13-100.fc30.x86_64
+sudo grubby --update-kernel=/boot/vmlinuz-5.6.13-100.fc30.x86_64 --args='selinux=1 enforcing=0'
+sudo reboot -n
+```
+
+Then check your system logs (for example using ```journalctl --no-page --since 'YYYY-MM-DD' --grep selinux```) and check the messages.
+
+
+{{% /pageinfo %}}
