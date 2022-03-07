@@ -55,8 +55,8 @@ to the file:
 Environment='FALCO_BPF_PROBE=""'
 ```
 
-If you are [installing Falco with Helm](https://falco.org/docs/getting-started/third-party/install-tools/#helm), you will need to set the `ebpf.enabled` option to `true`:
+If you are [installing Falco with Helm](https://falco.org/docs/getting-started/third-party/install-tools/#helm), you will need to set the `ebpf.enabled` option and `leastPrivileged` mode to `true`, and for Kubernetes versions earlier than 1.25 enabling the Falco pod security policy is also needed:
 
 ```
-helm install falco falcosecurity/falco --set ebpf.enabled=true
+helm install falco falcosecurity/falco --set ebpf.enabled=true --set leastPrivileged.enabled=true --set podSecurityPolicy.create=true 
 ```
