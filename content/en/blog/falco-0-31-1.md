@@ -31,7 +31,7 @@ This release also includes modifications to the default ruleset, including a [br
 
 ## Try it!
 
-As usual, in case you just want to try out the stable Falco 0.30.0, you can install its packages following the process outlined in the docs:
+As usual, in case you just want to try out the stable Falco 0.31.1, you can install its packages following the process outlined in the docs:
 
 - [CentOS/Amazon Linux](https://falco.org/docs/getting-started/installation/#centos-rhel)
 - [Debian/Ubuntu](https://falco.org/docs/getting-started/installation/#debian)
