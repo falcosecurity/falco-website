@@ -8,6 +8,12 @@ This section provides upgrading paths for Falco if previously installed followin
 
 ## Upgrading
 
+According to the installation method you chose, you first have to remove the active kernel module before upgrading Falco to the latest version:
+
+```shell
+rmmod falco
+```
+
 ### Debian/Ubuntu {#debian}
 
 {{% pageinfo color="warning" %}}
