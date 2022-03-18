@@ -398,7 +398,7 @@ url = "https://www.katacoda.com/falco/courses/falco"
 [[params.training.contribution]]
 src = "sysdig.png"
 alt = "Falco 101 course by Sysdig"
-url = "http://learn.sysdig.com/falco-101"
+url = "https://learn.sysdig.com/path/falco"
 
 # Adopters
 [params.adopters]
