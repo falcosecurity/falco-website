@@ -387,8 +387,7 @@ githubbranch = "master"
 docsbranch = "master"
 url = "https://falco.org"
 
-# Training resources provided by the community
-# If you are adding a new resource, remember to include an image in static/img/training/
+# To edit the list of Adopters or Training Providers, go to `./params.toml`
 
 [params.training]
 
