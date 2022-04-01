@@ -13,5 +13,6 @@ Currently, Falco supports the following built-in event sources:
 Falco also supports the following event sources via officially supported [plugins](../plugins):
 
 * [AWS Cloudtrail](./cloudtrail)
+* [Okta](./okta)
 
 In addition to these event sources, others have written third-party [plugins](https://github.com/falcosecurity/plugins#readme) that support additional event sources.
