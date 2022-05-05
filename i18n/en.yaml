@@ -19,7 +19,7 @@ version_banner_warning:
 latest_version:
   other: "latest version"
 cloud-native-runtime-security:
-  other: Cloud-Native runtime security
+  other: Cloud-Native Runtime Security
 home_falco_description:
   other: |
     <b>Falco</b>, the cloud-native runtime security project, is the de facto <b>Kubernetes threat detection engine</b><br /><br />
@@ -28,3 +28,13 @@ home_falco_description:
         in real time.</small>
 home_featured_videos:
   other: Featured Videos
+home_falco_intro_title:
+  other: <b>Falco</b>, the cloud-native runtime security project, is the de facto <b>Kubernetes threat detection engine</b>
+home_falco_intro_main:
+  other: Detect threats at runtime by observing the behavior of your applications and containers.
+home_falco_intro_plugins:
+  other: Extend threat detection across cloud environments with Falco Plugins.
+home_falco_intro_cncf:
+  other: Falco is the first runtime security project to join CNCF as an incubation-level project.
+home_falco_intro_camera:
+  other: Falco acts as a security camera detecting unexpected behavior, intrusions, and data theft in real time.
