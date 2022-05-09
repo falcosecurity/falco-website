@@ -191,7 +191,7 @@
     If an object is used, by convention its contents are formatted into a JSON string and then passed to the plugin.
     In both cases, the configuration string is automatically parsed against a schema before being passed to the plugin if the [`get_init_schema`](../plugins/plugin-api-reference/#const-char-plugin-get-init-schema-ss-plugin-schema-type-schema-type-required-no) function is implemented, otherwise it gets directly passed as an opaque string.
 
-    if `open_params`: is present, it contains the exact params string that will be provided as an argument to the open() function, which is used in [source plugins](../plugins#source-plugin) only.
+    if `open_params`: is present, it contains the exact params string that will be provided as an argument to the open() function, which is used in [plugins with event sourcing capability](../plugins#event-sourcing-capability) only.
 
 - name: load_plugins
   type: |
