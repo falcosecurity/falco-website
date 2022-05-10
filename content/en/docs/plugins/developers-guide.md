@@ -22,12 +22,12 @@ Here is a high level overview of how the plugin framework uses API functions to 
 * **Verify api compatibility**: the framework calls `plugin_get_required_api_version` to verify that the plugin is compatible with the framework.
 * **Call info functions**: the framework calls `plugin_get_xxx` functions to obtain information about the plugin.
 * **Get supported fields**: the framework calls `plugin_get_fields` to obtain the list of fields supported by the plugin.
-* **Initialize a plugin**: the framework calls `plugin_init()` to initialize a plugin, which returns an opaque `ss_plugin_t` handle. This handle is passed as an argument to later functions.
-* **Open a stream of events**: the framework calls `plugin_open()` the open a stream of events, which returns an opaque `ss_instance_t` handle. This handle is passed as an argument to later functions. (source plugins only)
-* **Obtain events**: the framework calls `plugin_next_batch()` to obtain events from the plugin. (source plugins only)
-* **Extract values**: the framework calls `plugin_extract_fields()` to obtain values for fields for a given event.
-* **Close a stream of events**: the framework calls `plugin_close()` to close a stream of events. The `ss_instance_t` handle is considered invalid and will not be used again. (source plugins only)
-* **Destroy the plugin**: the framework calls `plugin_destroy()` to destroy a plugin. The `ss_plugin_t` handle is considered invalid and will not be used again.
+* **Initialize a plugin**: the framework calls `plugin_init` to initialize a plugin, which returns an opaque `ss_plugin_t` handle. This handle is passed as an argument to later functions.
+* **Open a stream of events**: the framework calls `plugin_open` the open a stream of events, which returns an opaque `ss_instance_t` handle. This handle is passed as an argument to later functions. (source plugins only)
+* **Obtain events**: the framework calls `plugin_next_batch` to obtain events from the plugin. (source plugins only)
+* **Extract values**: the framework calls `plugin_extract_fields` to obtain values for fields for a given event.
+* **Close a stream of events**: the framework calls `plugin_close` to close a stream of events. The `ss_instance_t` handle is considered invalid and will not be used again. (source plugins only)
+* **Destroy the plugin**: the framework calls `plugin_destroy` to destroy a plugin. The `ss_plugin_t` handle is considered invalid and will not be used again.
 
 ## General Plugin Development Considerations
 
@@ -45,7 +45,7 @@ Every API function that returns or populates a string or struct pointer must poi
 
 ### What Configuration/Internal State Goes Where?
 
-When the framework calls `plugin_open()`, it provides a configuration string which is used to configure the plugin. When the framework calls `plugin_open()`, it provides a parameters string which is used to source a stream of events. The format of both text blocks is defined by the plugin and is passed directly through by the plugin framework.
+When the framework calls `plugin_open`, it provides a configuration string which is used to configure the plugin. When the framework calls `plugin_open`, it provides a parameters string which is used to source a stream of events. The format of both text blocks is defined by the plugin and is passed directly through by the plugin framework.
 
 Within a plugin, it must maintain state in two objects: a `ss_plugin_t` for plugin state, and a `ss_instance_t` for plugin instance state.
 
@@ -86,6 +86,7 @@ With every release, you should check for an updated Plugin API Version and if ne
 With each new release, make sure the contact information provided by the plugin is up-to-date.
 
 ## Go Plugin SDK Walkthrough
+
 The [Go SDK](https://github.com/falcosecurity/plugin-sdk-go) provides prebuilt constructs and definitions that help developing plugins by abstracting all the complexities related to the bridging between the C and the Go runtimes. The Go SDK takes care of satisfying all the plugin framework requirements without having to deal with the low-level details, by also optimizing the most critical code paths.
 
 The SDK allows developers to choose either from a low-level set of abstractions, or from a more high-level set of packages designed for simplicity and ease of use. The best way to approach the Go SDK is to start by importing a few high-level packages, which is enough to satisfy the majority of use cases.
@@ -263,7 +264,7 @@ This section documents the SDK.
 
 ### `falcosecurity::source_plugin`: Base Class for Plugins
 
-The `falcosecurity::source_plugin` class provides the base implementation for a source plugin. An object is created every time the plugin is initialized via `plugin_init()` and the object is deleted on `plugin_destroy()`. A separate static global object is also used to provide the demographic functions `plugin_get_name()`, `plugin_get_description()`, etc.
+The `falcosecurity::source_plugin` class provides the base implementation for a source plugin. An object is created every time the plugin is initialized via `plugin_init` and the object is deleted on `plugin_destroy`. A separate static global object is also used to provide the demographic functions `plugin_get_name`, `plugin_get_description`, etc.
 
 The abstract interface for plugin authors is in the `falcosecurity::source_plugin_iface` class and has the following methods:
 
@@ -292,7 +293,7 @@ typedef struct plugin_info {
 
 #### `virtual ss_plugin_rc init(const char* config) = 0`
 
-Initialize a plugin. This is *not* the constructor, but is called shortly after the plugin object has been allocated. The config is the config provided in the `plugin_initialize()` function. The plugin can parse this config and save it in the object. This method should return SS_PLUGIN_SUCCESS on success, SS_PLUGIN_FAILURE on failure. In case of failure, an error string can be set via set_last_error().
+Initialize a plugin. This is *not* the constructor, but is called shortly after the plugin object has been allocated. The config is the config provided in the `plugin_init` function. The plugin can parse this config and save it in the object. This method should return SS_PLUGIN_SUCCESS on success, SS_PLUGIN_FAILURE on failure. In case of failure, an error string can be set via set_last_error().
 
 #### `virtual void destroy() = 0`
 
@@ -300,11 +301,11 @@ Destroy a plugin. This is *not* the destructor, but is called shortly before the
 
 #### `virtual plugin_instance *create_instance(source_plugin &plugin) = 0`
 
-Create an object that derives from `falcosecurity::plugin_instance` and return a pointer to the object. This is called during `plugin_open()`. The derived instance's `open()` method will be called by the SDK after receiving the derived instance pointer from this function.
+Create an object that derives from `falcosecurity::plugin_instance` and return a pointer to the object. This is called during `plugin_open`. The derived instance's `open()` method will be called by the SDK after receiving the derived instance pointer from this function.
 
 #### `virtual std::string event_to_string(const uint8_t *data, uint32_t datalen) = 0`
 
-Return a string representation of an event. The returned string will be held in the base class and passed back in `plugin_event_to_string()`.
+Return a string representation of an event. The returned string will be held in the base class and passed back in `plugin_event_to_string`.
 
 The string representation should be on a single line and contain important information about the event. It is not necessary to return all information from the event. Simply return the most important fields/properties of the event that provide a useful default representation.
 
@@ -336,13 +337,13 @@ This method is optional, the default implementation simply returns no schema.
 
 ### `falcosecurity::plugin_instance`: Base Class for Plugin Instances
 
-The `falcosecurity::plugin_instance` class provides the base implementation for a plugin instance. An object is created (via `source_plugin::create_instance`) via `plugin_open()` and the object is deleted on `plugin_close()`.
+The `falcosecurity::plugin_instance` class provides the base implementation for a plugin instance. An object is created (via `source_plugin::create_instance`) via `plugin_open` and the object is deleted on `plugin_close`.
 
 The abstract interface for plugin authors is in the `falcosecurity::plugin_instance_iface` class and has the following methods:
 
 #### `virtual ss_plugin_rc open(const char* params) = 0`
 
-Create necessary state to open a stream of events. This is called during `plugin_open()` shortly after calling `source_plugin::create_instance`. The provided params are the params provided to `plugin_open()`.
+Create necessary state to open a stream of events. This is called during `plugin_open` shortly after calling `source_plugin::create_instance`. The provided params are the params provided to `plugin_open`.
 
 #### `virtual void close() = 0`
 
@@ -350,7 +351,7 @@ Tear down any state created in `open()`. The object will be deleted shortly afte
 
 #### `virtual ss_plugin_rc next(plugin_event &evt) = 0`
 
-Return a single event to the sdk. The sdk will handle managing memory for the events and passing them up to the framework in `plugin_next_batch()`. This method should return one of the following:
+Return a single event to the sdk. The sdk will handle managing memory for the events and passing them up to the framework in `plugin_next_batch`. This method should return one of the following:
 
 * `SS_PLUGIN_SUCCESS`: event ready and returned
 * `SS_PLUGIN_FAILURE`: some error, no event returned. The framework will close the instance.
@@ -944,7 +945,7 @@ bool dummy_plugin::extract_u64(const ss_plugin_event &evt, const std::string &fi
 
 #### `dummy_instance` class: plugin instance object
 
-The `dummy_instance` class derives from `falcosecurity::plugin_instance` and implements the abstract methods from the `falcosecurity::plugin_instance_iface` class. It saves the parameters provided to `plugin_open()` and holds the current sample, which is modified with each call to `next()`:
+The `dummy_instance` class derives from `falcosecurity::plugin_instance` and implements the abstract methods from the `falcosecurity::plugin_instance_iface` class. It saves the parameters provided to `plugin_open` and holds the current sample, which is modified with each call to `next()`:
 
 ```c++
 class dummy_instance : public falcosecurity::plugin_instance {
