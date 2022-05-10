@@ -17,13 +17,13 @@ At a high level, the API functions are grouped as follows:
 
 The C header file [plugin_info.h](https://github.com/falcosecurity/libs/blob/master/userspace/libscap/plugin_info.h) enumerates all the API functions and associated structs/types, as they are used by the plugins framework. It can be included in your source code when writing your own plugin, to take advantage of values like `PLUGIN_API_VERSION_XXX`, `ss_plugin_type`, etc.
 
-Remember, however, that from the perspective of the plugin, each function name has a prefix `plugin_` e.g. `plugin_get_required_api_version()`, `plugin_get_name()`, etc.
+Remember, however, that from the perspective of the plugin, each function name has a prefix `plugin_` e.g. `plugin_get_required_api_version`, `plugin_get_name`, etc.
 
 ### Plugin API Versioning
 
 **The current version of the plugin API is `1.0.0`**.
 
-The plugin API is a formal contract between the framework and the plugins, and it is versioned using [semantic versioning](https://semver.org/). The framework exposes the plugin API version it supports, and each plugin expresses a required plugin API version. If the version required by a plugin does not pass the semantic check with the one supported by the framework, then the plugin cannot be loaded. See the section about [`plugin_get_required_api_version()`](#get_required_api_version) for more details.
+The plugin API is a formal contract between the framework and the plugins, and it is versioned using [semantic versioning](https://semver.org/). The framework exposes the plugin API version it supports, and each plugin expresses a required plugin API version. If the version required by a plugin does not pass the semantic check with the one supported by the framework, then the plugin cannot be loaded. See the section about [`plugin_get_required_api_version`](#get_required_api_version) for more details.
 
 ### Conventions
 
@@ -31,10 +31,10 @@ The following conventions apply for all of the below API functions:
 
 * Every function that returns a `const char* ` must return a null-terminated C string.
 * All string values returned across the API are considered owned by the plugin and must remain valid for use by the plugin framework. Specifically, this means:
-    * For demographic functions like `plugin_get_name()`, `plugin_get_description()`, the returned strings must remain valid until the plugin is destroyed.
-    * When returning events via `plugin_next_batch`, both the array of structs and the data payloads inside each struct must remain valid until the next call to `plugin_next_batch()`.
-    * When returning extracted string values via `plugin_extract_fields`, every extracted string must remain valid until the next call to `plugin_extract_fields()`.
-* For every function that returns an error, the plugin should save a meaningful error string that the framework can retrieve via a call to `plugin_get_last_error()`.
+    * For demographic functions like `plugin_get_name`, `plugin_get_description`, the returned strings must remain valid until the plugin is destroyed.
+    * When returning events via `plugin_next_batch`, both the array of structs and the data payloads inside each struct must remain valid until the next call to `plugin_next_batch`.
+    * When returning extracted string values via `plugin_extract_fields`, every extracted string must remain valid until the next call to `plugin_extract_fields`.
+* For every function that returns an error, the plugin should save a meaningful error string that the framework can retrieve via a call to `plugin_get_last_error`.
 
 ## Common Plugin API
 
@@ -48,7 +48,7 @@ This function returns a string containing a [semver](https://semver.org/) versio
 
 This is the first function the framework calls when loading a plugin. If the returned value is not semver-compatible with the version of the plugin API framework, the plugin will not be loaded.
 
-For example, if the code implementing the plugin framework has version 1.1.0, and a plugin's `plugin_get_required_api_version()` function returns 1.0.0, the plugin API is compatible and the plugin will be loaded. If the code implementing the plugin framework has version 2.0.0, and a plugin's `plugin_get_required_api_version()` function returns 1.0.0, the API is not compatible and the plugin will not be loaded.
+For example, if the code implementing the plugin framework has version 1.1.0, and a plugin's `plugin_get_required_api_version` function returns 1.0.0, the plugin API is compatible and the plugin will be loaded. If the code implementing the plugin framework has version 2.0.0, and a plugin's `plugin_get_required_api_version` function returns 1.0.0, the API is not compatible and the plugin will not be loaded.
 
 ### get_{name,description,contact,version}
 
@@ -79,10 +79,10 @@ When managing plugin-level state, keep the following in mind:
 * It is the plugin's responsibility to allocate plugin state (memory, open files, etc) and free that state later in `plugin_destroy`.
 * The plugin state should be the *only* location for state (e.g. no globals, no per-thread state). Although unlikely, the framework may choose to call `plugin_init` multiple times for the same plugin, and this should be supported by the plugin.
 * The returned rc value should be `SS_PLUGIN_SUCCESS` (0) on success, `SS_PLUGIN_FAILURE` (1) on failure.
-* On failure, make sure to return a meaningful error message in the next call to `plugin_get_last_error()`.
+* On failure, make sure to return a meaningful error message in the next call to `plugin_get_last_error`.
 * On failure, plugins can decide whether to return an allocated state or not. In the first case, the plugin framework will use the allocated state to retrieve the failure error with `plugin_get_last_error`, and will then free the state with `plugin_destroy`. In the second case, `plugin_destroy` will not be called and the plugin framework will return a generic error.
 
-The format of the config string is entirely determined by the plugin author, and by default is passed unchanged from Falco/the application using the plugin framework to the plugin. However, semi-structured formats like JSON/YAML are preferable to free-form text. In those cases, the plugin author can provide a schema describing the config string contents by implementing the optional `get_init_schema` function. If so, the `init()` function can assume the passed-in configuration string to always be well-formed, and can avoid performing any error handling. The plugin framework will take care of automatically parsing it against the provided schema and generating ad-hoc errors accordingly. Please refer to the documentation of `get_init_schema` for more details.
+The format of the config string is entirely determined by the plugin author, and by default is passed unchanged from Falco/the application using the plugin framework to the plugin. However, semi-structured formats like JSON/YAML are preferable to free-form text. In those cases, the plugin author can provide a schema describing the config string contents by implementing the optional `get_init_schema` function. If so, the `init` function can assume the passed-in configuration string to always be well-formed, and can avoid performing any error handling. The plugin framework will take care of automatically parsing it against the provided schema and generating ad-hoc errors accordingly. Please refer to the documentation of `get_init_schema` for more details.
 
 ### destroy
 
@@ -106,9 +106,9 @@ This function is called by the framework after a prior call returned an error. T
 const char* plugin_get_init_schema(ss_plugin_schema_type* schema_type)  [Required: no]
 ```
 
-This function returns a schema that describes the configuration to be passed to `init()` during plugin initialization. The return value is a C string, with memory owned by the plugin, representing the configuration schema. The type of schema returned is compliant with the `ss_plugin_schema_type` enumeration, and is written inside the `schema_type` output argument.
+This function returns a schema that describes the configuration to be passed to `init` during plugin initialization. The return value is a C string, with memory owned by the plugin, representing the configuration schema. The type of schema returned is compliant with the `ss_plugin_schema_type` enumeration, and is written inside the `schema_type` output argument.
 
-Although this function is non-required, it is common to implement it due to the benefits it brings. If `get_init_schema` is correctly implemented, the `init()` function can assume the passed-in configuration string to always be well-formed. The plugin framework will take care of automatically parsing it against the provided schema and generating ad-hoc errors accordingly. This also serves as a piece of documentation for users about how the plugin needs to be configured.
+Although this function is non-required, it is common to implement it due to the benefits it brings. If `get_init_schema` is correctly implemented, the `init` function can assume the passed-in configuration string to always be well-formed. The plugin framework will take care of automatically parsing it against the provided schema and generating ad-hoc errors accordingly. This also serves as a piece of documentation for users about how the plugin needs to be configured.
 
 Currently, the plugin framework only supports the [JSON Schema format](https://json-schema.org/), which is represented by the `SS_PLUGIN_SCHEMA_JSON` enum value. If a plugin defines a JSON Schema, the framework will require the init configuration string to be a valid json-formatted string.
 
@@ -132,8 +132,8 @@ const char* plugin_get_event_source()   [Required: yes]
 
 This function returns a C string, with memory owned by the plugin, containing the plugin's [event source](../../plugins/#plugin-event-sources-and-interoperability). This event source is used for:
 
-* Associating Falco rules with plugin events--A Falco rule with a `source: gizmo` property will run on all events returned by the gizmo plugin's `next_batch()` function.
-* Linking together plugins with field extraction capability and plugins with event sourcing capability. The first can list a given event source like `gizmo` in its `get_extract_event_sources()` function, and they will get an opportunity to extract fields from all events returned by the "gizmo" plugin.
+* Associating Falco rules with plugin events--A Falco rule with a `source: gizmo` property will run on all events returned by the gizmo plugin's `next_batch` function.
+* Linking together plugins with field extraction capability and plugins with event sourcing capability. The first can list a given event source like `gizmo` in its `get_extract_event_sources` function, and they will get an opportunity to extract fields from all events returned by the "gizmo" plugin.
 * Ensuring that only one plugin at a time is loaded for a given source.
 
 When defining a source, make sure it accurately describes the events from your plugin (e.g. use `aws_cloudtrail` for AWS Cloudtrail events, not `json` or `logs`) and doesn't overlap with the source of any other plugin with event sourcing capability.
@@ -151,7 +151,7 @@ This function is called to "open" a stream of events. The interpretation of a st
 The same general guidelines apply for `plugin_open` as do for `plugin_init`:
 
 * All state related to sourcing a stream of events should be in the returned `ss_instance_t` pointer.
-* Return 0 on success, 1 on error. Be ready to return an error via `plugin_get_last_error()` on error.
+* Return 0 on success, 1 on error. Be ready to return an error via `plugin_get_last_error` on error.
 * The plugin should support concurrent open sessions at once. Unlike plugin-level state, it's very likely that the plugin framework might call `plugin_open` multiple times for a given plugin.
 * On error, do not return any instance struct, as the plugin framework will not call `plugin_close`.
 
@@ -188,7 +188,7 @@ typedef struct ss_plugin_event
 The struct has the following members:
 
 * `evtnum`: incremented for each event returned. Might not be contiguous.
-* `data`: pointer to a memory buffer pointer allocated by the plugin. The plugin will set it to point to the memory containing the next event. This memory is owned by the plugin and should be freed upon the next call to `plugin_next_batch()`.
+* `data`: pointer to a memory buffer pointer allocated by the plugin. The plugin will set it to point to the memory containing the next event. This memory is owned by the plugin and should be freed upon the next call to `plugin_next_batch`.
 * `datalen`: pointer to a 32bit unsigned integer. The plugin will set it the size of the buffer pointed by data.
 * `ts`: the event timestamp, in nanoseconds since the epoch. Can be (uint64_t)-1, in which case the engine will automatically fill the event time with the current time.
 
@@ -241,10 +241,10 @@ us-east-1 masters.some-demo.k8s.local s3 GetObject Size=0 URI=s3://some-demo-env
 const char* plugin_list_open_params(ss_plugin_t* s, ss_plugin_rc* rc)   [Required: no]
 ```
 
-This function returns a list of suggested values that are valid parameters for the `open()` plugin function.
+This function returns a list of suggested values that are valid parameters for the `open` plugin function.
 Although non-required, this function is useful to instruct users about potential valid parameters for opening a stream of events. Implementing this function also brings additional usage documentation for the plugin, and allows makes it more usable with automated tools.
 
-The returned value is a json string, with memory owned by the plugin, which contains an array of objects. Each object describes one suggested value for the `open()` function. Here's an example:
+The returned value is a json string, with memory owned by the plugin, which contains an array of objects. Each object describes one suggested value for the `open` function. Here's an example:
 
 ```json
 [
@@ -254,7 +254,7 @@ The returned value is a json string, with memory owned by the plugin, which cont
 ```
 
 Each object has the following properties:
-* `value`: a string usable as a parameter for `open()`
+* `value`: a string usable as a parameter for `open`
 * `desc`: (optional) a string with that describes the meaning of `value`.
 
 ## Field Extraction Capability API
@@ -298,7 +298,7 @@ When defining fields, keep the following guidelines in mind:
 int32_t plugin_extract_fields(ss_plugin_t *s, const ss_plugin_event *evt, uint32_t num_fields, ss_plugin_extract_field *fields) [Required: yes]
 ```
 
-This function is used to return the value for one or more field names that were returned in `plugin_get_fields()`. The framework provides an event and an array of `ss_plugin_extract_field` structs. Each struct has one field name/type, and the plugin fills in each struct with the corresponding value for that field.
+This function is used to return the value for one or more field names that were returned in `plugin_get_fields`. The framework provides an event and an array of `ss_plugin_extract_field` structs. Each struct has one field name/type, and the plugin fills in each struct with the corresponding value for that field.
 
 The format of the `ss_plugin_extract_field` struct is the following:
 
@@ -334,7 +334,7 @@ If `field_present` is set to false, the plugin framework assumes that `res_str`/
 const char* get_extract_event_sources() [Required: no]
 ```
 
-This function allows the plugin to restrict the kinds of events where the plugin's `get_fields()` method will be called. The return value should be a string containing a json array of compatible event sources, with memory owned by the plugin. Here's an example:
+This function allows the plugin to restrict the kinds of events where the plugin's `get_fields` method will be called. The return value should be a string containing a json array of compatible event sources, with memory owned by the plugin. Here's an example:
 
 ```json
 ["aws_cloudtrail", "gcp_cloudtrail"]
