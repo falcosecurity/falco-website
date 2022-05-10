@@ -19,6 +19,12 @@ The C header file [plugin_info.h](https://github.com/falcosecurity/libs/blob/mas
 
 Remember, however, that from the perspective of the plugin, each function name has a prefix `plugin_` e.g. `plugin_get_required_api_version()`, `plugin_get_name()`, etc.
 
+### Plugin API Versioning
+
+**The current version of the plugin API is `1.0.0`**.
+
+The plugin API is a formal contract between the framework and the plugins, and it is versioned using [semantic versioning](https://semver.org/). The framework exposes the plugin API version it supports, and each plugin expresses a required plugin API version. If the version required by a plugin does not pass the semantic check with the one supported by the framework, then the plugin cannot be loaded. See the section about [`plugin_get_required_api_version()`](#get_required_api_version) for more details.
+
 ### Conventions
 
 The following conventions apply for all of the below API functions:
