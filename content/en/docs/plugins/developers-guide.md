@@ -19,15 +19,21 @@ Before reading this page, read the main [plugins](../../plugins) page for an ove
 
 Here is a high level overview of how the plugin framework uses API functions to interact with plugins:
 
-* **Verify api compatibility**: the framework calls `plugin_get_required_api_version` to verify that the plugin is compatible with the framework.
-* **Call info functions**: the framework calls `plugin_get_xxx` functions to obtain information about the plugin.
-* **Get supported fields**: the framework calls `plugin_get_fields` to obtain the list of fields supported by the plugin.
-* **Initialize a plugin**: the framework calls `plugin_init` to initialize a plugin, which returns an opaque `ss_plugin_t` handle. This handle is passed as an argument to later functions.
-* **Open a stream of events**: the framework calls `plugin_open` the open a stream of events, which returns an opaque `ss_instance_t` handle. This handle is passed as an argument to later functions. (source plugins only)
-* **Obtain events**: the framework calls `plugin_next_batch` to obtain events from the plugin. (source plugins only)
-* **Extract values**: the framework calls `plugin_extract_fields` to obtain values for fields for a given event.
-* **Close a stream of events**: the framework calls `plugin_close` to close a stream of events. The `ss_instance_t` handle is considered invalid and will not be used again. (source plugins only)
-* **Destroy the plugin**: the framework calls `plugin_destroy` to destroy a plugin. The `ss_plugin_t` handle is considered invalid and will not be used again.
+* **Initialize**
+	* **Verify api compatibility**: the framework calls `plugin_get_required_api_version` to verify that the plugin is compatible with the framework
+	* **Call info functions**: the framework calls `plugin_get_xxx` functions to obtain information about the plugin
+	* **Check for supported capabilities**: the framework checks which capabilities a plugin implements by verifying that the required functions are exported
+		* **Get supported event source**: if the plugin has the event sourcing capability, the framework calls `plugin_get_id` and  `plugin_get_event_source` to obtain the plugin ID and its event source
+		* **Get supported fields**: if the plugin has the field extraction capability, the framework calls `plugin_get_fields` to obtain the list of fields supported by the plugin
+	* **Initialize the plugin**: the framework calls `plugin_init` to initialize a plugin, which returns an opaque `ss_plugin_t` handle. This handle is passed as an argument to later functions
+* **Open streams of events (event sourcing capability only)**
+	* **Open a stream**: the framework calls `plugin_open` the open a stream of events, which returns an opaque `ss_instance_t` handle. This handle is passed as an argument to later functions
+	* **Obtain events**: the framework calls `plugin_next_batch` to obtain events from the plugin
+	* **Close a stream of events**: the framework calls `plugin_close` to close a stream of events. The `ss_instance_t` handle is considered invalid and will not be used again
+* **Extract values from events (field extraction capability only)**
+	* **Extract values**: the framework calls `plugin_extract_fields` to obtain values for fields for a given event
+* **Destroy**
+	* **Destroy the plugin**: the framework calls `plugin_destroy` to destroy a plugin. The `ss_plugin_t` handle is considered invalid and will not be used again.
 
 ## General Plugin Development Considerations
 
@@ -63,7 +69,7 @@ Similarly, it may be confusing to distinguish between state for a plugin (e.g. `
 
 For example, assume some plugin returned a sample of a metric in events, and the internal state also held the maximum value seen so far. It would be a good practice to have a field `plugin.sample` that returned the value in a given event. It would *not* be a good practice to have a field `plugin.max_sample` that returned the maximum value seen, because that information is held in the internal state and not in events. If events *also* saved the current max sample so far, then it would be fine to have a field `plugin.max_sample`, as that can be retrieved directly from a single event.
 
-A question to ask when deciding what to put in an event is "if this were written to a `.scap` capture file and reread, would this plugin return the same values for fields as it did when the events were first generated?".
+A question to ask when deciding what to put in an event is "if this were written to a `.scap` capture file and replayed, would this plugin return the same values for fields as it did when the events were first generated?".
 
 ### Plugin Authoring Lifecycle
 
@@ -71,9 +77,9 @@ Here are some considerations to keep in mind when releasing the initial version 
 
 #### Initial Version
 
-For source plugins, make sure the event source is distinct, or if the same as existing plugins, that the saved payload is identical. In most cases, each source plugin should define a new event source.
+For plugins with event sourcing capability, make sure the event source is distinct, or if the same as existing plugins, that the saved payload is identical. In most cases, each plugin should define a new event source.
 
-For extractor plugins, if the plugin exports a set of compatible sources, make sure you have tested it with each compatible source plugin to ensure that your extractor plugin can read event payloads without errors/crashing. If the plugin does *not* export a set of compatible sources (meaning that it potentially handles every kind of event), your plugin must be very resilient. It will potentially be handed arbitrary binary data from other plugins.
+For plugins with field extraction capability, if the plugin exports a set of compatible sources, make sure you have tested it with each compatible plugin with event sourcing capability to ensure that your plugin can read event payloads without errors/crashing. If the plugin does *not* export a set of compatible sources (meaning that it potentially handles every kind of event), your plugin must be very resilient. It will potentially be handed arbitrary binary data from other plugins.
 
 Register this plugin by submitting a PR to [falcosecurity/plugins](https://github.com/falcosecurity/plugins) to update the [plugin registry](https://github.com/falcosecurity/plugins/blob/master/registry.yaml). This will give an official Plugin ID that can be safely used in capture files, etc., without overlapping with other plugins. It also lets others know that a new plugin is available!
 
@@ -105,7 +111,7 @@ At a high level, the SDK is on top of three fundamental packages with different 
 
 2. Package `sdk/symbols` contains prebuilt implementations for all the C symbols that plugins must export to be accepted by the framework. The prebuilt C symbols are divided in many subpackages, so that each of them can be imported individually to opt-in/opt-out each symbol. 
 
-3. Package `sdk/plugins` provide high-level definition and base types for writing extractor plugins and source plugins. This uses `sdk/symbols` internally and takes care of importing all the prebuilt C symbols required by extractor and source plugins respectively. This is the main entrypoint for developers to write plugins in Go.
+3. Package `sdk/plugins` provide high-level definition and base types for implementing plugin capabilities. This uses `sdk/symbols` internally and takes care of importing all the prebuilt C symbols required each plugin capability respectively. This is the main entrypoint for developers to write plugins in Go.
 
 Two additional packages `ptr` and `cgo` are used internally to simplify and optimize the state management and the usage of C-allocated memory pointers.
 
@@ -114,16 +120,16 @@ For some use cases, developers can consider using the SDK layers selectively. Th
 Further details can be found in the documentation of each package: [`sdk`](https://pkg.go.dev/github.com/falcosecurity/plugin-sdk-go/pkg/sdk), [`sdk/symbols`](https://pkg.go.dev/github.com/falcosecurity/plugin-sdk-go/pkg/sdk/symbols), and [`sdk/plugins`](https://pkg.go.dev/github.com/falcosecurity/plugin-sdk-go/pkg/sdk/plugins).
 
 ### Getting Started
+
 The SDK is built on top of a set of minimal composable interfaces describing the behavior of plugins and plugin instances. As such, developing plugins is as easy as defining a struct type representing the plugin itself, ensuring that the mandatory interface methods are defined on it, and then registering it to the SDK.
 
-To use the Go SDK, all you need to import are the `sdk` and `sdk/plugins` packages. The first contains all the core types and definitions used across the rest of the SDK packages, whereas the latter contains built-in constructs to develop plugins. The subpackages `sdk/plugins/source` and `sdk/plugins/extractor` contain specialized definitions for source and extraction functionalities respectively.
+To use the Go SDK, all you need to import are the `sdk` and `sdk/plugins` packages. The first contains all the core types and definitions used across the rest of the SDK packages, whereas the latter contains built-in constructs to develop plugins. The subpackages `sdk/plugins/source` and `sdk/plugins/extractor` contain specialized definitions for the event sourcing and the field extraction capabilities respectively.
 
-Extractor plugins just need to import `sdk/plugins/extractor`. Generally, source plugins should import both `sdk/plugins/source` and `sdk/plugins/extractor`, as they both generate new events and extract fields from them. If needed, the SDK also allows writing source-only plugins without the extraction features, in which case only the `sdk/plugins/source` package would need to be imported.
+The `dummy` plugin, documented in the [next sections](#example-go-plugin-dummy), is a simple example that helps understand how to start writing Go plugins with this SDK. The SDK also provides a set of [base examples](https://github.com/falcosecurity/plugin-sdk-go/tree/main/examples) to get you started with plugin development.
 
-The `dummy` Go plugin, documented in the [next sections](#example-go-plugin-dummy), is a simple example that helps understand how to start writing Go plugins with this SDK.
+#### Defining a Plugin with Field Extraction Capability
 
-#### Defining Extractor Plugin Functionalities
-In the Go SDK, an extractor Plugin is a type implementing the following interface:
+In the Go SDK, a plugin with field extraction capability is a type implementing the following interface:
 ```go
 // sdk/plugins/extractor
 type Plugin interface {
@@ -143,8 +149,24 @@ type Plugin interface {
 
 `Extract()` extracts the value of one of the supported fields from a given event passed in by the framework. The `sdk.ExtractRequest` argument should be used to set the extracted value.
 
-#### Defining Source Plugin Functionalities
-In the Go SDK, a source Plugin must specify two types, one of the plugin itself and one for the plugin instances, implementing the following interfaces respectively:
+##### Optional Interfaces
+
+```go
+type Destroyer interface {
+	Destroy()
+}
+
+type InitSchema interface {
+	InitSchema() *SchemaInfo
+}
+```
+
+Plugins with field extraction capability can optionally implement the `sdk.Destroyer` interface. In that case, `Destroy()` will be called when the plugin gets destroyed and can be used to release any allocated resource. they can also also optionally implement the `sdk.InitSchema` interface. In that case, `InitSchema()` will be used to to return a schema describing the data expected to be passed as a configuration during the plugin initialization. This follows the semantics documented for [`get_init_schema`](../plugin-api-reference/#const-char-plugin-get-init-schema-ss-plugin-schema-type-schema-type-required-no). Currently, the schema must follow the [JSON Schema specific](https://json-schema.org/), which in Go can also be easily auto-generated with external packages (e.g. [alecthomas/jsonschema](https:/github.com/alecthomas/jsonschema)).
+
+#### Defining a Plugin with Event Sourcing Capability
+
+In the Go SDK, a plugin with event sourcing capability must specify two types, one of the plugin itself and one for the plugin instances, implementing the following interfaces respectively:
+
 ```go
 // sdk/plugins/source
 type Plugin interface {
@@ -152,7 +174,6 @@ type Plugin interface {
 	Info() *sdk.Info
 	Init(config string) error
 	Open(params string) (Instance, error)
-	String(in io.ReadSeeker) (string, error)
 }
 
 // sdk/plugins/source
@@ -165,15 +186,11 @@ The `source.Plugin` interface has many functions in common with `extractor.Plugi
 
 `Open()` creates a new plugin instance to open a new stream of events. The framework provides the user-defined open parameters to customize the event source. The return value must implement the `source.Instance` interface, and its lifecycle ends when the event stream is closed.
 
-`String()` returns a string representation of an event created by the plugin. The string representation should be on a single line and contain important information about the event. 
-
 The `source.Instance` interface represents plugin instances for an opened event stream, and has one mandatory method and a few optional ones.
 
 `NextBatch` creates a new batch of events to be pushed in the event stream. The SDK provides a pre-allocated batch to write events into, in order to manage the used memory optimally.
 
-#### Optional Interfaces
-
-On top of the mandatory plugin interface requirements, source and extraction plugins can also implement some additional interface methods to enable optional functionalities. All the following interfaces are defined in the `sdk` package.
+##### Optional Interfaces
 
 ```go
 type Destroyer interface {
@@ -195,16 +212,17 @@ type OpenParams interface {
 type Progresser interface {
 	Progress(pState sdk.PluginState) (float64, string)
 }
+
+type Stringer interface {
+	String(evt sdk.EventReader) (string, error)
+}
 ```
 
-Source and extrator plugins can optionally implement the `sdk.Destroyer` interface. In that case, `Destroy()` will be called when the plugin gets destroyed and can be used to release any allocated resource.
+Plugins with event sourcing capabilities can optionally implement the `sdk.Destroyer` and `sdk.InitSchema` interfaces, just like mentioned in the section above.
 
-Source and extrator plugins can also optionally implement the `sdk.InitSchema` interface. In that case, `InitSchema()` will be used to to return a schema describing the data expected to be passed as a configuration during the plugin initialization. This follows the semantics documented for [`get_init_schema`](../plugin-api-reference/#const-char-plugin-get-init-schema-ss-plugin-schema-type-schema-type-required-no). Currently, the schema must follow the [JSON Schema specific](https://json-schema.org/), which in Go can also be easily auto-generated with external packages (e.g. [alecthomas/jsonschema](https:/github.com/alecthomas/jsonschema)).
+Additionally, they can also implement the `sdk.OpenParams` interface. If requested by the application, the framework may call `OpenParams()` before opening the event stream to obtains some suggested values that would valid parameters for `Open()`. For more details, see the documentation of [`list_open_params`](../plugin-api-reference/#const-char-plugin-list-open-params-ss-plugin-t-s-ss-plugin-rc-rc-required-no).
 
-Source plugins can optionally implement the `sdk.OpenParams` interface. If requested by the application, the framework may call `OpenParams()` before opening the event stream to obtains some suggested values that would valid parameters for `Open()`. For more details, see the documentation of [`list_open_params`](../plugin-api-reference/#const-char-plugin-list-open-params-ss-plugin-t-s-ss-plugin-rc-rc-required-no).
-
-Source plugin instances can optionally implement the `sdk.Closer` and `sdk.Progresser` interface. If `sdk.Closer` is implemented, the `Close()` method is called while closing the event stream and can be used to release the resources used by the plugin instance. If `sdk.Progresser` is implemented, the 
-`Progress()` method is called by the SDK when the framework requests progress data about the event stream of the plugin instance. `Progress()` must return a `float64` with a value between 0 and 1 representing the current progress percentage, and a string representation of the same progress value.
+Plugin instances can optionally implement the `sdk.Closer`, `sdk.Progresser`, and `sdk.Stringer` interfaces. If `sdk.Closer` is implemented, the `Close()` method is called while closing the event stream and can be used to release the resources used by the plugin instance. If `sdk.Progresser` is implemented, the `Progress()` method is called by the SDK when the framework requests progress data about the event stream of the plugin instance. `Progress()` must return a `float64` with a value between 0 and 1 representing the current progress percentage, and a string representation of the same progress value. If `sdk.Stringer` is implemented, the `String()` method must return a string representation of an event created by the plugin, which is used by the framework as an extraction value of the `evt.plugininfo` field. The string representation should be on a single line and contain important information about the event.
 
 #### Registering a Plugin in the SDK
 
@@ -216,7 +234,7 @@ func Register(p extractor.Plugin)
 // sdk/plugins/source
 func Register(p source.Plugin)
 ```
-The newly created plugin type need to be registered to the SDK in a Go `init` function. The `source.Register()` and `extractor.Register()` functions register plugins for source and extraction functionalities respectively. Extractor plugin should be registered with `extractor.Register()` only. Source plugins need to be registered with both `source.Register()` and `extractor.Register()`, and the order with which the two functions are called is not relevant. If a call to `extractor.Register()` is omitted, source plugins will be interpreted as source-only, with the extraction features disabled.
+The newly created plugin type need to be registered to the SDK in a Go `init` function. The `source.Register()` and `extractor.Register()` functions register plugins for the event sourcing and field extraction capabilities respectively.
 
 The defined types are expected to implement a given set of methods. Compilation will fail at the `Register()` functions if any of the required methods is not defined. Developers are encouraged to compose their structs with `plugins.BasePlugin`, and `source.BaseInstance`, which provide prebuilt boilerplate for many of those methods. In this way, developers just need to focus on implementing the few plugin-specific methods remaining.
 
@@ -227,6 +245,7 @@ Besides the interface requirements, the defined types can contain arbitrary fiel
 Generating new events, and extracting field values from them, are the hottest path in the plugin framework and can happen at a very high rate. For this reason, the Go SDK optimizes the memory usage as much as possible, avoiding reallocations and copies wherever possible. Internally, this sometimes means reading and writing on C-allocated memory from Go code directly, which is efficient but also very unsafe and can lead to unstable code.
 
 As such, the SDK provides the two `sdk.EventReader` and `sdk.EventWriter` interfaces, which enable developers to safely read and write from events while still fully leveraging the underlying memory optimizations. `sdk.EventReader` gives a read-only view of an event, with accessor methods for all the internal fields, and `sdk.EventWriter` does the same in read-only mode. 
+
 ```go
 type EventReader interface {
 	EventNum() uint64
@@ -239,15 +258,19 @@ type EventWriter interface {
 	Writer() io.Writer
 }
 ```
+
 Event data can either be read or written through the standard `io.SeekReader` and `io.Writer` interfaces, returned by the `Reader()` and `Writer()` methods respectively. The SDK hides behind these interfaces all the safety and optimization mechanisms.
 
-For source plugins, a reusable batch of `sdk.EventWriter`s is automatically allocated in each source plugin instance after the `Open()` method returns. This slab-allocator creates reusable event data by using the default `sdk.DefaultBatchSize` and `sdk.DefaultEvtSize` constants. Developers can override the automatic allocation to define batches of arbitrary sizes in the `Open()` method, by calling the `SetEvents()` method on the newly opened plugin instance before returning it. The reusable event batch can be created with the `sdk.NewEventWriters` function, that takes the event data size and batch size as arguments.
+For plugins with event sourcing capability, a reusable batch of `sdk.EventWriter`s is automatically allocated in each plugin source instance after the `Open()` method returns. This slab-allocator creates reusable event data by using the default `sdk.DefaultBatchSize` and `sdk.DefaultEvtSize` constants. Developers can override the automatic allocation to define batches of arbitrary sizes in the `Open()` method, by calling the `SetEvents()` method on the newly opened plugin instance before returning it. The reusable event batch can be created with the `sdk.NewEventWriters` function, that takes the event data size and batch size as arguments.
+
 ```go
 func NewEventWriters(size, dataSize int64) (EventWriters, error)
 ```
-Note that the size of the reusable event batch defines the maximum size of each event batch created by the source plugin in `NextBatch`.
+
+Note that the size of the reusable event batch defines the maximum size of each event batch created by the plugin in `NextBatch`.
 
 #### Compiling Plugins
+
 After successfully writing a plugin, all you need is to compile it. Go allows compiling binaries as a C-compliant shared library with the `-buildmode=c-shared` flag. The build command will be something looking like:
 ```
 go build -buildmode=c-shared -o <outname>.so *.go
@@ -401,15 +424,16 @@ import (
 	"github.com/falcosecurity/plugin-sdk-go/pkg/sdk/plugins/source"
 )
 ```
+
 Importing the `sdk` and `sdk/plugins` packages is the first step for developing a Falcosecurity plugin in Go. The `sdk` package contains all the core types and definitions used across the other packages of the SDK. The `sdk/plugins` package contains prebuilt constructs for defining new plugins.
 
-The `sdk/plugins/source` and `sdk/plugins/extractor` packages are required to register the functionalities of source and extractor plugins. `dummy` requires on both of them, as it is an example of source plugin.
+The `sdk/plugins/source` and `sdk/plugins/extractor` packages are required to register the event sourcing and field extraction capabilities. `dummy` implements both of them.
 
 The Go module `falcosecurity/plugin-sdk-go` has its own [documentation](https://pkg.go.dev/github.com/falcosecurity/plugin-sdk-go), which gives deeper insights about the internal architecture of the SDK.
 
 #### Defining the Plugin
 
-In the Go SDK, plugins are defined by a set of composable tiny interfaces. To define a new plugin, the first step is to define a new `struct` type representing the plugin itself, and then register it to the SDK. Source plugins, like `dummy`, must define an additional type representing the opened instance of the plugin event stream.
+In the Go SDK, plugins are defined by a set of composable tiny interfaces. To define a new plugin, the first step is to define a new `struct` type representing the plugin itself, and then register it to the SDK. Plugins with event sourcing capability, like `dummy`, must define an additional type representing the opened instance of the plugin event stream.
 
 ```go
 type MyPluginConfig struct {
@@ -452,13 +476,12 @@ An `Info()` method is needed to return a data struct containing all the plugin i
 
 ```go
 const (
-	PluginRequiredApiVersion        = "0.3.0"
-	PluginID                 uint32 = 3
-	PluginName                      = "dummy"
-	PluginDescription               = "Reference plugin for educational purposes"
-	PluginContact                   = "github.com/falcosecurity/plugins"
-	PluginVersion                   = "0.2.1"
-	PluginEventSource               = "dummy"
+	PluginID          uint32 = 3
+	PluginName               = "dummy"
+	PluginDescription        = "Reference plugin for educational purposes"
+	PluginContact            = "github.com/falcosecurity/plugins"
+	PluginVersion            = "0.2.1"
+	PluginEventSource        = "dummy"
 )
 
 ...
@@ -474,7 +497,6 @@ func (m *MyPlugin) Info() *plugins.Info {
 		EventSource:        PluginEventSource,
 	}
 }
-
 
 ...
 ```
@@ -518,7 +540,6 @@ func (p *MyPlugin) InitSchema() *sdk.SchemaInfo {
 func (m *MyPlugin) Init(cfg string) error {
 	// initialize state
 	m.rand = rand.New(rand.NewSource(time.Now().UnixNano()))
-
 	// The format of cfg is a json object with a single param
 	// "jitter", e.g. {"jitter": 10}
 	// Empty configs are allowed, in which case the default is used.
@@ -526,7 +547,6 @@ func (m *MyPlugin) Init(cfg string) error {
 	// guarantees that the config is always well-formed json.
 	m.config.setDefault()
 	json.Unmarshal([]byte(cfg), &m.config)
-
 	return nil
 }
 
@@ -537,7 +557,7 @@ func (m *MyPlugin) Destroy() {
 
 #### Opening/Closing a Stream of Events
 
-A plugin instance is created when the plugin event stream is opened, which can happen more than once during the plugin lifecycle. Source plugins are required to define an `Open()` method that creates a returns a new plugin instance. This is where the framework passes in the user-defined open parameters string.
+A plugin instance is created when the plugin event stream is opened, which can happen more than once during the plugin lifecycle. Plugins with event sourcing capability are required to define an `Open()` method that creates a returns a new plugin instance. This is where the framework passes in the user-defined open parameters string.
 
 The plugin instance type returned by `Open()` can define an optional `Close()` method bundling any additional deinitialization logic to run while closing the event stream.
 
@@ -576,7 +596,7 @@ func (m *MyInstance) Close() {
 
 #### Returning new Events
 
-New events are generated in batch by the `NextBatch` function. The function is mandatory for source plugins and must be defined as a method of the plugin instance struct type. The `pState` argument is the plugin struct type initialized in `Init()`, passed in by the framework for ease of access. The plugin state is passed as an instance of the `sdk.PluginState` interface, so a manual cast is required to access the internal state variables defined in the struct type.
+New events are generated in batch by the `NextBatch` function. The function is mandatory for plugins with event sourcing capability and must be defined as a method of the plugin instance struct type. The `pState` argument is the plugin struct type initialized in `Init()`, passed in by the framework for ease of access. The plugin state is passed as an instance of the `sdk.PluginState` interface, so a manual cast is required to access the internal state variables defined in the struct type.
 
 The `evts` parameter is a sdk-managed batch of events to be used for creating new events. For that, the SDK uses a slab allocator and reuses the same event batch at every iteration to improve performance. The length of the `evts` list represents the maximum size of each event batch.
 Each element of the batch is an instance of `sdk.EventWriter` that provides handy methods to write the event info and data. Event data can be written with the Go `io.Writer` interface.
@@ -619,11 +639,11 @@ func (m *MyInstance) NextBatch(pState sdk.PluginState, evts sdk.EventWriters) (i
 
 #### Printing Events As Strings
 
-Source plugins must define a `String()` method to format the contents of events created with a previous call to `NextBatch()`. The event data is readable through an instance of `io.ReadSeeker` provided by the SDK. Internally, this allows safe memory access and an optimal reusage of the same buffer to maximize the performance of hot framework paths.
+Plugins with event sourcing capability can optionally have a `String()` method to format the contents of events created with a previous call to `NextBatch()`. The event data is readable through an instance of `sdk.EventReader` provided by the SDK. Internally, this allows safe memory access and an optimal reusage of the same buffer to maximize the performance of hot framework paths.
 
 ```go
-func (m *MyPlugin) String(in io.ReadSeeker) (string, error) {
-	evtBytes, err := ioutil.ReadAll(in)
+func (m *MyPlugin) String(evt sdk.EventReader) (string, error) {
+	evtBytes, err := ioutil.ReadAll(evt.Reader())
 	if err != nil {
 		return "", err
 	}
@@ -636,7 +656,7 @@ func (m *MyPlugin) String(in io.ReadSeeker) (string, error) {
 
 #### Defining Fields
 
-This dummy plugin exports 3 fields:
+This dummy plugin has field extraction capability and exports 3 fields:
 
 * `dummy.value`: the value in the event, as a uint64
 * `dummy.strvalue`: the value in the event, as a string
@@ -647,16 +667,29 @@ The `Fields()` method returns a slice of `sdk.FieldEntry` representing all the s
 ```go
 func (m *MyPlugin) Fields() []sdk.FieldEntry {
 	return []sdk.FieldEntry{
-		{Type: "uint64", Name: "dummy.divisible", ArgRequired: true, Desc: "Return 1 if the value is divisible by the provided divisor, 0 otherwise"},
-		{Type: "uint64", Name: "dummy.value", Desc: "The sample value in the event"},
-		{Type: "string", Name: "dummy.strvalue", Desc: "The sample value in the event, as a string"},
+		{
+			Type: "uint64",
+			Name: "dummy.divisible",
+			Desc: "Return 1 if the value is divisible by the provided divisor, 0 otherwise",
+			Arg:  sdk.FieldEntryArg{IsRequired: true, IsKey: true},
+		},
+		{
+			Type: "uint64",
+			Name: "dummy.value",
+			Desc: "The sample value in the event",
+		},
+		{
+			Type: "string",
+			Name: "dummy.strvalue",
+			Desc: "The sample value in the event, as a string",
+		},
 	}
 }
 ```
 
 #### Extracting Fields
 
-The `Extractor` method extracts any of the supported fields. The `req` parameter allows accessing all the info regarding the field request, such as the field id or name, and the optional user-passed argument. The `evt` parameter is an interface that helps reading the event info and data.
+The `Extract` method extracts all of the supported fields. The `req` parameter allows accessing all the info regarding the field request, such as the field id or name, and the optional user-passed argument. The `evt` parameter is an interface that helps reading the event info and data.
 
 The extracted field value must be set through the `SetValue` method of `sdk.ExtractRequest`. Returning from `Extract` without calling `SetValue` will signal the SDK that the requested field is not present in the given event.
 
@@ -671,13 +704,11 @@ func (m *MyPlugin) Extract(req sdk.ExtractRequest, evt sdk.EventReader) error {
 	if err != nil {
 		return err
 	}
-
 	switch req.FieldID() {
 	case 0: // dummy.divisible
-		arg := req.Arg()
-		divisor, err := strconv.Atoi(arg)
+		divisor, err := strconv.Atoi(req.ArgKey())
 		if err != nil {
-			return fmt.Errorf("argument to dummy.divisible %s could not be converted to number", arg)
+			return fmt.Errorf("argument to dummy.divisible %s could not be converted to number", req.ArgKey())
 		}
 		if evtVal%divisor == 0 {
 			req.SetValue(uint64(1))
@@ -691,7 +722,6 @@ func (m *MyPlugin) Extract(req sdk.ExtractRequest, evt sdk.EventReader) error {
 	default:
 		return fmt.Errorf("no known field: %s", req.Field())
 	}
-
 	return nil
 }
 ```
