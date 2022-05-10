@@ -222,7 +222,7 @@ The return value is an string representation of the read progress, with the memo
 ### event_to_string
 
 ```
-const char* plugin_event_to_string(ss_plugin_t *s, const uint8_t *data, uint32_t datalen)   [Required: no]
+const char* plugin_event_to_string(ss_plugin_t *s, const ss_plugin_event *evt)  [Required: no]
 ```
 
 This function is used to return a printable representation of an event. The memory is owned by the plugin and can be freed on the next call to `plugin_event_to_string`. It is used in filtering/output expressions as the built-in field `evt.plugininfo`.
@@ -256,6 +256,7 @@ The returned value is a json string, with memory owned by the plugin, which cont
 Each object has the following properties:
 * `value`: a string usable as a parameter for `open`
 * `desc`: (optional) a string with that describes the meaning of `value`.
+* `separator`: (optional) a string representing a separator string in case `value` represents a list of concatenated values. This can be used by plugins to specify an open param that represents more than one source, in which case they can be separated by the separator substring. It's a plugin responsibility to specify the separator string.
 
 ## Field Extraction Capability API
 
@@ -269,7 +270,7 @@ This function should return the set of fields supported by the plugin. Remember,
 
 ```json
 [
-    {"type": "string", "name": "gizmo.field1", "argRequired": true, "desc": "Describing field 1"},
+    {"type": "string", "name": "gizmo.field1", "arg": {"isRequired": true, "isKey": true}, "desc": "Describing field 1"},
     {"type": "uint64", "name": "gizmo.field2", "desc": "Describing field 2", properties: ["hidden"]}
 ]
 ```
@@ -278,7 +279,11 @@ Each object has the following properties:
 
 * `type`: one of "string", "uint64"
 * `name`: a string with a name for the field. By convention, this is a dot-separated path of names. Use a consistent first name e.g. "ct.xxx" to help filter authors associate the field with a given plugin.
-* `argRequired`: (optional) If present and set to true, notes that the field requires an argument e.g. `field[arg]`.
+* `isList`: (optional) If present and set to true, notes that the field extracts a list of values. Fields of this kind can only be used with the `in` and `intersects` filtering operators. For list fields, extracting single values means extracting lists of length equal to 1.
+* `arg`: (optional) if present, notes that the field can accept an argument e.g. field[arg]. More precisely, the following flags could be specified:
+    * `isRequired`: if true, the argument is required.
+    * `isIndex`: if true, the field is numeric.
+    * `isKey`: if true, the field is a string. If `isRequired` is true, one between `isIndex` and `isKey` must be true, to specify the argument type. If `isRequired` is false, but one between `isIndex` and `isKey` is true, the argument is allowed but not required.
 * `display`: (optional) If present, a string that will be used to display the field instead of the name. Used in tools like wireshark.
 * `desc`: a string with a short description of the field. This will be used in help output so be concise and descriptive.
 * `properties`: (optional) If present, an array of additional properties that apply to the field. The value is an array of strings that can be one of the following:
@@ -311,16 +316,22 @@ typedef enum ss_plugin_field_type
 	FTYPE_STRING = 9
 }ss_plugin_field_type;
 
+
 typedef struct ss_plugin_extract_field
 {
-    uint32_t fields_id;
-	const char* field;
-	const char* arg;
-	uint32_t ftype;      // Has value from ss_plugin_field_type enum
+	union {
+		const char** str;
+		uint64_t* u64;
+	} res;
+	uint64_t res_len;
 
-	bool field_present;
-	const char* res_str;
-	uint64_t res_u64;
+	uint32_t field_id;
+	const char* field;
+	const char* arg_key;
+	uint64_t arg_index;
+	bool arg_present;
+	uint32_t ftype;
+	bool flist;
 } ss_plugin_extract_field;
 ```
 
