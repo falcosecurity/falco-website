@@ -19,21 +19,21 @@ Before reading this page, read the main [plugins](../../plugins) page for an ove
 
 Here is a high level overview of how the plugin framework uses API functions to interact with plugins:
 
-* **Initialize**
-	* **Verify api compatibility**: the framework calls `plugin_get_required_api_version` to verify that the plugin is compatible with the framework
-	* **Call info functions**: the framework calls `plugin_get_xxx` functions to obtain information about the plugin
-	* **Check for supported capabilities**: the framework checks which capabilities a plugin implements by verifying that the required functions are exported
-		* **Get supported event source**: if the plugin has the event sourcing capability, the framework calls `plugin_get_id` and  `plugin_get_event_source` to obtain the plugin ID and its event source
-		* **Get supported fields**: if the plugin has the field extraction capability, the framework calls `plugin_get_fields` to obtain the list of fields supported by the plugin
-	* **Initialize the plugin**: the framework calls `plugin_init` to initialize a plugin, which returns an opaque `ss_plugin_t` handle. This handle is passed as an argument to later functions
-* **Open streams of events (event sourcing capability only)**
-	* **Open a stream**: the framework calls `plugin_open` the open a stream of events, which returns an opaque `ss_instance_t` handle. This handle is passed as an argument to later functions
-	* **Obtain events**: the framework calls `plugin_next_batch` to obtain events from the plugin
-	* **Close a stream of events**: the framework calls `plugin_close` to close a stream of events. The `ss_instance_t` handle is considered invalid and will not be used again
-* **Extract values from events (field extraction capability only)**
-	* **Extract values**: the framework calls `plugin_extract_fields` to obtain values for fields for a given event
-* **Destroy**
-	* **Destroy the plugin**: the framework calls `plugin_destroy` to destroy a plugin. The `ss_plugin_t` handle is considered invalid and will not be used again.
+* **Initialization**
+	* **Checking API Compatibility** — The framework calls `plugin_get_required_api_version` to verify that the plugin is compatible with the framework
+	* **Collecting Plugin Info** — The framework calls `plugin_get_xxx` functions to obtain information about the plugin
+	* **Checking Capabilities** — The framework checks which capabilities a plugin implements by verifying that the required functions are exported
+		* **Getting Supported Event source** — If the plugin has the event sourcing capability, the framework calls `plugin_get_id` and  `plugin_get_event_source` to obtain the plugin ID and its event source
+		* **Getting Supported Extractable Fields** — If the plugin has the field extraction capability, the framework calls `plugin_get_fields` to obtain the list of fields supported by the plugin
+	* **Initializing the Plugin** — The framework calls `plugin_init` to initialize a plugin, which returns an opaque `ss_plugin_t` handle. This handle is passed as an argument to later functions
+* **Opening Streams of Events (*event sourcing capability only*)**
+	* **Opening a Stream** —  The framework calls `plugin_open` the open a stream of events, which returns an opaque `ss_instance_t` handle. This handle is passed as an argument to later functions
+	* **Collecting Events** — The framework calls `plugin_next_batch` to obtain events from the plugin
+	* **Closeing the Stream** — The framework calls `plugin_close` to close a stream of events. The `ss_instance_t` handle is considered invalid and will not be used again
+* **Extracting Fields from Events (*field extraction capability only*)**
+	* **Extracting Values** — The framework calls `plugin_extract_fields` to obtain values for fields for a given event
+* **Deinitialization**
+	* **Destroying the Plugin** — The framework calls `plugin_destroy` to destroy a plugin. The `ss_plugin_t` handle is considered invalid and will not be used again.
 
 ## General Plugin Development Considerations
 
