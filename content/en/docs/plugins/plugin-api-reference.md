@@ -44,14 +44,6 @@ This is the first function the framework calls when loading a plugin. If the ret
 
 For example, if the code implementing the plugin framework has version 1.1.0, and a plugin's `plugin_get_required_api_version()` function returns 1.0.0, the plugin API is compatible and the plugin will be loaded. If the code implementing the plugin framework has version 2.0.0, and a plugin's `plugin_get_required_api_version()` function returns 1.0.0, the API is not compatible and the plugin will not be loaded.
 
-### get_id
-
-```
-uint32_t plugin_get_id()    [Required: yes]
-```
-
-This should return the [event ID](../../plugins#plugin-event-ids) allocated to your plugin. During development and before receiving an official event ID, you can use the "Test" value of 999.
-
 ### get_{name,description,contact,version}
 
 ```
@@ -67,91 +59,6 @@ These functions all return an C string, with memory owned by the plugin, that de
 * `plugin_get_description`: Return a short description of the plugin.
 * `plugin_get_contact`: Return a contact url/email/twitter account for the plugin authors.
 * `plugin_get_version`: Return the version of the plugin itself.
-
-### get_event_source()
-
-```
-const char* plugin_get_event_source()   [Required: yes]
-```
-
-This function returns a C string, with memory owned by the plugin, containing the plugin's [event source](../../plugins/#plugin-event-sources-and-interoperability). This event source is used for:
-
-* Associating Falco rules with plugin events--A Falco rule with a `source: gizmo` property will run on all events returned by the gizmo plugin's `next_batch()` function.
-* Linking together plugins with field extraction capability and plugins with event sourcing capability. The first can list a given event source like `gizmo` in its `get_extract_event_sources()` function, and they will get an opportunity to extract fields from all events returned by the "gizmo" plugin.
-* Ensuring that only one plugin at a time is loaded for a given source.
-
-When defining a source, make sure it accurately describes the events from your plugin (e.g. use `aws_cloudtrail` for AWS Cloudtrail events, not `json` or `logs`) and doesn't overlap with the source of any other plugin with event sourcing capability.
-
-The only time where duplicate sources make sense are when a group of plugins can use a standard data format for a given event. For example, plugins might extract `k8s_audit` events from multiple cloud sources like gcp, azure, aws, etc. If they all format their events as json objects that have identical formats as one could obtain by using [K8s Audit](https://kubernetes.io/docs/tasks/debug-application-cluster/audit/) hooks, then it would make sense for the plugins to use the same source.
-
-### get_fields
-
-```
-const char* plugin_get_fields() [Required: yes]
-```
-
-This function should return the set of fields supported by the plugin. Remember, a field is a name (e.g. `proc.name`) that can extract a value (e.g. `nginx`) from an event (e.g. a syscall event involving a process). The return value is a string whose memory is owned by the plugin. The string is json formatted and contains an array of objects. Each object describes one field. Here's an example:
-
-```json
-[
-    {"type": "string", "name": "gizmo.field1", "argRequired": true, "desc": "Describing field 1"},
-    {"type": "uint64", "name": "gizmo.field2", "desc": "Describing field 2", properties: ["hidden"]}
-]
-```
-
-Each object has the following properties:
-
-* `type`: one of "string", "uint64"
-* `name`: a string with a name for the field. By convention, this is a dot-separated path of names. Use a consistent first name e.g. "ct.xxx" to help filter authors associate the field with a given plugin.
-* `argRequired`: (optional) If present and set to true, notes that the field requires an argument e.g. `field[arg]`.
-* `display`: (optional) If present, a string that will be used to display the field instead of the name. Used in tools like wireshark.
-* `desc`: a string with a short description of the field. This will be used in help output so be concise and descriptive.
-* `properties`: (optional) If present, an array of additional properties that apply to the field. The value is an array of strings that can be one of the following:
-    * `hidden`: Do not display the field when using programs like `falco --list` to list the set of supported fields.
-    * `conversation`: This field is applicable for use in [wireshark conversations](https://www.wireshark.org/docs/wsug_html_chunked/ChStatConversations.html), and denotes that the field represents one half of a "conversation" that can be shown in the conversations or endpoints view.
-    * `info`: Also applicable for use in wireshark, and denotes that it should be appended to the "info" column in the wireshark event list.
-
-When defining fields, keep the following guidelines in mind:
-
-* Field names should generally have the plugin name/event source as the first component, and usually have one or two additional components. For example, `gizmo.pid` is preferred over `gizmo.process.id.is`. If a plugin has a moderately large set of fields, using components to group fields may make sense (e.g. `cloudtrail.s3.bytes.in` and `cloudtrail.s3.bytes.out`).
-* Fields should be idempotent: for a given event, the value for a field should be the same regardless of when/where the event was generated.
-* Fields should be neutral: define fields that extract properties of the event (e.g. "source ip address") rather than judgements (e.g. "source ip address is associated with a botnet").
-
-### get_init_schema
-
-```
-const char* plugin_get_init_schema(ss_plugin_schema_type* schema_type)  [Required: no]
-```
-
-This function returns a schema that describes the configuration to be passed to `init()` during plugin initialization. The return value is a C string, with memory owned by the plugin, representing the configuration schema. The type of schema returned is compliant with the `ss_plugin_schema_type` enumeration, and is written inside the `schema_type` output argument.
-
-Although this function is non-required, it is common to implement it due to the benefits it brings. If `get_init_schema` is correctly implemented, the `init()` function can assume the passed-in configuration string to always be well-formed. The plugin framework will take care of automatically parsing it against the provided schema and generating ad-hoc errors accordingly. This also serves as a piece of documentation for users about how the plugin needs to be configured.
-
-Currently, the plugin framework only supports the [JSON Schema format](https://json-schema.org/), which is represented by the `SS_PLUGIN_SCHEMA_JSON` enum value. If a plugin defines a JSON Schema, the framework will require the init configuration string to be a valid json-formatted string.
-
-Writing the dummy enum value `SS_PLUGIN_SCHEMA_NONE` inside `schema_type` is equivalent to avoiding implementing the `get_init_schema` function itself, which ends up with the framework treating the init configuration as an opaque string with no additional checks.
-
-### list_open_params
-
-```
-const char* plugin_list_open_params(ss_plugin_t* s, ss_plugin_rc* rc)   [Required: no]
-```
-
-This function returns a list of suggested values that are valid parameters for the `open()` plugin function.
-Although non-required, this function is useful to instruct users about potential valid parameters for opening a stream of events. Implementing this function also brings additional usage documentation for the plugin, and allows makes it more usable with automated tools.
-
-The returned value is a json string, with memory owned by the plugin, which contains an array of objects. Each object describes one suggested value for the `open()` function. Here's an example:
-
-```json
-[
-    {"value": "resource1", "desc": "An example of openable resource"},
-    {"value": "resource2", "desc": "Another example of openable resource"}
-]
-```
-
-Each object has the following properties:
-* `value`: a string usable as a parameter for `open()`
-* `desc`: (optional) a string with that describes the meaning of `value`.
 
 ### init
 
@@ -179,6 +86,54 @@ void plugin_destroy(ss_plugin_t *s) [Required: yes]
 
 This function frees any resources held in the `ss_plugin_t` struct. Afterwards, the handle should be considered destroyed and no further API functions will be called with that handle.
 
+### get_last_error
+
+```
+const char* plugin_get_last_error(ss_plugin_t* s)   [Required: yes]
+```
+
+This function is called by the framework after a prior call returned an error. The plugin should return a meaningful error string providing more information about the most recent error.
+
+### get_init_schema
+
+```
+const char* plugin_get_init_schema(ss_plugin_schema_type* schema_type)  [Required: no]
+```
+
+This function returns a schema that describes the configuration to be passed to `init()` during plugin initialization. The return value is a C string, with memory owned by the plugin, representing the configuration schema. The type of schema returned is compliant with the `ss_plugin_schema_type` enumeration, and is written inside the `schema_type` output argument.
+
+Although this function is non-required, it is common to implement it due to the benefits it brings. If `get_init_schema` is correctly implemented, the `init()` function can assume the passed-in configuration string to always be well-formed. The plugin framework will take care of automatically parsing it against the provided schema and generating ad-hoc errors accordingly. This also serves as a piece of documentation for users about how the plugin needs to be configured.
+
+Currently, the plugin framework only supports the [JSON Schema format](https://json-schema.org/), which is represented by the `SS_PLUGIN_SCHEMA_JSON` enum value. If a plugin defines a JSON Schema, the framework will require the init configuration string to be a valid json-formatted string.
+
+Writing the dummy enum value `SS_PLUGIN_SCHEMA_NONE` inside `schema_type` is equivalent to avoiding implementing the `get_init_schema` function itself, which ends up with the framework treating the init configuration as an opaque string with no additional checks.
+
+## Event Sourcing Capability API
+
+### get_id
+
+```
+uint32_t plugin_get_id()    [Required: yes]
+```
+
+This should return the [event ID](../../plugins#plugin-event-ids) allocated to your plugin. During development and before receiving an official event ID, you can use the "Test" value of 999.
+
+### get_event_source()
+
+```
+const char* plugin_get_event_source()   [Required: yes]
+```
+
+This function returns a C string, with memory owned by the plugin, containing the plugin's [event source](../../plugins/#plugin-event-sources-and-interoperability). This event source is used for:
+
+* Associating Falco rules with plugin events--A Falco rule with a `source: gizmo` property will run on all events returned by the gizmo plugin's `next_batch()` function.
+* Linking together plugins with field extraction capability and plugins with event sourcing capability. The first can list a given event source like `gizmo` in its `get_extract_event_sources()` function, and they will get an opportunity to extract fields from all events returned by the "gizmo" plugin.
+* Ensuring that only one plugin at a time is loaded for a given source.
+
+When defining a source, make sure it accurately describes the events from your plugin (e.g. use `aws_cloudtrail` for AWS Cloudtrail events, not `json` or `logs`) and doesn't overlap with the source of any other plugin with event sourcing capability.
+
+The only time where duplicate sources make sense are when a group of plugins can use a standard data format for a given event. For example, plugins might extract `k8s_audit` events from multiple cloud sources like gcp, azure, aws, etc. If they all format their events as json objects that have identical formats as one could obtain by using [K8s Audit](https://kubernetes.io/docs/tasks/debug-application-cluster/audit/) hooks, then it would make sense for the plugins to use the same source.
+
 ### open
 
 ```
@@ -202,14 +157,6 @@ void plugin_close(ss_plugin_t* s, ss_instance_t* h) [Required: yes]
 
 This function closes a stream of events previously started via a call to `plugin_open`. Afterwards, the stream should be considered closed and the framework will not call `plugin_next_batch`/`plugin_extract_fields` with the same `ss_instance_t` pointer.
 
-### get_last_error
-
-```
-const char* plugin_get_last_error(ss_plugin_t* s)   [Required: yes]
-```
-
-This function is called by the framework after a prior call returned an error. The plugin should return a meaningful error string providing more information about the most recent error.
-
 ### next_batch
 
 ```
@@ -230,7 +177,7 @@ typedef struct ss_plugin_event
 	uint32_t datalen;
 	uint64_t ts;
 } ss_plugin_event;
-````
+```
 
 The struct has the following members:
 
@@ -281,6 +228,63 @@ Here is an example output, from the [cloudtrail](https://github.com/falcosecurit
 ```
 us-east-1 masters.some-demo.k8s.local s3 GetObject Size=0 URI=s3://some-demo-env/some-demo.k8s.local/backups/etcd/events/control/etcd-cluster-created
 ```
+
+### list_open_params
+
+```
+const char* plugin_list_open_params(ss_plugin_t* s, ss_plugin_rc* rc)   [Required: no]
+```
+
+This function returns a list of suggested values that are valid parameters for the `open()` plugin function.
+Although non-required, this function is useful to instruct users about potential valid parameters for opening a stream of events. Implementing this function also brings additional usage documentation for the plugin, and allows makes it more usable with automated tools.
+
+The returned value is a json string, with memory owned by the plugin, which contains an array of objects. Each object describes one suggested value for the `open()` function. Here's an example:
+
+```json
+[
+    {"value": "resource1", "desc": "An example of openable resource"},
+    {"value": "resource2", "desc": "Another example of openable resource"}
+]
+```
+
+Each object has the following properties:
+* `value`: a string usable as a parameter for `open()`
+* `desc`: (optional) a string with that describes the meaning of `value`.
+
+## Field Extraction Capability API
+
+### get_fields
+
+```
+const char* plugin_get_fields() [Required: yes]
+```
+
+This function should return the set of fields supported by the plugin. Remember, a field is a name (e.g. `proc.name`) that can extract a value (e.g. `nginx`) from an event (e.g. a syscall event involving a process). The return value is a string whose memory is owned by the plugin. The string is json formatted and contains an array of objects. Each object describes one field. Here's an example:
+
+```json
+[
+    {"type": "string", "name": "gizmo.field1", "argRequired": true, "desc": "Describing field 1"},
+    {"type": "uint64", "name": "gizmo.field2", "desc": "Describing field 2", properties: ["hidden"]}
+]
+```
+
+Each object has the following properties:
+
+* `type`: one of "string", "uint64"
+* `name`: a string with a name for the field. By convention, this is a dot-separated path of names. Use a consistent first name e.g. "ct.xxx" to help filter authors associate the field with a given plugin.
+* `argRequired`: (optional) If present and set to true, notes that the field requires an argument e.g. `field[arg]`.
+* `display`: (optional) If present, a string that will be used to display the field instead of the name. Used in tools like wireshark.
+* `desc`: a string with a short description of the field. This will be used in help output so be concise and descriptive.
+* `properties`: (optional) If present, an array of additional properties that apply to the field. The value is an array of strings that can be one of the following:
+    * `hidden`: Do not display the field when using programs like `falco --list` to list the set of supported fields.
+    * `conversation`: This field is applicable for use in [wireshark conversations](https://www.wireshark.org/docs/wsug_html_chunked/ChStatConversations.html), and denotes that the field represents one half of a "conversation" that can be shown in the conversations or endpoints view.
+    * `info`: Also applicable for use in wireshark, and denotes that it should be appended to the "info" column in the wireshark event list.
+
+When defining fields, keep the following guidelines in mind:
+
+* Field names should generally have the plugin name/event source as the first component, and usually have one or two additional components. For example, `gizmo.pid` is preferred over `gizmo.process.id.is`. If a plugin has a moderately large set of fields, using components to group fields may make sense (e.g. `cloudtrail.s3.bytes.in` and `cloudtrail.s3.bytes.out`).
+* Fields should be idempotent: for a given event, the value for a field should be the same regardless of when/where the event was generated.
+* Fields should be neutral: define fields that extract properties of the event (e.g. "source ip address") rather than judgements (e.g. "source ip address is associated with a botnet").
 
 ### extract_fields
 
