@@ -63,9 +63,9 @@ V0.31.0附带了一个插件Cloudtrail，但预计未来还会有更多插件。
 
 如果你想了解更多关于Falco的信息：
 
-*从[Falco.org]开始(http://falco.org/)
-*查看[Falco在GitHub的项目](https://github.com/falcosecurity/falco).
-*参与[Falco社区](https://falco.org/community/).
-*与[Falco Slack]上的维修人员会面(https://kubernetes.slack.com/messages/falco).
-*关注[@falco_org on Twitter](https://twitter.com/falco_org).
+* 从[Falco.org]开始(http://falco.org/)
+* 查看[Falco在GitHub的项目](https://github.com/falcosecurity/falco).
+* 参与[Falco社区](https://falco.org/community/).
+* 与[Falco Slack]上的维修人员会面(https://kubernetes.slack.com/messages/falco).
+* 关注[@falco_org on Twitter](https://twitter.com/falco_org).
 
