@@ -1,5 +1,6 @@
 ---
-linktitle: “与Falco发布插件和云安全”
+title: "通过Falco发布插件和云安全"
+linktitle: "通过Falco发布插件和云安全"
 日期: 2022-02-09
 作者: Loris Degioanni
 slug: falco宣布推出插件
