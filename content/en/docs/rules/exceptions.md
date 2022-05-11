@@ -97,7 +97,7 @@ The specific strings "proc_writer"/"container_writer"/"proc_filenames"/"filename
 
 Notice that exceptions are defined as a part of the rule. This is important because the author of the rule defines what construes a valid exception to the rule. In this case, an exception can consist of a process and file directory (actor and target), but not a process name only (too broad).
 
-The `fields` property contains one or more fields that will extract a value from the syscall/k8s_audit events. The `comps` property contains comparison operators that align 1-1 with the items in the fields property. The `values` property contains tuples of values. Each item in the tuple should align 1-1 with the corresponding field and comparison operator. Together, each tuple of values is combined with the fields/comps to modify the condition to add an exclusion to the rule's condition.
+The `fields` property contains one or more fields that will extract a value from the events. The `comps` property contains comparison operators that align 1-1 with the items in the fields property. The `values` property contains tuples of values. Each item in the tuple should align 1-1 with the corresponding field and comparison operator. Together, each tuple of values is combined with the fields/comps to modify the condition to add an exclusion to the rule's condition.
 
 For example, for the exception "proc_writer" above, the fields/comps/values are the equivalent of adding the following to the rule's condition:
 

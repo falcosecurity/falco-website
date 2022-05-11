@@ -132,7 +132,7 @@ When the configuration is complete, Falco is ready to expose its gRPC server and
 To do so, simply run Falco. For example:
 
 ```bash
-$ falco -c falco.yaml -r rules/falco_rules.yaml -r rules/falco_rules.local.yaml -r rules/k8s_audit_rules.yaml
+$ falco -c falco.yaml -r rules/falco_rules.yaml -r rules/falco_rules.local.yaml
 ```
 
 Refer to the [Go client](./client-go) or [Python client](./client-py) documentation to learn how to receive and consume Falco [output](./outputs) events.

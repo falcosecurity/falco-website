@@ -40,7 +40,7 @@ The above command loops forever, incessantly generating a sample event each seco
 
 ### Kubernetes Auditing Activity
 
-The `k8saudit` collection generates activity that matches the [k8s audit event ruleset](https://github.com/falcosecurity/falco/blob/master/rules/k8s_audit_rules.yaml).
+The `k8saudit` collection generates activity that matches the [k8s audit event ruleset](https://github.com/falcosecurity/plugins/blob/master/plugins/k8saudit/rules/k8s_audit_rules.yaml).
 
 
 ```shell

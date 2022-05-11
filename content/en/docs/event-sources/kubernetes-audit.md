@@ -21,25 +21,15 @@ Once your cluster is configured with audit logging and the events are selected t
 
 # What's New in Falco
 
-The overall architecture of Falco remains the same, with events being matched against sets of rules, with a rule identifying suspicious or notable behavior. What falco introduces in v0.13.0 is two parallel independent streams of events that are read separately and matched separately against the sets of rules, instead of just one.
+Since [Falco 0.32.0](../../blog/falco-0-32-0.md), the Kubernetes Audit Events support has been [refactored to become a plugin](https://github.com/falcosecurity/plugins/tree/master/plugins/k8saudit) and is compliant to the [Falco Plugin System](../plugins). Previously, this feature was supported as a parallel independent stream of events that was read separately from system calls, and was matched separately against its own sets of rules. 
 
-To receive Kubernetes audit events, falco embeds a [civetweb](https://github.com/civetweb/civetweb) webserver that listens on a configurable port and accepts POST requests on a configurable endpoint. See [configuration page](../../configuration/) for information on configuring the embedded webserver. The posted JSON object comprises the event.
+To receive Kubernetes audit events, the plugin embeds a webserver that listens on a configurable port and accepts POST requests on a configurable endpoint. The posted JSON object comprises the event. The webserver embedded inside Falco to implement endpoints such as `/healtz` is totally **unrelated and independent** from the webserver of the plugin. The webserver of the plugin can be configuted as part of the plugin's init configuration and open parameters. See [configuration page](../../configuration/) for information on how plugins can be configured in Falco, and refer to [the plugin's readme for more specifics](https://github.com/falcosecurity/plugins/blob/master/plugins/k8saudit/README.md).
 
 A given rule is tied to either system call events or Kubernetes audit events, via the `source` attribute. If not specified, the source defaults to `syscall`. Rules with source `syscall` are matched against system call events. Rules with source `k8s_audit` are matched against Kubernetes audit events.
 
-See [Auditing with Falco](https://v1-17.docs.kubernetes.io/docs/tasks/debug-application-cluster/falco/) to get started with Falco.
-
-## Conditions and Fields
-
-Like system call rules, a condition field for Kubernetes audit rules is a logical expression based on operators and event fields. For example, `ka.user.name`. A given event field selects one property value from the json object. For instance, the field `ka.user.name` first identifies the `user` object within the Kubernetes audit event, and selects the `username` property of that object.
-
-Falco includes a number of predefined fields that access common properties of the Kubernetes event/json object. You can view the fields via `falco --list k8s_audit`.
-
-To select a property value of the Kubernetes audit event/json object that isn't covered by one of the predefined fields, you can use `jevt.value[<json pointer>]`. You use [JSON Pointer](http://rapidjson.org/md_doc_pointer.html) to choose a single property value from a json object. This allows you to select arbitrary property values from the Kubernetes audit event to create your rule's condition. For example, an equivalent way to extract `ka.username` is `jevt.value[/user/username]`.
-
 ## Kubernetes Audit Rules
 
-Rules devoted to Kubernetes audit events are given in [k8s_audit_rules.yaml](https://github.com/falcosecurity/falco/blob/master/rules/k8s_audit_rules.yaml). When installed as a daemon, falco installs this rules file to `/etc/falco/`, so they are available for use.
+Rules devoted to Kubernetes audit events are given in [the default k8saudit plugin rules](https://github.com/falcosecurity/plugins/tree/master/plugins/k8saudit/rules). When installed as a daemon, falco installs this rules file to `/etc/falco/`, so they are available for use.
 
 ## Example
 
