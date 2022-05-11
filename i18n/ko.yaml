@@ -28,3 +28,13 @@ home_falco_description:
         실행 시간.</small>
 home_featured_videos:
   other: 추천 동영상
+home_falco_intro_title:
+  other: 클라우드 네이티브 런타임 보안 프로젝트 인 <b>Falco</b>는 사실상 <b>Kubernetes</b> 위협 탐지 엔진입니다.
+home_falco_intro_main:
+  other: 애플리케이션 및 컨테이너의 동작을 관찰하여 런타임 위협을 감지합니다.
+home_falco_intro_plugins:
+  other: Falco 플러그인을 사용하여 클라우드 환경 전반에 걸쳐 위협 탐지를 확장합니다.
+home_falco_intro_cncf:
+  other: Falco는 인큐베이션 수준 프로젝트로 CNCF에 합류한 최초의 런타임 보안 프로젝트입니다.
+home_falco_intro_camera:
+  other: Falco는 예기치 않은 행동, 침입 및 데이터 도난을 실시간으로 감지하는 보안 카메라 역할을 합니다.
