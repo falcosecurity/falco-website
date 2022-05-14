@@ -20,7 +20,7 @@ We try not to duplicate logos, and would prefer more encompassing logos over gra
 
 To build this website you need:
 
-* [Hugo](https://gohugo.io/getting-started/installing/)
+* [Hugo](https://gohugo.io/getting-started/installing/) (tested with version 0.80, 0.90 is known not to work)
 * [Nodejs](https://nodejs.org/en/download/)
 * [Yarn](https://yarnpkg.com/lang/en/docs/install/#windows-stable)
 
