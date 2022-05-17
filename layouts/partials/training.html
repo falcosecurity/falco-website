@@ -1,6 +1,7 @@
 {{ $training := $.Site.Params.training }}
 {{ $contributors := index $training "contribution" }}
 
+
 <section class="row relative td-box--gradient td-box--height-auto">
     <div class="container text-center">
 
@@ -15,12 +16,19 @@
 
         <div class="row h-30">
             {{- range $contributors }}
-            <div class="col-xs-12 col-sm-6 col-md-3 px-5 pb-3 my-auto">
+            <div class="col-xs-12 col-sm-6 col-md-3 px-3 pb-3">
             <figure>
                 <a href="{{ .url }}">
                 <img class="img-fluid mb-4" src="{{ printf "/img/training/%s" .src | relURL }}"
                     alt="{{ .alt }}">
                 </a>
+                <!-- https://mertbakir.gitlab.io/hugo/loops-in-hugo/ -->
+                <ul  style=text-align:left;list-style-type:circle;>
+                {{ range $course := .courses }}
+                <li><a style=font-size:75%; href="{{ index . 1 }}" target="_blank" title="Course Description: {{ index . 2 }}">{{ index . 0 }}</a></li>
+                {{ end }}
+                </ul>
+
             </figure>
             </div>
             {{- end }}
