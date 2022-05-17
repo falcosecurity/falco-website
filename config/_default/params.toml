@@ -3,6 +3,7 @@
 #   2. Training providers (visible in https://falco.org/training)
 #
 # You can add a new entry specifying the next fields: `src`, `alt` and `url`.
+# More metadata is available for training courses (see below).
 #
 # And remember to include your logo in png format here:
 #   1. static/img/training/
@@ -167,13 +168,37 @@ url = "https://github.com/statsd/statsd"
 # -------------------------------------------------------------------------------------
 # Training resources provided by the community
 # -------------------------------------------------------------------------------------
+# For every new training contributor, add a new [[training.contribution]] entry.
+# include the src, alt and url fields for a general reference to the training site.
+# include an array courses, with one array per course [title, url]
+
+# [[training.contribution]]
+# src = "logo.png"
+# alt = "alternative text for the image media"
+# url = "URL to training main page"
+# courses = [
+#             ["course1_title", "course1_url", "course1_desc"], 
+#             ["course2_title", "course2_url", "course2_desc"], 
+#             ["course3_title", "course3_url", "course3_desc"]
+#         ]
 
 [[training.contribution]]
 src = "katacoda.png"
 alt = "Falco & CNCF Training by Katacoda (O'Reilly)"
 url = "https://www.katacoda.com/falco/courses/falco"
+courses = [
+            ["Container runtime security with Falco", "https://www.katacoda.com/falco/courses/falco/falco", "Learn how to use Falco to detect anomalous behaviour and create your own container security policy"], 
+            ["Practical example of Kubernetes runtime security with Falco", "https://www.katacoda.com/falco/courses/falco/forensics-k8s", "This scenario teaches you how to use Falco for container forensics on a Kubernetes cluster"],
+            ["Falcosidekick: Blocking security threats with Falco Response Engine", "https://www.katacoda.com/falco/courses/falco/falco-falcosidekick", "This scenario teaches you how to use Falcosidekick Response Engine on a Kubernetes cluster"]
+
+        ]
 
 [[training.contribution]]
 src = "sysdig.png"
 alt = "Falco 101 course by Sysdig"
 url = "https://learn.sysdig.com/path/falco"
+courses = [
+            ["Falco 101", "https://learn.sysdig.com/path/falco/falco-101", "All you need to learn to get started with Falco"], 
+            ["Falco Plugins", "https://learn.sysdig.com/path/falco/falco-plugins", "Extending Falco to secure your cloud services"], 
+            ["Detecting a Cryptomining Malware attack with Falco and Prometheus", "https://learn.sysdig.com/path/falco/detecting-a-crytomining-malware-attack-with-falco-and-prometheus", "Learn how to detect Cryptominers with Falco and Prometheus"]
+        ]
