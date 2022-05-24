@@ -2,7 +2,7 @@ clean:
 	rm -rf public
 
 dependencies:
-	(npm install && cd themes/docsy && git submodule update -f --init && cd ../..)
+	npm install && git submodule update -f --init --recursive
 
 serve: dependencies
 	hugo server --minify \
@@ -18,7 +18,7 @@ preview-build: dependencies
 		--baseURL $(DEPLOY_PRIME_URL) \
 		--buildDrafts \
 		--buildFuture \
-		--minify 
+		--minify
 	make check-links
 
 link-checker-setup:
