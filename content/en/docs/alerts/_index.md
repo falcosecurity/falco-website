@@ -212,6 +212,27 @@ sudo grubby --update-kernel=/boot/vmlinuz-5.6.13-100.fc30.x86_64 --args='selinux
 sudo reboot -n
 ```
 
+Or if you want, you can turn the permissive mode directly onto the ```/etc/selinux/config``` file:
+
+```shell
+sudo sed -i 's#SELINUX=enforcing#SELINUX=permissive#' /etc/selinux/config 
+sudo cat /etc/selinux/config
+
+# This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
+SELINUX=permissive
+# SELINUXTYPE= can take one of these three values:
+#     targeted - Targeted processes are protected,
+#     minimum - Modification of targeted policy. Only selected processes are protected. 
+#     mls - Multi Level Security protection.
+SELINUXTYPE=targeted
+
+sudo reboot -n
+```
+
 Then check your system logs (for example using ```journalctl --no-page --since 'YYYY-MM-DD' --grep selinux```) and check the messages.
 
 
