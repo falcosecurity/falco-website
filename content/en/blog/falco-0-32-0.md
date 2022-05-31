@@ -10,7 +10,7 @@ Today we announce the release of **Falco 0.32.0** 🦅!
 ## Novelties 🆕
 
 Let's review some of the highlights of the new [release](https://github.com/falcosecurity/falco/blob/master/CHANGELOG.md#v0320).  
-This is one amonge the biggest releases ever™, with around 200 commits on Falco and 230 on libs.  
+This is one among the biggest releases ever™, with around 200 commits on Falco and 230 on libs.  
 The Falco community once again proved to be super active, and we wanted to say a huge THANK YOU 🙏 💖 to everyone involved.
 
 ### New features
@@ -49,13 +49,17 @@ As always, hard work was also spent on hardening the system, supporting new sysc
 ### Plugins
 
 Plugins API reached stable 1.0.0, with tons of work to improve the API and its performances, eventually fixing any bug encountered.  
-This means that the contract is now stable and there is guarantee of avoiding future API breaks.  
+This means that the contract is now stable and you can start developing your own plugin; we eagerly wait for it!
 
 GO Plugin Sdk was updated and all plugins were ported to new sdk.
 
 Moreover, with this release, plugin related rules are shipped together with their plugin.  
 
-An okta plugin is now [officially supported](https://github.com/falcosecurity/plugins/tree/master/plugins/okta), and more came from the community:
+A couple of new plugins are now officially supported:
+* [okta plugin](https://github.com/falcosecurity/plugins/tree/master/plugins/okta)
+* [github plugin](https://github.com/falcosecurity/plugins/tree/master/plugins/github)
+
+And more came from the community:
 * [docker plugin](https://github.com/Issif/docker-plugin)
 * [seccompagent plugin](https://github.com/kinvolk/seccompagent)
 
@@ -125,7 +129,8 @@ As usual, the final release date will be discussed during the [Falco Community C
 
 Current work is involving arm64 support (https://github.com/falcosecurity/falco/pull/1997, https://github.com/falcosecurity/falco/pull/1990, https://github.com/falcosecurity/driverkit/pull/143), gvisor event source support, and libs versioning with proper tags.  
 
-Moreover, [a proposal for a new eBPF probe](https://github.com/falcosecurity/libs/pull/268) was merged, and hopefully we will see the new probe coming into life very soon™!
+Moreover, [a proposal for a shiny new eBPF probe](https://github.com/falcosecurity/libs/pull/268) was merged, and hopefully we will see the new probe coming into life very soon™!  
+It will make use of modern eBPF features like CO-RE, ringbuffer API and new tracing program; together, these features will relax our support matrix while boosting performances.
 
 In the end, as always, the best is yet to come 😉
 
