@@ -10,8 +10,8 @@ Today we announce the release of **Falco 0.32.0** 🦅!
 ## Novelties 🆕
 
 Let's review some of the highlights of the new [release](https://github.com/falcosecurity/falco/blob/master/CHANGELOG.md#v0320).  
-This is the biggest release ever™, with around 200 commits on Falco and 230 on libs.  
-The Falco community once again proved to be as active as possible, and we wanted to say a huge THANK YOU 🙏 💖 to everyone involved.
+This is one amonge the biggest releases ever™, with around 200 commits on Falco and 230 on libs.  
+The Falco community once again proved to be super active, and we wanted to say a huge THANK YOU 🙏 💖 to everyone involved.
 
 ### New features
 
@@ -30,7 +30,10 @@ Moreover, Falco won't confuse host and container users anymore.
 
 Another big refactor happened on how Falco handles its CLI and config options, with the concept of "app action". While this has no user facing changes, it is a big change that is also noteworthy.  
 
-Falco is now able to detect changes to ruleset or config file, and automatically restart itself. This behavior is enabled by default.
+Falco is now able to detect changes to ruleset or config file, and automatically restart itself. This behavior is enabled by default.  
+
+Two new operators were developed: `bcontains` and `bstartswith`. These are useful to perform byte matching on events raw data.  
+It allows better detection for log4shell like vulnerabilities.  
 
 Finally, all the Falco CI that is not involving any output artifact, has been ported to github actions.  
 This frees up credits for CircleCI builds, mitigating various CI issues; moreover, it is now quicker.  
