@@ -142,15 +142,22 @@ Plugin instances can optionally implement the `sdk.Closer`, `sdk.Progresser`, an
 
 After defining proper types for the plugin, the only thing remaining is to register it in the SDK so that it can be used in the plugin framework.
 ```go
+// sdk/plugins
+type FactoryFunc func() plugins.Plugin
+
+// sdk/plugins
+func SetFactory(plugins.FactoryFunc)
+
 // sdk/plugins/extractor
-func Register(p extractor.Plugin)
+func Register(extractor.Plugin)
 
 // sdk/plugins/source
-func Register(p source.Plugin)
+func Register(source.Plugin)
 ```
-The newly created plugin type need to be registered to the SDK in a Go `init` function. The `source.Register()` and `extractor.Register()` functions register plugins for the event sourcing and field extraction capabilities respectively.
 
-The defined types are expected to implement a given set of methods. Compilation will fail at the `Register()` functions if any of the required methods is not defined. Developers are encouraged to compose their structs with `plugins.BasePlugin`, and `source.BaseInstance`, which provide prebuilt boilerplate for many of those methods. In this way, developers just need to focus on implementing the few plugin-specific methods remaining.
+The newly created plugin type need to be registered to the SDK in a Go `init` function and through the `plugins.SetFactory()` function. `plugins.FactoryFunc` is a function type that is used by the SDK to create plugins when requested by the plugin framework. Then, the `source.Register()` and `extractor.Register()` functions should be invoked inside the body of `plugins.FactoryFunc` functions to implement the event sourcing and the field extraction capabilities respectively.
+
+The defined plugin types are expected to implement a given set of methods. Compilation will fail at the `Register()` functions if any of the required methods is not defined. Developers are encouraged to compose their structs with `plugins.BasePlugin`, and `source.BaseInstance`, which provide prebuilt boilerplate for many of those methods. In this way, developers just need to focus on implementing the few plugin-specific methods remaining.
 
 Besides the interface requirements, the defined types can contain arbitrary fields and methods. State variable that must be maintained during the plugin lifecycle (or in the lifecycle of an opened event stream) must be contained in the defined types. In this way, the SDK can guarantee that the state variables are not disposed by the garbage collector.
 
@@ -251,9 +258,12 @@ type MyInstance struct {
 }
 
 func init() {
-	p := &MyPlugin{}
-	source.Register(p)
-	extractor.Register(p)
+	plugins.SetFactory(func() plugins.Plugin {
+		p := &MyPlugin{}
+		source.Register(p)
+		extractor.Register(p)
+		return p
+	})
 }
 ```
 
