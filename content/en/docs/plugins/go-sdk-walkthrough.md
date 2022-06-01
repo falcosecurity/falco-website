@@ -230,21 +230,21 @@ The Go module `falcosecurity/plugin-sdk-go` has its own [documentation](https://
 In the Go SDK, plugins are defined by a set of composable tiny interfaces. To define a new plugin, the first step is to define a new `struct` type representing the plugin itself, and then register it to the SDK. Plugins with event sourcing capability, like `dummy`, must define an additional type representing the opened instance of the plugin event stream.
 
 ```go
-type MyPluginConfig struct {
+type PluginConfig struct {
 	// This reflects potential internal state for the plugin. In
 	// this case, the plugin is configured with a jitter.
 	Jitter uint64 `json:"jitter" jsonschema:"description=A random amount added to the sample of each event (Default: 10)"`
 }
 
-type MyPlugin struct {
+type Plugin struct {
 	plugins.BasePlugin
 	// Will be used to randomize samples
 	rand *rand.Rand
 	// Contains the init configuration values
-	config MyPluginConfig
+	config PluginConfig
 }
 
-type MyInstance struct {
+type PluginInstance struct {
 	source.BaseInstance
 	// Copy of the init params from plugin_open()
 	initParams string
@@ -259,7 +259,7 @@ type MyInstance struct {
 
 func init() {
 	plugins.SetFactory(func() plugins.Plugin {
-		p := &MyPlugin{}
+		p := &Plugin{}
 		source.Register(p)
 		extractor.Register(p)
 		return p
@@ -277,13 +277,13 @@ const (
 	PluginName               = "dummy"
 	PluginDescription        = "Reference plugin for educational purposes"
 	PluginContact            = "github.com/falcosecurity/plugins"
-	PluginVersion            = "0.2.1"
+	PluginVersion            = "0.4.0"
 	PluginEventSource        = "dummy"
 )
 
 ...
 
-func (m *MyPlugin) Info() *plugins.Info {
+func (m *Plugin) Info() *plugins.Info {
 	return &plugins.Info{
 		ID:                 PluginID,
 		Name:               PluginName,
@@ -306,7 +306,7 @@ Defining the `Destroy()` method is optional but can be useful if some resource n
 
 ```go
 // Set the config default values.
-func (p *MyPluginConfig) setDefault() {
+func (p *PluginConfig) setDefault() {
 	p.Jitter = 10
 }
 
@@ -314,7 +314,7 @@ func (p *MyPluginConfig) setDefault() {
 // plugin to be passed to the Init() method. Defining InitSchema() allows
 // the framework to automatically validate the configuration, so that the
 // plugin can assume that it to be always be well-formed when passed to Init().
-func (p *MyPlugin) InitSchema() *sdk.SchemaInfo {
+func (p *Plugin) InitSchema() *sdk.SchemaInfo {
 	// We leverage the jsonschema package to autogenerate the
 	// JSON Schema definition using reflection from our config struct.
 	reflector := jsonschema.Reflector{
@@ -323,7 +323,7 @@ func (p *MyPlugin) InitSchema() *sdk.SchemaInfo {
 		// unrecognized properties don't cause a parsing failures
 		AllowAdditionalProperties:  true,
 	}
-	if schema, err := reflector.Reflect(&MyPluginConfig{}).MarshalJSON(); err == nil {
+	if schema, err := reflector.Reflect(&PluginConfig{}).MarshalJSON(); err == nil {
 		return &sdk.SchemaInfo{
 			Schema: string(schema),
 		}
@@ -334,7 +334,7 @@ func (p *MyPlugin) InitSchema() *sdk.SchemaInfo {
 // Since this plugin defines the InitSchema() method, we can assume
 // that the configuration is pre-validated by the framework and
 // always well-formed according to the provided schema.
-func (m *MyPlugin) Init(cfg string) error {
+func (m *Plugin) Init(cfg string) error {
 	// initialize state
 	m.rand = rand.New(rand.NewSource(time.Now().UnixNano()))
 	// The format of cfg is a json object with a single param
@@ -347,7 +347,7 @@ func (m *MyPlugin) Init(cfg string) error {
 	return nil
 }
 
-func (m *MyPlugin) Destroy() {
+func (m *Plugin) Destroy() {
 	// nothing to do here
 }
 ```
@@ -359,7 +359,7 @@ A plugin instance is created when the plugin event stream is opened, which can h
 The plugin instance type returned by `Open()` can define an optional `Close()` method bundling any additional deinitialization logic to run while closing the event stream.
 
 ```go
-func (m *MyPlugin) Open(prms string) (source.Instance, error) {
+func (m *Plugin) Open(prms string) (source.Instance, error) {
 	// The format of params is a json object with two params:
 	// - "start", which denotes the initial value of sample
 	// - "maxEvents": which denotes the number of events to return before EOF.
@@ -378,7 +378,7 @@ func (m *MyPlugin) Open(prms string) (source.Instance, error) {
 		return nil, fmt.Errorf("params %s did not contain maxEvents property", prms)
 	}
 
-	return &MyInstance{
+	return &PluginInstance{
 		initParams: prms,
 		maxEvents:  obj["maxEvents"],
 		counter:    0,
@@ -386,7 +386,7 @@ func (m *MyPlugin) Open(prms string) (source.Instance, error) {
 	}, nil
 }
 
-func (m *MyInstance) Close() {
+func (m *PluginInstance) Close() {
 	// nothing to do here
 }
 ```
@@ -401,21 +401,23 @@ Each element of the batch is an instance of `sdk.EventWriter` that provides hand
 If an error is returned, the SDK returns a failure to the framework and invalidates the current batch. The special errors `sdk.ErrTimeout` and `sdk.ErrEOF` have a special meaning, and are used to either advise the framework that no new events are currently available, or that the event stream is terminated.
 
 ```go
-func (m *MyInstance) NextBatch(pState sdk.PluginState, evts sdk.EventWriters) (int, error) {
+func (m *PluginInstance) NextBatch(pState sdk.PluginState, evts sdk.EventWriters) (int, error) {
 	// Return EOF if reached maxEvents
 	if m.counter >= m.maxEvents {
 		return 0, sdk.ErrEOF
 	}
 
+	// access the plugin state
+	plugin := pState.(*Plugin)
+
 	var n int
 	var evt sdk.EventWriter
-	myPlugin := pState.(*MyPlugin)
 	for n = 0; m.counter < m.maxEvents && n < evts.Len(); n++ {
 		evt = evts.Get(n)
 		m.counter++
 
 		// Increment sample by 1, also add a jitter of [0:jitter]
-		m.sample += 1 + uint64(myPlugin.rand.Int63n(int64(myPlugin.config.Jitter+1)))
+		m.sample += 1 + uint64(plugin.rand.Int63n(int64(plugin.config.Jitter+1)))
 
 		// The representation of a dummy event is the sample as a string.
 		str := strconv.Itoa(int(m.sample))
@@ -439,7 +441,7 @@ func (m *MyInstance) NextBatch(pState sdk.PluginState, evts sdk.EventWriters) (i
 Plugins with event sourcing capability can optionally have a `String()` method to format the contents of events created with a previous call to `NextBatch()`. The event data is readable through an instance of `sdk.EventReader` provided by the SDK. Internally, this allows safe memory access and an optimal reusage of the same buffer to maximize the performance of hot framework paths.
 
 ```go
-func (m *MyPlugin) String(evt sdk.EventReader) (string, error) {
+func (m *Plugin) String(evt sdk.EventReader) (string, error) {
 	evtBytes, err := ioutil.ReadAll(evt.Reader())
 	if err != nil {
 		return "", err
@@ -462,7 +464,7 @@ This dummy plugin has field extraction capability and exports 3 fields:
 The `Fields()` method returns a slice of `sdk.FieldEntry` representing all the supported fields.
 
 ```go
-func (m *MyPlugin) Fields() []sdk.FieldEntry {
+func (m *Plugin) Fields() []sdk.FieldEntry {
 	return []sdk.FieldEntry{
 		{
 			Type: "uint64",
@@ -491,7 +493,7 @@ The `Extract` method extracts all of the supported fields. The `req` parameter a
 The extracted field value must be set through the `SetValue` method of `sdk.ExtractRequest`. Returning from `Extract` without calling `SetValue` will signal the SDK that the requested field is not present in the given event.
 
 ```go
-func (m *MyPlugin) Extract(req sdk.ExtractRequest, evt sdk.EventReader) error {
+func (m *Plugin) Extract(req sdk.ExtractRequest, evt sdk.EventReader) error {
 	evtBytes, err := ioutil.ReadAll(evt.Reader())
 	if err != nil {
 		return err
