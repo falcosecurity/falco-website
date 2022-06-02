@@ -25,7 +25,7 @@ The plugin can be configured to read log files from:
 
 For more information on the open params syntax, see [open params](https://github.com/falcosecurity/plugins/tree/master/plugins/cloudtrail#plugin-open-params).
 
-# Terraform Module For Cloudtrail Prerequsites
+# Terraform Module For Cloudtrail Prerequisites
 
 In order to use the Cloutrail plugin, you must [enable](https://docs.aws.amazon.com/AmazonS3/latest/userguide/enable-cloudtrail-logging-for-s3.html) Cloudtrail logging for the account(s) you want to monitor. This must be done before using the plugin.
 
