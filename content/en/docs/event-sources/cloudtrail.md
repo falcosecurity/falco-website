@@ -31,4 +31,4 @@ In order to use the Cloutrail plugin, you must [enable](https://docs.aws.amazon.
 
 In addition, of the three options above, using an SQS queue provides the easiest-to-consume source of logs. With the SQS queue, the plugin can detect when the new log files are written and can automatically consume them. However, this also requires creating multiple AWS cloud resources, such as SQS queues, SNS topics/subscriptions, IAM policy documents, etc., outside of Falco, which involve multiple manual steps.
 
-To make this process easier, we've created a Terraform [module](https://github.com/falcosecurity/falco-cloudtrail-terraform) that automatically creates these resources.
+To make this process easier, we've created a Terraform [module](https://github.com/falcosecurity/falco-aws-terraform) that automatically creates these resources.
