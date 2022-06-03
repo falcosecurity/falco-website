@@ -9,34 +9,32 @@ Today we announce the release of **Falco 0.32.0** 🦅!
 
 ## Novelties 🆕
 
-Let's review some of the highlights of the new [release](https://github.com/falcosecurity/falco/blob/master/CHANGELOG.md#v0320).  
-This is one among the biggest releases ever™, with around 200 commits on Falco and 230 on libs.  
+Let's review some of the highlights of the new [release](https://github.com/falcosecurity/falco/blob/master/CHANGELOG.md#v0320). This is one among the biggest releases ever™, with around 200 commits on Falco and 230 on libs.
+
+
 The Falco community once again proved to be super active, and we wanted to say a huge THANK YOU 🙏 💖 to everyone involved.
 
 ### New features
 
-This new release comes with a ton of inner rework; let's start with the foremost important change: lua is no more a dependency of Falco!  
-Ok, calm down now.  
-Basically, the Falco rule loader was rewritten in C++, to achieve better performance. Moreover, the entire rule engine has been rewritten too.  
+This new release comes with a ton of inner rework; let's start with the foremost important change: **Lua is no more a dependency of Falco!** 
+Ok, calm down now. Basically, the Falco **rule loader was rewritten in C++**, to achieve better performance. Moreover, the entire rule engine has been rewritten too.  
 This work reduces the needs of weird workarounds in Falco, as it is now fully using libsinsp provided filter parsers and compiler; finally, the [new grammar](https://github.com/falcosecurity/libs/pull/217) fixes quite a lot of minor and not-so-minor bugs.  
-Thanks to Jason Dellaluce for his amazing work!  
+Thanks to [Jason Dellaluce](https://github.com/jasondellaluce) for his amazing work!  
 
-Another effort by Jason was the porting of k8s audit log support to a [plugin](https://github.com/falcosecurity/plugins/tree/master/plugins/k8saudit); consequently, there is no k8s audit log related code in Falco anymore.
+Another effort by Jason was the **porting of K8s Audit Log support to a [plugin](https://github.com/falcosecurity/plugins/tree/master/plugins/k8saudit)**; consequently, there is no K8s Audit Log related code in Falco anymore.
 
 Moreover, a new `--list-syscall-events` CLI option is now available, to print list of supported syscalls.
 
-Users and groups management is now dynamic: newly added users/groups will be properly fetched by Falco. On host, their full informations will be retrieved; instead, on containers, only the uid and gid will be retrieved as there is no stable API to fetch user/group info.
-Moreover, Falco won't confuse host and container users anymore.
+**Users and groups management is now dynamic**: newly added users/groups will be properly fetched by Falco. On host, their full informations will be retrieved; instead, on containers, only the uid and gid will be retrieved as there is no stable API to fetch user/group info. Moreover, Falco won't confuse host and container users anymore.
 
-Another big refactor happened on how Falco handles its CLI and config options, with the concept of "app action". While this has no user facing changes, it is a big change that is also noteworthy.  
+Another big refactor happened on how Falco handles its CLI and config options, with the concept of "app actions". While this has no user facing changes, it is a big update that is also noteworthy.  
 
-Falco is now able to detect changes to ruleset or config file, and automatically restart itself. This behavior is enabled by default.  
+Falco is now able to **detect changes to ruleset or config file, and automatically restart itself**. This behavior is enabled by default.  
 
-Two new operators were developed: `bcontains` and `bstartswith`. These are useful to perform byte matching on events raw data.  
+Two new operators were developed: `bcontains` and `bstartswith`. These are useful to perform **byte matching** on events raw data.  
 It allows better detection for log4shell like vulnerabilities.  
 
-Finally, all the Falco CI that is not involving any output artifact, has been ported to github actions.  
-This frees up credits for CircleCI builds, mitigating various CI issues; moreover, it is now quicker.  
+Finally, all the Falco CI that is not involving any output artifact, has been ported to github actions. This frees up credits for CircleCI builds, mitigating various CI issues; moreover, it is now quicker.  
 
 ### New syscalls
 
@@ -48,12 +46,12 @@ As always, hard work was also spent on hardening the system, supporting new sysc
 
 ### Plugins
 
-Plugins API reached stable 1.0.0, with tons of work to improve the API and its performances, eventually fixing any bug encountered.  
-This means that the contract is now stable and you can start developing your own plugin; we eagerly wait for it!
+**Plugins API reached stable 1.0.0**, with tons of work to improve the API and its performances, eventually fixing any bug encountered.  
+It means that the contract is now stable and you can start developing your own plugin; we eagerly wait for it!
 
 GO Plugin Sdk was updated and all plugins were ported to new sdk.
 
-Moreover, with this release, plugin related rules are shipped together with their plugin.  
+Moreover, with this release, **plugin related rules are shipped together with their plugin**.  
 
 A couple of new plugins are now officially supported:
 * [okta plugin](https://github.com/falcosecurity/plugins/tree/master/plugins/okta)
@@ -69,17 +67,17 @@ We are really pleased to see new plugins coming; hopefully Plugin API 1.0.0 will
 
 Multiple bugs were fixed:
 
-* a bug that caused Falco memory usage to skyrocket was solved. We are sorry for the inconvenience. 
+* a bug that caused Falco **memory usage to skyrocket was solved**. We are sorry for the inconvenience. 
 * multiple issues with container events were fixed.
-* number of reported drops was doubled while using the eBPF probe. This is now fixed.
+* number of reported drops was mistakenly doubled while using the eBPF probe. This is now fixed.
 * multiple eBPF verifier issues were solved, resulting in a much more resilient probe.
 
 ...and much more of course!
 
 ### Security Content 🔒
 
-Bundled dependencies were upgraded, namely openssl to 1.1.1o and libcurl to 7.83.1, fixing a ton of CVEs!  
-Moreover, gRPC was also bumped to 1.44.0.
+Bundled dependencies were upgraded, namely `openssl` to 1.1.1o and `libcurl` to 7.83.1, fixing a ton of CVEs!  
+Moreover, `gRPC` was also bumped to 1.44.0.
 
 ### Default rules update 🛡️
 
@@ -123,14 +121,14 @@ You can also find the Falcosecurity container images on the public AWS ECR galle
 ## What's next 🔮
 
 Don't worry, we are still very hungry for improvements!   
-Falco 0.33.0 is anticipated to be released in September 2022!
-
-As usual, the final release date will be discussed during the [Falco Community Calls](https://github.com/falcosecurity/community).
 
 Current work is involving arm64 support (https://github.com/falcosecurity/falco/pull/1997, https://github.com/falcosecurity/falco/pull/1990, https://github.com/falcosecurity/driverkit/pull/143), gvisor event source support, and libs versioning with proper tags.  
 
 Moreover, [a proposal for a shiny new eBPF probe](https://github.com/falcosecurity/libs/pull/268) was merged, and hopefully we will see the new probe coming into life very soon™!  
 It will make use of modern eBPF features like CO-RE, ringbuffer API and new tracing program; together, these features will relax our support matrix while boosting performances.
+
+Finally, maintainers are discussing about releasing a patch release (0.32.1), once arm64 support is complete.  
+We will keep you posted!
 
 In the end, as always, the best is yet to come 😉
 
