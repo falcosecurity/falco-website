@@ -193,7 +193,7 @@ Plugins hosted and maintained by the Falcosecurity community are at the [plugins
 
 ## Plugin SDKs
 
-To facilitate the development of plugins written in Go, we've written a [SDK](https://github.com/falcosecurity/plugin-sdk-go) that provides support code for writing plugins. The SDK provides Go structs/enums corresponding to the C structs/enums used by the API, has utility packages that manage the details of memory management/type conversion, and presents abstract interfaces that provide a more streamlined interface to potential plugin authors. We go through the details and the architecture of the GO SDK in the [Go SDK walkthough section](./go-sdk-walkthrough).
+To facilitate the development of plugins written in Go, we've written a [SDK](https://github.com/falcosecurity/plugin-sdk-go) that provides support code for writing plugins. The SDK provides Go structs/enums corresponding to the C structs/enums used by the API, has utility packages that manage the details of memory management/type conversion, and presents abstract interfaces that provide a more streamlined interface to potential plugin authors. We go through the details and the architecture of the GO SDK in the [Go SDK walkthrough section](/docs/plugins/go-sdk-walkthrough).
 
 There is also an experimental [C++](https://github.com/falcosecurity/plugins/tree/master/sdk/cpp) SDK that defines abstract C++ base classes for plugins. Plugin authors can derive from these base classes and implement the abstract methods to provide demographic information, events, and extract fields from events. This SDK is currently in line with the most recent changes in the plugin API, and will be subject to many updates in the near future.
 

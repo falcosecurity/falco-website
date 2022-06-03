@@ -41,7 +41,7 @@ Here is a high level overview of how the plugin framework uses API functions to 
 
 In order to abstract the complexity related with the low-level details of plugin development, the Falcosecurity organization provides a maintains SDKs to make the life of developers easier. Using an SDK is not mandatory but highly encouraged, and should be the way to go for almost all use cases.
 
-So far, only the [SDK for the Go language](https://github.com/falcosecurity/plugin-sdk-go) is production-ready. Please check the [Go SDK walkthough section](./go-sdk-walkthrough) for in-depth details.
+So far, only the [SDK for the Go language](https://github.com/falcosecurity/plugin-sdk-go) is production-ready. Please check the [Go SDK walkthrough section](/docs/plugins/go-sdk-walkthrough) for in-depth details.
 ### API Versioning
 
 The plugins API is versioned with a [semver](https://semver.org/)-style version string. The plugins framework checks the plugin's required api version by calling the `plugin_get_required_api_version` API function. In order for the framework to load the plugin, the major number of the plugin framework must match the major number in the version returned by `plugin_get_required_api_version`. Otherwise, the plugin is incompatible and will not be loaded.
