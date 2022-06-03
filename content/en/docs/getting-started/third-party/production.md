@@ -60,3 +60,18 @@ If you are [installing Falco with Helm](https://falco.org/docs/getting-started/t
 ```
 helm install falco falcosecurity/falco --set ebpf.enabled=true
 ```
+
+### K3s
+
+[K3s](https://k3s.io/) is a lightweight, CNCF certified Kubernetes distribution. It has embedded components like etcd (datastore), CoreDNS, traefik ingress controller and etc. to simplify Kubernetes installation or upgrade.
+
+If you are using K3s with containerd, you should set the CRI settings because the socket path is different from the default setting configured in Falco.
+
+- If you install Falco on host machine
+  - Append the parameter ```--cri /run/k3s/containerd/containerd.sock``` when starting the Falco binary.
+- If you install Falco inside K3s with Helm
+  - Append below options when install with Helm:
+
+  ```shell
+  --set containerd.enabled=true --set containerd.socket=/run/k3s/containerd/containerd.sock
+  ```
