@@ -136,7 +136,7 @@ This function returns a C string, with memory owned by the plugin, containing th
 * Linking together plugins with field extraction capability and plugins with event sourcing capability. The first can list a given event source like `gizmo` in its `get_extract_event_sources` function, and they will get an opportunity to extract fields from all events returned by the "gizmo" plugin.
 * Ensuring that only one plugin at a time is loaded for a given source.
 
-When defining a source, make sure it accurately describes the events from your plugin (e.g. use `aws_cloudtrail` for AWS Cloudtrail events, not `json` or `logs`) and doesn't overlap with the source of any other plugin with event sourcing capability.
+When defining a source, make sure it accurately describes the events from your plugin (e.g. use `aws_cloudtrail` for AWS CloudTrail events, not `json` or `logs`) and doesn't overlap with the source of any other plugin with event sourcing capability.
 
 The only time where duplicate sources make sense are when a group of plugins can use a standard data format for a given event. For example, plugins might extract `k8s_audit` events from multiple cloud sources like gcp, azure, aws, etc. If they all format their events as json objects that have identical formats as one could obtain by using [K8s Audit](https://kubernetes.io/docs/tasks/debug-application-cluster/audit/) hooks, then it would make sense for the plugins to use the same source.
 
