@@ -10,7 +10,7 @@ You can also see this set of fields via `falco --list=<source>`, with `<source>`
 ## System Calls (source `syscall`)
 <!-- 
 generated with:
-falco --list=syscall --markdown  | sed -E 's/## Field Class/### Field Class/g'
+falco --list=syscall --markdown  | sed -E 's/## Field Class/### Field Class/g' | awk '!/^Event Sources: syscall\w*/'
 -->
 
 `syscall` event source fields are provided by the [Falco Drivers](/docs/event-sources/drivers/).
@@ -23,6 +23,7 @@ $ falco --list=syscall
 ### Field Class: evt
 
 These fields can be used for all event types
+
 
 Name | Type | Description
 :----|:-----|:-----------
@@ -41,9 +42,10 @@ Name | Type | Description
 `evt.pluginname` | CHARBUF | if the event comes from a plugin, the name of the plugin that generated it. The plugin must be currently loaded.
 `evt.plugininfo` | CHARBUF | if the event comes from a plugin, a summary of the event as formatted by the plugin. The plugin must be currently loaded.
 
-### Field Class: evt (for system calls)
+### Field Class: evt
 
 Event fields applicable to syscall events. Note that for most events you can access the individual arguments/parameters of each syscall via evt.arg, e.g. evt.arg.filename.
+
 
 Name | Type | Description
 :----|:-----|:-----------
@@ -85,13 +87,14 @@ Name | Type | Description
 `evt.count.exit` | UINT32 | This filter field returns 1 for exit events, and can be used to count single events from inside chisels.
 `evt.around` | UINT64 | Accepts the event if it's around the specified time interval. The syntax is evt.around[T]=D, where T is the value returned by %evt.rawtime for the event and D is a delta in milliseconds. For example, evt.around[1404996934793590564]=1000 will return the events with timestamp with one second before the timestamp and one second after it, for a total of two seconds of capture.
 `evt.abspath` | CHARBUF | Absolute path calculated from dirfd and name during syscalls like renameat and symlinkat. Use 'evt.abspath.src' or 'evt.abspath.dst' for syscalls that support multiple paths.
-`evt.is_open_read` | BOOL | 'true' for open/openat/openat2 events where the path was opened for reading
-`evt.is_open_write` | BOOL | 'true' for open/openat/openat2 events where the path was opened for writing
+`evt.is_open_read` | BOOL | 'true' for open/openat/openat2/open_by_handle_at events where the path was opened for reading
+`evt.is_open_write` | BOOL | 'true' for open/openat/openat2/open_by_handle_at events where the path was opened for writing
 `evt.is_open_exec` | BOOL | 'true' for open/openat/openat2 or creat events where a file is created with execute permissions
 
 ### Field Class: process
 
 Additional information about the process and thread executing the syscall event.
+
 
 Name | Type | Description
 :----|:-----|:-----------
@@ -142,10 +145,14 @@ Name | Type | Description
 `proc.is_container_liveness_probe` | BOOL | true if this process is running as a part of the container's liveness probe.
 `proc.is_container_readiness_probe` | BOOL | true if this process is running as a part of the container's readiness probe.
 `proc.is_exe_writable` | BOOL | true if this process' executable file is writable by the same user that spawned the process.
+`thread.cap_permitted` | CHARBUF | The permitted capabilities set
+`thread.cap_inheritable` | CHARBUF | The inheritable capabilities set
+`thread.cap_effective` | CHARBUF | The effective capabilities set
 
 ### Field Class: user
 
 Information about the user executing the specific event.
+
 
 Name | Type | Description
 :----|:-----|:-----------
@@ -160,6 +167,7 @@ Name | Type | Description
 
 Information about the user group.
 
+
 Name | Type | Description
 :----|:-----|:-----------
 `group.gid` | UINT64 | group ID.
@@ -168,6 +176,7 @@ Name | Type | Description
 ### Field Class: container
 
 Container information. If the event is not happening inside a container, both id and name will be set to 'host'.
+
 
 Name | Type | Description
 :----|:-----|:-----------
@@ -194,6 +203,7 @@ Name | Type | Description
 ### Field Class: fd
 
 Every syscall that has a file descriptor in its arguments has these fields set with information related to the file.
+
 
 Name | Type | Description
 :----|:-----|:-----------
@@ -243,6 +253,7 @@ Name | Type | Description
 
 Content of Syslog messages.
 
+
 Name | Type | Description
 :----|:-----|:-----------
 `syslog.facility.str` | CHARBUF | facility as a string.
@@ -254,6 +265,7 @@ Name | Type | Description
 ### Field Class: fdlist
 
 Poll event related fields.
+
 
 Name | Type | Description
 :----|:-----|:-----------
@@ -267,6 +279,7 @@ Name | Type | Description
 ### Field Class: k8s
 
 Kubernetes related context. Available when configured to fetch k8s meta-data from API Server.
+
 
 Name | Type | Description
 :----|:-----|:-----------
@@ -299,6 +312,7 @@ Name | Type | Description
 
 Mesos related context.
 
+
 Name | Type | Description
 :----|:-----|:-----------
 `mesos.task.name` | CHARBUF | Mesos task name.
@@ -318,6 +332,7 @@ Name | Type | Description
 
 Fields used if information about distributed tracing is available.
 
+
 Name | Type | Description
 :----|:-----|:-----------
 `span.id` | INT64 | ID of the span. This is a unique identifier that is used to match the enter and exit tracer events for this span. It can also be used to match different spans belonging to a trace.
@@ -336,6 +351,7 @@ Name | Type | Description
 ### Field Class: evtin
 
 Fields used if information about distributed tracing is available.
+
 
 Name | Type | Description
 :----|:-----|:-----------
