@@ -67,4 +67,5 @@ Operators | Description
 `in`, `intersects` | Set operations.
 `pmatch` | Compare a file path against a set of file or directory prefixes. Example: `fd.name pmatch (/tmp/hello)` will evaluate to true against `/tmp/hello`, `/tmp/hello/world` but not `/tmp/hello_world`.
 `exists` | Check if a field is set. Example: `k8s.pod.name exists`.
+`bcontains`, `bstartswith` | These operators work similarly to `contains` and `startswith` and allow performing byte matching against a raw string of bytes, accepting as input a hexadecimal string. Examples: `evt.buffer bcontains CAFEBABE`, `evt.buffer bstartswith 012AB3CC`.
 
