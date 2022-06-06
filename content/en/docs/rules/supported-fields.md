@@ -10,7 +10,7 @@ You can also see this set of fields via `falco --list=<source>`, with `<source>`
 ## System Calls (source `syscall`)
 <!-- 
 generated with:
-falco --list=syscall --markdown  | sed -E 's/## Field Class/### Field Class/g' | awk '!/^Event Sources: syscall\w*/'
+falco --list=syscall --markdown  | sed -E 's/## Field Class/### Field Class/g' | awk '!/^Event Sources: syscall\w*/' | awk '/Field Class: evt/{c++;if(c==2){sub("evt","evt (for system calls)");c=0}}1'
 -->
 
 `syscall` event source fields are provided by the [Falco Drivers](/docs/event-sources/drivers/).
@@ -42,7 +42,7 @@ Name | Type | Description
 `evt.pluginname` | CHARBUF | if the event comes from a plugin, the name of the plugin that generated it. The plugin must be currently loaded.
 `evt.plugininfo` | CHARBUF | if the event comes from a plugin, a summary of the event as formatted by the plugin. The plugin must be currently loaded.
 
-### Field Class: evt
+### Field Class: evt (for system calls)
 
 Event fields applicable to syscall events. Note that for most events you can access the individual arguments/parameters of each syscall via evt.arg, e.g. evt.arg.filename.
 
