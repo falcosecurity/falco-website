@@ -1,9 +1,9 @@
 ---
 title: "通过Falco发布插件和云安全"
 linktitle: "通过Falco发布插件和云安全"
-日期: 2022-02-09
-作者: Loris Degioanni
-slug: falco宣布推出插件
+date: 2022-02-09
+author: Loris Degioanni
+slug: falco-announcing-plugins
 ---
 
 刚刚发布的Falco v0.31.0是几个月努力工作的结果，包括许多令人兴奋的新特性。然而，其中之一对于Falco作为一个项目来说尤其具有战略意义：插件框架的普遍可用性，我想用这篇博文来解释为什么插件令人兴奋，以及它们对Falco的未来意味着什么，让我们先解释一下这项新技术是什么。
