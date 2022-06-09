@@ -5,8 +5,8 @@ Author: Thomas Labarussias
 slug: extend-falco-inputs-with-a-plugin-the-basics
 ---
 
-> 这篇文章是关于“如何开发 Falco 插件”系列文章的一部分。 它面向任何想了解插件是如何编写并希望做出贡献的人。
-> See other articles:
+> T这篇文章是关于如何开发 Falco 插件的系列文章的一部分。 它面向任何想了解插件是如何编写并希望做出贡献的人。 
+> 见其他文章：
 > * [Extend Falco inputs by creating a Plugin: Register the plugin]({{< ref "/blog/extend-falco-inputs-with-a-plugin-register" >}})
 
 - [What are Plugins?](#what-are-plugins)
@@ -36,7 +36,6 @@ slug: extend-falco-inputs-with-a-plugin-the-basics
 - [Conclusion](#conclusion)
 
 # 什么是插件？
-
 在开始之前，您应该查看这些帖子以了解更多关于插件是什么、它们可以做什么以及它们背后的概念的信息：
 
 * [Falco Plugins Early Access](https://falco.org/blog/falco-plugins-early-access/)
@@ -45,13 +44,13 @@ slug: extend-falco-inputs-with-a-plugin-the-basics
 
 # 开发者指南
 
-这篇文章的目的不是取代官方文档，它是一个循序渐进的示例，让您了解运行插件的最低要求。 有关详细信息， 请阅读 [developers guide](https://falco.org/docs/plugins/developers-guide/).
+这篇文章的目的不是取代官方文档，它是一个循序渐进的示例，让您了解运行插件的最低要求。 有关详细信息，请阅读开发人员指南。(https://falco.org/docs/plugins/developers-guide/).
 
 # 我们的插件
 
-对于这个例子，我们将创建一个插件 [`docker events`](https://docs.docker.com/engine/reference/commandline/events/) 来自本地的“docker daemon”。 它是具有基本格式且没有特定身份验证的“事件流”的基本示例。
+对于这个例子，我们将从本地 docker 守护进程为 docker 事件创建一个插件。 它是具有基本格式且没有特定身份验证的事件流的基本示例。
 
-查看我们将能够收集并应用“Falco”规则的事件示例：
+查看我们将能够收集并应用 Falco 规则的事件示例：
 ```
 2022-02-08T10:58:56.370816183+01:00 container create e327f1fa52a90d79421e416aed60e6de6872231f31101a1cc63401e90cef4bd6 (image=alpine, name=confident_kirch)
 2022-02-08T10:58:56.371818906+01:00 container attach e327f1fa52a90d79421e416aed60e6de6872231f31101a1cc63401e90cef4bd6 (image=alpine, name=confident_kirch)
@@ -62,22 +61,22 @@ slug: extend-falco-inputs-with-a-plugin-the-basics
 2022-02-08T10:58:57.132390363+01:00 container destroy e327f1fa52a90d79421e416aed60e6de6872231f31101a1cc63401e90cef4bd6 (image=alpine, name=confident_kirch)
 ```
 
-为了减少与 `docker daemon` 通信的复杂性， 我们将使用官方 [`docker sdk`](https://pkg.go.dev/github.com/docker/docker).
+为了减少与 docker daemon 通信的复杂性，我们将使用官方的 docker sdk。(https://pkg.go.dev/github.com/docker/docker).
 
 ## 要求
 
-对于这篇文章和后续文章，我们将使用“Go”进行开发，因为它是最常用的语言，“Falco”社区的许多成员和“Falco”工具已经在使用它。 我们还将使用维护者提供的[Go Plugin SDK](https://github.com/falcosecurity/plugin-sdk-go/) 来增强插件体验。
+对于这篇文章和后续文章，我们将使用 Go 进行开发，因为它是最常用的语言，Falco 社区的许多成员和 Falco 的工具已经在使用它。 我们还将使用维护者提供的 Go Plugin SDK 来增强插件体验。
 
 此示例的唯一要求是：
-* a `docker daemon` running in your local system
-* `falco 0.31` installed in your local system
+* 在本地系统中运行的“docker daemon”
+* `falco 0.31` 安装在您的本地系统中
 * `go` >= 1.17
 
 ## 代码片段
 
 ### 进口
 
-尽管有基本的 `Go` 模块，但我们必须从[`plugin-sdk-go`](https://github.com/falcosecurity/plugin-sdk-go/pkg/sdk) 导入不同的模块并检索`docker events`:
+尽管有基本的 Go 模块，但我们必须从 plugin-sdk-go 导入不同的模块并检索 docker 事件：
 
 ```go
 import (
@@ -99,11 +98,11 @@ import (
 )
 ```
 
-我们将在我们要编写的几乎每个插件中导入 `plugin-sdk-go` 的这些不同组件。 它们非常方便，并且提供了一种更简单的方法来处理 *Falco 插件框架*。
+我们将在我们将编写的几乎每个插件中导入 plugin-sdk-go 的这些不同组件。 它们非常方便，并且提供了一种更简单的方式来处理 Falco 插件框架。
 
 ### 结构
 
-两个结构是强制性的，并且必须尊重 SDK 的“接口”：
+两个结构是强制性的，并且必须尊重 SDK 的接口：
 
 ```go
 // DockerPlugin represents our plugin
@@ -122,17 +121,16 @@ type DockerInstance struct {
 }
 ```
 
-* `DockerPlugin` 代表我们将被框架加载的插件。 嵌入 `plugins.BasePlugin` 允许尊守 [`Plugin interface`](https://pkg.go.dev/github.com/falcosecurity/plugin-sdk-go@v0.1.0/pkg/sdk/plugins#Plugin) SDK的。
-* `DockerInstance` 表示框架使用插件打开的事件流。 嵌入`source.BaseInstance`允许尊重 [`Instance interface`](https://pkg.go.dev/github.com/falcosecurity/plugin-sdk-go@v0.1.0/pkg/sdk/plugins/source#Instance)的SDK。
+* DockerPlugin 代表我们将由框架加载的插件。 嵌入 plugins.BasePlugin 允许尊重 SDK 的插件接口
+* DockerInstance 表示框架使用插件打开的事件流。 嵌入 source.BaseInstance 允许尊重 SDK 的 Instance 接口。
 
-
-我们可以为我们需要的任何目的为这两个 structs 添加额外的属性，比如配置。 在这个例子中，我们有 `FlushInterval`，它表示我们将创建的 `docker` 客户端发送到 `instance` 的事件频率。 这个属性将有一个默认值，可以被 `plugins` 部分中的 `init_config` 覆盖。
+我们可以为两个结构添加额外的属性，用于我们需要的任何目的，比如配置。 在此示例中，我们使用 FlushInterval 表示我们将创建的 docker 客户端向实例发送事件的频率。 该属性将有一个默认值，可以被插件部分中的 init_config 覆盖。
 
 ### 功能和方法
 
 #### `main()`
 
-`main()` 函数对于任何 `go` 程序都是必需的，但是因为我们将构建 `plugin` 作为 *Falco 插件框架* 的库，它是用 `C` 编写的，所以我们可以让它为空。
+main() 函数对于任何 go 程序都是必需的，但是因为我们将把插件构建为用 C 编写的 Falco 插件框架的库，所以我们可以让它为空。
 
 ```go
 // main is mandatory but empty, because the plugin will be used as C library by Falco plugin framework
@@ -141,7 +139,7 @@ func main() {}
 
 #### `init()`
 
-`init()` 函数用于将我们的插件注册到 `Falco 插件框架`，作为[`source`](https://falco.org/docs/plugins/#source-plugin) and [`extractor`](https://falco.org/docs/plugins/#extractor-plugin).
+init() 函数用于将我们的插件注册到 Falco 插件框架，作为源和提取器。
 
 ```go
 // init function is used for referencing our plugin to the Falco plugin framework
@@ -154,7 +152,7 @@ func init() {
 
 #### `Info()`
 
-此方法是强制性的，所有插件都必须尊守这一点。 它允许“Falco 插件框架”拥有关于插件本身的所有信息：
+此方法是强制性的，所有插件都必须尊重这一点。 它允许 Falco 插件框架拥有关于插件本身的所有信息：
 
 ```go
 // Info displays information of the plugin to Falco plugin framework
@@ -172,13 +170,13 @@ func (dockerPlugin *DockerPlugin) Info() *plugins.Info {
 ```
 
 这里有一些细节：
-* `ID`：在所有插件中必须是唯一的，框架在捕获中使用它来知道哪个`插件`是事件的`源`。 如果您想在 [registry](https://github.com/falcosecurity/plugins). 中共享您的插件，避免冲突也很重要。 有关详细信息，请参阅[documentation](https://falco.org/docs/plugins/#plugin-event-ids)
-* `Name`：我们插件的名称，将在`falco.yaml`的`plugins`部分使用
-* `EventSource`：这表示我们将在 `Falco` 映射规则中设置的值，在我们的例子中，我们将设置的所有规则都将具有 `source: docker`
+* ID：在所有插件中必须是唯一的，框架在捕获中使用它来知道哪个插件是事件的来源。 如果您想在注册表中共享您的插件，避免冲突也很重要。 有关更多详细信息，请参阅文档。
+* Name：我们插件的名称，将在 falco.yaml 的 plugins 部分使用
+* EventSource：这表示我们将在 Falco 映射规则中设置的值，在我们的例子中，我们将设置的所有规则都将具有源：docker
 
 #### `Init()`
 
-这个方法（:warning: 不同于函数`init()`）将是*Falco插件框架*调用的第一个方法，我们用它来设置`DockerPlugin`属性的默认值。 在我们的例子中，这些默认值被 `falco.yaml` 配置文件中的 `init_config:` 的值覆盖，参见 []()。
+这个方法（警告不同于函数 init()）将是 Falco 插件框架调用的第一个方法，我们用它来设置 DockerPlugin 属性的默认值。 在我们的例子中，这些默认值被 init_config 的值覆盖：来自 falco.yaml 配置文件，请参阅 .
  
 ```go
 // Init is called by the Falco plugin framework as first entry
@@ -190,11 +188,11 @@ func (dockerPlugin *DockerPlugin) Init(config string) error {
 }
 ```
 
-该方法的字符串参数`config`是`init_config`的内容，我们在这个例子中使用JSON语法来利用`Go`的能力来映射带有标签的结构属性的JSON字段。 只要您的代码解析它并正确设置属性，一个简单的字符串也可以工作。
+该方法的字符串参数 config 是 init_config 的内容，我们在此示例中使用 JSON 语法来利用 Go 的能力将 JSON 字段与结构属性与标签进行映射。 只要您的代码解析它并正确设置属性，一个简单的字符串也可以工作。
 
 #### `Fields()`
 
-此方法向 *Falco 插件框架* 声明所有可用于规则的“字段”，以及它们的名称和类型。
+此方法向 Falco 插件框架声明所有可用于规则的字段，以及它们的名称和类型。
 
 ```go
 // Fields exposes to Falco plugin framework all availables fields for this plugin
@@ -226,7 +224,7 @@ func (dockerPlugin *DockerPlugin) Fields() []sdk.FieldEntry {
 
 #### `String()`
 
-即使此方法是强制性的，`Falco` 目前也不会使用它，但必须设置以供将来使用。 它只是检索事件，它可以是 JSON 或任何格式，只要它包含源事件的全部内容即可。
+即使此方法是强制性的，Falco 目前也不会使用它，但必须设置它以供将来使用。 它只是检索事件，它可以是 JSON 或任何格式，只要它包含源事件的全部内容即可。
 
 ```go
 // String represents the raw value of on event
@@ -244,7 +242,7 @@ func (dockerPlugin *DockerPlugin) String(in io.ReadSeeker) (string, error) {
 
 #### `Extract()`
 
-*Falco 插件框架* 调用此方法来获取 `fields` 的值：
+Falco 插件框架调用此方法来获取字段的值：
 
 ```go
 // Extract allows Falco plugin framework to get values for all available fields
@@ -310,13 +308,13 @@ func (dockerPlugin *DockerPlugin) Extract(req sdk.ExtractRequest, evt sdk.EventR
 }
 ```
 
-> :warning: 尽量不要与其他插件创建的 `fields` 重叠，例如，在这个例子中，我们可以使用 `docker.` 前缀，因为 `Falco` 库使用 `container.` 更通用的字段，所以我们已经 不要冲突。
+> :warning: 尽量不要与其他插件创建的字段重叠，例如，在这个例子中，我们可以使用 docker。 前缀，因为 Falco 库使用容器。 更通用的字段，因此我们不必冲突。
 
-对于这个插件，我们使用“docker sdk”提供的模块，所有检索到的事件都将被解组到 [`events.Message`](https://pkg.go.dev/github.com/docker/docker@v20.10.12+incompatible/api/types/events#Message) 结构，简化了映射。
+对于这个插件，我们使用 docker sdk 提供的模块，所有检索到的事件都将被 Unmarshaled 到 events.Message 结构中，这简化了映射。
 
 #### `Open()`
 
-*Falco 插件框架* 使用此方法打开一个新的事件“流”，即所谓的“实例”。 当前的实现为每个插件只创建一个“实例”，但未来可能同一个“插件”允许打开多个流，因此一次可以打开多个“实例”。
+Falco 插件框架使用此方法打开一个新的事件流，即所谓的实例。 当前的实现每个插件只创建一个实例，但未来可能同一个插件允许打开多个流，因此一次打开多个实例。
 
 ```go
 // Open is called by Falco plugin framework for opening a stream of events, we call that an instance
@@ -339,9 +337,9 @@ func (dockerPlugin *DockerPlugin) Open(params string) (source.Instance, error) {
 
 #### `NextBatch()`
 
-*Falco 插件框架* 将调用此方法来获取我们的 `plugin` 收集的一批事件。
+Falco 插件框架会调用这个方法来获取我们插件收集的一批事件。
 
-> :warning: 这篇博文涉及插件的创建，我们不会描述使用 `docker sdk` 从 `docker daemon` 获取事件的逻辑。
+> :warning: 这篇博文涉及插件的创建，我们不会描述使用 docker sdk 从 docker 守护进程获取事件的逻辑。
 
 ```go
 // NextBatch is called by Falco plugin framework to get a batch of events from the instance
@@ -374,10 +372,10 @@ func (dockerInstance *DockerInstance) NextBatch(pState sdk.PluginState, evts sdk
 }
 ```
 
-* this methods returns the number of events in the batch and an error
-* the **max size** for a batch is `evts.Len()`
-* the plugin configuration can be retrieved with `pState.(*DockerPlugin)`
-* for each "slot" of the batch, we have to get it `evt := evts.Get(n)` and then set its value `evt.Writer().Write(s)`
+* 此方法返回批处理中的事件数和错误
+* 批处理的最大大小是 evts.Len()
+* 可以使用`pState.(*DockerPlugin)` 检索插件配置
+* 对于批次的每个“槽”，我们必须得到它 evt := evts.Get(n) 然后设置它的值 evt.Writer().Write(s)
 
 ## 完整的插件
 
@@ -385,17 +383,17 @@ func (dockerInstance *DockerInstance) NextBatch(pState sdk.PluginState, evts sdk
 /*
 Copyright (C) 2022 The Falco Authors.
 
-根据 Apache 许可证 2.0 版（“许可证”）获得许可；
-除非遵守许可，否则您不得使用此文件。
-您可以在以下网址获取许可证的副本
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
     http://www.apache.org/licenses/LICENSE-2.0
 
-除非适用法律要求或书面同意，否则软件
-根据许可分发是在“原样”基础上分发的，
-没有任何明示或暗示的保证或条件。
-请参阅许可证以了解特定语言的管理权限和
-许可证下的限制。
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 */
 
 package main
@@ -615,16 +613,16 @@ func (dockerInstance *DockerInstance) Close() {
 func main() {}
 ```
 
-## 构建
+## 建造
 
-该插件被构建为 `c-shared` 库，以获取 `.so`：
+该插件构建为 c 共享库，以获取 .so：
 ```shell
 go build -buildmode=c-shared -o /usr/share/falco/plugins/libdocker.so
 ```
 
 # 配置
 
-现在我们有了插件，我们必须在 `falco.yaml` 中将其声明为 `Falco`：
+现在我们有了插件，我们必须在 falco.yaml 中向 Falco 声明它：
 
 ```yaml
 plugins:
@@ -638,7 +636,7 @@ stdout_output:
   enabled: true
 ```
 
-有关此配置的更多详细信息，文档是 [here](https://falco.org/docs/plugins/#loading-plugins-in-falco).
+有关此配置的更多详细信息，请参见此处的文档。(https://falco.org/docs/plugins/#loading-plugins-in-falco).
 
 # 规则
 
@@ -656,7 +654,7 @@ stdout_output:
 
 # 测试和结果
 
-让我们使用我们的配置和规则文件运行“Falco”：
+让我们使用我们的配置和规则文件运行 Falco：
 
 ```shell
 falco -c falco.yaml -r docker_rules.yaml
@@ -679,21 +677,21 @@ Syscall event drop monitoring:
 
 # 来源
 
-这篇文章的所有文件都可以在 [this repo](https://github.com/Issif/docker-plugin).
+这篇文章的所有文件都可以在这个 repo 上找到。(https://github.com/Issif/docker-plugin).
 
 # 更进一步
 
-插件完成后，您可以通过注册与社区共享它。 下一篇文章 [Extend Falco inputs by creating a Plugin: Register the plugin]({{< ref "/blog/extend-falco-inputs-with-a-plugin-register" >}}) 将指导整个过程。
+插件完成后，您可以通过注册与社区共享它。 下一篇文章 [通过创建插件扩展 Falco 输入：注册插件]({{< ref "/blog/extend-falco-inputs-with-a-plugin-register" >}}) 将指导整个过程。
 
 # 结论
 
-有了这篇文章，您现在应该已经掌握了创建自己插件的所有基础知识。下面的帖子将描述更高级的用例，比如从云服务收集事件。敬请关注。
+通过第一篇文章，您现在应该具备创建自己的插件的所有基础知识。 以下文章将描述更高级的用例，例如从云服务收集事件。 敬请期待。
 
 ---
 
-您可以在 [Falco community](https://github.com/falcosecurity/community). 中找到我们。 如有任何问题、建议，甚至是友好的交谈，请随时与我们联系！
+您可以在 Falco 社区找到我们。 如有任何问题、建议，甚至是友好的交谈，请随时与我们联系！
 
-If you would like to find out more about Falco:
+如果您想了解有关 Falco 的更多信息：
 
 * Get started in [Falco.org](http://falco.org/)
 * [Plugin Documentation](https://falco.org/docs/plugins/)
