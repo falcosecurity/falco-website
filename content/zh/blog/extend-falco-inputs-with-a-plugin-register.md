@@ -1,7 +1,7 @@
 ---
-标题: 通过创建插件扩展Falco输入：Register the plugin
-日期: 2022-03-02
-作者: Thomas Labarussias
+Title: "Extend Falco inputs by creating a Plugin: Register the plugin"
+Date: 2022-03-02
+Author: Thomas Labarussias
 slug: extend-falco-inputs-with-a-plugin-register
 ---
 
