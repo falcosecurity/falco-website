@@ -153,9 +153,9 @@ Considering the above, the SDK provides prebuilt implementations of `source.Inst
 ```go
 // sdk/plugins/source
 
-func NewPullInstance(pull source.PullFunc, options ...func(*<unexported type>)) (source.Instance, error)
+func NewPullInstance(pull source.PullFunc, options ...func(*<unexported-type>)) (source.Instance, error)
 
-func NewPushInstance(evtC <-chan source.PushEvent, options ...func(*<unexported type>)) (source.Instance, error)
+func NewPushInstance(evtC <-chan source.PushEvent, options ...func(*<unexported-type>)) (source.Instance, error)
 ```
 
 `source.NewPullInstance` and `source.NewPushInstance` are two constructors for SDK-provided `source.Instance` implementations that cover the following use cases:
@@ -168,17 +168,17 @@ The prebuilt `source.Instance`s can be configured in the function constructors b
 ```go
 // sdk/plugins/source
 
-func WithInstanceContext(ctx context.Context) func(*<unexported type>)
+func WithInstanceContext(ctx context.Context) func(*<unexported-type>)
 
-func WithInstanceTimeout(timeout time.Duration) func(*<unexported type>)
+func WithInstanceTimeout(timeout time.Duration) func(*<unexported-type>)
 
-func WithInstanceClose(close func()) func(*<unexported type>)
+func WithInstanceClose(close func()) func(*<unexported-type>)
 
-func WithInstanceBatchSize(size uint32) func(*<unexported type>)
+func WithInstanceBatchSize(size uint32) func(*<unexported-type>)
 
-func WithInstanceEventSize(size uint32) func(*<unexported type>)
+func WithInstanceEventSize(size uint32) func(*<unexported-type>)
 
-func WithInstanceProgress(progress func() (float64, string)) func(*<unexported type>)
+func WithInstanceProgress(progress func() (float64, string)) func(*<unexported-type>)
 ```
 
 Here's an example of how the *Pull Model* prebuilt can be used to implement an event source:
