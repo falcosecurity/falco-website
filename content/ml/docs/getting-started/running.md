@@ -85,7 +85,7 @@ falco --help
         -v /root/.falco:/root/.falco \
         -v /proc:/host/proc:ro \
         -v /boot:/host/boot:ro \
-        -v /lib/modules:/host/lib/modules:ro \
+        -v /lib/modules:/host/lib/modules \
         -v /usr:/host/usr:ro \
         -v /etc:/host/etc:ro \
         falcosecurity/falco-driver-loader:latest
