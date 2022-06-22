@@ -138,6 +138,66 @@ Additionally, they can also implement the `sdk.OpenParams` interface. If request
 
 Plugin instances can optionally implement the `sdk.Closer`, `sdk.Progresser`, and `sdk.Stringer` interfaces. If `sdk.Closer` is implemented, the `Close()` method is called while closing the event stream and can be used to release the resources used by the plugin instance. If `sdk.Progresser` is implemented, the `Progress()` method is called by the SDK when the framework requests progress data about the event stream of the plugin instance. `Progress()` must return a `float64` with a value between 0 and 1 representing the current progress percentage, and a string representation of the same progress value. If `sdk.Stringer` is implemented, the `String()` method must return a string representation of an event created by the plugin, which is used by the framework as an extraction value of the `evt.plugininfo` field. The string representation should be on a single line and contain important information about the event.
 
+#### Best Practices and Go SDK Prebuilts for Source Instances
+
+Although the Go SDK gives developers high control and flexibility, in the general case implementing the `sdk.NextBatcher` interface is not trivial. Custom definitions of `source.Instance` require developers to be mindful of the following while implementing the `NextBatch()` function:
+
+- It should return as fast as possible and should try to fill-up event batch up to its maximum capacity
+- Listen for a timeout of few milliseconds and return the batch in its current state once the timeout is expired
+- Conceive the case in which `Close()` is called before `NextBatch()` has returned. This can potentially happen if the plugin framework receives signals such as SIGINT or SIGTERM
+- Minimize the number of memory allocations
+- Keep returning `sdk.ErrEOF` after returning it the first time
+
+Considering the above, the SDK provides prebuilt implementations of `source.Instance` that satisfy a broad range of use cases, so that developers need to define their own type only if they have advanced or custom requirements.
+
+```go
+// sdk/plugins/source
+
+func NewPullInstance(pull source.PullFunc, options ...func(*<unexported type>)) (source.Instance, error)
+
+func NewPushInstance(evtC <-chan source.PushEvent, options ...func(*<unexported type>)) (source.Instance, error)
+```
+
+`source.NewPullInstance` and `source.NewPushInstance` are two constructors for SDK-provided `source.Instance` implementations that cover the following use cases:
+
+- **Pull Model**: for when the event source can be implemented sequentially and the time required to generate a sequence of event is deterministic. This is implemented with a functional design, where the passed-in callback is expected to be non-suspensive and to return quickly
+- **Push Model**: for when the event source can be suspensive and there is no time guarantee reguarding when an event gets produced. For instance, this applies for all event sources that generate events from webhook events. Given the event-driven nature of this use case, this is implemented by passing event data in the form of byte slices through a channel
+
+The prebuilt `source.Instance`s can be configured in the function constructors by using the Go *options pattern*. The SDK provides options for configuring and overriding all the default values:
+
+```go
+// sdk/plugins/source
+
+func WithInstanceContext(ctx context.Context) func(*<unexported type>)
+
+func WithInstanceTimeout(timeout time.Duration) func(*<unexported type>)
+
+func WithInstanceClose(close func()) func(*<unexported type>)
+
+func WithInstanceBatchSize(size uint32) func(*<unexported type>)
+
+func WithInstanceEventSize(size uint32) func(*<unexported type>)
+
+func WithInstanceProgress(progress func() (float64, string)) func(*<unexported type>)
+```
+
+Here's an example of how the *Pull Model* prebuilt can be used to implement an event source:
+
+```go
+func (m *MyPlugin) Open(params string) (source.Instance, error) {
+	counter := uint64(0)
+	pull := func(ctx context.Context, evt sdk.EventWriter) error {
+		counter++
+		if err := gob.NewEncoder(evt.Writer()).Encode(counter); err != nil {
+			return err
+		}
+		evt.SetTimestamp(uint64(time.Now().UnixNano()))
+		return nil
+	}
+	return source.NewPullInstance(pull)
+}
+```
+
 ### Registering a Plugin in the SDK
 
 After defining proper types for the plugin, the only thing remaining is to register it in the SDK so that it can be used in the plugin framework.
