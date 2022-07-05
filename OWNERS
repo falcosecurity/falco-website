@@ -1,12 +1,5 @@
 approvers:
-  - fntlnz
-  - leodido
-  - kris-nova
-  - mfdii
-  - lucperkins
-  - radhikapc
   - leogr
-  - Rajakavitha1
   - jasondellaluce
   - Issif
 reviewers:
@@ -22,3 +15,11 @@ reviewers:
   - Rajakavitha1
   - jasondellaluce
   - Issif
+emeritus_approvers:
+  - fntlnz
+  - leodido
+  - kris-nova
+  - mfdii
+  - lucperkins
+  - radhikapc
+  - Rajakavitha1

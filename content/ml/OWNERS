@@ -1,6 +1,6 @@
-approvers:
-  - radhikapc
-  - sreedaum
 reviewers:
   - sreedaum
   - radhikapc
+emeritus_approvers:
+  - radhikapc
+  - sreedaum
