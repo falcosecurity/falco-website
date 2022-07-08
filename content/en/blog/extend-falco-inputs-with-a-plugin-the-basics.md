@@ -9,25 +9,38 @@ slug: extend-falco-inputs-with-a-plugin-the-basics
 > See other articles:
 > * [Extend Falco inputs by creating a Plugin: Register the plugin]({{< ref "/blog/extend-falco-inputs-with-a-plugin-register" >}})
 
+
+> 2022/07/08 - Updates to reflect last features of the Go SDK
+
 - [What are Plugins?](#what-are-plugins)
 - [Developers Guide](#developers-guide)
-- [Our plugin](#our-plugin)
+- [The plugin](#the-plugin)
+	- [Go SDK](#go-sdk)
 	- [Requirements](#requirements)
-	- [Pieces of code](#pieces-of-code)
-		- [The imports](#the-imports)
-		- [The structures](#the-structures)
-		- [The functions and methods](#the-functions-and-methods)
-			- [`main()`](#main)
-			- [`init()`](#init)
-			- [`Info()`](#info)
-			- [`Init()`](#init-1)
-			- [`Fields()`](#fields)
-			- [`String()`](#string)
-			- [`Extract()`](#extract)
-			- [`Open()`](#open)
-			- [`NextBatch()`](#nextbatch)
-	- [Complete plugin](#complete-plugin)
-	- [Build](#build)
+	- [Code Organization](#code-organization)
+	- [The plugin codebase](#the-plugin-codebase)
+		- [plugin/main.go](#pluginmaingo)
+			- [The imports](#the-imports)
+			- [The const](#the-const)
+			- [The functions](#the-functions)
+				- [`main()`](#main)
+				- [`init()`](#init)
+		- [pkg/docker.go](#pkgdockergo)
+			- [The imports](#the-imports-1)
+			- [The global variables](#the-global-variables)
+			- [The structures](#the-structures)
+			- [The functions and methods](#the-functions-and-methods)
+				- [`SetInfo()`](#setinfo)
+				- [`Info()`](#info)
+				- [`Init()`](#init-1)
+				- [`InitSchema()`](#initschema)
+				- [`Fields()`](#fields)
+				- [`String()`](#string)
+				- [`Extract()`](#extract)
+				- [`Open()`](#open)
+	- [The repository](#the-repository)
+- [Build](#build)
+- [Installation](#installation)
 - [Configuration](#configuration)
 - [Rules](#rules)
 - [Test and Results](#test-and-results)
@@ -37,7 +50,7 @@ slug: extend-falco-inputs-with-a-plugin-the-basics
 
 # What are Plugins?
 
-Before starting, you should take look at these posts to know more about what Plugins are, what they can do and what concepts are behind them:
+Before starting, you should take a look at these posts to know more about what Plugins are, what they can do and what concepts are behind them:
 
 * [Falco Plugins Early Access](https://falco.org/blog/falco-plugins-early-access/)
 * [Falco 0.31.0 a.k.a. "the Gyrfalcon"](https://falco.org/blog/falco-0-31-0/)
@@ -45,9 +58,9 @@ Before starting, you should take look at these posts to know more about what Plu
 
 # Developers Guide
 
-This post has not for the purpose to replace the official documentation, it's a step-by-step example to get you to know minimal requirements for having a running plugin. For details, please read the [developers guide](https://falco.org/docs/plugins/developers-guide/).
+This post has not for purpose to replace the official documentation, it's a step-by-step example to get you to know minimal requirements for having a running plugin. For details, please read the [developers guide](https://falco.org/docs/plugins/developers-guide/).
 
-# Our plugin
+# The plugin
 
 For this example, we'll create a plugin for [`docker events`](https://docs.docker.com/engine/reference/commandline/events/) from a local `docker daemon`. It is a basic example of an `event stream` with a basic format and without specific authentication.
 
@@ -62,75 +75,135 @@ See an example of events we'll be able to gather and apply `Falco` rules over:
 2022-02-08T10:58:57.132390363+01:00 container destroy e327f1fa52a90d79421e416aed60e6de6872231f31101a1cc63401e90cef4bd6 (image=alpine, name=confident_kirch)
 ```
 
-For reducing the complixity to communicate with `docker daemon`, we'll use the official [`docker sdk`](https://pkg.go.dev/github.com/docker/docker).
+## Go SDK
+
+For reducing the complixity to communicate with the `docker daemon`, we'll use the official [`docker sdk`](https://pkg.go.dev/github.com/docker/docker).
 
 ## Requirements
 
-For this post and following ones, we'll develop in `Go`, because it's the most common language for that purpose, a lot of member of the `Falco` Community and tools for `Falco` are already using it. We'll also use the [Go Plugin SDK](https://github.com/falcosecurity/plugin-sdk-go/) the maintainer provide for enhancing the experience with plugins.
+For this post and following ones, we'll develop in `Go`, because it's the most common language for that purpose, a lot of member of the `Falco` Community and tools for `Falco` are already using it. We'll also use the [Go Plugin SDK](https://github.com/falcosecurity/plugin-sdk-go/) the maintainers provide for enhancing the experience with plugins.
 
 The only requirements for this examples are:
 * a `docker daemon` running in your local system
-* `falco 0.31` installed in your local system
+* `falco 0.32` installed in your local system
 * `go` >= 1.17
 
-## Pieces of code
+## Code Organization
 
-### The imports
+To simplify contributions and keep a consistency between plugins, we propose a specific organization for the repositories of plugins:
 
-Despite basic `Go` modules, we'll have to import the different modules from [`plugin-sdk-go`](https://github.com/falcosecurity/plugin-sdk-go/pkg/sdk) and for retrieving `docker events`:
+```shell
+.
+├── LICENSE
+├── Makefile
+├── README.md
+├── falco.yaml
+├── go.mod
+├── go.sum
+├── pkg
+│   └── docker.go
+├── plugin
+│   └── main.go
+└── rules
+    └── docker_rules.yaml
+```
+
+The directories:
+* `pkg`: contains all modules for our plugin, we use a `pkg` folder because they might be imported and used by other plugins
+* `plugin`: contains the `main.go` of our plugin
+* `rules`: contains one or more `.yaml` files with default rules for the plugin 
+
+The files:
+* `LICENSE`: the license file, most of the plugins are under Apache License 2.0
+* `README`: the README, see in the [repository](https://github.com/Issif/docker-plugin) for an example
+* `Makefile`: allows to easily build and install the plugin, see in the [repository](https://github.com/Issif/docker-plugin/blob/main/Makefile) for an example
+* `falco.yaml`: (optionnal) an example file with the minimal configuration to use the plugin
+* `go.mod`, `go.sum`: classic go module files
+
+## The plugin codebase
+
+### plugin/main.go
+
+This is the entrypoint of our plugin.
 
 ```go
-import (
-	"context"
-	"encoding/json"
-	"fmt"
-	"io"
-	"io/ioutil"
-	"time"
+package main
 
-	"github.com/falcosecurity/plugin-sdk-go/pkg/sdk"
+import (
+	docker "github.com/Issif/docker-plugin/pkg"
 	"github.com/falcosecurity/plugin-sdk-go/pkg/sdk/plugins"
 	"github.com/falcosecurity/plugin-sdk-go/pkg/sdk/plugins/extractor"
 	"github.com/falcosecurity/plugin-sdk-go/pkg/sdk/plugins/source"
+)
 
-	dockerTypes "github.com/docker/docker/api/types"
-	dockerEvents "github.com/docker/docker/api/types/events"
-	docker "github.com/moby/docker/client"
+const (
+	PluginID          uint32 = 5
+	PluginName               = "docker"
+	PluginDescription        = "Docker Events"
+	PluginContact            = "github.com/falcosecurity/plugins/"
+	PluginVersion            = "0.2.0"
+	PluginEventSource        = "docker"
+)
+
+func init() {
+	plugins.SetFactory(func() plugins.Plugin {
+		p := &docker.Plugin{}
+		p.SetInfo(
+			PluginID,
+			PluginName,
+			PluginDescription,
+			PluginContact,
+			PluginVersion,
+			PluginEventSource,
+		)
+		extractor.Register(p)
+		source.Register(p)
+		return p
+	})
+}
+
+func main() {}
+```
+
+#### The imports
+
+Despite basic `Go` modules, we'll have to import the different [`plugin-sdk-go`](https://github.com/falcosecurity/plugin-sdk-go/pkg/sdk) modules (>= 0.5.0) and other modules we need for our plugin:
+
+```go
+import (
+	docker "github.com/Issif/docker-plugin/pkg"
+	"github.com/falcosecurity/plugin-sdk-go/pkg/sdk/plugins"
+	"github.com/falcosecurity/plugin-sdk-go/pkg/sdk/plugins/extractor"
+	"github.com/falcosecurity/plugin-sdk-go/pkg/sdk/plugins/source"
 )
 ```
 
 We'll import these different components of `plugin-sdk-go` in almost every plugin we'll write. They're really convenient and provide a much easier way to deal with the *Falco plugin framework*.
 
-### The structures
-
-Two structures are mandatory and must respect `interface`s of the SDK:
+#### The const
 
 ```go
-// DockerPlugin represents our plugin
-type DockerPlugin struct {
-	plugins.BasePlugin
-	FlushInterval uint64 `json:"flushinterval" jsonschema:"description=Flush Interval in ms (Default: 30)"`
-}
-
-// DockerInstance represents a opened stream based on our Plugin
-type DockerInstance struct {
-	source.BaseInstance
-	dclient *docker.Client
-	msgC    <-chan dockerEvents.Message
-	errC    <-chan error
-	ctx     context.Context
-}
+const (
+	ID          uint32 = 5
+	Name               = "docker"
+	Description        = "Docker Events"
+	Contact            = "github.com/Issif/docker-plugin"
+	Version            = "0.2.0"
+	EventSource        = "docker"
+)
 ```
 
-* `DockerPlugin` represents our plugin that will be loaded by the framework. Embedding `plugins.BasePlugin` allows respecting the [`Plugin interface`](https://pkg.go.dev/github.com/falcosecurity/plugin-sdk-go@v0.1.0/pkg/sdk/plugins#Plugin) of the SDK
-* `DockerInstance` represents a stream of events opened by the framework with the plugin. Embedding `source.BaseInstance` allows to respect the [`Instance interface`](https://pkg.go.dev/github.com/falcosecurity/plugin-sdk-go@v0.1.0/pkg/sdk/plugins/source#Instance) of the SDK.
+The `const` are used to declare all mandatory informations of our plugin through the `docker.SetInfo()` method:
+* `ID`:  must be unique among all plugins, it's used by the framework in captures to know which `plugin` is the `source` of events. It's also important for avoiding collisions if you want to share your plugin in the [registry](https://github.com/falcosecurity/plugins), see [the main repository](https://github.com/falcosecurity/plugins#registering-a-new-plugin) for more details
+* `Name`: the name of our plugin, will be used in `plugins` section of  `falco.yaml`
+* `Description`: the description of our plugin
+* `Contact`: a contact link, often a link to the repository
+* `Version`: all plugins must be versionned for compatibility with Falco
+* `EventSource`: this represents the value we'll set in `Falco` rules for mapping, in our case, all rules we'll set will have `source: docker`
 
+#### The functions
 
-We can add extra attributes for both `structs` for any purpose we need, like for configuration. In this example, we have `FlushInterval` that represents the frequency of events sent to the `instance` by the `docker` client we'll create. This attribute will have a default value that can be overridden by `init_config` in `plugins` section.
-
-### The functions and methods
-
-#### `main()`
+##### `main()`
 
 The `main()` function is mandatory for any `go` program, but because we'll build the `plugin` as a library for the *Falco plugin framework* which is written in `C`, we can let it empty.
 
@@ -139,62 +212,421 @@ The `main()` function is mandatory for any `go` program, but because we'll build
 func main() {}
 ```
 
-#### `init()`
+##### `init()`
 
-The `init()` function is used for registering our plugin to the `Falco plugin framework`, as a [`source`](https://falco.org/docs/plugins/#source-plugin) and [`extractor`](https://falco.org/docs/plugins/#extractor-plugin).
+The `init()` function is used for registering our plugin to the *Falco plugin framework*, as a [`source`](https://falco.org/docs/plugins/#source-plugin) and an [`extractor`](https://falco.org/docs/plugins/#extractor-plugin). We also use it to set the info of the plugin:
 
 ```go
-// init function is used for referencing our plugin to the Falco plugin framework
 func init() {
-	p := &DockerPlugin{}
-	extractor.Register(p)
-	source.Register(p)
+	plugins.SetFactory(func() plugins.Plugin {
+		p := &docker.Plugin{}
+		p.SetInfo(
+			ID,
+			Name,
+			Description,
+			Contact,
+			Version,
+			EventSource,
+		)
+		extractor.Register(p)
+		source.Register(p)
+		return p
+	})
 }
 ```
 
-#### `Info()`
+The `init()` contains also some specific functions and methods:
+* `plugins.SetFactory()` is a method to register our plugin to the framework
+* `SetInfo()` is a method to set the details of our plugin before it's registered to the *Falco plugin framework*
+* `source.Register()` allows to declare our plugin as a source to the framework, ie, a plugin to collect events from a source
+* `extractor.Register()` allows to declare our plugin as an extractor to the framework, ie, a plugin to extract fields from an event
 
-This method is mandatory, and all plugins must respect that. It allows the `Falco plugin framework` to have all intel about the plugin itself:
+### pkg/docker.go
+
+The module used by our `main.go`, it can also be imported by other plugins, expecially when it's an [extractor](https://falco.org/docs/plugins/#field-extraction-capability).
+
+```go
+package docker
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"io"
+	"io/ioutil"
+
+	"github.com/alecthomas/jsonschema"
+	"github.com/falcosecurity/plugin-sdk-go/pkg/sdk"
+	"github.com/falcosecurity/plugin-sdk-go/pkg/sdk/plugins"
+	"github.com/falcosecurity/plugin-sdk-go/pkg/sdk/plugins/source"
+
+	dockerTypes "github.com/docker/docker/api/types"
+	dockerEvents "github.com/docker/docker/api/types/events"
+	docker "github.com/moby/docker/client"
+)
+
+var (
+	ID          uint32
+	Name        string
+	Description string
+	Contact     string
+	Version     string
+	EventSource string
+)
+
+type PluginConfig struct {
+	FlushInterval uint64 `json:"flushInterval" jsonschema:"description=Flush Interval in ms (Default: 30)"`
+}
+
+// Plugin represents our plugin
+type Plugin struct {
+	plugins.BasePlugin
+	Config                 PluginConfig
+	lastDockerEventMessage dockerEvents.Message
+	lastDockerEventNum     uint64
+}
+
+// setDefault is used to set default values before mapping with InitSchema()
+func (p *PluginConfig) setDefault() {
+	p.FlushInterval = 30
+}
+
+// SetInfo is used to set the Info of the plugin
+func (p *Plugin) SetInfo(id uint32, name, description, contact, version, eventSource string) {
+	ID = id
+	Name = name
+	Contact = contact
+	Version = version
+	EventSource = eventSource
+}
+
+// Info displays information of the plugin to Falco plugin framework
+func (p *Plugin) Info() *plugins.Info {
+	return &plugins.Info{
+		ID:          ID,
+		Name:        Name,
+		Description: Description,
+		Contact:     Contact,
+		Version:     Version,
+		EventSource: EventSource,
+	}
+}
+
+// InitSchema map the configuration values with Plugin structure through JSONSchema tags
+func (p *Plugin) InitSchema() *sdk.SchemaInfo {
+	reflector := jsonschema.Reflector{
+		RequiredFromJSONSchemaTags: true, // all properties are optional by default
+		AllowAdditionalProperties:  true, // unrecognized properties don't cause a parsing failures
+	}
+	if schema, err := reflector.Reflect(&PluginConfig{}).MarshalJSON(); err == nil {
+		return &sdk.SchemaInfo{
+			Schema: string(schema),
+		}
+	}
+	return nil
+}
+
+// Init is called by the Falco plugin framework as first entry,
+// we use it for setting default configuration values and mapping
+// values from `init_config` (json format for this plugin)
+func (p *Plugin) Init(config string) error {
+	p.Config.setDefault()
+	return json.Unmarshal([]byte(config), &p.Config)
+}
+
+// Fields exposes to Falco plugin framework all availables fields for this plugin
+func (p *Plugin) Fields() []sdk.FieldEntry {
+	return []sdk.FieldEntry{
+		{Type: "string", Name: "docker.status", Desc: "Status of the event"},
+		{Type: "string", Name: "docker.id", Desc: "ID of the event"},
+		{Type: "string", Name: "docker.from", Desc: "From of the event (deprecated)"},
+		{Type: "string", Name: "docker.type", Desc: "Type of the event"},
+		{Type: "string", Name: "docker.action", Desc: "Action of the event"},
+		{Type: "string", Name: "docker.stack.namespace", Desc: "Stack Namespace"},
+		{Type: "string", Name: "docker.node.id", Desc: "Swarm Node ID"},
+		{Type: "string", Name: "docker.swarm.task", Desc: "Swarm Task"},
+		{Type: "string", Name: "docker.swarm.taskid", Desc: "Swarm Task ID"},
+		{Type: "string", Name: "docker.swarm.taskname", Desc: "Swarm Task Name"},
+		{Type: "string", Name: "docker.swarm.servicename", Desc: "Swarm Service Name"},
+		{Type: "string", Name: "docker.node.statenew", Desc: "Node New State"},
+		{Type: "string", Name: "docker.node.stateold", Desc: "Node Old State"},
+		{Type: "string", Name: "docker.attributes.container", Desc: "Attribute Container"},
+		{Type: "string", Name: "docker.attributes.image", Desc: "Attribute Image"},
+		{Type: "string", Name: "docker.attributes.name", Desc: "Attribute Name"},
+		{Type: "string", Name: "docker.attributes.type", Desc: "Attribute Type"},
+		{Type: "string", Name: "docker.attributes.exitcode", Desc: "Attribute Exit Code"},
+		{Type: "string", Name: "docker.attributes.signal", Desc: "Attribute Signal"},
+		{Type: "string", Name: "docker.scope", Desc: "Scope"},
+	}
+}
+
+// Extract allows Falco plugin framework to get values for all available fields
+func (p *Plugin) Extract(req sdk.ExtractRequest, evt sdk.EventReader) error {
+	msg := p.lastDockerEventMessage
+
+	// For avoiding to Unmarshal the same message for each field to extract
+	// we store it with its EventNum. When it's a new event with a new message, we
+	// update the Plugin struct.
+	if evt.EventNum() != p.lastDockerEventNum {
+		rawData, err := ioutil.ReadAll(evt.Reader())
+		if err != nil {
+			fmt.Println(err.Error())
+			return err
+		}
+
+		err = json.Unmarshal(rawData, &msg)
+		if err != nil {
+			return err
+		}
+
+		p.lastDockerEventMessage = msg
+		p.lastDockerEventNum = evt.EventNum()
+	}
+
+	switch req.Field() {
+	case "docker.status":
+		req.SetValue(msg.Status)
+	case "docker.id":
+		req.SetValue(msg.ID)
+	case "docker.from":
+		req.SetValue(msg.From)
+	case "docker.type":
+		req.SetValue(msg.Type)
+	case "docker.action":
+		req.SetValue(msg.Action)
+	case "docker.scope":
+		req.SetValue(msg.Scope)
+	case "docker.actor.id":
+		req.SetValue(msg.Actor.ID)
+	case "docker.stack.namespace":
+		req.SetValue(msg.Actor.Attributes["com.docker.stack.namespace"])
+	case "docker.swarm.task":
+		req.SetValue(msg.Actor.Attributes["com.docker.swarm.task"])
+	case "docker.swarm.taskid":
+		req.SetValue(msg.Actor.Attributes["com.docker.swarm.task.id"])
+	case "docker.swarm.taskname":
+		req.SetValue(msg.Actor.Attributes["com.docker.swarm.task.name"])
+	case "docker.swarm.servicename":
+		req.SetValue(msg.Actor.Attributes["com.docker.swarm.service.name"])
+	case "docker.node.id":
+		req.SetValue(msg.Actor.Attributes["com.docker.swarm.node.id"])
+	case "docker.node.statenew":
+		req.SetValue(msg.Actor.Attributes["state.new"])
+	case "docker.node.stateold":
+		req.SetValue(msg.Actor.Attributes["state.old"])
+	case "docker.attributes.container":
+		req.SetValue(msg.Actor.Attributes["container"])
+	case "docker.attributes.image":
+		req.SetValue(msg.Actor.Attributes["image"])
+	case "docker.attributes.name":
+		req.SetValue(msg.Actor.Attributes["name"])
+	case "docker.attributes.type":
+		req.SetValue(msg.Actor.Attributes["type"])
+	default:
+		return fmt.Errorf("no known field: %s", req.Field())
+	}
+
+	return nil
+}
+
+// Open is called by Falco plugin framework for opening a stream of events, we call that an instance
+func (Plugin *Plugin) Open(params string) (source.Instance, error) {
+	dclient, err := docker.NewClientWithOpts()
+	if err != nil {
+		return nil, err
+	}
+
+	eventC := make(chan source.PushEvent)
+	ctx, cancel := context.WithCancel(context.Background())
+	// launch an async worker that listens for Docker events and pushes them
+	// to the event channel
+	go func() {
+		defer close(eventC)
+		msgC, errC := dclient.Events(ctx, dockerTypes.EventsOptions{})
+		var msg dockerEvents.Message
+		var err error
+		for {
+			select {
+			case msg = <-msgC:
+				bytes, err := json.Marshal(msg)
+				if err != nil {
+					eventC <- source.PushEvent{Err: err}
+					// errors are blocking, so we can stop here
+					return
+				}
+				eventC <- source.PushEvent{Data: bytes}
+			case err = <-errC:
+				if err == io.EOF {
+					// map EOF to sdk.ErrEOF, which is recognized by the Go SDK
+					err = sdk.ErrEOF
+				}
+				eventC <- source.PushEvent{Err: err}
+				// errors are blocking, so we can stop here
+				return
+			}
+		}
+	}()
+	return source.NewPushInstance(eventC, source.WithInstanceClose(cancel))
+}
+
+// String represents the raw value of on event
+// (not currently used by Falco plugin framework, only there for future usage)
+func (Plugin *Plugin) String(in io.ReadSeeker) (string, error) {
+	evtBytes, err := ioutil.ReadAll(in)
+	if err != nil {
+		return "", err
+	}
+	evtStr := string(evtBytes)
+	return fmt.Sprintf("%v", evtStr), nil
+}
+```
+
+#### The imports
+
+Despite basic Go modules, we'll have to import the different modules from `plugin-sdk-go` and from `Docker SDK` to docker events:
+
+```go
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"io"
+	"io/ioutil"
+
+	"github.com/alecthomas/jsonschema"
+	"github.com/falcosecurity/plugin-sdk-go/pkg/sdk"
+	"github.com/falcosecurity/plugin-sdk-go/pkg/sdk/plugins"
+	"github.com/falcosecurity/plugin-sdk-go/pkg/sdk/plugins/source"
+
+	dockerTypes "github.com/docker/docker/api/types"
+	dockerEvents "github.com/docker/docker/api/types/events"
+	docker "github.com/moby/docker/client"
+)
+```
+
+#### The global variables
+
+Global variables are declared and filled with the `SetInfo()` method called by the `init()` of the `main.go`. These variables are then used to declare the details of the plugin to Falco:
+
+```go
+var (
+	ID          uint32
+	Name        string
+	Description string
+	Contact     string
+	Version     string
+	EventSource string
+)
+```
+
+#### The structures
+
+The structure to declare the plugin is mandatory and must respect the `interface` declared in the SDK:
+
+```go
+type PluginConfig struct {
+	FlushInterval uint64 `json:"flushInterval" jsonschema:"description=Flush Interval in ms (Default: 30)"`
+}
+
+// Plugin represents our plugin
+type Plugin struct {
+	plugins.BasePlugin
+	Config                 PluginConfig
+	lastDockerEventMessage dockerEvents.Message
+	lastDockerEventNum     uint64
+}
+```
+
+`Plugin` represents our plugin that will be loaded by the framework. It contains some fields: 
+* `plugins.BasePlugin`: allows to respect the [`Plugin interface`](https://pkg.go.dev/github.com/falcosecurity/plugin-sdk-go@v0.1.0/pkg/sdk/plugins#Plugin) of the SDK
+* `Config`: contains the configuration of our plugin, represented by the `PluginConfig` structure
+* `lastDockerEventMessage`: contains the result of the last unmarshalled event
+* `lastDockerEventNum`: contains the number of the unmarshalled event, by comparing it, we avoid to unmarshal the same event several times
+
+`PluginConfig` represents the configuration of our plugin, we'll use the module `alecthomas/jsonschema` to map the content of `init_config` from the plugin section of `falco.yaml` and check its validity:
+
+```yaml
+plugins:
+  - name: docker
+    library_path: /etc/falco/audit/libdocker.so
+    init_config: '{"flushinterval": 10}'
+    open_params: ''
+```
+
+#### The functions and methods
+
+##### `SetInfo()`
+
+It's used to set the global variables which represent the details of our plugin, this method is called by the `init()` of the `main.go`:
+
+```go
+// SetInfo is used to set the Info of the plugin
+func (p *Plugin) SetInfo(id uint32, name, description, contact, version, eventSource string) {
+	ID = id
+	Name = name
+	Contact = contact
+	Version = version
+	EventSource = eventSource
+}
+```
+
+##### `Info()`
+
+This method is mandatory and all plugins must respect that. It allows the *Falco plugin framework* to have all intels about the plugin itself, we use the global variables and the `SetInfo()` method to set the values:
 
 ```go
 // Info displays information of the plugin to Falco plugin framework
-func (dockerPlugin *DockerPlugin) Info() *plugins.Info {
+func (p *Plugin) Info() *plugins.Info {
 	return &plugins.Info{
-		ID:                 5,
-		Name:               "docker",
-		Description:        "Docker Events",
-		Contact:            "github.com/falcosecurity/plugins/",
-		Version:            "0.1.0",
-		RequiredAPIVersion: "0.3.0",
-		EventSource:        "docker",
+		ID:          ID,
+		Name:        Name,
+		Description: Description,
+		Contact:     Contact,
+		Version:     Version,
+		EventSource: EventSource,
 	}
 }
 ```
 
-Here some details:
-* `ID`: must be unique among all plugins, it's used by the framework in captures to know which `plugin` is the `source` of events. It's also important for avoiding collisions if you want to share your plugin in the [registry](https://github.com/falcosecurity/plugins). See [documentation](https://falco.org/docs/plugins/#plugin-event-ids) for more details.
-* `Name`: the name of our plugin, will be used in `plugins` section of  `falco.yaml`
-* `EventSource`: this represents the value we'll set in `Falco` rules for mapping, in our case, all rules we'll set will have `source: docker`
+##### `Init()`
 
-#### `Init()`
-
-This method (:warning: different from the function `init()`) will be the first one called by the *Falco plugin framework*, we use it for setting default values for `DockerPlugin` attributes. In our case, these default values are overridden by the value of `init_config:` from `falco.yaml` config file, see []().
+This method (:warning: different from the function `init()`) will be the first one called by the *Falco plugin framework*, we use `setDefault()` to set the default values of the config. In our case, these default values are overridden by the values from `init_config:`.
  
 ```go
-// Init is called by the Falco plugin framework as first entry
+// Init is called by the Falco plugin framework as first entry,
 // we use it for setting default configuration values and mapping
 // values from `init_config` (json format for this plugin)
-func (dockerPlugin *DockerPlugin) Init(config string) error {
-	dockerPlugin.FlushInterval = 2
-	return json.Unmarshal([]byte(config), &dockerPlugin)
+func (p *Plugin) Init(config string) error {
+	p.Config.setDefault()
+	return json.Unmarshal([]byte(config), &p.Config)
 }
 ```
 
-The string argument `config` of the method is the content of `init_config`, we use JSON syntax in this example for leveraging the `Go` capacity to map JSON fields with a structure attribute with tags. A simple string may also work, as long as your code parses it and correctly sets the attributes.
+##### `InitSchema()`
 
-#### `Fields()`
+`InitSchema()` and the `jsonschema` tags from the fields of `PluginConfig` struct are used to check the validity of the content of `init_config` from `falco.yaml`.
 
-This method declares all to the *Falco plugin framework* all `fields` that will be available for the rules, with their names and their types.
+```go
+// InitSchema map the configuration values with Plugin structure through JSONSchema tags
+func (p *Plugin) InitSchema() *sdk.SchemaInfo {
+	reflector := jsonschema.Reflector{
+		RequiredFromJSONSchemaTags: true, // all properties are optional by default
+		AllowAdditionalProperties:  true, // unrecognized properties don't cause a parsing failures
+	}
+	if schema, err := reflector.Reflect(&PluginConfig{}).MarshalJSON(); err == nil {
+		return &sdk.SchemaInfo{
+			Schema: string(schema),
+		}
+	}
+	return nil
+}
+```
+
+It uses a json schema reflector, see [jsonschema](https://github.com/invopop/jsonschema) for more details about how it works.
+
+##### `Fields()`
+
+This method declares to the *Falco plugin framework* all `fields` that will be available for the rules, with their names and their types.
 
 ```go
 // Fields exposes to Falco plugin framework all availables fields for this plugin
@@ -224,9 +656,9 @@ func (dockerPlugin *DockerPlugin) Fields() []sdk.FieldEntry {
 }
 ```
 
-#### `String()`
+##### `String()`
 
-Even if this method is mandatory, it's not used by `Falco` for now but must be set up for future usage. It simply retrieves the events, it can be JSON or any format as long it contains the whole content of the source event.
+Even if this method is mandatory, it's not used by `Falco` for now but must be set up for future usage. It simply retrieves the events, it can be in JSON or any format as long it contains the whole content of the source event.
 
 ```go
 // String represents the raw value of on event
@@ -242,66 +674,73 @@ func (dockerPlugin *DockerPlugin) String(in io.ReadSeeker) (string, error) {
 }
 ```
 
-#### `Extract()`
+##### `Extract()`
 
 This method is called by the *Falco plugin framework* for getting the values of `fields`:
 
 ```go
 // Extract allows Falco plugin framework to get values for all available fields
-func (dockerPlugin *DockerPlugin) Extract(req sdk.ExtractRequest, evt sdk.EventReader) error {
-	var data dockerEvents.Message
+func (p *Plugin) Extract(req sdk.ExtractRequest, evt sdk.EventReader) error {
+	msg := p.lastDockerEventMessage
 
-	rawData, err := ioutil.ReadAll(evt.Reader())
-	if err != nil {
-		fmt.Println(err.Error())
-		return err
-	}
+	// For avoiding to Unmarshal the same message for each field to extract
+	// we store it with its EventNum. When it's a new event with a new message, we
+	// update the Plugin struct.
+	if evt.EventNum() != p.lastDockerEventNum {
+		rawData, err := ioutil.ReadAll(evt.Reader())
+		if err != nil {
+			fmt.Println(err.Error())
+			return err
+		}
 
-	err = json.Unmarshal(rawData, &data)
-	if err != nil {
-		fmt.Println(err.Error())
-		return err
+		err = json.Unmarshal(rawData, &msg)
+		if err != nil {
+			return err
+		}
+
+		p.lastDockerEventMessage = msg
+		p.lastDockerEventNum = evt.EventNum()
 	}
 
 	switch req.Field() {
 	case "docker.status":
-		req.SetValue(data.Status)
+		req.SetValue(msg.Status)
 	case "docker.id":
-		req.SetValue(data.ID)
+		req.SetValue(msg.ID)
 	case "docker.from":
-		req.SetValue(data.From)
+		req.SetValue(msg.From)
 	case "docker.type":
-		req.SetValue(data.Type)
+		req.SetValue(msg.Type)
 	case "docker.action":
-		req.SetValue(data.Action)
+		req.SetValue(msg.Action)
 	case "docker.scope":
-		req.SetValue(data.Scope)
+		req.SetValue(msg.Scope)
 	case "docker.actor.id":
-		req.SetValue(data.Actor.ID)
+		req.SetValue(msg.Actor.ID)
 	case "docker.stack.namespace":
-		req.SetValue(data.Actor.Attributes["com.docker.stack.namespace"])
+		req.SetValue(msg.Actor.Attributes["com.docker.stack.namespace"])
 	case "docker.swarm.task":
-		req.SetValue(data.Actor.Attributes["com.docker.swarm.task"])
+		req.SetValue(msg.Actor.Attributes["com.docker.swarm.task"])
 	case "docker.swarm.taskid":
-		req.SetValue(data.Actor.Attributes["com.docker.swarm.task.id"])
+		req.SetValue(msg.Actor.Attributes["com.docker.swarm.task.id"])
 	case "docker.swarm.taskname":
-		req.SetValue(data.Actor.Attributes["com.docker.swarm.task.name"])
+		req.SetValue(msg.Actor.Attributes["com.docker.swarm.task.name"])
 	case "docker.swarm.servicename":
-		req.SetValue(data.Actor.Attributes["com.docker.swarm.service.name"])
+		req.SetValue(msg.Actor.Attributes["com.docker.swarm.service.name"])
 	case "docker.node.id":
-		req.SetValue(data.Actor.Attributes["com.docker.swarm.node.id"])
+		req.SetValue(msg.Actor.Attributes["com.docker.swarm.node.id"])
 	case "docker.node.statenew":
-		req.SetValue(data.Actor.Attributes["state.new"])
+		req.SetValue(msg.Actor.Attributes["state.new"])
 	case "docker.node.stateold":
-		req.SetValue(data.Actor.Attributes["state.old"])
+		req.SetValue(msg.Actor.Attributes["state.old"])
 	case "docker.attributes.container":
-		req.SetValue(data.Actor.Attributes["container"])
+		req.SetValue(msg.Actor.Attributes["container"])
 	case "docker.attributes.image":
-		req.SetValue(data.Actor.Attributes["image"])
+		req.SetValue(msg.Actor.Attributes["image"])
 	case "docker.attributes.name":
-		req.SetValue(data.Actor.Attributes["name"])
+		req.SetValue(msg.Actor.Attributes["name"])
 	case "docker.attributes.type":
-		req.SetValue(data.Actor.Attributes["type"])
+		req.SetValue(msg.Actor.Attributes["type"])
 	default:
 		return fmt.Errorf("no known field: %s", req.Field())
 	}
@@ -310,317 +749,117 @@ func (dockerPlugin *DockerPlugin) Extract(req sdk.ExtractRequest, evt sdk.EventR
 }
 ```
 
-> :warning: try to not overlap the `fields` created by other plugins, for eg, in this example we can use `docker.` prefix because `Falco` libs use `container.` fields which are more generic, so we've not to conflict.
+> :warning: try to not overlap the `fields` created by other plugins, for eg, in this example we can use `docker.` prefix because `Falco` libs use `container.` fields which are more generic, so we've not a conflict.
 
-For this plugin, we use the modules provided by `docker sdk`, all retrieved events will be Unmarshaled into the [`events.Message`](https://pkg.go.dev/github.com/docker/docker@v20.10.12+incompatible/api/types/events#Message) struct which simplifies the mapping.
+For this plugin, we use the modules provided by the `Docker SDK`, all retrieved events will be unmarshaled into the [`events.Message`](https://pkg.go.dev/github.com/docker/docker@v20.10.12+incompatible/api/types/events#Message) struct which simplifies the mapping and the extraction of fields.
 
-#### `Open()`
+To avoid to unmarshall for each field extraction the same message and impact the performances, we store the number (=~ID) and the result of the last unmarshalled message. When the number change, it means it's not the same event and we can unmarshall its message and store it with its number.
 
-This methods is used by the *Falco plugin framework* for opening a new `stream` of events, what is called an `instance`. The current implementation creates only one `instance` per plugin but it's possible in future that same `plugin` allows to open several streams, and so several `instances` at once.
+```go
+	msg := p.lastDockerEventMessage
+
+	// For avoiding to Unmarshal the same message for each field to extract
+	// we store it with its EventNum. When it's a new event with a new message, we
+	// update the Plugin struct.
+	if evt.EventNum() != p.lastDockerEventNum {
+		rawData, err := ioutil.ReadAll(evt.Reader())
+		if err != nil {
+			fmt.Println(err.Error())
+			return err
+		}
+
+		err = json.Unmarshal(rawData, &msg)
+		if err != nil {
+			return err
+		}
+
+		p.lastDockerEventMessage = msg
+		p.lastDockerEventNum = evt.EventNum()
+	}
+```
+
+##### `Open()`
+
+This methods is used by the *Falco plugin framework* for opening a new `stream` of events, what is called an `instance` (`source.Instance`). The current implementation creates only one `instance` per plugin but it's possible in future that same `plugin` allows to open several streams, and so several `instances` at once.
+
+To simplify the creation of this `source.Instance`, the Go SDK provides two easy functions, see the [docs](https://falco.org/docs/plugins/go-sdk-walkthrough/#best-practices-and-go-sdk-prebuilts-for-source-instances):
+* `source.NewPullInstance`: for when the event source can be implemented sequentially and the time required to generate a sequence of event is deterministic, eg: periodic calls to an external API
+* `souce.NewPushInstance`: for when the event source can be suspensive and there is no time guarantee reguarding when an event gets produced, eg: we wait a webhook from an external service
+
+For collecting events from `docker`, we'll use `souce.NewPushInstance` as the `docker SDK` creates a channel and sends the events into when they happened.
 
 ```go
 // Open is called by Falco plugin framework for opening a stream of events, we call that an instance
-func (dockerPlugin *DockerPlugin) Open(params string) (source.Instance, error) {
+func (Plugin *Plugin) Open(params string) (source.Instance, error) {
 	dclient, err := docker.NewClientWithOpts()
 	if err != nil {
 		return nil, err
 	}
 
-	ctx := context.Background()
-	msgC, errC := dclient.Events(ctx, dockerTypes.EventsOptions{})
-	return &DockerInstance{
-		dclient: dclient,
-		msgC:    msgC,
-		errC:    errC,
-		ctx:     ctx,
-	}, nil
-}
-```
-
-#### `NextBatch()`
-
-The *Falco plugin framework* will call this method to get a batch of events collected by our `plugin`.
-
-> :warning: this blog post concerns the creation of a plugin, we'll not describe the logic to get the events from the `docker daemon` with the `docker sdk`.
-
-```go
-// NextBatch is called by Falco plugin framework to get a batch of events from the instance
-func (dockerInstance *DockerInstance) NextBatch(pState sdk.PluginState, evts sdk.EventWriters) (int, error) {
-
-	dockerPlugin := pState.(*DockerPlugin)
-
-	i := 0
-	expire := time.After(time.Duration(dockerPlugin.FlushInterval) * time.Millisecond)
-	for i < evts.Len() {
-		select {
-		case m := <-dockerInstance.msgC:
-			s, _ := json.Marshal(m)
-			evt := evts.Get(i)
-			if _, err := evt.Writer().Write(s); err != nil {
-				return i, err
+	eventC := make(chan source.PushEvent)
+	ctx, cancel := context.WithCancel(context.Background())
+	// launch an async worker that listens for Docker events and pushes them
+	// to the event channel
+	go func() {
+		defer close(eventC)
+		msgC, errC := dclient.Events(ctx, dockerTypes.EventsOptions{})
+		var msg dockerEvents.Message
+		var err error
+		for {
+			select {
+			case msg = <-msgC:
+				bytes, err := json.Marshal(msg)
+				if err != nil {
+					eventC <- source.PushEvent{Err: err}
+					// errors are blocking, so we can stop here
+					return
+				}
+				eventC <- source.PushEvent{Data: bytes}
+			case err = <-errC:
+				if err == io.EOF {
+					// map EOF to sdk.ErrEOF, which is recognized by the Go SDK
+					err = sdk.ErrEOF
+				}
+				eventC <- source.PushEvent{Err: err}
+				// errors are blocking, so we can stop here
+				return
 			}
-			i++
-		case <-expire:
-			// Timeout occurred, flush a partial batch
-			return i, sdk.ErrTimeout
-		case err := <-dockerInstance.errC:
-			// todo: this will cause the program to exit. May we want to ignore some kind of error?
-			return i, err
 		}
-	}
-
-	// The batch is full
-	return i, nil
+	}()
+	return source.NewPushInstance(eventC, source.WithInstanceClose(cancel))
 }
 ```
 
-* this methods returns the number of events in the batch and an error
-* the **max size** for a batch is `evts.Len()`
-* the plugin configuration can be retrieved with `pState.(*DockerPlugin)`
-* for each "slot" of the batch, we have to get it `evt := evts.Get(n)` and then set its value `evt.Writer().Write(s)`
+We'll not describe with details the docker relative part, see the [documentation](https://pkg.go.dev/github.com/docker/docker/client) of the `Docker SDK` for more info.
 
-## Complete plugin
+Here's the most important things to notice:
 
-```go
-/*
-Copyright (C) 2022 The Falco Authors.
+* `eventC := make(chan source.PushEvent)`: we create a channel, it will be used by the `instance` to listen incoming events, we'll push into it the events from the `docker client`
+* `ctx, cancel := context.WithCancel(context.Background())`: we create a `context`, and more important, a `Done channel` for this context
+* `eventC <- source.PushEvent{Data: bytes}`: this is how to push an event to the `instance`
+* `return source.NewPushInstance(eventC, source.WithInstanceClose(cancel))`: the `Open()` method must return a `source.Instance`, and `source.NewPushInstance()` requires a channel where the events will pushed and may have optionnal settings, in our case, we pass also the `Done channel` of the `context` with the `source.WithInstanceClose()` function
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+Passing to the `instance` the same `Done channel` than the `docker client` uses, allows to correctly stop the plugin when we ask Falco to stop (CTRL+C or `systemctl stop falco`).
 
-    http://www.apache.org/licenses/LICENSE-2.0
+## The repository
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
+You can find the complete plugin with all details in its [repository](https://github.com/Issif/docker-plugin). Feel free to create issues or PR.
 
-package main
+# Build
 
-import (
-	"context"
-	"encoding/json"
-	"fmt"
-	"io"
-	"io/ioutil"
-	"time"
-
-	"github.com/falcosecurity/plugin-sdk-go/pkg/sdk"
-	"github.com/falcosecurity/plugin-sdk-go/pkg/sdk/plugins"
-	"github.com/falcosecurity/plugin-sdk-go/pkg/sdk/plugins/extractor"
-	"github.com/falcosecurity/plugin-sdk-go/pkg/sdk/plugins/source"
-
-	dockerTypes "github.com/docker/docker/api/types"
-	dockerEvents "github.com/docker/docker/api/types/events"
-	docker "github.com/moby/docker/client"
-)
-
-// DockerPlugin represents our plugin
-type DockerPlugin struct {
-	plugins.BasePlugin
-	FlushInterval uint64 `json:"flushInterval" jsonschema:"description=Flush Interval in ms (Default: 30)"`
-}
-
-// DockerInstance represents a opened stream based on our Plugin
-type DockerInstance struct {
-	source.BaseInstance
-	dclient *docker.Client
-	msgC    <-chan dockerEvents.Message
-	errC    <-chan error
-	ctx     context.Context
-}
-
-// init function is used for referencing our plugin to the Falco plugin framework
-func init() {
-	p := &DockerPlugin{}
-	extractor.Register(p)
-	source.Register(p)
-}
-
-// Info displays information of the plugin to Falco plugin framework
-func (dockerPlugin *DockerPlugin) Info() *plugins.Info {
-	return &plugins.Info{
-		ID:                 5,
-		Name:               "docker",
-		Description:        "Docker Events",
-		Contact:            "github.com/falcosecurity/plugins/",
-		Version:            "0.1.0",
-		RequiredAPIVersion: "0.3.0",
-		EventSource:        "docker",
-	}
-}
-
-// Init is called by the Falco plugin framework as first entry,
-// we use it for setting default configuration values and mapping
-// values from `init_config` (json format for this plugin)
-func (dockerPlugin *DockerPlugin) Init(config string) error {
-	dockerPlugin.FlushInterval = 30
-	return json.Unmarshal([]byte(config), &dockerPlugin)
-}
-
-// Fields exposes to Falco plugin framework all availables fields for this plugin
-func (dockerPlugin *DockerPlugin) Fields() []sdk.FieldEntry {
-	return []sdk.FieldEntry{
-		{Type: "string", Name: "docker.status", Desc: "Status of the event"},
-		{Type: "string", Name: "docker.id", Desc: "ID of the event"},
-		{Type: "string", Name: "docker.from", Desc: "From of the event (deprecated)"},
-		{Type: "string", Name: "docker.type", Desc: "Type of the event"},
-		{Type: "string", Name: "docker.action", Desc: "Action of the event"},
-		{Type: "string", Name: "docker.stack.namespace", Desc: "Stack Namespace"},
-		{Type: "string", Name: "docker.node.id", Desc: "Swarm Node ID"},
-		{Type: "string", Name: "docker.swarm.task", Desc: "Swarm Task"},
-		{Type: "string", Name: "docker.swarm.taskid", Desc: "Swarm Task ID"},
-		{Type: "string", Name: "docker.swarm.taskname", Desc: "Swarm Task Name"},
-		{Type: "string", Name: "docker.swarm.servicename", Desc: "Swarm Service Name"},
-		{Type: "string", Name: "docker.node.statenew", Desc: "Node New State"},
-		{Type: "string", Name: "docker.node.stateold", Desc: "Node Old State"},
-		{Type: "string", Name: "docker.attributes.container", Desc: "Attribute Container"},
-		{Type: "string", Name: "docker.attributes.image", Desc: "Attribute Image"},
-		{Type: "string", Name: "docker.attributes.name", Desc: "Attribute Name"},
-		{Type: "string", Name: "docker.attributes.type", Desc: "Attribute Type"},
-		{Type: "string", Name: "docker.attributes.exitcode", Desc: "Attribute Exit Code"},
-		{Type: "string", Name: "docker.attributes.signal", Desc: "Attribute Signal"},
-		{Type: "string", Name: "docker.scope", Desc: "Scope"},
-	}
-}
-
-// Extract allows Falco plugin framework to get values for all available fields
-func (dockerPlugin *DockerPlugin) Extract(req sdk.ExtractRequest, evt sdk.EventReader) error {
-	var data dockerEvents.Message
-
-	rawData, err := ioutil.ReadAll(evt.Reader())
-	if err != nil {
-		fmt.Println(err.Error())
-		return err
-	}
-
-	err = json.Unmarshal(rawData, &data)
-	if err != nil {
-		fmt.Println(err.Error())
-		return err
-	}
-
-	switch req.Field() {
-	case "docker.status":
-		req.SetValue(data.Status)
-	case "docker.id":
-		req.SetValue(data.ID)
-	case "docker.from":
-		req.SetValue(data.From)
-	case "docker.type":
-		req.SetValue(data.Type)
-	case "docker.action":
-		req.SetValue(data.Action)
-	case "docker.scope":
-		req.SetValue(data.Scope)
-	case "docker.actor.id":
-		req.SetValue(data.Actor.ID)
-	case "docker.stack.namespace":
-		req.SetValue(data.Actor.Attributes["com.docker.stack.namespace"])
-	case "docker.swarm.task":
-		req.SetValue(data.Actor.Attributes["com.docker.swarm.task"])
-	case "docker.swarm.taskid":
-		req.SetValue(data.Actor.Attributes["com.docker.swarm.task.id"])
-	case "docker.swarm.taskname":
-		req.SetValue(data.Actor.Attributes["com.docker.swarm.task.name"])
-	case "docker.swarm.servicename":
-		req.SetValue(data.Actor.Attributes["com.docker.swarm.service.name"])
-	case "docker.node.id":
-		req.SetValue(data.Actor.Attributes["com.docker.swarm.node.id"])
-	case "docker.node.statenew":
-		req.SetValue(data.Actor.Attributes["state.new"])
-	case "docker.node.stateold":
-		req.SetValue(data.Actor.Attributes["state.old"])
-	case "docker.attributes.container":
-		req.SetValue(data.Actor.Attributes["container"])
-	case "docker.attributes.image":
-		req.SetValue(data.Actor.Attributes["image"])
-	case "docker.attributes.name":
-		req.SetValue(data.Actor.Attributes["name"])
-	case "docker.attributes.type":
-		req.SetValue(data.Actor.Attributes["type"])
-	default:
-		return fmt.Errorf("no known field: %s", req.Field())
-	}
-
-	return nil
-}
-
-// Open is called by Falco plugin framework for opening a stream of events, we call that an instance
-func (dockerPlugin *DockerPlugin) Open(params string) (source.Instance, error) {
-	dclient, err := docker.NewClientWithOpts()
-	if err != nil {
-		return nil, err
-	}
-
-	ctx := context.Background()
-	msgC, errC := dclient.Events(ctx, dockerTypes.EventsOptions{})
-	return &DockerInstance{
-		dclient: dclient,
-		msgC:    msgC,
-		errC:    errC,
-		ctx:     ctx,
-	}, nil
-}
-
-// String represents the raw value of on event
-// (not currently used by Falco plugin framework, only there for future usage)
-func (dockerPlugin *DockerPlugin) String(in io.ReadSeeker) (string, error) {
-	evtBytes, err := ioutil.ReadAll(in)
-	if err != nil {
-		return "", err
-	}
-	evtStr := string(evtBytes)
-
-	return fmt.Sprintf("%v", evtStr), nil
-}
-
-// NextBatch is called by Falco plugin framework to get a batch of events from the instance
-func (dockerInstance *DockerInstance) NextBatch(pState sdk.PluginState, evts sdk.EventWriters) (int, error) {
-
-	dockerPlugin := pState.(*DockerPlugin)
-
-	i := 0
-	expire := time.After(time.Duration(dockerPlugin.FlushInterval) * time.Millisecond)
-	for i < evts.Len() {
-		select {
-		case m := <-dockerInstance.msgC:
-			s, _ := json.Marshal(m)
-			evt := evts.Get(i)
-			if _, err := evt.Writer().Write(s); err != nil {
-				return i, err
-			}
-			i++
-		case <-expire:
-			// Timeout occurred, flush a partial batch
-			return i, sdk.ErrTimeout
-		case err := <-dockerInstance.errC:
-			// todo: this will cause the program to exit. May we want to ignore some kind of error?
-			return i, err
-		}
-	}
-
-	// The batch is full
-	return i, nil
-}
-
-func (dockerInstance *DockerInstance) Close() {
-	dockerInstance.ctx.Done()
-}
-
-// main is mandatory but empty, because the plugin will be used as C library by Falco plugin framework
-func main() {}
-```
-
-## Build
-
-The plugin is built as `c-shared` library, to get a `.so`:
+The plugin is built as a `c-shared` library, it means a `.so`:
 ```shell
-go build -buildmode=c-shared -o /usr/share/falco/plugins/libdocker.so
+go build -buildmode=c-shared -o libdocker.so
 ```
+
+If you use `make` from the repository:
+```shell
+make build
+```
+
+# Installation
+
+The plugins are commonly installed in `/usr/share/falco/plugins`, just move the `libdocker.so` you built or run `make install`. 
 
 # Configuration
 
@@ -642,7 +881,7 @@ For more details about this configuration, the documentation is [here](https://f
 
 # Rules
 
-We create a simple rule, for checking that `fields` and `source` work as expected:
+We create a simple rule, for checking that the `fields` and `source` work as expected:
 
 ```yaml
 - rule: Container status changed
@@ -683,7 +922,7 @@ All files of this post can be found on [this repo](https://github.com/Issif/dock
 
 # To Go further
 
-Once your plugin is done, you can share it with the community, by registrating it. The next post [Extend Falco inputs by creating a Plugin: Register the plugin]({{< ref "/blog/extend-falco-inputs-with-a-plugin-register" >}}) will guide guide through the process.
+Once your plugin is done, you can share it with the community, by registrating it. The next post [Extend Falco inputs by creating a Plugin: Register the plugin]({{< ref "/blog/extend-falco-inputs-with-a-plugin-register" >}}) will guide you through the process.
 
 # Conclusion
 
