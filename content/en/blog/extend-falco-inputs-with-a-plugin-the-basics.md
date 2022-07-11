@@ -830,7 +830,7 @@ func (Plugin *Plugin) Open(params string) (source.Instance, error) {
 }
 ```
 
-We'll not describe with details the docker relative part, see the [documentation](https://pkg.go.dev/github.com/docker/docker/client) of the `Docker SDK` for more info.
+We'll not describe with details the docker relative part, see the [documentation](https://pkg.go.dev/github.com/docker/docker/client) of the `Docker SDK` for more info. You just have to know it creates a channel to receive the events from the engine and we use same context than the whole plugin.
 
 Here's the most important things to notice:
 
