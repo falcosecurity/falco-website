@@ -1,5 +1,4 @@
 approvers:
-  - fntlnz
   - leodido
   - kris-nova
   - mfdii
@@ -10,7 +9,6 @@ approvers:
   - jasondellaluce
   - Issif
 reviewers:
-  - fntlnz
   - leodido
   - danpopsd
   - kris-nova
