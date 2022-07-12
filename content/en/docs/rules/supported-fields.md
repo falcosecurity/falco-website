@@ -248,6 +248,7 @@ Name | Type | Description
 `fd.dev` | INT32 | device number (major/minor) containing the referenced file
 `fd.dev.major` | INT32 | major device number containing the referenced file
 `fd.dev.minor` | INT32 | minor device number containing the referenced file
+`fd.ino` | INT64 | inode number of the referenced file
 
 ### Field Class: syslog
 
