@@ -52,20 +52,24 @@ The above command loops forever, creating resources in the current namespace and
 
 ## Running the Event Generator in K8s
 
-We've also provided K8s resource object files that make it easy to run the event generator in K8s Clusters:
+We've also provided a [helm chart](https://github.com/falcosecurity/charts/tree/master/event-generator) that make it easy to run the event generator in K8s Clusters.
 
-* [`role-rolebinding-serviceaccount.yaml`](https://github.com/falcosecurity/event-generator/blob/master/deployment/role-rolebinding-serviceaccount.yaml) creates a Service Account, Cluster Role, and Role that allows a service account `falco-event-generator`.
-* [`event-generator.yaml`](https://github.com/falcosecurity/event-generator/blob/master/deployment/event-generator.yaml) creates a deployment that runs all sample events in a loop.
-* [`run-as-job.yaml`](https://github.com/falcosecurity/event-generator/blob/master/deployment/run-as-job.yaml) creates a job that runs all sample events once.
+First thing, we need to add the `falcosecurity` charts repository:
 
-
-For example, you can run the following to create the necessary objects in the current namespace and then generate events continuously:
-
+```shell
+helm repo add falcosecurity https://falcosecurity.github.io/charts
+helm repo update
 ```
-kubectl apply -f deployment/role-rolebinding-serviceaccount.yaml \
-  -f deployment/event-generator.yaml
+Once you have the helm repo configured, you can run the following to create the necessary objects in the `event-generator` namespace and then generate events continuously:
+
+```shell
+helm install event-generator falcosecurity/event-generator \
+  --namespace event-generator \
+  --create-namespace \
+  --set config.loop=false \
+  --set config.actions=""
 ```
 
-The above command applies to the default namespace. Use the `--namespace` option to deploy in a different namespace. Events will be generated in the same namespace.
+The above command applies to the `event-generator` namespace. Use the `--namespace` option to deploy in a different namespace. Events will be generated in the same namespace.
 
-You can also find more examples in the repository [documentation](https://github.com/falcosecurity/event-generator#with-kubernetes).
+You can also find more examples in the [event-generator](https://github.com/falcosecurity/event-generator#with-kubernetes) and [charts](https://github.com/falcosecurity/charts/tree/master/event-generator) repositories.
