@@ -14,7 +14,7 @@ One of the easiest ways to install Falco in Kubernetes is by using [Helm](https:
 
 ### DaemonSet
 
-Falco can also be installed in Kubernetes manually. In this case, you are in charge of providing the DaemonSet object YAML definition and deploying it in your cluster. For further details, [you can find an example here](https://github.com/falcosecurity/evolution/tree/master/deploy/kubernetes/falco/templates).
+Falco can also be installed in Kubernetes manually. In this case, you are in charge of providing the DaemonSet object YAML definition and deploying it in your cluster. For further details, [you can find an example here](https://github.com/falcosecurity/deploy-kubernetes/tree/main/kubernetes/falco/templates).
 
 ### Docker Deprecation in Kubernetes
 
