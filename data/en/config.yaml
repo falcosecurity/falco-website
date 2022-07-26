@@ -18,12 +18,11 @@
     If `true` (default is `false`), the times displayed in log messages and output messages will be in ISO 8601. By default, times are displayed in the local time zone, as governed by /etc/localtime.
 - name: json_output
   type: Boolean
-  description: |
-    If `true`, print falco alert messages and rules file loading/validation results as json, which allows for easier consumption by downstream programs. Default is `false`.
+  description: Whether to use JSON output for alert messages.
 - name: json_include_output_property
   type: Boolean
   description: |
-    When using json output for falco alerts, whether or not to include the `output` property itself (e.g. `File below a known binary directory opened for writing (user=root ....`) in the JSON output.
+    When using json output, whether or not to include the `output` property itself (e.g. `File below a known binary directory opened for writing (user=root ....`) in the JSON output.
 - name: log_stderr
   type: Boolean
   description: |
