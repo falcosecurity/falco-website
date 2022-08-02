@@ -25,7 +25,7 @@ Hopefully this resource will give you a starting point for understanding which d
 
 The Falco Kernel module is the traditional way of consuming the required stream of data from the kernel.
 
-_Source_: [github.com/draios/sysdig/driver](https://github.com/draios/sysdig/tree/dev/driver)
+_Source_: [github.com/falcosecurity/libs/driver](https://github.com/falcosecurity/libs/tree/master/driver)
 
 The kernel module must be loaded in order for Falco to start.
 The kernel module depends on the `linux-headers` package in order to compile. [More information
@@ -37,7 +37,7 @@ _Note_: A convenience script found [here](https://github.com/falcosecurity/falco
  
 ```bash
 cd ~
-git clone git@github.com/falcosecurity/falco
+git clone https://github.com/falcosecurity/falco
 cd falco
 mkdir build
 cd build
@@ -83,7 +83,7 @@ Kernel modules are the quickest, and most common way to run Falco. They are a vi
 The Falco eBPF probe is a viable option in environments where kernel modules are not trusted or are not allowed but eBPF programs are.
 The most common example of this environment is GKE. Running Falco in GKE was the original use case for creating the eBPF probe.
 
-_Source_: [github.com/draios/sysdig/driver/bpf](https://github.com/draios/sysdig/tree/dev/driver/bpf)
+_Source_: [github.com/falcosecurity/libs/driver/bpf](https://github.com/falcosecurity/libs/tree/master/driver/bpf)
 
 The eBPF probe must be loaded in order for Falco to start, and will provide the same stream of metrics that the kernel module does.
 Falco should work seamlessly with this approach.
@@ -95,7 +95,7 @@ _Note_: A convenience script found [here](https://github.com/falcosecurity/falco
 
 ```bash
 cd ~
-git clone git@github.com/falcosecurity/falco
+git clone https://github.com/falcosecurity/falco
 cd falco
 mkdir build
 cd build
