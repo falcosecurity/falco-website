@@ -12,9 +12,9 @@ Currently the Falco project supports 3 different drivers in which the engine can
 
  - A kernel module
  - An eBPF probe
- - A ptrace(2) userspace program 
- 
-This blog will highlight the nuances of each implementation and explain why they exist. 
+ - A ptrace(2) userspace program
+
+This blog will highlight the nuances of each implementation and explain why they exist.
 Hopefully this resource will give you a starting point for understanding which driver is right for your use case.
 
 *Updated: Falco 0.26.0*
@@ -34,7 +34,7 @@ The kernel module depends on the `linux-headers` package in order to compile. [M
 _Note_: A convenience script found [here](https://github.com/falcosecurity/falco/blob/master/scripts/falco-driver-loader)
 
 #### Using the kernel module
- 
+
 ```bash
 cd ~
 git clone https://github.com/falcosecurity/falco
@@ -66,18 +66,18 @@ The kernel module is the most commonly used driver for Falco and can be used in 
  - Tightly coupled with the host kernel and changing kernel versions, architecture, operating systems can introduce complexity.
  - A faulty kernel module could potentially panic or crash a Linux kernel.
  - Loading a kernel module is not always trusted or allowed in some environments.
- 
-#### Summary 
+
+#### Summary
 
 Kernel modules are the quickest, and most common way to run Falco. They are a viable solution in any environment where access to the host kernel is trusted.
 
- - Kubernetes 
+ - Kubernetes
  - AWS EC2 (kops, eks, kubeadm) Anywhere access to the host is allowed
- - Azure 
+ - Azure
  - IBM Cloud
- 
- ---
- 
+
+---
+
 ## eBPF Probe
 
 The Falco eBPF probe is a viable option in environments where kernel modules are not trusted or are not allowed but eBPF programs are.
@@ -122,7 +122,7 @@ sudo falco
  - The eBPF probe does not work for every system.
  - You need at least Linux kernel version 4.14 but the Falco project suggests an LTS kernel of 4.14/4.19 or above.
 
-#### Summary 
+#### Summary
 
 The eBPF probe should be used when loading a kernel module is not a viable option.
 Reasons for not loading a kernel module may change, and in this case the eBPF probe is the default.
@@ -130,15 +130,15 @@ Reasons for not loading a kernel module may change, and in this case the eBPF pr
  - Kubernetes
  - GKE
  - Environments where loading a kernel module is untrusted or not supported
- 
- ---
- 
+
+---
+
 ## pdig
 
 The `pdig` binary is the newest and most viable path forward when both a kernel module, and eBPF probe is not an option.
-The most common example of this environment is AWS ECS with Fargate. 
+The most common example of this environment is AWS ECS with Fargate.
 
-The `pdig` tool is built on `ptrace(2)`. It requires `CAP_SYS_PTRACE` enabled for the container runtime. 
+The `pdig` tool is built on `ptrace(2)`. It requires `CAP_SYS_PTRACE` enabled for the container runtime.
 The `pdig` tool enables a new way of consuming metrics about a given application at the process level.
 
 _Note_: The eBPF probe and kernel module work at a global host level, whereas `pdig` works at a process level. A clever invocation of `pdig` against a system can simulate a broader scope of system parsing. PID 1 is sometimes of interest.
@@ -150,24 +150,24 @@ _Source_: [github.com/falcosecurity/pdig](https://github.com/falcosecurity/pdig)
  - Lightweight, safe, and process specific
  - Runs only in userspace
  - Enables Falco for use cases when a kernel module, and an eBPF probe is not viable
- 
+
 #### Cons
 
  - The dependency on `ptrace(2)` is slow. Period.
  - Requires executing Falco with the `pdig` binary to "hack" the driver.
- 
+
 #### Summary
 
 The `pdig` tool is the most unique of all the drivers, and enables functionality not otherwise possible.
 
  - Kubernetes
- - AWS ECS/Fargate 
+ - AWS ECS/Fargate
  - AWS EKS/Fargate
  - Environments where kernel modules and eBPF is not an option
- 
---- 
 
-## Suggested Cloud Provider Implementations 
+---
+
+## Suggested Cloud Provider Implementations
 
 | Solution             | Suggested Driver            | More Resources                                                                                         |
 |----------------------|-----------------------------|--------------------------------------------------------------------------------------------------------|
