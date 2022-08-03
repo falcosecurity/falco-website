@@ -388,26 +388,27 @@ daemonset.apps/my-falco-falco-exporter   1         1         1       1          
 
 The previous output might differ depending on the type of cluster you would be using, among other variables.
 
-As you can see, once App Platform is up and running, we only needed to create the namespace that should contain the Falco application (which should already exist if we installing on a managed workload cluster), and the CRD based on the template from the `kubectl gs` plugin.
+As you can see, once App Platform is up and running, we only needed to create the namespace that should contain the Falco application (which should already exist if we are deploying from a managed workload cluster), and the CRD based on the template from the `kubectl gs` plugin. In a matter of seconds, Falco will be up and running, watching for threats and alerting when suspicious behaviors arise.
 
 
 ### Managed Security
 
 [Zach Stone](https://twitter.com/StoneZach/), Platform Engineer at Giant Swarm, walked us through some of the biggest challenges that the company's customers face and how his team is using Falco to develop thoughtful solutions. 
 
-“The biggest problem that most of our customers face isn't what happens in the cluster, it's what happens with the information once they get it out of the cluster,” says Stone. “People also focus too much on the capability that a tool offers and not take a bigger look at the security process itself.”
+_“The biggest problem that most of our customers face isn't what happens in the cluster, it's what happens with the information once they get it out of the cluster,”_ asserts Stone. _“People also focus too much on the capability that a tool offers and not take a bigger look at the security processes it supports.”_
 
-#### Policy Development and Vulnerability Management
+_“If a customer has a vulnerability management program, we can track all of the vulnerabilities in their components, but if fixing those vulnerabilities isn’t a priority, then the program doesn’t work,”_ remarks Stone. _"The larger discussion is usually about where the alerts should go, who bears responsibility for remediation, and how to fit that work into the team's limited capacity. We spend a lot of time trying to ensure security isn't just something that sits alongside the business, but rather is a meaningful part of the daily routine."_
 
-“I think Falco's superpower is in the flexibility of the policies. I'm really excited about the changes that are slated to make it easier to update those policies—if we have a policy, then we have configurations on top of it, and the customers have their own policies, which makes it incredibly difficult to reconcile,” says Stone. “Speaking to the fact that we can already do it with Falco, it speaks volumes to the versatility of the solution.” 
+Part of that effort is in tuning detection rules and alerting. _"Any time we surface an alert, it should be actionable and have a clear owner who is invested in never seeing that alert again."_
 
-If a customer has a vulnerability management program, we can track all of the vulnerabilities and their components, but if fixing those vulnerabilities isn’t a priority, then the program doesn’t work,” says Stone. “To me, the hard part is really influencing those changes within customer organizations are more limited, so raising the visibility of these issues more broadly is key.”
+_“I think Falco's superpower is in the flexibility of the policies. I'm also really excited about the changes that are slated to make it easier to update them. Most rules aren't one-size-fits-all -- for a given policy, there is usually some refinement needed to ensure the policy makes sense within our platform, and then customers modify it even further to meet their security requirements. All that customization can make it incredibly difficult to reconcile,”_ says Stone. _“The fact that we can already do it with Falco speaks volumes about the versatility of the solution.”_
+
 
 #### Security Pack
 
 Giant Swarm's [Security Pack](https://docs.giantswarm.io/app-platform/apps/security/) is a collection of open-source security tools offered by Giant Swarm which does not only include Falco but a plethora of other open-source projects including *Kyverno*, for policy enforcement, *Trivy*, for image scanning, and *Cosign* for image signature verification.
 
-Security does not apply to a single level and therefore Security Pack consists of multiple applications independently installable and configurable available via their App Platform. *“Falco will be the cornerstone of our node-level security concerns.”*, says Stone. *“I see the biggest impact for API plug-ins to get feedback from the node level into the Security Pack so that it can further contextualize events in the ecosystem.”*
+Security does not apply to a single level and therefore Security Pack consists of multiple applications independently installable and configurable available via their App Platform. _“Falco will be the cornerstone of our node-level security capabilities.”_, affirms Stone. _“The biggest opportunity for API plug-ins I see is to get feedback from the node level back into the Security Pack so that we can further contextualize events in the ecosystem.”_
 
 
 ### Conclusion
