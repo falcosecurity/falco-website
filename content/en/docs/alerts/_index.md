@@ -1,6 +1,6 @@
 ---
 title: Falco Alerts
-weight: 8
+weight: 80
 ---
 
 Falco can send alerts to one or more channels:

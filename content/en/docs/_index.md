@@ -1,7 +1,7 @@
 ---
 title: The Falco Project
 description: Cloud Native Runtime Security
-weight: 1
+weight: 10
 ---
 
 ## What is Falco?

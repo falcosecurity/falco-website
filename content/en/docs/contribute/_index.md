@@ -1,7 +1,7 @@
 ---
 title: Contribute
 description: Contribution recognitions
-weight: 11
+weight: 110
 notoc: true
 ---
 
