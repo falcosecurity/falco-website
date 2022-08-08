@@ -1,7 +1,7 @@
 ---
 title: Plugins
 description: Plugins for Falco libraries/Falco daemon
-weight: 40
+weight: 50
 notoc: true
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Event Sources
-weight: 50
+weight: 60
 ---
 
 Falco can consume events from a variety of different sources and apply rules to these events to detect abnormal behavior.
