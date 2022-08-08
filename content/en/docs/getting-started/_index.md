@@ -1,7 +1,7 @@
 ---
 title: Getting Started
 description: Getting started with Falco
-weight: 2
+weight: 20
 ---
 You can deploy Falco on a local machine, cloud, a managed Kubernetes cluster, or a Kubernetes cluster such as K3s running on IoT & Edge computing.
 
