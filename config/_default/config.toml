@@ -208,7 +208,7 @@ sidebar_menu_compact = false
 #  Set to true to disable breadcrumb navigation.
 breadcrumb_disable = false
 #  Set to true to hide the sidebar search box (the top nav search box will still be displayed if search is enabled)
-sidebar_search_disable = false
+sidebar_search_disable = true
 #  Set to false if you don't want to display a logo (/assets/icons/logo.svg) in the top nav bar
 navbar_logo = true
 
@@ -296,15 +296,15 @@ languageName ="English"
 weight = 1
 languagedirection = "ltr"
 
-[languages.zh]
+[languages.zh-cn]
 title = "Falco"
 description = "运行时安全"
 languageName = "中文 Chinese"
 weight = 2
-contentDir = "content/zh"
+contentDir = "content/zh-cn"
 languagedirection = "ltr"
 
-[languages.zh.params]
+[languages.zh-cn.params]
 time_format_blog = "2006.01.02"
 language_alternatives = ["en"]
 
