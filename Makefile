@@ -14,6 +14,7 @@ production-build: dependencies
 	make check-links
 
 preview-build: dependencies
+	make check-github-rate-limit
 	hugo \
 		--baseURL $(DEPLOY_PRIME_URL) \
 		--buildDrafts \
@@ -31,3 +32,11 @@ run-link-checker:
 check-links: link-checker-setup run-link-checker
 
 check-links-locally: check-links
+
+check-github-rate-limit: retrieve-github-rate-limit
+	$(info [ To translate the reset time (epoch) use 'date -d @<reset value>' ]) 
+
+retrieve-github-rate-limit:
+	$(info [ If build fails at a later stage, verify GitHub rate limit suffices ])
+	curl -s https://api.github.com/rate_limit | jq '{ "GitHub rate quota": .resources.core }' || echo "Error: $?"
+
