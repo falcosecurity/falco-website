@@ -1,5 +1,7 @@
 ---
 title: Falco
+ailases: 
+  - /zh/
 ---
 
 {{< blocks/section >}}

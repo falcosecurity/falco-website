@@ -1,3 +1,4 @@
 [submodule "themes/docsy"]
 	path = themes/docsy
 	url = https://github.com/google/docsy
+	branch = 9f55cf34808d720bcfff9398c9f9bb7fd8fce4ec
