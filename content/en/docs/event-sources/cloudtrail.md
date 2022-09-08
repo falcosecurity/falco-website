@@ -5,7 +5,7 @@ weight: 2
 
 The Falco [cloudtrail](https://github.com/falcosecurity/plugins/tree/master/plugins/cloudtrail#readme) plugin can read [AWS CloudTrail](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html) logs and emit events for each CloudTrail log entry.
 
-Falco also distributes out-of-the-box [rules](https://github.com/falcosecurity/falco/blob/master/rules/aws_cloudtrail_rules.yaml) that can be used to identify interesting/suspicious/notable events in CloudTrail logs, including:
+This plug-in also includes out-of-the-box [rules](https://github.com/falcosecurity/plugins/blob/master/plugins/cloudtrail/rules/aws_cloudtrail_rules.yaml) that can be used to identify interesting/suspicious/notable events in CloudTrail logs, including:
 
 * Console logins that do not use multi-factor authentication 
 * Disabling multi-factor authentication for users 
