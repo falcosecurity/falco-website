@@ -164,6 +164,11 @@ src = "statsd.png"
 alt = "StatsD"
 url = "https://github.com/statsd/statsd"
 
+[[adopters.integrations]]
+src = "gvisor.png"
+alt = "gVisor"
+url = "https://gvisor.dev/"
+
 
 # -------------------------------------------------------------------------------------
 # Training resources provided by the community
