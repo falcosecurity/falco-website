@@ -1,4 +1,5 @@
 ---
+aliases: ["/docs/getting-started/"]
 title: Getting Started
 description: Getting started with Falco
 weight: 20

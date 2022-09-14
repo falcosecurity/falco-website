@@ -1,4 +1,5 @@
 ---
+aliases: ["/docs/contribute/"]
 title: Contribute
 description: Contribution recognitions
 weight: 110

@@ -1,4 +1,5 @@
 ---
+aliases: ["/docs/"]
 title: The Falco Project
 description: Cloud Native Runtime Security
 weight: 10
@@ -16,7 +17,7 @@ Falco uses system calls to secure and monitor a system, by:
  - Asserting the stream against a powerful rules engine
  - Alerting when a rule is violated
 
- For more information, see Falco [Rules](rules).
+For more information, see Falco [Rules](rules).
 
 ## What does Falco check for?
 
