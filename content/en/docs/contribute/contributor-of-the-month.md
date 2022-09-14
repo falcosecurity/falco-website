@@ -1,4 +1,5 @@
 ---
+aliases: ["/docs/contribute/contributor-of-the-month"]
 title: Contributor of the Month
 ---
 
