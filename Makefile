@@ -10,6 +10,7 @@ serve: dependencies
 		--buildFuture
 
 production-build: dependencies
+	make check-github-rate-limit
 	hugo --minify
 	make check-links
 
@@ -34,7 +35,7 @@ check-links: link-checker-setup run-link-checker
 check-links-locally: check-links
 
 check-github-rate-limit: retrieve-github-rate-limit
-	$(info [ To translate the reset time (epoch) use 'date -d @<reset value>' ]) 
+	$(info [ To translate the reset time (epoch) use 'date -d @<reset value>' ])
 
 retrieve-github-rate-limit:
 	$(info [ If build fails at a later stage, verify GitHub rate limit suffices ])
