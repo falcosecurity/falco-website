@@ -5,7 +5,11 @@ description: Learn how to integrate gVisor and Falco on Docker
 date: 2022-09-15
 author: Luca Guerra, Lorenzo Susini, Vicente J. Jiménez Miras
 slug: intro-gvisor-falco
-featured_image: "images/intro-gvisor-falco-featured.png"
+images:
+  - /blog/intro-gvisor-falco/images/intro-gvisor-falco-01.png
+  - /blog/intro-gvisor-falco/images/intro-gvisor-falco-02.png
+  - /blog/intro-gvisor-falco/images/intro-gvisor-falco-03.png
+  - /blog/intro-gvisor-falco/images/intro-gvisor-falco-featured.png
 ---
 ![](/blog/intro-gvisor-falco/images/intro-gvisor-falco-01.png)
 
