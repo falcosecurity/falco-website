@@ -1,0 +1,10 @@
+---
+name: Container runtime security with Falco
+type: course
+link: https://www.katacoda.com/falco/courses/falco/falco
+description: Learn how to use Falco to detect anomalous behaviour and create your own container security policy
+thumbnail:
+provider: 
+  name: katacoda
+  order: 1
+...

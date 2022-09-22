@@ -1,0 +1,10 @@
+---
+name: Falco 101
+type: course
+link: https://learn.sysdig.com/path/falco/falco-101
+description: All you need to learn to get started with Falco
+thumbnail: 
+provider: 
+  name: sysdig
+  order: 1
+...
