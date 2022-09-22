@@ -1,0 +1,10 @@
+---
+name: Practical example of Kubernetes runtime security with Falco
+type: course
+link: https://www.katacoda.com/falco/courses/falco/forensics-k8s
+description: https://learn.sysdig.com/path/falco/falco-plugins
+thumbnail: 
+provider: 
+  name: katacoda
+  order: 2
+... 
