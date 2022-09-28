@@ -33,18 +33,18 @@ Falco现在对tocou类型的攻击更有弹性，可能导致规则绕过(CVE-20
 
 像往常一样，如果您只想试用稳定的 Falco 0.31.1，您可以按照文档中概述的过程安装其软件包：
 
-- [CentOS/Amazon Linux](https://falco.org/docs/getting-started/installation/#centos-rhel)
-- [Debian/Ubuntu](https://falco.org/docs/getting-started/installation/#debian)
-- [openSUSE](https://falco.org/docs/getting-started/installation/#suse)
-- [Linux binary package](https://falco.org/docs/getting-started/installation/#linux-binary)
+- CentOS/Amazon Linux https://falco.org/docs/getting-started/installation/#centos-rhel
+- Debian/Ubuntu https://falco.org/docs/getting-started/installation/#debian
+- openSUSE https://falco.org/docs/getting-started/installation/#suse
+- Linux binary package https://falco.org/docs/getting-started/installation/#linux-binary
 
 您更喜欢使用容器镜像吗？ 一点问题都没有！
 
 您可以在文档中阅读有关使用 Docker 运行 Falco 的更多信息。
 您还可以在公共 AWS ECR 库中找到 Falcosecurity 容器镜像：
-- [falco](https://gallery.ecr.aws/falcosecurity/falco)
-- [falco-no-driver](https://gallery.ecr.aws/falcosecurity/falco-no-driver)
-- [falco-driver-loader](https://gallery.ecr.aws/falcosecurity/falco-driver-loader)
+- falco https://gallery.ecr.aws/falcosecurity/falco
+- falco-no-driver https://gallery.ecr.aws/falcosecurity/falco-no-driver
+- falco-driver-loader https://gallery.ecr.aws/falcosecurity/falco-driver-loader
 
 ## 下一步是什么
 
@@ -58,8 +58,8 @@ Falco 0.32.0预计将在2022年5月发布!
 
 如果你有任何问题
 
-- Join the [#falco channel](https://kubernetes.slack.com/messages/falco) on the [Kubernetes Slack](https://slack.k8s.io)
-- Join the [Falco mailing list](https://lists.cncf.io/g/cncf-falco-dev)
+- 加入Kubernetes Slack上的#falco频道
+- 加入Falco邮件列表
 
 感谢所有了不起的贡献者!
 
