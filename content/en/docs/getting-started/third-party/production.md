@@ -55,10 +55,10 @@ to the file:
 Environment='FALCO_BPF_PROBE=""'
 ```
 
-If you are [installing Falco with Helm](https://falco.org/docs/getting-started/third-party/install-tools/#helm), you will need to set the `ebpf.enabled` option to `true`:
+If you are [installing Falco with Helm](https://falco.org/docs/getting-started/third-party/install-tools/#helm), you will need to set the `driver.kind` option to `ebpf`:
 
 ```
-helm install falco falcosecurity/falco --set ebpf.enabled=true
+helm install falco falcosecurity/falco --set driver.kind=ebpf
 ```
 
 ### K3s
@@ -73,5 +73,5 @@ If you are using K3s with containerd, you should set the CRI settings because th
   - Append below options when install with Helm:
 
   ```shell
-  --set containerd.enabled=true --set containerd.socket=/run/k3s/containerd/containerd.sock
+  --set collectors.containerd.enabled=true --set collectors.containerd.socket=/run/k3s/containerd/containerd.sock
   ```
