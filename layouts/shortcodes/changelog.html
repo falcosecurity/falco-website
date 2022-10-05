@@ -1,26 +1,37 @@
-{{ $dataJSONURL := (.Get 0) }}
-{{ $dataJSON := getJSON $dataJSONURL }}
-{{ $nItems   := len $dataJSON }}
+{{- $releases_url := (.Get 0) -}}
+{{- $gh_project_repo := ($.Site.Param "github_project_repo") -}}
+{{- $dataJSON := false }}
+
+{{- with $github_token := (os.Getenv "HUGO_GITHUB_TOKEN" | default false ) -}}
+  {{- $bearer_token := dict "Authorization" (printf "Bearer %s" .) -}}
+  {{- $dataJSON = getJSON $releases_url $bearer_token -}}
+{{- else }}
+  {{- $dataJSON = getJSON $releases_url -}}
+{{- end }}
 
 <div class="changelog">
-  {{ range $idx, $value := $dataJSON }}
-  {{ $isLast := eq (add $idx 1) $nItems}}
-  {{ $link   := printf "https://github.com/falcosecurity/falco/tree/%s" .tag_name }}
-  <div class="changelog-item">
-    <p class="title is-size-3 is-size-4-mobile">
-      Version
-      <a href="{{ $link }}" target="_blank">
-        {{ .tag_name }}
-      </a>
-    </p>
+    {{- $separator := false -}}
 
-    <div class="changelog-item-content content">
-      {{ .body | markdownify }}
-    </div>
-  </div>
+    {{- range $release := $dataJSON }}
 
-  {{ if not $isLast }}
-  <hr />
-  {{ end }}
-  {{ end }}
+        {{- with $separator }} {{/* No separator before the first entry */}}
+            {{ . | markdownify }}
+        {{- end }}
+
+        <div class="changelog-item">
+            <h2 class="title is-size-3 is-size-4-mobile">
+              {{- with .tag_name -}}
+                  {{- $link := printf "%s/tree/%s" $gh_project_repo . -}}
+                  Version <a href="{{ $link }}" target="_blank">{{ . }}</a>
+              {{- end -}}
+            </h2>
+
+            <div class="changelog-item-content content">
+              <h3 class="title is-size-3 is-size-4-mobile">Download</h3>
+              {{ .body | markdownify }}
+            </div>
+        </div>
+
+        {{- $separator = "<hr />" -}}
+    {{- end -}}
 </div>
