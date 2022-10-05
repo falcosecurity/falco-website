@@ -1,5 +1,13 @@
-{{ $repository := (.Get 0) }}
-{{ $path := (.Get 1) }}
-{{ $codeURL := printf "https://api.github.com/repos/%s/contents/%s" $repository $path }}
-{{ $dataJSON := getJSON $codeURL }}
-{{ $dataJSON.content | base64Decode | safeHTML }}
+{{- $repository := (.Get 0) -}}
+{{- $path := (.Get 1) -}}
+{{- $codeURL := printf "https://api.github.com/repos/%s/contents/%s" $repository $path -}}
+{{- $dataJSON := false -}}
+
+{{- with $github_token := (os.Getenv "HUGO_GITHUB_TOKEN" | default false ) -}}
+  {{- $bearer_token := dict "Authorization" (printf "Bearer %s" .) -}}
+  {{- $dataJSON = getJSON $codeURL $bearer_token -}}
+{{- else }}
+  {{- $dataJSON = getJSON $codeURL -}}
+{{- end }}
+
+{{- $dataJSON.content | base64Decode | safeHTML -}}
