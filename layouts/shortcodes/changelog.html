@@ -9,6 +9,7 @@
   {{- $dataJSON = getJSON $releases_url -}}
 {{- end }}
 
+{{ with $dataJSON }}
 <div class="changelog">
     {{- $separator := false -}}
 
@@ -35,3 +36,6 @@
         {{- $separator = "<hr />" -}}
     {{- end -}}
 </div>
+{{ else }}
+  {{ $.Page.Scratch.Set "github_error" true }}
+{{ end }}

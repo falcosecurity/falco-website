@@ -10,4 +10,9 @@
   {{- $dataJSON = getJSON $codeURL -}}
 {{- end }}
 
-{{- $dataJSON.content | base64Decode | safeHTML -}}
+{{ with $dataJSON }}
+  {{- .content | base64Decode | safeHTML -}}
+{{ else }}
+  {{ $.Page.Scratch.Set "github_error" true }}
+{{ end }}
+
