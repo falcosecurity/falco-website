@@ -1,0 +1,16 @@
+{{ $_hugo_config := `{ "version": 1 }` }}
+{{ $color := .Get "color" | default "primary" }}
+
+{{/* Following message will be only displayed if another shortcode
+     set the 'github_error' value to true on the Scratch */}}
+
+{{ if $github_error := ( $.Page.Scratch.Get "github_error") }}
+    <div class="alert alert-{{ $color }}" role="alert">
+    {{ with .Get "title" }}<h4 class="alert-heading">{{ . | safeHTML }}</h4>{{ end }}
+    {{ if eq .Page.File.Ext "md" }}
+        {{ .Inner | markdownify }}
+    {{ else }}
+        {{ .Inner | htmlUnescape | safeHTML }}
+    {{ end }}
+    </div>
+{{ end }}
