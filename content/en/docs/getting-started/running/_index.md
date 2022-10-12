@@ -7,8 +7,19 @@ weight: 4
 
 ## Run Falco as a service
 
-If you installed Falco by using [the DEB or the RPM](/docs/getting-started/installation) package, you can start the service by running:
+If you installed Falco by using [the DEB or the RPM](/docs/getting-started/installation) package, then falco systemd service was already started and enabled for you.  
+In case you wish to stop or disable it, issue:
 
+
+```console
+systemctl disable falco
+```
+
+```console
+systemctl stop falco
+```
+
+Then, to enable or start it back, you would need:
 
 ```console
 systemctl enable falco
@@ -236,3 +247,5 @@ This will reload the Falco configuration and restart the engine without killing 
 ```bash
 kill -1 $(cat /var/run/falco.pid)
 ```
+
+Moreover, since Falco 0.32.0, `watch_config_files` config option drives the automatic reload of Falco when either the config or the ruleset change.
