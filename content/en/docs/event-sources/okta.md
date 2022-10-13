@@ -11,13 +11,13 @@ Falco also distributes out-of-the-box [rules](https://github.com/falcosecurity/f
 * Detecting a locked-out user
 * Assigning admin permissions to an okta user
 
-# Configuration
+## Configuration
 
 See the [README](https://github.com/falcosecurity/plugins/blob/master/plugins/okta/README.md#settings) for information on configuring the plugin. This simply involves providing the `organization/api` token as part of init params. These can be added to `falco.yaml` under the `plugins` [configuration key](https://falco.org/docs/configuration/) key.
 
 The plugin does not use any open params configuration.
 
-# Sample Output
+## Sample Output
 
 For example, when using a dummy rule as follows:
 

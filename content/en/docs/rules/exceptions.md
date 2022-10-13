@@ -3,7 +3,7 @@ title: Rule Exceptions
 weight: 3
 ---
 
-# Introduction
+## Introduction
 
 Almost all Falco Rules have cases where the behavior detected by the
 rule should be allowed. For example, The rule Write Below Binary Dir
@@ -50,7 +50,7 @@ A more extreme case of this is the write_below_etc macro used by Write below etc
 
 The exceptions all generally follow the same structure--naming a program and a directory prefix below /etc where that program is allowed to write files.
 
-# Rule Exceptions
+## Rule Exceptions
 
 Starting in 0.28.0, falco supports an optional `exceptions` property to rules. The exceptions key is a list of identifier plus list of tuples of filtercheck fields. Here's an example:
 
@@ -111,13 +111,13 @@ Note that when a comparison operator is "in", the corresponding values tuple ite
 ... and not (proc.name=my-custom-dpkg and fd.name in (/usr/bin, /bin))
 ```
 
-## Exception Syntax Shortcuts
+### Exception Syntax Shortcuts
 
 In general, the value for an exceptions fields properly should always be a list of fields. The comps property must be an equal-length list of comparison operators, and the values property must be a list of tuples, where each tuple has the same length as the fields/comps list.
 
 However, there are a few shortcuts that can be used when defining an exception:
 
-### Values are Optional
+#### Values are Optional
 
 A rule may define fields and comps, but not define values. This allows a later rule with "append: true" to add values to an exception (more on that below). The exception "cmdline_writer" above has this format:
 
@@ -127,7 +127,7 @@ A rule may define fields and comps, but not define values. This allows a later r
      comps: [startswith, =]
 ```
 
-### Fields/Comps Can Be a Single Value, Not a List
+#### Fields/Comps Can Be a Single Value, Not a List
 
 An alternate way to define an exception is to have fields contain a single field and comps contain a single comparison operator (which must be one of "in", "pmatch", "intersects"). In this format, values is a list of values rather than list of tuples. The exception "filenames" above has this format:
 
@@ -143,7 +143,7 @@ In this case, the exception is the equivalent of:
 ... and not (fd.filename in (...))
 ```
 
-### Comps is Optional
+#### Comps is Optional
 
 If comps is not provided, a default value is filled in. When fields is a list, comps will be set to an equal-length list of =. The exception "container_writer" above has that format, and is equivalent to:
 
@@ -155,7 +155,7 @@ If comps is not provided, a default value is filled in. When fields is a list, c
 
 When fields is a single field, comps is set to the single field "in".
 
-## Appending Exception Values
+### Appending Exception Values
 
 Exception values will most commonly be defined in rules with append: true. Here's an example:
 
@@ -196,15 +196,15 @@ Putting it all together, the effective rule condition for this rule is:
 	     (fd.filename in (python, go))                                                      # filenames
 ```
 
-# Guidelines For Adding Exceptions To Rules
+## Guidelines For Adding Exceptions To Rules
 
 The default rules files have been revamped to use exceptions whenever possible, and are a good reference for best practices when defining exceptions for rules. Here are some other guidelines to follow:
 
-## Be Specific
+### Be Specific
 
 When defining an exception, try to think about the *actor*, *action*, and *target*, and whenever possible use all three items for an exception. For example, instead of simply using `proc.name` or `container.image.repository` for a file-based exception, also include the file being acted on via `fd.name`, `fd.directory`, etc. Similarly, if a rule is container-specific, don't only include the image `container.image.repository`, also include the processs name `proc.name`.
 
-## Use Set Operators
+### Use Set Operators
 
 If an exception involves a set of process names, file paths, etc., combine the process names into a list and use the `in`/`pmatch` operator to handle the values in a single exception. Here's an example:
 
@@ -220,6 +220,6 @@ If an exception involves a set of process names, file paths, etc., combine the p
 
 This exception matches process name and path, but allows for multiple process names writing to any of a set of files.
 
-# More Information
+## More Information
 
 The original [proposal](https://github.com/falcosecurity/falco/blob/master/proposals/20200828-structured-exception-handling.md) describes the benefits of exceptions in more detail.

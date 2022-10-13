@@ -4,7 +4,7 @@ title: How fd.sip.name and Related Fields Work in Falco rules
 weight: 3
 ---
 
-# Introduction
+## Introduction
 
 This section explains how to use the fd.sip.name field and the related fd.{clr}ip.name fields in the default falco ruleset. For example:
 
@@ -26,14 +26,14 @@ This section explains how to use the fd.sip.name field and the related fd.{clr}i
     "xmr.crypto-pool.fr"
   ]
 
-# Add rule based on crypto mining IOCs
+## Add rule based on crypto mining IOCs
 - macro: minerpool_https
   condition: (fd.sport="443" and fd.sip.name in (https_miner_domains))
 ```
 
 The fd.sip.name field and the related fd.{clr}ip.name fields behave differently than the other fields in the falco ruleset. See the following to learn more.
 
-# Resolve Domains First, Match IPs Later
+## Resolve Domains First, Match IPs Later
 
 When a rule contains a field `fd.*ip.name`, the domain names on the right hand side of the comparison (The `foo.com` in `=foo.com or in (foo.com, bar.com)`) are saved internally within the falco engine. The engine looks up the A records for those domains immediately and saves the set of returned IPs internally. This behavior prevents stalling the system call event loop to perform a blocking time-consuming DNS lookup at the time of the system call event.
 
@@ -43,22 +43,22 @@ Here's an example. If a rule contains a predicate `evt.type=connect and fd.sip.n
 
 The right hand side of a predicate can be `in` e.g. `fd.sip.name in (yahoo.com, foo.com)`. In this case, the set of IPs for both domains are resolved and held. A later system call event will compare a given IP to the set of IPs for both sets of domains.
 
-# How Falco Engine Refreshes Domain/IP Mappings
+## How Falco Engine Refreshes Domain/IP Mappings
 
 The actual lookup of domains is done on a separate thread, to avoid stalling the main system call event loop. Additionally, the set of IPs for the domain is refreshed periodically, with the following strategy:
 
 * Domain names have a base refresh time of 10 seconds.
 * If after a refresh cycle the IP addresses haven't changed, the refresh timeout for that domain name is doubled until 320 seconds (~5mins).
 
-# Caveats Related to fd.*ip.name Fields
+## Caveats Related to fd.*ip.name Fields
 
 There are a few caveats related to the use of `fd.*ip.name` fields that should be considered when writing Falco Rules.
 
-## The Right-Hand Side Must Be a Resolvable Domain Name
+### The Right-Hand Side Must Be a Resolvable Domain Name
 
 Since the right hand side of the predicate (e.g. the `foo.com` part of `fd.sip.name=foo.com`) is used to perform a DNS lookup at the time the rules are loaded, it must be a resolvable domain name. As a result, it's not possible to use domain substrings in conjunction with comparison operators like startswith/endswith/contains/etc. e.g. `fd.sip.name contains company.com`. Also, the falco engine must be able to resolve domain names in order for rules using `fd.*ip.name` fields to return accurate results.
 
-## Using fd.*ip.name Fields in Outputs
+### Using fd.*ip.name Fields in Outputs
 
 The fields `fd.*ip.name` can be used in rule outputs, but they will return meaningful values only when the actual IP for the system call event matches one of the IPs associated with the domain name for the field. For example, the following rule will display a meaningful output for `...IP=%fd.sip.name`, as the rule condition has a positive comparison for a `fd.sip.name` field:
 
@@ -82,6 +82,6 @@ In contrast, this rule will never display a meaningful output for `...IP=%fd.sip
 
 The rule can match a given connect to an IP like 1.5.6.7, which is outside the known IPs 1.2.3.4/1.2.3.5/1.2.3.6 and generate an alert, but the value for `%fd.sip.name` will be blank. (The full connection information is still available in `%fd.name`, though.)
 
-## Limited Comparison Operators
+### Limited Comparison Operators
 
 Although the falco rules systax supports a fairly wide set of comparison operators for IPs, including contains, the only allowed operators for `fd.*ip.name` fields are =/!=/in, with an optional preceding not.

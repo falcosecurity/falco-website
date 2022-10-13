@@ -7,7 +7,7 @@ Here are the fields supported by Falco. These fields can be used in the `conditi
 
 You can also see this set of fields via `falco --list=<source>`, with `<source>` being one of the [supported sources](../event-sources/).
 
-## System Calls (source `syscall`)
+### System Calls (source `syscall`)
 <!-- 
 generated with:
 falco --list=syscall --markdown  | sed -E 's/## Field Class/### Field Class/g' | awk '!/^Event Sources: syscall\w*/' | awk '/Field Class: evt/{c++;if(c==2){sub("evt","evt (for system calls)");c=0}}1'
