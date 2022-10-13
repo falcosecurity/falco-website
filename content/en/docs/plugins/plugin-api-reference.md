@@ -15,13 +15,15 @@ At a high level, the API functions are grouped as follows:
 * Functions that implement the event sourcing capability
 * Functions that implement the field extraction capability
 
-The C header file [plugin_info.h](https://github.com/falcosecurity/libs/blob/master/userspace/libscap/plugin_info.h) enumerates all the API functions and associated structs/types, as they are used by the plugins framework. It can be included in your source code when writing your own plugin, to take advantage of values like `PLUGIN_API_VERSION_XXX`, `ss_plugin_type`, etc.
+The C header files [plugin_api.h](hhttps://github.com/falcosecurity/libs/blob/173c139e6f04c802da9dddb20beab050f558b7af/userspace/plugin/plugin_api.h) and [plugin_types.h](https://github.com/falcosecurity/libs/blob/173c139e6f04c802da9dddb20beab050f558b7af/userspace/plugin/plugin_types.h) numerate all the API functions and associated structs/types as they are used by the plugins framework. The whole plugin API and the loader used in Falco are implemented in C in a standaline module located inside [falcosecurity/libs/userspace/plugin](https://github.com/falcosecurity/libs/tree/master/userspace/plugin), and can be imported and reused in other projects using the falcosecurity plugin system (e.g. we have a [plugin loader written in Go](https://github.com/falcosecurity/plugin-sdk-go/tree/main/pkg/loader) developed on top of the C one).
 
 Remember, however, that from the perspective of the plugin, each function name has a prefix `plugin_` e.g. `plugin_get_required_api_version`, `plugin_get_name`, etc.
 
+Since [Falco v0.33.0](../../../blog/falco-0-33-0), some function symbols of **the plugin API started supporting concurrent invocations** from multiple threads. If not explicitly specified in each symbol's API reference, the plugin API assumes that functions are invoked always from the same thread with no concurrency.
+
 ### Plugin API Versioning
 
-**The current version of the plugin API is `1.0.0`**.
+**The current version of the plugin API is `2.0.0`**.
 
 The plugin API is a formal contract between the framework and the plugins, and it is versioned using [semantic versioning](https://semver.org/). The framework exposes the plugin API version it supports, and each plugin expresses a required plugin API version. If the version required by a plugin does not pass the semantic check with the one supported by the framework, then the plugin cannot be loaded. See the section about [`plugin_get_required_api_version`](#get-required-api-version) for more details.
 
@@ -44,7 +46,7 @@ The following conventions apply for all of the below API functions:
 const char* plugin_get_required_api_version()   [Required: yes]
 ```
 
-This function returns a string containing a [semver](https://semver.org/) version number e.g. "1.0.0", reflecting the version of the plugin API framework that this plugin requires. This is different than the version of the plugin itself, and should only have to change when the plugin API changes.
+This function returns a string containing a [semver](https://semver.org/) version number e.g. "2.0.0", reflecting the version of the plugin API framework that this plugin requires. This is different than the version of the plugin itself, and should only have to change when the plugin API changes.
 
 This is the first function the framework calls when loading a plugin. If the returned value is not semver-compatible with the version of the plugin API framework, the plugin will not be loaded.
 
@@ -66,6 +68,8 @@ These functions all return an C string, with memory owned by the plugin, that de
 * `plugin_get_contact`: Return a contact url/email/twitter account for the plugin authors.
 * `plugin_get_version`: Return the version of the plugin itself.
 
+For `get_version`, note that increasing the major version signals breaking changes in the plugin implementation but must not change the serialization format of the event data. For example, events written in pre-existing capture files must always be readable by newer versions of the plugin.
+
 ### init
 
 ```
@@ -83,6 +87,8 @@ When managing plugin-level state, keep the following in mind:
 * On failure, plugins can decide whether to return an allocated state or not. In the first case, the plugin framework will use the allocated state to retrieve the failure error with `plugin_get_last_error`, and will then free the state with `plugin_destroy`. In the second case, `plugin_destroy` will not be called and the plugin framework will return a generic error.
 
 The format of the config string is entirely determined by the plugin author, and by default is passed unchanged from Falco/the application using the plugin framework to the plugin. However, semi-structured formats like JSON/YAML are preferable to free-form text. In those cases, the plugin author can provide a schema describing the config string contents by implementing the optional `get_init_schema` function. If so, the `init` function can assume the passed-in configuration string to always be well-formed, and can avoid performing any error handling. The plugin framework will take care of automatically parsing it against the provided schema and generating ad-hoc errors accordingly. Please refer to the documentation of `get_init_schema` for more details.
+
+If a non-NULL ss_plugin_t* state is returned, then subsequent invocations of `init` must not return the same `ss_plugin_t *` value again, if not after it has been disposed with `destroy` first.
 
 ### destroy
 
@@ -155,6 +161,8 @@ The same general guidelines apply for `plugin_open` as do for `plugin_init`:
 * The plugin should support concurrent open sessions at once. Unlike plugin-level state, it's very likely that the plugin framework might call `plugin_open` multiple times for a given plugin.
 * On error, do not return any instance struct, as the plugin framework will not call `plugin_close`.
 
+If a non-NULL `ss_instance_t*` instance is returned, then subsequent invocations of `open` must not return the same `ss_instance_t*` value again, if not after it has been disposed with `close` first.
+
 ### close
 
 ```
@@ -205,6 +213,8 @@ If the plugin receives a SS_PLUGIN_FAILURE, it will close the stream of events b
 
 SS_PLUGIN_TIMEOUT should be returned whenever no events can be returned immediately. This ensures that the plugin framework is not stalled waiting for a response from `plugin_next_batch`. When the framework receives a SS_PLUGIN_TIMEOUT, it will keep the stream of events open and call `plugin_next_batch` again later.
 
+This function can be invoked concurrently by multiple threads, each with distinct and unique parameter values. The value of the `ss_plugin_event**` output parameter must be uniquely attached to the ss_instance_t* parameter value. The pointer must not be shared across multiple distinct `ss_instance_t*` values.
+
 ### get_progress
 
 ```
@@ -218,6 +228,8 @@ If not exported, the plugin framework will not print meaningful process indicato
 When called, the `progress_pct` pointer should be updated with the read progress, as a number between 0 (no data has been read) and 10000 (100% of the data has been read). This encoding allows the engine to print progress decimals without requiring to deal with floating point numbers (which could cause incompatibility problems with some languages).
 
 The return value is an string representation of the read progress, with the memory owned by the plugin. This might include the progress percentage combined with additional context added by the plugin. The plugin can return NULL. In this case, the framework will use the `progress_pct` value instead.
+
+This function can be invoked concurrently by multiple threads, each with distinct and unique parameter values. If the returned pointer is non-NULL, then it must be uniquely attached to the `ss_instance_t*` parameter value. The pointer must not be shared across multiple distinct `ss_instance_t*` values.
 
 ### event_to_string
 
@@ -235,6 +247,8 @@ Here is an example output, from the [cloudtrail](https://github.com/falcosecurit
 us-east-1 masters.some-demo.k8s.local s3 GetObject Size=0 URI=s3://some-demo-env/some-demo.k8s.local/backups/etcd/events/control/etcd-cluster-created
 ```
 
+This function can be invoked concurrently by multiple threads, each with distinct and unique parameter values. If the returned pointer is non-NULL, then it must be uniquely attached to the `ss_plugin_t*` parameter value. The pointer must not be shared across multiple distinct `ss_plugin_t*` values.
+
 ### list_open_params
 
 ```
@@ -250,6 +264,11 @@ The returned value is a json string, with memory owned by the plugin, which cont
 [
     {"value": "resource1", "desc": "An example of openable resource"},
     {"value": "resource2", "desc": "Another example of openable resource"}
+	{
+		"value": "res1;res2;res3",
+		"desc": "Some names",
+		"separator": ";"
+	}
 ]
 ```
 
@@ -338,6 +357,8 @@ typedef struct ss_plugin_extract_field
 For each struct, the plugin fills in `field_id`/`field`/`arg`/`ftype` with the field. `field_id` is the index into the original list of fields returned by `plugin_get_fields`, and allows for faster mapping to a plugin's set of fields. The plugin should fill in `field_present` and either `res_str`/`res_u64` with the value for the field, depending on the field type `ftype`. If the field type is `FTYPE_STRING`, res_str should be updated to point to an string with the string value, with memory owned by the plugin. The plugin should retain this memory until the next call to `plugin_extract_fields`.
 
 If `field_present` is set to false, the plugin framework assumes that `res_str`/`res_u64` is undefined and will not use it.
+
+This function can be invoked concurrently by multiple threads, each with distinct and unique parameter values. The value of the `ss_plugin_extract_field*` output parameter must be uniquely attached to the `ss_plugin_t*` parameter value. The pointer must not be shared across multiple distinct `ss_plugin_t*` values.
 
 ### get_extract_event_sources
 
