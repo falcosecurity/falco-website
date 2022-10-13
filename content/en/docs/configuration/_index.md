@@ -17,7 +17,7 @@ Falco's configuration file is a [YAML](http://www.yaml.org/start.html) file cont
 
 
 
-Any configuration option can be overridden on the command line via the `-o/--option key=value` flag. For `key: [value list]` options, you can specify individual list items using `--option key.subkey=value`.
+Any configuration option can be overridden on the command line via the `-o/--option key=value` flag. For `key: [value list]` options, you can specify individual list items using `--option key.subkey=value`. Since version 0.31.0, Falco supports arbitrary-depth nested values override, including array access, like the following: `-o base.id=2 -o base.subvalue.subvalue2.name="hello" -o base.list[0]=100`
 
 ## Current configuration options
 
