@@ -19,7 +19,7 @@ To cover these scenarios, additional set of falco rules have been added that mon
 
 Once your cluster is configured with audit logging and the events are selected to be sent to falco, you can write falco rules that can read these events and send notifications for suspicious or other notable activity.
 
-# What's New in Falco
+## What's New in Falco
 
 Since [Falco 0.32.0](../../../blog/falco-0-32-0), the Kubernetes Audit Events support has been [refactored to become a plugin](https://github.com/falcosecurity/plugins/tree/master/plugins/k8saudit) and is compliant to the [Falco Plugin System](../../plugins/). Previously, this feature was supported as a parallel independent stream of events that was read separately from system calls, and was matched separately against its own sets of rules. 
 
@@ -39,7 +39,7 @@ The new plugin-based implementation has been developed to be as similar as possi
 
 Rules devoted to Kubernetes audit events are given in [the default k8saudit plugin rules](https://github.com/falcosecurity/plugins/tree/master/plugins/k8saudit/rules). When installed as a daemon, falco installs this rules file to `/etc/falco/`, so they are available for use.
 
-## Example
+### Example
 
 One of the rules in `k8s_audit_rules.yaml` is as follows:
 
@@ -202,7 +202,7 @@ The output string is used to print essential information about the audit event, 
 * ConfigMap name: `%ka.req.configmap.name`
 * ConfigMap contents: `%ka.req.configmap.obj`
 
-## Enabling Kubernetes Audit Logs
+### Enabling Kubernetes Audit Logs
 
 To enable Kubernetes audit logs, you need to change the arguments to the `kube-apiserver` process to add `--audit-policy-file` and `--audit-webhook-config-file` arguments and provide files that implement an audit policy/webhook configuration. It is beyond the scope of Falco documentation to give a detailed description of how to do this, but the [example files](https://github.com/falcosecurity/evolution/blob/master/examples/k8s_audit_config/README.md) show how audit logging is added to minikube. Managed Kubernetes providers will usually provide a mechanism to configure the audit system.
 
