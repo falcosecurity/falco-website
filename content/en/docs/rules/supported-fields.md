@@ -148,6 +148,9 @@ Name | Type | Description
 `thread.cap_permitted` | CHARBUF | The permitted capabilities set
 `thread.cap_inheritable` | CHARBUF | The inheritable capabilities set
 `thread.cap_effective` | CHARBUF | The effective capabilities set
+`proc.cmdnargs` | UINT64 | The number of cmd args.
+`proc.cmdlenargs` | UINT64 | The total count of characters / length of all cmd args combined excluding whitespaces.
+`proc.pvpid` | INT64 | the id of the parent process generating the event as seen from its current PID namespace.
 
 ### Field Class: user
 
@@ -170,7 +173,7 @@ Information about the user group.
 
 Name | Type | Description
 :----|:-----|:-----------
-`group.gid` | UINT64 | group ID.
+`group.gid` | UINT32 | group ID.
 `group.name` | CHARBUF | group name.
 
 ### Field Class: container
@@ -209,7 +212,7 @@ Name | Type | Description
 :----|:-----|:-----------
 `fd.num` | INT64 | the unique number identifying the file descriptor.
 `fd.type` | CHARBUF | type of FD. Can be 'file', 'directory', 'ipv4', 'ipv6', 'unix', 'pipe', 'event', 'signalfd', 'eventpoll', 'inotify' or 'signalfd'.
-`fd.typechar` | CHARBUF | type of FD as a single character. Can be 'f' for file, 4 for IPv4 socket, 6 for IPv6 socket, 'u' for unix socket, p for pipe, 'e' for eventfd, 's' for signalfd, 'l' for eventpoll, 'i' for inotify, 'o' for unknown.
+`fd.typechar` | CHARBUF | type of FD as a single character. Can be 'f' for file, 4 for IPv4 socket, 6 for IPv6 socket, 'u' for unix socket, p for pipe, 'e' for eventfd, 's' for signalfd, 'l' for eventpoll, 'i' for inotify, 'b' for bpf, 'u' for userfaultd, 'r' for io_uring, 'o' for unknown.
 `fd.name` | CHARBUF | FD full name. If the fd is a file, this field contains the full path. If the FD is a socket, this field contain the connection tuple.
 `fd.directory` | CHARBUF | If the fd is a file, the directory that contains it.
 `fd.filename` | CHARBUF | If the fd is a file, the filename without the path.
@@ -249,6 +252,7 @@ Name | Type | Description
 `fd.dev.major` | INT32 | major device number containing the referenced file
 `fd.dev.minor` | INT32 | minor device number containing the referenced file
 `fd.ino` | INT64 | inode number of the referenced file
+`fd.nameraw` | CHARBUF | FD full name raw. Just like fd.name, but only used if fd is a file path. File path is kept raw with limited sanitization and without deriving the absolute path.
 
 ### Field Class: syslog
 
@@ -279,7 +283,7 @@ Name | Type | Description
 
 ### Field Class: k8s
 
-Kubernetes related context. Available when configured to fetch k8s meta-data from API Server.
+Kubernetes related context. When configured to fetch from the API server, all fields are available. Otherwise, only the `k8s.pod.*` and `k8s.ns.name` fields are populated with data gathered from the container runtime.
 
 
 Name | Type | Description
