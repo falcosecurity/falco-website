@@ -7,7 +7,7 @@ Falco uses different instrumentations to analyze the system workload and pass se
 
 There are three supported syscall sources:
 
-- Kernel module *(dafault)*
+- Kernel module *(default)*
 - eBPF probe
 - Userspace instrumentation
 
