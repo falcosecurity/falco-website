@@ -1,5 +1,5 @@
 ---
-title: Syscall Events
+title: Kernel Events
 weight: 1
 ---
 
@@ -33,7 +33,7 @@ To enable the eBPF support in Falco set the `FALCO_BPF_PROBE` environment variab
 ## Userspace instrumentation
 
 {{% pageinfo color="warning" %}}
-This [syscall source](https://github.com/falcosecurity/pdig) is archived. Falco still has the support for it but the userspace instrumentation is no more maintained.
+[The pdig project](https://github.com/falcosecurity/pdig) is currently in archived status. Falco still has support for userspace instrumentation, but `pdig` is not actively maintained currently.
 {{% /pageinfo %}}
 
 Differently from the other drivers, as the name suggests, userspace instrumentation happens 100% in userspace.
