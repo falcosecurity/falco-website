@@ -33,7 +33,7 @@ Wed Mar 27 15:28:24 2019: Exiting.
 
 ## Actions Rate Throttling
 
-To reduce the likelihood of a flood of log messages/alerts, a token bucket is provided to govern the actions. The default parameter of the token bucket is the rate of one alert per 30 seconds with an allowed burst of up to 10 messages.
+To reduce the likelihood of a flood of log messages/alerts, Falco provides an alert throttling mechanism disabled by default. This feature can be enabled through the [Falco configuration](../../configuration) (see the `outputs` entry). Before [v0.33.0](/blog/falco-0-33-0.md) this feature was enabled by default.
 
 ## Configuration
 
