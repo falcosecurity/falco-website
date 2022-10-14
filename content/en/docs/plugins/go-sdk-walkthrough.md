@@ -262,7 +262,7 @@ The SDK takes care of generating all the required C exported functions that the 
 
 This section walks through the implementation of the `dummy`. This plugin returns events that are just a number value that increases with each event generated. Each increase is 1 plus a random "jitter" value that ranges from [0:jitter]. The jitter value is provided as configuration to the plugin in `plugin_init`. The starting value and the maximum number of events are provided as open parameters to the plugin in `plugin_open`.
 
-This will show how the above API functions are actually used in a functional plugin. The source code for this plugin can be found at [dummy.go](https://github.com/falcosecurity/plugins/blob/master/plugins/dummy/dummy.go).
+This will show how the above API functions are actually used in a functional plugin. The source code for this plugin can be found at [dummy.go](https://github.com/falcosecurity/plugins/blob/master/plugins/dummy/plugin/dummy.go).
 
 ### Initial Imports
 
