@@ -88,7 +88,7 @@ When managing plugin-level state, keep the following in mind:
 
 The format of the config string is entirely determined by the plugin author, and by default is passed unchanged from Falco/the application using the plugin framework to the plugin. However, semi-structured formats like JSON/YAML are preferable to free-form text. In those cases, the plugin author can provide a schema describing the config string contents by implementing the optional `get_init_schema` function. If so, the `init` function can assume the passed-in configuration string to always be well-formed, and can avoid performing any error handling. The plugin framework will take care of automatically parsing it against the provided schema and generating ad-hoc errors accordingly. Please refer to the documentation of `get_init_schema` for more details.
 
-If a non-NULL ss_plugin_t* state is returned, then subsequent invocations of `init` must not return the same `ss_plugin_t *` value again, if not after it has been disposed with `destroy` first.
+If a non-NULL ss_plugin_t* state is returned, then subsequent invocations of `init` must not return the same `ss_plugin_t *` value again, unless it has been disposed with `destroy` first.
 
 ### destroy
 
@@ -161,7 +161,7 @@ The same general guidelines apply for `plugin_open` as do for `plugin_init`:
 * The plugin should support concurrent open sessions at once. Unlike plugin-level state, it's very likely that the plugin framework might call `plugin_open` multiple times for a given plugin.
 * On error, do not return any instance struct, as the plugin framework will not call `plugin_close`.
 
-If a non-NULL `ss_instance_t*` instance is returned, then subsequent invocations of `open` must not return the same `ss_instance_t*` value again, if not after it has been disposed with `close` first.
+If a non-NULL `ss_instance_t*` instance is returned, then subsequent invocations of `open` must not return the same `ss_instance_t*` value again, unless it has been disposed with `close` first.
 
 ### close
 
