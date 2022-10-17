@@ -8,9 +8,9 @@ weight: 2
 
 The easiest way to use Falco on Kubernetes in a local environment is on [Minikube](https://kubernetes.io/docs/tutorials/hello-minikube/).
 
-When running `minikube` with the default `--driver` arguments, Minikube creates a VM that runs the various Kubernetes services and a container framework to run Pods, etc. Generally, it's not possible to build the Falco kernel module directly on the minikube VM, as the VM doesn't include the kernel headers for the running kernel.
+When running `minikube` with one of the following drivers `virtualbox, qemu, kvm2`, it creates a VM that runs the various Kubernetes services and a container framework to run Pods, etc. Generally, it's not possible to build the Falco kernel module directly on the `minikube` VM, as the VM doesn't include the kernel headers for the running kernel.
 
-To address this, starting with Falco 0.13.1 a pre-build kernel modules for the last 10 minikube versions are available at https://s3.amazonaws.com/download.draios.com. This allows the download fallback step to succeed with a loadable kernel module. Falco now supports 10 most recent versions of minikube with each new Falco release. Falco currently retains previously-built kernel modules for download and continues to provide limited historical support as well.
+To address this, starting with Falco 0.33.0 prebuilt `kernel modules` and `bpf probes` for the last 3 `minikube` major versions, including minor versions, are available at https://download.falco.org/?prefix=driver/. This allows the download fallback step to succeed with a loadable driver. New versions of `minikube` are automatically discovered by the [kernel-crawler](https://github.com/falcosecurity/kernel-crawler) and periodically built by [test-infra](https://github.com/falcosecurity/test-infra). The supported versions can be found at https://falcosecurity.github.io/kernel-crawler/?target=Minikube&arch=x86_64. Falco currently retains previously-built kernel modules for download and continues to provide limited historical support as well.
 
 You can follow the official
 [Get Started!](https://minikube.sigs.k8s.io/docs/start/) guide to install.
@@ -21,7 +21,7 @@ You can follow the official
 
 To set up Falco with minikube:
 
-1. Create the cluster with Minikube using a VM driver, in this case Virtualbox:
+1. Create the cluster with Minikube using a VM driver, in this case, Virtualbox:
 
     ```shell
     minikube start --driver=virtualbox
@@ -41,35 +41,40 @@ To set up Falco with minikube:
     ```
 
 4. Install Falco using Helm:
+    1. With kernel module:
 
     ```shell
-    helm install falco falcosecurity/falco
+    helm install falco --set tty=true falcosecurity/falco
+    ```
+    2. With bpf probe:
+    ```shell
+    helm install falco --set driver.kind=ebpf --set tty=true falcosecurity/falco
     ```
 
     The output is similar to:
 
-```
-NAME: falco
-LAST DEPLOYED: Wed Jan 20 18:24:08 2021
-NAMESPACE: default
-STATUS: deployed
-REVISION: 1
-TEST SUITE: None
-NOTES:
-Falco agents are spinning up on each node in your cluster. After a few
-seconds, they are going to start monitoring your containers looking for
-security issues.
+    ```
+    NAME: falco
+    LAST DEPLOYED: Wed Jan 20 18:24:08 2021
+    NAMESPACE: default
+    STATUS: deployed
+    REVISION: 1
+    TEST SUITE: None
+    NOTES:
+    Falco agents are spinning up on each node in your cluster. After a few
+    seconds, they are going to start monitoring your containers looking for
+    security issues.
 
 
-No further action should be required.
+    No further action should be required.
 
 
-Tip:
-You can easily forward Falco events to Slack, Kafka, AWS Lambda and more with falcosidekick.
-Full list of outputs: https://github.com/falcosecurity/charts/falcosidekick.
-You can enable its deployment with `--set falcosidekick.enabled=true` or in your values.yaml.
-See: https://github.com/falcosecurity/charts/blob/master/falcosidekick/values.yaml for configuration values.
-```
+    Tip:
+    You can easily forward Falco events to Slack, Kafka, AWS Lambda and more with falcosidekick.
+    Full list of outputs: https://github.com/falcosecurity/charts/falcosidekick.
+    You can enable its deployment with `--set falcosidekick.enabled=true` or in your values.yaml.
+    See: https://github.com/falcosecurity/charts/blob/master/falcosidekick/values.yaml for configuration values.
+    ```
 
 5. Check the logs to ensure that Falco is running:
 
@@ -79,18 +84,18 @@ See: https://github.com/falcosecurity/charts/blob/master/falcosidekick/values.ya
 
     The output is similar to:
 
-```
-* Trying to dkms install falco module with GCC /usr/bin/gcc-5
-DIRECTIVE: MAKE="'/tmp/falco-dkms-make'"
-* Running dkms build failed, couldn't find /var/lib/dkms/falco/5c0b863ddade7a45568c0ac97d037422c9efb750/build/make.log (with GCC /usr/bin/gcc-5)
-* Trying to load a system falco driver, if present
-* Success: falco module found and loaded with modprobe
-Wed Jan 20 12:55:47 2021: Falco version 0.27.0 (driver version 5c0b863ddade7a45568c0ac97d037422c9efb750)
-Wed Jan 20 12:55:47 2021: Falco initialized with configuration file /etc/falco/falco.yaml
-Wed Jan 20 12:55:47 2021: Loading rules from file /etc/falco/falco_rules.yaml:
-Wed Jan 20 12:55:48 2021: Loading rules from file /etc/falco/falco_rules.local.yaml:
-Wed Jan 20 12:55:49 2021: Starting internal webserver, listening on port 8765
-```
+    ```
+    * Trying to dkms install falco module with GCC /usr/bin/gcc-5
+    DIRECTIVE: MAKE="'/tmp/falco-dkms-make'"
+    * Running dkms build failed, couldn't find /var/lib/dkms/falco/5c0b863ddade7a45568c0ac97d037422c9efb750/build/make.log (with GCC /usr/bin/gcc-5)
+    * Trying to load a system falco driver, if present
+    * Success: falco module found and loaded with modprobe
+    Wed Jan 20 12:55:47 2021: Falco version 0.27.0 (driver version 5c0b863ddade7a45568c0ac97d037422c9efb750)
+    Wed Jan 20 12:55:47 2021: Falco initialized with configuration file /etc/falco/falco.yaml
+    Wed Jan 20 12:55:47 2021: Loading rules from file /etc/falco/falco_rules.yaml:
+    Wed Jan 20 12:55:48 2021: Loading rules from file /etc/falco/falco_rules.local.yaml:
+    Wed Jan 20 12:55:49 2021: Starting internal webserver, listening on port 8765
+    ```
 
 ## kind
 
