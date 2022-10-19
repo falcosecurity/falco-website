@@ -22,7 +22,7 @@ Finally, once a snapshot for the previous version has been created, you need to 
 The following instructions assume **`v0.x.y` is the version to be archived**.
 
 1. Create the new `v0.x` branch from the current `master` branch.
-2. Within the `v0.x` branch, edit the [config.toml](config.toml) file:
+2. Within the `v0.x` branch, edit the [config.toml]([config.toml](_default/config.toml)) file:
     - set `archived_version` to `true`,
     - make sure `version` is equal to `v0.x.y`,
     - finally, commit and push to `v0.x`.
