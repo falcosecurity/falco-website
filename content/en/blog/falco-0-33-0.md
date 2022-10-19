@@ -11,7 +11,7 @@ A big thank you to the community for helping get the latest release over the fin
 
 ## What’s new? 🗞️
 
-In this release we saw **82** pull requests to the Falco repo and **89** for the libraries and drivers. We had a total of **20+ individual contributors**. We’d like to give a special shout-out to [Andrea Terzolo](https://github.com/Andreagit97) and [Melissa Kilby](https://github.com/incertum) for standing out as two of the most high-impact contributors for this release.
+In this release we saw **more than 160 pull requests** across the repos of Falco and the libraries. We had a total of **20+ individual contributors**. We’d like to give a special shout-out to [Andrea Terzolo](https://github.com/Andreagit97) and [Melissa Kilby](https://github.com/incertum) for standing out as two of the most high-impact contributors for this release.
 
 The project really seems to be more alive than ever! Thank you to our maintainers and contributors, as this would not happen without your support.
 
