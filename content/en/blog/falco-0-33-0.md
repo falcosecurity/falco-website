@@ -9,7 +9,7 @@ Dear community, today we are happy to announce the release of Falco 0.33.0 🎉!
 
 A big thank you to the community for helping get the latest release over the finish line. The Falco community rallied behind this release and we wanted to share some of the latest novelties you’ll find in this most recent launch. To read a more detailed account of the release, check out [v0.33.0 in the changelog](https://github.com/falcosecurity/falco/releases/tag/0.33.0).
 
-## What’s new? 🗞️
+## What’s New? 🗞️
 
 In this release we saw **more than 160 pull requests** across the repos of Falco and the libraries. We had a total of **20+ individual contributors**. We’d like to give a special shout-out to [Andrea Terzolo](https://github.com/Andreagit97) and [Melissa Kilby](https://github.com/incertum) for standing out as two of the most high-impact contributors for this release.
 
@@ -57,7 +57,7 @@ Historically, Falco supported consuming events from one source only. The only ex
 
 This is a huge improvement and also **brings back support for running syscall and k8s audit logs** in the same Falco instance, for all the folks who were interested in doing so. For insights about the principles and rationale behind this release, follow the discussion at [falcosecurity/falco#2074](https://github.com/falcosecurity/falco/issues/2074).
 
-Please note that this feature introduces **few user-facing changes** to be aware of when updating. The primary one is that the syscall event sources will always be enabled by default if not explicitly disabled. So, please make sure you pass `--disable-source=syscall` to the Falco CLI if you’re interested in a plugin-only deployment!
+Please note that this feature introduces **few user-facing changes** to be aware of when updating. The primary one is that the syscall event sources will always be enabled by default if not explicitly disabled. So, please make sure you pass `--disable-source=syscall` to the Falco CLI if you’re interested in a plugin-only deployment! You can find more details in [the documentation](/docs/event-sources/#configuring-event-sources).
 
 ### Supporting minikube in the Driver Loader 📥
 
@@ -65,7 +65,7 @@ We now offer new prebuilt drivers for the three most recent major version releas
 
 In general, it’s not possible to compile the Falco drivers locally when deploying on minikube, so in the past we needed to wait for a new minikube release to bundle the most recent Falco drivers. Thanks to the new Kernel Crawler, and great work carried out by [Aldo Lacuku](https://github.com/alacuku), our driver build grid now supports and auto-discovers the driver configurations for minikube and provides users with pre-built drivers to download with the driver loader. This **reduces release delays** to the bare minimum, and running Falco on minikube has never been easier!
 
-### Disabling Alert Rate Limiter at Default ⚠️
+### Disabling Alert Rate Limiter at Default ❗
 
 Falco provides a throttling mechanism for reducing the number of rule alerts, with the purpose of reducing noise in some environments. However, some users found concerns in this approach, as in the discussion at [falcosecurity/falco#1333](https://github.com/falcosecurity/falco/issues/1333).
 
@@ -89,18 +89,18 @@ Additionally, existing rules have been updated to become **less noisy** and **mo
 
 It’s time to try out the new release! Here are some pointers for getting started with Falco:
 
-* [Container Images](./docs/getting-started/running/#docker)
+* [Container Images](/docs/getting-started/running/#docker)
   * `falco` ([DockerHub](https://hub.docker.com/r/falcosecurity/falco), [AWS ECR Gallery](https://gallery.ecr.aws/falcosecurity/falco))
   * `falco-no-driver` ([DockerHub](https://hub.docker.com/r/falcosecurity/falco-no-driver), [AWS ECR Gallery](https://gallery.ecr.aws/falcosecurity/falco-no-driver))
   * `falco-driver-loader` ([DockerHub](https://hub.docker.com/r/falcosecurity/falco-driver-loader), [AWS ECR Gallery](https://gallery.ecr.aws/falcosecurity/falco-driver-loader))
-* [CentOS/Amazon Linux](./docs/getting-started/installation/#centos-rhel)
-* [Debian/Ubuntu](./docs/getting-started/installation/#debian)
-* [openSUSE](./docs/getting-started/installation/#suse)
-* [Linux binary package](./docs/getting-started/installation/#linux-binary)
+* [CentOS/Amazon Linux](/docs/getting-started/installation/#centos-rhel)
+* [Debian/Ubuntu](/docs/getting-started/installation/#debian)
+* [openSUSE](/docs/getting-started/installation/#suse)
+* [Linux binary package](/docs/getting-started/installation/#linux-binary)
 
 But the party is far from being over! The community is preparing **lots of exciting updates** for the near future. Special mention goes to [the modern eBPF probe work](https://github.com/falcosecurity/libs/blob/master/proposals/20220329-modern-bpf-probe.md) led by Andrea Terzolo, which is under active development and should be rolled out by the next Falco release! Moreover, there has been plenty of work on [falcoctl](https://github.com/falcosecurity/falcoctl), and we can expect a new release of the tool to come soon and bring plenty of exciting novelties in the ecosystem! 
 
-## Stay tuned 🤗
+## Stay Tuned 🤗
 
 **Join us** in our communication channels and in our weekly community calls! It’s always great to have new members in the community and we’re looking forward to having your feedback and hearing your ideas.
 
