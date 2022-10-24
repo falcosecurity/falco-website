@@ -12,14 +12,14 @@ When running `minikube` with one of the following drivers `virtualbox, qemu, kvm
 
 To address this, starting with Falco 0.33.0 prebuilt `kernel modules` and `bpf probes` for the last 3 `minikube` major versions, including minor versions, are available at https://download.falco.org/?prefix=driver/. This allows the download fallback step to succeed with a loadable driver. New versions of `minikube` are automatically discovered by the [kernel-crawler](https://github.com/falcosecurity/kernel-crawler) and periodically built by [test-infra](https://github.com/falcosecurity/test-infra). The supported versions can be found at https://falcosecurity.github.io/kernel-crawler/?target=Minikube&arch=x86_64. Falco currently retains previously-built kernel modules for download and continues to provide limited historical support as well.
 
-You can follow the official
-[Get Started!](https://minikube.sigs.k8s.io/docs/start/) guide to install.
+You can follow the official [Get Started!](https://minikube.sigs.k8s.io/docs/start/) guide to install.
 
 <a class="btn btn-primary" href="https://minikube.sigs.k8s.io/docs/start/" role="button" aria-label="View minikube Get Started! Guide">View minikube Get Started! Guide</a>
 
 **Note**: Ensure that you have [installed kubectl](/docs/getting-started/third-party/install-tools/#kubectl).
 
-To set up Falco with minikube:
+#### Falco with syscall source
+In order to install Falco with the `kernel module` or the `bpf probe`:
 
 1. Create the cluster with Minikube using a VM driver, in this case, Virtualbox:
 
@@ -33,7 +33,7 @@ To set up Falco with minikube:
     kubectl get pods --all-namespaces
     ```
 
-3. Add the stable chart to Helm repository:
+3. Add the Falco Helm repository and update the local Helm repository cache:
 
     ```shell
     helm repo add falcosecurity https://falcosecurity.github.io/charts
@@ -43,19 +43,19 @@ To set up Falco with minikube:
 4. Install Falco using Helm:
     1. With kernel module:
 
-    ```shell
-    helm install falco --set tty=true falcosecurity/falco
-    ```
+        ```shell
+        helm install falco --set tty=true falcosecurity/falco
+        ```
     2. With bpf probe:
-    ```shell
-    helm install falco --set driver.kind=ebpf --set tty=true falcosecurity/falco
-    ```
+        ```shell
+        helm install falco --set driver.kind=ebpf --set tty=true falcosecurity/falco
+        ```
 
     The output is similar to:
 
-    ```
+    ```bash
     NAME: falco
-    LAST DEPLOYED: Wed Jan 20 18:24:08 2021
+    LAST DEPLOYED: Mon Oct 24 16:55:51 2022
     NAMESPACE: default
     STATUS: deployed
     REVISION: 1
@@ -69,33 +69,264 @@ To set up Falco with minikube:
     No further action should be required.
 
 
-    Tip:
-    You can easily forward Falco events to Slack, Kafka, AWS Lambda and more with falcosidekick.
-    Full list of outputs: https://github.com/falcosecurity/charts/falcosidekick.
-    You can enable its deployment with `--set falcosidekick.enabled=true` or in your values.yaml.
+    Tip: 
+    You can easily forward Falco events to Slack, Kafka, AWS Lambda and more with falcosidekick. 
+    Full list of outputs: https://github.com/falcosecurity/charts/tree/master/falcosidekick.
+    You can enable its deployment with `--set falcosidekick.enabled=true` or in your values.yaml. 
     See: https://github.com/falcosecurity/charts/blob/master/falcosidekick/values.yaml for configuration values.
     ```
 
 5. Check the logs to ensure that Falco is running:
 
     ```shell
-    kubectl logs -l app=falco -f
+    kubectl logs -l app.kubernetes.io/name=falco --all-containers
     ```
 
     The output is similar to:
 
+    ```bash
+    * Looking for a falco module locally (kernel 5.10.57)
+    * Filename 'falco_minikube_5.10.57_1_1.26.1.ko' is composed of:
+     - driver name: falco
+     - target identifier: minikube
+     - kernel release: 5.10.57
+     - kernel version: 1_1.26.1
+    * Trying to download a prebuilt falco module from https://download.falco.org/driver/3.0.1%2Bdriver/x86_64/falco_minikube_5.10.57_1_1.26.1.ko
+    * Download succeeded
+    * Success: falco module found and inserted
+    Mon Oct 24 14:57:06 2022: Falco version: 0.33.0 (x86_64)
+    Mon Oct 24 14:57:06 2022: Falco initialized with configuration file: /etc/falco/falco.yaml
+    Mon Oct 24 14:57:06 2022: Loading rules from file /etc/falco/falco_rules.yaml
+    Mon Oct 24 14:57:06 2022: Loading rules from file /etc/falco/falco_rules.local.yaml
+    Mon Oct 24 14:57:07 2022: The chosen syscall buffer dimension is: 8388608 bytes (8 MBs)
+    Mon Oct 24 14:57:07 2022: Starting health webserver with threadiness 4, listening on port 8765
+    Mon Oct 24 14:57:07 2022: Enabled event sources: syscall
+    Mon Oct 24 14:57:07 2022: Opening capture with Kernel module
     ```
-    * Trying to dkms install falco module with GCC /usr/bin/gcc-5
-    DIRECTIVE: MAKE="'/tmp/falco-dkms-make'"
-    * Running dkms build failed, couldn't find /var/lib/dkms/falco/5c0b863ddade7a45568c0ac97d037422c9efb750/build/make.log (with GCC /usr/bin/gcc-5)
-    * Trying to load a system falco driver, if present
-    * Success: falco module found and loaded with modprobe
-    Wed Jan 20 12:55:47 2021: Falco version 0.27.0 (driver version 5c0b863ddade7a45568c0ac97d037422c9efb750)
-    Wed Jan 20 12:55:47 2021: Falco initialized with configuration file /etc/falco/falco.yaml
-    Wed Jan 20 12:55:47 2021: Loading rules from file /etc/falco/falco_rules.yaml:
-    Wed Jan 20 12:55:48 2021: Loading rules from file /etc/falco/falco_rules.local.yaml:
-    Wed Jan 20 12:55:49 2021: Starting internal webserver, listening on port 8765
+
+#### Falco with multiple sources 
+Here we run Falco in `minikube` cluster with multiple sources: `syscall` and `k8s_audit`. The next steps show how to start a `minikube` cluster with the [audit logs](https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/) enabled and deploy Falco with the `kernel module` and the `k8saudit plugin`:
+
+1. First, we need to create a new folder under the configuration folder of `minikube`:
+    ```bash
+    mkdir -p ~/.minikube/files/etc/ssl/certs
     ```
+    We are assuming that the `minikube` configuration folder lives in your home folder otherwise, adjust the command according to your enviroment.
+
+2. Let's create the needed configuration files to enable the `audit logs`. Create a new file under `~/.minikube/files/etc/ssl/certs` named `audit-policy.yaml`:
+    ```bash
+    touch ~/.minikube/files/etc/ssl/certs/audit-policy.yaml
+    ```
+    and copy the following snippet into it:
+    ```yaml
+    apiVersion: audit.k8s.io/v1 # This is required.
+    kind: Policy
+    # Don't generate audit events for all requests in RequestReceived stage.
+    omitStages:
+      - "RequestReceived"
+    rules:
+      # Log pod changes at RequestResponse level
+      - level: RequestResponse
+        resources:
+        - group: ""
+          # Resource "pods" doesn't match requests to any subresource of pods,
+          # which is consistent with the RBAC policy.
+          resources: ["pods", "deployments"]
+
+      - level: RequestResponse
+        resources:
+        - group: "rbac.authorization.k8s.io"
+          # Resource "pods" doesn't match requests to any subresource of pods,
+          # which is consistent with the RBAC policy.
+          resources: ["clusterroles", "clusterrolebindings"]
+
+      # Log "pods/log", "pods/status" at Metadata level
+      - level: Metadata
+        resources:
+        - group: ""
+          resources: ["pods/log", "pods/status"]
+
+      # Don't log requests to a configmap called "controller-leader"
+      - level: None
+        resources:
+        - group: ""
+          resources: ["configmaps"]
+          resourceNames: ["controller-leader"]
+
+      # Don't log watch requests by the "system:kube-proxy" on endpoints or services
+      - level: None
+        users: ["system:kube-proxy"]
+        verbs: ["watch"]
+        resources:
+        - group: "" # core API group
+          resources: ["endpoints", "services"]
+
+      # Don't log authenticated requests to certain non-resource URL paths.
+      - level: None
+        userGroups: ["system:authenticated"]
+        nonResourceURLs:
+        - "/api*" # Wildcard matching.
+        - "/version"
+
+      # Log the request body of configmap changes in kube-system.
+      - level: Request
+        resources:
+        - group: "" # core API group
+          resources: ["configmaps"]
+        # This rule only applies to resources in the "kube-system" namespace.
+        # The empty string "" can be used to select non-namespaced resources.
+        namespaces: ["kube-system"]
+
+      # Log configmap changes in all other namespaces at the RequestResponse level.
+      - level: RequestResponse
+        resources:
+        - group: "" # core API group
+          resources: ["configmaps"]
+
+      # Log secret changes in all other namespaces at the Metadata level.
+      - level: Metadata
+        resources:
+        - group: "" # core API group
+          resources: ["secrets"]
+
+      # Log all other resources in core and extensions at the Request level.
+      - level: Request
+        resources:
+        - group: "" # core API group
+        - group: "extensions" # Version of group should NOT be included.
+
+      # A catch-all rule to log all other requests at the Metadata level.
+      - level: Metadata
+        # Long-running requests like watches that fall under this rule will not
+        # generate an audit event in RequestReceived.
+        omitStages:
+          - "RequestReceived"
+    ```
+
+    Create the file `webhook-config.yaml` required to configure the `k8s api-server` to send the audit logs to Falco:
+    ```bash
+    touch ~/.minikube/files/etc/ssl/certs/webhook-config.yaml
+    ```
+    After the file is in place write the following snippet and save the file:
+    ```yaml
+    apiVersion: v1
+    kind: Config
+    clusters:
+    - name: falco
+      cluster:
+        # certificate-authority: /path/to/ca.crt # for https
+        server: http://localhost:30007/k8s-audit
+    contexts:
+    - context:
+        cluster: falco
+        user: ""
+      name: default-context
+    current-context: default-context
+    preferences: {}
+    users: []
+    ```
+3. Once the configuration files are in place we are ready to start the `minikube` cluster:
+    ```bash
+    minikube start \
+        --extra-config=apiserver.audit-policy-file=/etc/ssl/certs/audit-policy.yaml \
+        --extra-config=apiserver.audit-log-path=- \
+        --extra-config=apiserver.audit-webhook-config-file=/etc/ssl/certs/webhook-config.yaml \
+        --extra-config=apiserver.audit-webhook-batch-max-size=10 \
+        --extra-config=apiserver.audit-webhook-batch-max-wait=5s \
+        --cpus=4 \
+        --driver=virtualbox
+    ```
+    {{% pageinfo color="warning" %}}
+     We need at least 4 CPUs for the VM to deploy Falco with multiple sources!
+    {{% /pageinfo %}}
+4. Before installing Falco, let us configure it to use the `syscall` and `k8saudit` sources. Save the following snippet in a file in your local folder and use it with helm when deploying Falco:
+    ```yaml
+    driver:
+      enabled: true
+
+    collectors:
+      enabled: true
+
+    controller:
+      kind: daemonset
+
+    services:
+      - name: k8saudit-webhook
+        type: NodePort
+        ports:
+          - port: 9765 # See plugin open_params
+            nodePort: 30007
+            protocol: TCP
+
+    tty: true
+
+    falco:
+      rules_file:
+        - /etc/falco/k8s_audit_rules.yaml
+        - /etc/falco/rules.d
+        - /etc/falco/falco_rules.yaml
+      plugins:
+        - name: k8saudit
+          library_path: libk8saudit.so
+          init_config:
+            ""
+            # maxEventBytes: 1048576
+            # sslCertificate: /etc/falco/falco.pem
+          open_params: "http://:9765/k8s-audit"
+        - name: json
+          library_path: libjson.so
+          init_config: ""
+      load_plugins: [k8saudit, json] 
+    ```
+    {{% pageinfo color="warning" %}}
+     If you need to change the port numbers then make sure to change them also in the `webhook` configuration file in step 2.
+    {{% /pageinfo %}}
+5. Add the Falco Helm repository and update the local Helm repository cache:
+
+    ```shell
+    helm repo add falcosecurity https://falcosecurity.github.io/charts
+    helm repo update
+    ```
+
+6. Assuming the configuration showed in the previous step lives in the current directory `values-falco-syscall-k8saudit.yaml`, then run the following command to deploy Falco in the `minikube` cluster:
+    ```bash
+    helm install falco \
+        --values=values-falco-syscall-k8saudit.yaml \
+        falcosecurity/falco
+    ```
+7. Check that the Falco pod is up and running:
+   ```bash
+   kubectl get pods -l app.kubernetes.io/name=falco
+   ```
+8. Execute the following command and keep the terminal open:
+   ```bash
+   kubectl logs -l app.kubernetes.io/name=falco -f
+   ```
+   The command will follow the log stream of the Falco pod by printing the logs as soon as Falco emits them. And make sure that the following lines are present:
+   ```bash
+   Mon Oct 24 15:24:06 2022: Opening capture with plugin 'k8saudit'
+   Mon Oct 24 15:24:06 2022: Opening capture with Kernel module
+   ```
+   It means that Falco is running with the configured sources.
+
+9. Trigger some rules to check that Falco works as expected. Open a new terminal and make sure that your `kubeconfig` points to the minikube cluster. Then run:
+    1. Trigger a `k8saudit` rule:
+        ```bash
+        kubectl create cm  myconfigmap --from-literal=username=admin --from-literal=password=123456
+        ```
+        In the terminal that we opened in step 8 we should ses a log line like:
+        ```bash
+        15:30:07.927586000: Warning K8s configmap with private credential (user=minikube-user verb=create resource=configmaps configmap=myconfigmap config={"password":"123456","username":"admin"})
+        ```
+    2. Trigger a Falco rule:
+        ```bash
+        kubectl exec <falco-pod-name> -- touch /bin/test-bin
+        ```
+        Check that a log similar to this one has been printed:
+        ```bash
+        15:32:04.318689836: Error File below a known binary directory opened for writing (user=<NA> user_loginuid=-1 command=touch /bin/test-bin pid=20954 file=/bin/test-bin parent=<NA> pcmdline=<NA> gparent=<NA> container_id=38e44b926166 image=falcosecurity/falco-no-driver) k8s.ns=default k8s.pod=falco-bggd7 container=38e44b926166
+        ```
+
 
 ## kind
 
