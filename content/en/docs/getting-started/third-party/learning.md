@@ -239,7 +239,12 @@ Here we run Falco in `minikube` cluster with multiple sources: `syscall` and `k8
     {{% pageinfo color="warning" %}}
      We need at least 4 CPUs for the VM to deploy Falco with multiple sources!
     {{% /pageinfo %}}
-4. Before installing Falco, let us configure it to use the `syscall` and `k8saudit` sources. Save the following snippet in a file in your local folder and use it with helm when deploying Falco:
+4. Before installing Falco, let us configure it to use the `syscall` and `k8saudit` sources. Save the following snippet in a file in your local folder:
+
+    ```bash
+    touch ~/values-falco-syscall-k8saudit.yaml
+    ```
+    and copy the following snippet into it:
     ```yaml
     driver:
       enabled: true
