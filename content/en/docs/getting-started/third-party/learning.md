@@ -111,14 +111,11 @@ Here we run Falco in `minikube` cluster with multiple sources: `syscall` and `k8
     ```bash
     mkdir -p ~/.minikube/files/etc/ssl/certs
     ```
-    We are assuming that the `minikube` configuration folder lives in your home folder otherwise, adjust the command according to your enviroment.
+    We are assuming that the `minikube` configuration folder lives in your home folder otherwise, adjust the command according to your environment.
 
-2. Let's create the needed configuration files to enable the `audit logs`. Create a new file under `~/.minikube/files/etc/ssl/certs` named `audit-policy.yaml`:
-    ```bash
-    touch ~/.minikube/files/etc/ssl/certs/audit-policy.yaml
-    ```
-    and copy the following snippet into it:
+2. Let's create the needed configuration files to enable the `audit logs`. We are going to create a new file under `~/.minikube/files/etc/ssl/certs` named `audit-policy.yaml` and copy the required config into it. Copy the following snippet into your terminal shell:
     ```yaml
+    cat << EOF > ~/.minikube/files/etc/ssl/certs/audit-policy.yaml
     apiVersion: audit.k8s.io/v1 # This is required.
     kind: Policy
     # Don't generate audit events for all requests in RequestReceived stage.
@@ -201,14 +198,12 @@ Here we run Falco in `minikube` cluster with multiple sources: `syscall` and `k8
         # generate an audit event in RequestReceived.
         omitStages:
           - "RequestReceived"
+      EOF
     ```
 
-    Create the file `webhook-config.yaml` required to configure the `k8s api-server` to send the audit logs to Falco:
-    ```bash
-    touch ~/.minikube/files/etc/ssl/certs/webhook-config.yaml
-    ```
-    After the file is in place write the following snippet and save the file:
+    Create the file `webhook-config.yaml` and save the required configuration needed by the `k8s api-server` to send the audit logs to Falco:
     ```yaml
+    cat << EOF > ~/.minikube/files/etc/ssl/certs/webhook-config.yaml
     apiVersion: v1
     kind: Config
     clusters:
@@ -224,6 +219,7 @@ Here we run Falco in `minikube` cluster with multiple sources: `syscall` and `k8
     current-context: default-context
     preferences: {}
     users: []
+    EOF
     ```
 3. Once the configuration files are in place we are ready to start the `minikube` cluster:
     ```bash
@@ -239,13 +235,9 @@ Here we run Falco in `minikube` cluster with multiple sources: `syscall` and `k8
     {{% pageinfo color="warning" %}}
      We need at least 4 CPUs for the VM to deploy Falco with multiple sources!
     {{% /pageinfo %}}
-4. Before installing Falco, let us configure it to use the `syscall` and `k8saudit` sources. Save the following snippet in a file in your local folder:
-
-    ```bash
-    touch ~/values-falco-syscall-k8saudit.yaml
-    ```
-    and copy the following snippet into it:
+4. Before installing Falco, let us configure it to use the `syscall` and `k8saudit` sources:
     ```yaml
+    cat << EOF > ~/values-falco-syscall-k8saudit.yaml
     driver:
       enabled: true
 
@@ -281,7 +273,8 @@ Here we run Falco in `minikube` cluster with multiple sources: `syscall` and `k8
         - name: json
           library_path: libjson.so
           init_config: ""
-      load_plugins: [k8saudit, json] 
+      load_plugins: [k8saudit, json]
+      EOF
     ```
     {{% pageinfo color="warning" %}}
      If you need to change the port numbers then make sure to change them also in the `webhook` configuration file in step 2.
@@ -319,13 +312,13 @@ Here we run Falco in `minikube` cluster with multiple sources: `syscall` and `k8
         ```bash
         kubectl create cm  myconfigmap --from-literal=username=admin --from-literal=password=123456
         ```
-        In the terminal that we opened in step 8 we should ses a log line like:
+        In the terminal that we opened in step 8 we should see a log line like this:
         ```bash
         15:30:07.927586000: Warning K8s configmap with private credential (user=minikube-user verb=create resource=configmaps configmap=myconfigmap config={"password":"123456","username":"admin"})
         ```
     2. Trigger a Falco rule:
         ```bash
-        kubectl exec <falco-pod-name> -- touch /bin/test-bin
+        kubectl exec $(kubectl get pods -l app.kubernetes.io/name=falco -o name) -- touch /bin/test-bin
         ```
         Check that a log similar to this one has been printed:
         ```bash
