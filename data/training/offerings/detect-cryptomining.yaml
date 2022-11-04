@@ -3,7 +3,7 @@ name: Detecting a Cryptomining Malware attack with Falco and Prometheus
 type: course 
 link: https://learn.sysdig.com/path/falco/detecting-a-crytomining-malware-attack-with-falco-and-prometheus
 description: Learn how to detect Cryptominers with Falco and Prometheus
-thumbnail: 
+thumbnail: detecting-cryptomining.png
 provider: 
   name: sysdig
   order: 3
