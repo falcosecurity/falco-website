@@ -1,0 +1,90 @@
+section#training-hero {
+  
+    // Section colors
+    background-color: $primary;
+    color: white;
+
+    a {
+        color: $secondary;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    
+}
+
+main#training-content {
+    
+    width: 80%;
+    padding-top: 0px;
+    margin: auto;
+
+    .training-header {
+        
+        background-color: $primary;
+        color: white;
+        border: solid;
+        border-radius: 5px;
+        width: 300px;
+        height: 50px;
+
+        h1 {
+            text-align: center;
+        }
+    }
+
+    .training-provider {
+        padding: 0.2rem 0.2rem 0rem 0.5rem;
+        border: solid;
+        border-radius: 5px;
+        border-color: $primary;
+        
+        h2 {
+            font-size: 1.5rem;
+            display: inline;
+            vertical-align: middle;
+            color: $secondary;
+        }
+        img {
+            display: inline-block;
+            padding: 10px;
+            height: 50px;
+        }
+    }
+
+    section#training-courses {
+
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+            
+        main#training-courses {
+
+            padding: 1rem 0px 2rem 0px;          
+
+            .training-offerings {
+                margin: auto;
+            }
+
+            .training-offering {
+                margin: 10px;
+                max-width: 300px;
+            }
+
+            .training-offering-title {
+                text-align: center;
+                margin-top: 5px;
+                color: $secondary;
+
+                &:hover {
+                    color: $primary;
+                }
+            }
+        }
+    }   
+
+    footer#training-content {
+        margin: auto;
+        text-align: center;
+    }
+
+}

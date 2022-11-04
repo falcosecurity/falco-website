@@ -1,5 +1,7 @@
-<a href="{{ .link }}">
-    <img class="img-fluid mb-4"
-         src="/images/training/providers/{{ .logo | relURL }}"
-         alt="{{ .alt }}">
+{{ $logo := print "/images/training/providers/" .logo | relURL }}
+
+<a  href="{{ .link }}"
+    target="_blank">
+    <h2>Courtesy of</h2>
+    <img class="img-fluid" src="{{ $logo }}" alt="{{ .alt }}">
 </a>

@@ -3,7 +3,7 @@ name: Falco Plugins
 type: course
 link: https://learn.sysdig.com/path/falco/falco-plugins
 description: Extending Falco to secure your cloud services
-thumbnail: 
+thumbnail: falco-plugins.png
 provider: 
   name: sysdig
   order: 2

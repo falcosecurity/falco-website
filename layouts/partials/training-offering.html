@@ -1,8 +1,10 @@
-<li>
-    <a style='font-size:75%;'
-       href="{{ .link }}" 
-       target="_blank"
-       title="Course Description: {{ .description }}">
-       {{ .name }}
-    </a>
-</li>
+{{ $thumbnail := print "/images/training/offerings/" .thumbnail | relURL }}
+
+<a  href="{{ .link }}" 
+    target="_blank"
+    title="Course Description: {{ .description }}">
+    <div class="training-offering-thumbnail">
+        <img class="img-fluid" src="{{ $thumbnail }}" alt="{{ .alt }}">
+    </div>
+    <div class="training-offering-title">{{ .name }}</div>
+</a>

@@ -1,0 +1,62 @@
+{{ $providers := index $.Site.Data.training.providers }}
+
+{{ $offerings := slice }}
+{{ range $.Site.Data.training.offerings }}
+{{ $offerings = $offerings | append . }}
+{{ end }}
+
+{{ $courses := where $offerings "type" "course" }}
+
+<main id="training-content" class="row">
+
+    <!-- Courses -->
+    <section id="training-courses" class="container-fluid">
+
+        <header id="training-courses" class="row justify-content-start">
+            <div class="training-header mt-3 mx-5">
+                <h1>Courses</h1>
+            </div>
+        </header>
+
+        <main id="training-courses">
+            {{- range $provider,$provider_data := $providers }}
+
+                {{ $provider_offerings := where $courses "provider.name" $provider }}
+                <div class="row justify-content-center">
+                    <div class="training-provider mt-4 mb-3 mx-4">
+                    {{ partial "training-provider.html" . }}
+                  </div>
+                </div>
+
+                <div class="row training-offerings justify-content-center">
+                    {{ range $offering, $offering_data := sort $provider_offerings "provider.order" }}
+                        <article class="col-lg-3 col-md-4 col-sm-6 training-offering mb-4">
+                            {{ partial "training-offering.html" . }}
+                        </article>
+                    {{ end }}
+                </div>
+            {{- end }}
+          </main>
+
+    </section>  <!-- End of section id="training-courses" -->
+
+    <footer id="training-content" class="row justify-content-center mt-5">
+        <div class="col-md-12">
+            <a name="add"></a><h2>Adding new training resources</h2>
+            <p>
+              Falco training is built and maintained by its community members.<br>
+              Have you created any material that might be useful for others to learn about Falco and Runtime Security?<br><br>
+              <strong>Open a PR and add it here!</strong>
+            </p>
+
+            <div class="doc-content training-cta">
+                <a href="https://github.com/falcosecurity/falco-website/tree/master/data/training/"
+                    target="_blank"
+                    class="btn btn-primary btn-lg">
+                    Add new resources
+                </a>
+            </div>
+        </div>
+    </footer>
+      
+</main>
