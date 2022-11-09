@@ -33,7 +33,7 @@ Falco currently stands with **5,300+ GitHub stars** and **165+ contributors** ac
 
 The most significant additions since acceptance for Incubation include:
 * Stable release schedule
-* Contribution of the whole libs source code into the Falcosecurity organization
+* Contribution of the whole libs source code into the _Falcosecurity_ organization
 * Plugin framework, allowing event sources other than syscalls
 * New eBPF probe
 * *gVisor* integration
@@ -49,5 +49,5 @@ Falco has also demonstrated consistent application of governance and community g
 
 * Go here: [Falco graduation proposal](https://github.com/cncf/toc/pull/956).
 * If you are a fan of Falco, we would love a 👍, ❤️, or 🚀 on this PR.
-* If you are using Falco in production, please add your name to our [ADOPTERS.md doc](https://github.com/falcosecurity/falco/blob/master/ADOPTERS.md).
+* If you are using Falco in production, please add your name to our [ADOPTERS.md](https://github.com/falcosecurity/falco/blob/master/ADOPTERS.md) document.
 * If you do any of the above, share it on the social media platform of your choice.
