@@ -37,7 +37,6 @@ The most significant additions since acceptance for Incubation include:
 * Plugin framework, allowing event sources other than syscalls
 * New eBPF probe
 * *gVisor* integration
-* Graduation state criteria
 
 ### Community maturity
 
