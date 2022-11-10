@@ -5,6 +5,7 @@ command = "make production-build"
 [build.environment]
 HUGO_VERSION = "0.101.0"
 NODE_VERSION = "18.12.1"
+NPM_VERSION  = "9.1.1"
 
 [context.production.environment]
 HUGO_BASEURL = "https://falco.org/"
