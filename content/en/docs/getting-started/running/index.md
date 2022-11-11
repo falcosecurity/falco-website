@@ -240,6 +240,19 @@ Other configurable options:
 - `DRIVER_REPO` - See the [Installing the driver](https://falco.org/docs/getting-started/installation/#install-driver) section.
 - `SKIP_DRIVER_LOADER` - Set this environment variable to avoid running `falco-driver-loader` when the `falcosecurity/falco` image starts. Useful when the driver has been already installed on the host by other means.
 
+## Rules validation
+It's possible to validate Falco rules without installation by using the Docker image.
+
+```bash
+export RULES_PATH=<PATH_TO_YOUR_RULES_HERE>
+docker run --rm \
+    -v ${RULES_PATH}:/etc/falco/my-rules \
+    falcosecurity/falco:latest /usr/bin/falco \
+    -r /etc/falco/falco_rules.yaml \
+    -r /etc/falco/my-rules \
+    -L
+```
+
 ## Hot Reload
 
 This will reload the Falco configuration and restart the engine without killing the pid. This is useful to propagate new config changes without killing the daemon.
