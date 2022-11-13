@@ -158,16 +158,6 @@ copyright_linux =  "The Linux Foundation ®."
 # This menu appears only if you have at least one [params.versions] set.
 version_menu = "Releases"
 
-# Flag used in the "version-banner" partial to decide whether to display a
-# banner on every page indicating that this is an archived version of the docs.
-# Set this flag to "true" if you want to display the banner.
-archived_version = false
-
-# The version number for the version of the docs represented in this doc set.
-# Used in the "version-banner" partial to display a version number for the
-# current doc set.
-version = "v0.33.0"
-
 # SHA256 checksum variable
 sha256sum = "59201c1339cc53e86edcd7d2e7273e52f784b3cf7d4a3142059112b3b9062f6d"
 
@@ -344,62 +334,6 @@ languagedirection = "ltr"
 [languages.ml.params]
 time_format_blog = "2006.01.02"
 language_alternatives = ["en"]
-
-[[params.versions]]
-fullversion = "v0.26.2"
-version = "v0.26"
-githubbranch = "0.26.2"
-docsbranch = "v0.26"
-url = "https://v0-26.falco.org/"
-
-[[params.versions]]
-fullversion = "v0.27.0"
-version = "v0.27"
-githubbranch = "0.27.0"
-docsbranch = "v0.27"
-url = "https://v0-27.falco.org"
-
-[[params.versions]]
-fullversion = "v0.28.1"
-version = "v0.28"
-githubbranch = "0.28.1"
-docsbranch = "v0.28"
-url = "https://v0-28.falco.org"
-
-[[params.versions]]
-fullversion = "v0.29.1"
-version = "v0.29"
-githubbranch = "0.29.1"
-docsbranch = "v0.29"
-url = "https://v0-29.falco.org/"
-
-[[params.versions]]
-fullversion = "v0.30.0"
-version = "v0.30"
-githubbranch = "0.30.0"
-docsbranch = "v0.30"
-url = "https://v0-30.falco.org/"
-
-[[params.versions]]
-fullversion = "v0.31.1"
-version = "v0.31"
-githubbranch = "0.31.1"
-docsbranch = "v0.31"
-url = "https://v0-31.falco.org/"
-
-[[params.versions]]
-fullversion = "v0.32.2"
-version = "v0.32"
-githubbranch = "0.32.2"
-docsbranch = "v0.32"
-url = "https://v0-32.falco.org"
-
-[[params.versions]]
-fullversion = "v0.33.0"
-version = "v0.33"
-githubbranch = "master"
-docsbranch = "master"
-url = "https://falco.org"
 
 # To edit the list of Adopters or Training Providers, go to `./params.toml`
 

@@ -1,0 +1,9 @@
+---
+docs_version_latest_heading:
+  other: Latest version
+
+docs_version_other_heading:
+  other: Older versions
+
+docs_version_current:
+  other: ' (this documentation)'
