@@ -23,23 +23,33 @@ The following instructions assume **`v0.x.y` is the version to be archived**.
 
 1. Create the new `v0.x` branch from the current `master` branch.
 2. Configure [the branch deploy control on Netlify](https://docs.netlify.com/site-deploys/overview/#branch-deploy-controls) by adding the newly created branch `v0.x`.
-3. Within the `v0.x` branch, edit the [config.toml]([config.toml](_default/config.toml)) file:
-    - set `archived_version` to `true`,
-    - make sure `version` is equal to `v0.x.y`,
-    - finally, commit and push to `v0.x`.
+3. Within the `v0.x` branch, edit the [versions/params.yaml](config/_default/versions/params.yaml) file:
+    - Set `archived_version` to `true`,
+    - Make sure `version` is equal to `v0.x.y`,
+    - Update the YAML block refering to `v0.x.y` (i.e., *the previous version*) as following:
+    ```yaml
+    versions:
+
+      - fullversion: v0.x.y
+        version: v0.x
+        githubbranch: 0.x.y
+        docsbranch: v0.x
+        url: https://v0-x.falco.org/
+    ```
+    - Finally, commit and push to `v0.x`.
 4. Once the Netlify branch build is done (see the [Deploys section](https://app.netlify.com/sites/falcosecurity/deploys)), add a new [branch subdomain on Netilify](https://docs.netlify.com/domains-https/custom-domains/multiple-domains/#branch-subdomains) by selecting the branch deploy configured in the previous step.
 5. Open a [PR in falcosecurity/test-infra](https://github.com/falcosecurity/test-infra/edit/master/config/config.yaml) to add `v0.x` as protected branch to the `prow/config.yaml`, for example:
 
     ```yaml
-            falco-website:
-              branches:
-                master:
-                  protect: true
-                v0.26:
-                  protect: true
-                ...
-                v0.x:
-                  protect: true
+    falco-website:
+      branches:
+        master:
+          protect: true
+        v0.26:
+          protect: true
+        ...
+        v0.x:
+          protect: true
     ```
 
 ### Bump the version on the current website
@@ -48,24 +58,22 @@ The following instructions assume **`v0.x.y` is the version to be archived**.
 >
 The following instructions assume **`v0.X.Y` is the new version** and **v0.x.y** is the previous already-archived version.
 
-1. Open a [PR in falcosecurity/falco-website](https://github.com/falcosecurity/falco-website/edit/update/master/config.toml) to modifiy the [config.toml](config.toml) file on the `master` branch:
-    - make sure `version` is set to `v0.X.Y` (i.e., *the new version*),
-    - append the following config for *the new version* to the end of the file:
-    ```toml
-    [[params.versions]]
-    fullversion = "v0.X.Y"
-    version = "vX.Y"
-    githubbranch = "master"
-    docsbranch = "master"
-    url = "https://falco.org"
+1. [Open a PR in the falcosecurity/falco-website repo](https://github.com/falcosecurity/falco-website/edit/master/config/_default/versions/params.yaml) to modify the [versions/params.yaml](config/_default/versions/params.yaml) file on the `master` branch:
+    - Make sure the `version` field is set to `v0.X.Y` (i.e., *the new version*).
+    - **Insert** the following config block for *the new version* as the first entry of the list, right after the `versions:` line. Make sure the indentation is right (it should align with the adyacent blocks) and tabs should be avoided.
+    ```yaml
+      - fullversion: v0.X.Y
+        version: vX.Y
+        githubbranch: master
+        docsbranch: master
+        url: https://falco.org/
     ```
-    - change the `[[params.versions]]` block refering to `v0.x.y` (i.e., *the previous version*) as following:
-    ```toml
-    [[params.versions]]
-    fullversion = "v0.x.y"
-    version = "v0.x"
-    githubbranch = "0.x.y"
-    docsbranch = "v0.x"
-    url = "https://v0-x.falco.org"
+    - Update the current second YAML block refering to `v0.x.y` (i.e., *the previous version*) as following:
+    ```yaml
+      - fullversion: v0.x.y
+        version: v0.x
+        githubbranch: 0.x.y
+        docsbranch: v0.x
+        url: https://v0-x.falco.org/
     ```
 2. Once the PR gets approved and merged, the website will be updated shortly, and no other actions are needed.
