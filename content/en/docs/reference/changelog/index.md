@@ -1,7 +1,9 @@
 ---
 title: Changelog
+aliases: ["/docs/changelog/"]
+weight: 200
 notoc: true
-weight: 100
+no_edit: true
 ---
 
 {{< changelog "https://api.github.com/repos/falcosecurity/falco/releases" >}}
