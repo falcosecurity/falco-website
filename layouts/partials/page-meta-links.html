@@ -1,3 +1,4 @@
+{{ if not .Params.no_edit }}
 {{ if .File }}
 {{ $pathFormatted := replace .File.Path "\\" "/" -}}
 {{ $gh_repo := ($.Param "github_repo") -}}
@@ -40,3 +41,5 @@
 {{ end -}}
 
 {{ end -}}
+
+{{ end }}
