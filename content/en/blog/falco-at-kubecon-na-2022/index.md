@@ -70,11 +70,8 @@ For those that were not able to attend the Project Meetings at the SecurityCon, 
 
 On Friday afternoon, **Jason Dellaluce** and **Luca Guerra**, both *Open Source Engineers*, as well as Falco maintainers, gave an overview of the Falco project and its recent updates.
 
-{{% alert title="Soon" color="primary" %}}
-As soon as the CNCF makes the presentation available you'll be able to watch it here.
-{{% /alert %}}
-
-<!-- [Security In the Cloud With Falco: Overview And Project Updates](#) -->
+{{< youtube-80 id="pDwmWFa9oAQ" title="Security In the Cloud With Falco: Overview And Project Updates - Jason Dellaluce & Luca Guerra">}}
+[Security In the Cloud With Falco: Overview And Project Updates - Jason Dellaluce & Luca Guerra](https://www.youtube.com/watch?v=pDwmWFa9oAQ)
 
 ![Falco Updates at KubeCon NA 2022](/blog/falco-kubecon-2022/images/falco-at-kubecon-na-2022-03.png)
 
