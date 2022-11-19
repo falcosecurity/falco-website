@@ -1,0 +1,19 @@
+{{ $content := os.ReadFile ( .Get "contentPath" ) }}
+
+{{ $format := .Get "format" | default "raw" }}
+
+{{ with $format }}
+
+  {{ if eq . "raw" }}
+
+    {{ $content | markdownify }}
+
+  {{ else if eq . "code" }}
+
+    <code>
+    {{ $content | markdownify }}
+    </code>
+
+  {{ end }}
+
+{{ end }}
