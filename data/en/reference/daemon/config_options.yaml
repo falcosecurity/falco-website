@@ -1,0 +1,282 @@
+- name: rules_file
+  type: List
+  description: |
+    The location of the rules file(s). This can contain one or more paths to separate rules files. The following examples are equivalent:
+
+    ```yaml
+    rules_file:
+    - path1
+    - path2
+
+    rules_file: [path1, path2]
+    ```
+
+    You can also specify multiple rules files on the command line via one or more `-r` options.
+
+- name: plugins
+  type: |
+    A list of objects. Each object has the following sub-keys:
+
+    * `name: <string>`
+    * `library_path: <path>`
+    * `init_config: [<string>|<object>]`
+    * `open_params: <string>`
+
+  description: |
+    Defines the set of plugins Falco can load.
+
+    `name` provides the plugin name. This is only used for load_plugins, but by convention should be the same as the value returned by the plugin_get_name() api function.
+
+    `library_path` is path to the shared library. The path can be relative, in which case it is relative to Falco's "share" directory under a "plugins" subdirectory e.g. /usr/share/falco/plugins.
+
+    If `init_config` is present, it contains the configuration that will be provided as an argument to the init() function.
+    This can either be in string or object form. If a string is used, the plugin is configured with the string content as-is.
+    If an object is used, by convention its contents are formatted into a JSON string and then passed to the plugin.
+    In both cases, the configuration string is automatically parsed against a schema before being passed to the plugin if the [`get_init_schema`](../plugins/plugin-api-reference/#get-init-schema) function is implemented, otherwise it gets directly passed as an opaque string.
+
+    if `open_params`: is present, it contains the exact params string that will be provided as an argument to the open() function, which is used in [plugins with event sourcing capability](../plugins#event-sourcing-capability) only.
+
+- name: load_plugins
+  type: |
+    A list of plugin names, corresponding to the name sub-key from the plugins config item. Example:
+
+    `load_plugins: [cloudtrail, json]`
+  description: Defines the set of plugins that will actually be loaded. This is optional--if the property is not present, all plugins named in the plugins list will be loaded. All loaded plugins supporting the [event sourcing capability](../plugins#event-sourcing-capability) will add a new event source in Falco. By default, all event sources known by Falco are enabled for live captures and can be turned on and off with the `--enabled-source` and `--disable-source` command line options.
+
+- name: watch_config_files
+  type: Boolean
+  description: |
+    If `true` (default is `true`), watch the config file and all loaded rules files for modification. When any of these files gets modified, Falco will do a hot reload to propagate the changes.
+
+- name: time_format_iso_8601
+  type: Boolean
+  description: |
+    If `true` (default is `false`), the times displayed in log messages and output messages will be in ISO 8601. By default, times are displayed in the local time zone, as governed by /etc/localtime.
+
+- name: json_output
+  type: Boolean
+  description: |
+    If `true` (default is `false`), print falco alert messages and rules file loading/validation results as json, which allows for easier consumption by downstream programs. Default is `false`.
+
+- name: json_include_output_property
+  type: Boolean
+  description: |
+    If `true` (default is `true`), when using json output, whether or not to include the `output` property itself (e.g. `File below a known binary directory opened for writing (user=root ....`) in the JSON output.
+
+- name: json_include_tags_property
+  type: Boolean
+  description: |
+    When using json output, whether or not to include the `tags` property in the json output. If set to `true` (default is `true`), outputs caused by rules with no tags will have a `tags` field set to an empty array. If set to `false`, the `tags` field will not be included in the json output at all.
+
+- name: log_stderr
+  type: Boolean
+  description: |
+    If `true`, log messages describing Falco's activity will be logged to stderr. Note these are *not* alert messages---these are log messages for Falco itself.
+
+- name: log_syslog
+  type: Boolean
+  description: |
+    If `true`, log messages describing Falco's activity will be logged to syslog.
+
+- name: log_level
+  type: |
+    Enum with the following possible values: `emergency`, `alert`, `critical`, `error`, `warning`, `notice`, `info`, `debug`
+  description: |
+    Minimum log level to include in logs. Note: these levels are separate from the priority field of rules. This refers only to the log level of Falco's internal logging.
+
+- name: libs_logger
+  type: |
+    List containing the following sub-keys:
+
+    * `enabled`: [true|false]  (default is `false`)
+    * `severity`: One of `fatal`, `critical`, `error`, `warning`, `notice`, `info`, `debug`, `trace`.
+  description: |
+    Since version 0.32.2, Falco is capable of managing the logs coming from libs. If enabled, the libs logger send its log records the same outputs supported by alco (stderr and syslog).
+
+- name: priority
+  type: |
+    Enum with the following possible values: `emergency`, `alert`, `critical`, `error`, `warning`, `notice`, `info`, `debug`
+  description: Minimum rule priority level to load and run. All rules having a priority more severe than this level will be loaded/run.
+
+- name: buffered_outputs
+  type: Boolean
+  description: Whether or not output to any of the output channels below is buffered. Defaults is `false`.
+
+- name: syscall_event_drops
+  type: |
+    List containing the following sub-keys:
+
+    * `actions`: A list containing one or more of these boolean sub-keys:
+      * `ignore`: do nothing. If an empty list is provided, ignore is assumed.
+      * `log`: log a CRITICAL message noting that the buffer was full.
+      * `alert`: emit a Falco alert noting that the buffer was full.
+      * `exit`: exit Falco with a non-zero rc.
+    * `rate`: The steady-state rate at which actions can be taken. Units of actions/second. Default 0.03333 (one action per 30 seconds).
+    * `max_burst`: The maximum number of actions that can be taken before the steady-state rate is applied.
+  description: Controls [Actions For Dropped System Call Events](../event-sources/dropped-events/).
+
+- name: syscall_event_timeouts
+  type: |
+    List containing the following sub-keys:
+
+    * `max_consecutives`: maximum number of consecutive timeouts without an event after which you want Falco to alert. Default is 1000.
+  description: |
+    Since version 0.28.1, Falco allows configuring the maximum number of consecutive timeouts without an event before sending an alert.
+
+- name: syscall_buf_size_preset
+  type: |
+    Integer between 1 and 10. Every value corresponds to a dimension in bytes:
+    ```
+    (*), 1 MB, 2 MB, 4 MB, 8 MB, 16 MB,
+     ^    ^     ^     ^     ^     ^    
+     |    |     |     |     |     |    
+     0    1     2     3     4     5    
+
+    32 MB, 64 MB, 128 MB, 256 MB, 512 MB
+     ^      ^       ^       ^       ^
+     |      |       |       |       |
+     6      7       8       9       10
+    ```
+  description: |
+    Since version 0.33.0, Falco allows configuring the dimension of the syscall ring-buffers, which are the shared spaces between Falco the drivers where kernel events are pushed. Depending on the system in which Falco is deployed, this can effect performance and drop percentace.
+
+- name: output_timeout
+  type: Integer
+  description: |
+    Since version 0.27.0, Falco allows specifying the duration in milliseconds to wait before considering all the configured outputs blocked. Default is 2000ms.
+
+- name: outputs
+  type: |
+    List containing the following sub-keys:
+
+    * `rate`: <notifications/second>
+    * `outputs`: max_burst: <number of messages>
+  description: |
+    A throttling mechanism implemented as a token bucket limits the rate of Falco notifications. One rate limiter is assigned to each one of the loaded event sources, so that alerts coming from one can't influence the throttling mechanism of the others. This throttling is controlled by the `rate` and `max_burst` options.
+
+    * `rate`: the number of tokens (i.e. right to send a notification) gained per second. When 0, the throttling mechanism is disabled. Defaults to 0.
+    * `max_burst`: the maximum number of tokens outstanding. Defaults to 1000.
+
+    Since Falco 0.33.0, this is optional and disabled by default with a rate of 0. For example, by setting rate to 1 Falco could send up to 1000 notifications after an initial quiet period, and then up to 1 notification per second afterward. It would gain the full burst back after 1000 seconds of no activity.
+
+- name: syslog_output
+  type: |
+    List containing the following sub-keys:
+
+    * `enabled: [true|false]`
+  description: |
+    If `true`, Falco alerts will be sent via syslog.
+
+- name: file_output
+  type: |
+    List containing the following sub-keys:
+
+    * `enabled: [true|false]`
+    * `keep_alive: [true|false]`
+    * `filename: <path>`
+  description: |
+    If `enabled` is set to `true`, Falco alerts will be sent to the filepath specified in `filename`.
+
+    If `keep_alive` is set to `false` (the default), Falco will re-open the file for every alert. If `true`, Falco will open the file once and keep it open for all alerts. It may also be necessary to specify `--unbuffered` using the Falco CLI.
+
+- name: stdout_output
+  type: |
+    List containing the following sub-keys:
+
+    * `enabled: [true|false]`
+  description: |
+    If `enabled` is set to `true`, Falco alerts will be sent to standard output (stdout).
+
+- name: program_output
+  type: |
+    List containing the following sub-keys:
+
+    * `enabled: [true|false]`
+    * `keep_alive: [true|false]`
+  description: |
+    If `enabled` is set to `true`, Falco alerts will be sent to a program.
+
+    If `keep_alive` is set to `false` (the default), run the program for each alert. If `true`, Falco will spawn the program once and keep it open for all alerts. It may also be necessary to specify `--unbuffered` using the Falco CLI.
+
+    The `program` setting specifies the program to be run for each alert. This is started via the shell, so you can specify a command pipeline to allow for additional formatting.
+
+- name: http_output
+  type: |
+    List containing the following sub-keys:
+
+    * `enabled: [true|false]`
+    * `url: [http[s]://path/to/webhook/]`
+  description: |
+    As of `0.15.0`, if enabled is set to `true`, Falco alerts will be sent to the HTTP[s] URL defined by `url`. Currently this is a blocking operation and this output does not support `keep_alive`.
+
+- name: webserver
+  type: |
+    List containing the following sub-keys:
+
+    * `enabled: [true|false]`
+    * `listen_port`
+    * `k8s_audit_endpoint`
+    * `ssl_enabled: [true|false]`
+    * `ssl_certificate: <path>`
+    * `threadiness`: number
+  threadiness: 0
+  description: |
+    If `enabled` is set to `true`, Falco will start an embedded web server used to implement an health endpoint for checking if Falco is up and running
+
+    `listen_port` specifies the port on which the web server will listen. The default is 8765.
+
+    `k8s_audit_endpoint` specifies the URI on which to listen for Kubernetes audit events. The default is `/k8s-audit`.
+
+    `ssl_enabled` enables SSL support for the webserver, using the certificate specified in `ssl_certificate`. The specified `ssl_certificate` file should contain the server's certificate as well as the key as [documented by civitweb](https://github.com/civetweb/civetweb/blob/master/docs/OpenSSL.md#creating-a-self-signed-certificate).
+    
+    `threadiness` enables configuring the number of threads used by the webserver (Default is 0). When 0, Falco automatically guesses it depending on the number of online cores
+
+- name: grpc
+  type: |
+    List containing the following sub-keys:
+
+    * `enabled: [true|false]`
+    * `bind_address: [unix://<path>.sock|address:port]`
+    * `threadiness: <integer>`
+    * `private_key: <path>`
+    * `cert_chain: <path>`
+    * `root_certs: <path>`
+  description: |
+    If `enabled` is set to `true`, Falco will embed a gRPC server to expose its gRPC API. The default is `false`.
+
+    Falco supports running a gRPC server with two main binding types:
+
+    * Over a local unix socket with no authentication
+    * Over the network with mandatory mutual TLS authentication (mTLS)
+
+    `bind_address` specifies either the unix socket path or the address and port on which the gRPC server will listen. The default is `unix:///var/run/falco.sock`.
+
+    `threadiness` defines the number of threads to use to serve gRPC requests. When `threadiness` is `0`, Falco automatically guesses it depending on the number of online cores. The default is `0`.
+
+    The gRPC server over the network can only be used with [mutual authentication](https://en.wikipedia.org/wiki/Mutual_authentication) between the clients and the server using TLS certificates, and the following options should be provided:
+
+    `private_key` path of the private key for server authentication. The default is `/etc/falco/certs/server.key`.
+
+    `cert_chain` path of the public cert for server authentication. The default is `/etc/falco/certs/server.crt`.
+
+    `root_certs` path of the CA certificate (or chain) common between the server and all the clients. The default is `/etc/falco/certs/ca.crt`.
+
+    How to generate the certificates is [documented here](/docs/grpc/#generate-valid-ca). Please always remember that the only common thing between server and clients is the root certificate. Every client will need to generate their own certificates signed by the same root CA as the server.
+
+- name: grpc_output
+  type: |
+    List containing the following sub-keys:
+
+    * `enabled: [true|false]`
+  description: |
+    If `enabled` is set to `true`, Falco will start collecting outputs for the gRPC server. It's important to consume them with an output client. Example of output client [here](https://github.com/falcosecurity/client-go/tree/master/examples/output).
+
+- name: metadata_download
+  type: |
+    List containing the following sub-keys:
+
+    * `max_mb`: number (Default: 100)
+    * `chunk_wait_us`: number (Default: 1000)
+    * `watch_freq_sec`: number (Default: 1)
+  description: |
+    Since Falco 0.30.0, this allows configuring the how the container orchestrator metadata is downloaded.

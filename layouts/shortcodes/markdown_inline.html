@@ -1,0 +1,28 @@
+
+{{ with ( .Get "header" ) }}
+<h2>{{ . }}</h2>
+{{ end }}
+
+{{ with ( .Get "subheader" ) }}
+<h5>{{ . }}</h5>
+{{ end }}
+
+{{ $content := os.ReadFile ( .Get "contentPath" ) }}
+
+{{ $format := .Get "format" | default "raw" }}
+
+{{ with $format }}
+
+  {{ if eq . "raw" }}
+
+    {{ $content | markdownify }}
+
+  {{ else if eq . "code" }}
+
+    <code>
+    {{ $content | markdownify }}
+    </code>
+
+  {{ end }}
+
+{{ end }}

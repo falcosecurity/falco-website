@@ -1,0 +1,46 @@
+{{/* theaders: Table headers received as colTitles parameter */}}
+{{/* tkeys: Table row keys received as colKeys parameter */}}
+{{/* contentPath: Path to the YAML content to render as table, 
+                   without the language prefix */}}
+{{/* class: CSS Class for the table */}}
+
+{{ $theaders := (split (.Get "columnTitles") "," ) }}
+{{ $tkeys := (split (.Get "columnKeys") "," ) }}
+{{ $contentPath := .Get "contentPath" }}
+{{ $class := .Get "class" }}
+
+{{ $YAMLContent := index site.Data (string site.Language) }}
+{{ range (split $contentPath "." ) }}
+  {{ $YAMLContent = index $YAMLContent . }}
+{{ end }}
+
+{{ $tag_id := anchorize $contentPath }}
+<table class="{{ $class }}" id="table-{{ $tag_id }}" >
+  <thead>
+    <tr>
+      {{ range $theaders }}
+      {{ $tag_id := printf "%s-%s" $tag_id . | anchorize }}
+      <th id="th-{{ $tag_id }}" >
+        {{ . }}
+      </th>
+      {{ end }}
+    </tr>
+  </thead>
+  <tbody>
+    {{ range $option := $YAMLContent }}
+    {{ $tag_id := printf "%s-%s" $tag_id .name | anchorize }}
+    <tr id="{{ $tag_id }}">
+    {{ range $tkeys }} 
+    {{ $tag_id := printf "%s-%s" $tag_id . | anchorize }}
+      <td id="td-{{ $tag_id }}">
+        {{ if eq . "name" }}
+        <code>{{ index $option "name" }}</code>
+        {{ else }}
+        {{ index $option . | markdownify }}
+        {{ end }}
+      </td>
+    {{ end }}
+    </tr>
+    {{ end }}
+  </tbody>
+</table>
