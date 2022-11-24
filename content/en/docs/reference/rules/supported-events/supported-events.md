@@ -1,15 +1,3 @@
----
-title: Supported Syscall Events
-weight: 3
----
-
-Here are the system call event types and args supported by the [kernel module and BPF probe](/docs/event-sources/drivers) via `libscap` included in the Falco libs. Note that, for performance reasons, by default Falco will only consider a subset of them indicated in the table below. However, it's possible to make Falco consider all events by using the `-A` command line switch.
-
-<!--
-generated with:
-falco --list-syscall-events --markdown
--->
-
 Falco | Dir | Event
 :-----|:----|:-----
 Yes | > | **open**(FSPATH name, FLAGS32 flags, UINT32 mode)
