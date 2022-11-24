@@ -5,6 +5,7 @@ author: Hiroki Akamatsu
 slug: restructuring-the-kubernetes-threat-matrix
 images:
   - /blog/restructuring-the-kubernetes-threat-matrix/images/kubernetes-threat-matrix.png
+canonical_url: https://engineering.mercari.com/en/blog/entry/20220928-kubernetes-threat-matrix-and-attack-detection-by-falco/
 ---
 
 I’m Hiroki Akamatsu ([@hi120ki](https://twitter.com/hi120ki)), an intern on [Mercari](https://about.mercari.com/en/)’s [Security Engineering Team](https://mercan.mercari.com/en/articles/35855/). During my internship, I worked on the re-evaluation of [Falco](https://github.com/falcosecurity/falco), runtime security monitoring tools for Kubernetes.
