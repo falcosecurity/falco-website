@@ -1,6 +1,7 @@
 ---
-
-title: How fd.sip.name and Related Fields Work in Falco rules
+title: Resolving Domain Names in Falco Rules
+description: How fd.sip.name and related fields work
+linktitle: Resolving Domain Names
 weight: 100
 ---
 
