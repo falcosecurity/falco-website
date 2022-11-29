@@ -1,5 +1,6 @@
 ---
 title: Rule Format Version
+description: Understand how Falco Rules support explicit versioning
 linktitle: Rules Versioning
 weight: 200
 ---

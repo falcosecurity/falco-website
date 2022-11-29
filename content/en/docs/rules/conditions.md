@@ -1,5 +1,7 @@
 ---
 title: Condition Syntax
+description: Learn how to write conditions for a Falco Rule
+linktitle: Condition Syntax
 weight: 40
 ---
 

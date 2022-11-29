@@ -1,6 +1,7 @@
 ---
 aliases: ["/docs/rules/supported-fields"]
 title: Supported Fields for Conditions and Outputs
+description: Events fields that you can use in conditions and outputs of Falco Rules
 linktitle: Fields for Conditions and Outputs
 weight: 60
 ---
