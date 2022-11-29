@@ -7,9 +7,9 @@ A Falco *rules file* is a [YAML](https://www.yaml.org/) file containing mainly t
 
 Element | Description
 :-------|:-----------
-[Rules](#rules) | *Conditions* under which an alert should be generated. A rule is accompanied by a descriptive *output string* that is sent with the alert.
-[Macros](#macros) | Rule condition snippets that can be re-used inside rules and even other macros. Macros provide a way to name common patterns and factor out redundancies in rules.
-[Lists](#lists) | Collections of items that can be included in rules, macros, or other lists. Unlike rules and macros, lists cannot be parsed as filtering expressions.
+[Rules](/docs/rules/basic-elements/#rules) | *Conditions* under which an alert should be generated. A rule is accompanied by a descriptive *output string* that is sent with the alert.
+[Macros](/docs/rules/basic-elements/#macros) | Rule condition snippets that can be re-used inside rules and even other macros. Macros provide a way to name common patterns and factor out redundancies in rules.
+[Lists](/docs/rules/basic-elements/#lists) | Collections of items that can be included in rules, macros, or other lists. Unlike rules and macros, lists cannot be parsed as filtering expressions.
 
 Falco rules files can also contain two optional elements related to [versioning](/docs/rules/versioning):
 
@@ -17,102 +17,6 @@ Element | Description
 :-------|:-----------
 `required_engine_version` | Used to track compatibility between rules content and the falco [engine version](/docs/rules/versioning/#falco-engine-versioning).
 `required_plugin_versions` | Used to track compatibility between rules content and [plugin versions](/docs/plugins#plugin-versions-and-falco-rules).
-
-## Rules
-
-A Falco *rule* is a node containing the following keys:
-
-Key | Required | Description | Default
-:---|:---------|:------------|:-------
-`rule` | yes | A short, unique name for the rule. |
-`condition` | yes | A filtering expression that is applied against events to check whether they match the rule. |
-`desc` | yes | A longer description of what the rule detects. |
-`output` | yes | Specifies the message that should be output if a matching event occurs. See [output](#output). |
-`priority` | yes | A case-insensitive representation of the severity of the event. Should be one of the following: `emergency`, `alert`, `critical`, `error`, `warning`, `notice`, `informational`, `debug`. |
-`exceptions` | no | A set of [exceptions](/docs/rules/exceptions) that cause the rule to not generate an alert. |
-`enabled` | no | If set to `false`, a rule is neither loaded nor matched against any events. | `true`
-`tags` | no | A list of tags applied to the rule (more on this [below](#tags)). |
-`warn_evttypes` | no | If set to `false`, Falco suppresses warnings related to a rule not having an event type (more on this [below](#rule-condition-best-practices)). | `true`
-`skip-if-unknown-filter` | no | If set to `true`, if a rule conditions contains a filtercheck, e.g. `fd.some_new_field`, that is not known to this version of Falco, Falco silently accepts the rule but does not execute it; if set to `false`, Falco repots an error and exists when finding an unknown filtercheck. | `false`
-`source` | no | The event source for which this rule should be evaluated. Typical values are `syscall`, `k8s_audit`, or the source advertised by a source [plugin](../plugins). | `syscall`
-
-## Conditions
-
-The key part of a rule is the _condition_ field. A condition is a Boolean predicate expressed using the [condition syntax](/docs/rules/conditions). It is possible to express conditions on [all supported events](/docs/rules/supported-events) using their respective [supported fields](/docs/rules/supported-fields).
-
-Here's an example of a condition that alerts whenever a bash shell is run inside a container:
-
-```
-container.id != host and proc.name = bash
-```
-
-The first clause checks that the event happened in a container (where `container.id` is equal to `"host"` if the event happened on a regular host). The second clause checks that the process name is `bash`. Since this condition does not include a clause with a system call it will only check event metadata. Because of that, if a bash shell does start up in a container, Falco outputs events for every syscall that is performed by that shell.
-
-
-If you want to be alerted only for each successful spawn of a shell in a container, add the appropriate event type and direction to the condition:
-
-```
-evt.type = execve and evt.dir=< and container.id != host and proc.name = bash
-```
-
-Therefore, a complete rule using the above condition might be:
-
-```yaml
-- rule: shell_in_container
-  desc: notice shell activity within a container
-  condition: evt.type = execve and evt.dir=< and container.id != host and proc.name = bash
-  output: shell in a container (user=%user.name container_id=%container.id container_name=%container.name shell=%proc.name parent=%proc.pname cmdline=%proc.cmdline)
-  priority: WARNING
-```
-
-Conditions allow you to check for many aspects of each supported event. To learn more, see the [condition language](/docs/rules/conditions).
-
-## Macros
-
-As noted above, macros provide a way to define common sub-portions of rules in a reusable way. By looking at the condition above it looks like both `evt.type = execve and evt.dir=<` and `container.id != host` would be used many by other rules, so to make our job easier we can easily define macros for both:
-
-```yaml
-- macro: container
-  condition: container.id != host
-```
-
-```yaml
-- macro: spawned_process
-  condition: evt.type = execve and evt.dir=<
-```
-
-With this macro defined, we can then rewrite the above rule's condition as `spawned_process and container and proc.name = bash`.
-
-For many more examples of rules and macros, take a look the documentation on [default macros](./default-macros) and the `rules/falco_rules.yaml` file. In fact, both the macros above are part of the default list!
-
-## Lists
-
-*Lists* are named collections of items that you can include in rules, macros, or even other lists. Please note that lists *cannot* be parsed as filtering expressions. Each list node has the following keys:
-
-Key | Description
-:---|:-----------
-`list` | The unique name for the list (as a slug)
-`items` | The list of values
-
-Here are some example lists as well as a macro that uses them:
-
-```yaml
-- list: shell_binaries
-  items: [bash, csh, ksh, sh, tcsh, zsh, dash]
-
-- list: userexec_binaries
-  items: [sudo, su]
-
-- list: known_binaries
-  items: [shell_binaries, userexec_binaries]
-
-- macro: safe_procs
-  condition: proc.name in (known_binaries)
-```
-
-Referring to a list inserts the list items in the macro, rule, or list.
-
-Lists *can* contain other lists.
 
 ## Disable Default Rules
 
@@ -166,45 +70,6 @@ At the same time, disabled rules can be re-enabled by using the `enabled: true` 
   enabled: true
 ```
 
-
-## Output
-
-A rule output is a string that can use the same [fields](/docs/rules/supported-fields) that conditions can use prepended by `%` to perform interpolation, akin to `printf`. For example:
-
-```
-Disallowed SSH Connection (command=%proc.cmdline connection=%fd.name user=%user.name user_loginuid=%user.loginuid container_id=%container.id image=%container.image.repository)
-```
-
-could output:
-
-```
-Disallowed SSH Connection (command=sshd connection=127.0.0.1:34705->10.0.0.120:22 user=root user_loginuid=-1 container_id=host image=<NA>)
-```
-
-Note that it's not necessary that all fields are set in the specific event. As you can see in the example above if the connection happens outside a container the field `%container.image.repository` would not be set and `<NA>` is displayed instead.
-
-## Rule Priorities
-
-Every Falco rule has a priority which indicates how serious a violation of the rule is. The priority is included in the message/JSON output/etc. Here are the available priorities:
-
-* `EMERGENCY`
-* `ALERT`
-* `CRITICAL`
-* `ERROR`
-* `WARNING`
-* `NOTICE`
-* `INFORMATIONAL`
-* `DEBUG`
-
-The general guidelines used to assign priorities to rules are the following:
-
-* If a rule is related to writing state (i.e. filesystem, etc.), its priority is `ERROR`.
-* If a rule is related to an unauthorized read of state (i.e. reading sensitive files, etc.), its priority is `WARNING`.
-* If a rule is related to unexpected behavior (spawning an unexpected shell in a container, opening an unexpected network connection, etc.), its priority is `NOTICE`.
-* If a rule is related to behaving against good practices (unexpected privileged containers, containers with sensitive mounts, running interactive commands as root), its priority is `INFO`.
-
-One exception is that the rule "Run shell untrusted", which is fairly FP-prone, has a priority of `DEBUG`.
-
 ## Rule Tags {#tags}
 
 As of 0.6.0, rules have an optional set of _tags_ that are used to categorize the ruleset into groups of related rules. Here's an example:
@@ -243,29 +108,6 @@ Tag | Description
 `network` |The rule relates to network activity
 
 Rules can have multiple tags if they relate to multiple of the above. Every rule in the falco ruleset currently has at least one tag.
-
-## Rule Condition Best Practices
-
-To allow for grouping rules by event type, which improves performance, Falco prefers rule conditions that have at least one `evt.type=` operator, at the beginning of the condition, before any negative operators (i.e. `not` or `!=`). If a condition does not have any `evt.type=` operator, Falco logs a warning like:
-
-```
-Rule no_evttype: warning (no-evttype):
-proc.name=foo
-     did not contain any evt.type restriction, meaning that it will run for all event types.
-     This has a significant performance penalty. Consider adding an evt.type restriction if possible.
-```
-
-If a rule has an `evt.type` operator in the latter portion of the condition, Falco logs a warning like this:
-
-```
-Rule evttype_not_equals: warning (trailing-evttype):
-evt.type!=execve
-     does not have all evt.type restrictions at the beginning of the condition,
-     or uses a negative match (i.e. "not"/"!=") for some evt.type restriction.
-     This has a performance penalty, as the rule can not be limited to specific event types.
-     Consider moving all evt.type restrictions to the beginning of the rule and/or
-     replacing negative matches with positive matches if possible.
-```
 
 ## Escaping Special Characters
 
