@@ -13,7 +13,7 @@ This plug-in also includes out-of-the-box [rules](https://github.com/falcosecuri
 
 ## Configuration
 
-See the [README](https://github.com/falcosecurity/plugins/tree/master/plugins/cloudtrail#configuration) for information on how to configure the plugin. The plugin initialization and open params strings/objects can be added to `falco.yaml` under the `plugins` [configuration key](/docs/configuration/#current-configuration-options).
+See the [README](https://github.com/falcosecurity/plugins/tree/master/plugins/cloudtrail#configuration) for information on how to configure the plugin. The plugin initialization and open params strings/objects can be added to `falco.yaml` under the `plugins` [configuration key](/docs/reference/daemon/config-options/).
 
 ## Ways to read AWS CloudTrail Logs
 
