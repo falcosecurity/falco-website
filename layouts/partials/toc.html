@@ -1,0 +1,11 @@
+{{ if not .Params.notoc }}
+{{ with .TableOfContents }}
+{{ if ge (len .) 200 }}
+<div class="td-toc">
+<h5 class="mt-4 td-toc-title">{{ T "content" }}</h5>
+{{ . }}
+<hr>
+</div>
+{{ end }}
+{{ end }}
+{{ end }}
