@@ -1,6 +1,6 @@
 ---
 title: Condition Syntax
-weight: 3
+weight: 40
 ---
 
 A condition is a boolean expression related to a single event that has been detected by Falco. You can use fields related to every supported event, but this document focuses on syscalls as they're currently the most common. The language supports boolean operators and parentheses as you'd expect. For example a condition like:

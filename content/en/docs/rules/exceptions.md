@@ -1,6 +1,6 @@
 ---
 title: Rule Exceptions
-weight: 3
+weight: 70
 ---
 
 ## Introduction
