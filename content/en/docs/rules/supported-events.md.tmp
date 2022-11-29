@@ -1,5 +1,7 @@
 ---
 title: Supported Syscall Events
+description: Kernel events that Falco support in the rules
+linktitle: Supported Syscall Events
 weight: 350
 ---
 

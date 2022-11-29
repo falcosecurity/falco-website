@@ -1,5 +1,7 @@
 ---
 title: Default and Local Rules Files
+description: Falco provides default rules, but you can add your own
+linktitle: Default and Local Rules
 weight: 20
 ---
 

@@ -1,5 +1,7 @@
 ---
 title: Default Macros
+description: Falco provides default macros to enhance your rules
+title: Default Macros
 weight: 30
 ---
 
