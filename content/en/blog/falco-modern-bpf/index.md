@@ -24,7 +24,7 @@ We wouldn't be able to cover all the details here so we will just go through the
 
 Portability is one of the biggest issues we have with the current BPF driver. Our infrastructure tries to compile a BPF probe for every supported kernel since version `4.14`! As you can imagine, this is not a simple task, and it causes some pain to both, users and maintainers. For this reason, the Falco maintainers have been working hard to adopt the so-called **[CO-RE](https://nakryiko.com/posts/bpf-portability-and-co-re/)** paradigm.
 
-CO-RE stands for *"Compile-once-run-everywhere"*, so as you may imagine, this paradigm allows compileing the BPF probe just once for all kernels!
+CO-RE stands for *"Compile-once-run-everywhere"*, so as you may imagine, this paradigm allows compiling the BPF probe just once for all kernels!
 
 You understood well: No more missing drivers, and no more painful local builds requiring the much-loved **KERNEL HEADERS**.
 
@@ -50,7 +50,7 @@ This will not only increase the readability of the BPF code but will also reduce
 
 The addition of global variables points in the same direction as BTF: Simplify the code experience, increase the readability and reduce the performance overhead due to BPF helpers.
 
-While BTF allows to deference kernel pointer without the use of the`bpf_probe_read()` helper, global variables allow to access BPF maps without the use of helpers like `bpf_map_lookup_elem()`.
+While BTF allows to deference kernel pointer without the use of the `bpf_probe_read()` helper, global variables allow to access BPF maps without the use of helpers like `bpf_map_lookup_elem()`.
 
 You can find further technical information about these 2 new features in the [probe proposal](https://github.com/falcosecurity/libs/blob/master/proposals/20220329-modern-bpf-probe.md#new-bpf-tracing-programs-kernel-version-55).
 
@@ -67,7 +67,7 @@ Under the hood, the probe is compiled once into Falco when the package is built.
 
 The modern BPF probe also supports multiple architectures by design. The actual targets are `x86_64`, `arm64`, and `s390x`, but new ones can be added at any time.
 
-If you have a project that needs BPF instrumentation for one of these architectures you could simply link the Falco libraries (`libsinsp`, `libscap`) to obtain a working solution out of the box.
+If you have a project that needs BPF instrumentation for one of these architectures you could simply link the Falco libraries (`libsinsp`, `libscap`) to obtain a working solution out of the box. We would to thank [Hendrik Brueckner](https://github.com/hbrueckner) for the huge help he gives in reviewing and implementing the multi-arch support!
 
 > At this moment, we ship Falco for `x86_64` and `arm64` architectures only, due to their popularity in the community.
 
@@ -109,7 +109,7 @@ If you happen find some bugs or misbehaviors, please be kind with us and [open a
 
 Having said that, you have 3 main ways to try Falco with the modern probe.
 
-### 1. Pre-built `deb, rpm` packages
+### 1. Pre-built `deb`, `rpm` packages
 
 You can find [here](https://app.circleci.com/pipelines/github/falcosecurity/falco/3453/workflows/c8573555-0ecb-44de-af84-1f2a4121d772/jobs/29647/artifacts) the `x86_64` packages and [here](https://app.circleci.com/pipelines/github/falcosecurity/falco/3453/workflows/c8573555-0ecb-44de-af84-1f2a4121d772/jobs/29646/artifacts) the `arm64` ones.
 
@@ -121,7 +121,7 @@ sudo dpkg -i <your_deb_package.deb>
 
 Now there are 2 possibilities:
 
-1. If you have the `dialog` binary installed on your system you should see a dialog window like this:
+1. If you have the `dialog` binary installed on your system you should see a dialog window like this (the dialog is a new feature that will be regularly shipped in Falco 0.34 for all the drivers!):
 
 ![](/blog/falco-modern-bpf/images/falco-modern-bpf-02.png)
 
@@ -156,7 +156,7 @@ Here the procedure is very simple, you can extract the contents of the archive a
 ```bash
 tar -xvf <targz_package.tar.gz>
 cd <untar_folder>
-sudo ./usr/bin/falco -c ./etc/falco/falco.yaml -r ./etc/falco/falco_rules.yaml --modern-bpf
+sudo ./usr/bin/falco --modern-bpf -c ./etc/falco/falco.yaml -r ./etc/falco/falco_rules.yaml
 ```
 
 > **Please note**: The command line option required to run Falco with the modern BPF probe is `--modern-bpf`
@@ -183,7 +183,7 @@ docker run --rm -i -t \
            andreater/falco-modern-arm64:latest
 ```
 
-> **Please note**: the helm chart method is not present here since this is a pre-release but it will be regularly shipped with Falco `0.34`
+> **Please note**: The helm chart is not available yet since this is a pre-release but it will be shipped as expected with Falco `0.34`
 
 ## Current syscall support ⏲️
 
@@ -201,6 +201,6 @@ The good news is that we are actively working to include all the syscalls suppor
 
 ## Falco and modern BPF at eBPF summit 🐝
 
-If you want to know more on how the modern BPF probe works under the hood take a look at the eBPF summit presentation.
+If you want to know more about how the modern BPF probe works under the hood take a look at the eBPF summit presentation.
 
 {{< youtube-80 id="BxoKztfHnYY" title="Falco's Discovery of the Modern eBPF World - Andrea Terzolo & Jason Dellaluce">}}
