@@ -1,6 +1,5 @@
 baseURL = "https://falco.org"
 title = "The Falco Project"
-
 theme = ["docsy"]
 
 # Language settings
@@ -190,6 +189,9 @@ offlineSearchMaxResults = 10
 
 # Enable syntax highlighting and copy buttons on code blocks with Prism
 prism_syntax_highlighting = true
+
+# Site Featured image
+images = ['images/featured/default-01.png']
 
 # User interface configuration
 [params.ui]
