@@ -1,13 +1,14 @@
 ---
 title: Actions For Dropped System Call Events
-weight: 3
+description: Let Falco say *basta* when your system reaches its limit
+linktitle: Dropped Syscall Events
+weight: 60
 ---
 ## Introduction
 
 With the enhancements introduced in v0.15.0, Falco can now intelligently detect dropped system call events and take remedial actions, such as alerting or even exiting Falco entirely. When system call events are dropped, Falco might encounter problems building its internal view of the processes, files, containers, and orchestrator metadata in use, which in turn might affect the rules that depend on that metadata. The explicit signals that Falco now provides make it easier to detect dropped system calls.
 
 For more information on this feature, see our blog post on [CVE-2019-8339](https://sysdig.com/blog/cve-2019-8339-falco-vulnerability/).
-
 
 ## Implementation
 
@@ -33,8 +34,12 @@ Wed Mar 27 15:28:24 2019: Exiting.
 
 ## Actions Rate Throttling
 
-To reduce the likelihood of a flood of log messages/alerts, Falco provides an alert throttling mechanism disabled by default. This feature can be enabled through the [Falco configuration](../../configuration) (see the `outputs` entry). Before [v0.33.0](/blog/falco-0-33-0.md) this feature was enabled by default.
+To reduce the likelihood of a flood of log messages/alerts, Falco provides an alert throttling mechanism disabled by default. This feature can be enabled through the [Falco configuration](/docs/reference/daemon/config-options/) (see the `outputs` entry). 
+
+{{% alert color="primary" %}}
+Before [v0.33.0](/blog/falco-0-33-0/) this feature was enabled by default.
+{{% /alert %}}
 
 ## Configuration
 
-The actions to take on a dropped system call event and the throttling parameters for the token bucket are configurable in `falco.yaml` and are described in [syscall_event_drops](../../configuration).
+The actions to take on a dropped system call event and the throttling parameters for the token bucket are configurable in the file `falco.yaml`. You can find them in [syscall_event_drops](/docs/reference/daemon/config-options/).

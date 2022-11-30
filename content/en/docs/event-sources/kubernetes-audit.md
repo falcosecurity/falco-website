@@ -1,6 +1,8 @@
 ---
 title: Kubernetes Audit Events
-weight: 2
+description: Kubernetes Audit Events will give you a deeper visibility of your environment
+linktitle: Kubernetes Audit Events
+weight: 40
 ---
 
 Falco v0.13.0 adds [Kubernetes Audit Events](https://kubernetes.io/docs/tasks/debug-application-cluster/audit/#audit-backends) to the list of supported event sources. This is in addition to the existing support for system call events. An improved implementation of audit events was introduced in Kubernetes v1.11 and it provides a log of requests and responses to [kube-apiserver](https://kubernetes.io/docs/admin/kube-apiserver). Because almost all the cluster management tasks are performed through the API server, the audit log can effectively track the changes made to your cluster.
@@ -21,19 +23,28 @@ Once your cluster is configured with audit logging and the events are selected t
 
 ## What's New in Falco
 
-Since [Falco 0.32.0](../../../blog/falco-0-32-0), the Kubernetes Audit Events support has been [refactored to become a plugin](https://github.com/falcosecurity/plugins/tree/master/plugins/k8saudit) and is compliant to the [Falco Plugin System](../../plugins/). Previously, this feature was supported as a parallel independent stream of events that was read separately from system calls, and was matched separately against its own sets of rules. 
+Since [Falco 0.32.0](/blog/falco-0-32-0), the Kubernetes Audit Events support has been [refactored to become a plugin](https://github.com/falcosecurity/plugins/tree/master/plugins/k8saudit) and is compliant to the [Falco Plugin System](/docs/plugins/). Previously, this feature was supported as a parallel independent stream of events that was read separately from system calls, and was matched separately against its own sets of rules. 
 
-To receive Kubernetes audit events, the plugin embeds a webserver that listens on a configurable port and accepts POST requests on a configurable endpoint. The posted JSON object comprises the event. The webserver embedded inside Falco to implement endpoints such as `/healtz` is totally **unrelated and independent** from the webserver of the plugin. The webserver of the plugin can be configured as part of the plugin's init configuration and open parameters. See [configuration page](../../configuration/) for information on how plugins can be configured in Falco, and refer to [the plugin's readme for more specifics](https://github.com/falcosecurity/plugins/blob/master/plugins/k8saudit/README.md).
+To receive Kubernetes audit events, the plugin embeds a webserver that listens on a configurable port and accepts POST requests on a configurable endpoint. The posted JSON object comprises the event. The webserver embedded inside Falco to implement endpoints such as `/healthz` is totally **unrelated and independent** from the webserver of the plugin. The webserver of the plugin can be configured as part of the plugin's init configuration and open parameters. 
+
+See [configuration page](/docs/reference/daemon/config-options/) for information on how plugins can be configured in Falco, and refer to [the plugin's readme](https://github.com/falcosecurity/plugins/blob/master/plugins/k8saudit/README.md) for more specifics.
 
 The new plugin-based implementation has been developed to be as similar as possible to the legacy K8S Audit Events feature introduced in Falco 0.13.0. However, due to technical constraints, there are few user-facing differences. Although the most up-to-date setups should work as they used to, there are few user-facing differences to be mindful of:
 
-* K8S Audit Events support should be configured in `falco.yaml` through the `plugins` section through the plugin's init configuration and open parameters
-* In the legacy implementation, the extraction of list of values was supported implicitly. When extracting a field for a rule condition or output, the check used to be able to extract single values or list of values, and use them with operators such as `in`, `intersect`, etc. However, the concept of "list" was totally implicity and there was no distinction between single values and lists of values with lenght equal to 1. Now, the plugin-based implementation is compliant to the new semantics supported in the libs since Falco 0.32, which allows fields to be of explicit list type. A field of list type will always extract list of values, containing one or more entries, or fail the extraction
-*  Fields of list type now only support the `in` and `intersects` operators. For example, checks such as `ka.req.role.rules.verbs contains create` would be rejected and would need to be changed in the equivalent `ka.req.role.rules.verbs intersects (create)`
-* Failed field value extraction should now be checked with the `exists` operator, and not by comparing with the `<NA>` string
+* K8S Audit Events support must be configured in `falco.yaml` through the `plugins` section through the plugin's init configuration and open parameters.
+
+* In the legacy implementation, the extraction of list of values was supported implicitly. When extracting a field for a rule condition or output, the check used to be able to extract single values or list of values, and use them with operators such as `in`, `intersect`, etc. However, the concept of "list" was totally implicity and there was no distinction between single values and lists of values with lenght equal to 1.\
+Now, the plugin-based implementation is compliant to the new semantics supported in the libs since Falco 0.32, which allows fields to be of explicit list type. A field of list type will always extract list of values, containing one or more entries, or fail the extraction.
+
+*  Fields of list type now only support the `in` and `intersects` operators. For example, checks such as `ka.req.role.rules.verbs contains create` would be rejected and would need to be changed in the equivalent `ka.req.role.rules.verbs intersects (create)`.
+
+* Failed field value extraction should now be checked with the `exists` operator, and not by comparing with the `<NA>` string.
+
 * The `<NA>` string literal is not returned anymore, neither in single-valued fields nor in list fields. In the legacy implementation, field existence was occasionally checked with expressions like `ka.target.subresource != <NA>`, which would now inherently be always false, because if the field was absent the string comparison ends up failing. Instead, prefer using the analoguous `ka.target.subresource exists`, which explicitly checks for missing values
-* The `/healtz` endpoint endpoint of Falco cannot bind to the same port of the K8S Audit Log endpoint (e.g. `/k8s-audit`), due to the fact that they are now managed by two different webservers (one in Falco, one in the plugin)
-* In Falco versions 0.32.x ([Falco v0.32.0](/blog/falco-0-32-0.md), [Falco v0.32.1](/blog/falco-0-32-1.md), and Falco v0.32.2), Falco didn't allow the use of Syscalls and K8S Audit event sources on the same instance. Starting from [version 0.33.0](/blog/falco-0-33-0.md), Falco introduced the capability of [consuming events from multiple event sources simultaneously within the same Falco instance](/docs/event-sources/#configuring-event-sources).
+
+* The `/healtz` endpoint endpoint of Falco cannot bind to the same port of the K8S Audit Log endpoint (e.g. `/k8s-audit`), due to the fact that they are now managed by two different webservers (one in Falco, one in the plugin).
+
+* In Falco versions 0.32.x ([Falco v0.32.0](/blog/falco-0-32-0/), [v0.32.1](/blog/falco-0-32-1/), and [ v0.32.2](/blog/falco-0-32-2/)), Falco didn't allow the use of Syscalls and K8S Audit event sources on the same instance. Starting from [version 0.33.0](/blog/falco-0-33-0/), Falco introduced the capability of [consuming events from multiple event sources simultaneously within the same Falco instance](/docs/event-sources/#configuring-event-sources).
 
 ## Kubernetes Audit Rules
 
@@ -189,10 +200,13 @@ When the ConfigMap contains private credentials, the rule uses the following fie
 
 4. `contains-private-credentials`: Search the ConfigMap contents at `requestObject > data` for any of the sensitive strings named in the `contains_private_credentials` macro.
 
-If they do, a falco event is generated:
+If they do, a falco alert is generated:
 
 ```log
-17:18:28.428398080: Warning K8s ConfigMap with private credential (user=minikube-user verb=create configmap=my-config config={"access.properties":"aws_access_key_id = MY-ID\naws_secret_access_key = MY-KEY\n","ui.properties":"color.good=purple\ncolor.bad=yellow\nallow.textmode=true\n"})
+17:18:28.428398080: Warning K8s ConfigMap with private credential 
+(user=minikube-user verb=create configmap=my-config 
+config={"access.properties":"aws_access_key_id = MY-ID\naws_secret_access_key = MY-KEY\n",
+"ui.properties":"color.good=purple\ncolor.bad=yellow\nallow.textmode=true\n"})
 ```
 
 The output string is used to print essential information about the audit event, including:
@@ -204,6 +218,10 @@ The output string is used to print essential information about the audit event, 
 
 ### Enabling Kubernetes Audit Logs
 
-To enable Kubernetes audit logs, you need to change the arguments to the `kube-apiserver` process to add `--audit-policy-file` and `--audit-webhook-config-file` arguments and provide files that implement an audit policy/webhook configuration. It is beyond the scope of Falco documentation to give a detailed description of how to do this, but [this step-by-step guide](/docs/getting-started/third-party/learning/#falco-with-multiple-sources) will show you how to configure `kubernetes audit logs` on `minikube` and deploy Falco. Managed Kubernetes providers will usually provide a mechanism to configure the audit system.
+To enable Kubernetes audit logs, you need to change the arguments to the `kube-apiserver` process to add `--audit-policy-file` and `--audit-webhook-config-file` arguments and provide files that implement an audit policy/webhook configuration. 
 
-> Note: Dynamic Audit Webhooks were [removed](https://github.com/kubernetes/kubernetes/pull/91502) from Kubernetes. However, static audit configuration continues to work.
+It is beyond the scope of Falco documentation to give a detailed description of how to do this, but [this step-by-step guide](/docs/getting-started/third-party/learning/#falco-with-multiple-sources) will show you how to configure `kubernetes audit logs` on `minikube` and deploy Falco. Managed Kubernetes providers will usually provide a mechanism to configure the audit system.
+
+{{% alert color="warning" %}}
+Dynamic Audit Webhooks were [removed](https://github.com/kubernetes/kubernetes/pull/91502) from Kubernetes. However, static audit configuration continues to work.
+{{% /alert %}}
