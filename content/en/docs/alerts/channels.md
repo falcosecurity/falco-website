@@ -1,22 +1,15 @@
 ---
-title: Falco Alerts
-weight: 80
+title: Alert Channels
+description: Supported channels for Falco Alerts
+linktitle: Alert Channels
+weight: 10
 ---
-
-Falco can send alerts to one or more channels:
-
-* Standard Output
-* A file
-* Syslog
-* A spawned program
-* A HTTP[s] end point
-* A client via the gRPC API
-
-The channels are configured via the falco configuration file `falco.yaml`. See the [Falco Configuration](../configuration) page for more details. Here are details on each of those channels.
 
 ## Standard Output
 
-When configured to send alerts via standard output, a line is printed for each alert. Here's an example:
+When configured to send alerts via standard output, a line is printed for each alert. 
+
+Here is an example:
 
 ```yaml
 stdout_output:
@@ -26,19 +19,23 @@ stdout_output:
 ```
 10:20:05.408091526: Warning Sensitive file opened for reading by non-trusted program (user=root command=cat /etc/shadow file=/etc/shadow)
 ```
-Standard output is useful when using Fluentd or Logstash to capture logs from containers. Alerts can then be stored in Elasticsearch, and dashboards can be created to visualize the alerts. For more information, read [this blog post](https://sysdig.com/blog/kubernetes-security-logging-fluentd-falco/).
+Standard output is useful when using [Fluentd](https://www.fluentd.org/) or [Logstash](https://www.elastic.co/logstash/) to capture logs from containers. Alerts can then be stored in [Elasticsearch](https://www.elastic.co/elasticsearch/), and dashboards can be created to visualize the alerts. For more information, read [this blog post](https://sysdig.com/blog/kubernetes-security-logging-fluentd-falco/).
 
-When run in the background via the `-d/--daemon` command line option, standard output messages are discarded.
+{{% alert color="warning" %}}
+When run in the background via the `-d/--daemon` command line option,\
+standard output messages are discarded.
+{{% /alert %}}
 
 ### Standard Output buffering
 
-If the logs are inspected by tailing container logs (e.g. `kubectl logs -f` in Kubernetes) it might look like events can take a long time to appear, sometimes more than 15 minutes.
-This is not an issue with Falco but is simply a side effect of the system output buffering. However, if realtime update of these logs is necessary it can be forced
+If the logs are inspected by tailing container logs (e.g. `kubectl logs -f` in Kubernetes) it might look like events can take a long time to appear, sometimes longer than 15 minutes. This is not an issue with Falco but is simply a side effect of the system output buffering. 
+
+However, if realtime update of these logs is necessary it can be forced
 with the `-U/--unbuffered` command line option which will ensure the output is flushed for every event at the cost of higher CPU usage.
 
 ## File Output
 
-When configured to send alerts to a file, a message is written to the file for each alert. The format is very similar to the Standard Output format:
+When configured to send alerts to a file, a message is written to the file for each alert. The configuration is very similar to the [Standard Output](/docs/alerts/channels/#standard-output) format:
 
 ```yaml
 file_output:
@@ -47,7 +44,7 @@ file_output:
   filename: ./events.txt
 ```
 
-When `keep_alive` is false (the default), for each alert the file is opened for appending, the single alert is written, and the file is closed. The file is not rotated or truncated. If `keep_alive` is set to true, the file is opened before the first alert and kept open for all subsequent alerts. Output is buffered and will be flushed only on close. (This can be changed with `--unbuffered`).
+When the field `keep_alive` is set to false (default value), for each alert the file is opened for appending, the single alert is written, and the file is closed. The file is not rotated or truncated. If `keep_alive` is set to true, the file is opened before the first alert and kept open for all subsequent alerts. Output is buffered and will be flushed only on close. (This can be changed with `--unbuffered`).
 
 If you'd like to use a program like [logrotate](https://github.com/logrotate/logrotate) to rotate the output file, an example logrotate config is available [here](https://github.com/falcosecurity/falco/blob/ffd8747ec0943db2546c3270826e1700dc4df75f/examples/logrotate/falco).
 
@@ -55,24 +52,29 @@ As of Falco 0.10.0, falco will close and reopen its file output when signaled wi
 
 ## Syslog Output
 
-When configured to send alerts to syslog, a syslog message is sent for each alert. The actual format depends on your syslog daemon, but here's an example:
+When configured to send alerts to syslog, a syslog message is sent for each alert. The actual format depends on your syslog daemon, but here's a simple configuration example:
 
 ```yaml
 syslog_output:
   enabled: true
 ```
 
+And its respective entry in the syslog service:
+
 ```
 Jun  7 10:20:05 ubuntu falco: Sensitive file opened for reading by non-trusted program (user=root command=cat /etc/shadow file=/etc/shadow)
 ```
 
-Syslog messages are sent with a facility of LOG_USER. The rule's priority is used as the priority of the syslog message.
+{{% alert color="primary" %}}
+Syslog messages are sent with a facility of **`LOG_USER`**.\
+The rule's priority is used as the priority of the syslog message.
+{{% /alert %}}
 
 ## Program Output
 
-When configured to send alerts to a program, Falco starts the program for each alert and writes its contents to the program's standard input. You can only configure a single program output (e.g. route alerts to a single program) at a time.
+When configured to send alerts to a program, Falco normally starts the program for each alert and writes its contents to the program's standard input. You can only configure a single program output (e.g. route alerts to a single program) at a time.
 
-For example, given a `falco.yaml` configuration of:
+Here you can find an example of how to configure the `program_output` inside the `falco.yaml` file:
 
 ```yaml
 program_output:
@@ -81,7 +83,7 @@ program_output:
   program: mail -s "Falco Notification" someone@example.com
 ```
 
-If the program cannot normally accept an input from standard input, `xargs` can be used to pass the falco events with an argument. For example :
+If the program cannot normally accept an input from standard input, `xargs` can be used to pass the falco events with an argument. For example:
 
 ```yaml
 program_output:
@@ -90,15 +92,18 @@ program_output:
   program: "xargs -I {} aws --region ${region} sns publish --topic-arn ${falco_sns_arn} --message {}"
 ```
 
-When `keep_alive` is false (the default), for each alert falco will run the program `mail -s ...` and write the alert to the program. The program is run via a shell, so it's possible to specify a command pipeline if you wish to add additional formatting.
+When `keep_alive` is set to false (default value), for each alert falco will run the program `mail -s ...` and write the alert to the program. The program is run via a shell, so it's possible to specify a command pipeline if you wish to add additional formatting.
 
 If `keep_alive` is set to true, before the first alert falco will spawn the program and write the alert. The program pipe will be kept open for subsequent alerts.  Output is buffered and will be flushed only on close. (This can be changed with --unbuffered).
 
-*Note*: the program spawned by falco is in the same process group as falco and will receive all signals that falco receives. If you want to, say, ignore SIGTERM to allow for a clean shutdown in the face of buffered outputs, you must override the signal handler yourself.
-
+{{% alert title="Controlling the program output" color="primary" %}}
+The program spawned by falco is in the same process group as falco and will receive all signals that falco receives. If you want to, say, ignore SIGTERM to allow for a clean shutdown in the face of buffered outputs, you must override the signal handler yourself.
+\
 As of Falco 0.10.0, falco will close and reopen its file output when signaled with `SIGUSR1`.
+{{% /alert %}}
 
-### Program Output Example: Posting to a Slack Incoming Webhook
+
+### Example 1: Posting to a Slack Incoming Webhook
 
 If you'd like to send falco notifications to a slack channel, here's the required configuration to massage the JSON output to a form required for the slack webhook endpoint:
 
@@ -111,7 +116,7 @@ program_output:
   program: "jq '{text: .output}' | curl -d @- -X POST https://hooks.slack.com/services/XXX"
 ```
 
-### Program Output: Sending Alerts to Network Channel
+### Example 2: Sending Alerts to Network Channel
 
 If you'd like to send a stream of alerts over a network connection, here's an example:
 
@@ -127,9 +132,9 @@ program_output:
 
 Note the use of `keep_alive: true` to keep the network connection persistent.
 
-## HTTP[s] Output: Send alerts to an HTTP[s] end point.
+## HTTP/HTTPS Output {#http-output}
 
-If you'd like to send alerts to an HTTP[s] endpoint, you can use the `http_output` option:
+If you'd like to send alerts to an HTTP(S) endpoint, you can use the `http_output` option:
 
 ```yaml
 json_output: true
@@ -139,7 +144,7 @@ http_output:
   url: http://some.url/some/path/
 ```
 
-Currently only unencrypted HTTP endpoints or valid, secure HTTPs endpoints are supported (ie invalid or self signed certificates are not supported).
+Currently only unencrypted HTTP endpoints, and valid, secure HTTPS endpoints are supported (i.e. invalid or self signed certificates are not supported).
 
 ## JSON Output
 

@@ -1,180 +1,52 @@
 ---
-title: Falco Alerts
-weight: 80
+title: Formatting Alerts
+description: Format Falco Alerts for Containers and Kubernetes
+linktitle: Formating Alerts
+weight: 20
 ---
 
-Falco can send alerts to one or more channels:
+Falco has native support for containers and orchestration environments. With the option `-k`, Falco communicates with the provided K8s API server to decorate events with the K8s pod/namespace/deployment/etc. associated with the event. With `-m`, Falco communicates with the marathon server to do the same thing.
 
-* Standard Output
-* A file
-* Syslog
-* A spawned program
-* A HTTP[s] end point
-* A client via the gRPC API
+Falco can be run with `-pk`/`-pm`/`-pc`/`-p` arguments that change the formatted output to be a k8s-friendly/mesos-friendly/container-friendly/general format. However, the source of formatted output is in the set of rules and not on the command line. This page provides more detail on how `-pk`/`-pm`/`-pc`/`-p` interacts with the format strings in the `output` attribute of rules.
 
-The channels are configured via the falco configuration file `falco.yaml`. See the [Falco Configuration](../configuration) page for more details. Here are details on each of those channels.
+The information from k8s/mesos/containers is used in conjunction with the command line options in these ways:
 
-## Standard Output
+* In rule outputs, if the format string contains `%container.info`, that is replaced with the value from `-pk`/`-pm`/`-pc`, if one of those options was provided. If no option was provided, `%container.info` is replaced with a generic `%container.name (id=%container.id)` instead.
 
-When configured to send alerts via standard output, a line is printed for each alert. Here's an example:
+* If the format string does not contain `%container.info`, and one of `-pk`/`-pm`/`-pc` was provided, that is added to the end of the formatting string.
 
-```yaml
-stdout_output:
-  enabled: true
+* If `-p` was specified with a general value (i.e. not `-pk`/`-pm`/`-pc`), the value is simply added to the end and any `%container.info` is replaced with the generic value.
+
+
+## Examples
+
+Here are some examples of Falco command lines, output strings in rules, and the resulting output:
+
+### Output contains `%container.info`
+```
+output: "Namespace change (setns) by unexpected program (user=%user.name command=%proc.cmdline parent=%proc.pname %container.info)"
+
+$ falco
+15:42:35.347416068: Warning Namespace change (setns) by unexpected program (user=root command=test_program parent=hyperkube k8s-kubelet (id=4a4021c50439))
+
+$ falco -pk -k <k8s api server url>
+15:42:35.347416068: Warning Namespace change (setns) by unexpected program (user=root command=test_program parent=hyperkube k8s.pod=jclient-3160134038-qqaaz container=4a4021c50439)
+
+$ falco -p "This is Some Extra" -k <k8s api server url>
+15:42:35.347416068: Warning Namespace change (setns) by unexpected program (user=root command=test_program parent=hyperkube k8s-kubelet (id=4a4021c50439)) This is Some Extra
 ```
 
-```
-10:20:05.408091526: Warning Sensitive file opened for reading by non-trusted program (user=root command=cat /etc/shadow file=/etc/shadow)
-```
-Standard output is useful when using Fluentd or Logstash to capture logs from containers. Alerts can then be stored in Elasticsearch, and dashboards can be created to visualize the alerts. For more information, read [this blog post](https://sysdig.com/blog/kubernetes-security-logging-fluentd-falco/).
-
-When run in the background via the `-d/--daemon` command line option, standard output messages are discarded.
-
-### Standard Output buffering
-
-If the logs are inspected by tailing container logs (e.g. `kubectl logs -f` in Kubernetes) it might look like events can take a long time to appear, sometimes more than 15 minutes.
-This is not an issue with Falco but is simply a side effect of the system output buffering. However, if realtime update of these logs is necessary it can be forced
-with the `-U/--unbuffered` command line option which will ensure the output is flushed for every event at the cost of higher CPU usage.
-
-## File Output
-
-When configured to send alerts to a file, a message is written to the file for each alert. The format is very similar to the Standard Output format:
-
-```yaml
-file_output:
-  enabled: true
-  keep_alive: false
-  filename: ./events.txt
-```
-
-When `keep_alive` is false (the default), for each alert the file is opened for appending, the single alert is written, and the file is closed. The file is not rotated or truncated. If `keep_alive` is set to true, the file is opened before the first alert and kept open for all subsequent alerts. Output is buffered and will be flushed only on close. (This can be changed with `--unbuffered`).
-
-If you'd like to use a program like [logrotate](https://github.com/logrotate/logrotate) to rotate the output file, an example logrotate config is available [here](https://github.com/falcosecurity/falco/blob/ffd8747ec0943db2546c3270826e1700dc4df75f/examples/logrotate/falco).
-
-As of Falco 0.10.0, falco will close and reopen its file output when signaled with `SIGUSR1`. The logrotate example above depends on it.
-
-## Syslog Output
-
-When configured to send alerts to syslog, a syslog message is sent for each alert. The actual format depends on your syslog daemon, but here's an example:
-
-```yaml
-syslog_output:
-  enabled: true
-```
+### Output does not contain `%container.info`
 
 ```
-Jun  7 10:20:05 ubuntu falco: Sensitive file opened for reading by non-trusted program (user=root command=cat /etc/shadow file=/etc/shadow)
+output: "File below a known binary directory opened for writing (user=%user.name command=%proc.cmdline file=%fd.name)"
+
+$ falco
+15:50:18.866559081: Warning File below a known binary directory opened for writing (user=root command=touch /bin/hack file=/bin/hack) k8s-kubelet (id=4a4021c50439)
+
+$ falco -pk -k <k8s api server url>
+15:50:18.866559081: Warning File below a known binary directory opened for writing (user=root command=touch /bin/hack file=/bin/hack) k8s.pod=jclient-3160134038-qqaaz container=4a4021c50439
+
+$ falco -p "This is Some Extra" -k <k8s api server url>
+15:50:18.866559081: Warning File below a known binary directory opened for writing (user=root command=touch /bin/hack file=/bin/hack) This is Some Extra
 ```
-
-Syslog messages are sent with a facility of LOG_USER. The rule's priority is used as the priority of the syslog message.
-
-## Program Output
-
-When configured to send alerts to a program, Falco starts the program for each alert and writes its contents to the program's standard input. You can only configure a single program output (e.g. route alerts to a single program) at a time.
-
-For example, given a `falco.yaml` configuration of:
-
-```yaml
-program_output:
-  enabled: true
-  keep_alive: false
-  program: mail -s "Falco Notification" someone@example.com
-```
-
-If the program cannot normally accept an input from standard input, `xargs` can be used to pass the falco events with an argument. For example :
-
-```yaml
-program_output:
-  enabled: true
-  keep_alive: false
-  program: "xargs -I {} aws --region ${region} sns publish --topic-arn ${falco_sns_arn} --message {}"
-```
-
-When `keep_alive` is false (the default), for each alert falco will run the program `mail -s ...` and write the alert to the program. The program is run via a shell, so it's possible to specify a command pipeline if you wish to add additional formatting.
-
-If `keep_alive` is set to true, before the first alert falco will spawn the program and write the alert. The program pipe will be kept open for subsequent alerts.  Output is buffered and will be flushed only on close. (This can be changed with --unbuffered).
-
-*Note*: the program spawned by falco is in the same process group as falco and will receive all signals that falco receives. If you want to, say, ignore SIGTERM to allow for a clean shutdown in the face of buffered outputs, you must override the signal handler yourself.
-
-As of Falco 0.10.0, falco will close and reopen its file output when signaled with `SIGUSR1`.
-
-### Program Output Example: Posting to a Slack Incoming Webhook
-
-If you'd like to send falco notifications to a slack channel, here's the required configuration to massage the JSON output to a form required for the slack webhook endpoint:
-
-```yaml
-# Whether to output events in json or text
-json_output: true
-…
-program_output:
-  enabled: true
-  program: "jq '{text: .output}' | curl -d @- -X POST https://hooks.slack.com/services/XXX"
-```
-
-### Program Output: Sending Alerts to Network Channel
-
-If you'd like to send a stream of alerts over a network connection, here's an example:
-
-```yaml
-# Whether to output events in json or text
-json_output: true
-…
-program_output:
-  enabled: true
-  keep_alive: true
-  program: "nc host.example.com 1234"
-```
-
-Note the use of `keep_alive: true` to keep the network connection persistent.
-
-## HTTP[s] Output: Send alerts to an HTTP[s] end point.
-
-If you'd like to send alerts to an HTTP[s] endpoint, you can use the `http_output` option:
-
-```yaml
-json_output: true
-...
-http_output:
-  enabled: true
-  url: http://some.url/some/path/
-```
-
-Currently only unencrypted HTTP endpoints or valid, secure HTTPs endpoints are supported (ie invalid or self signed certificates are not supported).
-
-## JSON Output
-
-For all output channels, you can switch to JSON output either in the configuration file or on the command line. For each alert, falco will print a JSON object, on a single line, containing the following properties:
-
-* `time`: the time of the alert, in ISO8601 format.
-* `rule`: the rule that resulted in the alert.
-* `priority`: the priority of the rule that generated the alert.
-* `output`: the formatted output string for the alert.
-* `output_fields`: for each templated value in the output expression, the value of that field from the event that triggered the alert.
-
-Here's an example:
-
-```javascript
-{"output":"16:31:56.746609046: Error File below a known binary directory opened for writing (user=root command=touch /bin/hack file=/bin/hack)","priority":"Error","rule":"Write below binary dir","time":"2017-10-09T23:31:56.746609046Z", "output_fields": {"evt.t\
-ime":1507591916746609046,"fd.name":"/bin/hack","proc.cmdline":"touch /bin/hack","user.name":"root"}}
-```
-
-Here's the same output, pretty-printed:
-
-```javascript
-{
-   "output" : "16:31:56.746609046: Error File below a known binary directory opened for writing (user=root command=touch /bin/hack file=/bin/hack)"
-   "priority" : "Error",
-   "rule" : "Write below binary dir",
-   "time" : "2017-10-09T23:31:56.746609046Z",
-   "output_fields" : {
-      "user.name" : "root",
-      "evt.time" : 1507591916746609046,
-      "fd.name" : "/bin/hack",
-      "proc.cmdline" : "touch /bin/hack"
-   }
-}
-```
-
-## gRPC Output
-
-If you'd like to send alerts to an external program connected via gRPC API (for example, the [falco-exporter](https://github.com/falcosecurity/falco-exporter)), you need to enable both the `grpc` and `grpc_output` options as described under the [gRPC Configuration section](/docs/grpc/#configuration).
