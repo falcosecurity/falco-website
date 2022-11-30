@@ -1,6 +1,8 @@
 ---
 title: Okta Events
-weight: 2
+description: Keep an eye on your activity within this famous authentication service
+linktitle: Okta Events
+weight: 50
 ---
 
 The Falco [Okta](https://github.com/falcosecurity/plugins/blob/master/plugins/okta/README.md) plugin can read [Okta](https://www.okta.com/) logs and emit events for each Okta log entry.

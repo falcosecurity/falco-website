@@ -1,6 +1,8 @@
 ---
 title: Generating sample events
-weight: 4
+description: Test your Falco deployment by generating sample events under controlled circumstances
+linktitle: Generating sample events
+weight: 70
 ---
 
 If you'd like to check if Falco is working properly, we have the [`event-generator`](https://github.com/falcosecurity/event-generator) tool that can perform an activity for both our syscall and k8s audit related rules.
@@ -14,7 +16,8 @@ Without arguments it runs all actions, otherwise only those actions matching the
 
 The full command line documentation is [here](https://github.com/falcosecurity/event-generator/blob/master/docs/event-generator_run.md).
 
-## Downloads 
+## Downloads
+
 | Artifacts     |  | Version |
 |------|----------|----------|
 | binaries | [download link](https://github.com/falcosecurity/event-generator/releases/latest) | [![Release](https://img.shields.io/github/release/falcosecurity/event-generator.svg?style=flat-square)](https://github.com/falcosecurity/event-generator/releases/latest) |
@@ -22,12 +25,14 @@ The full command line documentation is [here](https://github.com/falcosecurity/e
 
 ## Sample events
 
-### System Call Activity
+{{% pageinfo color="warning" %}}
+**WARNING**
 
-{{% pageinfo color="primary" %}}
-**Warning** — We strongly recommend that you run the program within Docker (see below), since some commands might alter your system. For example, some actions modify files and directories below `/bin`, `/etc`, `/dev`, etc.
-
+Since some commands might alter your system, we strongly recommend that you run the program within a container (see below).\
+For example, some actions modify files and directories below `/bin`, `/etc`, `/dev`, etc.
 {{% /pageinfo %}}
+
+### System Call Activity
 
 The `syscall` collection performs a variety of suspect actions that are detected by the [default Falco ruleset](https://github.com/falcosecurity/falco/blob/master/rules/falco_rules.yaml).
 
