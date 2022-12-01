@@ -1,7 +1,23 @@
 body > .version-banner {
+
     padding-top: 4rem;
     padding-right: 4rem;
     padding-left: 4rem;
     margin-bottom: -2rem;
     background-color: $primary;
+
+}
+
+.version-banner {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .pageinfo {
+        text-align: center;
+        max-width: 1200px;
+        min-width: 300px;
+    }
+
 }
