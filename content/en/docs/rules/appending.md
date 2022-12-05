@@ -7,7 +7,7 @@ weight: 50
 
 ## Overview
 
-If you use multiple Falco rules files, you might want to append new items to an existing list, rule, or macro. To do that, define an item with the same name as an existing item and add an `append: true` attribute to the list. 
+If you use multiple Falco rules files, you might want to append new items to an existing list, macro or rule. To do that, define an item with the same name as an existing item and add an `append: true` attribute to the YAML object. 
 
 {{% alert color="warning" %}}
 When appending to lists, items are automatically added to the **end** of the _list_.\
@@ -18,7 +18,15 @@ Note that when appending to lists, rules or macros, the order of the rule config
 
 This can be configured with multiple `-r` parameters in the right order, directly inside the falco configuration file (`falco.yaml`) via `rules_file` or if you use the official Helm chart, via the `falco.rulesFile` value.
 
-## Examples
+## Rewriting Rules
+
+On the contratry, if `append` is set to `false` (default value), the whole object will be redefined. This can be used to empty a list, [override a macro](/docs/reference/rules/macros-override/) or even change a rule completely.
+
+Take into account that override is complete, there will be no merge of previous and new content for that object. When redefining a rule, it will entirely replace the previous one, so if the new object defines fewer YAML map fields than required, Falco could return an error. 
+
+The only exceptions to this are the `enabled` field, that when defined as a single accompanying field, it simply enables or disables a previously-defined rule. And obviously, the `append` field, that when set to `true` for either macros or rules, it just appends the condition/exceptions field.
+
+## Examples of Appending to Rules
 
 In all of the examples below, it's assumed one is running Falco via `falco -r /etc/falco/falco_rules.yaml -r /etc/falco/falco_rules.local.yaml`, or has the default entries for `rules_file` in falco.yaml, which has `/etc/falco/falco.yaml` first and `/etc/falco/falco_rules.local.yaml` second.
 
