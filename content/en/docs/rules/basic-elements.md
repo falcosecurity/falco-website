@@ -176,6 +176,11 @@ With these macros defined, we can then rewrite the above rule's condition as `sp
 
 For more examples of rules and macros, take a look the documentation on [default macros](./default-macros) and the `rules/falco_rules.yaml` file. In fact, both the macros above are part of the default list!
 
+
+{{% alert color="primary" %}}
+Macros *can* contain other macros that had been **previously** defined.
+{{% /alert %}}
+
 ## Lists
 
 *Lists* are named collections of items that you can include in rules, macros, or even other lists. 
@@ -208,7 +213,7 @@ Here are some example lists as well as a macro that uses them:
 ```
 
 {{% alert color="primary" %}}
-Lists *can* contain other lists.
+Lists *can* contain other lists that had been **previously** defined.
 {{% /alert %}}
 
 Referring to a list inserts the list items in the macro, rule, or list. Therefore, our rule could become more general replacing `proc.name = bash` with `proc.name in (shell_binaries)`, or even better, using the already included macro `shell_procs`:
@@ -232,3 +237,16 @@ Referring to a list inserts the list items in the macro, rule, or list. Therefor
     shell=%proc.name parent=%proc.pname cmdline=%proc.cmdline)
   priority: WARNING
 ```
+
+## Visibility
+
+As mentioned above, [lists](#lists) can reference other lists, and [macros](#macros) can reference other macros. The only requirement is that to reference an object of the same kind (a list including another list, or a macro including another macro) they must have been defined previously.
+
+However, if a [macro](#macros) included a [list](#lists), this list might have been defined earlier or be defined at a later stage in the rules files. The same happens with a [rule](#rules) referencing a [macro](#macros). This one doesn't need to be previously defined.
+
+In other words, visibility is defined in cascade and is quite important:
+
+- A list can only reference lists defined before it.
+- A macro can only reference macros defined before it.
+- A macro can reference any list.
+- A rule can reference any macro.
