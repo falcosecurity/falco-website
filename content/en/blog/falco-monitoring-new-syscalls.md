@@ -30,7 +30,9 @@ The purpose of this syscall is to open a file in a given path or to try creating
 
 In theory, the Falco monitoring can potentially be bypassed by using `openat2` instead of `openat`. If malicious software is carefully built to only use `openat2`, Falco would not be able to detect anomalies related to file opening, thus weakening its security guarantees. 
 
-Nonetheless, we found this syscall relatively easy to implement in Falco, because the code that supports `openat` was already at our disposal.
+Nonetheless, we found this syscall relatively easy to implement in Falco, because the code that supports `openat` was already at our disposal.  
+
+Last but not least, before starting, it is a good practice to check whether a syscall is already implemented with specific filler logic, or not, by looking at the [drivers report table](https://github.com/falcosecurity/libs/blob/master/driver/report.md).
 
 ### Architectural Overview of Falco
 
@@ -38,11 +40,13 @@ Having a high-level understanding of the architecture of Falco is the key to ide
 
 ![Architecture of Falco](/img/falco-architectural-overview.png)
 
-On the bottom, there are the **Kernel Module** and the **eBPF Probe**, which are often simply called **drivers**. The Kernel Module offers slightly better performance and compatibility, whereas the eBPF probe is optimal in terms of security and modernity. 
+On the bottom, there are the **Kernel Module** and the **eBPF Probe**, which are often simply called **drivers**. The Kernel Module offers slightly better performance and compatibility, whereas the eBPF probe is optimal in terms of security and modernity.  
+Moreover, recently a new driver entered the family: **modern eBPF probe**.  
+It has better performances than old eBPF probe, but requires newer kernels. See https://github.com/falcosecurity/libs#drivers-officially-supported-architectures for a comparison.
 
-The two drivers are equal in functionality and run in the kernel space to catch internal events (such as syscalls) and then push them up to the userspace. Then, **libscap** consumes each event and enriches them with some context information. This component can also read and write dump files. The next in line is **libsinsp**. This is where each event is parsed, inspected, and is evaluated against a set of user-specified filters. 
+The drivers are equal in functionality and run in the kernel space to catch internal events (such as syscalls) and then push them up to the userspace. Then, **libscap** consumes each event and enriches them with some context information. This component can also read and write dump files. The next in line is **libsinsp**. This is where each event is parsed, inspected, and is evaluated against a set of user-specified filters. 
 
-Finally, **Falco** and its **Rule Engine** consume the processed events, orchestrate the behavior of the underlying libraries, and send the output alerts to the outside world. However, the core logic responsible for processing each system call is contained in the [low-level drivers](https://github.com/falcosecurity/libs/tree/master/driver) (kmod and eBPF) and the [userspace libraries](https://github.com/falcosecurity/libs/tree/master/userspace).
+Finally, **Falco** and its **Rule Engine** consume the processed events, orchestrate the behavior of the underlying libraries, and send the output alerts to the outside world. However, the core logic responsible for processing each system call is contained in the [low-level drivers](https://github.com/falcosecurity/libs/tree/master/driver) and the [userspace libraries](https://github.com/falcosecurity/libs/tree/master/userspace).
 
 ### Adding OS-Independent Representations
 
@@ -64,6 +68,8 @@ enum ppm_event_type {
 ```
 Most careful readers will notice that we defined two constants for the same syscall. This is mandatory since the **E**nter and the e**X**it of a syscall are seen as two distinct events. Most of the time, the interesting one is the exit event because it carries both the syscall arguments and the return value, but there is a value in the enter event for many use cases too.
 
+**Don't forget to bump `PPM_EVENT_MAX` value too!**
+
 There is also an additional enumeration that defines syscalls specifically. This is the abstract representation of syscalls numbers used internally by the engine.
 
 ```clike=
@@ -75,7 +81,8 @@ enum ppm_syscall_code {
 };
 ```
 
-**Last but not least, don't forget to bump `PPM_EVENT_MAX` and `PPM_SC_MAX` values too!**
+> **NOTE**: there should be no need to adjust anything here, because PPM_SC codes are already automatically bumped monthly by https://github.com/falcosecurity/syscalls-bumper tool.  
+Basically, you will find that the PPM_SC for your syscall is already existent.
 
 Finally, we noticed that the drivers provide support to the ia32 architecture by maintaining a wide set of definitions. In many cases, some enumerations and definitions are replicated with the `_ia32` prefix. At this point, we redefine the actual syscall number of `openat2` for ia32.
 
@@ -88,6 +95,9 @@ Finally, we noticed that the drivers provide support to the ia32 architecture by
 // ...
 ```
 **Again, remember to increment `NR_ia32_syscalls` value too!**
+
+This whole file is needed by kmod to ensure it is able to catch 32bit syscalls emulation on a 64bit host; right now, kmod is the only driver supporting this.  
+There is ongoing work to properly support it on old and modern eBPF: https://github.com/falcosecurity/libs/issues/279.  
 
 #### Argument Flags (optional)
 
@@ -125,6 +135,7 @@ const struct ppm_name_value openat2_flags[] = {
 Quite straightforward so far, uh? Lastly, we needed to create a mapping function that will be invoked by the drivers to convert the flags in the internal representation format:
 
 ```clike=
+// driver/ppm_flag_helpers.h
 static __always_inline u32 openat2_resolve_to_scap(unsigned long flags)
 {
     u32 res = 0;
@@ -139,7 +150,7 @@ static __always_inline u32 openat2_resolve_to_scap(unsigned long flags)
 }
 ```
 
-Using `ifdefs` here is a good practice to avoid compilation issues that may arise on different platforms. Generally, this could be a good practice to make the compilation step as robust as possible, given the fact that `openat2` is not yet supported in many kernel versions and standard libraries.
+Using `ifdefs` here is a good practice to avoid compilation issues that may arise on different platforms/kernel versions. Generally, this could be a good practice to make the compilation step as robust as possible, given the fact that `openat2` is not yet supported in many kernel versions and standard libraries.
 
 ### Tables
 
@@ -152,17 +163,17 @@ Starting from `g_event_info`, we must fill in the name of the syscall, its categ
 const struct ppm_event_info g_event_info[PPM_EVENT_MAX] = {
     // ...
     /* PPME_SYSCALL_OPENAT2_E */ {
-        "openat2", EC_FILE, EF_CREATES_FD | EF_MODIFIES_STATE, 0
+        "openat2", EC_FILE | EC_SYSCALL, EF_CREATES_FD | EF_MODIFIES_STATE, 0
     },
     /* PPME_SYSCALL_OPENAT2_X */ {
-        "openat2", EC_FILE, EF_CREATES_FD | EF_MODIFIES_STATE, 6, {
+        "openat2", EC_FILE | EC_SYSCALL, EF_CREATES_FD | EF_MODIFIES_STATE, 6, {
             {"fd", PT_FD, PF_DEC},
             {"dirfd", PT_FD, PF_DEC},
             {"name", PT_FSRELPATH, PF_NA, DIRFD_PARAM(1)},
             {"flags", PT_FLAGS32, PF_HEX, file_flags},
             {"mode", PT_UINT32, PF_OCT},
             {"resolve", PT_FLAGS32, PF_HEX, openat2_flags} 
-        }    
+        }
     },
 }
 ```
@@ -190,7 +201,20 @@ We also need to update `FILLER_LIST_MAPPER` with the filler for our exit event. 
 // ...
 ```
 
-Next, we will make sure to add the new syscall to both the syscall table and the routing table. `g_syscall_table` maps a syscall with some flags and its enter and exit events constants. We discovered the meaning of each flag by inspecting its definition and by looking at the way they were used in other parts of the code.
+Next, we will make sure to add the new syscall to the syscall table. `g_syscall_table` maps a syscall with some flags and its enter and exit events constants.  
+Once again, the `syscalls-bumper` tool, already did part of the work for us; we will find an empty entry here, like:
+```clike=
+// driver/syscall_table.c 
+const struct syscall_evt_pair g_syscall_table[SYSCALL_TABLE_SIZE] = {
+    // ...
+#ifdef __NR_openat2
+    [__NR_openat2 - SYSCALL_TABLE_ID0] = {
+        .ppm_sc = PPM_SC_OPENAT2
+    },
+#endif
+```
+
+We must finally add other informations, like enter and exit events mapping:
 
 ```clike=
 // driver/syscall_table.c 
@@ -198,26 +222,16 @@ const struct syscall_evt_pair g_syscall_table[SYSCALL_TABLE_SIZE] = {
     // ...
 #ifdef __NR_openat2
     [__NR_openat2 - SYSCALL_TABLE_ID0] = {
-        UF_USED, PPME_SYSCALL_OPENAT2_E, PPME_SYSCALL_OPENAT2_X
+        UF_USED, PPME_SYSCALL_OPENAT2_E, PPME_SYSCALL_OPENAT2_X, PPM_SC_OPENAT2
     },
 #endif
 };
 
 ```
 
-Then, the `g_syscall_code_routing_table` table maps the platform syscall number to our internal enumeration:
+Be mindful that there is a counterpart of `g_syscall_table` for ia32. **Please make sure to update that too!**
 
-```clike=
-// driver/syscall_table.c 
-const enum ppm_syscall_code g_syscall_code_routing_table[SYSCALL_TABLE_SIZE] = {
-    // ...
-#ifdef __NR_openat2
-    [__NR_openat2 - SYSCALL_TABLE_ID0] = PPM_SC_OPENAT2,
-#endif
-};
-```
-
-Be mindful that there are counterparts of `g_syscall_code_routing_table` and `g_syscall_table` for ia32. **Please be sure of updating those too!**
+For **modern eBPF probe** TODO...
 
 ### Fillers
 
@@ -306,6 +320,10 @@ Then, the body of the eBPF filler is implemented as a faithful copy of what we a
 At this point, even if you are lucky enough to compile all these changes on the first try, you can still expect the kernel to reject the newly produced eBPF probe. To guarantee its safety, the kernel has a `verifier` that checks the eBPF bytecode before actually launching it. 
 
 The technology is still at an early stage, and there is no explicit agreement between the clang compiler and the Linux kernel between the bytecode produced and the one accepted. Documentation on these aspects can be found on the web for further reference. The good news is that the filler functions are simple enough to avoid this kind of risk if implemented correctly.
+
+#### Modern eBPF probe
+
+TODO
 
 ### Libscap
 
@@ -418,6 +436,8 @@ int main(int argc, char** argv)
 The testing setup is fairly simple. First, we had to compile Falco with the new version of `libs`, and we ran it with an ad-hoc ruleset that we were sure would trigger some alerts once our sample program was running. A rule filter such as `evt.type=openat2` will suffice. Then, we ran the little program above and checked that Falco effectively sent some output alert (luckily, it did). 
 
 Whoever reproduces the same experiment must be mindful of testing it with both the kernel module and the eBPF probe to assert that the feature parity guarantee of the two drivers gets respected.
+
+TODO: testing framework!
 
 ### Conclusion
 
