@@ -1,6 +1,8 @@
 ---
 title: Python Client
-weight: 3
+linktitle: Python Client
+description: Retrieve Falco events using the gRPC Python Client
+weight: 60
 ---
 
 The [client-py](https://github.com/falcosecurity/client-py) Python library provides:

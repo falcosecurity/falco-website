@@ -1,9 +1,9 @@
 ---
 title: Outputs
-weight: 1
+linktitle: Outputs
+description: Protocol buffer schema definition of the Falco gRPC Outputs APIs
+weight: 80
 ---
-
-This is the protocol buffer schema definition of the Falco gRPC Outputs APIs.
 
 {{< highlight protobuf >}}
 {{< githubcode "falcosecurity/falco" "userspace/falco/outputs.proto" >}}

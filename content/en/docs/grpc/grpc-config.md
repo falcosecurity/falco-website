@@ -34,7 +34,7 @@ grpc:
 ```
 
 As you can see, binding to a network address requires you to generate and specify a set of TLS certificates
-as show in the next section.
+as shown in the next section.
 
 Alternatively, if you want something simpler, you can tell Falco to bind the gRPC server to a local unix socket,
 this does not require you to generate certificates for mTLS but also comes without any authentication mechanism.
@@ -47,7 +47,9 @@ grpc:
   threadiness: 8
 ```
 
-Then, remember to enable the services you need, otherwise the gRPC server won't expose anything, for the outputs use:
+Then, remember to enable the services you need. Otherwise, the gRPC server won't expose anything.
+
+For the outputs use:
 
 ```yaml
 # gRPC output service.
@@ -58,12 +60,11 @@ grpc_output:
   enabled: true
 ```
 
-
 ## Certificates
 
 When configured to bind to a network address, the Falco gRPC server works only with mutual TLS by design. Therefore, you have to generate the certificates and update the paths in the above configuration.
 
-The Falco authors plan to automate the certificates generation soon.
+The Falco authors plan to automate the certificate generation soon.
 
 In the meantime, use the following script to generate the certificates.
 
@@ -74,7 +75,7 @@ In the meantime, use the following script to generate the certificates.
 Run the following commands:
 
 ```bash
-$ openssl genrsa -des3  -out ca.key 4096  -passout pass:1234
+$ openssl genrsa -des3 -out ca.key 4096 -passout pass:1234
 
 $ openssl req -new                  \
               -x509                 \
@@ -90,7 +91,7 @@ $ openssl req -new                  \
 Run the following command:
 
 ```bash
-$ openssl genrsa -des3  -out server.key 4096  -passout pass:1234
+$ openssl genrsa -des3 -out server.key 4096 -passout pass:1234
 
 $ openssl req -new                  \
               -key server.key       \
@@ -105,7 +106,7 @@ $ openssl x509 -req                 \
                -in server.csr       \
                -out server.crt      \
                -set_serial 01       \
-               -passin pass:1234 
+               -passin pass:1234
 ```
 
 ### Remove passphrase from Server Key
@@ -121,10 +122,10 @@ $ openssl rsa -in server.key -out server.key -passin pass:1234
 Run the following command:
 
 ```bash
-$ openssl genrsa -des3  -passout pass:1234  -out client.key 4096
+$ openssl genrsa -des3 -passout pass:1234 -out client.key 4096
 
 $ openssl req -new                  \
-              -passin pass:1234     \ 
+              -passin pass:1234     \
               -key client.key       \
               -out client.csr       \
               -subj  "/C=SP/ST=Italy/L=Ornavasso/O=Test/OU=Client/CN=localhost"
@@ -144,7 +145,7 @@ $ openssl x509 -req                 \
 Run the following command:
 
 ```bash
-$ openssl rsa -in client.key  -out client.key  -passin pass:1234
+$ openssl rsa -in client.key -out client.key -passin pass:1234
 ```
 
 ## Usage
