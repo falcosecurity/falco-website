@@ -1,22 +1,11 @@
 ---
-title: gRPC API
-weight: 70
+title: Configuration
+linktitle: Configuration
+description: Setup Falco to serve events via the gRPC Server
+weight: 10
 ---
 
-Starting from version [0.18.0](https://github.com/falcosecurity/falco/releases/tag/0.18.0), Falco has its own gRPC server which provides a set of gRPC APIs.
-
-The current APIs are:
-
-- [schema definition](outputs): get or subscribe to Falco output events.
-- [schema definition](version): retrieve the Falco version.
-
-In order to interact with these APIs, the falcosecurity organization provides some clients/SDKs:
-
-- [client-go](./client-go)
-- [client-py](./client-py)
-- [client-rs](https://github.com/falcosecurity/client-rs)
-
-## Configuration
+## Enabling the Server
 
 The Falco gRPC server and the Falco gRPC Outputs APIs are not enabled by default.
 
@@ -70,7 +59,7 @@ grpc_output:
 ```
 
 
-### Certificates
+## Certificates
 
 When configured to bind to a network address, the Falco gRPC server works only with mutual TLS by design. Therefore, you have to generate the certificates and update the paths in the above configuration.
 
@@ -80,41 +69,74 @@ In the meantime, use the following script to generate the certificates.
 
 **Note**: Ensure that you configure the `-passin`, `-passout`, and `-subj` flags according to your settings.
 
-### Generate valid CA
+### Generate CA
 
-Run the following command:
+Run the following commands:
 
 ```bash
-$ openssl genrsa -passout pass:1234 -des3 -out ca.key 4096
-$ openssl req -passin pass:1234 -new -x509 -days 365 -key ca.key -out ca.crt -subj  "/C=SP/ST=Italy/L=Ornavasso/O=Test/OU=Test/CN=Root CA"
+$ openssl genrsa -des3  -out ca.key 4096  -passout pass:1234
+
+$ openssl req -new                  \
+              -x509                 \
+              -days 365             \
+              -key ca.key           \
+              -out ca.crt           \
+              -passin pass:1234     \
+              -subj  "/C=SP/ST=Italy/L=Ornavasso/O=Test/OU=Test/CN=Root CA"
 ```
 
-### Generate valid Server Key/Cert
+### Generate Server Key/Cert
 
 Run the following command:
 
 ```bash
-$ openssl genrsa -passout pass:1234 -des3 -out server.key 4096
-$ openssl req -passin pass:1234 -new -key server.key -out server.csr -subj  "/C=SP/ST=Italy/L=Ornavasso/O=Test/OU=Server/CN=localhost"
-$ openssl x509 -req -passin pass:1234 -days 365 -in server.csr -CA ca.crt -CAkey ca.key -set_serial 01 -out server.crt
+$ openssl genrsa -des3  -out server.key 4096  -passout pass:1234
+
+$ openssl req -new                  \
+              -key server.key       \
+              -out server.csr       \
+              -passin pass:1234     \
+              -subj  "/C=SP/ST=Italy/L=Ornavasso/O=Test/OU=Server/CN=localhost"
+
+$ openssl x509 -req                 \
+               -days 365            \
+               -CA ca.crt           \
+               -CAkey ca.key        \
+               -in server.csr       \
+               -out server.crt      \
+               -set_serial 01       \
+               -passin pass:1234 
 ```
 
-### Remove passphrase from the Server Key
+### Remove passphrase from Server Key
 
 Run the following command:
 
 ```bash
-$ openssl rsa -passin pass:1234 -in server.key -out server.key
+$ openssl rsa -in server.key -out server.key -passin pass:1234
 ```
 
-### Generate valid Client Key/Cert
+### Generate Client Key/Cert
 
 Run the following command:
 
 ```bash
-$ openssl genrsa -passout pass:1234 -des3 -out client.key 4096
-$ openssl req -passin pass:1234 -new -key client.key -out client.csr -subj  "/C=SP/ST=Italy/L=Ornavasso/O=Test/OU=Client/CN=localhost"
-$ openssl x509 -passin pass:1234 -req -days 365 -in client.csr -CA ca.crt -CAkey ca.key -set_serial 01 -out client.crt
+$ openssl genrsa -des3  -passout pass:1234  -out client.key 4096
+
+$ openssl req -new                  \
+              -passin pass:1234     \ 
+              -key client.key       \
+              -out client.csr       \
+              -subj  "/C=SP/ST=Italy/L=Ornavasso/O=Test/OU=Client/CN=localhost"
+
+$ openssl x509 -req                 \
+               -days 365            \
+               -CA ca.crt           \
+               -CAkey ca.key        \
+               -set_serial 01       \
+               -in client.csr       \
+               -out client.crt      \
+               -passin pass:1234
 ```
 
 ### Remove passphrase from Client Key
@@ -122,7 +144,7 @@ $ openssl x509 -passin pass:1234 -req -days 365 -in client.csr -CA ca.crt -CAkey
 Run the following command:
 
 ```bash
-$ openssl rsa -passin pass:1234 -in client.key -out client.key
+$ openssl rsa -in client.key  -out client.key  -passin pass:1234
 ```
 
 ## Usage
