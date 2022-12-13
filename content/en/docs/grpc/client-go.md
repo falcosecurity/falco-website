@@ -1,6 +1,8 @@
 ---
 title: Go Client
-weight: 2
+linktitle: Go Client
+description: Retrieve Falco events using the gRPC Go Client
+weight: 50
 ---
 
 The [client-go](https://github.com/falcosecurity/client-go) Go library provides:
