@@ -1,6 +1,8 @@
 ---
 title: Falco Plugins Developers Guide
-weight: 1
+linktitle: Developers Guide
+description: Start writing your own Falco plugins
+weight: 40
 aliases:
     - /docs/plugins/developers_guide/
 ---

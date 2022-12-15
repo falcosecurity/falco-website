@@ -1,6 +1,8 @@
 ---
 title: Falco Plugins Go SDK Walkthrough
-weight: 1
+linktitle: Go SDK Walkthrough
+description: High-level documentation of the Go SDK
+weight: 50
 aliases:
     - /docs/plugins/go_sdk_walkthrough/
 ---
