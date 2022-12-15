@@ -2,7 +2,7 @@
 title: Falco Alerts
 description: Integrate Falco and send Falco Alerts in your desired platform
 linktitle: Falco Alerts
-weight: 80
+weight: 40
 ---
 
 Falco can send alerts to one or more channels:
