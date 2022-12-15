@@ -1,6 +1,8 @@
 ---
 title: Falco Plugins API Reference
-weight: 2
+linktitle: API Reference
+description: Learn how the Plugins API works
+weight: 60
 aliases:
     - /docs/plugins/plugin_api_reference/
 ---
