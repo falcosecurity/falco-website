@@ -9,7 +9,7 @@ slug: falco-0-28-0
 
 
 
-这是Falco在2021年的第二个版本!
+这是Falco在2021年发布的第二个版本!
 
 
 
@@ -21,7 +21,7 @@ slug: falco-0-28-0
 
 
 
-和往常一样，如果你只是想尝试稳定的Falco 0.28.0，你可以按照文档中列出的过程安装它的包:
+和往常一样，如果你只是想试用稳定的Falco 0.28.0，你可以按照文档中概述的流程安装它的软件包:
 
 
 
@@ -35,7 +35,7 @@ slug: falco-0-28-0
 
 
 
-您是否更喜欢使用容器镜像?完全没问题!
+如果您更喜欢使用容器镜像?完全没问题!
 
 
 
@@ -43,8 +43,7 @@ slug: falco-0-28-0
 
 
 
-注意从这个版本开始，感谢Jonah，我们的Falco Infra维护者之一，你也可以在[AWS ECR gallery](https://gallery.ecr.aws/falcosecurity/falco-no-driver)上找到Falco -no-driver容器镜像。falco-driver-loader容器镜像([link](https://gallery.ecr.aws/falcosecurity/falco-driver-loader))也是如此。这是在制作Falco 0.27.0时开始在其他注册表上发布Falco容器镜像的努力的一部分。
-
+注意从这个版本开始，你也可以在[AWS ECR gallery](https://gallery.ecr.aws/falcosecurity/falco-no-driver)上找到Falco -no-driver容器镜像，这都要感谢我们的Falco Infra维护者之一Jonah。falco-driver-loader容器镜像([link](https://gallery.ecr.aws/falcosecurity/falco-driver-loader))也是如此。这是在制作Falco 0.27.0时开始在其他注册表上发布Falco容器镜像的努力的一部分。
 
 
 ##新奇
@@ -87,8 +86,7 @@ slug: falco-0-28-0
 
 
 
-另一个值得一提的变化是，我们确实删除了Falco容器映像用来跳过驱动程序加载的' SKIP_MODULE_LOAD '环境变量。在Falco 0.24.0版本中已弃用。如果你仍然在使用，请切换到使用名为“SKIP_DRIVER_LOADER”的新环境变量。
-
+另一个值得一提的变化是，我们确实移除了Falco容器映像用来跳过驱动程序加载的' SKIP_MODULE_LOAD '环境变量。在Falco 0.24.0版本中已弃用。如果你仍然在使用，请切换到使用名为“SKIP_DRIVER_LOADER”的新环境变量。
 
 
 ###例外
@@ -167,7 +165,7 @@ Falco引擎中的一个bug，准确地说，在Falco规则语言中，阻止数�
 
 
 
-###规则
+### 规则
 
 
 
@@ -183,7 +181,7 @@ Falco引擎中的一个bug，准确地说，在Falco规则语言中，阻止数�
 
 
 
-##接下来是什么
+## 接下来是什么
 
 
 
@@ -199,7 +197,7 @@ Falco引擎中的一个bug，准确地说，在Falco规则语言中，阻止数�
 
 
 
-##让我们见面
+## 让我们见面
 
 
 
@@ -213,9 +211,9 @@ Falco引擎中的一个bug，准确地说，在Falco规则语言中，阻止数�
 
 
 
--在[Kubernetes Slack](https://slack.k8s.io)上加入[#falco channe](https://kubernetes.slack.com/messages/falco)
+- 在[Kubernetes Slack](https://slack.k8s.io)上加入[#falco channe](https://kubernetes.slack.com/messages/falco)
 
--[Join the Falco mailing list](https://lists.cncf.io/g/cncf-falco-dev)
+- [Join the Falco mailing list](https://lists.cncf.io/g/cncf-falco-dev)
 
 
 
