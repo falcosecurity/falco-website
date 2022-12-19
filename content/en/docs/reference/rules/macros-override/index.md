@@ -1,6 +1,7 @@
 ---
-_aliases: ["/docs/rules/default-macros"]
 title: Macros to Override
+linktitle: Macros to Override
+description: Control the behavior of some rules by enabling or disabling these default macros
 weight: 25
 ---
 

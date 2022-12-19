@@ -1,5 +1,7 @@
 ---
 title: Rule fields
+linktitle: Rule fields
+description: Understand what role each field in a rule plays
 weight: 10
 ---
 

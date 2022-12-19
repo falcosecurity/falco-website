@@ -1,5 +1,7 @@
 ---
 title: gRPC API
+linktitle: gRPC API
+description: Enable and configure the gRPC capabilities of Falco
 weight: 70
 ---
 

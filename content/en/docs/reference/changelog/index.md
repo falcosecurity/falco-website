@@ -1,5 +1,7 @@
 ---
 title: Changelog
+linktitle: Changelog
+description: List of changes throughout Falco versions
 aliases: ["/docs/changelog/"]
 weight: 200
 notoc: true

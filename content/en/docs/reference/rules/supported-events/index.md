@@ -1,7 +1,8 @@
 ---
-aliases: ["/docs/rules/supported-events"]
 title: Supported Syscall Events
 linktitle: Syscall Events
+description: Find out which syscall events Falco supports
+aliases: ["/docs/rules/supported-events"]
 weight: 40
 ---
 

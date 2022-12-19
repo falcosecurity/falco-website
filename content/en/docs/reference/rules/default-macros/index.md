@@ -1,6 +1,8 @@
 ---
-aliases: ["/docs/rules/default-macros"]
 title: Default Macros
+linktitle: Default Macros
+description: Use the default macros to simplify Falco Rules
+aliases: ["/docs/rules/default-macros"]
 weight: 20
 ---
 

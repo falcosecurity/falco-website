@@ -1,5 +1,7 @@
 ---
 title: Tutorials
+linktitle: Tutorials
+description: Learn Falco with How-To guides and tutorials
 main_menu: true
 weight: 85
 ---
