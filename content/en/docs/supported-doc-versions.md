@@ -1,5 +1,6 @@
 ---
 title: Available Documentation Versions
+description: Archived versions of Falco Documentation
 content_type: custom
 layout: supported-versions
 weight: 200

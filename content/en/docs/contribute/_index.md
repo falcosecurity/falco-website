@@ -1,6 +1,7 @@
 ---
 title: Contribute
-description: Contribution recognitions
+linktitle: Contribute
+description: Find out how to contribute to the Falco Project
 weight: 110
 notoc: true
 ---

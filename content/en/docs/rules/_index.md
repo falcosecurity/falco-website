@@ -1,5 +1,7 @@
 ---
 title: Falco Rules
+linktitle: Falco Rules
+description: Write and customize Falco Rules to secure your environment
 weight: 30
 ---
 

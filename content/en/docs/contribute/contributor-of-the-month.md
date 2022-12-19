@@ -1,5 +1,7 @@
 ---
 title: Contributor of the Month
+description: Discover who has earned the title of Contributor of the Month
+weight: 50
 ---
 
 Hundreds of developers around the world contribute to Falco open source projects. Our Hall of Fame honors the best of the best.

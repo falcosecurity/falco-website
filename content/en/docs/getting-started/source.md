@@ -1,5 +1,6 @@
 ---
 title: Build Falco from source
+description: Build Falco or its libraries yourself from the source code
 weight: 5
 ---
 
