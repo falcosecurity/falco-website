@@ -1,7 +1,7 @@
 ---
 title: Getting started with gVisor support in Falco
 linktitle: Getting started with gVisor support in Falco
-description: Learn how to integrate gVisor and Falco on Docker
+description: Learn how to integrate gVisor and Falco on Docker and GKE
 date: 2022-09-15
 author: Luca Guerra, Lorenzo Susini, Vicente J. Jiménez Miras
 slug: intro-gvisor-falco
@@ -13,17 +13,20 @@ images:
 ---
 ![](/blog/intro-gvisor-falco/images/intro-gvisor-falco-01.png)
 
-In version 0.32.1, [Falco first introduced support](https://falco.org/blog/falco-0-32-1/) for **[gVisor](https://gvisor.dev/)**. So, what is it and how can we use it?
+_This post has been updated in December 2022 after initial publication. It now contains up-to-date instructions about how to use gVisor support on Docker and Kubernetes with GKE as well! The recommended version for gVisor support is now Falco 0.33.1 or above._
+
+Falco can now work with **[gVisor](https://gvisor.dev/)**! So, what is it and how can we use it?
 
 gVisor, quoting the [official documentation](https://gvisor.dev/docs), is an application kernel that provides an **additional layer of isolation** between running applications and the host operating system. It delivers an additional security boundary for containers by **intercepting and monitoring workload runtime instructions in user space** before they can reach the underlying host.
 
 Falco, on the other hand, works by [monitoring runtime system calls](https://falco.org/docs/), normally in kernel space via a kernel module or an eBPF probe, that are then evaluated against the flexible and powerful [Falco rule engine](https://falco.org/docs/rules/) and so used to trigger security alerts.
 
-Before 0.32.1, Falco could not work with gVisor monitored sandboxes because it is not possible to install a kernel module or eBPF probe in such an environment. But wouldn't it be great to **leverage the stream of system call information that gVisor collects through its powerful monitoring system directly in Falco**? This is exactly what became possible since gVisor released version 20220704.0 and Falco 0.32.1.
+Before, Falco could not work with gVisor monitored sandboxes because it is not possible to install a kernel module or eBPF probe in such an environment. But wouldn't it be great to **leverage the stream of system call information that gVisor collects through its powerful monitoring system directly in Falco**? This is exactly what is possible now!
 
 In this article, you will learn:
 * [✨ The magic that allows Falco and gVisor to work together](#How-Falco-and-gVisor-work-together)
-* [🚀 How to run Falco with gVisor on your host with Docker](#Setup-gVisor-sandbox-monitoring-with-Falco)
+* [🚀 How to run Falco with gVisor on your host with Docker](#Setup-gVisor-Docker-sandbox-monitoring-with-Falco)
+* [☸️ How to run Falco with gVisor on your k8s GKE cluster](#Falco-and-gVisor-on-Kubernetes-with-GKE)
 
 ## How Falco and gVisor work together
 
@@ -43,25 +46,25 @@ Once a message related to a syscall is received, Falco unpacks it and creates th
 
 ![](/blog/intro-gvisor-falco/images/intro-gvisor-falco-03.png)
 
-## Setup gVisor sandbox monitoring with Falco
+## Setup gVisor Docker sandbox monitoring with Falco
 
-First, [install **Falco**](https://falco.org/docs/getting-started/installation/) 0.32.1 or above and [install the **gVisor runsc tool**](https://gvisor.dev/docs/user_guide/install/) 20220704.0 or above.
+First, [install **Falco**](https://falco.org/docs/getting-started/installation/) 0.33.1 or above and [install the **gVisor runsc tool**](https://gvisor.dev/docs/user_guide/install/) 20221122.0 or above.
 
 You can check the version by running:
 ```bash
 falco --version
 ```
-... which needs to report 0.32.1 or above and:
+... which needs to report 0.33.1 or above and:
 ```bash
 runsc --version
 ```
-... which needs to report `release-20220704.0` or above.
+... which needs to report `release-20221122.0` or above.
 
-gVisor needs to be configured to send events to Falco. Download the appropriate configuration file:
+gVisor needs to be configured to send events to Falco. Generate the appropriate configuration file:
 
 ```bash
-$ sudo wget -O /etc/docker/runsc_falco_config.json \
-    https://falco.org/blog/intro-gvisor-falco/assets/config.json
+$ falco --gvisor-generate-config > /tmp/runsc_falco_config.json
+$ sudo mv /tmp/runsc_falco_config.json /etc/docker/runsc_falco_config.json
 
 # Don't forget to protect this configuration
 $ sudo chmod 640 /etc/docker/runsc_falco_config.json
@@ -180,6 +183,16 @@ If you don't happen to have the time to try it right now, here is a short video 
 
 \
 And if you liked this step-by-step tutorial, don't miss the one that Google has published on the gVisor blog: [Configuring Falco with gVisor](https://gvisor.dev/docs/tutorials/falco/).
+
+## Falco and gVisor on Kubernetes with GKE
+
+gVisor can be used to [sandbox pods on GKE](https://cloud.google.com/kubernetes-engine/docs/concepts/sandbox-pods) for higher security. If your cluster has node pools with gVisor support enabled and k8s version at least `1.24.4-gke.1800` or `1.25.0-gke.200`, you can deploy an instance of Falco to monitor them via the [Helm chart](https://github.com/falcosecurity/charts).
+
+```
+helm install falco-gvisor falcosecurity/falco -f https://raw.githubusercontent.com/falcosecurity/charts/master/falco/values-gvisor-gke.yaml --namespace falco-gvisor --create-namespace
+```
+
+As simple as that! Note that this new instance is completely independent from other Falco instances that you might have that monitor your regular nodes (w/o gVisor sandboxing), so you can decide whether you want to monitor regular node pools, gVisor-enabled node pools or both! For more information about these use cases and more check out the [related sections](https://github.com/falcosecurity/charts/blob/master/falco/README.md#about-gvisor) of the Falco Helm chart documentation.
 
 ## Limitations and syscall support
 
