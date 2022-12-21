@@ -93,12 +93,12 @@ The Falco [release process has been well-defined](https://github.com/falcosecuri
 ### Plugins 
 Falco v0.31.0 resulted in many exciting new features. One that is particularly strategic for the project is the general availability of the plugins framework. Why are plugins exciting and what do they mean for the future of Falco? 
 
-Plugins are shared libraries that can be loaded by Falco to extend its functionality. Plugins come in two flavors:
+Plugins are shared libraries that can be loaded by Falco to extend its functionality. Plugins can currently implement two capabilities:
 
-- Source Plugins, which add new data sources to Falco. They produce input events, from either the local machine or a remote source, that Falco can understand.
-- Extractor Plugins, which parse the data coming from source plugins and expose new fields that can be used in Falco rules.
+- The event sourcing capability, which add new data sources to Falco. They produce input events, from either the local machine or a remote source, that Falco can understand.
+- The field extraction capability, which parse the data coming from source plugins and expose new fields that can be used in Falco rules.
 
-The combination of Source and Extractor plugins allows users to feed data into Falco, parse it in useful ways and create rules and policies from it, read the full announcement [here!](https://falco.org/blog/falco-announcing-plugins/) 
+By supporting one or both capabilities, plugins allows users to feed data into Falco, parse it in useful ways and create rules and policies from it, read the full announcement [here!](https://falco.org/blog/falco-announcing-plugins/) 
 
 Official plugins launched in 2022 include: 
 - AWS CloudTrail
