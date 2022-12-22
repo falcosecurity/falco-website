@@ -206,6 +206,14 @@ Name | Type | Description
 `container.liveness_probe` | CHARBUF | The container's liveness probe. Will be the null value ("N/A") if no liveness probe configured, the liveness probe command line otherwise
 `container.readiness_probe` | CHARBUF | The container's readiness probe. Will be the null value ("N/A") if no readiness probe configured, the readiness probe command line otherwise
 
+{{% alert color="primary" %}}
+
+The [k8s set of fields](#field-class-k8s) `k8s.ns.name` and `k8s.pod.*` (i.e., `k8s.pod.name`, `k8s.pod.id`, `k8s.pod.labels`, and `k8s.pod.label.*`) are populated with data fetched from the **container runtime**.
+
+Therefore, they can also be accessed without having the **Kubernetes Metadata Enrichment** functionality enabled (`-k` Falco option).
+
+{{% /alert %}}
+
 ### Field Class: fd
 
 Every syscall that has a file descriptor in its arguments has these fields set with information related to the file.
@@ -286,8 +294,15 @@ Name | Type | Description
 
 ### Field Class: k8s
 
-Kubernetes related context. When configured to fetch from the API server, all fields are available. Otherwise, only the `k8s.pod.*` and `k8s.ns.name` fields are populated with data gathered from the container runtime.
+Kubernetes related context.
 
+{{% alert color="warning" %}}
+
+The set of fields `k8s.ns.name` and `k8s.pod.*` (e.g., `k8s.pod.name`) are populated with data fetched from the **container runtime**, so they don't require the **Kubernetes Metadata Enrichment** functionality to be enabled.
+
+All the other fields will only be available when Falco also fetches the **Kubernetes Metadata** from the Kubernetes API server  (`-k` Falco option) .
+
+{{% /alert %}}
 
 Name | Type | Description
 :----|:-----|:-----------
