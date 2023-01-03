@@ -131,6 +131,6 @@ The most significant additions since acceptance for Incubation include:
 
 Thank you to all of the contributors and maintainers of the Falco project. The project would not be where it is today without the help and dedication of these key individuals. 
 
-See you in 2023, 
+Wishing you a happy 2023, 
 
 Jacque
