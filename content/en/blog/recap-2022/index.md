@@ -112,7 +112,7 @@ The Falco project excitedly announced that on Nov 4, 2022, project maintainers s
 Falco joined the CNCF as a Sandbox project in the fall of 2018 and evolved into Incubating status two years later. The community believes the next natural step is for Falco to apply for graduation. The project has reached maturity in community health, diversity of contributions & contributors, and ecosystem adoption.
 
 - Project highlights for 2022
-- Github stars: + 26%
+- Github stars: + 31%
 - Core repo contributors: +65%
 - Forks: +46%
 - Slack channel members: +126%
