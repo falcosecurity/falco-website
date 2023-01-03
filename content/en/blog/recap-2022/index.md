@@ -114,7 +114,7 @@ Falco joined the CNCF as a Sandbox project in the fall of 2018 and evolved into 
 - Project highlights for 2022
 - Github stars: + 26%
 - Core repo contributors: +65%
-- Forks: +7%
+- Forks: +46%
 - Slack channel members: +126%
 - Downloads:
   - 41.7M Docker hub pulls (25% growth)
