@@ -85,7 +85,7 @@ The Falco [release process has been well-defined](https://github.com/falcosecuri
 ### Falcosidekick & UI
 [Falcosidekick](https://github.com/falcosecurity/falcosidekick) is a little daemon that extends a number of possible outputs, and since its creation this little guy has evolved in many amazing ways. A big thank you to Thomas Labarussias for driving the development of Falcosidekick and the UI. Here is how the project evolved in 2022: 
 
-- Falcosidekick saw a major update in June of 2022, delivering four new outputs and enhancing existing ones too! Not only did we see updates in outputs, but the community delivered the first version of the Falcosidekick UI. The UI offered these new features: Redis DB for long term storage of events, API for counting and searching for events, and lastly filters to keep and share query strings. For a full detailed account of this update, see the blog Falcosidekick 2.25.0 and Falcosidekick 2.0.0. 
+- Falcosidekick saw a major update in June of 2022, delivering four new outputs and enhancing existing ones too! Not only did we see updates in outputs, but the community delivered the first version of the Falcosidekick UI. The UI offered these new features: Redis DB for long term storage of events, API for counting and searching for events, and lastly filters to keep and share query strings. For a full detailed account of this update, see the blog [Falcosidekick 2.25.0 and Falcosidekick 2.0.0.](https://falco.org/blog/falcosidekick-2-25-0-falco-2-0-0/).
 
 
 ### Plugins 
