@@ -1,7 +1,7 @@
 ---
 title: "Falco: Project Recap 2022"
 slug: recap-2022
-date: 2022-12-20
+date: 2023-01-04
 author: Jacqueline Salinas
 images:
   - /blog/recap-2022/images/recap-2022-featured.png
