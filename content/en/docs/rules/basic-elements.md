@@ -19,7 +19,7 @@ A rule is a YAML object, part of the rules file, whose definition contains at le
      proc.name = ksh)
   output: >
     shell in a container
-    (user=%user.name container_id=%container.id ontainer_name=%container.name 
+    (user=%user.name container_id=%container.id container_name=%container.name 
     shell=%proc.name parent=%proc.pname cmdline=%proc.cmdline)
   priority: WARNING
 ```
@@ -169,7 +169,7 @@ With these macros defined, we can then rewrite the above rule's condition as `sp
     proc.name = bash
   output: >
     shell in a container
-    (user=%user.name container_id=%container.id ontainer_name=%container.name 
+    (user=%user.name container_id=%container.id container_name=%container.name 
     shell=%proc.name parent=%proc.pname cmdline=%proc.cmdline)
   priority: WARNING
 ```
@@ -233,7 +233,7 @@ Referring to a list inserts the list items in the macro, rule, or list. Therefor
     shell_procs
   output: >
     shell in a container
-    (user=%user.name container_id=%container.id ontainer_name=%container.name 
+    (user=%user.name container_id=%container.id container_name=%container.name 
     shell=%proc.name parent=%proc.pname cmdline=%proc.cmdline)
   priority: WARNING
 ```
