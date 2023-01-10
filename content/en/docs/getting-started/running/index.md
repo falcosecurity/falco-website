@@ -7,33 +7,42 @@ weight: 4
 
 ## Run Falco as a service
 
-If you installed Falco by using [the DEB or the RPM](/docs/getting-started/installation) package, then falco systemd service was already started and enabled for you.  
+If you installed Falco by using [the DEB or the RPM](/docs/getting-started/installation) package, then, if you got `dialog` package installed, you will be prompted to choose a driver.  
+Once you select your driver, Falco will be automatically setup to use that driver, and enabled and started for you.  
 In case you wish to stop or disable it, issue:
 
 
 ```console
-systemctl disable falco
+systemctl disable falco-$driver
 ```
 
 ```console
-systemctl stop falco
+systemctl stop falco-$driver
 ```
 
 Then, to enable or start it back, you would need:
 
 ```console
-systemctl enable falco
+systemctl enable falco-$driver
 ```
 
 ```console
-systemctl start falco
+systemctl start falco-$driver
 ```
 
 You can also view the Falco logs using `journalctl`.
 
 ```console
-journalctl -fu falco
+journalctl -fu falco-$driver
 ```
+
+Note that `$driver` is one of:
+* `kmod`
+* `bpf`
+* `modern-bpf`
+* `plugin`
+
+In case `dialog` is not installed, or Falco is installed with `DEBIAN_FRONTEND=noninteractive`, nothing will be automatically enabled.  
 
 ## Run Falco manually
 
