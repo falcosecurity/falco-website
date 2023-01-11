@@ -192,7 +192,9 @@ gVisor can be used to [sandbox pods on GKE](https://cloud.google.com/kubernetes-
 helm install falco-gvisor falcosecurity/falco -f https://raw.githubusercontent.com/falcosecurity/charts/master/falco/values-gvisor-gke.yaml --namespace falco-gvisor --create-namespace
 ```
 
-As simple as that! Note that this new instance is completely independent from other Falco instances that you might have that monitor your regular nodes (w/o gVisor sandboxing), so you can decide whether you want to monitor regular node pools, gVisor-enabled node pools or both! For more information about these use cases and more check out the [related sections](https://github.com/falcosecurity/charts/blob/master/falco/README.md#about-gvisor) of the Falco Helm chart documentation.
+As simple as that! Note that this new instance is completely independent of other Falco instances that you might have that monitor your regular nodes (w/o gVisor sandboxing), so you can decide whether you want to monitor **regular** node pools, **gVisor-enabled** node pools or **both**! 
+
+For more information about these use cases and more check out the [related sections](https://github.com/falcosecurity/charts/blob/master/falco/README.md#about-gvisor) of the Falco Helm chart documentation.
 
 ## Limitations and syscall support
 
