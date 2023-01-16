@@ -1,6 +1,6 @@
 ---
 title: Controlling Rules
-description: Load Falco Rules selectively
+description: Disable default rules or use tags to load Falco Rules selectively
 linktitle: Controlling Rules
 weight: 80
 ---
