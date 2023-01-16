@@ -150,7 +150,7 @@
     List containing the following sub-keys:
 
     * `rate`: <notifications/second>
-    * `outputs`: max_burst: <number of messages>
+    * `max_burst`: <number_of_messages>
   description: |
     A throttling mechanism implemented as a token bucket limits the rate of Falco notifications. One rate limiter is assigned to each one of the loaded event sources, so that alerts coming from one can't influence the throttling mechanism of the others. This throttling is controlled by the `rate` and `max_burst` options.
 
