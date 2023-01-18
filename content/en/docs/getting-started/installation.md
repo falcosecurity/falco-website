@@ -25,6 +25,12 @@ Alternatively, it is also possible to use a binary package as [explained below](
 
 ## Installing
 
+{{% pageinfo color="warning" %}}
+
+On January 18th, 2023 the GPG key used to sign Falco packages has been rotated. Check out [the related blog post](/content/en/blog/falco-packages-gpg-key-rotated.md) and make sure you're using the most up-to-date key available at [https://falco.org/repo/falcosecurity-packages.asc](https://falco.org/repo/falcosecurity-packages.asc).
+
+{{% /pageinfo %}}
+
 ### Debian/Ubuntu {#debian}
 
 1. Trust the falcosecurity GPG key, configure the apt repository, and update the package list:
