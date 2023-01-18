@@ -50,7 +50,7 @@ This process takes place in two cases:
 
 When one of these two conditions happen:
 
-1. it packages Falco into signed ([GPG public key](https://falco.org/repo/falcosecurity-3672BA8F.asc)) packages: DEB, a RPM, and a TAR.GZ
+1. it packages Falco into signed ([GPG public key](https://falco.org/repo/falcosecurity-packages.asc)) packages: DEB, a RPM, and a TAR.GZ
 2. it pushes these packages to their new open repositories
     1. [deb-dev](https://bintray.com/falcosecurity/deb-dev/falco), [rpm-dev](https://bintray.com/falcosecurity/rpm-dev/falco), [bin-dev](https://bintray.com/falcosecurity/bin-dev/falco) for _development_ versions
 	1. [deb](https://bintray.com/falcosecurity/deb/falco), [rpm](https://bintray.com/falcosecurity/rpm/falco), [bin](https://bintray.com/falcosecurity/bin/falco) for _stable_ versions

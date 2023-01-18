@@ -119,7 +119,7 @@ Let's connect to the VM again and install Falco following the [official document
 ```shell
 $ limactl shell falco-fedora
 
-$ sudo bash -c "rpm --import https://falco.org/repo/falcosecurity-3672BA8F.asc && \
+$ sudo bash -c "rpm --import https://falco.org/repo/falcosecurity-packages.asc && \
                 curl -s -o /etc/yum.repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo && \
                 dnf install falco -y"
 ```

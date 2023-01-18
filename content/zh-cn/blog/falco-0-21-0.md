@@ -49,7 +49,7 @@ PR 1059的大部分工作都是我们做的。(https://github.com/falcosecurity/
 
 当以下两种情况之一发生时:
 
-1. 它将Falco打包成签名(GPG公钥)包:DEB、RPM和TAR.GZ(https://falco.org/repo/falcosecurity-3672BA8F.asc)
+1. 它将Falco打包成签名(GPG公钥)包:DEB、RPM和TAR.GZ(https://falco.org/repo/falcosecurity-packages.asc)
 2. 它将这些包推到它们新的开放存储库中
     i. Deb-dev, rpm-dev, bin-dev用于开发版本
 	  ii. deb, rpm, bin 用于稳定版本

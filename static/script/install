@@ -32,7 +32,7 @@ function install_rpm {
 	fi
 	
 	echo "* Installing Falco public GPG key"
-	rpm --quiet --import https://falco.org/repo/falcosecurity-3672BA8F.asc
+	rpm --quiet --import https://falco.org/repo/falcosecurity-packages.asc
 	echo "* Installing Falco repository"
 	curl -s -o /etc/yum.repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
 	echo "* Installing kernel headers"
@@ -60,7 +60,7 @@ function install_deb {
 	fi
 
 	echo "* Installing Falco public GPG key"
-	curl -s https://falco.org/repo/falcosecurity-3672BA8F.asc | apt-key add -
+	curl -s https://falco.org/repo/falcosecurity-packages.asc | apt-key add -
 	echo "* Installing Falco repository"
 	echo "deb https://download.falco.org/packages/deb stable main" | tee /etc/apt/sources.list.d/falcosecurity.list
 	apt-get -qq update < /dev/null
@@ -76,7 +76,7 @@ function install_suse {
 		zypper -q -n install curl
 	fi
 	
-	rpm --import https://falco.org/repo/falcosecurity-3672BA8F.asc
+	rpm --import https://falco.org/repo/falcosecurity-packages.asc
 	curl -s -o /etc/zypp/repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
 	
 	KERNEL_VERSION=$(uname -r)

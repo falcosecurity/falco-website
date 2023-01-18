@@ -213,7 +213,7 @@ sudo bash install_falco
 1. 信任falcosecurity GPG密钥并配置yum仓库：
 
    ```shell
-   rpm --import https://falco.org/repo/falcosecurity-3672BA8F.asc
+   rpm --import https://falco.org/repo/falcosecurity-packages.asc
    curl -s -o /etc/yum.repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
    ```
 
@@ -248,7 +248,7 @@ sudo bash install_falco
 1. 信任falcosecurity GPG密钥并配置apt仓库，然后更新包列表:
 
    ```shell
-    curl -s https://falco.org/repo/falcosecurity-3672BA8F.asc | apt-key add -
+    curl -s https://falco.org/repo/falcosecurity-packages.asc | apt-key add -
     echo "deb https://download.falco.org/packages/deb stable main" | tee -a /etc/apt/sources.list.d/falcosecurity.list
     apt-get update -y
     ```

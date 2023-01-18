@@ -31,7 +31,7 @@ Kind, Minikube, Helm 같은 도구를 이용해 팔코를 쿠버네티스에서 
 1. falcosecurity GPG 키를 추가하고, apt 리포지터리를 설정하고, 패키지 목록을 업데이트한다.
 
     ```shell
-    curl -s https://falco.org/repo/falcosecurity-3672BA8F.asc | apt-key add -
+    curl -s https://falco.org/repo/falcosecurity-packages.asc | apt-key add -
     echo "deb https://download.falco.org/packages/deb stable main" | tee -a /etc/apt/sources.list.d/falcosecurity.list
     apt-get update -y
     ```
@@ -64,7 +64,7 @@ Kind, Minikube, Helm 같은 도구를 이용해 팔코를 쿠버네티스에서 
 1. falcosecurity GPG 키를 추가하고, yum 리포지터리를 설정한다.
 
     ```shell
-    rpm --import https://falco.org/repo/falcosecurity-3672BA8F.asc
+    rpm --import https://falco.org/repo/falcosecurity-packages.asc
     curl -s -o /etc/yum.repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
     ```
 

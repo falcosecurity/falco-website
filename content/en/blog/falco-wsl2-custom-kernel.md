@@ -201,7 +201,7 @@ Let's jump again into the terminal:
 cd
 
 # Run the step 1 of the Falco documentation: add the repo
-curl -s https://falco.org/repo/falcosecurity-3672BA8F.asc | sudo apt-key add -
+curl -s https://falco.org/repo/falcosecurity-packages.asc | sudo apt-key add -
 echo "deb https://download.falco.org/packages/deb stable main" | sudo tee -a /etc/apt/sources.list.d/falcosecurity.list
 sudo apt update
 
