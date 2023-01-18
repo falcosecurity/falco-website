@@ -15,7 +15,7 @@ Users not using package signature verification (enabled by default in most DEB a
 
 Otherwise, your should update the key as soon as you can to download its revocation certificate. The next step is to download the new key as documented in the Falco [installation guide](/content/en/docs/getting-started/installation.md). All the Falco packages' signatures will be signed with the new key starting from January 18th 2023.
 
-The old key should be considered invalid and signatures produced with it should be untrusted. The existing package signatures available at [download.falco.org/?prefix=packages](https://download.falco.org/?prefix=packages/) have been updated by signing their relative packages with the new key.
+The old key should be considered invalid and signatures produced with it should be untrusted. The existing release package signatures available at [download.falco.org/?prefix=packages](https://download.falco.org/?prefix=packages/) have been updated by signing their relative packages with the new key.
 
 ## Action items for new users
 
