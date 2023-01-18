@@ -201,7 +201,7 @@ ps -aux
 cd
 
 # Falcoドキュメントのステップ1を実行します: repoを追加します
-curl -s https://falco.org/repo/falcosecurity-3672BA8F.asc | sudo apt-key add - -を追加します。
+curl -s https://falco.org/repo/falcosecurity-packages.asc | sudo apt-key add - -を追加します。
 echo "deb https://download.falco.org/packages/deb stable main" | sudo tee -a /etc/apt/sources.list.d/falcosecurity.list
 sudo apt update
 

@@ -3,6 +3,6 @@
 name=falcosecurity-rpm
 baseurl=https://download.falco.org/packages/rpm
 gpgcheck=1
-gpgkey=https://falco.org/repo/falcosecurity-3672BA8F.asc
+gpgkey=https://falco.org/repo/falcosecurity-packages.asc
 repo_gpgcheck=0
 enabled=1

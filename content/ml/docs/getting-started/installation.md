@@ -30,7 +30,7 @@ Helm  ഉപയോഗിച്ച് ഒരു ഡെമൺസെറ്റായ
 1. ഫാൽകോസെക്യൂരിറ്റി ജിപിജി കീയെ വിശ്വസിക്കുക, apt repository ക്രമീകരിക്കുക, പാക്കേജ് പട്ടിക അപ്‌ഡേറ്റുചെയ്യുക:
 
     ```shell
-    curl -s https://falco.org/repo/falcosecurity-3672BA8F.asc | apt-key add -
+    curl -s https://falco.org/repo/falcosecurity-packages.asc | apt-key add -
     echo "deb https://dl.bintray.com/falcosecurity/deb stable main" | tee -a /etc/apt/sources.list.d/falcosecurity.list
     apt-get update -y
     ```
@@ -63,7 +63,7 @@ Helm  ഉപയോഗിച്ച് ഒരു ഡെമൺസെറ്റായ
 1. ഫാൽകോസെക്യൂരിറ്റി ജിപിജി കീ വിശ്വസിച്ച് yum ശേഖരം ക്രമീകരിക്കുക:
 
     ```shell
-    rpm --import https://falco.org/repo/falcosecurity-3672BA8F.asc
+    rpm --import https://falco.org/repo/falcosecurity-packages.asc
     curl -s -o /etc/yum.repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
     ```
 
@@ -99,7 +99,7 @@ Helm  ഉപയോഗിച്ച് ഒരു ഡെമൺസെറ്റായ
 1. ഫാൽകോസെക്യൂരിറ്റി ജിപിജി കീ വിശ്വസിച്ച് zypper  ശേഖരം ക്രമീകരിക്കുക:
 
     ```shell
-    rpm --import https://falco.org/repo/falcosecurity-3672BA8F.asc
+    rpm --import https://falco.org/repo/falcosecurity-packages.asc
     curl -s -o /etc/zypp/repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
     ```
 

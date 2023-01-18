@@ -30,7 +30,7 @@ Alternatively, it is also possible to use a binary package as [explained below](
 1. Trust the falcosecurity GPG key, configure the apt repository, and update the package list:
 
     ```shell
-    curl -s https://falco.org/repo/falcosecurity-3672BA8F.asc | apt-key add -
+    curl -s https://falco.org/repo/falcosecurity-packages.asc | apt-key add -
     echo "deb https://download.falco.org/packages/deb stable main" | tee -a /etc/apt/sources.list.d/falcosecurity.list
     apt-get update -y
     ```
@@ -63,7 +63,7 @@ Alternatively, it is also possible to use a binary package as [explained below](
 1. Trust the falcosecurity GPG key and configure the yum repository:
 
     ```shell
-    rpm --import https://falco.org/repo/falcosecurity-3672BA8F.asc
+    rpm --import https://falco.org/repo/falcosecurity-packages.asc
     curl -s -o /etc/yum.repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
     ```
 
@@ -99,7 +99,7 @@ Alternatively, it is also possible to use a binary package as [explained below](
 1. Trust the falcosecurity GPG key and configure the zypper repository:
 
     ```shell
-    rpm --import https://falco.org/repo/falcosecurity-3672BA8F.asc
+    rpm --import https://falco.org/repo/falcosecurity-packages.asc
     curl -s -o /etc/zypp/repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
     ```
 
