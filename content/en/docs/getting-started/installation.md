@@ -27,7 +27,7 @@ Alternatively, it is also possible to use a binary package as [explained below](
 
 {{% pageinfo color="warning" %}}
 
-On January 18th, 2023 the GPG key used to sign Falco packages has been rotated. Check out [the related blog post](/content/en/blog/falco-packages-gpg-key-rotated.md) and make sure you're using the most up-to-date key available at [falco.org/repo/falcosecurity-packages.asc](https://falco.org/repo/falcosecurity-packages.asc), and that you read the [section below about package signing](#package-signing).
+On January 18th, 2023 the GPG key used to sign Falco packages has been rotated. Check out [the related blog post](/blog/falco-packages-gpg-key-rotated/) and make sure you're using the most up-to-date key available at [falco.org/repo/falcosecurity-packages.asc](https://falco.org/repo/falcosecurity-packages.asc), and that you read the [section below about package signing](#package-signing).
 
 {{% /pageinfo %}}
 
@@ -196,5 +196,5 @@ The **latest trusted public GPG key** used for packages signing can be downloade
 
 | **Fingerprint**                                     | **Expiration** | **Usage**              | **Status** | **Download**                                                   |
 |-----------------------------------------------------|----------------|------------------------|------------|----------------------------------------------------------------|
-| `2005 3990 02D5 E8FF 59F2 8CE6 4021 833E 14CB 7A8D` | 2026-01-17     | Signing Falco Packages | Trusted    | [falcosecurity-14CB7A8D.asc](/repo/falcosecurity-14CB7A8D.asc) |
-| `15ED 05F1 91E4 0D74 BA47 109F 9F76 B25B 3672 BA8F` | 2023-02-24     | Signing Falco Packages | Revoked    | [falcosecurity-3672BA8F.asc](/repo/falcosecurity-3672BA8F.asc) |
+| `2005399002D5E8FF59F28CE64021833E14CB7A8D` | 2026-01-17     | Signing Falco Packages | Trusted    | [falcosecurity-14CB7A8D.asc](/repo/falcosecurity-14CB7A8D.asc) |
+| `15ED05F191E40D74BA47109F9F76B25B3672BA8F` | 2023-02-24     | Signing Falco Packages | Revoked    | [falcosecurity-3672BA8F.asc](/repo/falcosecurity-3672BA8F.asc) |
