@@ -7,7 +7,7 @@ slug: falco-packages-gpg-key-rotated
 
 The Falcosecurity organization uses a GPG key for providing detatched signatures for the official Falco packages available at [download.falco.org/?prefix=packages](https://download.falco.org/?prefix=packages/). After [the security incident of CircleCI](https://circleci.com/blog/january-4-2023-security-alert/) disclosed in January 2023, the Falco maintainers opted for rotating the organization's secrets and token stored in the platform. Although we have not found any evidence of unauthorized modification of the Falco packages or their signatures, the GPG key has still been rotated as a safety measure.
 
-As of January 18th 2023, [the old key with fingerprint `15ED 05F1 91E4 0D74 BA47 109F 9F76 B25B 3672 BA8F`](/static/repo/falcosecurity-3672BA8F.asc) has been revoked. The GPG fingerprint of [the new key is `2005 3990 02D5 E8FF 59F2 8CE6 4021 833E 14CB 7A8D`](/static/repo/falcosecurity-14CB7A8D.asc). Please refer to the Falco [installation guide](/content/en/docs/getting-started/installation.md) for learn more about how the key can be used to verify the official packages.
+As of January 18th 2023, [the old key with fingerprint `15ED 05F1 91E4 0D74 BA47 109F 9F76 B25B 3672 BA8F`](/repo/falcosecurity-3672BA8F.asc) has been revoked. The GPG fingerprint of [the new key is `2005 3990 02D5 E8FF 59F2 8CE6 4021 833E 14CB 7A8D`](/repo/falcosecurity-14CB7A8D.asc). Please refer to the Falco [installation guide](/content/en/docs/getting-started/installation.md) for learn more about how the key can be used to verify the official packages.
 
 ## Action items for existing users
 
