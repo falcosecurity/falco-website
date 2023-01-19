@@ -27,7 +27,7 @@ Alternatively, it is also possible to use a binary package as [explained below](
 
 {{% pageinfo color="warning" %}}
 
-On January 18th, 2023 the GPG key used to sign Falco packages has been rotated. Check out [the related blog post](/content/en/blog/falco-packages-gpg-key-rotated.md) and make sure you're using the most up-to-date key available at [https://falco.org/repo/falcosecurity-packages.asc](https://falco.org/repo/falcosecurity-packages.asc).
+On January 18th, 2023 the GPG key used to sign Falco packages has been rotated. Check out [the related blog post](/content/en/blog/falco-packages-gpg-key-rotated.md) and make sure you're using the most up-to-date key available at [falco.org/repo/falcosecurity-packages.asc](https://falco.org/repo/falcosecurity-packages.asc), and that you read the [section below about package signing](#package-signing).
 
 {{% /pageinfo %}}
 
@@ -188,3 +188,13 @@ Configurable options:
 
     The `falco-driver-loader` script fetches the drivers using the above format.
 
+## Package signing
+
+Most Falco packages available at [download.falco.org](https://download.falco.org/?prefix=packages/) are provided with a detatched signature that can be used to verify that the package information downloaded from the remote repository can be trusted.
+
+The **latest trusted public GPG key** used for packages signing can be downloaded from [falco.org/repo/falcosecurity-packages.asc](https://falco.org/repo/falcosecurity-packages.asc). The following table lists all the keys employed by the organization currently and in the past, including the revoked ones. We recommend to update the revoked keys to download their revocation certificate, and eventually remove them from your package verification system due to signature made with them not being trustable anymore.
+
+| **Fingerprint**                                     | **Expiration** | **Usage**              | **Status** | **Download**                                                   |
+|-----------------------------------------------------|----------------|------------------------|------------|----------------------------------------------------------------|
+| `2005 3990 02D5 E8FF 59F2 8CE6 4021 833E 14CB 7A8D` | 2026-01-17     | Signing Falco Packages | Trusted    | [falcosecurity-14CB7A8D.asc](/repo/falcosecurity-14CB7A8D.asc) |
+| `15ED 05F1 91E4 0D74 BA47 109F 9F76 B25B 3672 BA8F` | 2023-02-24     | Signing Falco Packages | Revoked    | [falcosecurity-3672BA8F.asc](/repo/falcosecurity-3672BA8F.asc) |
