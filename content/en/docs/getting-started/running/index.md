@@ -208,7 +208,6 @@ You can load the eBPF probe or kernel module in its own temporary container as b
 docker pull falcosecurity/falco-driver-loader:latest
 docker run --rm -i -t \
     --privileged \
-    -v /var/run/docker.sock:/host/var/run/docker.sock \
     -v /dev:/host/dev \
     -v /proc:/host/proc:ro \
     -v /boot:/host/boot:ro \
