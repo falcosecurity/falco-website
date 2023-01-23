@@ -17,6 +17,20 @@ Otherwise, your should update the key as soon as you can to download its revocat
 
 The old key should be considered invalid and signatures produced with it should be untrusted. The existing release package signatures available at [download.falco.org/?prefix=packages](https://download.falco.org/?prefix=packages/) have been updated by signing their relative packages with the new key.
 
+### Example
+
+If you are installing Falco via the DEB packages, you may see an error similar to:
+```
+W: GPG error: https://download.falco.org/packages/deb stable InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 4021833E14CB7A8D
+E: The repository 'https://download.falco.org/packages/deb stable InRelease' is not signed.
+```
+
+To update it, add the new key from the [installation instructions](https://falco.org/docs/getting-started/installation/#debian), i.e.:
+```
+curl -s https://falco.org/repo/falcosecurity-packages.asc | apt-key add -
+apt-get update -y
+```
+
 ## Action items for new users
 
 No action item is required for new users, simply follow the Falco [installation guide](/docs/getting-started/installation/#package-signing) to learn how to employ the package signature verification.
