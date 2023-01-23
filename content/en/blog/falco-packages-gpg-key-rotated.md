@@ -27,6 +27,7 @@ E: The repository 'https://download.falco.org/packages/deb stable InRelease' is 
 
 To update it, add the new key from the [installation instructions](https://falco.org/docs/getting-started/installation/#debian), i.e.:
 ```
+apt-key del "15ED 05F1 91E4 0D74 BA47  109F 9F76 B25B 3672 BA8F"
 curl -s https://falco.org/repo/falcosecurity-packages.asc | apt-key add -
 apt-get update -y
 ```
