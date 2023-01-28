@@ -6,19 +6,24 @@ weight: 3
 
 This section provides upgrading paths for Falco if previously installed following the [Install](../installation/) section.
 
-## Upgrading
+{{% pageinfo color="warning" %}}
+If you are using the kernel module, please remove it before upgrading Falco to avoid issues during the upgrade.
 
-According to the installation method you chose, you first have to remove the active kernel module before upgrading Falco to the latest version:
-
-```shell
+```bash
 rmmod falco
 ```
+
+{{% /pageinfo %}}
+
+## Falco packages
+
+Here there are no specific steps to follow, you just need to type the specific commands for your distro. Please remember to specify the `FALCO_FRONTEND=noninteractive` env variable if you don't want to use the dialog during the upgrade
 
 ### Debian/Ubuntu {#debian}
 
 {{% pageinfo color="warning" %}}
-If you configured the `apt` repository by having followed the instructions for Falco 0.27.0 or older,
-you may need to update the repository URL:
+
+If you configured the `apt` repository by having followed the instructions for Falco 0.27.0 or older, you may need to update the repository URL, otherwise, **fill free to ignore this message**
 
 ```shell
 sed -i 's,https://dl.bintray.com/falcosecurity/deb,https://download.falco.org/packages/deb,' /etc/apt/sources.list.d/falcosecurity.list
@@ -30,7 +35,7 @@ Check in the `apt-get update` log that `https://download.falco.org/packages/deb`
 
 {{% /pageinfo %}}
 
-If you installed Falco by following the [provided instructions](../installation/#debian):
+If you installed Falco by following the [provided instructions](../installation/#installation-details):
 
 ```shell
 apt-get --only-upgrade install falco
@@ -39,8 +44,7 @@ apt-get --only-upgrade install falco
 ### CentOS/RHEL/Fedora/Amazon Linux {#centos-rhel}
 
 {{% pageinfo color="warning" %}}
-If you configured the `yum` repository by having followed the instructions for Falco 0.27.0 or older,
-you may need to update the repository URL:
+If you configured the `yum` repository by having followed the instructions for Falco 0.27.0 or older, you may need to update the repository URL, otherwise, **fill free to ignore this message**
 
 ```shell
 sed -i 's,https://dl.bintray.com/falcosecurity/rpm,https://download.falco.org/packages/rpm,' /etc/yum.repos.d/falcosecurity.repo
@@ -72,8 +76,7 @@ If you installed Falco by following the [provided instructions](../installation/
 ### openSUSE {#suse}
 
 {{% pageinfo color="warning" %}}
-If you configured the `zypper` repository by having followed the instructions for Falco 0.27.0 or older,
-you may need to update the repository URL:
+If you configured the `zypper` repository by having followed the instructions for Falco 0.27.0 or older, you may need to update the repository URL, otherwise, **fill free to ignore this message**
 
 ```shell
 sed -i 's,https://dl.bintray.com/falcosecurity/rpm,https://download.falco.org/packages/rpm,' /etc/zypp/repos.d/falcosecurity.repo
@@ -93,3 +96,7 @@ If you installed Falco by following the [provided instructions](../installation/
 ```shell
 zypper update falco
 ```
+
+## Falco binary
+
+For the Falco binary we don't provide specific update paths, you just have to remove the installed files from the old `tar.gz` and download the new version of Falco as described [here](../installation/#falco-binary)
