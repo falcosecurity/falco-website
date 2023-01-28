@@ -10,7 +10,6 @@ weight: 4
 If you installed Falco by using [the DEB or the RPM](/docs/getting-started/installation) package, then falco systemd service was already started and enabled for you.  
 In case you wish to stop or disable it, issue:
 
-
 ```console
 systemctl disable falco
 ```
@@ -49,9 +48,7 @@ Are you looking for userspace instrumentation? Please see [this page](/docs/even
 
 {{% /pageinfo %}}
 
-
 ## Run within Docker {#docker}
-
 
 {{% pageinfo color="primary" %}}
 
@@ -63,6 +60,7 @@ You can find instructions on how to install the kernel headers for your system u
 
 Falco ships a set of official [docker images](/docs/getting-started/download#images).
 The images can be used in two ways as follows:
+
 - [Least privileged (recommended)](#docker-least-privileged)
 - [Fully privileged](#docker-privileged)
 
@@ -90,10 +88,8 @@ Once the kernel module has been installed directly on the host system, it can be
         falcosecurity/falco-driver-loader:latest
     ```
 
-
 The `falcosecurity/falco-driver-loader` image just wraps the `falco-driver-loader` script.
 You can find more about its usage [here](/docs/getting-started/installation#install-driver)
-
 
 2. Run Falco in a container using Docker with the [principle of least privilege](https://en.wikipedia.org/wiki/Principle_of_least_privilege):
 
@@ -105,7 +101,6 @@ You can find more about its usage [here](/docs/getting-started/installation#inst
         -v /var/run/docker.sock:/var/run/docker.sock \
         falcosecurity/falco-no-driver:latest
     ```
-
 
 {{% pageinfo color="warning" %}}
 If you are running Falco on a system with the AppArmor LSM enabled (e.g Ubuntu), you will also need to pass `--security-opt apparmor:unconfined` to
@@ -119,18 +114,19 @@ docker info | grep -i apparmor
 
 {{% /pageinfo %}}
 
-
 {{% pageinfo color="primary" %}}
 
 Note that `ls /dev/falco* | xargs -I {} echo --device {}` outputs a `--device /dev/falcoX` option per CPU (ie. just the devices created by the Falco's kernel module). Also, `-e HOST_ROOT=/` is necessary since with `--device` there is no way to remap devices to `/host/dev/`.
 
 {{% /pageinfo %}}
 
-To run Falco in least privileged mode with the eBPF driver, we list all the required capabilities: 
+To run Falco in least privileged mode with the eBPF driver, we list all the required capabilities:
+
 - on kernels <5.8, Falco requires `CAP_SYS_ADMIN`, `CAP_SYS_RESOURCE` and `CAP_SYS_PTRACE`
 - on kernels >=5.8, `CAP_BPF` and `CAP_PERFMON` were separated out of `CAP_SYS_ADMIN`, so the required capabilities are `CAP_BPF`, `CAP_PERFMON`, `CAP_SYS_RESOURCE`, `CAP_SYS_PTRACE`. Unfortunately, Docker does not yet support adding the two newly introduced capabilities with the `--cap-add` option. For this reason, we continue using `CAP_SYS_ADMIN`, given that it still allows performing the same operations granted by `CAP_BPF` and `CAP_PERFMON`. In the near future, Docker will support adding these two capabilities and we will be able to replace `CAP_SYS_ADMIN`.
 
 1. Install the eBPF probe
+
     ```shell
     docker pull falcosecurity/falco-driver-loader:latest
     docker run --rm -i -t \
@@ -143,7 +139,9 @@ To run Falco in least privileged mode with the eBPF driver, we list all the requ
         -v /etc:/host/etc:ro \
         falcosecurity/falco-driver-loader:latest bpf
     ```
+
 2. Then, run Falco
+
     ```shell
     docker pull falcosecurity/falco-no-driver:latest
     docker run --rm -i -t \
@@ -161,9 +159,10 @@ To run Falco in least privileged mode with the eBPF driver, we list all the requ
 
 {{% pageinfo color="warning" %}}
 
-Again, you will need to add `--security-opt apparmor:unconfined` to the last command if your system has the AppArmor LSM enabled. 
+Again, you will need to add `--security-opt apparmor:unconfined` to the last command if your system has the AppArmor LSM enabled.
 
 {{% /pageinfo %}}
+
 ### Fully privileged {#docker-privileged}
 
 To run Falco in a container using Docker with full privileges use the following commands.
@@ -230,6 +229,7 @@ docker run --rm -i -t \
 ```
 
 To use `falco-no-driver` and `falco-driver-loader` with the eBPF probe you have to remove the `-v /dev:/host/dev` (which is only required by the Kernel Module) and add:
+
 ```shell
     -e FALCO_BPF_PROBE="" -v /root/.falco:/root/.falco \
 ```
@@ -240,6 +240,7 @@ Other configurable options:
 - `SKIP_DRIVER_LOADER` - Set this environment variable to avoid running `falco-driver-loader` when the `falcosecurity/falco` image starts. Useful when the driver has been already installed on the host by other means.
 
 ## Rules validation
+
 It's possible to validate Falco rules without installation by using the Docker image.
 
 ```bash

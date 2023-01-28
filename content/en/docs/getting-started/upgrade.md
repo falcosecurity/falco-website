@@ -4,7 +4,7 @@ description: Upgrading Falco on a Linux system
 weight: 3
 ---
 
-This section provides upgrading paths for Falco if previously installed following the [Install](../installation/) section. 
+This section provides upgrading paths for Falco if previously installed following the [Install](../installation/) section.
 
 ## Upgrading
 
@@ -17,7 +17,7 @@ rmmod falco
 ### Debian/Ubuntu {#debian}
 
 {{% pageinfo color="warning" %}}
-If you configured the `apt` repository by having followed the instructions for Falco 0.27.0 or older, 
+If you configured the `apt` repository by having followed the instructions for Falco 0.27.0 or older,
 you may need to update the repository URL:
 
 ```shell
@@ -39,7 +39,7 @@ apt-get --only-upgrade install falco
 ### CentOS/RHEL/Fedora/Amazon Linux {#centos-rhel}
 
 {{% pageinfo color="warning" %}}
-If you configured the `yum` repository by having followed the instructions for Falco 0.27.0 or older, 
+If you configured the `yum` repository by having followed the instructions for Falco 0.27.0 or older,
 you may need to update the repository URL:
 
 ```shell
@@ -52,16 +52,19 @@ Then check that the `falcosecurity-rpm` repository is pointing to `https://downl
 ```shell
 yum repolist -v falcosecurity-rpm
 ```
+
 {{% /pageinfo %}}
 
 If you installed Falco by following the [provided instructions](../installation/#centos-rhel):
 
 1. Check for updates:
+
     ```shell
     yum check-update
     ```
 
 2. If a newer Falco version is available:
+
     ```shell
     yum update falco
     ```
@@ -82,6 +85,7 @@ Then check that the `falcosecurity-rpm` repository is pointing to `https://downl
 ```shell
 zypper lr falcosecurity-rpm
 ```
+
 {{% /pageinfo %}}
 
 If you installed Falco by following the [provided instructions](../installation/#suse):
