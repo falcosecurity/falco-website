@@ -4,51 +4,63 @@ description: Operating and Managing Falco
 weight: 4
 ---
 
+## Falco packages
 
-## Run Falco as a service
+If you installed the Falco packages using the `dialog` all your services should be already up and running, while if you chose the `Manual configuration` or if you used the `FALCO_FRONTEND=noninteractive` env variable you have to configure services by your hand. Here we show a simple example with the `eBPF probe`.
 
-If you installed Falco by using [the DEB or the RPM](/docs/getting-started/installation) package, then falco systemd service was already started and enabled for you.  
-In case you wish to stop or disable it, issue:
+Let's imagine we want to start the `falco-bpf.service`.
 
-```console
-systemctl disable falco
-```
+1. Type `systemctl list-units | grep falco` to check that no unit is running.
 
-```console
-systemctl stop falco
-```
+2. Now you have to decide if you want the Falcoctl service running together with the Falco one or not. If yes you don't have to do anything, if no you have to mask the Falcoctl service with `systemctl mask falcoctl-artifact-follow.service`. As said [in this section](../installation.md#rule-update) the Falcoctl service is strictly related to the Falco one so if you don't mask it, it will be started together with the Falco service.
 
-Then, to enable or start it back, you would need:
+3. Type `falco-driver-loader bpf` to download/compile the BPF probe.
 
-```console
-systemctl enable falco
-```
+4. Now running `systemctl start falco-bpf.service` and typing `systemctl list-units | grep falco` you should see something like that (supposing we didn't mask the Falcoctl service):
 
-```console
-systemctl start falco
-```
+    ```text
+    falco-bpf.service                                 loaded active running   Falco: Container Native Runtime Security with ebpf
+    falcoctl-artifact-follow.service                  loaded active running   Falcoctl Artifact Follow: automatic artifacts update service
+    ```
 
-You can also view the Falco logs using `journalctl`.
+5. If you want to stop both services in one shot
 
-```console
-journalctl -fu falco
-```
+    ```bash
+    systemctl stop falco-bpf.service
+    ```
 
-## Run Falco manually
+### Custom run
 
-If you'd like to run Falco by hand, you can find the full usage description for Falco by typing:
+You may have noticed a Falco unit called `falco-custom.service`. You should use it when you want to run Falco with a custom configuration like a plugin or Gvisor. Please note that in this case you have to modify this template according to how you want to run Falco, the unit cannot be used as it is!
 
-```console
+## Falco binary
+
+Here you can find some examples of how to run Falco after having [installed](../installation.md#falco-binary) it using the binary package
+
+
+```bash
+# Kernel module (default driver)
+falco
+# eBPF probe
+FALCO_BPF_PROBE="" falco
+# modern eBPF probe
+falco --modern-bpf
+# For more info see all available options
 falco --help
 ```
 
-{{% pageinfo color="primary" %}}
+{{% pageinfo color="warning" %}}
 
-Are you looking for userspace instrumentation? Please see [this page](/docs/event-sources/drivers/#userspace-instrumentation).
+If you are using the eBPF probe, in order to ensure that performance is not degraded, make sure that
+
+* Your kernel has `CONFIG_BPF_JIT` enabled
+* `net.core.bpf_jit_enable` is set to 1 (enable the BPF JIT Compiler)
+* This can be verified via `sysctl -n net.core.bpf_jit_enable`
 
 {{% /pageinfo %}}
 
-## Run within Docker {#docker}
+
+## Docker {#docker}
 
 {{% pageinfo color="primary" %}}
 
