@@ -14,12 +14,11 @@ Then the Falco alerts can be consumed through read-only agents running in Kubern
 You can also run Falco directly in Kubernetes as a daemonset using Helm, see the [third party integrations](../third-party)
 {{% /pageinfo %}}
 
-
 If Falco is installed using the package manager artifacts below, you will have the following in place:
 
- - Falco userspace program scheduled and watched via `systemd`
- - Falco driver installed via the package manager (either kernel module or eBPF depending on the host)
- - Sane and default configuration file installed in `/etc/falco`
+- Falco userspace program scheduled and watched via `systemd`
+- Falco driver installed via the package manager (either kernel module or eBPF depending on the host)
+- Sane and default configuration file installed in `/etc/falco`
 
 Alternatively, it is also possible to use a binary package as [explained below](#linux-binary).
 
@@ -88,11 +87,11 @@ On January 18th, 2023 the GPG key used to sign Falco packages has been rotated. 
     ```shell
     yum -y install falco
     ```
+
     Falco, the kernel module driver, and a default configuration are now installed.
     Falco is being ran as a systemd unit.
 
     See [running](../running) for information on how to manage, run, and debug with Falco.
-
 
 4. Uninstall Falco:
 
@@ -122,11 +121,11 @@ On January 18th, 2023 the GPG key used to sign Falco packages has been rotated. 
     ```shell
     zypper -n install falco
     ```
+
     Falco, the kernel module driver, and a default configuration are now installed.
     Falco is being ran as a systemd unit.
 
     See [running](../running) for information on how to manage, run, and debug with Falco.
-
 
 4. Uninstall Falco:
 
@@ -168,12 +167,11 @@ It first tries to build the eBPF probe locally, otherwise to download a prebuilt
 {{% pageinfo color="warning" %}}
 
 If you are using the eBPF probe, in order to ensure that performance is not degraded, make sure that
-* Your kernel has `CONFIG_BPF_JIT` enabled
-* `net.core.bpf_jit_enable` is set to 1 (enable the BPF JIT Compiler)
-* This can be verified via `sysctl -n net.core.bpf_jit_enable`
+- Your kernel has `CONFIG_BPF_JIT` enabled
+- `net.core.bpf_jit_enable` is set to 1 (enable the BPF JIT Compiler)
+- This can be verified via `sysctl -n net.core.bpf_jit_enable`
 
 {{% /pageinfo %}}
-
 
 Configurable options:
 
