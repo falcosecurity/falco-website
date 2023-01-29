@@ -239,6 +239,37 @@ Other configurable options:
 - `DRIVER_REPO` - See the [Installing the driver](https://falco.org/docs/getting-started/installation/#install-driver) section.
 - `SKIP_DRIVER_LOADER` - Set this environment variable to avoid running `falco-driver-loader` when the `falcosecurity/falco` image starts. Useful when the driver has been already installed on the host by other means.
 
+### Modern eBPF
+
+#### Privileged
+
+The modern BPF is shipped into Falco so the `falco-no-driver` image is enough. This allows you to run Falco without dependencies, just the following command:
+
+```bash
+docker run --rm -i -t \
+           --privileged \
+           -v /var/run/docker.sock:/host/var/run/docker.sock \
+           -v /proc:/host/proc:ro \
+           falcosecurity/falco-no-driver:latest falco --modern-bpf
+```
+
+#### Least privileged
+
+Right now **is not officialy supported** but the following command should work great:
+
+```bash
+docker run --rm -i -t \
+           --cap-drop all \
+           --cap-add sys_admin \
+           --cap-add sys_resource \
+           --cap-add sys_ptrace \
+           -v /var/run/docker.sock:/host/var/run/docker.sock \
+           -v /proc:/host/proc:ro \
+           falcosecurity/falco-no-driver:latest falco --modern-bpf
+```
+
+> __Note__: we cannot use `CAP_BPF` and `CAP_PERFMON` since [docker doesn't support](https://github.com/moby/moby/pull/41563) them yet
+
 ## Rules validation
 It's possible to validate Falco rules without installation by using the Docker image.
 
