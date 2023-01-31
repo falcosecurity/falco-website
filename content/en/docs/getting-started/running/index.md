@@ -12,7 +12,7 @@ Let's imagine we want to start the `falco-bpf.service`.
 
 1. Type `systemctl list-units | grep falco` to check that no unit is running.
 
-2. Now you have to decide if you want the Falcoctl service running together with the Falco one or not. If yes you don't have to do anything, if no you have to mask the Falcoctl service with `systemctl mask falcoctl-artifact-follow.service`. As said [in this section](../installation.md#rule-update) the Falcoctl service is strictly related to the Falco one so if you don't mask it, it will be started together with the Falco service.
+2. Now you have to decide whether you want the Falcoctl service running together with the Falco one. If yes you don't have to do anything, else you will need to mask the Falcoctl service with `systemctl mask falcoctl-artifact-follow.service`. As pointed out [in this section](../installation.md#rule-update) the Falcoctl service is strictly related to the Falco one so if you don't mask it, it will be started together with the Falco service.
 
 3. Type `falco-driver-loader bpf` to download/compile the BPF probe.
 
@@ -31,11 +31,11 @@ Let's imagine we want to start the `falco-bpf.service`.
 
 ### Custom run
 
-You may have noticed a Falco unit called `falco-custom.service`. You should use it when you want to run Falco with a custom configuration like a plugin or Gvisor. Please note that in this case you have to modify this template according to how you want to run Falco, the unit cannot be used as it is!
+You may have noticed a Falco unit called `falco-custom.service`. You should use it when you want to run Falco with a custom configuration like a plugin or Gvisor. Please note that in this case you have to modify this template according to how you want to run Falco, the unit should not be used as is!
 
 ## Falco binary
 
-Here you can find some examples of how to run Falco after having [installed](../installation.md#falco-binary) it using the binary package
+Here you can find some examples of how to run Falco after having [installed](/docs/getting-started/installation/#falco-binary) it using the binary package
 
 
 ```bash
