@@ -23,7 +23,7 @@ There are 2 main ways to install Falco on your host:
 
 {{% pageinfo color="secondary" %}}
 
-The Falco packages shipped with `Falco 0.34` support for the first time other drivers besides the kernel module. The new Systemd units' names are:
+The Falco packages shipped with `Falco 0.34` support for the first time other drivers besides the kernel module. The new systemd units' names are:
 
 * `falco-bpf.service`
 * `falco-kmod-inject.service`
@@ -32,7 +32,7 @@ The Falco packages shipped with `Falco 0.34` support for the first time other dr
 * `falco-custom.service`
 * `falcoctl-artifact-follow.service` (related to [Falcoctl](https://github.com/falcosecurity/falcoctl) tool, see next sections)
 
-This is still an experimental solution so our suggestion is to avoid relying on Falco Systemd unit names since they could change between releases. The final idea would be to have a single `falco.service` configurable through usual Systemd logic, but due to how Falco works today this solution is not viable.
+This is still an experimental solution so our suggestion is to avoid relying on Falco systemd unit names since they could change between releases. The final idea would be to have a single `falco.service` configurable through usual systemd logic, but due to how Falco works today this solution is not viable.
 
 Even if different units are available, you shouldn't run multiple Falco in parallel! Our units are not meant to be run in parallel!
 
@@ -47,7 +47,7 @@ On January 18th, 2023 the GPG key used to sign Falco packages has been rotated. 
 ### Installation details
 
 Before looking at the installation on different distros, let's focus on what we should expect when we install the package.
-The Falco package will look into your system for the `dialog` binary, if the binary is there, the package will prompt a simple configuration dialog, otherwise, it will install the unit files without starting any `Systemd` service.
+The Falco package will look into your system for the `dialog` binary, if the binary is there, the package will prompt a simple configuration dialog, otherwise, it will install the unit files without starting any `systemd` service.
 
 > _Note_:  If you don't have the `dialog` binary installed on your system a manual configuration is always required to start Falco services.
 
@@ -97,7 +97,7 @@ Let's see an example of how to install the package in a Debian-like system, for 
 
 #### Installation with dialog
 
-If you have the `dialog` binary installed on your system, you should see something similar to this:
+If you have the `dialog` binary installed on your system, you will be prompted with this:
 
 ![](/docs/getting-started/images/systemd_dialog_1.png)
 
@@ -107,8 +107,8 @@ Here we select the `Kmod` case as an example. After the first dialog, you should
 
 ![](/docs/getting-started/images/systemd_dialog_2.png)
 
-[Falcoctl](https://github.com/falcosecurity/falcoctl) is a tool revamped with `Falco 0.34` that offers shiny new features! One of the most important is the [automatic rulesets update]()!
-Our suggestion is to enable it by default, in this way you will always have your Falco instance running with the most updated rules!
+[Falcoctl](https://github.com/falcosecurity/falcoctl) is a tool revamped with `Falco 0.34` that offers shiny new features! One of the most important is the [automatic rulesets update](),
+our suggestion is to enable it by default, in this way you will always have your Falco instance running with the most updated rules.
 
 ##### Rule update
 
@@ -142,15 +142,13 @@ In this mode, the Falcoctl service is masked by default so if you want to enable
 
 ##### Final remarks on the dialog
 
-When you choose a driver from the dialog (in our case `Kmod`), the `Systemd` service is always enabled by default so it will start at every system reboot. If you want to disable this behavior type `systemctl disable falco-kmod.service` (if you are using the kernel module like in this example). If enabled, the Falcoctl service will follow the same behavior as Falco so it is enough to disable the Falco service.
+When you choose a driver from the dialog (in our case `Kmod`), the `systemd` service is always enabled by default so it will start at every system reboot. If you want to disable this behavior type `systemctl disable falco-kmod.service` (if you are using the kernel module like in this example). If enabled, the Falcoctl service will follow the same behavior as Falco so it is enough to disable the Falco service.
 
 #### Installation without dialog (Manual configuration)
 
-If you remember well, in the dialog we also had the `Manual configuration`. This option installs only the Falco units into the system without starting any service, this is the equivalent of not having the `dialog` binary installed on the system so we will analyze that case in this section.
+If you remember well, in the dialog we also had the `Manual configuration`. This option installs only the Falco units into the system without starting any service, this is the equivalent of not having the `dialog` binary installed on the system.
 
-If you don't want the dialog to start, remember to use `FALCO_FRONTEND=noninteractive` when you install/update packages.
-
-To see an example of how to run some services look at the [Running section](../running/index.md#falco-packages)
+Since no service is started, you have to manually configure services after the installation phase. You can see an example of how to configure the `falco-bpf` service in the [Running section](../running#falco-packages)
 
 ### Installation on different Distros
 
