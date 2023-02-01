@@ -12,11 +12,11 @@ Let's imagine we want to start the `falco-bpf.service`.
 
 1. Type `systemctl list-units | grep falco` to check that no unit is running.
 
-2. Now you have to decide whether you want the Falcoctl service running together with the Falco one. If yes you don't have to do anything, else you will need to mask the Falcoctl service with `systemctl mask falcoctl-artifact-follow.service`. As pointed out [in this section](../installation.md#rule-update) the Falcoctl service is strictly related to the Falco one so if you don't mask it, it will be started together with the Falco service.
+2. Now you have to decide whether you want the Falcoctl service running together with the Falco one. If yes you don't have to do anything, else you will need to mask the Falcoctl service with `systemctl mask falcoctl-artifact-follow.service`. As pointed out [in this section](/docs/getting-started/installation/#rule-update) the Falcoctl service is strictly related to the Falco one so if you don't mask it, it will be started together with the Falco service.
 
 3. Type `falco-driver-loader bpf` to download/compile the BPF probe.
 
-4. Now running `systemctl start falco-bpf.service` and typing `systemctl list-units | grep falco` you should see something like that (supposing we didn't mask the Falcoctl service):
+4. Now running `systemctl start falco-bpf.service` and typing `systemctl list-units | grep falco` you should see something like that (supposing you didn't mask the Falcoctl service):
 
     ```text
     falco-bpf.service                                 loaded active running   Falco: Container Native Runtime Security with ebpf

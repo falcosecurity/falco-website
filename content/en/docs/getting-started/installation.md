@@ -107,7 +107,7 @@ Here we select the `Kmod` case as an example. After the first dialog, you should
 
 ![](/docs/getting-started/images/systemd_dialog_2.png)
 
-[Falcoctl](https://github.com/falcosecurity/falcoctl) is a tool revamped with `Falco 0.34` that offers shiny new features! One of the most important is the [automatic rulesets update](),
+[Falcoctl](https://github.com/falcosecurity/falcoctl) is a tool revamped with `Falco 0.34` that offers shiny new features! One of the most important is the [automatic rulesets update](https://github.com/falcosecurity/falcoctl#falcoctl-artifact-follow),
 our suggestion is to enable it by default, in this way you will always have your Falco instance running with the most updated rules.
 
 ##### Rule update
