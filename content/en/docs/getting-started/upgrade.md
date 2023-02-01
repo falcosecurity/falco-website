@@ -17,7 +17,7 @@ rmmod falco
 
 ## Falco packages
 
-Here there are no specific steps to follow, you just need to type the specific commands for your distro. Please remember to specify the `FALCO_FRONTEND=noninteractive` env variable if you don't want to use the dialog during the upgrade
+Here there are no specific steps to follow, you just need to type the specific commands for your distro. Please remember to specify the `FALCO_FRONTEND=noninteractive` env variable if you don't want to use the `dialog` during the upgrade
 
 ### Debian/Ubuntu {#debian}
 
@@ -99,4 +99,4 @@ zypper update falco
 
 ## Falco binary
 
-For the Falco binary we don't provide specific update paths, you just have to remove the installed files from the old `tar.gz` and download the new version of Falco as described [here](../installation/#falco-binary)
+For the Falco binary we don't provide specific update paths, you just have to remove files installed by the old `tar.gz` and download the new version of Falco as described [here](../installation/#falco-binary)
