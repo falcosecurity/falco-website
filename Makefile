@@ -1,8 +1,8 @@
 clean:
-	rm -rf public
+	npm prune && rm -rf public
 
 dependencies:
-	npm install && git submodule update -f --init --recursive
+	npm install
 
 serve: dependencies
 	hugo server --minify \
