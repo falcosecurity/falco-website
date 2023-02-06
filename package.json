@@ -1,5 +1,8 @@
 {
   "private": true,
+  "scripts": {
+    "postinstall": "git submodule update -f --init --recursive && cd themes/docsy && npm install"
+  },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
     "lodash": ">=4.17.21",
