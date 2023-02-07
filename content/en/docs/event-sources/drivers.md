@@ -103,10 +103,10 @@ The new probe is highly customizable, you are not obliged to use one buffer [for
 
 The modern eBPF probe supports all the installation methods of other drivers:
 
-* [Falco packages](link to packages install sections)
-* [Falco binary](link to binary install section)
+* [Falco packages](/docs/getting-started/installation/#installation-with-dialog)
+* [Falco binary](/docs/getting-started/running/#falco-binary)
 * [Docker](/docs/getting-started/running/#modern-ebpf)
-* [Helm chart](link to how to run modern BPF probe with helm (?))
+* [Helm chart](https://github.com/falcosecurity/charts/blob/master/falco/README.md#daemonset)
 
 ### Useful resources
 
