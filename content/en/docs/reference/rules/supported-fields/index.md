@@ -154,6 +154,13 @@ Name | Type | Description
 `proc.cmdnargs` | UINT64 | The number of cmd args.
 `proc.cmdlenargs` | UINT64 | The total count of characters / length of all cmd args combined excluding whitespaces.
 `proc.pvpid` | INT64 | the id of the parent process generating the event as seen from its current PID namespace.
+`proc.is_exe_upper_layer` | BOOL | true if this process' executable file is in upper layer in overlayfs. This field value can only be trusted if the underlying kernel version is greater or equal than 3.18.0, since overlayfs was introduced at that time.
+`proc.exe_ino` | INT64 | The inode number of the executable image file on disk. Can be correlated with fd.ino.
+`proc.exe_ino.ctime` | ABSTIME | Last status change time (ctime - epoch nanoseconds) of executable image file on disk (inode->ctime). Time is changed by writing or by setting inode information e.g. owner, group, link count, mode etc.
+`proc.exe_ino.mtime` | ABSTIME | Last modification time (mtime - epoch nanoseconds) of executable image file on disk (inode->mtime). Time is changed by file modifications, e.g. by mknod, truncate, utime, write of more than zero bytes etc. For tracking changes in owner, group, link count or mode, use proc.exe_ino.ctime instead.
+`proc.exe_ino.ctime_duration_proc_start` | ABSTIME | Number of nanoseconds between modifying status of executable image and spawning a new process using the changed executable image.
+`proc.exe_ino.ctime_duration_pidns_start` | ABSTIME | Number of nanoseconds between pid namespace start ts and ctime exe file if pidns start predates ctime.
+`proc.pidns_init_start_ts` | UINT64 | Approximate start ts (epoch ns) of pid namespace (container or non container pid namespace).
 
 ### Field Class: user
 
@@ -205,14 +212,8 @@ Name | Type | Description
 `container.healthcheck` | CHARBUF | The container's health check. Will be the null value ("N/A") if no healthcheck configured, "NONE" if configured but explicitly not created, and the healthcheck command line otherwise
 `container.liveness_probe` | CHARBUF | The container's liveness probe. Will be the null value ("N/A") if no liveness probe configured, the liveness probe command line otherwise
 `container.readiness_probe` | CHARBUF | The container's readiness probe. Will be the null value ("N/A") if no readiness probe configured, the readiness probe command line otherwise
-
-{{% alert color="primary" %}}
-
-The [k8s set of fields](#field-class-k8s) `k8s.ns.name` and `k8s.pod.*` (i.e., `k8s.pod.name`, `k8s.pod.id`, `k8s.pod.labels`, and `k8s.pod.label.*`) are populated with data fetched from the **container runtime**.
-
-Therefore, they can also be accessed without having the **Kubernetes Metadata Enrichment** functionality enabled (`-k` Falco option).
-
-{{% /alert %}}
+`container.start_ts` | UINT64 | Approximate container start ts (epoch in ns) based on proc.pidns_init_start_ts.
+`container.duration` | RELTIME | Number of nanoseconds since container.start_ts.
 
 ### Field Class: fd
 
