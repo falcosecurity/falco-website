@@ -1,11 +1,9 @@
 ---
-title: Rule basics for Falco 3.0.0 Helm chart
+title: Rule basics for the Falco 3.0.0 Helm chart
 date: 2023-02-09
 author: Luca Guerra
 slug: rules-helm-chart-3-0-0
 ---
-
-# Rules basics for the Falco 3.0.0 Helm chart
 
 The new Falco Helm chart 3.0.0 ([full documentation](https://github.com/falcosecurity/charts/blob/master/falco/README.md), [upgrade information](https://github.com/falcosecurity/charts/blob/master/falco/BREAKING-CHANGES.md#300)) comes with a new way to automatically update the Falco rules that are currently loaded. Of course, you can enable, disable and configure this functionality to your liking. Below, we list a number of common basic use cases and how to easily configure Falco for each:
 
