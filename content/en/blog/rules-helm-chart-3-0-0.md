@@ -1,5 +1,5 @@
 ---
-title: Rules basics for the Falco 3.0.0 Helm chart
+title: Rule basics for Falco 3.0.0 Helm chart
 date: 2023-02-09
 author: Luca Guerra
 slug: rules-helm-chart-3-0-0
