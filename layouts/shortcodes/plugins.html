@@ -1,0 +1,61 @@
+{{- $regitry_url := (.Get 0) -}}
+{{- $dataYAML := resources.GetRemote $regitry_url -}}
+{{- $content := $dataYAML.Content | replaceRE `#.*\n` "" | transform.Unmarshal }}
+
+{{ with $content }}
+<style>
+    .keyword {
+        background-color: #00aec7;
+        border: none;
+        color: #fff;
+        padding: 2px 5px;
+        text-align: center;
+        font-size: 85%;
+        display: inline-block;
+        margin: 2px 0px 2px 0px;
+        border-radius: 5px;
+    }    
+    .source {
+        background-color: #727d8d;
+        border: none;
+        color: #fff;
+        padding: 4px 5px;
+        border-radius: 5px;
+    }    
+</style>
+
+<div class="table">
+<table>
+    <thead>
+        <th scope="col">ID</th>
+        <th scope="col">Plugin</th>
+        <th scope="col">Type</th>
+        <th scope="col">Source</th>
+        <th scope="col">Description</th>
+        <th scope="col">Authors</th>
+        <th scope="col">Keywords</th>
+        <th scope="col">URL</th>
+        <th scope="col">Rules URL</th>
+        <th scope="col">Licence</th>
+    </thead>
+    {{- range $content.plugins }}
+        <tr>
+            <td> {{ if .capabilities.sourcing.id }} {{ .capabilities.sourcing.id }} {{ end }} </td>
+            <td> <b>{{ .name }}</b> </td>
+            <td> {{ if eq .capabilities.sourcing.supported true }} sourcing {{ else }} extraction {{ end }} </td>
+            <td> {{ if .capabilities.sourcing.source }} <span class="source"> {{ .capabilities.sourcing.source }} {{ end }} </span> </td>
+            <td> {{ .description }} </td> 
+            <td> <a href="{{ .contact }}">{{ .authors }}</a>  </td>
+            <td> 
+                {{ range .keywords }}
+                    <span class="keyword">{{ . }}</span>
+                {{ end }}    
+            </td>
+            <td> {{ if .url }} <a href="{{ .url }}">{{ emojify ":link:" }}</a> {{ end }} </td>
+            <td> {{ if .rules_url }} <a href="{{ .rules_url }}">{{ emojify ":link:" }} {{ end }} </td> 
+            <td> {{ .license }} </td>
+        </tr>
+    {{- end -}}
+</table>
+</div>
+{{ end }}

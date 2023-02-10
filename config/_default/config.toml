@@ -17,6 +17,8 @@ ignoreFiles = [ "^OWNERS$", "README[-]+[a-z]*\\.md", "^node_modules$", "content/
 
 timeout = 3000
 
+enableEmoji = true
+
 # Highlighting config.
 pygmentsCodeFences = true
 pygmentsUseClasses = false
