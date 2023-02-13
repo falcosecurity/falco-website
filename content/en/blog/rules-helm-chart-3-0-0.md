@@ -42,7 +42,7 @@ It will be loaded and configured in our Falco instance.
 If you only want to use the rules that you add via configmap, discarding all automated updates and default rules shipping in the image you have to remove the `falco_rules.yaml` entry from the Falco configuration. Assuming you have your custom rules in `custom_rules.yaml`:
 
 ```
-helm install falco -f ./custom-rules.yaml \
+helm install falco -f ./custom_rules.yaml \
     --set "falco.rules_file={/etc/falco/falco_rules.local.yaml,/etc/falco/rules.d}" \
     --set falcoctl.artifact.install.enabled=false \
     --set falcoctl.artifact.follow.enabled=false
