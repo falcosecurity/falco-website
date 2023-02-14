@@ -62,29 +62,29 @@ Let's see an example of how to install the package in a Debian-like system, for 
 1. Trust the `falcosecurity` GPG key
 
     ```bash
-    curl -s https://falco.org/repo/falcosecurity-packages.asc | apt-key add -
+    curl -fsSL https://falco.org/repo/falcosecurity-packages.asc | sudo gpg --dearmor -o /usr/share/keyrings/falco-archive-keyring.gpg
     ```
 
 2. Configure the apt repository
 
     ```bash
-    echo "deb https://download.falco.org/packages/deb stable main" | tee -a /etc/apt/sources.list.d/falcosecurity.list
+    echo "deb [signed-by=/usr/share/keyrings/falco-archive-keyring.gpg] https://download.falco.org/packages/deb stable main" | sudo tee -a /etc/apt/sources.list.d/falcosecurity.list
     ```
 
 3. Update the package list
 
     ```bash
-    apt-get update -y
+    sudo apt-get update -y
     ```
 
 4. Install some required dependencies that are needed to build the kernel module and the BPF probe
 
     ```bash
-    apt install -y dkms make linux-headers-$(uname -r)
+    sudo apt install -y dkms make linux-headers-$(uname -r)
     # If you use the falco-driver-loader to build the BPF probe locally you need also clang toolchain
-    apt install -y clang llvm
+    sudo apt install -y clang llvm
     # You can install also the dialog package if you want it
-    apt install -y dialog
+    sudo apt install -y dialog
     ```
 
     > _Note_: You don't need to install these deps if you want to the modern BPF probe
@@ -92,7 +92,7 @@ Let's see an example of how to install the package in a Debian-like system, for 
 5. Install the Falco package
 
     ```bash
-    apt-get install -y falco
+    sudo apt-get install -y falco
     ```
 
 #### Installation with dialog
