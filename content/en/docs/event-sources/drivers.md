@@ -68,7 +68,7 @@ As you probably already understood, the userspace instrumentation drivers are a 
 
 Falco `0.34` ships a new experimental driver: the modern eBPF Probe. It is experimental for 2 main reasons:
 
-* It implements only `~80` syscalls used by Falco when running without the `-A` flag. So it can be used only without this flag!
+* It implements only `~80` syscalls. (The `-A` flag will not add further syscalls.)
 * It is not production-proven like the kernel module and the current eBPF probe.
 
 ### What's new
