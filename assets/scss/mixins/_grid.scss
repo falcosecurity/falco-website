@@ -1,0 +1,40 @@
+// Grid generation
+//
+// This grid layout uses bootstrap-like class naming including 12 columns
+// and media preakpoints to be used like grid-md-6, grid-xs-12, etc.
+@mixin make-grid($columns: $grid-columns, $breakpoints: $grid-breakpoints) {
+  @each $breakpoint in map-keys($breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $breakpoints);
+
+    @if $columns > 0 {
+      @for $size from 1 through $columns {
+        .grid#{$infix}-#{$size} {
+          @include media-breakpoint-up($breakpoint) {
+            display: grid;
+            grid-template-columns: repeat($size, 1fr);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Grid gap generator
+//
+// Uses bootstrap margins and paddings naming and values style
+@mixin gap($spacers: $spacers, $breakpoints: $grid-breakpoints) {
+  @each $breakpoint in map-keys($breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $breakpoints);
+
+    @each $size, $length in $spacers {
+      .gap#{$infix}-#{$size} {
+        @include media-breakpoint-up($breakpoint) {
+          gap: $length;
+        }
+      }
+    }
+  }
+}
+
+@include make-grid();
+@include gap();

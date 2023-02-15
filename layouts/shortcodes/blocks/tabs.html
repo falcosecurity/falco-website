@@ -1,0 +1,32 @@
+{{- .Page.Scratch.Add "tabset-counter" 1 -}}
+{{- $tabs := .Scratch.Get "tabs" -}}
+{{- $col_id := .Get "color" | default "white" -}}
+{{- $tab_set_id := .Get "name" | default (printf "tabset-%s-%d" (.Page.RelPermalink) (.Page.Scratch.Get "tabset-counter") ) | anchorize -}}
+{{- if .Inner -}}{{- end -}}
+<div class="tabpane card bg-light">
+  <div class="card-body">
+    <ul class="nav nav-tabs tabpane__header shadow bg-white" id="{{ $tab_set_id }}" role="tablist">
+      {{- range $i, $e := $tabs -}}
+        {{- $id := printf "%s-%d" $tab_set_id $i -}}
+        <li class="nav-item flex-grow-1">
+          {{- if (eq $i 0) -}}
+            <a data-toggle="tab" class="btn btn-lg btn-info btn-block active" href="#{{ $id }}" role="tab" aria-controls="{{ $id }}" aria-selected="true">{{- trim .name " " -}}</a>
+          {{ else }}
+            <a data-toggle="tab" class="btn btn-lg btn-info btn-block" href="#{{ $id }}" role="tab" aria-controls="{{ $id }}" aria-selected="false">{{- trim .name " " -}}</a>
+          {{- end -}}
+        </li>
+    {{- end -}}
+    </ul> 
+
+    <div class="tab-content" id="{{ $tab_set_id }}">
+      {{- range $i, $e := $tabs -}}
+      {{- $id := printf "%s-%d" $tab_set_id $i -}}
+      <div id="{{ $id }}" class="tab-pane fade{{ if (eq $i 0) }} show active{{ end }}" role="tabpanel" aria-labelledby="{{ $id }}">
+        {{- with .content -}}
+          {{- . -}}
+        {{- end -}}
+      </div>
+      {{- end -}}
+    </div>
+  </div>
+</div>
