@@ -1,0 +1,167 @@
+//
+// TODO: Use this stylesheet only while restyle is WIP. Must be deleted when
+// all the sections are updated. variables must be placed to project variables
+// file
+//
+@import "main";
+@import "variables_restyle";
+
+@import "tabs";
+
+// Bootstrap imports to override
+@import "../../themes/docsy/assets/vendor/bootstrap/scss/mixins/buttons";
+@import "../../themes/docsy/assets/vendor/bootstrap/scss/mixins/gradients";
+@import "../../themes/docsy/assets/vendor/bootstrap/scss/type";
+@import "../../themes/docsy/assets/vendor/bootstrap/scss/card";
+@import "../../themes/docsy/assets/vendor/bootstrap/scss/utilities";
+@import "../../themes/docsy/assets/vendor/bootstrap/scss/grid";
+@import "../../themes/docsy/assets/vendor/bootstrap/scss/buttons";
+
+@mixin gradient-bg($color) {
+  @debug $enable-gradients;
+  @if $enable-gradients {
+    background: $color linear-gradient(180deg, mix($body-bg, $color, 15%), $color) repeat-x;
+  } @else {
+    background-color: $color;
+  }
+}
+
+.icon {
+  padding: 1rem;
+  width: max-content;
+  border-radius: 50vh;
+  background-color: $white;
+  align-self: flex-start;
+  box-shadow: 0 0.25rem 1.5rem rgba($black, 0.1);
+}
+
+.icon-button {
+  height: 4rem;
+  width: 4rem;
+  border-radius: 50vh;
+  background-color: $white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0.25rem 1.5rem rgba($black, 0.1) !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: $font-weight-bold;
+}
+
+body {
+  background-color: $body-bg;
+}
+
+// Buttons
+
+// TODO: this to remove when redesign is finished. This behaviour must be
+// controlled through $enable-gradients and $enable-shadows variables
+.btn, .btn-link {
+  @if $enable-gradients == false {
+    background-image: none;
+
+    &:focus,.focus {
+      background-image: none;
+    }
+
+    &:hover,.hover {
+      background-image: none;
+    }
+  }
+
+  @if $enable-shadows == false {
+    box-shadow: none;
+
+    &:focus,.focus {
+      box-shadow: none;
+    }
+
+    &:hover,.hover {
+      box-shadow: none;
+    }
+  }
+}
+
+.btn-link {
+  font-weight: $font-weight-bold;
+
+  &:disabled,
+  &.disabled {
+    color: $btn-link-disabled-color;
+  }
+}
+
+// Cards
+
+// Overrides docsy default behaviour
+.card {
+  max-width: unset;
+  border-radius: $card-border-radius;
+
+  &-sm {
+    .card-body {
+      padding: $card-spacer-x-sm;
+    }
+  }
+
+  .card-text {
+    :last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.card-deck {
+  max-width: unset;
+}
+
+// Boxes
+
+.td-box {
+  .row {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+// TODO: remove when restyling is over
+.td-block-padding {
+  padding-top: $td-block-space-top-base ;
+  padding-bottom: $td-block-space-bottom-base;
+
+  @include media-breakpoint-up(md) {
+      padding-top: $td-block-space-top-base * 1.25;
+      padding-bottom: $td-block-space-bottom-base * 1.25;
+  }
+}
+
+// Misc
+
+main {
+  p,
+  li {
+    font-size: 1.25rem;
+  }
+}
+
+img[src*="#img-fit"] {
+  width: 100%;
+}
+
+// TODO: This overrides hardcoded styles in changelog.scss. Needs to be
+// removed alongside with changelog refactoring
+h1, h2, h3, h4, h5 {
+  margin-top: 0;
+}
+
+// TODO: remove when restyling is over
+@if $enable-grid-classes {
+  @include make-grid-columns();
+}
