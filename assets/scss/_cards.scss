@@ -1,0 +1,34 @@
+.faq-card {
+  font-size: 1.25rem;
+
+  .card-text {
+    margin-top: 1.5rem;
+  }
+
+  p {
+    margin-bottom: 1.5rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  button[data-toggle="collapse"] {
+    &:focus,
+    :active {
+      box-shadow: none !important;
+    }
+
+    i {
+      // TODO: colors must be fixed
+      color: $secondary;
+      transition: rotate 0.5s;
+    }
+
+    &[aria-expanded="true"] {
+      i {
+        rotate: 45deg;
+        color: $primary;
+      }
+    }
+  }
+}

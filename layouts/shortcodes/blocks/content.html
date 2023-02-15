@@ -1,0 +1,20 @@
+{{ $col_id := .Get "color" | default "transparent" }} 
+{{ $type := .Get "type" | default "" }}
+{{ $content_type := .Get "content" | default "text" }}
+{{ $wrap := .Get "wrap" }}
+<a id="td-block-{{ .Ordinal }}" class="td-offset-anchor"></a>
+<section class="row td-box td-box--{{ $col_id }}">
+  <div class="container">
+    <div class="row {{ $type }}">
+			{{ with $wrap }}
+				<div class="{{ $wrap | markdownify }}">
+			{{ end }}
+			{{ if eq $content_type "text" }}
+				{{ .Inner | markdownify }}
+			{{ end }}
+			{{ if eq $content_type "html" }}
+				{{ .Inner | htmlUnescape | safeHTML }}
+			{{ end }}
+		</div>
+  </div>
+</section>
