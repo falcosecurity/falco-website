@@ -15,6 +15,8 @@ When installed via rpm/debian packages, both rules files, as well as the falco c
 
 The default falco rules file is installed at `/etc/falco/falco_rules.yaml`. It contains a predefined set of rules designed to provide good coverage in a variety of situations. The intent is that this rules file is not modified, and is replaced with each new software version.
 
+> You can find the details of the available default rules, classified by tag and status, in the official repository: [**falcosecurity/rules**](https://github.com/falcosecurity/rules/blob/main/rules_inventory/rules_overview.md#falco-rules---summary-stats).
+
 ## Local Rules File
 
 The local falco rules file is installed at `/etc/falco/falco_rules.local.yaml`. It is empty other than some comments. The intent is that additions/overrides/modifications to the main rules file are added to this local file. It will not be replaced with each new software version.
