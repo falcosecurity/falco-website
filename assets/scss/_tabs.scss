@@ -1,5 +1,6 @@
 .tabpane {
   &__header {
+    flex-wrap: nowrap;
     padding: 0.75rem !important;
     border-radius: 50vh;
     gap: 0.5rem;

@@ -1,0 +1,5 @@
+src: docker.png
+alt: Docker
+url: https://github.com/Issif/docker-plugin
+description: Read Docker events
+weight: 50
