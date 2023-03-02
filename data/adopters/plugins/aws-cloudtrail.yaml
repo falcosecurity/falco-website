@@ -1,0 +1,5 @@
+src: aws-cloudtrail.png
+alt: AWS Cloudtrail
+url: https://github.com/falcosecurity/plugins/tree/master/plugins/cloudtrail
+description: Reads CloudTrail JSON logs from files/S3 and injects as events
+weight: 40

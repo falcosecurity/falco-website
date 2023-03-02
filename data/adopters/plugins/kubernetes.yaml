@@ -1,0 +1,5 @@
+src: kubernetes-icon.png
+alt: Kubernetes
+url: https://github.com/falcosecurity/plugins/tree/master/plugins/k8saudit
+description: Collect Kubernetes Audit Events and monitor Kubernetes Clusters
+weight: 20

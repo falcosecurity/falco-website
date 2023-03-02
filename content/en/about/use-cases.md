@@ -1,16 +1,21 @@
 ---
-title: Use case page
+title: Falco use cases
 ---
 
 {{< blocks/content wrap="col" >}}
-## What you can do with Falco today
+## Falco use cases
 {{< /blocks/content >}}
+
+<!-- TODO: uncomment this section when the redesign is ready -->
+<!-- {{< blocks/content content="html" wrap="col">}}
+{{< feedback >}}
+{{< /blocks/content >}} -->
 
 {{< blocks/content content="html" wrap="col">}}
 {{< footer_nav 
   prev="/about/why-falco"
   prevTitle="Why Falco?"
-  next="/about/mitre" 
-  nextTitle="MITRE ATT&CK Framework" 
+  next="/about/ecosystem" 
+  nextTitle="Falco Ecosystem" 
 >}}
 {{< /blocks/content >}}

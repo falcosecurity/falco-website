@@ -1,5 +1,9 @@
 .pageinfo {
-  width: 80%;
+  width: 100%;
+
+  @include media-breakpoint-up(xl) {
+    max-width: 80% !important;
+  }
 
   @each $color, $value in $theme-colors {
     &-#{$color} {

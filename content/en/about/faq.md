@@ -1,5 +1,5 @@
 ---
-title: Faq page
+title: FAQs
 ---
 
 {{< blocks/content wrap="col" >}}
@@ -145,14 +145,8 @@ title: Faq page
 
 {{< blocks/content content="html" wrap="col">}}
 {{< footer_nav 
-  prev="/about/falco"
-  prevTitle="About Falco"
-  next="/docs" 
-  nextTitle="Documentation" >}}
-<!-- TODO: uncomment when ecosystems section is ready -->
-<!-- {{< footer_nav 
   prev="/about/ecosystem"
-  prevTitle="Ecosystem"
+  prevTitle="Falco Ecosystem"
   next="/about/docs" 
-  nextTitle="Documentation" >}} -->
+  nextTitle="Documentation" >}}
 {{< /blocks/content >}}
