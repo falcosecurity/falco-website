@@ -26,3 +26,5 @@ August, 2021         | [Teryl Taylor](https://github.com/terylt) and [Frederico 
 September and October, 2021         | [Leo Di Donato](https://github.com/leodido)
 November and December, 2021         | [Pablo Lopez Zaldivar](https://github.com/pabloopez)
 January and February, 2022         | [Alban Créquy](https://github.com/alban)
+January 2023 | [Logan Bond](https://github.com/EXONER4TED)
+February 2023 | [Melissa Kilby](https://github.com/incertum) and [David Windsor](https://github.com/dwindsor)
