@@ -1,0 +1,5 @@
+src: aws-eks.png
+alt: AWS EKS
+url: https://github.com/falcosecurity/plugins/tree/master/plugins/k8saudit-eks
+description: Read Kubernetes Audit Events from AWS EKS Clusters
+weight: 30

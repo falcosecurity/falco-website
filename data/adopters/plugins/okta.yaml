@@ -1,0 +1,5 @@
+src: okta.png
+alt: Okta
+url: https://github.com/falcosecurity/plugins/tree/master/plugins/okta
+description: Collect Okta Audit logs
+weight: 60

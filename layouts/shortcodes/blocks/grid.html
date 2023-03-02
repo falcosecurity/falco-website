@@ -1,0 +1,11 @@
+{{ $class := .Get "class" | default "" }}
+{{ $layout := ""}}
+{{ range split (.Get "layout") " " }}
+  {{ $layout = printf "%sgrid-%s " $layout . }}
+{{ end }}
+{{ $gap := .Get "gap" | default 3 }}
+{{ with $.Inner }}
+  <div class="{{ $layout }} gap-{{ $gap }} {{ $class }}">
+    {{ $.Inner }}
+  </div>
+{{ end }}

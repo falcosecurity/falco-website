@@ -1,0 +1,5 @@
+src: nomad.png
+alt: Nomad
+url: https://github.com/albertollamaso/nomad-plugin/tree/main
+description: Collect Nomad events
+weight: 70

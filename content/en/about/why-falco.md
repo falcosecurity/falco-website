@@ -1,5 +1,5 @@
 ---
-title: Why falco
+title: Why Falco?
 ---
 
 {{< blocks/content wrap="col" >}}
@@ -300,16 +300,15 @@ Defining custom metadata can benefit security by enriching Falco alerts with con
 
 {{< /blocks/content >}}
 
+<!-- TODO: uncomment this section when the redesign is ready -->
+<!-- {{< blocks/content content="html" wrap="col">}}
+{{< feedback >}}
+{{< /blocks/content >}} -->
+
 {{< blocks/content content="html" wrap="col">}}
-{{< footer_nav
-prev="/about/falco"
-prevTitle="About Falco"
-next="/docs"
-nextTitle="Documentation" >}}
-<!-- TODO: uncomment when ecosystems section is ready -->
-<!-- {{< footer_nav 
-  prev="/about/ecosystem"
-  prevTitle="Ecosystem"
-  next="/about/docs" 
-  nextTitle="Documentation" >}} -->
+{{< footer_nav 
+  prev="/about/falco"
+  prevTitle="About Falco"
+  next="/about/use-cases"
+  nextTitle="Falco use cases" >}}
 {{< /blocks/content >}}

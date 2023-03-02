@@ -1,5 +1,5 @@
 ---
-title: About falco page
+title: What is Falco
 ---
 
 {{< blocks/content wrap="col" >}}
@@ -158,7 +158,5 @@ title: About falco page
 {{< /blocks/content >}} -->
 
 {{< blocks/content content="html" wrap="col">}}
-{{< footer_nav next="/about/faq" nextTitle="Frequently Asked Questions" >}}
-<!-- TODO: uncomment when WHY FALCO section is ready -->
-<!-- {{< footer_nav next="/about/why-falco" nextTitle="Why Falco?" >}} -->
+{{< footer_nav next="/about/why-falco" nextTitle="Why Falco?" >}}
 {{< /blocks/content >}}

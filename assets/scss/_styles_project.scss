@@ -7,6 +7,7 @@ footer {
 @import "training";
 @import "base";
 @import "version_banner";
+@import "utilities";
 
 // Mixins
 @import "mixins/grid";
@@ -24,6 +25,10 @@ footer {
   background-color: $white;
   align-self: flex-start;
   box-shadow: 0 0.25rem 1.5rem rgba($black, 0.1);
+
+  &-vendor {
+    max-width: 4rem;
+  }
 }
 
 .icon-button {
@@ -54,11 +59,8 @@ main {
   p,
   li {
     font-size: 1.25rem;
+    color: $dark;
   }
-}
-
-body {
-  color: $dark;
 }
 
 a {
