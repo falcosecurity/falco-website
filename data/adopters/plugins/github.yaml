@@ -1,0 +1,5 @@
+src: github.png
+alt: Github
+url: https://github.com/falcosecurity/plugins/tree/master/plugins/github
+description: Collect GitHub Webhook Events
+weight: 10

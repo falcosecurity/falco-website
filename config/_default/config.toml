@@ -143,12 +143,13 @@ id = "UA-40398182-19"
     url = "/about/use-cases/"
     parent = "about"
     weight = 4
-[[menu.main]]
-    identifier = "mitre"
-    name = "Mitre ATT&CK framework"
-    url = "/about/mitre/"
-    parent = "about"
-    weight = 6
+# TODO: uncomment when MITRE content is ready
+# [[menu.main]]
+#     identifier = "mitre"
+#     name = "Mitre ATT&CK framework"
+#     url = "/about/mitre/"
+#     parent = "about"
+#     weight = 6
 [[menu.main]]
     identifier = "ecosystem"
     name = "Ecosystem"

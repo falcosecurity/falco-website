@@ -1,0 +1,16 @@
+{{ $collection := index $.Site.Data.adopters ($.Get 0)}}
+{{ with $.Inner }}{{ end }}
+{{ with $collection }}
+  {{ range $collection }}
+    <div class="my-auto text-center">
+      <figure>
+        <a href="{{ .url }}">
+          <img class="img-fluid" src="{{ printf "/img/adopters/%s" .src | relURL }}" alt="{{ .alt }}" loading="lazy" >
+        </a>
+      </figure>
+      {{ if .description }}
+        <div class="mt-4 font-weight-bold">{{ .description }}</div>
+      {{ end }}
+    </div>
+  {{ end }}
+{{ end }}
