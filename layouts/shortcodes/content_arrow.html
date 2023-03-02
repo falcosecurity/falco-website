@@ -1,0 +1,27 @@
+{{ $direction := .Get "direction" | default "forward"}}
+{{ $url := .Get "url" | default "#" }}
+{{ $content_type := .Get "content" | default "text" }}
+<div class="d-flex align-items-center">
+  {{ with eq $direction "back" }}
+  <div class="pr-4">
+    <a href="{{ $url }}" class="btn-link">
+      <i class="fa fa-arrow-left"></i>
+    </a>
+  </div>
+  {{ end }}
+  <div class="flex-grow-1">
+    {{ if eq $content_type "text" }}
+    {{ .Inner | markdownify }}
+    {{ end }}
+    {{ if eq $content_type "html" }}
+    {{ .Inner | htmlUnescape | safeHTML }}
+    {{ end }}
+  </div>
+  {{ with eq $direction "forward" }}
+  <div class="pl-4">
+    <a href="{{ $url }}" class="btn-link">
+      <i class="fa fa-arrow-right"></i>
+    </a>
+  </div>
+  {{ end }}
+</div>
