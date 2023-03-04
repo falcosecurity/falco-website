@@ -1,10 +1,66 @@
 footer {
-    min-height: 200px;
+  min-height: 200px;
 }
 
 //docsy imports "pageinfo";
 @import "changelog";
 @import "training";
+@import "base";
+@import "version_banner";
 
 // Mixins
 @import "mixins/grid";
+@import "tabs";
+
+// Overrides
+@import "card";
+@import "buttons";
+@import "type";
+
+.icon {
+  padding: 1rem;
+  width: max-content;
+  border-radius: 50vh;
+  background-color: $white;
+  align-self: flex-start;
+  box-shadow: 0 0.25rem 1.5rem rgba($black, 0.1);
+}
+
+.icon-button {
+  height: 4rem;
+  width: 4rem;
+  border-radius: 50vh;
+  background-color: $white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0.25rem 1.5rem rgba($black, 0.1) !important;
+}
+
+//
+// Boxes
+//
+.td-box {
+  .row {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+//
+// Misc
+//
+main {
+  p,
+  li {
+    font-size: 1.25rem;
+  }
+}
+
+a {
+    font-weight: $font-weight-bold;
+}
+
+img[src*="#img-fit"] {
+  width: 100%;
+}

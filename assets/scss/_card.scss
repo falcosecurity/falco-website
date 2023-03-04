@@ -1,3 +1,27 @@
+// Overrides card-pane.scss
+.card {
+  max-width: unset;
+  border-radius: $card-border-radius !important;
+
+  &-sm {
+    .card-body {
+      padding: $card-spacer-x-sm;
+      border-radius: $card-border-radius-sm !important;
+    }
+  }
+
+  .card-text {
+    :last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.card-deck {
+  max-width: unset;
+}
+
+// FAQ card
 .faq-card {
   font-size: 1.25rem;
 
