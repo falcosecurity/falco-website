@@ -1,0 +1,25 @@
+// 
+// Buttons
+// 
+@if $enable-rounded {
+    .btn {
+        border-radius: 0.5rem;
+
+        &-lg {
+            border-radius: 0.5rem;
+        }
+
+        &-sm {
+            border-radius: 0.25rem;
+        }
+    }
+}
+
+.btn-link {
+    font-weight: $font-weight-bold;
+  
+    &:disabled,
+    &.disabled {
+      color: $btn-link-disabled-color;
+    }
+  }

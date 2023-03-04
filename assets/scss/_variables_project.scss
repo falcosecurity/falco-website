@@ -1,8 +1,87 @@
-$primary: #00aec7;
-$secondary: #53565a;
-$light: #F4F4F4;
-$info: #E1F2F5;
+$primary:                   #00aec7;
+$secondary:                 #53565a;
+$light:                     #F4F4F4;
+$info:                      #E1F2F5;
+$black:                     #121212;
+$gray-800:                  #404040;
 
-@import "base";
-@import "version_banner";
-@import "cards";
+// 
+// Fonts
+// 
+$font-size-base:              1rem;
+$spacer:                      1rem;
+
+// 
+// UI
+// 
+$enable-gradients:            false;
+$enable-shadows:              false;
+
+// 
+// Headers
+// 
+$h1-font-size:                $font-size-base * 4;
+$h2-font-size:                $font-size-base * 3.5;
+$h3-font-size:                $font-size-base * 2.5;
+$h4-font-size:                $font-size-base * 2;
+$h5-font-size:                $font-size-base * 1.75;
+$h6-font-size:                $font-size-base * 1.5;
+
+// 
+// Cards
+// 
+$card-border-radius:          2.5rem;
+$card-border-radius-sm:       1.25rem;
+$card-spacer-y:               1rem;
+$card-spacer-x:               2.5rem;
+$card-spacer-x-sm:            1.5rem;
+$card-border-width:           0;
+$card-deck-margin:            0.75rem;
+
+// 
+// Shadows
+// 
+$box-shadow-sm:               0 .125rem .25rem rgba($black, .075);
+$box-shadow:                  0 .25rem 1.25rem rgba($black, .05);
+$box-shadow-lg:               0 1rem 3rem rgba($black, .175);
+
+$body-bg:                   #FAFAFA;
+
+// 
+// Block
+// 
+$td-block-space-top-base:     2 * $spacer;
+$td-block-space-bottom-base:  2 * $spacer;
+
+// 
+// Buttons
+// 
+$font-size-lg:                $font-size-base * 1.25;
+$input-btn-font-size-lg:      $font-size-lg;
+$btn-active-box-shadow:       none;
+$btn-disabled-opacity:        .5;
+$btn-focus-box-shadow:        none;
+
+// lg
+$btn-padding-y-lg:            0.75rem;
+$btn-padding-x-lg:            1.5rem;
+$btn-font-size-lg:            $input-btn-font-size-lg;
+$btn-line-height-lg:          1.2;
+
+// 
+// Links
+// 
+$link-color:                  $primary;
+$link-hover-color:            $primary;
+$link-hover-decoration:       underline;
+$btn-link-disabled-color:     $primary;
+
+// 
+// Container
+// 
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1320px
+);

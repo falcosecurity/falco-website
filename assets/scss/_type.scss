@@ -1,0 +1,14 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: $font-weight-bold;
+
+  // TODO: This overrides hardcoded styles in changelog.scss. Needs to be
+  // removed alongside with changelog refactoring
+  margin-top: 0;
+  // TODO: This must be different for different tags and dimentions
+  margin-bottom: $spacer;
+}
