@@ -106,3 +106,18 @@ Usage:
       --version                 Print version number.
       --page-size               Print the system page size (may help you to choose the right syscall ring-buffer size).
 ```
+
+{{< yaml_table_inline  
+    header="-A option"
+    subheader="With the -A option Falco monitors all events, including those not interesting to Falco itself (allowing high volume of I/O syscalls). This option has effect only on live captures."
+    class="inline-config-options"
+    contentPath="reference.daemon.cli_options"
+    columnTitles="Category,evt.type,Default (without -A),With -A,.scap file"
+    columnKeys="category,evt_type,default,with_a,scap_file"
+>}}
+
+### Notes:
+
+* To list all the ignored events use the `-i` option.
+* `EF_OLD_VERSION` are never generated when live mode, but they may be present in .scap files
+* Since the new Falco version won't apply any userspace pre-filtering, `-A` is implicit when reading from `.scap`.
