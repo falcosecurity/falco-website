@@ -322,7 +322,7 @@ enable = false
         desc = "View the contributors of the month"
 
 [params.mermaid]
-enable = true
+enable = false
 theme = "default"
 
 [params.print]
