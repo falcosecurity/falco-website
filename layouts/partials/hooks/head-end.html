@@ -1,0 +1,2 @@
+{{ $feedback := resources.Get "js/feedback.js" | minify | fingerprint }}
+<script async src="{{ $feedback.RelPermalink }}"></script>
