@@ -1,0 +1,20 @@
+<div class="feedback td-block-padding text-center">
+  <h4 class="mb-3">{{ T "feedback_title" | markdownify }}</h4>
+  <p class="text-secondary">
+    {{ T "feedback_subtitle" | markdownify }}
+  </p>
+  <div class="mt-4 pt-3">
+    <button class="btn btn-outline-primary px-5 feedback--answer-yes">
+      {{ T "general_yes" | markdownify }}
+    </button>
+    <button class="btn btn-outline-primary px-5 feedback--answer-no">
+      {{ T "general_no" | markdownify }}
+    </button>
+  </div>
+  <p class="d-none feedback--response-yes mb-0 mt-3">
+    {{ T "feedback_yes" | safeHTML }}
+  </p>
+  <p class="d-none feedback--response-no mb-0 mt-3">
+    {{ T "feedback_no" | safeHTML }}
+  </p>
+</div>
