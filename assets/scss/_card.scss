@@ -4,9 +4,10 @@
   border-radius: $card-border-radius !important;
 
   &-sm {
+    border-radius: $card-border-radius-sm !important;
+    
     .card-body {
       padding: $card-spacer-x-sm;
-      border-radius: $card-border-radius-sm !important;
     }
   }
 
