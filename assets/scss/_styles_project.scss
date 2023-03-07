@@ -57,10 +57,26 @@ main {
   }
 }
 
+body {
+  color: $dark;
+}
+
 a {
   font-weight: $font-weight-bold;
 }
 
 img[src*="#img-fit"] {
   width: 100%;
+}
+
+#documentation {
+  h1 {
+    font-size: $h3-font-size ;
+  }
+  h2 {
+    font-size: $h5-font-size;
+  }
+  h3 {
+    font-size: $h6-font-size;
+  }
 }
