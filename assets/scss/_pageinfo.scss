@@ -1,21 +1,17 @@
 .pageinfo {
-    font-weight: $font-weight-medium;
-    background: $gray-100;
-    color: inherit;
-    border-radius: 0;
-    margin: 2rem;
-    padding: 1.5rem;
-    padding-bottom: 0.5rem;
+  width: 80%;
 
-    // Avoid full length of pageinfo box
-    width: 70%;
-
-    @each $color, $value in $theme-colors {
-        &-#{$color} {
-
-            border-style: solid;
-            border-color: $value;
-        }
+  @each $color, $value in $theme-colors {
+    &-#{$color} {
+      background-color: rgba($value, 0.1);
+      background-color: rgba($value, 1);
     }
+  }
 
+  &-primary {
+    background-color: $info;
+  }
+  &-secondary {
+    background-color: $light;
+  }
 }
