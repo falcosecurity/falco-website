@@ -1,0 +1,19 @@
+.collapse-control {
+  button[data-toggle="collapse"] {
+    i {
+      margin-left: 0.25rem;
+      transition: rotate 0.35s;
+    }
+
+    i.fa::before{
+      -webkit-text-stroke: 2px $body-bg;
+    }
+
+    &[aria-expanded="true"] {
+      color: darken($primary, 10%);
+      i {
+        rotate: -180deg;
+      }
+    }
+  }
+}
