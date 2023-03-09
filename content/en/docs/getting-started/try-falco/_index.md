@@ -1,8 +1,7 @@
 ---
 title: Try Falco
-# description: We know trying a new tool is always challenging. For that, the Falco Project includes some tutorials that will ease the road to discovering all that Falco can do for you.
+description: Learn how to install Falco on various platforms
 weight: 1
-hide_section_index: true
 ---
 We know trying a new tool is always challenging. For that, the Falco Project includes some tutorials that will ease the road to discovering all that Falco can do for you.
 
