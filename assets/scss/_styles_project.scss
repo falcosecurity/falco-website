@@ -73,6 +73,10 @@ img[src*="#img-fit"] {
   width: 100%;
 }
 
+img[src*="#img-fit"] {
+  object-fit: contain;
+}
+
 #documentation {
   h1 {
     font-size: $h3-font-size;
