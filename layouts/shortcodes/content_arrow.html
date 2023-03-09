@@ -1,7 +1,9 @@
 {{ $direction := .Get "direction" | default "forward"}}
 {{ $url := .Get "url" | default "#" }}
 {{ $content_type := .Get "content" | default "text" }}
-<div class="d-flex align-items-center">
+{{ $col_id := .Get "color" | default "transparent" }}
+{{ $class := .Get "class" | default "" }}
+<div class="d-flex align-items-center td-box--{{ $col_id }} {{ $class }}">
   {{ with eq $direction "back" }}
   <div class="pr-4">
     <a href="{{ $url }}" class="btn-link">
