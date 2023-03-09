@@ -1,5 +1,16 @@
 .section-index {
   &:hover {
     text-decoration: none;
+    .entry {
+      img {
+        max-height: 5rem;
+        max-width: 5rem;
+
+        @include media-breakpoint-down(sm) {
+          max-height: 3rem;
+          max-width: 3rem;
+        }
+      }
+    }
   }
 }
