@@ -1,0 +1,21 @@
+// Icon generator
+//
+// This mixin creates a set of icons of different size
+@mixin icon($breakpoints: $grid-breakpoints) {
+  $sizes: 1, 2, 3, 4, 5, 6;
+
+  @each $breakpoint in map-keys($breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $breakpoints);
+
+    @each $size in $sizes {
+      .icon#{$infix}-#{$size} {
+        @include media-breakpoint-up($breakpoint, $breakpoints) {
+          max-height: #{$size}rem;
+          max-width: #{$size}rem;
+        }
+      }
+    }
+  }
+}
+
+@include icon();

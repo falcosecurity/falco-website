@@ -1,0 +1,6 @@
+{{ $class := $.Get "class" }}
+{{ $href := $.Get "href" }}
+{{ $target := $.Get "target" }}
+<a href="{{ $href }}"{{ with $target }} target="{{ $target}}"{{ end }}class="d-block{{ with $class }} {{ $class}}{{ end }}" role="button">
+  {{ .Inner }}
+</a>
