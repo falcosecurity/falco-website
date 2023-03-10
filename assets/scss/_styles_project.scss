@@ -9,10 +9,11 @@ footer {
 @import "version_banner";
 @import "utilities";
 @import "collapse";
+@import "tabs";
 
 // Mixins
 @import "mixins/grid";
-@import "tabs";
+@import "mixins/icon";
 
 // Overrides
 @import "card";
