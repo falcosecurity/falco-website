@@ -17,24 +17,18 @@
         </ul>
     {{ else }}
     {{/* Otherwise we show a nice formatted list of subpages with page descriptions */}}
-    {{/*  <hr class="panel-line">  */}}
-        {{ range $pages }}
-            {{ $manualLink := cond (isset .Params "manuallink") .Params.manualLink ( cond (isset .Params "manuallinkrelref") (relref . .Params.manualLinkRelref) .RelPermalink) }}
-            <a class="entry btn btn-light card card-sm shadow mb-3 p-0" href="{{ $manualLink }}"{{ with .Params.manualLinkTitle }} title="{{ . }}"{{ end }}{{ with .Params.manualLinkTarget }} target="{{ . }}"{{ if eq . "_blank" }} rel="noopener"{{ end }}{{ end }}>
-                <div class="card-body text-left d-flex gap-4">
-                    {{ if .Params.Icon }}
-                        <img class="align-self-center" src="{{ .Params.Icon }}" alt="{{ .Params.Icon }}" loading="lazy">
-                    {{ end }}
-                    <div class="align-self-center">
-                        <div class="card-title mb-2">
-                            <h5>{{- .Title -}}</h5>
-                        </div>
-                        <div class="card-text text-dark">
-                            <span>{{ .Description | markdownify }}</span>
-                        </div>
-                    </div>
+    {{ range $pages }}
+        {{ $manualLink := cond (isset .Params "manuallink") .Params.manualLink ( cond (isset .Params "manuallinkrelref") (relref . .Params.manualLinkRelref) .RelPermalink) }}
+        <a class="entry btn btn-light card card-sm shadow mb-2 p-0" href="{{ $manualLink }}"{{ with .Params.manualLinkTitle }} title="{{ . }}"{{ end }}{{ with .Params.manualLinkTarget }} target="{{ . }}"{{ if eq . "_blank" }} rel="noopener"{{ end }}{{ end }}>
+            <div class="card-body text-left">
+                <div class="card-title">
+                    <h5>{{- .Title -}}</h5>
                 </div>
-            </a>
-        {{ end }}
+                <div class="card-text">
+                    <p>{{ .Description | markdownify }}</p>
+                </div>
+            </div>
+        </a>
+    {{ end }}
     {{ end }}
 </div>
