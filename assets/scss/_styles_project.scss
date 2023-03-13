@@ -17,8 +17,8 @@ footer {
 
 // Overrides
 @import "card";
-@import "buttons";
 @import "type";
+@import "tables";
 
 .icon {
   padding: 1rem;
@@ -75,7 +75,7 @@ img[src*="#img-fit"] {
 
 #documentation {
   h1 {
-    font-size: $h3-font-size ;
+    font-size: $h3-font-size;
   }
   h2 {
     font-size: $h5-font-size;
