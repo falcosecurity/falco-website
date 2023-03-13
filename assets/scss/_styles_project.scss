@@ -69,7 +69,8 @@ a {
   font-weight: $font-weight-bold;
 }
 
-img[src*="#img-fit"] {
+img[src*="#img-fit"],
+img[src*="#falco-today"] {
   width: 100%;
 }
 
