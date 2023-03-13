@@ -6,8 +6,10 @@ $dark:                      #404040;
 // TODO: update warning color
 $warning:                   #FCE5E5;
 $black:                     #121212;
+$white:                     #FFF;
 $blue:                        $primary;
 
+$gray-100:                  #F4F4F4;
 $gray-300:                  #C4C4C4;
 $gray-600:                  #8A8A8A;
 $gray-700:                  #404040;
@@ -26,6 +28,9 @@ $spacer:                      1rem;
 // 
 $enable-gradients:            false;
 $enable-shadows:              false;
+$border-radius:               .5rem !default;
+$border-radius-lg:            .75rem !default;
+$border-radius-sm:            .25rem !default;
 
 // 
 // Headers
@@ -85,6 +90,15 @@ $link-color:                  $primary;
 $link-hover-color:            $primary;
 $link-hover-decoration:       underline;
 $btn-link-disabled-color:     $primary;
+
+// 
+// Tables
+// 
+$table-accent-bg:             transparent;
+$table-border-color:          $light;
+$table-cell-padding:          1rem;
+$table-cell-padding-sm:       .5rem;
+$table-head-bg:               $light;
 
 // 
 // Container

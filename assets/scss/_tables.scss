@@ -1,0 +1,29 @@
+.table {
+  tbody {
+    background-color: $white;
+  }
+
+  thead th {
+    border-bottom: $table-border-width solid lighten($secondary, 10);
+    background-color: $light;
+
+    &:not(:first-child):before{
+      border-left: (2 * $table-border-width) solid lighten($secondary, 10);
+      margin-left: -1rem;
+      margin-right: 1rem;
+      content: "";
+    }
+  }
+
+  td {
+    border-bottom: $table-border-width solid $table-border-color;
+  }
+
+  tbody a {
+      font-weight: $font-weight-light;
+  }
+
+  @include media-breakpoint-up(xl) {
+    width: 80%;
+  }
+}
