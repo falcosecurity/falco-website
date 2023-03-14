@@ -14,7 +14,12 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             {{ range .Children }}
-            <a class="dropdown-item" href="{{ .URL | relLangURL}}">{{ .Name }}</a>
+            <a class="dropdown-item" href="{{ .URL | relLangURL}}">
+              <span class="d-block font-weight-bold">{{ .Name }}</span>
+              {{ with .Params.description }}
+              <span class="small text-dark">{{ safeHTML . }}</span>
+              {{ end }}
+            </a>
             {{ end }}
           </div>
          </li>
