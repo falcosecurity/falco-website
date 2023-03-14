@@ -47,5 +47,17 @@
         -webkit-text-stroke: 1px $body-bg;
       }
     }
+
+    &__img {
+      width: 100%;
+      object-fit: cover;
+      border-radius: 1.25rem;
+    }
+
+    &__share {
+      i {
+        font-size: 1.75rem;
+      }
+    }
   }
 }
