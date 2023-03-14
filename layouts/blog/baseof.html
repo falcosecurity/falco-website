@@ -8,29 +8,6 @@
       {{ partial "navbar.html" . }}
     </header>
     <div class="container-fluid td-outer">
-      <div class="td-default" id="blog">
-        <main role="main">
-          {{ partial "version-banner.html" . }}
-          {{ block "main" . }}{{ end }}
-        </main>
-      </div>
-      {{ partial "footer.html" . }}
-    </div>
-    {{ partial "scripts.html" . }}
-  </body>
-</html>
-
-
-{{/*  <!doctype html>
-<html itemscope itemtype="http://schema.org/WebPage" lang="{{ .Site.Language.Lang }}" class="no-js">
-  <head>
-    {{ partial "head.html" . }}
-  </head>
-  <body class="td-{{ .Kind }} td-blog {{- with .Page.Params.body_class }} {{ . }}{{ end }}">
-    <header>
-      {{ partial "navbar.html" . }}
-    </header>
-    <div class="container-fluid td-outer">
       <div class="td-main">
         <div class="row flex-xl-nowrap">
           <aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
@@ -54,4 +31,4 @@
     </div>
     {{ partial "scripts.html" . }}
   </body>
-</html>  */}}
+</html>
