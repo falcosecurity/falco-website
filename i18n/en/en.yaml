@@ -83,7 +83,3 @@ feedback_yes:
   other: Glad to hear it! Please <a href="https://github.com/falcosecurity/falco-website/issues/new">tell us how we can improve</a>.
 feedback_no:
   other: Sorry to hear that. Please <a href="https://github.com/falcosecurity/falco-website/issues/new">tell us how we can improve</a>.
-blog_title:
-  other: Blog
-blog_invite:
-  other: Do you have something to share? Contribute to Falco <a href="https://github.com/falcosecurity/falco-website/issues/new">blog</a>!
