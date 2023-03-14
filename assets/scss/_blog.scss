@@ -1,0 +1,51 @@
+// Blog related styles.
+
+.td-blog {
+  .td-rss-button {
+    position: absolute;
+    top: 5.5rem;
+    right: 1rem;
+    z-index: 22;
+  }
+
+  .grid {
+    row-gap: 2.5rem;
+    grid-template-areas: "img0 img0 content0";
+
+    > .post__img {
+      grid-area: img0;
+    }
+    > .post__content {
+      grid-area: content0;
+    }
+
+    > div > .post__content {
+      margin-top: 1.5rem;
+    }
+
+    @include media-breakpoint-down(md) {
+      grid-template-areas: "img0 content0";
+    }
+
+    @include media-breakpoint-down(xs) {
+      grid-template-areas:
+        "img0"
+        "content0";
+    }
+  }
+
+  .post {
+    &__cover {
+      aspect-ratio: 7 / 4;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 1.25rem;
+    }
+
+    &__content {
+      i.fa::before {
+        -webkit-text-stroke: 1px $body-bg;
+      }
+    }
+  }
+}
