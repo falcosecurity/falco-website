@@ -22,14 +22,12 @@
               </div>
             {{ end }}
             </div>
+            <div class="pt-5">
+              {{ template "_internal/pagination.html" . }}
+            </div>
         {{ end }} 
       </div>
     </div>
   </div>
 </section>
-<div class="row pl-2 pt-2">
-  <div class="col">
-    {{ if .Pages }} {{ template "_internal/pagination.html" . }} {{ end }}
-  </div>
-</div>
 {{ end }}
