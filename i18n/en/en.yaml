@@ -46,6 +46,8 @@ general_yes:
   other: "Yes"
 general_no:
   other: "No"
+general_share:
+  other: Share
 feedback_title:
   other: Was this page helpful?
 feedback_subtitle:
