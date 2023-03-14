@@ -9,12 +9,13 @@
   <div class="container">
     <div class="row"> 
       <div class="col-12">
-        <h2>Blog</h2>
+        <h2>{{ "blog_title" | T }}</h2>
+        <p>{{ "blog_invite" | T | safeHTML }}</p>
         {{- if .Pages -}} 
           {{ $pag := .Paginate (( $.Scratch.Get "blog-pages").ByDate.Reverse )}} 
           {{ $first := index (first 1 $pag.Pages) 0 }}
           {{ $rest := after 1 $pag.Pages }}
-          <div class="grid grid-1 grid-md-2 grid-lg-3 gap-4">
+          <div class="grid grid-1 grid-md-2 grid-lg-3 gap-4 mt-4">
             {{ partial "blog/card.html" $first  }}
             {{ range $rest }}
               <div>
