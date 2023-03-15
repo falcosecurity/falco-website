@@ -1,0 +1,20 @@
+- name: Slack
+  icon: /icons/slack.svg
+  title: Join our Slack
+  content: 12M Followers
+  url: https://kubernetes.slack.com/messages/falco
+- name: YouTube
+  icon: /icons/youtube.svg
+  title: Watch us on YouTube
+  content: 50M Followers
+  url: https://www.youtube.com/playlist?list=PLgVVUpW8NIJAaZtszf1_nxB2y6mQrlY4s
+- name: GitHub
+  icon: /icons/github.svg
+  title: Star us on GitHub
+  content: <i class="fa fa-star"></i> 5.6K
+  url: https://github.com/falcosecurity/falco
+- name: Docker
+  icon: /icons/docker64.svg
+  title: Download on Dockerhub
+  content: 50M Downloads
+  url: https://hub.docker.com/u/falcosecurity

@@ -29,9 +29,9 @@ $spacer:                      1rem;
 // 
 $enable-gradients:            false;
 $enable-shadows:              false;
-$border-radius:               .5rem !default;
-$border-radius-lg:            .75rem !default;
-$border-radius-sm:            .25rem !default;
+$border-radius:               .5rem;
+$border-radius-lg:            1.25rem;
+$border-radius-sm:            .25rem;
 
 // 
 // Headers
@@ -68,6 +68,8 @@ $body-bg:                   #FAFAFA;
 // 
 $td-block-space-top-base:     2 * $spacer;
 $td-block-space-bottom-base:  2 * $spacer;
+$td-block-space-top-home:     3 * $spacer;
+$td-block-space-bottom-home:  3 * $spacer;
 
 // 
 // Buttons
