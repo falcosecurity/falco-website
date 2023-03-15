@@ -38,6 +38,33 @@ home_falco_intro_cncf:
   other: Falco is the first runtime security project to join CNCF as an incubation-level project.
 home_falco_intro_camera:
   other: Falco acts as a security camera detecting unexpected behavior, intrusions, and data theft in real time.
+home_falco_community:
+  other: Join Falco community
+home_falco_primary_btn:
+  other: Try Falco
+add_your_logo_btn:
+  other: Add your logo
+share_your_story_btn:
+  other: Add your logo
+learn_more_btn:
+  other: Learn more
+home_falco_is_used_by:
+  other: Trusted by
+home_falco_features:
+  other: What makes us different?
+home_show_more:
+  other: Show more
+home_show_less:
+  other: Show less
+home_falco_what_is_falco_title:
+  other: Detect and respond to threats in real time
+home_falco_what_is_falco:
+  other: Falco is the open source standard for risk and threat detection for containers, Kubernetes and the cloud. Get visibility into unexpected behaviors, config changes, intrusions, and data theft in real time.
+homa_falco_secured_by_falco:
+  other: Secured with Falco
+home_falco_cncf:
+  other: We are a CNCF incubated Project
+
 general_previous_page:
   other: Previous page
 general_next_page:
