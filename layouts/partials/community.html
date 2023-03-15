@@ -1,0 +1,16 @@
+{{ $links := site.Data.en.community }}
+<div class="grid-md-3 grid-lg-4 grid-1 grid-sm-2 gap-4">
+  {{ range $links }}
+  <div class="card text-center">
+    <div class="card-body">
+      <a class="text-decoration-none"href="{{ .url }}">
+        <img class="icon-4" src="{{ .icon }}" />
+        <div class="card-title text-body font-weight-bold mt-3 mb-0">
+          {{ .title }}
+        </div>
+        <p class="text-muted text-small mb-0">{{ .content | markdownify }}</p>
+      </a>
+    </div>
+  </div>
+  {{ end }}
+</div>
