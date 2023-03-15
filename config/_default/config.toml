@@ -126,21 +126,21 @@ id = "UA-40398182-19"
     weight = 30
     url = "/about/"
 [[menu.main]]
-    identifier = "about-falco"
-    name = "About falco"
+    identifier = "what-is-falco"
+    name = "What is falco"
     weight = 2
     url = "/about/falco/"
     parent = "about"
     [menu.main.params]
         description = "Learn about Falco and how it works"
 [[menu.main]]
-    identifier = "why-falco"
-    name = "Why Falco?"
+    identifier = "why-choose-falco"
+    name = "Why choose Falco?"
     weight = 3
     url = "/about/why-falco/"
     parent = "about"
     [menu.main.params]
-        description = "Learn about benefits of Falco OSS"
+        description = "Benefits of Falco for runtime security"
 [[menu.main]]
     identifier = "use-cases"
     name = "Falco use cases"
@@ -148,7 +148,7 @@ id = "UA-40398182-19"
     parent = "about"
     weight = 4
     [menu.main.params]
-        description = "Our clients’ case studies and how can Falco help you <br/> today"
+        description = "Solutions for threat detection and response"
 # TODO: uncomment when MITRE content is ready
 # [[menu.main]]
 #     identifier = "mitre"
@@ -160,12 +160,12 @@ id = "UA-40398182-19"
 #       description = "Something about this section"
 [[menu.main]]
     identifier = "ecosystem"
-    name = "Ecosystem"
+    name = "Falco ecosystem"
     url = "/about/ecosystem/"
     parent = "about"
     weight = 8
     [menu.main.params]
-        description = "Plugins, integrations and so on"
+        description = "Integrations, plugins, end users and vendors"
 [[menu.main]]
     identifier = "faq"
     name = "FAQ"
