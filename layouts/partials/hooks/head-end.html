@@ -1,2 +1,6 @@
 {{ $feedback := resources.Get "js/feedback.js" | minify | fingerprint }}
 <script async src="{{ $feedback.RelPermalink }}"></script>
+{{ $swiperSlider := resources.Get "js/swiper-bundle.min.js" | minify | fingerprint }}
+<script src="{{ $swiperSlider.RelPermalink }}"></script>
+{{ $slider := resources.Get "js/slider.js" | minify | fingerprint }}
+<script src="{{ $slider.RelPermalink }}"></script>

@@ -1,79 +1,205 @@
 {{ define "main" }}
 
-
-
-<section id="td-cover-block-0"
-    class="row td-cover-block td-cover-block--height-auto js-td-cover td-overlay td-overlay--primary -bg-primary">
-    <div class="container td-overlay__inner">
-        <div class="row">
-            <div class="col-12">
-                <div class="text-center">
-                    <h1 class="display-1 mt-0 mt-md-5 pb-4">The Falco Project</h1>
-
-                    <div class="pt-3 lead">
-                        {{ T "cloud-native-runtime-security" | markdownify }}
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- Schema -->
+<section class="row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-12">
+        <h1>{{ T "home_falco_what_is_falco_title" | markdownify }}</h1>
+        <p class="mb-0 mt-3">
+          {{ T "home_falco_what_is_falco" | markdownify }}
+        </p>
+        <a href="#" role="button" class="btn btn-lg btn-primary px-5 mt-5">
+          {{ T "home_falco_primary_btn" | markdownify }}
+        </a>
+      </div>
+      <div class="col-md-6 col-12">
+        <img class="schema" src="/img/falco-schema.svg" alt="plug" />
+      </div>
     </div>
+  </div>
 </section>
 
-<section id="desc" class="row relative td-box--gradient td-box--height-auto">
-    <div class="container">
-        <div class="row justify-content-center mb-4">
-            <div class="col-md-6 align-self-center h4">
-                {{ T "home_falco_intro_title" | markdownify }}
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-4 align-self-end h5">
-                <div class="pb-4">{{ T "home_falco_intro_main" | markdownify }}</div>
-                <div class="pb-4">{{ T "home_falco_intro_plugins" | markdownify }}</div>
-            </div>
-            <div class="col-md-6">
-                <img width="100%" src="/img/falco-events-flow-simplified.png" />
-            </div>
-        </div>
-        <div class="row justify-content-center mt-5">
-            <div class="col-md-6 align-self-center h6 ">
-                <div class="text-justify">
-                    {{ T "home_falco_intro_cncf" | markdownify }}
-                    {{ T "home_falco_intro_camera" | markdownify }}
-                </div>
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-3 align-self-center">
-                <div class="mt-5">
-                    <a href="https://sysdig.com/"><img width="200px" src="/img/created-by-sysdig.png" /></a>
-                </div>
-            </div>
-        </div>
+<!-- Falco features -->
+<section class="row">
+  <div class="container td-arrow-down">
+    <div class="row">
+      <div class="col-12">
+        <h3>{{ T "home_falco_features" | markdownify }}</h3>
+        <div class="mt-4 pt-3">{{ partial "features.html" }}</div>
+      </div>
     </div>
+  </div>
 </section>
-{{ with .Content }}
-{{ . }}
-{{ end }}
 
-<section class="row relative td-box--gradient position-relative td-box--1 td-box--height-auto">
-    <div class="container td-arrow-down">
-        <div class="row">
-            <div class="col text-center">
-                <h3 class="display-1 mt-0 mt-md-3 pb-3">{{ T "home_featured_videos" }} </h3>
-                {{ partial "videos.html" .}}
-            </div>
+<!-- Testimonials -->
+{{/*  TODO: fix later  */}}
+{{/*  <section class="row">
+  <div class="container slider-wrapper">
+    <h3>
+      {{ T "homa_falco_secured_by_falco" | markdownify }}
+    </h3>
+    <div
+      class="swiper__container d-flex justify-content-center align-items-center mt-4"
+    >
+      <span class="swiper__control"
+        >{{ with resources.Get "icons/chevron-down.svg" }}{{ ( . |
+        minify).Content | safeHTML }}{{ end }}</span
+      >
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          {{ $data := index $.Site.Data .Site.Language.Lang }} {{ range $quote
+          := $data.quotes }}
+          <div class="swiper-slide px-3">
+            {{ partial "quote.html" (dict "text" $quote.text "logoUrl"
+            $quote.logoUrl "authorImgUrl" $quote.authorImgUrl "authorName"
+            $quote.authorName "authorPosition" $quote.authorPosition
+            "shareStory" $quote.shareStory) }}
+          </div>
+          {{ end }}
         </div>
+        <div
+          class="swiper__pagination d-flex justify-content-center mt-4"
+        ></div>
+      </div>
+      <span class="swiper__control-reverse"
+        >{{ with resources.Get "icons/chevron-down.svg" }}{{ ( . |
+        minify).Content | safeHTML }}{{ end }}</span
+      >
     </div>
+  </div>
+</section>  */}}
+
+<!-- Featured -->
+<section class="row">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-7 mt-4 pt-2 d-flex flex-column justify-content-between">
+        <div class="d-flex justify-content-between pb-3">
+          <h4 class="mb-0">Featured videos</h4>
+          <a href="#" role="button" class="btn btn-lg btn-outline-primary">
+            {{ T "learn_more_btn" | markdownify }}
+          </a>
+        </div>
+        <div class="d-flex flex-column flex-md-row pt-3">
+          <iframe class="rounded-lg" width="264" height="264" src="https://www.youtube.com/embed/u409G5PsO1w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          <div class="ml-4">
+            <div class="text-muted mb-2">Jan 18, 2023</div>
+            <h6 class="mb-2">Cloud Native Security Hub</h6>
+            <p>However rare side effects observed among children can be metabolic acidosis, coma, respiratory depression. Earlier in this series, we have seen how to use Argo, Tekton, and Knative to trigger a resource after getting input from Falcoside...</p>
+          </div>
+        </div>
+        <div class="d-flex flex-column flex-md-row pt-4">
+          <iframe class="rounded-lg" width="264" height="264" src="https://www.youtube.com/embed/rBqBrYESryY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          <div class="ml-4">
+            <div class="text-muted mb-2">Jan 18, 2023</div>
+            <h6 class="mb-2">Kubernetes Response Engine, Part 7: Falcosidekick + Cloud Functions</h6>
+            <p>However rare side effects observed among children can be metabolic acidosis, coma, respiratory depression. Earlier in this series, we have seen how to use Argo, Tekton, and Knative to trigger a resource after getting input from Falcoside...</p>
+          </div>
+        </div>
+        <div class="d-flex flex-column flex-md-row pt-4">
+          <iframe class="rounded-lg" width="264" height="264" src="https://www.youtube.com/embed/zgRFN3o7nJE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          <div class="ml-4">
+            <div class="text-muted mb-2">Jan 18, 2023</div>
+            <h6 class="mb-2">Kubernetes Response Engine, Part 7: Falcosidekick + Cloud Functions</h6>
+            <p>However rare side effects observed among children can be metabolic acidosis, coma, respiratory depression. </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5 d-flex flex-column justify-content-between">
+        <div class="card card-rounded mt-4 mt-lg-0">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+              <h4 class="mt-0 pb-1">News</h4>
+              <a href="#" role="button" class="btn btn-lg btn-outline-primary">
+                {{ T "learn_more_btn" | markdownify }}
+              </a>
+            </div>
+            <div class="text-muted mb-2">Dec 29, 2022</div>
+            <h6 class="card-title mb-2">Monitoring new syscalls with Falco</h6>
+            <p class="card-text">Falco is the first runtime security project to join CNCF as an incubation-level project. Falco is the first runtime security project to join...</p>
+            <hr/>
+            <div class="text-muted mb-2">Dec 28, 2022</div>
+            <h6 class="card-title mb-2">Cloud Native Security Hub</h6>
+            <p class="card-text">Earlier in this series, we have seen how to use Argo, Tekton, and Knative to trigger a resource Falco is the first runtime security project to join...</p>
+          </div>
+        </div>
+        <div class="card card-rounded mt-4">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+              <h4 class="mt-0 pb-1">Events</h4>
+              <a href="#" role="button" class="btn btn-lg btn-outline-primary">
+                {{ T "learn_more_btn" | markdownify }}
+              </a>
+            </div>
+            <div class="text-muted mb-2">Dec 29, 2022</div>
+            <h6 class="card-title mb-2">Kubernetes Response Engine, Part 7: Falcosidekick + Cloud Functions</h6>
+            <p class="card-text">Falco is the first runtime security project to join CNCF as an incubation-level project. Earlier in this series, we have seen how to use...</p>
+            <hr/>
+            <div class="text-muted mb-2">Dec 28, 2022</div>
+            <h6 class="card-title mb-2">Cloud Native Security Hub</h6>
+            <p class="card-text">Earlier in this series, we have seen how to use Argo, Tekton, and Knative to trigger a resource Falco is the first runtime security project to join...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-{{ partial "logos.html" . }}
-
-<section id="cncf">
-    <p>{{ T "cncf_status_statement" | markdownify }}</p>
+<!-- Community -->
+<section class="row">
+  <div class="container td-arrow-down">
+    <div class="row">
+      <div class="col">
+        <h3 class="">{{ T "home_falco_community" }}</h3>
+        <div class="mt-4 pt-3">{{ partial "community.html" . }}</div>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- CNCF -->
+<section class="row">
+  <div class="container td-arrow-down">
+    <div class="row justify-content-center">
+      <div class="px-3">
+        <h4 class="font-weight-normal">
+          {{ T "home_falco_cncf" | markdownify }}
+        </h4>
+        <a href="https://www.cncf.io/">
+          <img src="/img/cncf-color-bg.svg" />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- Adopters -->
+<section class="row relative">
+  <div class="container">
+    <h3 class="">{{ T "home_falco_is_used_by" | markdownify }}</h3>
+    <div class="grid-2 grid-md-3 grid-lg-4 grid-xl-5 gap-5">
+      {{ $endUsers := index $.Site.Data.adopters "endusers" }}
+      {{ range $endUsers }}
+        <figure class="my-auto">
+            <a href="{{ .url }}">
+              <img class="img-fluid" src="{{ printf "/img/adopters/%s" .src | relURL }}" alt="{{ .alt }}">
+            </a>
+        </figure>
+      {{ end }}
+    </div>
+    <div class="mt-5 d-flex justify-content-center">
+      <a href="#" role="button" class="btn btn-primary px-4 py-2">
+        {{ T "add_your_logo_btn" | markdownify }}
+      </a>
+    </div>
+  </div>
+</section>
 
+<div class="container eclipse__layout">
+  <div class="eclipse eclipse-top"></div>
+  <!-- TODO: uncomment when feed section is ready -->
+  <div class="eclipse eclipse-bottom"></div>
+</div>
 
 {{ end }}
