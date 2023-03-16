@@ -104,6 +104,24 @@ $table-cell-padding-sm:       .5rem;
 $table-head-bg:               $light;
 
 // 
+// Pagination
+// 
+$pagination-border-color:     $primary;
+$pagination-hover-border-color:$primary;
+$pagination-bg:               transparent;
+$pagination-disabled-bg:      transparent;
+$pagination-color:            $primary;
+$pagination-border-radius:    0.5rem;
+
+// 
+// Navigation
+// 
+$navbar-dark-color:           $black;
+$navbar-dark-hover-color:     $gray-600;
+$navbar-dark-active-color:    $black;
+$navbar-dark-disabled-color:  $secondary;
+
+// 
 // Container
 // 
 $container-max-widths: (
