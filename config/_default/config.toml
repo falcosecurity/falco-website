@@ -176,13 +176,13 @@ id = "UA-40398182-19"
         description = "The most common questions about the whole Falco <br/> ecosystem"
 [[menu.main]]
     identifier = "documentation"
-    name = "Documentation"
+    name = "Docs"
     weight = 40
     url = "/docs/"
 [[menu.main]]
     identifier = "blog"
     name = "Blog"
-    weight = 50
+    weight = 70
     url = "/blog/"
 [[menu.main]]
     identifier = "community"
@@ -192,7 +192,7 @@ id = "UA-40398182-19"
 [[menu.main]]
     identifier = "training"
     name = "Training"
-    weight = 70
+    weight = 50
     url = "/training/"
 
 # Specify a value here if your content directory is not in your repo's root directory
@@ -347,7 +347,7 @@ disable_toc = false
 [languages.en]
 title = "Falco"
 description = "Runtime Security "
-languageName ="English"
+languageName ="Eng"
 # Weight used for sorting.
 weight = 1
 languagedirection = "ltr"
