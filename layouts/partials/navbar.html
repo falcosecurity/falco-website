@@ -1,10 +1,12 @@
 {{ $cover := and (.HasShortcode "blocks/cover") (not .Site.Params.ui.navbar_translucent_over_cover_disable) }}
 <nav class="js-navbar-scroll navbar navbar-expand navbar-dark {{ if $cover}} td-navbar-cover {{ end }}flex-column flex-md-row td-navbar">
-        <a class="navbar-brand" href="{{ .Site.Home.RelPermalink }}">
-		<span class="navbar-logo">{{ if .Site.Params.ui.navbar_logo }}{{ with resources.Get "icons/logo.svg" }}{{ ( . | minify).Content | safeHTML }}{{ end }}{{ end }}</span><span class="font-weight-bold">{{ .Site.Title }}</span>
-	</a>
-	<div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
-		<ul class="navbar-nav mt-2 mt-lg-0">
+  <div class="w-50">
+    <a class="navbar-brand" href="{{ .Site.Home.RelPermalink }}">
+      <span class="navbar-logo">{{ if .Site.Params.ui.navbar_logo }}{{ with resources.Get "icons/logo.svg" }}{{ ( . | minify).Content | safeHTML }}{{ end }}{{ end }}</span><span class="font-weight-bold">{{ .Site.Title }}</span>
+    </a>
+  </div>
+	<div class="td-navbar-nav-scroll ml-md-auto w-100" id="main_navbar">
+		<ul class="navbar-nav mt-2 mt-lg-0 justify-content-center">
 			{{ $p := . }}
 			{{ range .Site.Menus.main }}
         {{ if .HasChildren }}
@@ -37,17 +39,20 @@
           </li>
         {{ end }}
       {{ end }}
-			{{ if  .Site.Params.versions }}
-			  <li class="nav-item dropdown mr-4 d-none d-lg-block">
-				{{ partial "navbar-version-selector.html" . }}
-			</li>
-			{{ end }}
-			{{ if  (gt (len .Site.Home.Translations) 0) }}
-			  <li class="nav-item dropdown mr-4 d-none d-lg-block">
-				{{ partial "navbar-lang-selector.html" . }}
-			</li>
-			{{ end }}
+
 		</ul>
 	</div>
-	<div class="navbar-nav d-none d-lg-block">{{ partial "search-input.html" . }}</div>
+  <div class="d-flex justify-content-center justify-content-md-end w-50">
+    <div class="navbar-nav d-none d-lg-block">
+      {{ partial "search-input.html" . }}
+    </div>
+    {{ if (gt (len .Site.Home.Translations) 0) }}
+    <div class="navbar-nav nav-item dropdown dropdown-left d-none d-lg-block">
+      {{ partial "navbar-lang-selector.html" . }}
+    </div>
+    {{ end }}
+		<a href="/docs/getting-started/try-falco/" role="button" class="btn btn-primary px-3">
+			{{ T "home_falco_primary_btn" | markdownify }}
+		</a>
+  </div>
 </nav>
