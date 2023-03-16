@@ -28,7 +28,8 @@
 }
 
 .td-navbar {
-  background: $primary;
+  background: $body-bg;
+  box-shadow: 0px 4px 20px rgba($black, 0.1);
   min-height: 4rem;
   margin: 0;
   z-index: 32;
@@ -65,6 +66,10 @@
         height: 100%;
         width: 120px;
 
+        path {
+          fill: $primary !important;
+        }
+
         @include media-breakpoint-down(md) {
           width: 120px;
           padding: 0px;
@@ -82,19 +87,46 @@
 
   .nav-link {
     text-transform: none;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-normal;
   }
 
   .td-search-input {
     border: none;
+    max-width: 10rem;
 
     @include placeholder {
       color: $navbar-dark-color;
     }
   }
 
+  %chevron {
+    border: none;
+    font-family: "Font Awesome 5 Free";
+    content: "\f078";
+    -webkit-text-stroke: 1px $body-bg;
+    vertical-align: 0;
+  }
+
   .dropdown {
     min-width: 100px;
+
+    .dropdown-toggle {
+      &::after {
+        @extend %chevron;
+      }
+    }
+
+    &-left {
+      .dropdown-toggle {
+        &::after {
+          content: "";
+        }
+        &::before {
+          @extend %chevron;
+          margin-right: 0.25rem;
+        }
+      }
+    }
   }
 
   @include media-breakpoint-down(md) {
@@ -222,7 +254,8 @@ nav.foldable-nav {
     }
   }
 
-  .ul-2, .ul-3 {
+  .ul-2,
+  .ul-3 {
     margin-top: 0.5rem;
   }
 
