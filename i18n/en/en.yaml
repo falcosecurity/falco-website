@@ -8,8 +8,10 @@ copyright:
   other: Copyright
 documentation_copyright_notice:
   other: Documentation Distributed under CC BY 4.0
+created_by:
+  other: Falco was originally created by
 main_copyright_notice:
-  other: The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our <a href="https://www.linuxfoundation.org/trademark-usage">Trademark Usage page</a>
+  other: The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our <a class="text-white" href="https://www.linuxfoundation.org/trademark-usage">Trademark Usage page</a>
 cncf_status_statement:
   other: We are a <a href="https://cncf.io/">CNCF</a> incubated Project
 version_banner_title:
