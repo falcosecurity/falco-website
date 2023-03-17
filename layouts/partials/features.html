@@ -1,5 +1,5 @@
 <div class="p-0 grid-lg-3 grid-1 gap-4" id="falco-features-container">
-  {{ range $index, $features := site.Data.en.features }}
+  {{ range $index, $features := (index site.Data site.Language.Lang).features }}
   <div class="card bg-light feature-card">
     <div class="card-body d-flex flex-column gap-3">
       <div class="icon">

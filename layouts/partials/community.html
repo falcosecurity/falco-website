@@ -1,4 +1,4 @@
-{{ $links := site.Data.en.community }}
+{{ $links := (index site.Data site.Language.Lang).community }}
 <div class="grid-md-3 grid-lg-4 grid-1 grid-sm-2 gap-4">
   {{ range $links }}
   <div class="card text-center">
