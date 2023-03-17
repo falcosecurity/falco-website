@@ -1,0 +1,14 @@
+{{ $p := .p }}
+{{ $class := .class | default "ml-3" }}
+{{ $image := ($p.Resources.ByType "image").GetMatch "**featured*" }}
+{{ $image_palceholder := .placeholder}}
+{{ if $image }}
+  <figure class="{{ $class }}" >
+  <img src="{{ $image.RelPermalink }}" alt="Featured Image for {{ $p.Title }}" class="{{ $class }}" loading="lazy" >
+  {{ with $image.Params.byline }}
+    <figcaption class="mt-2 mt-md-0"><small class="text-muted">{{ . | html }}</small></figcaption>
+  {{ end }}
+  </figure>
+{{ else }}
+  <img src="/img/blog/0.svg" alt="Featured Image for {{ $p.Title }}"  class="{{ $class }}" loading="lazy">
+{{ end }}
