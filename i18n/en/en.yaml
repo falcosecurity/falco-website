@@ -57,7 +57,7 @@ learn_more_btn:
 home_falco_is_used_by:
   other: Trusted by
 home_falco_features:
-  other: What makes us different?
+  other: What makes Falco different?
 home_show_more:
   other: Show more
 home_show_less:
@@ -65,7 +65,7 @@ home_show_less:
 home_falco_what_is_falco_title:
   other: Detect and respond to threats in real time
 home_falco_what_is_falco:
-  other: Falco is the open source standard for risk and threat detection for containers, Kubernetes and the cloud. Get visibility into unexpected behaviors, config changes, intrusions, and data theft in real time.
+  other: Falco is the open source standard for runtime security for hosts, containers, Kubernetes and the cloud. Get real-time visibility into unexpected behaviors, config changes, intrusions, and data theft.
 homa_falco_secured_by_falco:
   other: Secured with Falco
 home_falco_cncf:
