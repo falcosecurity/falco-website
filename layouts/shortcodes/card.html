@@ -1,38 +1,43 @@
 {{$class := $.Get "class"}}
+{{ $content_type := .Get "content" | default "text" }}
 <div class="card {{ $class }}">
   {{ with $.Get "header" }}
     <div class="card-header">
-      {{ if eq $.Page.File.Ext "md" }}
+      {{ if eq $content_type "text" }}
         {{ $.Get "header" | markdownify }}
-      {{ else }}
-        {{ $.Get "header" | htmlUnescape | safeHTML }}
+      {{ end }}
+      {{ if eq $content_type "html" }}
+        {{ $.Get "header"| htmlUnescape | safeHTML }}
       {{ end }}
     </div>
   {{ end }}
   <div class="card-body">
     {{ with $.Get "title" }}
       <h5 class="card-title">
-        {{ if eq $.Page.File.Ext "md" }}
+        {{ if eq $content_type "text" }}
           {{ $.Get "title" | markdownify }}
-        {{ else }}
-          {{ $.Get "title" | htmlUnescape | safeHTML }}
+        {{ end }}
+        {{ if eq $content_type "html" }}
+          {{ $.Get "title"| htmlUnescape | safeHTML }}
         {{ end }}
       </h5>
     {{ end }}
     {{ with $.Get "subtitle" }}
       <h6 class="card-title mb-2 text-muted">
-        {{ if eq $.Page.File.Ext "md" }}
+        {{ if eq $content_type "text" }}
           {{ $.Get "subtitle" | markdownify }}
-        {{ else }}
-          {{ $.Get "subtitle" | htmlUnescape | safeHTML }}
+        {{ end }}
+        {{ if eq $content_type "html" }}
+          {{ $.Get "subtitle"| htmlUnescape | safeHTML }}
         {{ end }}
       </h6>
     {{ end }}
     {{ with $.Inner }}
       <div class="card-text h-100 w-100">
-        {{ if eq $.Page.File.Ext "md" }}
+        {{ if eq $content_type "text" }}
           {{ $.Inner | markdownify }}
-        {{ else }}
+        {{ end }}
+        {{ if eq $content_type "html" }}
           {{ $.Inner | htmlUnescape | safeHTML }}
         {{ end }}
       </div>
@@ -40,10 +45,11 @@
   </div>
   {{ with $.Get "footer" }}
     <div class="card-footer">
-      {{ if eq $.Page.File.Ext "md" }}
+      {{ if eq $content_type "text" }}
         {{ $.Get "footer" | markdownify }}
-      {{ else }}
-        {{ $.Get "footer" | htmlUnescape | safeHTML }}
+      {{ end }}
+      {{ if eq $content_type "html" }}
+        {{ $.Get "footer"| htmlUnescape | safeHTML }}
       {{ end }}
     </div>
   {{ end }}
