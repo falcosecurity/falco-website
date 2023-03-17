@@ -39,7 +39,11 @@
           </li>
         {{ end }}
       {{ end }}
-
+			{{ if  .Site.Params.versions }}
+			<li class="nav-item dropdown mr-4 d-none d-lg-block">
+				{{ partial "navbar-version-selector.html" . }}
+			</li>
+			{{ end }}
 		</ul>
 	</div>
   <div class="d-flex justify-content-center justify-content-md-end w-50">

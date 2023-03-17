@@ -1,0 +1,13 @@
+{{ $data := index $.Site.Data .Site.Language.Lang }} 
+<div class="grid-4">
+  {{ range $usecases:= $data.usecases }}
+    {{/*  {{ range . }}  */}}
+      <div class="">
+        <div class="d-flex">
+          <h6 class="d-flex-1">{{ . }}</h6>
+        </div>
+        <div></div>
+      </div>
+    {{/*  {{ end }}  */}}
+  {{ end }}
+</div>
