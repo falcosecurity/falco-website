@@ -5,5 +5,9 @@
     "lodash": ">=4.17.21",
     "postcss": ">=8.4.21",
     "postcss-cli": "^10.1.0"
+  },
+  "dependencies": {
+    "date-fns": "^2.29.3",
+    "node-fetch": "^3.3.1"
   }
 }

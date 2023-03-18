@@ -1,0 +1,25 @@
+pinned: PLgVVUpW8NIJDaH2_KOVPvDsQQ-4he2wxX
+featured: PLgVVUpW8NIJAaa6AZmVWIGo34s7Gmndid
+
+plug:
+  title: Falco - Kubernetes threat detection engine (CNCFMinutes 19)
+  description: Falco, the cloud-native runtime security project, is the de facto Kubernetes threat detection engine.
+  published: 2021-11-29
+  id: MTgfstE0U7E
+
+template: | 
+  <div class="d-flex flex-column flex-md-row">
+    <iframe
+      class="rounded-lg video-responsive"
+      src="https://www.youtube.com/embed/%id%"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+    ></iframe>
+    <div class="ml-md-4 mt-4 mt-md-0 align-self-center">
+      <div class="text-muted mb-2">%published%</div>
+      <h6 class="mb-2">%title%</h6>
+      <p>%description%</p>
+    </div>
+  </div>

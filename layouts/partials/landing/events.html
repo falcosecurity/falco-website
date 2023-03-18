@@ -6,7 +6,7 @@
     <hr class="my-4"/>
   {{ end }}
   <div class="text-muted mb-2">{{ time.Format "Jan 2, 2006" .date }}</div>
-  <a class="card-title mb-2 text-body" href="/community/events">
+  <a class="card-title mb-2 text-body" href="{{ .RelPermalink }}">
     <h6 class="mb-2">{{ .title }}</h6>
   </a>
   <div class="card-text news">
