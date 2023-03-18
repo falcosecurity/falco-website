@@ -1,0 +1,17 @@
+{{ $blog_pages := (where site.RegularPages "Section" "blog").ByDate.Reverse }}
+{{ range $i, $item := first 2 $blog_pages }}
+  {{ with not (eq $i 0)}}
+    <hr class="my-4"/>
+  {{ end }}
+  <div class="text-muted mb-2">{{ .Date.Format "Jan 02, 2006" }}</div>
+  <a class="card-title mb-2 text-body" href="{{ .RelPermalink }}">
+    <h6 class="mb-2">{{ .Title }}</h6>
+  </a>
+  <div class="card-text news">
+    {{ if .Description }}
+      {{ .Description | truncate 160 }}
+    {{ else }}
+      {{ .Title | truncate 160 }}
+    {{ end }}
+  </div>
+{{ end }}

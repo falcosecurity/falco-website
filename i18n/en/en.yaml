@@ -96,3 +96,9 @@ blog_invite:
 
 ui_search:
   other: Search
+ui_featured_videos:
+  other: Featured videos
+ui_news:
+  other: News
+ui_events:
+  other: Events
