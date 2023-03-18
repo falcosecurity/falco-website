@@ -1,0 +1,27 @@
+- title: WEBCAST
+  date: 2023-03-23
+  location: Online
+  description: Easy management of the lifecycle of your rules and plugins for Falco
+  url: https://community.cncf.io/events/details/cncf-cncf-online-programs-presents-cncf-on-demand-webinarfalcoctl-easy-management-of-the-lifecycle-of-your-rules-plugins-for-falco/
+  schedule: 
+    - start:
+      end:
+      title:
+- title: WORKSHOP
+  date: 2023-03-30
+  location: Online
+  description: Up & Running with Runtime Security
+  url: https://www.aicamp.ai/event/eventdetails/W2023033010?utm_source=falco20230330
+  schedule: 
+    - start:
+      end:
+      title:
+- title: WORKSHOP
+  date: 2023-04-18
+  location: Amsterdam
+  description: Up & Running with Runtime Security
+  url: https://www.eventbrite.com/e/up-running-with-runtime-security-workshop-tickets-591851683317
+  schedule: 
+    - start:
+      end:
+      title:
