@@ -1,0 +1,22 @@
+.video-responsive {
+  height: 20rem;
+
+  @include media-breakpoint-up(md) {
+    width: 16.5rem;
+    height: 16.5rem;
+  }
+}
+
+.use-cases-item {
+  &:not(:first-of-type) {
+    border-top: 1px solid $secondary;
+    padding-top: 1rem;
+
+    @include media-breakpoint-up(lg) {
+      border-left: 1px solid $secondary;
+      padding-left: 1rem;
+      padding-top: 0;
+      border-top: 0;
+    }
+  }
+}
