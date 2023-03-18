@@ -5,7 +5,11 @@
   {{ with not (eq $i 0)}}
     <hr class="my-4"/>
   {{ end }}
+<<<<<<< HEAD
   <div class="text-muted mb-2">{{ time.Format "Jan 2, 2006" .start }}</div>
+=======
+  <div class="text-muted mb-2">{{ time.Format "Jan 2, 2006" .date }}</div>
+>>>>>>> 021d5d6 (fix: youtube bypass)
   <a class="card-title mb-2 text-body" href="{{ .RelPermalink }}">
     <h6 class="mb-2">{{ .title }}</h6>
   </a>

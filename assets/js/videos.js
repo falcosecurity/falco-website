@@ -43,7 +43,11 @@ function replace(template, { id, description, title, published }) {
   tpl = tpl.replace("%title%", title);
   tpl = tpl.replace(
     "%description%",
+<<<<<<< HEAD
     description.length > 200 ? `${description.slice(0, 140)}...` : description
+=======
+    description.length > 200 ? `${description.slice(0, 200)}...` : description
+>>>>>>> 021d5d6 (fix: youtube bypass)
   );
   tpl = tpl.replace("%published%", format(new Date(published), "MMM dd, yyyy"));
 
@@ -53,5 +57,9 @@ function replace(template, { id, description, title, published }) {
 try {
   handler();
 } catch {
+<<<<<<< HEAD
   document.getElementById(ids[0].id).innerHTML = replace(template, [plug, plug, plug].join(''));
+=======
+  document.getElementById(ids[0].id).innerHTML = replace(template, plug);
+>>>>>>> 021d5d6 (fix: youtube bypass)
 }
