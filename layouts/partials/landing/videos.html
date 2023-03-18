@@ -1,0 +1,21 @@
+{{ $videos := (index site.Data site.Language.Lang).videos }}
+{{ $sorted := sort (sort $videos "date" "desc") "pinned" "desc" }}
+{{ $class := . }}
+{{ range first 3 $sorted }}
+  <div class="d-flex flex-column flex-md-row{{ with . }} {{ $class }}{{ end }}">
+    <iframe
+      class="rounded-lg video-responsive"
+      src="{{ .url }}"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+    ></iframe>
+    <div class="ml-md-4 mt-4 mt-md-0 align-self-center">
+      <div class="text-muted mb-2">{{ time.Format "Jan 2, 2006" .date }}</div>
+      <h6 class="mb-2">{{ .title }}</h6>
+      <p>{{ .description | truncate 200 }}</p>
+    </div>
+  </div>
+{{ end }}
+

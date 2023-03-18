@@ -240,7 +240,7 @@ sysdig = "https://sysdig.com/"
 
 # Menu title if your navbar has a versions selector to access old versions of your site.
 # This menu appears only if you have at least one [params.versions] set.
-version_menu = "Releases"
+version_menu = "Versions"
 
 # SHA256 checksum variable
 sha256sum = "59201c1339cc53e86edcd7d2e7273e52f784b3cf7d4a3142059112b3b9062f6d"
