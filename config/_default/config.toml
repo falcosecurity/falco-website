@@ -190,6 +190,30 @@ id = "UA-40398182-19"
     weight = 60
     url = "/community/"
 [[menu.main]]
+    identifier = "community-about"
+    name = "About community"
+    url = "/community/"
+    parent = "community"
+    weight = 12
+    [menu.main.params]
+        description = "Learn about Falco community"
+[[menu.main]]
+    identifier = "community-events"
+    name = "Events"
+    url = "/community/events/"
+    parent = "community"
+    weight = 14
+    [menu.main.params]
+        description = "Learn about Falco events"
+[[menu.main]]
+    identifier = "community-contributors"
+    name = "Contributors"
+    url = "/community/contributors/"
+    parent = "community"
+    weight = 16
+    [menu.main.params]
+        description = "Discover who has earned the title of Contributor"
+[[menu.main]]
     identifier = "training"
     name = "Training"
     weight = 50
