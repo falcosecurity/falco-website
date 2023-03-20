@@ -19,10 +19,14 @@
       }
     }
   }
+}
 
-  .tab-content {
-    .tab-pane {
-      max-width: unset;
+.tab-content {
+  .tab-pane {
+    max-width: unset;
+
+    pre {
+      border: none;
     }
   }
 }

@@ -1,10 +1,10 @@
 .td-max-width-on-larger-screens {
   @include media-breakpoint-up(xs) {
-    max-width: 100%;
+    max-width: 100% !important;
   }
 
   @include media-breakpoint-up(xl) {
-    max-width: 80%;
+    max-width: 80% !important;
   }
 }
 
