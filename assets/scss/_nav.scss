@@ -135,7 +135,6 @@
     align-items: flex-center;
 
     .td-navbar-nav-scroll {
-      //max-width: calc(100% + .75rem - 96px - 1.5rem);
       max-width: calc(100%);
       height: 2.5rem;
       margin-top: 0.25rem;
@@ -160,7 +159,7 @@
   .dropdown-menu {
     padding: $dropdown-padding-y $dropdown-padding-x;
     @include border-radius(1rem);
-    
+
     .dropdown-item {
       padding: $dropdown-item-padding-y $pagination-padding-x;
       @include hover-focus() {
@@ -216,13 +215,20 @@ nav.foldable-nav {
   }
 
   .with-child ul {
-    padding-left: 0;
+    padding-left: 0.5rem;
   }
 
   .td-sidebar-nav {
     &__section {
       padding-top: 0;
-      padding-left: 1rem;
+      padding-left: 0;
+
+      @include media-breakpoint-up(md) {
+        padding-left: 1rem;
+        & .ul-1 ul {
+          padding-left: 0.5em;
+        }
+      }
     }
     &__section-title {
       .active {
@@ -233,9 +239,9 @@ nav.foldable-nav {
 
   .td-sidebar-link {
     padding-bottom: 0;
+    font-weight: $font-weight-normal;
 
     &__page {
-      font-weight: $font-weight-normal;
       padding-bottom: 0.5rem;
     }
 
@@ -244,23 +250,20 @@ nav.foldable-nav {
     }
   }
 
-  .ul-1 > li > label > a.td-sidebar-link__section {
-    font-size: 1.25rem;
-  }
-
   .ul-1 > li {
     &:not(:first-child) {
-      padding-top: 0.5rem;
+      margin-top: 0.5rem;
     }
   }
 
   .ul-2,
   .ul-3 {
     margin-top: 0.5rem;
+    margin-left: -0.75rem;
   }
 
   #m-docs-li > .ul-1 > li {
-    padding-left: 1.5em;
+    padding-left: 1rem;
   }
 
   #m-blog-li > .ul-1 > li {
@@ -271,7 +274,6 @@ nav.foldable-nav {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
-    margin-left: 0.5rem;
     border-left: 1px solid $secondary;
   }
 
@@ -297,15 +299,15 @@ nav.foldable-nav {
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
     font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    content: "\f0da";
+    content: "\f054";
     position: absolute;
     left: 0.1em;
-    padding-left: 0.4em;
-    padding-right: 0.4em;
-    font-size: 1em;
+    top: 0.2rem;
+    font-size: 0.8em;
     color: $gray-900;
     transition: all 0.5s;
+
+    -webkit-text-stroke: 1px $body-bg;
     &:hover {
       transform: rotate(90deg);
     }
@@ -382,7 +384,6 @@ nav.foldable-nav {
 //
 
 .nav-tabs {
-
   .nav-link {
     color: $nav-tabs-link-color;
     font-weight: $font-weight-normal;
@@ -390,7 +391,6 @@ nav.foldable-nav {
     @include hover-focus() {
       border-bottom: $nav-tabs-border-width solid $primary;
     }
-
   }
 
   .nav-link.active,
