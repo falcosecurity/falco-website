@@ -376,3 +376,25 @@ nav.foldable-nav {
     font-size: 1rem;
   }
 }
+
+//
+// Tabs
+//
+
+.nav-tabs {
+
+  .nav-link {
+    color: $nav-tabs-link-color;
+    font-weight: $font-weight-normal;
+
+    @include hover-focus() {
+      border-bottom: $nav-tabs-border-width solid $primary;
+    }
+
+  }
+
+  .nav-link.active,
+  .nav-item.show .nav-link {
+    border-bottom: $nav-tabs-border-width solid $primary;
+  }
+}
