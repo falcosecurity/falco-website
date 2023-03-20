@@ -9,29 +9,37 @@ title: Why Falco?
 {{< blocks/content content="html" >}}
 {{< two_column_block_img content="html" src="/img/about/highly_scalable.svg" alt="highly scalable" index="1 md-1 lg-1 xl-1" header="Highly Scalable" >}}
 
-{{< card class="card-sm shadow">}}
-{{< content_arrow content="html" direction="forward" url="#compatibility-with-container-orchestration-tools" >}}
+{{< link_wrapper href="#compatibility-with-container-orchestration-tools" class="text-decoration-none" >}}
+{{< card class="card-sm shadow btn btn-light text-left p-0">}}
+{{< content_arrow content="html" direction="forward" class="text-body text-decoration-none font-weight-normal" >}}
 Falco is highly scalable, due to its containerized architecture and  tight Kubernetes integration.
 {{< /content_arrow >}}
 {{< /card >}}
+{{< /link_wrapper >}}
 
-{{< card class="card-sm shadow mt-2">}}
-{{< content_arrow content="html" direction="forward" url="#runs-as-a-daemonset" >}}
+{{< link_wrapper href="#runs-as-a-daemonset" class="text-decoration-none" >}}
+{{< card class="card-sm shadow btn btn-light text-left p-0 mt-2">}}
+{{< content_arrow content="html" direction="forward" class="text-body text-decoration-none font-weight-normal" >}}
 Falco runs as a Kubernetes daemon set, ensuring every node in the cluster is protected by Falco.
 {{< /content_arrow >}}
 {{< /card >}}
+{{< /link_wrapper >}}
 
-{{< card class="card-sm shadow mt-2">}}
-{{< content_arrow content="html" direction="forward" url="#leverages-the-kubernetes-api" >}}
+{{< link_wrapper href="#leverages-the-kubernetes-api" class="text-decoration-none" >}}
+{{< card class="card-sm shadow btn btn-light text-left p-0 mt-2">}}
+{{< content_arrow content="html" direction="forward" class="text-body text-decoration-none font-weight-normal" >}}
 Falco leverages Kubernetes to dynamically update its configuration as new pods are added or removed from the cluster.
 {{< /content_arrow >}}
 {{< /card >}}
+{{< /link_wrapper >}}
 
-{{< card class="card-sm shadow mt-2">}}
-{{< content_arrow content="html" direction="forward" url="#analyze-alerts-at-scale" >}}
+{{< link_wrapper href="#analyze-alerts-at-scale" class="text-decoration-none" >}}
+{{< card class="card-sm shadow btn btn-light text-left p-0 mt-2">}}
+{{< content_arrow content="html" direction="forward" class="text-body text-decoration-none font-weight-normal" >}}
 Falco's integration with cloud-native technologies like Prometheus and Grafana provides users with the ability to visualize and analyze Falco alerts at scale.
 {{< /content_arrow >}}
 {{< /card >}}
+{{< /link_wrapper >}}
 
 {{< /two_column_block_img >}}
 {{< /blocks/content >}}
@@ -39,11 +47,13 @@ Falco's integration with cloud-native technologies like Prometheus and Grafana p
 {{< blocks/content content="html" >}}
 {{< two_column_block_img content="html" src="/img/about/highly_perfomant.svg" alt="highly performant" index="1 md-0 lg-0 xl-0" header="Highly Performant" >}}
 
-{{< card class="card-sm shadow">}}
-{{< content_arrow content="html" direction="forward" url="#event-driven-architecture" >}}
+{{< link_wrapper href="#event-driven-architecture" class="text-decoration-none" >}}
+{{< card class="card-sm shadow btn btn-light text-left p-0">}}
+{{< content_arrow content="html" direction="forward" class="text-body text-decoration-none font-weight-normal" >}}
 Falco is highly performant due to its low overhead, streaming event architecture, and the ability to leverage kernel-level instrumentation to capture system events.
 {{< /content_arrow >}}
 {{< /card >}}
+{{< /link_wrapper >}}
 
 {{< card class="card-sm shadow mt-2">}}
 {{< content_arrow content="html" direction="forward" url="#uses-a-minimal-set-of-resources" >}}

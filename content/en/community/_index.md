@@ -75,21 +75,25 @@ title: The Falco Community
 {{< blocks/content content="html">}}
 
 <div class="col-md-6 d-flex flex-column justify-content-between mb-5 mb-md-0">
-{{< card class="card-sm td-box--light">}}
-{{< content_arrow content="html" direction="forward" url="#">}}
+{{< link_wrapper href="#" class="text-decoration-none" >}}
+{{< card class="card-sm td-box--light shadow btn btn-light text-left p-0 mt-2">}}
+{{< content_arrow content="html" direction="forward" class="text-body text-decoration-none font-weight-normal" >}}
 <img width=40 height=40 class="mr-3" src="/img/icons/slack.svg" alt="slack">
-<span>Ask a question in Kubernetes <a href="#">#falco</a></span>
+<span>Ask a question in Kubernetes #falco</span>
 {{< /content_arrow >}}
 {{< /card >}}
+{{< /link_wrapper >}}
 </div>
 
 <div class="col-md-6 d-flex flex-column justify-content-between mb-5 mb-md-0">
-{{< card class="card-sm td-box--light">}}
-{{< content_arrow content="html" direction="forward" url="#">}}
+{{< link_wrapper href="#" class="text-decoration-none" >}}
+{{< card class="card-sm td-box--light shadow btn btn-light text-left p-0 mt-2">}}
+{{< content_arrow content="html" direction="forward" class="text-body text-decoration-none font-weight-normal" >}}
 <img class="mr-3" src="/img/icons/envelope-open-fill.svg" alt="envelope-open-fill">
 <span>Reach out to fellow users on the mailing list</span>
 {{< /content_arrow >}}
 {{< /card >}}
+{{< /link_wrapper >}}
 </div>
 
 {{< /blocks/content >}}
