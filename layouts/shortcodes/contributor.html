@@ -1,0 +1,18 @@
+{{$date := $.Get "date"}}
+{{$names := split ($.Get "names") ","}}
+{{$links := split ($.Get "links") ","}}
+<div class="d-flex flex-column flex-xl-row py-2 px-3">
+  <div class="contributor-date text-dark">
+    <span class="pr-5">{{ $date }}</span>
+  </div>
+  <p>
+    {{ range $index, $link := $links }}
+      {{ if ne $index (sub (len $links) 1) }}
+        <a href="{{ $link }}" class="text-dark font-weight-bold">{{ index $names $index }} </a> 
+        <span class="text-dark font-weight-bold">and </span>
+      {{ else }}
+        <a href="{{ $link }}" class="text-dark font-weight-bold">{{ index $names $index }}</a>
+      {{ end }}
+    {{ end }}
+  </p>
+</div>
