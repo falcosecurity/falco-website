@@ -98,6 +98,12 @@ title: Falco Ecosystem
       </div>
     </div>
   {{< /blocks/grid >}}
+
+  <h3 class="mt-5">Also used by</h3>
+
+  {{< blocks/grid layout="lg-4 md-3 sm-2 2" gap=5 class="gallery-vendor" >}}
+    {{< docs/vendors_gallery_items endusers />}}
+  {{< /blocks/grid >}}
   
   {{< /tab >}}
 
