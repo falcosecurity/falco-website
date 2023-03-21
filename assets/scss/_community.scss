@@ -1,0 +1,70 @@
+.community {
+  height: 76rem;
+
+  &__call-invitation {
+    top: 3rem;
+  }
+
+  &__events {
+    top: 30rem;
+    right: 17rem;
+  }
+
+  &__contribute {
+    top: 57rem;
+  }
+
+  &__links {
+    left: 6rem; 
+    top: 62rem;
+    width: 44rem;
+  }
+
+  img.img-fluid {
+    border-radius: 1.25rem;
+    position: absolute;
+  }
+
+  &__call {
+    right: 0;
+    width: 40rem;
+    aspect-ratio: 1.8;
+    object-fit: cover;
+  }
+
+  &__bar {
+    top: 19rem;
+    width: 25rem;
+    aspect-ratio: 1.4;
+    object-fit: cover;
+    z-index: 10;
+  }
+
+  &__presentation {
+    top: 32rem;
+    left: 12rem;
+    width: 33.5rem;
+    object-fit: cover;
+    aspect-ratio: 1.6;
+  }
+
+  &__coding {
+    right: 0;
+    top: 40rem;
+    width: 26.5rem;
+    object-fit: cover;
+    aspect-ratio: 0.74;
+  }
+
+  &__arrow1 {
+    top: -3rem;
+    left: 33rem;
+    border-radius: 0 !important;
+  }
+
+  &__arrow2 {
+    top: 26rem;
+    left: 41rem;
+    border-radius: 0 !important;
+  }
+}
