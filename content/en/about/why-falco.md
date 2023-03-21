@@ -9,37 +9,21 @@ title: Why Falco?
 {{< blocks/content content="html" >}}
 {{< two_column_block_img content="html" src="/img/about/highly_scalable.svg" alt="highly scalable" index="1 md-1 lg-1 xl-1" header="Highly Scalable" >}}
 
-{{< link_wrapper href="#compatibility-with-container-orchestration-tools" class="text-decoration-none" >}}
-{{< card class="card-sm shadow btn btn-light text-left p-0">}}
-{{< content_arrow content="html" direction="forward" class="text-body text-decoration-none font-weight-normal" >}}
+{{< content_arrow href="#compatibility-with-container-orchestration-tools" >}}
 Falco is highly scalable, due to its containerized architecture and  tight Kubernetes integration.
 {{< /content_arrow >}}
-{{< /card >}}
-{{< /link_wrapper >}}
 
-{{< link_wrapper href="#runs-as-a-daemonset" class="text-decoration-none" >}}
-{{< card class="card-sm shadow btn btn-light text-left p-0 mt-2">}}
-{{< content_arrow content="html" direction="forward" class="text-body text-decoration-none font-weight-normal" >}}
+{{< content_arrow href="#runs-as-a-daemonset" class="mt-2" >}}
 Falco runs as a Kubernetes daemon set, ensuring every node in the cluster is protected by Falco.
 {{< /content_arrow >}}
-{{< /card >}}
-{{< /link_wrapper >}}
 
-{{< link_wrapper href="#leverages-the-kubernetes-api" class="text-decoration-none" >}}
-{{< card class="card-sm shadow btn btn-light text-left p-0 mt-2">}}
-{{< content_arrow content="html" direction="forward" class="text-body text-decoration-none font-weight-normal" >}}
+{{< content_arrow href="#leverages-the-kubernetes-api" class="mt-2" >}}
 Falco leverages Kubernetes to dynamically update its configuration as new pods are added or removed from the cluster.
 {{< /content_arrow >}}
-{{< /card >}}
-{{< /link_wrapper >}}
 
-{{< link_wrapper href="#analyze-alerts-at-scale" class="text-decoration-none" >}}
-{{< card class="card-sm shadow btn btn-light text-left p-0 mt-2">}}
-{{< content_arrow content="html" direction="forward" class="text-body text-decoration-none font-weight-normal" >}}
+{{< content_arrow href="#analyze-alerts-at-scale" class="mt-2" >}}
 Falco's integration with cloud-native technologies like Prometheus and Grafana provides users with the ability to visualize and analyze Falco alerts at scale.
 {{< /content_arrow >}}
-{{< /card >}}
-{{< /link_wrapper >}}
 
 {{< /two_column_block_img >}}
 {{< /blocks/content >}}
@@ -47,31 +31,21 @@ Falco's integration with cloud-native technologies like Prometheus and Grafana p
 {{< blocks/content content="html" >}}
 {{< two_column_block_img content="html" src="/img/about/highly_perfomant.svg" alt="highly performant" index="1 md-0 lg-0 xl-0" header="Highly Performant" >}}
 
-{{< link_wrapper href="#event-driven-architecture" class="text-decoration-none" >}}
-{{< card class="card-sm shadow btn btn-light text-left p-0">}}
-{{< content_arrow content="html" direction="forward" class="text-body text-decoration-none font-weight-normal" >}}
+{{< content_arrow href="#event-driven-architecture" >}}
 Falco is highly performant due to its low overhead, streaming event architecture, and the ability to leverage kernel-level instrumentation to capture system events.
 {{< /content_arrow >}}
-{{< /card >}}
-{{< /link_wrapper >}}
 
-{{< card class="card-sm shadow mt-2">}}
-{{< content_arrow content="html" direction="forward" url="#uses-a-minimal-set-of-resources" >}}
+{{< content_arrow href="#uses-a-minimal-set-of-resources" class="mt-2" >}}
 Falco keeps its footprint small by using a minimal set of resources, including CPU, memory, and I/O, while monitoring system events.
 {{< /content_arrow >}}
-{{< /card >}}
 
-{{< card class="card-sm shadow mt-2">}}
-{{< content_arrow content="html" direction="forward" url="#only-monitor-the-relevant-events" >}}
+{{< content_arrow href="#only-monitor-the-relevant-events" class="mt-2" >}}
 Falco's event-driven architecture allows it to monitor only relevant events, reducing noise, decreasing latency, and dramatically reducing storage costs.
 {{< /content_arrow >}}
-{{< /card >}}
 
-{{< card class="card-sm shadow mt-2">}}
-{{< content_arrow content="html" direction="forward" url="#kernel-level-instrumentation-to-capture-system-events" >}}
+{{< content_arrow href="#kernel-level-instrumentation-to-capture-system-events" class="mt-2" >}}
 Falco uses eBPF or kernel modules capturing system and application behavior and detecting a broad range of security issues.
 {{< /content_arrow >}}
-{{< /card >}}
 
 {{< /two_column_block_img >}}
 {{< /blocks/content >}}
@@ -79,29 +53,21 @@ Falco uses eBPF or kernel modules capturing system and application behavior and 
 {{< blocks/content content="html" >}}
 {{< two_column_block_img content="html" src="/img/about/single_policy.svg" alt="single policy language" index="1 md-1 lg-1 xl-1" header="Single Policy Language" >}}
 
-{{< card class="card-sm shadow">}}
-{{< content_arrow content="html" direction="forward" url="#ensures-consistency-and-reduces-complexity" >}}
+{{< content_arrow href="#ensures-consistency-and-reduces-complexity" >}}
 Falco's policy language is all you need to know: reducing complexity and misconfigurations.
 {{< /content_arrow >}}
-{{< /card >}}
 
-{{< card class="card-sm shadow mt-2">}}
-{{< content_arrow content="html" direction="forward" url="#promotes-collaboration-between-security-ops-teams" >}}
+{{< content_arrow href="#promotes-collaboration-between-security-ops-teams" class="mt-2" >}}
 Collaboration over security and operations teams is eased by the use of a shared policy language.
 {{< /content_arrow >}}
-{{< /card >}}
 
-{{< card class="card-sm shadow mt-2">}}
-{{< content_arrow content="html" direction="forward" url="#provides-flexibility-extensibility" >}}
+{{< content_arrow href="#provides-flexibility-extensibility" class="mt-2" >}}
 Policy language extensibility means you can create, reuse, and consume others' rules.
 {{< /content_arrow >}}
-{{< /card >}}
 
-{{< card class="card-sm shadow mt-2">}}
-{{< content_arrow content="html" direction="forward" url="#simplifies-compliance-auditing" >}}
+{{< content_arrow href="#simplifies-compliance-auditing" class="mt-2" >}}
 A single policy language simplifies compliance and auditing.
 {{< /content_arrow >}}
-{{< /card >}}
 
 {{< /two_column_block_img >}}
 {{< /blocks/content >}}
@@ -109,29 +75,21 @@ A single policy language simplifies compliance and auditing.
 {{< blocks/content content="html" >}}
 {{< two_column_block_img content="html" src="/img/about/flexible_deployment.svg" alt="flexible deployment options" index="1 md-0 lg-0 xl-0" header="Flexible Deployment Options" >}}
 
-{{< card class="card-sm shadow">}}
-{{< content_arrow content="html" direction="forward" url="#tailor-the-install-process-to-your-specific-needs" >}}
+{{< content_arrow href="#tailor-the-install-process-to-your-specific-needs" >}}
 Customizable install lets you deploy to hosts, VMs, or Kubernetes, on or off-prem.
 {{< /content_arrow >}}
-{{< /card >}}
 
-{{< card class="card-sm shadow mt-2">}}
-{{< content_arrow content="html" direction="forward" url="#deploy-in-a-cloud-native-way" >}}
+{{< content_arrow href="#deploy-in-a-cloud-native-way" class="mt-2" >}}
 Falco was born cloud-native, so works well as a containerized app executing inside K8s clusters.
 {{< /content_arrow >}}
-{{< /card >}}
 
-{{< card class="card-sm shadow mt-2">}}
-{{< content_arrow content="html" direction="forward" url="#deploy-additional-components" >}}
+{{< content_arrow href="#deploy-additional-components" class="mt-2" >}}
 Falco installation plays nice with common cloud-native services such as Prometheus or Grafana.
 {{< /content_arrow >}}
-{{< /card >}}
 
-{{< card class="card-sm shadow mt-2">}}
-{{< content_arrow content="html" direction="forward" url="#falco-uses-ebpf-by-default" >}}
+{{< content_arrow href="#falco-uses-ebpf-by-default" class="mt-2" >}}
 Falco deploys by default using eBPF, providing performance, maintainability and simplified UX.
 {{< /content_arrow >}}
-{{< /card >}}
 
 {{< /two_column_block_img >}}
 {{< /blocks/content >}}
@@ -139,29 +97,21 @@ Falco deploys by default using eBPF, providing performance, maintainability and 
 {{< blocks/content content="html" >}}
 {{< two_column_block_img content="html" src="/img/about/customizable.svg" alt="Customizable" index="1 md-1 lg-1 xl-1" header="Customizable" >}}
 
-{{< card class="card-sm shadow">}}
-{{< content_arrow content="html" direction="forward" url="#meet-specific-security-requirements" >}}
+{{< content_arrow href="#meet-specific-security-requirements" >}}
 Define your own custom rules to meet specific security requirements
 {{< /content_arrow >}}
-{{< /card >}}
 
-{{< card class="card-sm shadow mt-2">}}
-{{< content_arrow content="html" direction="forward" url="#build-your-own-falco-plugins" >}}
+{{< content_arrow href="#build-your-own-falco-plugins" class="mt-2" >}}
 Create your own custom plugins to handle events from additional sources.
 {{< /content_arrow >}}
-{{< /card >}}
 
-{{< card class="card-sm shadow mt-2">}}
-{{< content_arrow content="html" direction="forward" url="#trigger-your-own-custom-actions" >}}
+{{< content_arrow href="#trigger-your-own-custom-actions" class="mt-2" >}}
 Configure alerts to trigger specific actions, such as executing custom scripts.
 {{< /content_arrow >}}
-{{< /card >}}
 
-{{< card class="card-sm shadow mt-2">}}
-{{< content_arrow content="html" direction="forward" url="#enrich-alerts-with-custom-metadata-context" >}}
+{{< content_arrow href="#enrich-alerts-with-custom-metadata-context" class="mt-2" >}}
 Define custom metadata to enrich Falco alerts with context specific to your needs.
 {{< /content_arrow >}}
-{{< /card >}}
 
 {{< /two_column_block_img >}}
 {{< /blocks/content >}}
