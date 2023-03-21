@@ -8,8 +8,6 @@ images:
   - images/falco-honeybee.png
 ---
 
-![](images/falco-honeybee.png)
-
 Dear community, today we are delighted to announce the release of Falco 0.34.0  🎉!
 
 A big thank you to the community for helping get the latest release out. The Falco community is thrilled about this release and cannot wait to share the latest goodies. Check out the newest features from this most recent launch to learn more ⬇️. To read a more detailed account of the release, see [v0.34.0 in the changelog](https://github.com/falcosecurity/falco/blob/master/CHANGELOG.md#v0340).
