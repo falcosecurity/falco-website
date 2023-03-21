@@ -2,21 +2,22 @@
 title: Try Falco
 description: Learn how to install Falco on various platforms
 hide_section_index: true
+aliases: [/try-falco]
 weight: 1
 ---
-We know trying a new tool is always challenging. For that, the Falco Project includes some tutorials that will ease the road to discovering all that Falco can do for you.
+We know trying a new tool is always challenging. For that, the Falco Project includes some scenarios that will ease the road to discovering all that Falco can do for you.
 
 {{< blocks/collapse title="Check the requirements" id="check-the-requirements" class="pb-5">}}
 {{< pageinfo color="secondary" >}}
-Depending on the tutorial you choose you might need either a Virtual Machine (you can your use your own machine, but we prefer to keep everything clear) or a Kubernetes cluster (Minikube would be enough, but using a multi-node Kubernetes cluster will definitely give you a better taste of it).
+Depending on the scenario you choose you might need either a Virtual Machine (you can your use your own machine, but we prefer to keep everything clear) or a Kubernetes cluster (Minikube would be enough, but using a multi-node Kubernetes cluster will definitely give you a better taste of it).
 
 If you don’t know how or don’t have the time to set up a proper environment, we have prepared some scenarios on Killercoda, the de-facto successor of the famous Katacoda.
 {{< /pageinfo >}}
 {{< /blocks/collapse >}}
 
-#### Choose your next tutorial
+#### Choose your next scenario
 
-{{< link_wrapper href="ubuntu-tutorial" class="section-index">}}
+{{< link_wrapper href="try-falco-on-ubuntu" class="section-index">}}
 {{< card class="card-sm shadow btn btn-light p-0">}}
 <div class="text-left d-flex gap-4">
     <img class="align-self-center icon-4 icon-lg-5" src="/img/ubuntu.png" alt="Ubuntu" loading="lazy">
@@ -30,7 +31,7 @@ If you don’t know how or don’t have the time to set up a proper environment,
 {{< /card >}}
 {{< /link_wrapper >}}
 
-{{< link_wrapper href="ubuntu-falcosidekick-tutorial" class="section-index mt-3">}}
+{{< link_wrapper href="try-falcosidekick-on-ubuntu" class="section-index mt-3">}}
 {{< card class="card-sm shadow btn btn-light p-0">}}
 <div class="text-left d-flex gap-4">
     <img class="align-self-center icon-4 icon-lg-5" src="/img/ubuntu.png" alt="Ubuntu" loading="lazy">
@@ -44,7 +45,7 @@ If you don’t know how or don’t have the time to set up a proper environment,
 {{< /card >}}
 {{< /link_wrapper >}}
 
-{{< link_wrapper href="kubernetes-tutorial" class="section-index mt-3">}}
+{{< link_wrapper href="try-falco-on-kubernetes" class="section-index mt-3">}}
 {{< card class="card-sm shadow btn btn-light p-0">}}
 <div class="text-left d-flex gap-4">
     <img class="align-self-center icon-4 icon-lg-5" src="/img/kubernetes-logo.png" alt="Ubuntu" loading="lazy">
@@ -58,7 +59,7 @@ If you don’t know how or don’t have the time to set up a proper environment,
 {{< /card >}}
 {{< /link_wrapper >}}
 
-{{< link_wrapper href="kubernetes-falcosidekick-tutorial" class="section-index mt-3 pb-5">}}
+{{< link_wrapper href="try-falcosidekick-on-kubernetes" class="section-index mt-3 pb-5">}}
 {{< card class="card-sm shadow btn btn-light p-0">}}
 <div class="text-left d-flex gap-4">
     <img class="align-self-center icon-4 icon-lg-5" src="/img/kubernetes-logo.png" alt="Ubuntu" loading="lazy">
