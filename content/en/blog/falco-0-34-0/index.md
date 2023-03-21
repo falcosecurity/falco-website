@@ -4,8 +4,8 @@ date: 2023-02-07
 author: Luca Guerra, Andrea Terzolo, Teryl Taylor, Jacque Salinas
 slug: falco-0-34-0
 images:
-  - images/falco-hobeybee-featured.png
-  - images/falco-honeybee.png
+  - /blog/falco-0-34-0/images/falco-hobeybee-featured.png
+  - /blog/falco-0-34-0/images/falco-honeybee.png
 ---
 
 Dear community, today we are delighted to announce the release of Falco 0.34.0  🎉!
