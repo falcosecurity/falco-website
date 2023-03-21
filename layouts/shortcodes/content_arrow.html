@@ -1,19 +1,20 @@
 {{ $direction := .Get "direction" | default "forward"}}
-{{ $content_type := .Get "content" | default "text" }}
+{{ $href := .Get "href" }}
 {{ $col_id := .Get "color" | default "transparent" }}
 {{ $class := .Get "class" | default "" }}
-<div class="d-flex align-items-center td-box--{{ $col_id }} {{ $class }}">
-  {{ with eq $direction "back" }}
-  <div class="pr-4">
-    <i class="fa fa-arrow-left"></i>
+{{ $arrow_col := .Get "arrow" | default "primary" }}
+{{ $text_align := cond (eq $direction "forward") "text-left" "text-right" }}
+
+<a href="{{ $href }}" class="text-decoration-none font-weight-normal td-box--{{ $col_id }} {{ $class }}">
+  <div class="card card-sm btn btn-light p-0 shadow">
+    <div class="card-body d-flex align-items-center">
+      {{ with eq $direction "back" }}
+        <i class="fa fa-arrow-left pl-4 text-{{ $arrow_col }}"></i>
+      {{ end }}
+      <p class="w-100 mb-0 {{ $text_align }}">{{ .Inner }}</p>
+      {{ with eq $direction "forward" }}
+        <i class="fa fa-arrow-right pl-4 text-{{ $arrow_col }}"></i>
+      {{ end }}
+    </div>
   </div>
-  {{ end }}
-  <div class="flex-grow-1">
-    {{ .Inner }}
-  </div>
-  {{ with eq $direction "forward" }}
-  <div class="pl-4">
-    <i class="fa fa-arrow-right"></i>
-  </div>
-  {{ end }}
-</div>
+</a>
