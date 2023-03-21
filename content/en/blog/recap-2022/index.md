@@ -4,10 +4,8 @@ slug: recap-2022
 date: 2023-01-04
 author: Jacqueline Salinas
 images:
-  - /blog/recap-2022/images/recap-2022-featured.png
+  - images/recap-2022-featured.png
 ---
-
-![](images/recap-2022-featured.png)
 
 Dear Falco community, 
 

@@ -11,7 +11,6 @@ images:
   - /blog/intro-gvisor-falco/images/intro-gvisor-falco-03.png
   - /blog/intro-gvisor-falco/images/intro-gvisor-falco-featured.png
 ---
-![](/blog/intro-gvisor-falco/images/intro-gvisor-falco-01.png)
 
 _This post has been updated in December 2022 after initial publication. It now contains up-to-date instructions about how to use gVisor support on Docker and Kubernetes with GKE as well! The recommended version for gVisor support is now Falco 0.33.1 or above._
 
