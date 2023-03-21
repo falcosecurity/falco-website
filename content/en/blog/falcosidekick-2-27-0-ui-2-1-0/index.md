@@ -9,8 +9,6 @@ images:
 tags: ["Falcosidekick","Release"]
 ---
 
-![](images/falcosidekick-featured.png)
-
 So many good things happened for Falcosidekick and Falcosidekick UI this year. It's still incredible these projects became so beloved and useful for the community. To all contributors, promotors and users, a big big thank you.
 
 The new year is there, it's time to release new versions and reach 10 million Docker pulls for Falcosidekick.

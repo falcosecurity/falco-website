@@ -8,8 +8,6 @@ images:
 tags: ["Community"]
 ---
 
-![](images/recap-2022-featured.png)
-
 Dear Falco community, 
 
 As always, we are truly grateful for the amazing community of maintainers and contributors. The Falco project and community would not be the vibrant ecosystem it is today without these incredible individuals. Let’s take a look at what the community accomplished in 2022, and we’ll give a quick glimpse of what to expect in 2023!  

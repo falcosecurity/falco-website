@@ -8,7 +8,6 @@ slug: falco-detect-cryptomining
 images:
   - /blog/falco-detect-cryptomining/images/falco-detect-cryptomining-featured.png
 ---
-![](/blog/falco-detect-cryptomining/images/falco-detect-cryptomining-01.png)
 
 Cryptominers are programs that utilize computer resources to mine cryptocurrency. XMRig is an example of an open source cryptomining software designed for the sole purpose of mining cryptocurrencies, like Monero or Bitcoin. Cryptominers usually get rewarded with a token for every successful transaction mined, which makes cryptomining a profitable activity.
 
@@ -352,4 +351,4 @@ If you would like to find out more about Falco:
 * Check out the [Falco project in GitHub](https://github.com/falcosecurity/falco).
 * Get involved in the [Falco community](https://falco.org/community/).
 * Meet the maintainers on the [Falco Slack](https://kubernetes.slack.com/?redir=%2Farchives%2FCMWH3EH32).
-* Follow [@falco_org](https://twitter.com/falco_org)  on Twitter.
+* Follow [@falco_org](https://twitter.com/falco_org) on Twitter.
