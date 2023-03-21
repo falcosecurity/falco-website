@@ -26,7 +26,7 @@ The following instructions assume **`v0.x.y` is the version to be archived**.
 3. Within the `v0.x` branch, edit the [versions/params.yaml](config/_default/versions/params.yaml) file:
     - Set `archived_version` to `true`,
     - Make sure `version` is equal to `v0.x.y`,
-    - Update the YAML block refering to `v0.x.y` (i.e., *the previous version*) as following:
+    - Update the YAML block referring to `v0.x.y` (i.e., *the previous version*) as following:
     ```yaml
     versions:
 
