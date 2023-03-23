@@ -1,5 +1,6 @@
 ---
 title: Why Falco?
+keywords: Scalable, performant, customizable, flexible deployment, single language policy
 ---
 
 {{< blocks/content wrap="col" >}}
