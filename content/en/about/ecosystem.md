@@ -79,7 +79,7 @@ title: Falco Ecosystem
   {{< /blocks/grid >}}
 
   <div class="text-center mt-4">
-    <a class="btn btn-lg btn-primary" href="https://github.com/falcosecurity/falco/blob/master/ADOPTERS.md#adding-a-name" role="button">Add your logo</a>
+    <a class="btn btn-lg btn-primary" href="https://github.com/falcosecurity/falco-website/blob/master/ADD_ECOSYSTEM_LOGO.md" role="button">Add your logo</a>
   </div>
 
   {{< /tab >}}
