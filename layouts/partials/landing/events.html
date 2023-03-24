@@ -1,11 +1,11 @@
-{{ $events := where (index site.Data site.Language.Lang).events "date" ">=" (now.Format "2006-01-02") }}
+{{ $events := where (index site.Data site.Language.Lang).events "end" ">=" (now.Format "2006-01-02") }}
 {{ $sorted := sort $events "date" }}
 
 {{ range $i, $item := first 2 $sorted }}
   {{ with not (eq $i 0)}}
     <hr class="my-4"/>
   {{ end }}
-  <div class="text-muted mb-2">{{ time.Format "Jan 2, 2006" .date }}</div>
+  <div class="text-muted mb-2">{{ time.Format "Jan 2, 2006" .start }}</div>
   <a class="card-title mb-2 text-body" href="{{ .RelPermalink }}">
     <h6 class="mb-2">{{ .title }}</h6>
   </a>
