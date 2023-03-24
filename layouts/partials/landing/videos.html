@@ -1,6 +1,4 @@
 
-{{ $key := os.Getenv "HUGO_YOUTUBE_API_KEY" }}
-{{ $api := "https://youtube.googleapis.com/youtube/v3" }}
 {{ $playlists := site.Data.videos }}
 {{ $template := $playlists.template }}
 {{ $plug := $playlists.plug }}
