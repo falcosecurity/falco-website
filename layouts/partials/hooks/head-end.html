@@ -6,3 +6,6 @@
 <script src="{{ $slider.RelPermalink }}"></script>
 {{ $announcement := resources.Get "js/announcement-bar.js" | minify | fingerprint }}
 <script src="{{ $announcement.RelPermalink }}" async></script>
+{{ $subscribe := resources.Get "js/subscribe-form.js" }}
+<script src="{{ $subscribe.RelPermalink }}" async></script>
+{{/*  TODO: merge scripts when revamp is ready  */}}

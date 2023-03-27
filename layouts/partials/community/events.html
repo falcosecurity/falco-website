@@ -1,0 +1,5 @@
+{{ $evt := sort (index site.Data site.Language.Lang).events "start" }}
+{{ $params := dict "events" $evt "type" "community" }}
+{{ $js := resources.Get "js/events.js" | js.Build (dict "params" $params) | minify | fingerprint }}
+
+<script src="{{ $js.RelPermalink}}" async></script>
