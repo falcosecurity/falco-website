@@ -1,0 +1,18 @@
+events_subscribe_title:
+  other: Get involved in Falco community events! Swag and recognition await!
+events_subscribe_name_placeholder:
+  other: Name
+events_subscribe_email_placeholder:
+  other: Email
+events_subscribe_checkbox_inform:
+  other: Inform me about upcoming events
+events_subscribe_checkbox_speak:
+  other: Speak about Falco at an event
+events_subscribe_checkbox_host:
+  other: Host an event
+events_subscribe_checkbox_support:
+  other: Support an existing event
+events_subscribe_submit:
+  other: Get involved
+events_subscribe_promotion:
+  other: Our immediate need is community support for the Falco project meeting and kiosk at KubeCon EU.
