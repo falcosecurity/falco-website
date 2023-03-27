@@ -38,12 +38,12 @@ $border-radius-sm:            .25rem;
 // 
 // Headers
 // 
-$h1-font-size:                $font-size-base * 4;
-$h2-font-size:                $font-size-base * 3.5;
-$h3-font-size:                $font-size-base * 2.5;
-$h4-font-size:                $font-size-base * 2;
-$h5-font-size:                $font-size-base * 1.75;
-$h6-font-size:                $font-size-base * 1.25;
+$h1-font-size:                $font-size-base * 3.5;
+$h2-font-size:                $font-size-base * 3;
+$h3-font-size:                $font-size-base * 2;
+$h4-font-size:                $font-size-base * 1.5;
+$h5-font-size:                $font-size-base * 1.25;
+$h6-font-size:                $font-size-base * 1;
 
 // 
 // Cards
@@ -134,12 +134,12 @@ $nav-tabs-link-hover-border-color: transparent;
 // 
 // Container
 // 
-$container-max-widths: (
-  sm: 540px,
-  md: 720px,
-  lg: 960px,
-  xl: 1320px
-);
+// $container-max-widths: (
+//   sm: 540px,
+//   md: 720px,
+//   lg: 960px,
+//   xl: 1320px
+// );
 
 // Dropdowns
 //
