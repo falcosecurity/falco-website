@@ -8,6 +8,16 @@
     z-index: 22;
   }
 
+  .back {
+    position: absolute;
+    top: -1.75rem;
+    color: $gray-600;
+
+    i.fa::before {
+      -webkit-text-stroke: 1px $body-bg;
+    }
+  }
+
   .grid {
     row-gap: 2.5rem;
     grid-template-areas: "img0 img0 content0";
@@ -54,10 +64,15 @@
       border-radius: 1.25rem;
     }
 
-    &__share {
-      i {
-        font-size: 1.75rem;
+    &__tags {
+      .btn-info {
+        background-color: $cyan;
+      }
+
+      .btn-light {
+        background-color: $gray-200;
       }
     }
   }
+
 }
