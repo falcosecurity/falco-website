@@ -1,0 +1,11 @@
+{{ $take := $.Get "take" | default 0 }}
+{{ $skip := $.Get "skip" | default 100 }}
+{{ $col_id := $.Get "color" | default "light" }}
+{{ $class := $.Get "class" | default ""}}
+
+{{ $faqList := (index site.Data site.Language.Lang).faq }}
+{{ range $i, $faq := $faqList }}
+  {{ if and (ge $i $take) (le $i $skip) }}
+    {{ partial "card_faq" (dict "index" $faq.index "col_id" $col_id "class" $class "title" $faq.title "content" $faq.content)}}
+  {{ end }}
+{{ end }}
