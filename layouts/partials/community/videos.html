@@ -1,0 +1,7 @@
+{{ $playlist := site.Data.videos.community }} 
+{{ $params := dict "playlist_id" $playlist "take" 6 }} 
+{{ $js := resources.Get "js/community-videos.js" | js.Build (dict "params" $params) }}
+
+<div class="grid-1 grid-md-2 grid-lg-3 gap-4" id="{{ $playlist }}"></div>
+
+<script src="{{ $js.RelPermalink}}" async></script>
