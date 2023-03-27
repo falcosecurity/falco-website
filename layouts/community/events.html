@@ -1,0 +1,34 @@
+{{ define "main" }}
+
+<section class="row">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-6">
+        <h2>Falco Events</h2>
+        <p>
+          Get involved in Falco community events! Swag and recognition await!
+        </p>
+      </div>
+      <div class="col-12 col-md-8 col-lg-6">
+        {{ partial "community/subscribe.html"}}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="row">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h3>See you in person</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col" id="community-events">
+        {{ partial "community/events.html" }}
+      </div>
+    </div>
+  </div>
+</section>
+
+{{ end }}

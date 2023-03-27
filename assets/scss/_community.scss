@@ -67,3 +67,35 @@
     border-radius: 0 !important;
   }
 }
+
+.event {
+  &__time {
+    // min-width: 12rem;
+
+    @include media-breakpoint-up(md) {
+      min-width: 7rem;
+    }
+
+    @include media-breakpoint-up(lg) {
+      min-width: 12rem;
+    }
+
+    @include media-breakpoint-up(xs) {
+      min-width: unset;
+    }
+  }
+
+  &:first-of-type {
+    // .event__card,
+    .event__info,
+    hr {
+      display: none;
+    }
+  }
+
+  &:not(:first-of-type) {
+    .event__item {
+      display: none;
+    }
+  }
+}
