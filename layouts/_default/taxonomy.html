@@ -1,0 +1,25 @@
+{{ define "main" }} 
+
+{{ $tag := .Title }}
+
+<section class="row td-box td-blog td-box--transparent">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <a href="/blog" class="btn btn-link p-0 text-decoration-none font-weight-normal back">
+          <i class="fa fa-arrow-left"></i>
+          {{ T "general_back" }}
+        </a>
+        <h2>{{ $tag }}</h2>
+        <div class="grid grid-1 grid-md-2 grid-lg-3 gap-4 mt-4">
+          {{ range .Pages }} 
+            {{ .Scratch.Set "selected_tag" $tag }}
+            <div>{{ partial "blog/card.html" . }}</div>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{ end }}
