@@ -46,6 +46,19 @@ For example, the GitHub plugin for Falco can detect unauthorized access attempts
 Similarly, the Okta plugin for Falco can provide enhanced identity and access management capabilities. This can be particularly useful in the event of a security incident, such as the [FireEye outbreak](https://www.nytimes.com/2020/12/08/technology/fireeye-hacked-russians.html), where rapid alerting and response are crucial for containing the damage and mitigating the threat.
 {{< /blocks/content >}}
 
+{{< blocks/content content="html" wrap="col">}}
+<h3 class="mb-3">Falco FAQs</h3>
+  <div class="grid-1 gap-3">
+
+{{< faq take=6 skip=8 >}}
+
+  </div>
+
+  <div class="text-center mt-5">
+    <a href="/about/faq/" class="text-center btn btn-primary btn-lg">Go to all FAQs</a>
+  </div>
+{{< /blocks/content >}}
+
 <!-- TODO: uncomment this section when the redesign is ready -->
 <!-- {{< blocks/content content="html" wrap="col">}}
 {{< feedback >}}

@@ -260,6 +260,19 @@ Defining custom metadata can benefit security by enriching Falco alerts with con
 
 {{< /blocks/content >}}
 
+{{< blocks/content content="html" wrap="col">}}
+<h3 class="mb-3">Falco FAQs</h3>
+  <div class="grid-1 gap-3">
+
+{{< faq take=3 skip=5 >}}
+
+  </div>
+
+  <div class="text-center mt-5">
+    <a href="/about/faq/" class="text-center btn btn-primary btn-lg">Go to all FAQs</a>
+  </div>
+{{< /blocks/content >}}
+
 <!-- TODO: uncomment this section when the redesign is ready -->
 <!-- {{< blocks/content content="html" wrap="col">}}
 {{< feedback >}}
