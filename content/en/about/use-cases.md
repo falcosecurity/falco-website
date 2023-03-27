@@ -2,23 +2,23 @@
 title: Falco use cases
 ---
 
-{{< blocks/content wrap="col-lg-9" >}}
+{{< blocks/content wrap="col" >}}
 ## What you can do with Falco today
 {{< /blocks/content >}}
 
-{{< blocks/content wrap="col-lg-9" >}}
+{{< blocks/content wrap="col" >}}
 Falco shines at detecting threats, intrusions, and data theft in real time. It works well with legacy infrastructures, and excels at supporting containers, Kubernetes, and the cloud. Falco secures both workloads (processes, containers, services) and infrastructure (hosts, VMs, network, cloud infrastructure and services). It is designed to be lightweight, efficient, and scalable, and to be used in both development and production. Falco can detect many classes of threats out of the box, but should you need more, you can add custom detections. Falco is driven by a thriving open source community, bringing support and constant enhancement.
 
 ![Falco today](/img/about/falco_today.svg#img-fit)
 {{< /blocks/content >}}
 
-{{< blocks/content wrap="col-lg-9" >}}
+{{< blocks/content wrap="col" >}}
 ### Secure your whole machine by instrumenting the operating system
 
 One of the major benefits of Falco is its ability to provide host security. It achieves this by leveraging kernel-level eBPF instrumentation to capture low-level system events, such as file accesses, process creations, and network activity. This allows Falco to detect suspicious behavior, such as unauthorized access attempts, malware infections, or privilege escalations, that may indicate a security breach. Additionally, Falco's rules engine can be customized to detect specific types of attacks and enforce security policies tailored to your organization's needs.
 {{< /blocks/content >}}
 
-{{< blocks/content wrap="col-lg-9" >}}
+{{< blocks/content wrap="col" >}}
 ### Protect containers, Kubernetes and cloud native applications
 
 Born "cloud-native",  Falco is able to provide advanced container security. By tracking container behaviors and communications with the kernel, with an eBPF probe or a native kernel module, Falco can detect suspicious activities and threats in real-time. Falco can also enrich container events with metadata from the operating system, the container runtime and the Kubernetes API, providing users with more context about what's happening in their containers.
@@ -27,7 +27,7 @@ In addition to container security, Falco also provides robust Kubernetes securit
 
 {{< /blocks/content >}}
 
-{{< blocks/content wrap="col-lg-9" >}}
+{{< blocks/content wrap="col" >}}
 ### Detect and alert on suspicious behavior in your cloud environments
 
 As more organizations migrate their applications to the cloud, the need for robust security measures becomes increasingly important. The nature of cloud-native environments can make it challenging to keep track of all the assets and configurations, which can expose infrastructure and applications to vulnerabilities.
@@ -36,7 +36,7 @@ Falco has powerful plugins that hook into the security event logs of your cloud 
 
 {{< /blocks/content >}}
 
-{{< blocks/content wrap="col-lg-9" >}}
+{{< blocks/content wrap="col" >}}
 ### Protect your organization across the cloud
 
 Falco offers a range of plugins that provide additional security benefits. These plugins integrate with various cloud services, such as GitHub and Okta, to enhance the security posture of your whole organization.
