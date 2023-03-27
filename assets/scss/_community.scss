@@ -1,22 +1,21 @@
 .community {
-  height: 76rem;
+  height: 72rem;
 
   &__call-invitation {
     top: 3rem;
   }
 
   &__events {
-    top: 30rem;
-    right: 17rem;
+    top: 29rem;
+    right: 16rem;
   }
 
   &__contribute {
-    top: 57rem;
+    top: 55rem;
   }
 
   &__links {
-    left: 6rem; 
-    top: 62rem;
+    bottom: 0;
     width: 44rem;
   }
 
@@ -27,44 +26,44 @@
 
   &__call {
     right: 0;
-    width: 40rem;
+    width: 34rem;
     aspect-ratio: 1.8;
     object-fit: cover;
   }
 
   &__bar {
-    top: 19rem;
-    width: 25rem;
+    top: 22rem;
+    width: 21rem;
     aspect-ratio: 1.4;
     object-fit: cover;
     z-index: 10;
   }
 
   &__presentation {
-    top: 32rem;
-    left: 12rem;
-    width: 33.5rem;
+    top: 33rem;
+    left: 7rem;
+    width: 28rem;
     object-fit: cover;
     aspect-ratio: 1.6;
   }
 
   &__coding {
     right: 0;
-    top: 40rem;
-    width: 26.5rem;
+    bottom: 0;
+    width: 22rem;
     object-fit: cover;
     aspect-ratio: 0.74;
   }
 
   &__arrow1 {
     top: -3rem;
-    left: 33rem;
+    left: 27rem;
     border-radius: 0 !important;
   }
 
   &__arrow2 {
-    top: 26rem;
-    left: 41rem;
+    top: 25rem;
+    left: 32rem;
     border-radius: 0 !important;
   }
 }
