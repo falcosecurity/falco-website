@@ -81,6 +81,8 @@ general_no:
   other: "No"
 general_share:
   other: Share
+general_back:
+  other: Back
 feedback_title:
   other: Was this page helpful?
 feedback_subtitle:

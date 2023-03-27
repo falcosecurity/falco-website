@@ -11,7 +11,19 @@ disableBrowserError = true
 
 ignoreErrors = ["error-remote-getjson"]
 
-disableKinds = ["taxonomy", "taxonomyTerm"]
+# disableKinds = ["category", "tags"]
+
+[params.taxonomy]
+taxonomyCloud = ["categories", "tags"] # set taxonomyCloud = [] to hide taxonomy clouds
+taxonomyCloudTitle = ["Categories", "Tag Cloud"] # if used, must have same length as taxonomyCloud
+taxonomyPageHeader = ["categories", "tags"]
+
+
+# [taxonomies]
+# tag = "tags"
+# category = "categories"
+# doc = "posts"
+
 
 ignoreFiles = [ "^OWNERS$", "README[-]+[a-z]*\\.md", "^node_modules$", "content/en/docs/doc-contributor-tools" ]
 
@@ -222,8 +234,7 @@ id = "UA-40398182-19"
 # Specify a value here if your content directory is not in your repo's root directory
 #github_subdir = "userguide"
 
-time_format_blog = "Monday, January 02, 2006"
-time_format_default = "January 2, 2006"
+
 # Sections to publish in the main RSS feed.
 rss_sections = ["blog"]
 
@@ -237,6 +248,8 @@ rss_sections = ["blog"]
 copyright = "The Falco Authors"
 copyright_linux =  "The Linux Foundation ®."
 sysdig = "https://sysdig.com/"
+time_format_blog = "Monday, January 02, 2006"
+time_format_default = "Jan 2, 2006"
 
 # Menu title if your navbar has a versions selector to access old versions of your site.
 # This menu appears only if you have at least one [params.versions] set.
@@ -258,11 +271,6 @@ github_repo = "https://github.com/falcosecurity/falco-website"
 github_project_repo = "https://github.com/falcosecurity/falco"
 # Specify a value here if you have would like to reference a different branch for the other github settings
 # github_branch =
-
-time_format_blog = "Monday, January 02, 2006"
-time_format_default = "January 2, 2006"
-# Sections to publish in the main RSS feed.
-rss_sections = ["blog"]
 
 # Enable Algolia DocSearch
 algolia_docsearch = false

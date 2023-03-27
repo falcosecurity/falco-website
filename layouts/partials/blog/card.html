@@ -1,3 +1,7 @@
+{{ $allowed_tags := (index $.Site.Data .Site.Language.Lang).blog_tags }}
+
+{{ $tag := .Scratch.Get "selected_tag" }}
+
 <div class="post__cover">
   <a href="{{ .RelPermalink }}" class="text-decoration-none">
     {{ partial "featured-image.html" (dict "p" . "class" "d-none d-md-block post__cover") }}
@@ -6,7 +10,7 @@
 <div class="post__content">
   <div class="d-flex text-muted text-uppercase">
     <small class="flex-grow-1">{{ .Params.author }}</small>
-    <small>{{ .Date.Format ($.Param "time_format_default") }}</small>
+    <small class="flex-shrink-0">{{ .Date.Format ($.Param "time_format_default") }}</small>
     <i class="fa fa-link ml-2"></i>
   </div>
 
@@ -18,4 +22,14 @@
       {{ .Plain | safeHTML | truncate 90 }}
     </p>
   </a>
+  <ul class="taxonomy-terms post__tags">
+    {{ range .Params.tags }}
+      {{ $class := cond (eq $tag .) "btn-info" "btn-light" }}
+      {{ if (in $allowed_tags . ) }}
+        <li>
+          <a class="btn py-0 px-3 rounded-pill {{ $class }}" href="{{ urlize (printf `/tags/%s` .) }}">{{ . }}</a>
+        </li>
+        {{ end }}
+    {{ end }}
+  </ul>
 </div>
