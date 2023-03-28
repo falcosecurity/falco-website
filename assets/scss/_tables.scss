@@ -26,4 +26,33 @@
   @include media-breakpoint-up(xl) {
     width: 80%;
   }
+
+  &--sm {
+    font-size: 0.75rem;
+  }
+
+  &-rounded {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: $table-border-radius;
+
+    th:first-child {
+      border-top-left-radius: $table-border-radius;
+    }
+
+    th:last-child {
+      border-top-right-radius: $table-border-radius;
+    }
+    
+    tr:last-child {
+      td:first-child {
+        border-bottom-left-radius: $table-border-radius;
+      }
+
+      td:last-child {
+        border-bottom-right-radius: $table-border-radius;
+      }
+    }
+  }
 }

@@ -1,0 +1,24 @@
+{{ $nominations := site.Data.nominations }}
+{{ $length := len $nominations }}
+
+{{ range $i, $nomination := $nominations }}
+  {{ if and (ge $i (sub $length 3)) (le $i (sub $length 1)) }}
+    {{ if eq $i (sub $length 3) }}
+      <tr class="text-secondary">
+        <td>{{ $nomination.month }}</td>
+        <td>{{ $nomination.open }}</td>
+        <td>{{ $nomination.close }}</td>
+        <td>{{ $nomination.period }}</td>
+        <td>{{ $nomination.announcement }}</td>
+      </tr>
+    {{ else if or (eq $i (sub $length 1)) (eq $i (sub $length 2)) }}
+        <tr>
+          <td><a class="font-weight-bold" href="{{ $nomination.link }}">{{ $nomination.month }}</a></td>
+          <td>{{ $nomination.open }}</td>
+          <td>{{ $nomination.close }}</td>
+          <td>{{ $nomination.period }}</td>
+          <td>{{ $nomination.announcement }}</td>
+        </tr>
+    {{ end }}
+  {{ end }}
+{{ end }}
