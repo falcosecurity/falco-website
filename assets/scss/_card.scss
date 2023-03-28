@@ -63,6 +63,10 @@
 // Landing/Feature card
 .feature-card {
   height: max-content;
+  
+  &__title {
+    font-size: 1.625rem;
+  }
 
   &__expand-control {
     &:hover {
