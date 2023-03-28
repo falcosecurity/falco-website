@@ -1,0 +1,80 @@
+{{ define "main" }}
+
+<section class="row td-box td-box--transparent">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h2 id="contributor-of-the-month">
+          Contributor of the Month
+        </h2>
+        <p>Hundreds of developers around the world contribute to Falco open source projects. Our Hall of Fame honors the best of the best.</p>
+        <div class="mt-4">
+          <a href="https://github.com/falcosecurity/.github/blob/master/CONTRIBUTING.md" class="text-center btn btn-primary btn-lg">
+            Learn how to contribute
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="row td-box td-box--transparent">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h2 id="the-latest-contributors">The latest contributors</h2>
+        {{ partial "contributors.html" }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="row td-box td-box--transparent">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h3 id="nominate-the-next-contributor-of-the-month">Nominate the next Contributor of the Month</h3>
+        <p>Head over to the 👉🏼 <a href="https://github.com/falcosecurity/falco-website">Falco community repo</a>. You’ll find an issue by month to offer nominations (open for one week starting the second Tuesday of each month) and then vote</p>
+        <div class="overflow-auto">
+          <table class="table table-rounded table--sm w-100">
+            <thead>
+              <tr>
+                <th scope="col">Month</th>
+                <th scope="col">Nominations open</th>
+                <th scope="col">Nominations close</th>
+                <th scope="col">Voting period</th>
+                <th scope="col">Announcement</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{ partial "nominations.html" }}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="row td-box td-box--transparent">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <a class="text-decoration-none" href="https://github.com/falcosecurity/community/blob/main/community-appreciation-program.md">
+          <div class="card shadow td-box--info">
+          <div class="card-body">
+            <div class="card-text h-100 w-100 font-weight-normal">
+              <h3 id="make-contributions-get-rewarded">
+                Make contributions, get rewarded
+              </h3>
+              <p>If you’re supporting the Falco community with contributions, please let us know! Earn digital badges, stickers, t-shirts and other swag awards for making blogs, bug fixes, doc posts, events, new features and more. Visit for more details. Happy contributing!</p>
+            </div>
+          </div>
+        </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{ end }}

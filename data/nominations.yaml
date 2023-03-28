@@ -1,0 +1,18 @@
+- month: January / February
+  link: none
+  open: Feb 15, 2023
+  close: Feb 24, 2023
+  period: Feb 25, 2023 — Feb 27, 2023
+  announcement: Feb 28, 2023
+- month: March
+  link: https://github.com/falcosecurity/community/issues/164
+  open: Mar 13, 2023
+  close: Mar 20, 2023
+  period: Mar 21, 2023 — Mar 27, 2023
+  announcement: Mar 31, 2023
+- month: April
+  link: https://github.com/falcosecurity/community/issues/165
+  open: Apr 10, 2023
+  close: Apr 17, 2023
+  period: Apr 18, 2023 — Apr 24, 2023
+  announcement: Apr 28, 2023
