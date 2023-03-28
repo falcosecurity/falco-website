@@ -139,7 +139,7 @@ id = "UA-40398182-19"
     url = "/about/"
 [[menu.main]]
     identifier = "what-is-falco"
-    name = "What is falco"
+    name = "What is Falco?"
     weight = 2
     url = "/about/falco/"
     parent = "about"
