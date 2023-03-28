@@ -116,11 +116,11 @@ Head over to the 👉🏼 [Falco community repo](https://github.com/falcosecurit
 
 <div class="td-content">
 
-| Month              | Nominations open | Nominations close | Voting period               | Announcement   |
-|--------------------|------------------|-------------------|-----------------------------|----------------|
+| Month             | Nominations open | Nominations close | Voting period               | Announcement   |
+|-------------------|------------------|-------------------|-----------------------------|----------------|
 | January / February | Feb 15, 2023     | Feb 24, 2023      | Feb 25, 2023 — Feb 27, 2023 | Feb 28, 2023   |
-| [March](#)         | Mar 13, 2023     | Mar 20, 2023      | Mar 21, 2023 — Mar 27, 2023 | Mar 31, 2023   |
-| [April](#)         | Apr 10, 2023     | Apr 17, 2023      | Apr 18, 2023 — Apr 24, 2023 | Apr 28, 2023   |
+| [March](https://github.com/falcosecurity/community/issues/164)        | Mar 13, 2023     | Mar 20, 2023      | Mar 21, 2023 — Mar 27, 2023 | Mar 31, 2023   |
+| [April](https://github.com/falcosecurity/community/issues/165)         | Apr 10, 2023     | Apr 17, 2023      | Apr 18, 2023 — Apr 24, 2023 | Apr 28, 2023   |
 
 </div>
 
