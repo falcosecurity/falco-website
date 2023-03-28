@@ -37,17 +37,19 @@
   const [announcementBar] = document.getElementsByClassName(CLASS_NAME);
   const [navbar] = document.getElementsByClassName("td-navbar");
 
-  const store = updateStore();
-  const inDateRange = isInDateRange();
+  if (announcementBar) {
+    const store = updateStore();
+    const inDateRange = isInDateRange();
 
-  if(store.show && inDateRange){
-    announcementBar.classList.add('d-flex');
-    navbar.classList.add('td-navbar--announcement-show');
+    if (store.show && inDateRange) {
+      announcementBar.classList.add("d-flex");
+      navbar.classList.add("td-navbar--announcement-show");
+    }
+
+    return (announcementBarHide = () => {
+      localStorage.setItem(STORE, JSON.stringify({ ...store, show: false }));
+      announcementBar.classList.add(`${CLASS_NAME}--hide`);
+      navbar.classList.add("td-navbar--announcement-hide");
+    });
   }
-
-  return (announcementBarHide = () => {
-    localStorage.setItem(STORE, JSON.stringify({ ...store, show: false }));
-    announcementBar.classList.add(`${CLASS_NAME}--hide`);
-    navbar.classList.add('td-navbar--announcement-hide');
-  });
 })();

@@ -53,5 +53,5 @@ function replace(template, { id, description, title, published }) {
 try {
   handler();
 } catch {
-  document.getElementById(ids[0].id).innerHTML = replace(template, plug);
+  document.getElementById(ids[0].id).innerHTML = replace(template, [plug, plug, plug].join(''));
 }
