@@ -1,5 +1,5 @@
 ---
-title: What is Falco
+title: What is Falco?
 keywords: Falco, Runtime security, Threat detection and response
 ---
 
