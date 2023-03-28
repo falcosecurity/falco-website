@@ -105,12 +105,16 @@
     content: "\f078";
     -webkit-text-stroke: 1px $body-bg;
     vertical-align: 0;
+    margin-left: 0;
+    font-size: 0.75rem;
   }
 
   .dropdown {
-    min-width: 100px;
-
     .dropdown-toggle {
+      &[aria-expanded="true"] {
+        color: $primary;
+      }
+      
       &::after {
         @extend %chevron;
       }
@@ -123,10 +127,11 @@
         }
         &::before {
           @extend %chevron;
-          margin-right: 0.25rem;
         }
       }
     }
+
+
   }
 
   @include media-breakpoint-down(md) {
@@ -177,7 +182,7 @@
     &:before {
       display: inline-block;
       text-align: center;
-      min-width: 1em;
+      // min-width: 1em;
     }
   }
   .alert {
