@@ -5,6 +5,7 @@ date: 2022-11-08
 author: Vicente J. Jimenez Miras
 images:
   - /blog/falco-kubecon-2022/images/falco-at-kubecon-na-2022-featured.png
+tags: ["Community","Live Event","Kubernetes"]
 ---
 
 It was KubeCon recently. I doubt anyone reading this didn't know about it. And if you attended, you're probably still receiving e-mails about the event.

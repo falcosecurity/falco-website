@@ -3,6 +3,7 @@ title: Falcosidekick 2020
 date: 2021-01-12
 author: Thomas Labarussias
 slug: falcosidekick-2020
+tags: ["Falcosidekick","Release"]
 ---
 
 This fantastic post from [@leodido](https://github.com/leodido) about how has been the previous year 2020 for falco inspired me ([link](https://falco.org/blog/falco-2020/))  I wanted to bring everyone up to speed on what we built for `falcosidekick` in 2020

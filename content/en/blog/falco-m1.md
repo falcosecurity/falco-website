@@ -4,6 +4,7 @@ linktitle: "Running Falco on Apple Silicon"
 date: 2022-09-20
 author: Eduardo Minguez
 slug: falco-apple-silicon
+tags: ["Tutorial"]
 ---
 
 Hello, Falcoers!

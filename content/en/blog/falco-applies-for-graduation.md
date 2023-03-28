@@ -3,6 +3,7 @@ title: Falco applies for graduation
 date: 2022-11-09
 author: Jacque Salinas, Leonardo Grasso, and Vicente Jiménez Miras
 slug: falco-applies-for-graduation
+tags: ["Community"]
 ---
 
 Dear Falco community, 

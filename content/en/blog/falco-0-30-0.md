@@ -3,6 +3,7 @@ title: Falco 0.30.0
 date: 2021-10-01
 author: Frederico Araujo
 slug: falco-0-30-0
+tags: ["Falco","Release"]
 ---
 
 Today we announce the fall release of Falco 0.30.0 🌱

@@ -3,6 +3,7 @@ title: "Kubernetes Response Engine, Part 6: Falcosidekick + Cloud Run"
 date: 2021-06-25
 author: Batuhan Apaydın
 slug: falcosidekick-response-engine-part-6-cloud-run
+tags: ["Falcosidekick","Integration"]
 ---
 
 > *This blog post is part of a series of articles about how to create a `Kubernetes` response engine with `Falco`, `Falcosidekick` and a `FaaS`.*

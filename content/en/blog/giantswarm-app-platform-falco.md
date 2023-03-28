@@ -5,6 +5,7 @@ description: Deploying and managing applications across hybrid environments take
 date: 2022-08-09
 author: Vicente J. Jiménez Miras
 slug: giantswarm-app-platform-falco
+tags: ["Falco","Integration","User Story"]
 ---
 
 In this article, you will learn how Giant Swarm simplifies the maintenance of the software stack within Kubernetes clusters by using its App Platform technology. Additionally, we will show how customers can leverage this to easily deploy Falco, either individually or as part of Giant Swarm's Security Pack, to secure their managed Kubernetes service.

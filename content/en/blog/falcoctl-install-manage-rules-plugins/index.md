@@ -4,6 +4,7 @@ linktitle: "Falcoctl: install and manage your rules and plugins"
 date: 2023-02-24
 author: Thomas Labarussias
 slug: falcoctl-install-manage-rules-plugins
+tags: ["Rules","Falco Plugins","Falcoctl"]
 ---
 
 Since the launch of the plugin framework in January 2022, our adopters have requested an out-of-the-box solution to manage the lifecycle of rules (installation, updates). We heard your request and also created a guide to help you smoothly install the [plugins](https://falco.org/docs/plugins/).

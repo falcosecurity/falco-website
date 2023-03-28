@@ -6,6 +6,7 @@ author: Thomas Labarussias
 slug: falcosidekick-2-27-0-ui-2-1-0
 images:
   - /blog/falcosidekick-2-27-0-ui-2-1-0/images/falcosidekick-featured.png
+tags: ["Falcosidekick","Release"]
 ---
 
 So many good things happened for Falcosidekick and Falcosidekick UI this year. It's still incredible these projects became so beloved and useful for the community. To all contributors, promotors and users, a big big thank you.

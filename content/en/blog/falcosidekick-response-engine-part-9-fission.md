@@ -3,6 +3,7 @@ title: "Kubernetes Response Engine, Part 9: Falcosidekick + Fission"
 date: 2021-09-01
 author: Gaurav Gahlot
 slug: falcosidekick-response-engine-part-9-fission
+tags: ["Falcosidekick","Integration"]
 ---
 
 > *This blog post is part of a series of articles about how to create a `Kubernetes` response engine with `Falco`, `Falcosidekick` and a `FaaS`.*

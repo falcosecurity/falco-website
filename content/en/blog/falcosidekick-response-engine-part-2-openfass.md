@@ -3,6 +3,7 @@ title: "Kubernetes Response Engine, Part 2: Falcosidekick + OpenFaas"
 date: 2021-04-11
 author: Batuhan Apaydın
 slug: falcosidekick-response-engine-part-2-openfaas
+tags: ["Falcosidekick","Integration"]
 ---
 
 > *This blog post is part of a series of articles about how to create a `Kubernetes` response engine with `Falco`, `Falcosidekick` and a `FaaS`.*

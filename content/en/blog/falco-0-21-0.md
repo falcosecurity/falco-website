@@ -3,6 +3,7 @@ title: Falco 0.21.0 is out!
 date: 2020-03-18
 author: Leonardo Di Donato
 slug: falco-0-21-0
+tags: ["Falco","Release"]
 ---
 
 Even though there's the lockdown, [Falco 0.21.0](https://github.com/falcosecurity/falco/releases/tag/0.21.0) decided to go out!

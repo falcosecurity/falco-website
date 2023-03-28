@@ -3,6 +3,7 @@ title: The GPG key used to sign Falco packages has been rotated
 date: 2023-01-18
 author: Jason Dellaluce
 slug: falco-packages-gpg-key-rotated
+tags: ["News"]
 ---
 
 The Falcosecurity organization uses a GPG key for providing detatched signatures for the official Falco packages available at [download.falco.org/?prefix=packages](https://download.falco.org/?prefix=packages/). After [the security incident of CircleCI](https://circleci.com/blog/january-4-2023-security-alert/) disclosed in January 2023, the Falco maintainers opted for rotating the organization's secrets and token stored in the platform. Although we have not found any evidence of unauthorized modification of the Falco packages or their signatures, the GPG key has still been rotated as a safety measure.
