@@ -111,12 +111,9 @@ title: Falco Ecosystem
 {{< /blocks/content >}}
 
 {{< blocks/content content="html" wrap="col">}}
-<h3 class="mb-3">Falco FAQs</h3>
-  <div class="grid-1 gap-3">
-
-{{< faq take=9 skip=11 >}}
-
-  </div>
+  <h3 class="mb-3">Falco FAQs</h3>
+  
+  {{< faq take=9 skip=11 >}}
 
   <div class="text-center mt-5">
     <a href="/about/faq/" class="text-center btn btn-primary btn-lg">Go to all FAQs</a>
