@@ -3,6 +3,7 @@ title: Falco 0.26.2 a.k.a. "the download.falco.org release"
 date: 2020-11-10
 author: Leonardo Di Donato, Lorenzo Fontana
 slug: falco-0-26-2
+tags: ["Falco","Release"]
 ---
 
 Today we announce the release of Falco 0.26.2 🥳

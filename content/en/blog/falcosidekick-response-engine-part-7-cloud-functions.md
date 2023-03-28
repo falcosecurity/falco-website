@@ -3,6 +3,7 @@ title: "Kubernetes Response Engine, Part 7: Falcosidekick + Cloud Functions"
 date: 2021-06-29
 author: Furkan Türkal
 slug: falcosidekick-response-engine-part-7-cloud-functions
+tags: ["Falcosidekick","Integration"]
 ---
 
 > *This blog post is part of a series of articles about how to create a `Kubernetes` response engine with `Falco`, `Falcosidekick` and a `FaaS`.*

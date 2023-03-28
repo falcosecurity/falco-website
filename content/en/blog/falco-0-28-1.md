@@ -3,6 +3,7 @@ title: Falco 0.28.1
 date: 2021-05-07
 author: Carlos Panato
 slug: falco-0-28-1
+tags: ["Falco","Release"]
 ---
 
 Today we announce the spring release of Falco 0.28.1 🌱

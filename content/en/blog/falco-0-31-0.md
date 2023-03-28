@@ -3,6 +3,7 @@ title: Falco 0.31.0 a.k.a. "the Gyrfalcon"
 date: 2022-01-31
 author: Jason Dellaluce, Leonardo Grasso
 slug: falco-0-31-0
+tags: ["Falco","Release"]
 ---
 
 Today we announce the release of **Falco 0.31.0**, a.k.a the **Gyrfalcon** 🦅!

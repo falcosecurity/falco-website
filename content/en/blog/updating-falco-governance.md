@@ -3,6 +3,7 @@ title: Updating Falco’s governance documentation
 date: 2022-09-02
 author: Jason Dellaluce, Leonardo Grasso
 slug: updating-falco-governance
+tags: ["Community"]
 ---
 
 As a CNCF project, Falco is committed to promoting a healthy community of contributors and maintainers from multiple vendors. In aid of this, we are delighted to announce that we have updated the Falco governance documentation to help our maintainers better serve our community. 

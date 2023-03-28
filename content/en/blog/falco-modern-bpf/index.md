@@ -9,6 +9,7 @@ images:
   - /blog/falco-modern-bpf/images/falco-modern-bpf-01.png
   - /blog/falco-modern-bpf/images/falco-modern-bpf-02.png
   - /blog/falco-modern-bpf/images/falco-modern-bpf-featured.png
+tags: ["eBPF"]
 ---
 ![](/blog/falco-modern-bpf/images/falco-modern-bpf-01.png)
 
