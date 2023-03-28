@@ -10,7 +10,7 @@
 			{{ $p := . }}
 			{{ range .Site.Menus.main }}
         {{ if .HasChildren }}
-          <li class="nav-item dropdown d-none d-lg-block mb-2 mb-lg-0">
+          <li class="nav-item dropdown d-none d-lg-block mb-2 mb-lg-0 mr-3">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{ .Name }}
           </a>
@@ -26,7 +26,7 @@
           </div>
          </li>
         {{ else }}
-          <li class="nav-item mr-4 mb-2 mb-lg-0">
+          <li class="nav-item mr-3 mb-2 mb-lg-0">
             {{ $active := or ($p.IsMenuCurrent "main" .) ($p.HasMenuCurrent "main" .) }}
             {{ with .Page }}
               {{ $active = or $active ( $.IsDescendant .)  }}
@@ -40,7 +40,7 @@
         {{ end }}
       {{ end }}
 			{{ if  .Site.Params.versions }}
-			<li class="nav-item dropdown mr-4 d-none d-lg-block">
+			<li class="nav-item dropdown d-none d-lg-block">
 				{{ partial "navbar-version-selector.html" . }}
 			</li>
 			{{ end }}
@@ -51,11 +51,11 @@
       {{ partial "search-input.html" . }}
     </div>
     {{ if (gt (len .Site.Home.Translations) 0) }}
-    <div class="navbar-nav nav-item dropdown dropdown-left d-none d-lg-block">
+    <div class="navbar-nav nav-item dropdown dropdown-left d-none d-lg-block mr-lg-3">
       {{ partial "navbar-lang-selector.html" . }}
     </div>
     {{ end }}
-		<a href="/docs/getting-started/try-falco/" role="button" class="btn btn-primary px-3">
+		<a href="/docs/getting-started/try-falco/" role="button" class="btn btn-primary flex-shrink-0 px-3">
 			{{ T "home_falco_primary_btn" | markdownify }}
 		</a>
   </div>
