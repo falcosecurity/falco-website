@@ -8,11 +8,7 @@ title: FAQs
 
 {{< blocks/content content="html" wrap="col" >}}
 
-<div class="grid-1 gap-3">
-
 {{< faq take=0 skip=11 >}}
-
-</div>
 
 {{< /blocks/content >}}
 

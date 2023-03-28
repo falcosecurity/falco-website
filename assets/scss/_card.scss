@@ -25,6 +25,10 @@
 // FAQ card
 .faq-card {
 
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+
   .card-text {
     margin-top: 1.5rem;
   }
