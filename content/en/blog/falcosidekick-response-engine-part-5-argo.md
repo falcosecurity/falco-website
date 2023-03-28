@@ -3,6 +3,7 @@ title: "Kubernetes Response Engine, Part 5: Falcosidekick + Argo"
 date: 2021-05-23
 author: Thomas Labarussias
 slug: falcosidekick-response-engine-part-5-argo
+tags: ["Falcosidekick","Integration"]
 ---
 
 > *This blog post is part of a series of articles about how to create a `Kubernetes` response engine with `Falco`, `Falcosidekick` and a `FaaS`.*

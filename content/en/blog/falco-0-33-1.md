@@ -3,6 +3,7 @@ title: Falco 0.33.1
 date: 2022-11-24
 author: Luca Guerra
 slug: falco-0-33-1
+tags: ["Falco","Release"]
 ---
 
 Today we announce the release of **Falco 0.33.1** 🦅!

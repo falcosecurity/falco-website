@@ -3,6 +3,7 @@ title: Falcosidekick 2.25.0 and Falcosidekick 2.0.0
 date: 2022-06-01
 author: Thomas Labarussias
 slug: falcosidekick-2-25-0-falco-2-0-0
+tags: ["Falcosidekick","Release"]
 ---
 
 A few days ago was the KubeCon EU in Valencia, Spain. The moment to meet contributors who made what Falcosidekick is now was a really enjoyable time and I hope we'll do it again in the future. One week before, two new major versions of Falcosidekick and Falcosidekick-Ui were released. Let's see what's new.

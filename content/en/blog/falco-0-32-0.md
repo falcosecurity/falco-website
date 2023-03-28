@@ -3,6 +3,7 @@ title: Falco 0.32.0
 date: 2022-06-03
 author: Federico Di Pierro
 slug: falco-0-32-0
+tags: ["Falco","Release"]
 ---
 
 Today we announce the release of **Falco 0.32.0** 🦅!

@@ -5,6 +5,7 @@ date: 2023-01-04
 author: Jacqueline Salinas
 images:
   - /blog/recap-2022/images/recap-2022-featured.png
+tags: ["Community"]
 ---
 
 Dear Falco community, 

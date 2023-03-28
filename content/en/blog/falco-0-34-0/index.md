@@ -6,6 +6,7 @@ slug: falco-0-34-0
 images:
   - /blog/falco-0-34-0/images/falco-hobeybee-featured.png
   - /blog/falco-0-34-0/images/falco-honeybee.png
+tags: ["Falco","Release"]
 ---
 
 Dear community, today we are delighted to announce the release of Falco 0.34.0  🎉!

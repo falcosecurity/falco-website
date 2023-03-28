@@ -2,6 +2,8 @@
 title: Falco 0.27.0 a.k.a. "The happy 2021 release"
 date: 2021-01-18
 author: Lorenzo Fontana
+slug: falco-0-27-0
+tags: ["Falco","Release"]
 ---
 
 Today we announce the release of Falco 0.27.0 🥳

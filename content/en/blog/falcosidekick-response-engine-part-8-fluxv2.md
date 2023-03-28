@@ -3,6 +3,7 @@ title: "Kubernetes Response Engine, Part 8: Falcosidekick + Flux v2"
 date: 2021-08-31
 author: Batuhan Apaydın
 slug: falcosidekick-response-engine-part-8-fluxv2
+tags: ["Falcosidekick","Integration"]
 ---
 
 > *This blog post is part of a series of articles about how to create a `Kubernetes` response engine with `Falco`, `Falcosidekick` and a `FaaS`.*

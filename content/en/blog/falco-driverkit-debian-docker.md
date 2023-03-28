@@ -5,6 +5,7 @@ description: Learn how to use build your own Falco Drivers for Debian
 date: 2022-09-05
 author: Vicente J. Jiménez Miras
 slug: falco-driverkit-debian-docker
+tags: ["Kmod","eBPF"]
 ---
 
 We use different technologies on a daily basis. Tools like Vagrant, Terraform, Ansible, and many more allow us to create and destroy digital resources in a matter of minutes, if not seconds. However, if you keep changing your running environment, you might also need to calibrate your workloads to these new changes. This is especially true when you deploy applications tightly dependent on the operating system.

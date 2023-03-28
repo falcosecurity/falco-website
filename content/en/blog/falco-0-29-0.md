@@ -3,6 +3,7 @@ title: Falco 0.29.0
 date: 2021-06-21
 author: Massimiliano Giovagnoli
 slug: falco-0-29-0
+tags: ["Falco","Release"]
 ---
 
 Today we announce the summer release of Falco 0.29.0 🌱

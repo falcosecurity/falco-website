@@ -9,6 +9,7 @@ images:
   - /blog/falco-modern-bpf/images/falco-modern-bpf-01.png
   - /blog/falco-modern-bpf/images/falco-modern-bpf-02.png
   - /blog/falco-modern-bpf/images/falco-modern-bpf-featured.png
+tags: ["eBPF"]
 ---
 
 The new BPF probe has landed among us 👽 and it brings to the table new shiny features. The BPF world grows continuously and every new kernel release introduces some unbelievable novelties!
