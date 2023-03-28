@@ -1,0 +1,98 @@
+{{ $contributors := site.Data.contributors }}
+
+{{ range $i, $contributor := $contributors }}
+  {{ if and (ge $i 0) (le $i 1) }}
+    <div class="card card-sm shadow mt-2">
+      <div class="card-body">
+        <div class="card-text h-100 w-100">
+          {{ if eq $i 0 }}
+            <div>
+              <h4 class="text-primary" id="contributor-date">{{ $contributor.date }}</h4>
+              <div class="d-flex align-items-center flex-column flex-md-row">
+                {{$links := $contributor.links }}
+                {{$names := $contributor.names }}
+                {{$images := $contributor.images }}
+                {{ range $index, $link := $links }}
+                <div class="contributor-date mt-3 mt-md-0">
+                  {{ with $contributor.images }}
+                    <img src="{{ index $images $index }}" alt="{{ index $names $index }}">
+                  {{ end }}
+                    <a href="{{ $link }}" class="text-dark font-weight-bold pl-3">{{ index $names $index }}</a>
+                </div>
+                {{ end }}
+              </div>
+            </div>
+          {{ else }}
+            <div class="d-flex flex-column flex-xl-row py-2 px-3">
+            <div class="contributor-date text-dark">
+              <span class="pr-5">{{ $contributor.date }}</span>
+            </div>
+            <p>
+              {{$links := $contributor.links }}
+              {{$names := $contributor.names }}
+              {{ range $index, $link := $links }}
+              {{ if ne $index (sub (len $links) 1) }}
+              <a href="{{ $link }}" class="text-dark font-weight-bold">{{ index $names $index }} </a>
+              <span class="text-dark font-weight-bold">and </span>
+              {{ else }}
+              <a href="{{ $link }}" class="text-dark font-weight-bold">{{ index $names $index }}</a>
+              {{ end }}
+              {{ end }}
+            </p>
+          </div>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+  {{ end }}
+{{ end }}
+
+<ul
+  id="contributors-list"
+  class="collapse multi-collapse pl-0 ml-0 fa-ul"
+  aria-labelledby="contributors-list"
+>
+  <li>
+    {{ range $i, $contributor := $contributors }}
+      {{ if (ge $i 2) }}
+        <div class="card card-sm shadow mt-2">
+          <div class="card-body">
+            <div class="card-text h-100 w-100">
+              <div class="d-flex flex-column flex-xl-row py-2 px-3">
+              <div class="contributor-date text-dark">
+                <span class="pr-5">{{ $contributor.date }}</span>
+              </div>
+              <p>
+                {{$links := $contributor.links }}
+                {{$names := $contributor.names }}
+                {{ range $index, $link := $links }}
+                  {{ if ne $index (sub (len $links) 1) }}
+                    <a href="{{ $link }}" class="text-dark font-weight-bold">{{ index $names $index }} </a>
+                    <span class="text-dark font-weight-bold">and </span>
+                  {{ else }}
+                    <a href="{{ $link }}" class="text-dark font-weight-bold">{{ index $names $index }}</a>
+                  {{ end }}
+                {{ end }}
+              </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      {{ end }}
+    {{ end }}
+  </li>
+</ul>
+
+<div class="d-flex justify-content-center mt-4">
+  <a
+    data-toggle="collapse"
+    data-target="#contributors-list"
+    class="btn btn-link text-primary align-self-start p-0 feature-card__expand-control"
+    aria-expanded="false"
+    aria-controls="contributors-list"
+    role="button"
+  >
+    <button class="btn btn-outline-primary collapsed font-weight-normal px-4">Show more</button>
+    <button class="btn btn-outline-primary expanded font-weight-normal px-4">Show less</button>
+  </a>
+</div>
