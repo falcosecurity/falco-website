@@ -1,5 +1,6 @@
 ---
 title: Contributors
+layout: contributors
 ---
 
 {{< blocks/content wrap="col" >}}
