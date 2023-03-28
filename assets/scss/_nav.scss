@@ -117,6 +117,7 @@
       
       &::after {
         @extend %chevron;
+        margin-left: 0.25rem;
       }
     }
 
@@ -127,6 +128,7 @@
         }
         &::before {
           @extend %chevron;
+          margin-right: 0.25rem;
         }
       }
     }
