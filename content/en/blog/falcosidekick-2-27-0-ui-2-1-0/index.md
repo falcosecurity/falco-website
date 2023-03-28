@@ -6,6 +6,7 @@ author: Thomas Labarussias
 slug: falcosidekick-2-27-0-ui-2-1-0
 images:
   - images/falcosidekick-featured.png
+tags: ["Falcosidekick","Release"]
 ---
 
 ![](images/falcosidekick-featured.png)

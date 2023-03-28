@@ -3,6 +3,7 @@ title: "Kubernetes Response Engine, Part 3: Falcosidekick + Knative"
 date: 2021-05-13
 author: Scott Nichols and Dan Papandrea
 slug: falcosidekick-response-engine-part-3-knative
+tags: ["Falcosidekick","Integration"]
 ---
 
 > *This blog post is part of a series of articles about how to create a `Kubernetes` response engine with `Falco`, `Falcosidekick` and a `FaaS`.*

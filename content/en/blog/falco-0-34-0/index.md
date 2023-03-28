@@ -6,6 +6,7 @@ slug: falco-0-34-0
 images:
   - images/falco-hobeybee-featured.png
   - images/falco-honeybee.png
+tags: ["Falco","Release"]
 ---
 
 ![](images/falco-honeybee.png)

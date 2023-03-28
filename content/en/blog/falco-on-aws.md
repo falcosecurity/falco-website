@@ -3,6 +3,7 @@ title: Falco on AWS Cloud
 date: 2022-11-30
 author: The Falco Authors
 slug: falco-on-aws
+tags: ["Falco","Cloud"]
 ---
 
 It's Amazon Web Services' largest user conference this week, [re:Invent](https://reinvent.awsevents.com/), which is a good time to highlight the ways you can use Falco in the AWS Cloud for runtime security. In this article we'll review what's new, and take a look at installation, plugins, and integrations for AWS.

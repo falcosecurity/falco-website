@@ -3,6 +3,7 @@ title: Falco 0.34.1
 date: 2023-02-20
 author: Aldo Lacuku
 slug: falco-0-34-1
+tags: ["Falco","Release"]
 ---
 
 Today we announce the release of **Falco 0.34.1** 🦅!

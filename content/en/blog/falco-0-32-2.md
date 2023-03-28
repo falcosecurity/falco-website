@@ -3,6 +3,7 @@ title: Falco 0.32.2
 date: 2022-08-09
 author: Andrea Terzolo
 slug: falco-0-32-2
+tags: ["Falco","Release"]
 ---
 
 Today we announce the release of **Falco 0.32.2** 🦅!

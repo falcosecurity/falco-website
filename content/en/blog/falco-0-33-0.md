@@ -3,6 +3,7 @@ title: Falco 0.33.0 a.k.a. "the pumpkin release 🎃"
 date: 2022-10-19
 author: Jason Dellaluce, Jacque Salinas
 slug: falco-0-33-0
+tags: ["Falco","Release"]
 ---
 
 Dear community, today we are happy to announce the release of Falco 0.33.0 🎉!
