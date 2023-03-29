@@ -8,7 +8,7 @@ import { format, addDays } from "date-fns";
     return el.content.firstChild;
   };
 
-  const { events, type, take } = params.default;
+  const { events, type, take } = params;
 
   const communityEvents = (events) => {
     const eventTemplate = `
@@ -31,7 +31,7 @@ import { format, addDays } from "date-fns";
 
     const eventItemTemplate = `
       <div class="event__item">
-        <h6 class="event__item-title mt-5 d-flex justify-content-between">{{ .date }}</h6>
+        <h6 class="event__item-title mt-5 d-flex justify-content-between"></h6>
       </div>`;
 
     const hostElement = document.getElementById("community-events");
@@ -58,8 +58,12 @@ import { format, addDays } from "date-fns";
           eventCard.getElementsByClassName("event__time")[0].innerHTML = start
             ? `${start}${end ? ` - ${end}` : ""}`
             : "All day";
-          eventCard.getElementsByClassName("event__content")[0].innerHTML =
-            content.trim();
+          const [eventContent] =
+            eventCard.getElementsByClassName("event__content");
+          eventContent.innerHTML = content.trim();
+
+          if (!eventContent.getElementsByTagName("a").length)
+            eventContent.nextElementSibling.remove();
 
           eventItem.appendChild(eventCard);
         });
@@ -100,6 +104,41 @@ import { format, addDays } from "date-fns";
     });
   };
 
+  const webcasts = (events, take = 3) => {
+    const template = `
+      <div class="card bg-light">
+        <img class="card-img-top webcast__img" loading="lazy"/>
+        <div class="card-body pt-4">
+          <div class="align-items-start card-text d-flex flex-column text-left h-100">
+            <div class="d-flex mb-4">
+              <span class="-text-600 mr-4 webcast__start"></span>
+              <span class="text-secondary text-uppercase webcast__type"></span>
+            </div>
+            <h5 class="webcast__title flex-grow-1"></h5>
+            <a class="btn btn-link p-0 webcast__link"></a>
+          </div>
+        </div>
+      </div>
+    `;
+    const hostElement = document.getElementById("community-webcasts");
+
+    events.slice(0, take).forEach(({ start, title, type, url, img }) => {
+      const eventItem = fromString(template);
+      eventItem.getElementsByClassName("webcast__start")[0].innerText = format(
+        new Date(start),
+        "MMM dd, yyyy"
+      );
+      eventItem.getElementsByClassName("webcast__img")[0].src = img;
+      eventItem.getElementsByClassName("webcast__title")[0].innerText = title;
+      eventItem.getElementsByClassName("webcast__type")[0].innerText = type;
+      const [link] = eventItem.getElementsByClassName("webcast__link");
+      link.href = url;
+      link.innerText = "Register";
+
+      hostElement.append(eventItem);
+    });
+  };
+
   const eventsMap = events
     .map(({ start, end, ...rest }) => ({
       start: new Date(start),
@@ -111,6 +150,9 @@ import { format, addDays } from "date-fns";
   switch (type) {
     case "landing":
       landingEvents(eventsMap);
+      break;
+    case "webcast":
+      webcasts(eventsMap);
       break;
     default:
       communityEvents(eventsMap);
