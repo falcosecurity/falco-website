@@ -98,7 +98,7 @@ feedback_no:
 blog_title:
   other: Blog
 blog_invite:
-  other: Do you have something to share? Contribute to Falco <a href="https://github.com/falcosecurity/falco-website/issues/new">blog</a>!
+  other: Do you have something to share? Contribute to Falco <a href="https://github.com/falcosecurity/community/blob/main/blog-contribution-guidelines.md">blog</a>!
 
 ui_search:
   other: Search
