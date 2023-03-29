@@ -12,6 +12,14 @@ title: FAQs
 
 {{< /blocks/content >}}
 
+{{< blocks/content wrap="col" >}}
+
+<div class="text-center">
+  Didn't find your question? Ask us on <a href="https://app.slack.com/client/T09NY5SBT/CMWH3EH32">Slack</a>.
+</div>
+
+{{< /blocks/content >}}
+
 <!-- TODO: uncomment this section when the redesign is ready -->
 <!-- {{< blocks/content content="html" wrap="col">}}
 {{< feedback >}}
@@ -20,7 +28,7 @@ title: FAQs
 {{< blocks/content content="html" wrap="col">}}
 {{< footer_nav 
   prev="/about/ecosystem"
-  prevTitle="Falco Ecosystem"
-  next="/about/docs" 
+  prevTitle="Falco ecosystem"
+  next="/docs" 
   nextTitle="Documentation" >}}
 {{< /blocks/content >}}
