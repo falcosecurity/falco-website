@@ -1,7 +1,7 @@
 ---
 title: Formatting Alerts
 description: Format Falco Alerts for Containers and Kubernetes
-linktitle: Formating Alerts
+linktitle: Formatting Alerts
 weight: 20
 ---
 
