@@ -21,7 +21,7 @@
       <div class="col-12 col-sm-8 text-center text-sm-left text-white">
         <p class="my-4">{{ T "created_by_originally"}} <a href="{{ $.Site.Params.sysdig }}" target="_blank">Sysdig</a></p>
         {{ with .Site.Params.copyright }}
-          <small>&copy; {{ now.Year}} {{ .}}| {{ T "documentation_copyright_notice" }} </small>
+          <small>&copy; {{ now.Year}} {{ .}} | {{ T "documentation_copyright_notice" | safeHTML }} </small>
         {{ end }}
         <br />
         {{ with .Site.Params.copyright_linux }}
