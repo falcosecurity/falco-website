@@ -83,6 +83,12 @@
     .navbar-brand__name {
       display: none;
     }
+
+    &__wrapper {
+      @include media-breakpoint-up(xl) {
+        width: 50%;
+      }
+    }
   }
 
   .nav-link {
@@ -92,7 +98,8 @@
 
   .td-search-input {
     border: none;
-    max-width: 10rem;
+    max-width: 9rem;
+    min-width: 7rem;
 
     @include placeholder {
       color: $navbar-dark-color;

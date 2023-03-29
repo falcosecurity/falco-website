@@ -1,6 +1,6 @@
 {{ $cover := and (.HasShortcode "blocks/cover") (not .Site.Params.ui.navbar_translucent_over_cover_disable) }}
 <nav class="js-navbar-scroll navbar navbar-expand navbar-dark {{ if $cover}} td-navbar-cover {{ end }}flex-column flex-md-row td-navbar">
-  <div class="w-50">
+  <div class="navbar-brand__wrapper">
     <a class="navbar-brand" href="{{ .Site.Home.RelPermalink }}">
       <span class="navbar-logo">{{ if .Site.Params.ui.navbar_logo }}{{ with resources.Get "icons/logo.svg" }}{{ ( . | minify).Content | safeHTML }}{{ end }}{{ end }}</span><span class="font-weight-bold">{{ .Site.Title }}</span>
     </a>
@@ -51,7 +51,7 @@
       {{ partial "search-input.html" . }}
     </div>
     {{ if (gt (len .Site.Home.Translations) 0) }}
-    <div class="navbar-nav nav-item dropdown dropdown-left d-none d-lg-block mr-lg-3">
+    <div class="navbar-nav nav-item dropdown dropdown-left d-none d-lg-block mr-md-2">
       {{ partial "navbar-lang-selector.html" . }}
     </div>
     {{ end }}
