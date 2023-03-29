@@ -2,10 +2,10 @@
 title: Falco Ecosystem
 ---
 
-{{< blocks/content wrap="col" >}}
-  ## Falco Ecosystem
+{{< blocks/content wrap="col-9" >}}
+  ## Falco ecosystem
   
-  Falco’s rich ecosystem of plugins and integrations with the cloud native stack will help you enhance your organization’s security posture. The array of providers who install and manage Falco, and success stories from existing users at scale can guide you to get the most out of your Falco deployment
+  Falco’s rich ecosystem of plugins and integrations with the cloud native stack will help you enhance your organization’s security posture. This page showcases plugins and integrations, as well as success stories from end users, and vendors whose products build on Falco.
 {{< /blocks/content >}}
 
 {{< blocks/content wrap="col" content="html" >}}

@@ -50,46 +50,49 @@ keywords: Falco, Runtime security, Threat detection and response
 
 {{< blocks/content content="html" >}}
 {{< two_column_block_img img-aligned="right" src="/img/about/instrumenting_system_calls.svg" alt="Instrumenting system calls" index="1 md-1 lg-1 xl-1" header="Instrumenting system calls" >}}
-  Capturing system calls is performance-critical, and there are two ways in which Falco achieves this: an eBPF probe or a Kernel Module.
+  Capturing system calls is performance-critical, and there are two ways in which Falco achieves this: an eBPF probe or a kernel module.
 
   eBPF is a revolutionary technology that allows us to run sandboxed programs inside an operating system. eBPF scripts are flexible and safe, and run extremely fast, making them perfect for capturing runtime security. This makes it ideal for instrumenting system calls for Falco.
 
   Before the emergence of eBPF, kernel modules were the norm for extending functionality in the Linux kernel. They run in privileged mode, and are written in C, making them very efficient and therefore a great option for performance-critical work. Falco offers a kernel module for situations where eBPF isn't the best fit.
 
-  [Falcosidekick](https://github.com/falcosecurity/falcosidekick) is a companion application to Falco  forwards Falco events . It allows you to distribute events to more than 50 systems, such as email, chat, message queues, serverless functions, databases and more. It’s easy to configure and use both locally and inside Kubernetes.
 {{< /two_column_block_img >}}
 {{< /blocks/content >}}
 
 {{< blocks/content content="html" >}}
-{{< two_column_block_img img-aligned="left" src="/img/about/response_to_threats.svg" alt="response to threats" index="1 md-0 lg-0 xl-0" header="Response to threats" >}}
+{{< two_column_block_img img-aligned="left" src="/img/about/response_to_threats.svg" alt="respond to threats" index="1 md-0 lg-0 xl-0" header="Respond to threats" >}}
   With Falco and [Falcosidekick](https://github.com/falcosecurity/falcosidekick), you can forward suspicious events to serverless systems to trigger actions and remediate threats. It creates a full response engine to protect your environments.
+
+[Falcosidekick](https://github.com/falcosecurity/falcosidekick) is a companion application to Falco  forwards Falco events. It allows you to distribute events to more than 50 systems, such as email, chat, message queues, serverless functions, databases and more. It’s easy to configure and use both locally and inside Kubernetes.
 {{< /two_column_block_img >}}
 {{< /blocks/content >}}
 
 {{< blocks/content content="html" wrap="col">}}
-<div class=" grid-1 grid-lg-3 gap-4">
-  {{< card class="shadow">}}
-  <div class="d-flex flex-column h-100 align-items-start">
-    <h5 class="font-weight-normal flex-grow-1">If you are convinced, and want to learn more check our documentation</h5>
-    <a href="/docs/" class="btn btn-primary mt-4">Learn more</a>
-  </div>
-  {{< /card >}}
 
-  {{< card class="shadow">}}
-  <div class="d-flex flex-column h-100 align-items-start">
-    <h5 class="font-weight-normal flex-grow-1">Here is how to get started with Falco</h5>
-    <a href="/docs/getting-started/" class="btn btn-primary mt-4">Learn more</a>
+<div class="grid-1 grid-lg-3 gap-4">
+  <div class="use-cases-item">
+    <a href="/docs/getting-started/" class="d-flex align-items-baseline text-decoration-none">
+      <p class="w-100 text-body font-weight-normal">Get started with Falco, whether on a host, Kubernetes, or the cloud</p>
+      <i class="fa fa-arrow-right"></i>
+    </a>
   </div>
-  {{< /card >}}
-
-  {{< card class="shadow">}}
-  <div class="d-flex flex-column h-100 align-items-start">
-    <h5 class="font-weight-normal flex-grow-1">The most common use cases for Falco</h5>
-    <a href="/about/use-cases/" class="btn btn-primary mt-4">Learn more</a>
+  <div class="use-cases-item">
+    <a href="/about/use-cases/" class="d-flex align-items-baseline text-decoration-none">
+      <h6 class="w-100 text-body font-weight-normal">Discover the most common use cases for Falco</h6>
+      <i class="fa fa-arrow-right"></i>
+    </a>
   </div>
-  {{< /card >}}
+  <div class="use-cases-item">
+    <a href="/docs/" class="d-flex align-items-baseline text-decoration-none">
+      <p class="w-100 text-body font-weight-normal">Check out Falco’s comprehensive documentation to dive deeper</p>
+      <i class="fa fa-arrow-right"></i>
+    </a>
+  </div>
 </div>
+
+
 {{< /blocks/content >}}
+
 
 {{< blocks/content content="html" wrap="col">}}
   <h3 class="mb-3">Falco FAQs</h3>
