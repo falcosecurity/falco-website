@@ -19,14 +19,14 @@
   </a>
   <a href="{{ .RelPermalink }}" class="text-decoration-none">
     <p class="text-dark font-weight-normal">
-      {{ .Plain | safeHTML | truncate 90 }}
+      {{ .Plain | safeHTML | truncate 240 }}
     </p>
   </a>
   <ul class="taxonomy-terms post__tags">
     {{ range .Params.tags }}
       {{ $class := cond (eq $tag .) "btn-info" "btn-light" }}
       {{ if (in $allowed_tags . ) }}
-        <li>
+        <li class="mr-1 mb-1 d-inline-block">
           <a class="btn py-0 px-3 rounded-pill {{ $class }}" href="{{ urlize (printf `/tags/%s` .) }}">{{ . }}</a>
         </li>
         {{ end }}
