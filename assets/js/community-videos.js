@@ -24,7 +24,7 @@ import { format } from "date-fns";
     const data = await response.json();
 
     const el = document.getElementById(playlist_id);
-    console.log(data, el);
+    
 
     const items = data
       .map(({ title, publishedAt, thumbnails }) => {

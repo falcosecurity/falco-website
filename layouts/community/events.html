@@ -1,26 +1,25 @@
 {{ define "main" }}
 
-<section class="row">
+{{/*  TODO: uncomment when needed  */}}
+{{/*  <section class="row">
   <div class="container">
     <div class="row">
       <div class="col-12 col-lg-6">
-        <h2>Falco Events</h2>
-        <p>
-          Get involved in Falco community events! Swag and recognition await!
-        </p>
+        <h2>{{ T "events_title" }}</h2>
+        <p>{{ T "events_subtitle"}}</p>
       </div>
       <div class="col-12 col-md-8 col-lg-6">
         {{ partial "community/subscribe.html"}}
       </div>
     </div>
   </div>
-</section>
+</section>  */}}
 
 <section class="row">
   <div class="container">
     <div class="row">
       <div class="col">
-        <h3>See you in person</h3>
+        <h3>{{ T "events_list_title" }}</h3>
       </div>
     </div>
     <div class="row">
@@ -31,18 +30,38 @@
   </div>
 </section>
 
+
 <section class="row">
   <div class="container">
     <div class="row">
       <div class="col">
-        <h3>Join us for webcasts, livestreams and workshops</h3>
-        <h5 class="text-dark font-weight-normal mt-5 mb-4">Learn more about the security landscape and Falco! Register below</h5>
+        <h3>{{ T "events_webcasts_title" }}</h3>
+        <h5 class="text-dark font-weight-normal mt-5 mb-4">{{ T "events_webcasts_subtitle" }}</h5>
       </div>
     </div>
     <div class="row mt-3">
-      <div class="col">{{ partial "community/videos.html" }}</div>
+      <div class="col">
+        <div class="grid grid-1 grid-md-2 grid-lg-3 gap-3" id="community-webcasts">
+        {{ partial "community/webcasts.html" }}</div>
+      </div>
     </div>
   </div>
 </section>
+
+<section class="row">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h4 class="font-weight-normal">{{ T "events_webcasts_previous" }}</h4>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col">
+          {{ partial "community/videos.html" }}
+      </div>
+    </div>
+  </div>
+</section>
+
 
 {{ end }}
