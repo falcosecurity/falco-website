@@ -99,3 +99,10 @@
     }
   }
 }
+
+.webcast {
+  &__img {
+    height: 12rem;
+    object-fit: cover;
+  }
+}

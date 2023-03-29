@@ -1,0 +1,7 @@
+{{ $events := where (index site.Data site.Language.Lang).events "location" "==" "online" }}
+{{ $events_sorted := sort $events "start" }}
+
+{{ $params := dict "events" $events_sorted "type" "webcast" }}
+{{ $js := resources.Get "js/events.js" | js.Build (dict "params" $params) | minify | fingerprint }}
+
+<script src="{{ $js.RelPermalink}}" async></script>
