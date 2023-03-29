@@ -2,15 +2,12 @@
 
 <div class="grid-1 grid-lg-4 gap-3">
   {{ range $index, $item := $data }}
-    {{/*  <div class="{{ if not (eq $index 0) }}{{ `border-left border-secondary pl-3` }}{{ end }}">  */}}
-    <div class="use-cases-item">
-      <div class="d-flex">
-        <h6 class="w-100">{{ .title }}</h6>
-        <a href="{{ .url }}" class="btn btn-link py-0">
-          <i class="fa fa-arrow-right"></i>
-        </a>
-      </div>
-      <p class="mb-0">{{ .description }}</p>
-    </div>
+  <div class="use-cases-item">
+    <a href="{{ .url }}" class="d-flex align-items-baseline text-decoration-none">
+      <h6 class="w-100 text-body">{{ .title }}</h6>
+      <i class="fa fa-arrow-right"></i>
+    </a>
+    <p class="mb-0">{{ .description }}</p>
+  </div>
   {{ end }}
 </div>

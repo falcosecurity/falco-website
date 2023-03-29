@@ -194,7 +194,7 @@ id = "UA-40398182-19"
 [[menu.main]]
     identifier = "blog"
     name = "Blog"
-    weight = 70
+    weight = 50
     url = "/blog/"
 [[menu.main]]
     identifier = "community"
@@ -203,12 +203,12 @@ id = "UA-40398182-19"
     url = "/community/"
 [[menu.main]]
     identifier = "community-about"
-    name = "About community"
+    name = "About the community"
     url = "/community/"
     parent = "community"
     weight = 12
     [menu.main.params]
-        description = "Learn about Falco community"
+        description = "For users and contributors"
 [[menu.main]]
     identifier = "community-events"
     name = "Events"
@@ -216,7 +216,7 @@ id = "UA-40398182-19"
     parent = "community"
     weight = 14
     [menu.main.params]
-        description = "Learn about Falco events"
+        description = "Meet and learn about Falco"
 [[menu.main]]
     identifier = "community-contributors"
     name = "Contributors"
@@ -224,11 +224,11 @@ id = "UA-40398182-19"
     parent = "community"
     weight = 16
     [menu.main.params]
-        description = "Discover who has earned the title of Contributor"
+        description = "The people who build Falco"
 [[menu.main]]
     identifier = "training"
     name = "Training"
-    weight = 50
+    weight = 70
     url = "/training/"
 
 # Specify a value here if your content directory is not in your repo's root directory
@@ -247,7 +247,7 @@ rss_sections = ["blog"]
 [params]
 copyright = "The Falco Authors"
 copyright_linux =  "The Linux Foundation ®."
-sysdig = "https://sysdig.com/"
+sysdig = "https://sysdig.com/opensource/"
 time_format_blog = "Monday, January 02, 2006"
 time_format_default = "Jan 2, 2006"
 
