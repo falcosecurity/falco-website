@@ -5,7 +5,7 @@
 {{ $arrow_col := .Get "arrow" | default "primary" }}
 {{ $text_align := cond (eq $direction "forward") "text-left" "text-right" }}
 
-<a href="{{ $href }}" class="text-decoration-none font-weight-normal td-box--{{ $col_id }} {{ $class }}">
+<a href="{{ $href }}" class="text-body text-decoration-none font-weight-normal td-box--{{ $col_id }} {{ $class }}">
   <div class="card card-sm btn btn-light p-0 shadow">
     <div class="card-body d-flex align-items-center">
       {{ with eq $direction "back" }}
