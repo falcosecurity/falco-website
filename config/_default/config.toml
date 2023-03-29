@@ -295,6 +295,7 @@ sidebar_menu_foldable = true
 # Extends foldable functionality to the branch
 sidebar_cache_limit = 1
 #  Set to true to disable breadcrumb navigation.
+docs_breadcrumb_disable = true
 breadcrumb_disable = false
 #  Set to true to hide the sidebar search box (the top nav search box will still be displayed if search is enabled)
 sidebar_search_disable = true
