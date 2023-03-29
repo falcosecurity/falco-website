@@ -174,7 +174,7 @@ With these macros defined, we can then rewrite the above rule's condition as `sp
   priority: WARNING
 ```
 
-For more examples of rules and macros, take a look the documentation on [default macros](./default-macros) and the `rules/falco_rules.yaml` file. In fact, both the macros above are part of the default list!
+For more examples of rules and macros, take a look the documentation on [default macros](/docs/reference/rules/default-macros) and the `rules/falco_rules.yaml` file. In fact, both the macros above are part of the default list!
 
 
 {{% alert color="primary" %}}
