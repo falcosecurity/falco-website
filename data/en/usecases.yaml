@@ -4,9 +4,9 @@
 - title: Host Security
   description: Protect your applications in real time wherever they run, whether bare metal or VMs.
   url: /about/use-cases/#secure-your-whole-machine-by-instrumenting-the-operating-system
-- title: Kubernetes security
+- title: Kubernetes Security
   description: Falco is Kubernetes-compatible, helping you instantly detect suspicious activity across the control plane.
   url: /about/use-cases/#detect-and-alert-on-suspicious-behavior-in-your-cloud-environments
-- title: Cloud security
+- title: Cloud Security
   description: Detect intrusions in real time across your cloud, from AWS, GCP or Azure, to Okta, Github and beyond.
   url: /about/use-cases/#protect-your-organization-across-the-cloud

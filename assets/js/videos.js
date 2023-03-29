@@ -43,7 +43,7 @@ function replace(template, { id, description, title, published }) {
   tpl = tpl.replace("%title%", title);
   tpl = tpl.replace(
     "%description%",
-    description.length > 200 ? `${description.slice(0, 200)}...` : description
+    description.length > 200 ? `${description.slice(0, 140)}...` : description
   );
   tpl = tpl.replace("%published%", format(new Date(published), "MMM dd, yyyy"));
 
