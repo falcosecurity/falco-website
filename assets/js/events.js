@@ -56,7 +56,7 @@ import { format, addDays } from "date-fns";
           const eventCard = fromString(eventCardTemplate);
 
           eventCard.getElementsByClassName("event__time")[0].innerHTML = start
-            ? `${start}${end ? ` - ${end}` : ""}`
+            ? `${format(new Date(start), 'HH:mm')}${format(new Date(end), 'HH:mm') ? ` - ${format(new Date(end), 'HH:mm')}` : ""}`
             : "All day";
           const [eventContent] =
             eventCard.getElementsByClassName("event__content");
