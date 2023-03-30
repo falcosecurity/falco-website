@@ -1,0 +1,74 @@
+//
+// Announcement bar
+//
+
+$announcement-height: 2rem;
+
+@mixin animate($from, $to, $name) {
+  @keyframes #{$name} {
+    from {
+      top: $from;
+    }
+    to {
+      top: $to;
+    }
+  }
+}
+
+.announcement-bar {
+  $height: 1.5rem;
+
+  z-index: 9999;
+  width: 100%;
+  background-color: $black;
+  color: $primary;
+
+  @include media-breakpoint-up(md) {
+    position: fixed;
+    top: -$announcement_height;
+    height: $announcement_height;
+    @include animate(-$announcement_height, 0, announcement-show);
+    animation: announcement-show 0.5s forwards 1s;
+  }
+
+  &--hide {
+    @include animate(0, -$announcement_height, announcement-hide);
+    animation: announcement-hide 0.5s forwards;
+  }
+
+  &__button-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    line-height: 1rem;
+
+    i {
+      rotate: 45deg;
+    }
+  }
+}
+
+
+.td-navbar {
+  min-height: 4rem;
+  margin: 0;
+  z-index: 32;
+
+  @include media-breakpoint-up(md) {
+    position: fixed;
+    top: 0;
+    width: 100%;
+
+    &--announcement {
+      &-show {
+        @include animate(0, $announcement_height, shift);
+        animation: shift 0.5s forwards 1s;
+      }
+
+      &-hide {
+        @include animate($announcement_height, 0, unshift);
+        animation: unshift 0.5s forwards;
+      }
+    }
+  }
+}
