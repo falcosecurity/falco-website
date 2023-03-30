@@ -1,9 +1,6 @@
 pinned: PLgVVUpW8NIJDaH2_KOVPvDsQQ-4he2wxX
 featured: PLgVVUpW8NIJAaa6AZmVWIGo34s7Gmndid
-<<<<<<< HEAD
 community: PLgVVUpW8NIJB7tPnjqbR4rySh9pg7XSbr
-=======
->>>>>>> 021d5d6 (fix: youtube bypass)
 
 plug:
   title: Falco - Kubernetes threat detection engine (CNCFMinutes 19)
@@ -23,13 +20,9 @@ template: |
     ></iframe>
     <div class="ml-md-4 mt-4 mt-md-0 align-self-center">
       <div class="text-muted mb-2">%published%</div>
-<<<<<<< HEAD
       <a class="text-body" href="https://www.youtube.com/watch?v=%id%" target="_blank">
         <h6 class="mb-2">%title%</h6>
       </a>
-=======
-      <h6 class="mb-2">%title%</h6>
->>>>>>> 021d5d6 (fix: youtube bypass)
       <p>%description%</p>
     </div>
   </div>
