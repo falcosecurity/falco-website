@@ -5,6 +5,7 @@
   </head>
   <body class="td-{{ .Kind }}{{ with .Page.Params.body_class }} {{ . }}{{ end }}">
     <header>
+      {{ partial "announcement-bar.html" . }}
       {{ partial "navbar.html" . }}
     </header>
     {{ partial "version-banner.html" . }}
