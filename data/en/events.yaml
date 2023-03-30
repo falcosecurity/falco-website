@@ -1,15 +1,3 @@
-- title: WEBCAST
-  start: 2023-03-23
-  end: 2023-03-23
-  location: online
-  type: webcast
-  description: Falcoctl - Easy management of the lifecycle of your rules and plugins for Falco
-  url: https://community.cncf.io/events/details/cncf-cncf-online-programs-presents-cncf-on-demand-webinarfalcoctl-easy-management-of-the-lifecycle-of-your-rules-plugins-for-falco/
-  schedule:
-    - start: 2023-03-23
-      time:
-        - start: 10:00
-          content: Join the Falco project meeting
 - title: Up & Running with Runtime Security
   start: 2023-03-30T10:00:00-0700
   end: 2023-03-30T12:00:00-0700
@@ -21,45 +9,45 @@
   schedule:
     - start: 2023-03-30T10:00:00-0700
       time:
-        - start: 10:00
+        - start: 2023-03-30T10:00:00-0700
           content: Up & Running with Runtime Security
 - title: Up & Running with Runtime Security (KubeCon EU, Amsterdam)
-  start: 2023-04-18
-  end: 2023-04-18
+  start: 2023-04-18T15:00:00+0200
+  end: 2023-04-18T17:00:00+0200
   location: online
   type: workshop
   description: Up & Running with Runtime Security
   img: https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F471064429%2F1448044207513%2F1%2Foriginal.20230316-220123?w=940&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C14%2C1200%2C600&s=57dbe2a12520f6b34ee6dc303408518a
   url: https://www.aicamp.ai/event/eventdetails/W2023033010?utm_source=falco20230330
   schedule:
-    - start: 2023-03-30
+    - start: 2023-04-18T15:00:00+0200
       time:
-        - start: 10:00
+        - start: 2023-04-18T15:00:00+0200
           content: Up & Running with Runtime Security
 - title: KubeCon EU — Amsterdam, here we come!
-  location: offline
+  location: Amsterdam
   description: Up & Running with Runtime Security
   url: https://www.eventbrite.com/e/up-running-with-runtime-security-workshop-tickets-591851683317
-  start: 2023-04-18
-  end: 2023-04-21
+  start: 2023-04-18T10:00:00+0200
+  end: 2023-04-21T23:30:00+0200
   schedule:
-    - start: 2023-04-18
+    - start: 2023-04-18T10:00:00+0200
       time:
-        - start: 10:30
-          end: 12:30
+        - start: 2023-04-18T10:30:00+0200
+          end: 2023-04-18T12:30:00+0200
           content: <a href="https://sched.co/1JWQy" target="_blank">Join the Falco project meeting</a>
-        - start: 15:00
-          end: 17:00
+        - start: 2023-04-18T15:00:00+0200
+          end: 2023-04-18T17:00:00+0200
           content: <a href="https://upandrunning.eventbrite.com" target="_blank">Up & Running with Runtime Security, hands-on workshop</a>
-        - start: 18:00
-          end: 21:00
+        - start: 2023-04-18T18:00:00+0200
+          end: 2023-04-18T21:00:00+0200
           content: Join the <a href="https://upandrunning.eventbrite.com" target="_blank">Sip ‘n’ Security community party</a><br>Meet OSS developer and security friends
-    - start: 2023-04-19
+    - start: 2023-04-18T16:30:00+0200
       time:
-        - start: 16:30
-          end: 17:05
+        - start: 2023-04-18T16:30:00+0200
+          end: 2023-04-18T17:05:00+0200
           content: <a href="https://sched.co/1HyTj" target="_blank">No Fear, Falco is Looking After Us!</a><br>featuring Falco community from Apple, Chainguard, IBM and Sysdig
-    - start: 2023-04-19
-      end: 2023-04-21
+    - start: 2023-04-19T10:00:00+0200
+      end: 2023-04-21T23:30:00+0200
       time:
         - content: "See us at the Falco kiosk #13 in the Project Pavillion"
