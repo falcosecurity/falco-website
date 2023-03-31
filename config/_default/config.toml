@@ -384,7 +384,7 @@ disable_toc = false
 [languages.en]
 title = "Falco"
 description = "Runtime Security "
-languageName ="Eng"
+languageName ="English"
 # Weight used for sorting.
 weight = 1
 languagedirection = "ltr"
