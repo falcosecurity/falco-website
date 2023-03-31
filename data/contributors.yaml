@@ -8,11 +8,16 @@
   images:
     - /img/community/contributors/melissa_kilby.svg
     - /img/community/contributors/contributor_m.svg
+  descriptions:
+    - Melissa added the ability to filter process ancestry by exepath, which is useful for creating rules around shells or RCE originating from Java processes, providing new opportunities to write filter expressions for many use cases, and added aexepath and aexe filters and a display option, while also changing the ordering of proc.x fields in a follow-up PR.
+    - David has been performing exceptionally well as a driverkit maintainer and on libs, tirelessly adding new modern BPF syscalls; furthermore, he has recently added new features such as getresgid, getresuid, and nanosleep to modern_probe in the libs repository.
 - date: January, 2023
   names:
     - Logan Bond
   links:
     - https://github.com/EXONER4TED
+  descriptions:
+    - Logan updated the Dockerfile to be in the root of the repo, removed the shell script wrapper, added linting and testing checks to the CI pipeline, and updated the container to run as a non-root user.
 - date: January and February, 2022
   names:
     - Alban Créquy
