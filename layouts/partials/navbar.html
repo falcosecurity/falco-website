@@ -51,7 +51,7 @@
       {{ partial "search-input.html" . }}
     </div>
     {{ if (gt (len .Site.Home.Translations) 0) }}
-    <div class="navbar-nav nav-item dropdown dropdown-left d-none d-lg-block mr-md-2">
+    <div class="navbar-nav nav-item dropdown d-none d-lg-block mr-md-2">
       {{ partial "navbar-lang-selector.html" . }}
     </div>
     {{ end }}
