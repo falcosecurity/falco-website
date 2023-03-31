@@ -29,3 +29,15 @@
 .text-decoration-none:hover {
   text-decoration: none;
 }
+
+// Fixes overlapping margin
+@include media-breakpoint-up(md) {
+  h1[id]:before,
+  h2[id]:before,
+  h3[id]:before,
+  h4[id]:before,
+  h5[id]:before,
+  h6[id]:before {
+    display: none;
+  }
+}
