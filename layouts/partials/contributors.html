@@ -6,40 +6,45 @@
       <div class="card-body">
         <div class="card-text h-100 w-100">
           {{ if eq $i 0 }}
-            <div>
-              <h4 class="text-primary" id="contributor-date">{{ $contributor.date }}</h4>
-              <div class="d-flex align-items-center flex-column flex-md-row">
+            <div class="d-flex flex-column flex-xl-row py-2 px-3">
+              <h4 class="contributor-date text-primary">{{ $contributor.date }}</h4>
+              <div class="grid-1 grid-lg-{{ len $contributor.links }} gap-3">
                 {{$links := $contributor.links }}
                 {{$names := $contributor.names }}
                 {{$images := $contributor.images }}
+                {{$descriptions := $contributor.descriptions }}
                 {{ range $index, $link := $links }}
-                <div class="contributor-date mt-3 mt-md-0">
+                <div class="d-flex flex-column mt-3 mt-md-0">
                   {{ with $contributor.images }}
-                    <img src="{{ index $images $index }}" alt="{{ index $names $index }}">
+                    <img width="80px" src="{{ index $images $index }}" alt="{{ index $names $index }}">
                   {{ end }}
-                    <a href="{{ $link }}" class="text-dark font-weight-bold pl-3">{{ index $names $index }}</a>
+                  <a href="{{ $link }}" class="text-dark font-weight-bold mt-3">{{ index $names $index }}</a>
+                  {{ with $contributor.descriptions }}
+                    <div class="mt-3">{{ index $descriptions $index }}</div>
+                  {{ end }}
                 </div>
                 {{ end }}
               </div>
             </div>
           {{ else }}
-            <div class="d-flex flex-column flex-xl-row py-2 px-3">
-            <div class="contributor-date text-dark">
-              <span class="pr-5">{{ $contributor.date }}</span>
+            <div class="d-flex align-items-baseline flex-column flex-xl-row py-2 px-3">
+              <div class="contributor-date text-dark">
+                <span class="pr-5">{{ $contributor.date }}</span>
+              </div>
+              <div class="grid-1 grid-lg-{{ len $contributor.links }} gap-3">
+                {{$links := $contributor.links }}
+                {{$names := $contributor.names }}
+                {{ range $index, $link := $links }}
+                {{$descriptions := $contributor.descriptions }}
+                <div class="d-flex flex-column gap-3 mt-3 mt-md-0">
+                  <a href="{{ $link }}" class="text-dark font-weight-bold mt-3">{{ index $names $index }}</a>
+                  {{ with $contributor.descriptions }}
+                  <div>{{ index $descriptions $index }}</div>
+                  {{ end }}
+                </div>
+                {{ end }}
+              </div>
             </div>
-            <p>
-              {{$links := $contributor.links }}
-              {{$names := $contributor.names }}
-              {{ range $index, $link := $links }}
-              {{ if ne $index (sub (len $links) 1) }}
-              <a href="{{ $link }}" class="text-dark font-weight-bold">{{ index $names $index }} </a>
-              <span class="text-dark font-weight-bold">and </span>
-              {{ else }}
-              <a href="{{ $link }}" class="text-dark font-weight-bold">{{ index $names $index }}</a>
-              {{ end }}
-              {{ end }}
-            </p>
-          </div>
           {{ end }}
         </div>
       </div>
