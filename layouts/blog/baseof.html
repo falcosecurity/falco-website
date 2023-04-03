@@ -12,6 +12,7 @@
         <main role="main">
           {{ partial "version-banner.html" . }}
           {{ block "main" . }}{{ end }}
+          {{ partial "toast.html" }}
         </main>
       </div>
       {{ partial "footer.html" . }}

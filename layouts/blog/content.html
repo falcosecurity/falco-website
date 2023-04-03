@@ -8,13 +8,16 @@
 			</div>
 		</div>
 		<div class="row flex-xl-nowrap"> 
-      <div class="col-10">
+      <div class="col">
 				{{ if not .Site.Params.ui.breadcrumb_disable }}{{ partial "breadcrumb.html" . }}{{ end }}
-				<div class="td-byline mb-3">
+				<div class="d-flex align-items-center mb-3 post__content">
 					{{ with .Params.author }}
 						<b class="text-uppercase text-dark mr-3">{{ . | markdownify }}</b>
 					{{ end}}
 					<time datetime="{{  $.Date.Format "2006-01-02" }}" class="text-muted">{{ $.Date.Format $.Site.Params.time_format_default  }}</time>
+					<button class="btn btn-link text-muted p-0" onclick="copyLinkClickHandler(`{{ .Permalink }}`)">
+						<i class="fa fa-link ml-2"></i>
+					</button>
 				</div>
 				<h1>{{ .Title }}</h1>
 				<ul class="taxonomy-terms post__tags">
@@ -27,24 +30,6 @@
 					{{ end }}
 				</ul>
 			</div>
-			<aside class="d-none d-xl-block col-xl-2 d-print-none mt-5 pt-4">
-				<p>{{ "general_share" | T }}</p>
-				<div class="post__share d-flex gap-3">
-					{{/*  TODO: add links  */}}
-					<a class="btn btn-link p-0 text-dark" role="button">
-						<i class="fab fa-facebook"></i>
-					</a>
-					<a class="btn btn-link p-0 text-dark" role="button">
-						<i class="fab fa-twitter"></i>
-					</a>
-					<a class="btn btn-link p-0 text-dark" role="button">
-						<i class="fab fa-linkedin"></i>
-					</a>
-					<a class="btn btn-link p-0 text-dark" role="button">
-						<i class="fa fa-envelope"></i>
-					</a>
-				</div>
-			</aside>
 		</div>
 	</div>
 </section>
