@@ -8,10 +8,12 @@
   </a>
 </div>
 <div class="post__content">
-  <div class="d-flex text-muted text-uppercase">
+  <div class="d-flex align-items-center text-muted text-uppercase">
     <small class="flex-grow-1">{{ .Params.author }}</small>
     <small class="flex-shrink-0">{{ .Date.Format ($.Param "time_format_default") }}</small>
-    <i class="fa fa-link ml-2"></i>
+    <button class="btn btn-link text-muted p-0" onclick="copyLinkClickHandler(`{{ .Permalink }}`)">
+      <i class="fa fa-link ml-2"></i>
+    </button>
   </div>
 
   <a href="{{ .RelPermalink }}" class="text-decoration-none">

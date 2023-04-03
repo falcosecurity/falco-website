@@ -1,0 +1,13 @@
+.toast {
+  bottom: 1rem;
+  right: 1rem;
+
+  min-width: 20rem;
+  width: 20rem;;
+  
+  line-height: 1rem;
+
+  @include media-breakpoint-down(sm) {
+    top: 10rem;
+  }
+}
