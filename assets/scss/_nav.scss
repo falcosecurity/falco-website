@@ -174,6 +174,12 @@
     padding: $dropdown-padding-y $dropdown-padding-x;
     @include border-radius(1rem);
 
+    &--mobile {
+      margin: 0;
+      border-radius: 0;
+      border: none;
+    }
+
     .dropdown-item {
       padding: $dropdown-item-padding-y $pagination-padding-x;
       @include hover-focus() {
@@ -410,5 +416,15 @@ nav.foldable-nav {
   .nav-link.active,
   .nav-item.show .nav-link {
     border-bottom: $nav-tabs-border-width solid $primary;
+  }
+}
+
+.dropdown-hamburger {
+  button[data-toggle="dropdown"] {
+    &[aria-expanded="true"] {
+      i:before {
+        content: "\f00d";
+      }
+    }
   }
 }
