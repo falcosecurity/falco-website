@@ -42,37 +42,10 @@ AWS Security Lake requires to group events in [`parquet`](https://parquet.apache
 ### IAM Policy
 
 Security is important, and there's a few ways to ensure that you are using best practices. There's a few options such as the use of a role, an instance profile or direct user, as well as configuring the associated IAM Policy.
-To use Falcosidekick with AWS Security Lake, here's the minimal policy you need.
 
-```json
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "S3WriteRead",
-            "Effect": "Allow",
-            "Action": [
-                "s3:GetObject",
-                "s3:PutObject"
-            ],
-            "Resource": [
-                "arn:aws:s3:::aws-security-data-lake-{region}-{id}/*"
-            ]
-        },
-        {
-            "Sid": "CheckIdentity",
-            "Effect": "Allow",
-            "Action": [
-                "sts:GetCallerIdentity"
-            ]
-        },
-    ]
-}
-```
+Please follow the [official documentation](https://docs.aws.amazon.com/security-lake/latest/userguide/custom-sources.html) to correctly set the IAM Policies to the role/profile you will use.
 
-> Replace {region} and {id} with the elements got for AWS Security Lake at bucket creation.
-
-> `sts:GetCallerIdentity` is used by Falcosidekick to check its accesses to AWS API at bootstrap, you can remove it and set `aws.checkidentity=false` in the configuration of Falcosidekick (see below).
+> `sts:GetCallerIdentity` must also be added to allow Falcosidekick to check its accesses to AWS API at bootstrap, you can avoid it and set `aws.checkidentity=false` in the configuration of Falcosidekick (see below).
 
 ### Falcosidekick's configuration
 
