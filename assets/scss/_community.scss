@@ -1,27 +1,108 @@
 .community {
   height: 72rem;
 
+  @include media-breakpoint-down(lg) {
+    height: 56rem;
+  }
+  
+  @include media-breakpoint-down(md) {
+    height: 46rem;
+  }
+
+  @include media-breakpoint-down(sm) {
+    position: static;
+    height: 100%;
+
+    .icon {
+      padding: 0.75rem;
+      height: 2.5rem;
+      width: 2.5rem;
+
+      img {
+        width: 1rem;
+      }
+    }
+
+    div.col > .position-absolute {
+      position: static !important;
+    }
+  }
+
   &__call-invitation {
     top: 3rem;
+
+    @include media-breakpoint-down(md) {
+      max-width: 28rem;
+    }
+
+    @include media-breakpoint-down(sm) {
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
   }
 
   &__events {
     top: 29rem;
     right: 16rem;
+
+    @include media-breakpoint-down(lg) {
+      top: 19rem;
+      right: 10rem;
+    }
+    
+    @include media-breakpoint-down(md) {
+      top: 14rem;
+      right: 2rem;
+    }
+
+    @include media-breakpoint-down(sm) {
+      margin-top: 3rem;
+      margin-bottom: 2rem;
+    }
   }
 
   &__contribute {
     top: 55rem;
+
+    @include media-breakpoint-down(sm) {
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+    }
+    @include media-breakpoint-down(lg) {
+      top: 38rem;
+    }
+    
+    @include media-breakpoint-down(md) {
+      top: 29rem;
+    }
   }
 
   &__links {
     bottom: 0;
     width: 44rem;
+
+    @include media-breakpoint-down(lg) {
+      width: 38rem;
+    }
+
+    @include media-breakpoint-down(md) {
+      width: 30rem;
+    }
+
+    @include media-breakpoint-down(sm) {
+      width: auto;
+      margin-bottom: 2rem;
+    }
   }
 
   img.img-fluid {
     border-radius: 1.25rem;
     position: absolute;
+
+    @include media-breakpoint-down(sm) {
+      position: static;
+      width: 100%;
+    }
   }
 
   &__call {
@@ -29,6 +110,14 @@
     width: 34rem;
     aspect-ratio: 1.8;
     object-fit: cover;
+    
+    @include media-breakpoint-down(lg) {
+      width: 24rem;
+    }
+    
+    @include media-breakpoint-down(md) {
+      width: 14rem;
+    }
   }
 
   &__bar {
@@ -37,6 +126,20 @@
     aspect-ratio: 1.4;
     object-fit: cover;
     z-index: 10;
+
+    @include media-breakpoint-down(lg) {
+      top: 14rem;
+      width: 17rem;
+    }
+    
+    @include media-breakpoint-down(md) {
+      top: 10rem;
+      width: 14rem;
+    }
+
+    @include media-breakpoint-down(sm) {
+      width: 66% !important;
+    }
   }
 
   &__presentation {
@@ -45,6 +148,24 @@
     width: 28rem;
     object-fit: cover;
     aspect-ratio: 1.6;
+    
+    @include media-breakpoint-down(lg) {
+      top: 22rem;
+      left: 5rem;
+      width: 22rem;
+    }
+    
+    @include media-breakpoint-down(md) {
+      top: 16rem;
+      left: 5rem;
+      width: 18rem;
+    }
+
+    @include media-breakpoint-down(sm) {
+      width: 85% !important;
+      margin-top: -20%;
+      align-self: flex-end;
+    }
   }
 
   &__coding {
@@ -53,25 +174,51 @@
     width: 22rem;
     object-fit: cover;
     aspect-ratio: 0.74;
+
+    @include media-breakpoint-down(lg) {
+      width: 18rem;
+    }
+    
+    @include media-breakpoint-down(md) {
+      width: 13rem;
+    }
   }
 
   &__arrow1 {
     top: -3rem;
     left: 27rem;
     border-radius: 0 !important;
+
+    @include media-breakpoint-down(lg) {
+      width: 8rem;
+    }
+    
+    @include media-breakpoint-down(md) {
+      width: 7rem;
+      left: 23rem;
+    }
   }
 
   &__arrow2 {
     top: 25rem;
     left: 32rem;
     border-radius: 0 !important;
+
+    @include media-breakpoint-down(lg) {
+      width: 8rem;
+      top: 16rem;
+      left: 28rem;
+    }
+    
+    @include media-breakpoint-down(md) {
+      top: 11rem;
+      left: 24rem;
+    }
   }
 }
 
 .event {
   &__time {
-    // min-width: 12rem;
-
     @include media-breakpoint-up(md) {
       min-width: 7rem;
     }
@@ -80,13 +227,12 @@
       min-width: 12rem;
     }
 
-    @include media-breakpoint-up(xs) {
+    @include media-breakpoint-up(sm) {
       min-width: unset;
     }
   }
 
   &:first-of-type {
-    // .event__card,
     .event__info,
     hr {
       display: none;
@@ -104,5 +250,35 @@
   &__img {
     height: 12rem;
     object-fit: cover;
+  }
+}
+
+.community-header {
+  @include media-breakpoint-down(sm) {
+    padding-top: 0 !important;
+
+    .btn {
+      width: 100%;
+    }
+  }
+
+  &__cover {
+    img {
+      border-radius: 2.5rem;
+    }
+
+    @include media-breakpoint-down(sm) {
+      padding: 0 !important;
+
+      img {
+        border-radius: 0;
+      }
+    }
+  }
+}
+
+.community-git {
+  a.btn {
+    white-space: nowrap;
   }
 }

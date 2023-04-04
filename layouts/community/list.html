@@ -1,15 +1,15 @@
 {{ define "main" }}
 
 {{/*  Header  */}}
-<section class="row">
+<section class="row community-header">
   <div class="container">
     <div class="row">
-      <div class="col-md-5 col-12">
-        <h2 class="my-4 pt-5">Welcome to the Falco flock!</h2>
-        <p>Fly with us! Get support! Help us grow!</p>
-        <a href="https://github.com/falcosecurity/.github/blob/main/CONTRIBUTING.md#how-to-contribute" class="text-center btn btn-primary btn-lg mt-4" role="button">Contribute</a>
+      <div class="col-md-5 col-12 order-1 order-md-0">
+        <h2 class="my-4">Welcome to the Falco flock!</h2>
+        <p>Falco is an open source security project, hosted by the CNCF. Our community is passionate about securing containers and clouds. We love open source and Falco. We are a vendor neutral project, and welcome a broad range of contributions. Please take a moment to check out the different ways you can participate or obtain support. Come fly with us!</p>
+        <a href="https://github.com/falcosecurity/.github/blob/main/CONTRIBUTING.md#how-to-contribute" class="text-center btn btn-primary btn-lg mt-md-4 mt-3" role="button">Contribute</a>
       </div>
-      <div class="col-md-6 offset-md-1 col-12 mt-4">
+      <div class="col-md-6 offset-md-1 col-12 mt-md-4 community-header__cover">
         <img class="img-fluid" src="/img/community/falco_flock.jpg" alt="plug" />
       </div>
     </div>
@@ -71,18 +71,22 @@
   </section>
 
 {{/*  Github  */}}
-<section class="row">
+<section class="row community-git">
     <div class="container">
         <div class="row">
-            <div class="col-12 col-md-6">
-                <h3 class="mb-4">Create an issue</h3>
-                <p>Report bugs and make requests</p>
-                <a href="https://github.com/falcosecurity/falco/issues/new/choose" class="text-center btn btn-outline-primary btn-lg mt-4" target="_blank">Go to GitHub</a>
+            <div class="col-12 col-md-6 d-flex flex-row flex-md-column gap-3 align-items-start justify-content-between mb-5 mb-md-0">
+                <div>
+                    <h3 >Create an issue</h3>
+                    <p class="my-2 my-md-3">Report bugs and make requests</p>
+                </div>
+                <a href="https://github.com/falcosecurity/falco/issues/new/choose" class="text-center btn btn-outline-primary btn-lg" target="_blank">Go to GitHub</a>
             </div>
-            <div class="col-12 col-md-6">
-                <h3 class="mb-4">Meet our maintainers</h3>
-                <p>Check out the leaders of the project</p>
-                <a href="https://github.com/falcosecurity/evolution/blob/main/MAINTAINERS.md" class="text-center btn btn-outline-primary btn-lg mt-4" target="_blank">Go to GitHub</a>
+            <div class="col-12 col-md-6 d-flex flex-row flex-md-column gap-3 align-items-start justify-content-between">
+                <div>
+                    <h3>Meet our maintainers</h3>
+                    <p class="my-2 my-md-3">Check out the leaders of the project</p>
+                </div>
+                <a href="https://github.com/falcosecurity/evolution/blob/main/MAINTAINERS.md" class="text-center btn btn-outline-primary btn-lg" target="_blank">Go to GitHub</a>
             </div>
         </div>
     </div>
@@ -97,7 +101,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-6 mb-3 mb-md-0">
                 <a class="card card-sm btn btn-light bg-light h-100 p-0" href="https://kubernetes.slack.com/messages/falco" target="_blank">
                     <div class="card-body d-flex justify-content-center align-items-center">
                         <img width=40 height=40 src="/img/icons/slack.svg" alt="slack">
@@ -128,33 +132,33 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <h3 class="mb-2">Join the Community</h3>
+                <h3 class="mb-2">Join the сommunity</h3>
             </div>
         </div>
         <div class="row community">
-            <div class="col position-relative">
-                <div class="position-absolute d-flex gap-3 align-items-center community__call-invitation">
-                    <div class="align-self-center icon">
+            <div class="col position-relative d-flex flex-column">
+                <div class="position-absolute d-flex gap-3 align-items-center community__call-invitation order-0">
+                    <div class="d-flex align-self-center icon">
                         <img src="/img/icons/telephone.svg" alt="community-call" />
                     </div>
-                    <p class="mb-0">Join a Falco <a href="https://lists.cncf.io/g/cncf-falco-dev/calendar" target="_blank">community call</a> - every Wednesday</p>
+                    <p class="mb-0">Join a Falco <a href="https://lists.cncf.io/g/cncf-falco-dev/calendar" target="_blank">community call</a> - every Wednesday at 16:00 (UTC)</p>
                 </div>
                 
-                <div class="position-absolute d-flex gap-3 align-items-center community__events">
-                    <div class="align-self-center icon">
+                <div class="position-absolute d-flex gap-3 align-items-center community__events order-2">
+                    <div class="d-flex align-self-center icon">
                         <img src="/img/icons/calendar.svg" alt="community-events" />
                     </div>
                     <p class="mb-0">Attend our <a href="/community/events">events</a></p>
                 </div>
                 
-                <div class="position-absolute d-flex gap-3 align-items-center community__contribute">
-                    <div class="align-self-center icon">
+                <div class="position-absolute d-flex gap-3 align-items-center community__contribute order-5">
+                    <div class="d-flex align-self-center icon">
                         <img src="/img/icons/plus-circle-fill.svg" alt="community-contribute" />
                     </div>
-                    <p class="mb-0">Contribute</a></p>
+                    <p class="mb-0">Contribute</p>
                 </div>
                 
-                <div class="position-absolute community__links">
+                <div class="position-absolute community__links order-6">
                     <a class="card card-sm btn btn-light bg-light p-0" href="https://github.com/falcosecurity/.github/blob/main/CONTRIBUTING.md" target="_blank" role="button">
                         <div class="card-body d-flex flex-column justify-content-center">
                             <div class="card-text d-flex align-items-center gap-4">
@@ -173,12 +177,12 @@
                     </a>
                 </div>
 
-                <img class="community__call img-fluid" src="/img/community/call.jpg" alt="community-call" loading="lazy"/>
-                <img class="community__bar img-fluid" src="/img/community/bar.jpg" alt="community-bar" loading="lazy"/>
-                <img class="community__presentation img-fluid" src="/img/community/presentation.jpg" alt="community-presentation" loading="lazy"/>
-                <img class="community__coding img-fluid" src="/img/community/coding.jpg" alt="community-coding" loading="lazy"/>
-                <img class="community__arrow1 img-fluid" src="/img/community/arrow1.svg" alt="community-arrow1" loading="lazy"/>
-                <img class="community__arrow2 img-fluid" src="/img/community/arrow2.svg" alt="community-arrow2" loading="lazy"/>
+                <img class="community__call order-1 img-fluid" src="/img/community/call.jpg" alt="community-call" loading="lazy"/>
+                <img class="community__bar order-3 img-fluid" src="/img/community/bar.jpg" alt="community-bar" loading="lazy"/>
+                <img class="community__presentation order-4 img-fluid" src="/img/community/presentation.jpg" alt="community-presentation" loading="lazy"/>
+                <img class="community__coding order-7 img-fluid" src="/img/community/coding.jpg" alt="community-coding" loading="lazy"/>
+                <img class="community__arrow1 img-fluid d-none d-md-block" src="/img/community/arrow1.svg" alt="community-arrow1" loading="lazy"/>
+                <img class="community__arrow2 img-fluid d-none d-md-block" src="/img/community/arrow2.svg" alt="community-arrow2" loading="lazy"/>
             </div>
         </div>
     </div>
