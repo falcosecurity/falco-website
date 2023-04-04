@@ -6,7 +6,13 @@
     <hr class="my-4"/>
   {{ end }}
   {{ $url := cond (isset $item "url") .url "/community/events" }}
-  <div class="text-muted mb-2">{{ time.Format "Jan 2, 2006" .start }}</div>
+  <div class="d-flex justify-content-between text-muted mb-2">
+    <span>{{ time.Format "Jan 2, 2006" .start }}</span>
+    <div>
+      <i class="fa fa-map-marker-alt"></i>
+      <span>{{ .location }}</span>
+    </div>
+  </div>
   <a class="card-title mb-2 text-body" href="{{ .url }}">
     <h6 class="mb-2">{{ .title }}</h6>
   </a>
