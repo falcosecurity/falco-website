@@ -228,7 +228,7 @@
     }
 
     @include media-breakpoint-up(sm) {
-      min-width: unset;
+      min-width: 7rem;
     }
   }
 
