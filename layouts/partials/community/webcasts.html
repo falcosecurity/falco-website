@@ -1,4 +1,4 @@
-{{ $events := where (index site.Data site.Language.Lang).events "location" "==" "online" }}
+{{ $events := where (index site.Data site.Language.Lang).events "format" "==" "online" }}
 {{ $events_sorted := sort $events "start" }}
 
 {{ $params := dict "events" $events_sorted "type" "webcast" }}

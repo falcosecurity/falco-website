@@ -25,7 +25,9 @@ import { format, addDays } from "date-fns";
         <div class="card-body d-flex flex-column flex-sm-row align-items-sm-center gap-4 text-left">
           <div class="event__time"></div>
           <div class="event__content w-100"></div>
-          <i class="fa fa-arrow-right text-primary d-none d-sm-block"></i>
+          <a target="_blank">
+            <i class="fa fa-arrow-right text-primary d-none d-sm-block"></i>
+          </a>
         </div>
       </div>`;
 
@@ -62,8 +64,9 @@ import { format, addDays } from "date-fns";
             eventCard.getElementsByClassName("event__content");
           eventContent.innerHTML = content.trim();
 
-          if (!eventContent.getElementsByTagName("a").length)
-            eventContent.nextElementSibling.remove();
+          const [link] = eventContent.getElementsByTagName("a");
+          const arrow = eventContent.nextElementSibling;
+          link ? (arrow.href = link.href) : arrow.remove();
 
           eventItem.appendChild(eventCard);
         });

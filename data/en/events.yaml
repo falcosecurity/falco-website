@@ -14,8 +14,9 @@
 - title: Up & Running with Runtime Security (KubeCon EU, Amsterdam)
   start: 2023-04-18T15:00:00+0200
   end: 2023-04-18T17:00:00+0200
-  location: online
+  location: Amsterdam
   type: workshop
+  format: online
   description: Up & Running with Runtime Security
   img: https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F471064429%2F1448044207513%2F1%2Foriginal.20230316-220123?w=940&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C14%2C1200%2C600&s=57dbe2a12520f6b34ee6dc303408518a
   url: https://upandrunning.eventbrite.com
@@ -26,8 +27,8 @@
           content: Up & Running with Runtime Security
 - title: KubeCon EU — Amsterdam, here we come!
   location: Amsterdam
-  description: Up & Running with Runtime Security
-  url: https://www.eventbrite.com/e/up-running-with-runtime-security-workshop-tickets-591851683317
+  description: See Falco at the conference
+  url: /community/events/
   start: 2023-04-18T10:00:00+0200
   end: 2023-04-21T23:30:00+0200
   schedule:
@@ -41,7 +42,7 @@
           content: <a href="https://upandrunning.eventbrite.com" target="_blank">Up & Running with Runtime Security, hands-on workshop</a>
         - start: 2023-04-18T18:00:00+0200
           end: 2023-04-18T21:00:00+0200
-          content: Join the <a href="https://upandrunning.eventbrite.com" target="_blank">Sip ‘n’ Security community party</a><br>Meet OSS developer and security friends
+          content: Join the <a href="https://www.eventbrite.com/e/sip-n-security-tickets-588579536237?aff=erellivmlt" target="_blank">Sip ‘n’ Security community party</a><br>Meet OSS developer and security friends
     - start: 2023-04-18T16:30:00+0200
       time:
         - start: 2023-04-18T16:30:00+0200
