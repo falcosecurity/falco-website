@@ -202,6 +202,7 @@ Here we run Falco in `minikube` cluster with multiple sources: `syscall` and `k8
     ```
 
     Create the file `webhook-config.yaml` and save the required configuration needed by the `k8s api-server` to send the audit logs to Falco:
+
     ```yaml
     cat << EOF > ~/.minikube/files/etc/ssl/certs/webhook-config.yaml
     apiVersion: v1
@@ -221,6 +222,7 @@ Here we run Falco in `minikube` cluster with multiple sources: `syscall` and `k8
     users: []
     EOF
     ```
+
 3. Once the configuration files are in place we are ready to start the `minikube` cluster:
     ```bash
     minikube start \
@@ -235,83 +237,87 @@ Here we run Falco in `minikube` cluster with multiple sources: `syscall` and `k8
     {{% pageinfo color="warning" %}}
      We need at least 4 CPUs for the VM to deploy Falco with multiple sources!
     {{% /pageinfo %}}
+
 4. Before installing Falco, let us configure it to use the `syscall` and `k8saudit` sources:
+
     ```yaml
     cat << EOF > ~/values-falco-syscall-k8saudit.yaml
-      # Enable the driver, and choose between the kernel module or the ebpf probe.
-      # Default value: kernel module.
-      driver:
-        enabled: true
-        kind: module
+    # Enable the driver, and choose between the kernel module or the ebpf probe.
+    # Default value: kernel module.
+    driver:
+      enabled: true
+      kind: module
 
-      # Enable the collectors used to enrich the events with metadata.
-      # Check the values.yaml file for fine-grained options.
-      collectors:
-        enabled: true
+    # Enable the collectors used to enrich the events with metadata.
+    # Check the values.yaml file for fine-grained options.
+    collectors:
+      enabled: true
 
-      # We set the controller to daemonset since we have the syscalls source enabled.
-      # It will ensure that every node on our cluster will be monitored by Falco.
-      # Please note that the api-server will use the "k8saudit-webhook" service to send
-      # audit logs to the falco instances. That means that when we have multiple instances of Falco
-      # we can not predict to which instance the audit logs will be sent. When testing please check all
-      # the Falco instance to make sure that at least one of them have received the audit logs.
-      controller:
-        kind: daemonset
+    # We set the controller to daemonset since we have the syscalls source enabled.
+    # It will ensure that every node on our cluster will be monitored by Falco.
+    # Please note that the api-server will use the "k8saudit-webhook" service to send
+    # audit logs to the falco instances. That means that when we have multiple instances of Falco
+    # we can not predict to which instance the audit logs will be sent. When testing please check all
+    # the Falco instance to make sure that at least one of them have received the audit logs.
+    controller:
+      kind: daemonset
 
-      falcoctl:
+    falcoctl:
+      artifact:
+        install:
+          # -- Enable the init container. We do not recommend installing plugins for security reasons since they are executable objects.
+          # We install only "rulesfiles".
+          enabled: true
+        follow:
+          # -- Enable the sidecar container. We do not support it yet for plugins. It is used only for rules feed such as k8saudit-rules rules.
+          enabled: true
+      config:
         artifact:
           install:
-            # -- Enable the init container. We do not recommend installing plugins for security reasons since they are executable objects.
-            # We install only "rulesfiles".
-            enabled: true
+            # -- Do not resolve the depenencies for artifacts. By default is true, but for our use case we disable it.
+            resolveDeps: false
+            # -- List of artifacts to be installed by the falcoctl init container.
+            # We do not recommend installing (or following) plugins for security reasons since they are executable objects.
+            refs: [falco-rules:0, k8saudit-rules:0.5]
           follow:
-            # -- Enable the sidecar container. We do not support it yet for plugins. It is used only for rules feed such as k8saudit-rules rules.
-            enabled: true
-        config:
-          artifact:
-            install:
-              # -- Do not resolve the depenencies for artifacts. By default is true, but for our use case we disable it.
-              resolveDeps: false
-              # -- List of artifacts to be installed by the falcoctl init container.
-              # We do not recommend installing (or following) plugins for security reasons since they are executable objects.
-              refs: [falco-rules:0, k8saudit-rules:0.5]
-            follow:
-              # -- List of artifacts to be followed by the falcoctl sidecar container.
-              # We do not recommend installing (or following) plugins for security reasons since they are executable objects.
-              refs: [falco-rules:0, k8saudit-rules:0.5]
+            # -- List of artifacts to be followed by the falcoctl sidecar container.
+            # We do not recommend installing (or following) plugins for security reasons since they are executable objects.
+            refs: [falco-rules:0, k8saudit-rules:0.5]
 
-      services:
-        - name: k8saudit-webhook
-          type: NodePort
-          ports:
-            - port: 9765 # See plugin open_params
-              nodePort: 30007
-              protocol: TCP
+    services:
+      - name: k8saudit-webhook
+        type: NodePort
+        ports:
+          - port: 9765 # See plugin open_params
+            nodePort: 30007
+            protocol: TCP
 
-      falco:
-        rules_file:
-          - /etc/falco/falco_rules.yaml
-          - /etc/falco/k8s_audit_rules.yaml
-          - /etc/falco/rules.d
-        plugins:
-          - name: k8saudit
-            library_path: libk8saudit.so
-            init_config:
-              ""
-              # maxEventBytes: 1048576
-              # sslCertificate: /etc/falco/falco.pem
-            open_params: "http://:9765/k8s-audit"
-          - name: json
-            library_path: libjson.so
-            init_config: ""
-        load_plugins: [k8saudit, json]
+    falco:
+      rules_file:
+        - /etc/falco/falco_rules.yaml
+        - /etc/falco/k8s_audit_rules.yaml
+        - /etc/falco/rules.d
+      plugins:
+        - name: k8saudit
+          library_path: libk8saudit.so
+          init_config:
+            ""
+            # maxEventBytes: 1048576
+            # sslCertificate: /etc/falco/falco.pem
+          open_params: "http://:9765/k8s-audit"
+        - name: json
+          library_path: libjson.so
+          init_config: ""
+      load_plugins: [k8saudit, json]
 
-      tty: true
+    tty: true
     EOF
     ```
+
     {{% pageinfo color="warning" %}}
      If you need to change the port numbers then make sure to change them also in the `webhook` configuration file in step 2.
     {{% /pageinfo %}}
+
 5. Add the Falco Helm repository and update the local Helm repository cache:
 
     ```shell
