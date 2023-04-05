@@ -1,6 +1,6 @@
 ---
 title: What is Falco?
-keywords: Falco, Runtime security, Threat detection and response
+keywords: Falco, Runtime security, kubernetes security, k8s security, Threat detection, intrusion detection
 ---
 
 {{< blocks/content wrap="col" >}}

@@ -1,3 +1,13 @@
+- date: March, 2023
+  names:
+    - Federico Di Pierro
+  links:
+    - https://github.com/fededp
+  images:
+    - /img/community/contributors/1598953548691.jpeg
+  descriptions:
+  - March's winner is @FedeDP! Thank you for your contribution to the community and work on updating oracle to support OracleLinux9, fixing the gcc version from builder images setter, among other impactful contributions such as driving cleanup in the driver, userspace to help properly map each event to its own syscall using syscall name "accept4."
+
 - date: February, 2023
   names:
     - Melissa Kilby
