@@ -40,11 +40,24 @@
   index: 6
 - title: Can I build Falco's kernel driver for custom kernels?
   content: |
-    Yes.
-    Kernel module and old eBPF
-    All you need are the extracted kernel headers that are passed into the cmake make setup.
-    Modern eBPF
-    For newer kernels >= 5.8 Falco supports a modern_bpf eBPF driver. For modern_bpf you DON’T need kernel headers as BTF information and eBPF CORE is used. As a consequence modern_bpf will work for all distros and future kernel versions.
+    Yes. The `falco-driver-loader` should try to build them locally if it is not able to find a remote driver in our bucket.
+    If `falco-driver-loader` fails to build the driver locally, please try the following steps (here for a Debian-like machine):
+    1. Install `dkms` and `kernel-headers` for your machine
+       ```bash
+       apt install -y dkms make linux-headers-$(uname -r)
+       ```
+    2. If you want to run the BPF probe try to install the most recent `clang` version you have available on your system
+       ```bash
+       apt install -y clang llvm
+       ```
+       If you want to run the Kernel module probe try to install the most recent `gcc` version you have available on your system
+       ```bash
+       apt install -y gcc
+       ```
+    Now you can try again to build drivers!
+    If you are still not able to build them you have 2 options:
+    1. Add a config for your kernel on test-infra. This [blog post](/blog/falco-prebuilt-drivers-new-distro) should drive you step by step.
+    2. Use the modern BPF probe driver (if you kernel is recent enough to support it). Right now you should have at least a kernel version >= 5.8 but with Falco 0.35 the modern probe will autodetect if it can run telling you what is missing if necessary
   index: 7
 - title: I get too many notifications from Falco. What can I do?
   content: |
