@@ -1,4 +1,3 @@
-
 @import "changelog";
 @import "training";
 @import "base";
@@ -61,7 +60,6 @@
 main {
   p,
   li {
-    // font-size: 1.25rem;
     color: $dark;
   }
 }
@@ -69,7 +67,7 @@ main {
 footer {
   min-height: unset;
   background-color: $black;
-  
+
   .list-inline-item {
     font-size: 2rem;
   }
@@ -103,4 +101,13 @@ img[src*="#img-fit"] {
 .contributor-date {
   min-width: 350px;
   font-size: 1.25rem;
+}
+
+#open_preferences_center {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  i {
+    font-size: 2rem;
+  }
 }
