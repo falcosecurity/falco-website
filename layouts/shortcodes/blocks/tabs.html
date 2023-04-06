@@ -4,7 +4,7 @@
 {{- $tab_set_id := .Get "name" | default (printf "tabset-%s-%d" (.Page.RelPermalink) (.Page.Scratch.Get "tabset-counter") ) | anchorize -}}
 {{- $class := .Get "class" | default ""}}
 {{- if .Inner -}}{{- end -}}
-<div class="tabpane card bg-light {{ $class }}">
+<div class="card tabpane bg-light {{ $class }}">
   <div class="card-body">
     <ul class="nav nav-tabs tabpane__header shadow bg-white" id="{{ $tab_set_id }}" role="tablist">
       {{- range $i, $e := $tabs -}}
