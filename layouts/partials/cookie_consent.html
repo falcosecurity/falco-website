@@ -12,13 +12,19 @@ cookieconsent.run({"notice_banner_type":"interstitial","consent_type":"express",
 <!-- <a href="#" id="open_preferences_center"><i class="fa fa-cookie-bite"></i></a> -->
 
 <script>
-  (() => document.addEventListener("scroll", () => {
-    const [footer] = document.getElementsByTagName('footer');
-    const rect = footer.getBoundingClientRect();
-    const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
-    const offset = viewHeight - rect.top;
-    
-    const consent = document.getElementById('open_preferences_center');
-    consent.style.bottom = offset > 0 ? `calc(1rem + ${offset}px)` : '1rem'
-  }))()
+  (() => {
+    const consent = document.getElementById("open_preferences_center");
+    if (consent)
+      document.addEventListener("scroll", () => {
+        const [footer] = document.getElementsByTagName("footer");
+        const rect = footer.getBoundingClientRect();
+        const viewHeight = Math.max(
+          document.documentElement.clientHeight,
+          window.innerHeight
+        );
+        const offset = viewHeight - rect.top;
+
+        consent.style.bottom = offset > 0 ? `calc(1rem + ${offset}px)` : "1rem";
+      });
+  })();
 </script>
