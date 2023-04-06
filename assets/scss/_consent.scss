@@ -1,0 +1,35 @@
+//
+// Cookie consent styles
+// TODO: remove when GA4 is implemented
+//
+
+%buttons {
+  border-radius: $border-radius !important;
+  font-size: $font-size-base !important;
+  font-weight: $font-weight-normal !important;
+}
+
+.cc-nb {
+  &-main-container {
+    padding: 2.5rem !important;
+  }
+
+  &-okagree,
+  &-reject,
+  &-changep {
+    @extend %buttons;
+  }
+
+  &-okagree,
+  &-reject,
+  &-foot-save {
+    background-color: $primary !important;
+  }
+}
+
+.cc-cp {
+  &-foot-save {
+    @extend %buttons;
+    background-color: $primary !important;
+  }
+}
