@@ -6,7 +6,7 @@
 {{ end -}}
 
 {{ if .Params.keywords }}
-<meta name="keywords" content="{{ range .Params.keywords }}{{ . }}{{ end }}">
+<meta name="keywords" content="{{ range $index, $keyword := .Params.keywords }}{{ if $index }} {{ end }}{{ $keyword }}{{ end }}">
 {{ end }}
 
 {{ $outputFormat := partial "outputformat.html" . -}}
