@@ -1,6 +1,6 @@
 ---
 title: Falco use cases
-keywords: Host security, container security, Kubernetes security, k8s security, cloud security, runtime security, detection, intrusion detection
+keywords: Host security, container security, Kubernetes security, k8s security, cloud security, runtime security, detection, intrusion detection, Detect, Respond
 ---
 
 {{< blocks/content wrap="col-9" >}}
