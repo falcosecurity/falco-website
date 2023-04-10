@@ -3,7 +3,7 @@
   {{ range $links }}
   <a class="card shadow text-center text-decoration-none" href="{{ .url }}" target="_blank">
     <div class="card-body">
-      <img class="icon-4" src="{{ .icon }}" />
+      <img class="icon-4" src="{{ .icon }}" alt="{{ .name }}"/>
       <div class="card-title text-body font-weight-bold mt-3 mb-0">
         {{ .title }}
       </div>
