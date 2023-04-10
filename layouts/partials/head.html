@@ -42,8 +42,8 @@
 {{/*  TODO: Remove when GA4 is introduced  */}}
 {{ partial "cookie_consent.html" }}
 <script
-  src="https://code.jquery.com/jquery-3.6.0.min.js"
-  integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK"
+  src='{{ "/js/jquery-3.6.4.min.js" | relURL }}'
+  integrity="sha384-D3uwrq65ksHOpbvkMEb7reM5Bzm4MbOwpMgngc01wq8i5BTp7Tc74UZr97GXb2xS"
   crossorigin="anonymous"></script>
 {{ if .Site.Params.offlineSearch -}}
 <script defer
