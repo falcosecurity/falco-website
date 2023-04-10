@@ -1,6 +1,3 @@
-{{ $swiperSlider := resources.Get "js/swiper-bundle.min.js" | minify | fingerprint }}
-<script src="{{ $swiperSlider.RelPermalink }}"></script>
-
 {{ $feedback := resources.Get "js/feedback.js" }}
 {{ $slider := resources.Get "js/slider.js" }}
 {{ $announcement := resources.Get "js/announcement-bar.js" }}
@@ -8,3 +5,6 @@
 {{ $copy_link := resources.Get "js/copy-link.js" }}
 {{ $js := (slice $feedback $slider $announcement $subscribe $copy_link) | resources.Concat "js/scripts.js" }}
 <script src="{{ $js.RelPermalink }}" async></script>
+
+{{ $swiperSlider := resources.Get "js/swiper-bundle.min.js" | minify | fingerprint }}
+<script src="{{ $swiperSlider.RelPermalink }}" async onload="initSwiper()"></script>

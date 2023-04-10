@@ -11,7 +11,7 @@
   <div class="d-flex align-items-center text-muted text-uppercase">
     <small class="flex-grow-1">{{ .Params.author }}</small>
     <small class="flex-shrink-0">{{ .Date.Format ($.Param "time_format_default") }}</small>
-    <button class="btn btn-link text-muted p-0" onclick="copyLinkClickHandler({{ .Permalink }})">
+    <button class="btn btn-link text-muted p-0" aria-label="Copy link" onclick="copyLinkClickHandler({{ .Permalink }})">
       <i class="fa fa-link ml-2"></i>
     </button>
   </div>
