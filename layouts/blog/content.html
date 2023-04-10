@@ -15,7 +15,7 @@
 						<b class="text-uppercase text-dark mr-3">{{ . | markdownify }}</b>
 					{{ end}}
 					<time datetime="{{  $.Date.Format "2006-01-02" }}" class="text-muted">{{ $.Date.Format $.Site.Params.time_format_default  }}</time>
-					<button class="btn btn-link text-muted p-0" onclick="copyLinkClickHandler(`{{ .Permalink }}`)">
+					<button class="btn btn-link text-muted p-0" aria-label="Copy link" onclick="copyLinkClickHandler({{ .Permalink }})">
 						<i class="fa fa-link ml-2"></i>
 					</button>
 				</div>

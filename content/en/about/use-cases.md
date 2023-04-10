@@ -1,6 +1,6 @@
 ---
 title: Falco use cases
-keywords: Host security, container security, Kubernetes security, k8s security, cloud security, runtime security, detection, intrusion detection
+keywords: Host security, container security, Kubernetes security, k8s security, cloud security, runtime security, detection, intrusion detection, Detect, Respond
 ---
 
 {{< blocks/content wrap="col-9" >}}
@@ -11,13 +11,13 @@ Falco shines at detecting threats, intrusions, and data theft in real time. It w
 ![Falco today](/img/about/falco_today.svg#img-fit)
 {{< /blocks/content >}}
 
-{{< blocks/content wrap="col" >}}
+{{< blocks/content wrap="col-9" >}}
 <h3>Secure your whole machine by instrumenting the operating system</h3>
 
 One of the major benefits of Falco is its ability to provide host security. It achieves this by leveraging kernel-level eBPF instrumentation to capture low-level system events, such as file accesses, process creations, and network activity. This allows Falco to detect suspicious behavior, such as unauthorized access attempts, malware infections, or privilege escalations, that may indicate a security breach. Additionally, Falco's rules engine can be customized to detect specific types of attacks and enforce security policies tailored to your organization's needs.
 {{< /blocks/content >}}
 
-{{< blocks/content wrap="col" >}}
+{{< blocks/content wrap="col-9" >}}
 <h3>Protect containers, Kubernetes and cloud native applications</h3>
 
 Born "cloud-native",  Falco is able to provide advanced container security. By tracking container behaviors and communications with the kernel, with an eBPF probe or a native kernel module, Falco can detect suspicious activities and threats in real-time. Falco can also enrich container events with metadata from the operating system, the container runtime and the Kubernetes API, providing users with more context about what's happening in their containers.
@@ -26,7 +26,7 @@ In addition to container security, Falco also provides robust Kubernetes securit
 
 {{< /blocks/content >}}
 
-{{< blocks/content wrap="col" >}}
+{{< blocks/content wrap="col-9" >}}
 <h3>Detect and alert on suspicious behavior in your cloud environments</h3>
 
 As more organizations migrate their applications to the cloud, the need for robust security measures becomes increasingly important. The nature of cloud-native environments can make it challenging to keep track of all the assets and configurations, which can expose infrastructure and applications to vulnerabilities.
@@ -35,7 +35,7 @@ Falco has powerful plugins that hook into the security event logs of your cloud 
 
 {{< /blocks/content >}}
 
-{{< blocks/content wrap="col" >}}
+{{< blocks/content wrap="col-9" >}}
 <h3>Protect your organization across the cloud</h3>
 
 Falco offers a range of plugins that provide additional security benefits. These plugins integrate with various cloud services, such as GitHub and Okta, to enhance the security posture of your whole organization.
@@ -45,7 +45,7 @@ For example, the GitHub plugin for Falco can detect unauthorized access attempts
 Similarly, the Okta plugin for Falco can provide enhanced identity and access management capabilities. This can be particularly useful in the event of a security incident, such as the [FireEye outbreak](https://www.nytimes.com/2020/12/08/technology/fireeye-hacked-russians.html), where rapid alerting and response are crucial for containing the damage and mitigating the threat.
 {{< /blocks/content >}}
 
-{{< blocks/content content="html" wrap="col">}}
+{{< blocks/content content="html" wrap="col-9">}}
   <h3 class="mb-3">Falco FAQs</h3>
 
   {{< faq take=6 skip=8 >}}
@@ -56,11 +56,11 @@ Similarly, the Okta plugin for Falco can provide enhanced identity and access ma
 {{< /blocks/content >}}
 
 <!-- TODO: uncomment this section when the redesign is ready -->
-<!-- {{< blocks/content content="html" wrap="col">}}
+<!-- {{< blocks/content content="html" wrap="col-9">}}
 {{< feedback >}}
 {{< /blocks/content >}} -->
 
-{{< blocks/content content="html" wrap="col">}}
+{{< blocks/content content="html" wrap="col-9">}}
 {{< footer_nav 
   prev="/about/why-falco"
   prevTitle="Why Falco?"

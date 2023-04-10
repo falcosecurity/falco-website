@@ -2,7 +2,7 @@
 {{ $type := .Get "type" | default "" }}
 {{ $content_type := .Get "content" | default "text" }}
 {{ $wrap := .Get "wrap" }}
-<a id="td-block-{{ .Ordinal }}" class="td-offset-anchor"></a>
+<span id="td-block-{{ .Ordinal }}" class="td-offset-anchor"></span>
 <section class="row td-box td-box--{{ $col_id }}">
   <div class="container">
     <div class="row {{ $type }}">

@@ -194,8 +194,9 @@
     }
     
     @include media-breakpoint-down(md) {
-      width: 7rem;
-      left: 23rem;
+      top: -1rem;
+      width: 6rem;
+      left: 25rem;
     }
   }
 
@@ -212,7 +213,7 @@
     
     @include media-breakpoint-down(md) {
       top: 11rem;
-      left: 24rem;
+      left: 22rem;
     }
   }
 }
@@ -281,4 +282,8 @@
   a.btn {
     white-space: nowrap;
   }
+}
+
+#contribute {
+  scroll-margin-top: 7rem;
 }

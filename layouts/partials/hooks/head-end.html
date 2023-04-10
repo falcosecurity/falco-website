@@ -1,13 +1,10 @@
-{{ $feedback := resources.Get "js/feedback.js" | minify | fingerprint }}
-<script async src="{{ $feedback.RelPermalink }}" async ></script>
-{{ $swiperSlider := resources.Get "js/swiper-bundle.min.js" | minify | fingerprint }}
-<script src="{{ $swiperSlider.RelPermalink }}"></script>
-{{ $slider := resources.Get "js/slider.js" | minify | fingerprint }}
-<script src="{{ $slider.RelPermalink }}"></script>
-{{ $announcement := resources.Get "js/announcement-bar.js" | minify | fingerprint }}
-<script src="{{ $announcement.RelPermalink }}" async></script>
+{{ $feedback := resources.Get "js/feedback.js" }}
+{{ $slider := resources.Get "js/slider.js" }}
+{{ $announcement := resources.Get "js/announcement-bar.js" }}
 {{ $subscribe := resources.Get "js/subscribe-form.js" }}
-<script src="{{ $subscribe.RelPermalink }}" async></script>
 {{ $copy_link := resources.Get "js/copy-link.js" }}
-<script src="{{ $copy_link.RelPermalink }}" async></script>
-{{/*  TODO: merge scripts when revamp is ready  */}}
+{{ $js := (slice $feedback $slider $announcement $subscribe $copy_link) | resources.Concat "js/scripts.js" }}
+<script src="{{ $js.RelPermalink }}" async></script>
+
+{{ $swiperSlider := resources.Get "js/swiper-bundle.min.js" | minify | fingerprint }}
+<script src="{{ $swiperSlider.RelPermalink }}" async onload="initSwiper()"></script>
