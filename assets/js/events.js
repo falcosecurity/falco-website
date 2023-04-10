@@ -25,7 +25,7 @@ import { format, addDays } from "date-fns";
         <div class="card-body d-flex flex-column flex-sm-row align-items-sm-center gap-4 text-left">
           <div class="event__time"></div>
           <div class="event__content w-100"></div>
-          <a target="_blank">
+          <a target="_blank" aria-label="event">
             <i class="fa fa-arrow-right text-primary d-none d-sm-block"></i>
           </a>
         </div>
@@ -110,7 +110,7 @@ import { format, addDays } from "date-fns";
   const webcasts = (events, take = 3) => {
     const template = `
       <div class="card bg-light">
-        <img class="card-img-top webcast__img" loading="lazy"/>
+        <img class="card-img-top webcast__img" alt="webcast" loading="lazy"/>
         <div class="card-body pt-4">
           <div class="align-items-start card-text d-flex flex-column text-left h-100">
             <div class="d-flex mb-4">
