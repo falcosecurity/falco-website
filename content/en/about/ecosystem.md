@@ -17,8 +17,8 @@ title: Falco Ecosystem
   {{< blocks/grid layout="lg-4 md-3 sm-2 2" gap=4 class="gallery-vendor" >}}
   {{< docs/plugins_gallery_items plugins icon />}}
     <div class="d-flex flex-column align-items-center">
-      <a class="icon-button shadow" href="https://github.com/falcosecurity/plugins#registered-plugins">
-        <img src="/img/icons/box-arrow-up-right.svg"/>
+      <a class="icon-button shadow" href="https://github.com/falcosecurity/plugins#registered-plugins" aria-label="go to plugins#registered-plugins" >
+        <img src="/img/icons/box-arrow-up-right.svg" alt="box-arrow-up-right" />
       </a>
       <span class="font-weight-bold mt-2">More plugins...</span>
     </div>
@@ -36,7 +36,7 @@ title: Falco Ecosystem
   {{< docs/vendors_gallery_items integrations />}}
     <div class="d-flex flex-column align-items-center">
       <a class="icon-button shadow" href="https://github.com/falcosecurity/falcosidekick#outputs">
-        <img src="/img/icons/box-arrow-up-right.svg"/>
+        <img src="/img/icons/box-arrow-up-right.svg" alt="box-arrow-up-right"/>
       </a>
       <span class="font-weight-bold mt-2">More outputs...</span>
     </div>

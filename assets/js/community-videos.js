@@ -7,8 +7,8 @@ import { format } from "date-fns";
   async function handler() {
     const template = `
       <div class="card bg-light">
-        <a class="text-body" href="https://www.youtube.com/watch?v=%id%" target="_blank">
-          <img class="card-img-top" src="%img_src%" />
+        <a class="text-body" href="https://www.youtube.com/watch?v=%id%" aria-label="youtube" target="_blank">
+          <img class="card-img-top" src="%img_src%" alt="card" />
         </a>
         <div class="card-body pt-4">
           <div class="card-text">
