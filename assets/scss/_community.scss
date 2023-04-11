@@ -221,7 +221,7 @@
 .event {
   &__time {
     @include media-breakpoint-up(md) {
-      min-width: 7rem;
+      min-width: 9rem;
     }
 
     @include media-breakpoint-up(lg) {
@@ -229,7 +229,7 @@
     }
 
     @include media-breakpoint-up(sm) {
-      min-width: 7rem;
+      min-width: 9rem;
     }
   }
 
