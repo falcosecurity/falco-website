@@ -24,15 +24,27 @@ async function handler() {
     return;
   }
 
-  data.map((videos, i) => {
+  data.map(async (playlistItems, i) => {
+    const videoIds = playlistItems.map(
+      ({ resourceId: { videoId } }) => videoId
+    );
+    const response = await fetch(
+      `/.netlify/functions/youtube-bypass?type=videos&id=${videoIds.join(
+        ","
+      )}`
+    );
+    const videos = await response.json();
+
     const el = document.getElementById(ids[i].id);
-    const items = videos.map(
-      ({
-        resourceId: { videoId: id },
-        description,
-        title,
-        publishedAt: published,
-      }) => replace(template, { id, description, title, published })
+
+    const items = playlistItems.map(
+      ({ resourceId: { videoId: id }, description, title }, i) =>
+        replace(template, {
+          id,
+          description,
+          title,
+          published: videos[i].publishedAt,
+        })
     );
     el.innerHTML = items.join();
   });

@@ -26,18 +26,27 @@ import { format } from "date-fns";
       }`
     );
     const data = await response.json();
+    
+    const videoIds = data.map(
+      ({ resourceId: { videoId } }) => videoId
+    );
+    const videosResponse = await fetch(
+      `/.netlify/functions/youtube-bypass?type=videos&id=${videoIds.join(
+        ","
+      )}`
+    );
+    const videos = await videosResponse.json();
 
     const el = document.getElementById(playlist_id);
-    
 
     const items = data
-      .map(({ resourceId: { videoId: id }, title, publishedAt, thumbnails }) => {
+      .map(({ resourceId: { videoId: id }, title, publishedAt, thumbnails }, i) => {
         let tpl = template.replace("%img_src%", thumbnails?.standard?.url);
         tpl = tpl.replaceAll("%id%", id);
         tpl = tpl.replace("%title%", title);
         tpl = tpl.replace(
           "%published%",
-          format(new Date(publishedAt), "MMM dd, yyyy")
+          format(new Date(videos[i].publishedAt), "MMM dd, yyyy")
         );
         return tpl.trim();
       })
