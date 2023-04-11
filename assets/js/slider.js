@@ -1,7 +1,5 @@
 const initSwiper = () =>
-  {
-    console.log('init')
-    new Swiper(".swiper", {
+  new Swiper(".swiper", {
     loop: false,
     slidesPerView: 1,
     slidesPerGroup: 1,
@@ -26,4 +24,4 @@ const initSwiper = () =>
       prevEl: ".swiper__control",
       disabledClass: "swiper__control--disabled",
     },
-  });}
+  });

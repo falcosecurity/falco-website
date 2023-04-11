@@ -31,6 +31,8 @@
   url: /community/events/
   start: 2023-04-18T10:00:00+0200
   end: 2023-04-21T23:30:00+0200
+  timezone: Europe/Amsterdam
+  timezoneName: CEST
   schedule:
     - start: 2023-04-18T10:00:00+0200
       time:

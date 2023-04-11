@@ -1,5 +1,6 @@
 import * as params from "@params";
 import { format, addDays } from "date-fns";
+import { formatInTimeZone, getTimezoneOffset } from "date-fns-tz";
 
 (() => {
   const fromString = (template) => {
@@ -45,8 +46,10 @@ import { format, addDays } from "date-fns";
       event.getElementsByClassName("event__info")[0].href = e.url;
 
       e.schedule.forEach((item) => {
-        start = format(new Date(item.start), "MMM dd%, yyyy");
-        end = item.end ? format(new Date(item.end), " - dd") : "";
+        const startDate = new Date(item.start);
+        const endDate = new Date(item.end);
+        start = e.timezone ? formatInTimeZone(startDate, e.timezone, "MMM dd%, yyyy") : format(startDate, "MMM dd%, yyyy");
+        end = item.end ? ( e.timezone ? formatInTimeZone(endDate, e.timezone, " - dd") : format(endDate, " - dd")) : "";
         const title = start.replace("%", `${end}`);
 
         const eventItem = fromString(eventItemTemplate);
@@ -57,9 +60,10 @@ import { format, addDays } from "date-fns";
         item.time.forEach(({ start, end, content }) => {
           const eventCard = fromString(eventCardTemplate);
 
-          eventCard.getElementsByClassName("event__time")[0].innerHTML = start
-            ? `${format(new Date(start), 'HH:mm')}${format(new Date(end), 'HH:mm') ? ` - ${format(new Date(end), 'HH:mm')}` : ""}`
-            : "All day";
+          const startTime = start && (e.timezone ? formatInTimeZone(new Date(start), e.timezone, "HH:mm") : format(new Date(start), "HH:mm"));
+          const endTime = end && (e.timezone ? formatInTimeZone(new Date(end), e.timezone, "HH:mm") : format(new Date(end), "HH:mm"));
+          
+          eventCard.getElementsByClassName("event__time")[0].innerHTML = start ? `${startTime} - ${endTime || "" } ${e.timezoneName || ""}` : "All day";
           const [eventContent] =
             eventCard.getElementsByClassName("event__content");
           eventContent.innerHTML = content.trim();
