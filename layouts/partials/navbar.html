@@ -11,7 +11,7 @@
 			{{ range .Site.Menus.main }}
         {{ if .HasChildren }}
           <li class="nav-item dropdown d-none d-md-block mb-2 mb-lg-0 mx-2">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown{{ .Name }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{ .Name }}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
