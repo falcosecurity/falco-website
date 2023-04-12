@@ -11,6 +11,17 @@
     }
   }
 
+  &-md {
+    border-radius: $card-border-radius-md !important;
+    .card-body {
+      padding: $card-spacer-x-md !important;
+      &-md {
+        padding-top: $card-spacer-x-sm !important;
+        padding-bottom: $card-spacer-x-sm !important;
+      }
+    }
+  }
+
   .card-text {
     :last-child {
       margin-bottom: 0;

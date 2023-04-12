@@ -1,0 +1,24 @@
+{{ $logos := site.Data.logos }}
+
+{{ range $logo := $logos }}
+<div class="card card-md shadow td-box--{{ .color }}">
+  <div class="card-body">
+    <div class="card-text h-100 w-100">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="font-weight-bold">{{ .description }}</div>
+        <div>
+          <a href="{{ .img }}.png" download>
+            <button class="btn btn-outline-primary">PNG</button>
+          </a>
+          <a class="ml-1" href="{{ .img }}.svg" download>
+            <button class="btn btn-outline-primary">SVG</button>
+          </a>
+        </div>
+      </div>
+      <div class="mt-4 d-flex justify-content-center">
+        <img src="{{ .img }}.svg" alt="{{ .description }}">
+      </div>
+    </div>
+  </div>
+</div>
+{{ end }}

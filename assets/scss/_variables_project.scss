@@ -7,18 +7,34 @@ $dark:                      #404040;
 $warning:                   #FCE5E5;
 $black:                     #121212;
 $white:                     #FFF;
-$blue:                        $primary;
+$blue:                      $primary;
 $cyan:                      #B3E7EE;
-$body-color:                  $black;
+$body-color:                $black;
                               
 $gray-100:                  #F4F4F4;
 $gray-200:                  #E5E5E5;
 $gray-300:                  #C4C4C4;
 $gray-600:                  #8A8A8A;
+$gray-650:                  #53565A;
 $gray-700:                  #404040;
+$cyan-700:                  #244245;
+$black-700:                 #000000;
 
 $td-sidebar-bg-color:         transparent;
 $td-sidebar-border-color:     transparent;
+
+//
+// Color system
+//
+$colors: () !default;
+$colors: map-merge(
+  (
+    "cyan-700":  $cyan-700,
+    "gray-650":  $gray-650,
+    "black":     $black-700,
+  ),
+  $colors
+);
 
 // 
 // Fonts
@@ -49,9 +65,11 @@ $h6-font-size:                $font-size-base * 1;
 // Cards
 // 
 $card-border-radius:          2.5rem;
+$card-border-radius-md:       2rem;
 $card-border-radius-sm:       1.25rem;
 $card-spacer-y:               1rem;
 $card-spacer-x:               2.5rem;
+$card-spacer-x-md:            2rem;
 $card-spacer-x-sm:            1.5rem;
 $card-border-width:           0;
 $card-deck-margin:            0.75rem;

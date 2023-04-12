@@ -1,0 +1,216 @@
+{{ define "main" }}
+
+<section class="row td-box td-box--transparent">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h3 id="community-brand-identity-guidelines">
+          Community Brand & Identity Guidelines
+        </h3>
+        <p>Looking for our logo? Want to reference The Falco Project correctly? Below is handy <a href="https://docs.google.com/document/d/1fzqRsDVVpweyhZpI4CyLTg7kKDYdArFJpcnl5PoEu_c/edit#bookmark=id.m0vf4gv92ev6">visual content</a> and
+          <a href="https://docs.google.com/document/d/1fzqRsDVVpweyhZpI4CyLTg7kKDYdArFJpcnl5PoEu_c/edit#bookmark=id.zgguaaawhhg6">written content</a> that can be used publicly. </p>
+        <p>Falco is an open source security project whose brand and identity are governed by the <a href="https://www.linuxfoundation.org/legal/trademark-usage">Cloud Native Computing Foundation.</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="row td-box td-box--transparent">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h4>Visual content</h4>
+        <h5>Project Mark</h5>
+        <p>
+          Wherever possible, the horizontal teal logo is the preferred logo to use. If you need all the logos, <a
+          href="https://drive.google.com/drive/folders/11BwquocBGO4aOcaa7enBvqECwHCX_3yh?usp=share_link">download the logo pac.</a>
+        </p>
+        <div class="grid-1 grid-md-2 grid-xl-3 gap-4">
+          {{ partial "brand-logos.html" }}
+        </div>
+        <h4 class="mt-5">Project Font & Typestyle</h4>
+        <p>Falco prefers Ubuntu font. When you reference us, please capitalize the first letter of our name, just as you would your own.</p>
+        <div class="grid-1 grid-lg-2 gap-4">
+          <div class="card card-md td-box--info">
+            <div class="card-body">
+              <div class="card-text h-100 w-100 d-flex flex-column align-items-center">
+                <h6 class="font-weight-normal">Falco, The Falco Project</h6>
+                <div class="icon-button shadow flex-shrink-0">
+                  <img src="/icons/check-sm.svg" alt="check">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card card-md td-box--light">
+            <div class="card-body">
+              <div class="card-text h-100 w-100 d-flex flex-column align-items-center">
+                <h6 class="font-weight-normal">falco, the falco project, the Falco project</h6>
+                <div class="icon-button shadow flex-shrink-0">
+                  <img src="/icons/x-stroke.svg" alt="x">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h4 class="mt-5">Project Colors</h4>
+        <div class="grid-1 grid-md-2 grid-lg-4 gap-4 mt-3">
+        {{ partial "colors.html" }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="row td-box td-box--transparent">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h4>Project Slide Templates</h4>
+        <p>Want to speak about Falco at a meetup or conference? Make it easier by using these templates and/or scripted slides. You can even watch this video as a training tool.</p>
+        {{ partial "slide-templates.html" (dict "start" 0 "end" 2) }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="row td-box td-box--transparent">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h4>Falco diagrams</h4>
+        <p>Find all the SVG and PNG format diagrams used throughout the Falco website on this repository.</p>
+        {{ partial "slide-templates.html" (dict "start" 3 "end" 3) }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="row td-box td-box--transparent">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h3>Written content</h3>
+        <h4 class="mt-4">Project Facts</h4>
+        <div>As of {{ now.Format "April, 2006," }} Falco has:</div>
+        <div class="grid-1 grid-md-2 grid-lg-4 gap-4 mt-3">
+          {{ partial "project-facts.html" }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="row td-box td-box--transparent">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h4>Project Origin</h4>
+        <div class="card card-md td-box--light">
+          <div class="card-body card-body-md">
+            <div class="card-text h-100 w-100">
+              <p>Falco was created as a cloud native runtime security project by Sysdig. The project was contributed to the CNCF in October 2018. Falco is a CNCF incubating project with more than 170 individual contributors around the world.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="row td-box td-box--transparent">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h4>Project Description</h4>
+        <div class="card card-md td-box--light">
+          <div class="card-body card-body-md">
+            <div class="card-text h-100 w-100">
+              <h4 class="font-weight-normal">Cloud Native Runtime Security</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="row td-box td-box--transparent">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h4>Project Blurbs</h4>
+        <div class="card card-md td-box--light">
+          <div class="card-body card-body-md">
+            <div class="card-text h-100 w-100">
+              <h6>25-word description</h6>
+              <p>Falco is the open source standard for threat detection across Kubernetes, containers, hosts and the cloud to detect and stop attacks. </p>
+            </div>
+          </div>
+        </div>
+        <div class="card card-md td-box--light mt-5">
+          <div class="card-body card-body-md">
+            <div class="card-text h-100 w-100">
+              <h6>50-word description</h6>
+              <p>Falco is the open source standard for threat detection across Kubernetes, containers, hosts and the cloud. Runtime security with Falco provides visibility into unexpected behavior, config changes, intrusions, and data theft in real time, so you can detect and stop attacks. Falco uses state-of-the-art eBPF technology for workload visibility.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card card-md td-box--light mt-5">
+          <div class="card-body card-body-md">
+            <div class="card-text h-100 w-100">
+              <h6>100-word description</h6>
+              <p>Falco is the open source standard for threat detection across Kubernetes, containers, hosts and the cloud. Runtime security with Falco provides visibility into unexpected behavior, config changes, intrusions, and data theft in real time, so you can detect and stop attacks. Falco uses state-of-the-art eBPF technology to monitor workloads, and can protect cloud services such as AWS CloudTrail, GitHub or Okta. Falco is supported by a global multi-vendor ecosystem, and is hosted by the CNCF, home of the Kubernetes project.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="row td-box td-box--transparent">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h4>Project Encouraged Phrasing</h4>
+        <p>The phrases below are effective ways of messaging Falco's value add. Use them when writing or speaking publicly about Falco. You can also reference language in the <a href="/about/falco/">About Falco</a> section.</p>
+        <div class="grid-1 grid-md-2 gap-5 mt-4">
+          <div class="card card-md td-box--light">
+            <div class="card-body card-body-md">
+              <div class="card-text h-100 w-100">
+                <h6>Falco is the open source standard for threat detection</h6>
+                <p>This statement refers to Falco as a CNCF incubating project with widespread adoption and broad community leadership.</p>
+              </div>
+            </div>
+          </div>
+          <div class="card card-md td-box--light">
+            <div class="card-body card-body-md">
+              <div class="card-text h-100 w-100">
+                <h6>Falco is a rules engine that powers runtime security</h6>
+                <p>This term refers to the concept that Falco is a stateless processing engine. A large amount of data comes into the engine, but meticulously crafted security alerts come out. It reasons about signals coming from a system at runtime, and can alert if a threat is detected.</p>
+              </div>
+            </div>
+          </div>
+          <div class="card card-md td-box--light">
+            <div class="card-body card-body-md">
+              <div class="card-text h-100 w-100">
+                <h6>Falco provides real time threat detection</h6>
+                <p>Falco provides streaming detection of unexpected behavior, configuration changes, and attacks. With this streaming approach, Falco enables real-time response while minimizing storage costs and complexity.</p>
+              </div>
+            </div>
+          </div>
+          <div class="card card-md td-box--light">
+            <div class="card-body card-body-md">
+              <div class="card-text h-100 w-100">
+                <h6>Falco delivers detection tooling and alerts</h6>
+                <p>Falco does not prevent unwanted behavior, rather it alerts when unusual behavior, config changes, intrusions and data theft occurs. This is commonly referred to as detection or forensics.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{ end }}

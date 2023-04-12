@@ -226,6 +226,14 @@ id = "UA-40398182-19"
     [menu.main.params]
         description = "The people who build Falco"
 [[menu.main]]
+    identifier = "falco-brand"
+    name = "Falco brand "
+    url = "/community/falco-brand/"
+    parent = "community"
+    weight = 18
+    [menu.main.params]
+        description = "Brand guidelines"
+[[menu.main]]
     identifier = "training"
     name = "Training"
     weight = 70

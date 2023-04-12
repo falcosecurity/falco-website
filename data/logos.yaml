@@ -1,0 +1,27 @@
+- description: Horizontal color
+  img: /img/brand/falco-horizontal-color
+  color: white
+- description: Horizontal black
+  img: /img/brand/falco-horizontal-color
+  color: white
+- description: Horizontal white
+  img: /img/brand/falco-horizontal-white
+  color: cyan-700
+- description: Icon color
+  img: /img/brand/falco-icon-color
+  color: white
+- description: Icon black
+  img: /img/brand/falco-icon-black
+  color: white
+- description: Icon white
+  img: /img/brand/falco-icon-white
+  color: cyan-700
+- description: Stacked color
+  img: /img/brand/falco-stacked-color
+  color: white
+- description: Stacked black
+  img: /img/brand/falco-stacked-black
+  color: white
+- description: Stacked white
+  img: /img/brand/falco-stacked-white
+  color: cyan-700
