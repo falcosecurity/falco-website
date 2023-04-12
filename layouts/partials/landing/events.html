@@ -1,22 +1,7 @@
-{{ $events := where (index site.Data site.Language.Lang).events "end" ">=" (now.Format "2006-01-02") }}
-{{ $sorted := sort $events "date" }}
+{{ $events := (index site.Data site.Language.Lang).events }}
+{{ $sorted := sort $events "start" }}
+{{ $params := dict "events" $sorted "type" "landing" "take" 2 }}
+{{ $js := resources.Get "js/events.js" | js.Build (dict "params" $params) | minify | fingerprint }}
 
-{{ range $i, $item := first 2 $sorted }}
-  {{ with not (eq $i 0)}}
-    <hr class="my-4"/>
-  {{ end }}
-  {{ $url := cond (isset $item "url") .url "/community/events" }}
-  <div class="d-flex justify-content-between text-muted mb-2">
-    <span>{{ time.Format "Jan 2, 2006" .start }}</span>
-    <div>
-      <i class="fa fa-map-marker-alt"></i>
-      <span>{{ .location }}</span>
-    </div>
-  </div>
-  <a class="card-title mb-2 text-body" href="{{ .url }}">
-    <h6 class="mb-2">{{ .title }}</h6>
-  </a>
-  <div class="card-text news">
-    {{ .description | truncate 160 }}
-  </div>
-{{ end }}
+<div id="landing-events"></div>
+<script src="{{ $js.RelPermalink}}" async></script>
