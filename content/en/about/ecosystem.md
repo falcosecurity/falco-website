@@ -120,10 +120,9 @@ title: Falco Ecosystem
   </div>
 {{< /blocks/content >}}
 
-<!-- TODO: uncomment this section when the redesign is ready -->
-<!-- {{< blocks/content content="html" wrap="col">}}
+{{< blocks/content content="html" wrap="col">}}
 {{< feedback >}}
-{{< /blocks/content >}} -->
+{{< /blocks/content >}}
 
 {{< blocks/content content="html" wrap="col" >}}
 {{< footer_nav 

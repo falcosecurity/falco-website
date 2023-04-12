@@ -55,10 +55,9 @@ Similarly, the Okta plugin for Falco can provide enhanced identity and access ma
   </div>
 {{< /blocks/content >}}
 
-<!-- TODO: uncomment this section when the redesign is ready -->
-<!-- {{< blocks/content content="html" wrap="col-9">}}
+{{< blocks/content content="html" wrap="col-9">}}
 {{< feedback >}}
-{{< /blocks/content >}} -->
+{{< /blocks/content >}}
 
 {{< blocks/content content="html" wrap="col-9">}}
 {{< footer_nav 
