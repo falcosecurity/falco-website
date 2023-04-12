@@ -48,8 +48,14 @@ import { formatInTimeZone, getTimezoneOffset } from "date-fns-tz";
       e.schedule.forEach((item) => {
         const startDate = new Date(item.start);
         const endDate = new Date(item.end);
-        start = e.timezone ? formatInTimeZone(startDate, e.timezone, "MMM dd%, yyyy") : format(startDate, "MMM dd%, yyyy");
-        end = item.end ? ( e.timezone ? formatInTimeZone(endDate, e.timezone, " - dd") : format(endDate, " - dd")) : "";
+        start = e.timezone
+          ? formatInTimeZone(startDate, e.timezone, "MMM dd%, yyyy")
+          : format(startDate, "MMM dd%, yyyy");
+        end = item.end
+          ? e.timezone
+            ? formatInTimeZone(endDate, e.timezone, " - dd")
+            : format(endDate, " - dd")
+          : "";
         const title = start.replace("%", `${end}`);
 
         const eventItem = fromString(eventItemTemplate);
@@ -60,10 +66,20 @@ import { formatInTimeZone, getTimezoneOffset } from "date-fns-tz";
         item.time.forEach(({ start, end, content }) => {
           const eventCard = fromString(eventCardTemplate);
 
-          const startTime = start && (e.timezone ? formatInTimeZone(new Date(start), e.timezone, "HH:mm") : format(new Date(start), "HH:mm"));
-          const endTime = end && (e.timezone ? formatInTimeZone(new Date(end), e.timezone, "HH:mm") : format(new Date(end), "HH:mm"));
-          
-          eventCard.getElementsByClassName("event__time")[0].innerHTML = start ? `${startTime} - ${endTime || "" } ${e.timezoneName || ""}` : "All day";
+          const startTime =
+            start &&
+            (e.timezone
+              ? formatInTimeZone(new Date(start), e.timezone, "HH:mm")
+              : format(new Date(start), "HH:mm"));
+          const endTime =
+            end &&
+            (e.timezone
+              ? formatInTimeZone(new Date(end), e.timezone, "HH:mm")
+              : format(new Date(end), "HH:mm"));
+
+          eventCard.getElementsByClassName("event__time")[0].innerHTML = start
+            ? `${startTime} - ${endTime || ""} ${e.timezoneName || ""}`
+            : "All day";
           const [eventContent] =
             eventCard.getElementsByClassName("event__content");
           eventContent.innerHTML = content.trim();
@@ -82,33 +98,47 @@ import { formatInTimeZone, getTimezoneOffset } from "date-fns-tz";
     });
   };
 
-  const landingEvents = (events, take) => {
+  const landingEvents = (events, take = 2) => {
     const template = `
     <div class="event">
       <hr/>
-      <div class="text-muted mb-2 event__start"></div>
+      <div class="d-flex justify-content-between text-muted mb-2">
+        <span class="event__start"></span>
+        <div class="d-none event__location">
+          <i class="fa fa-map-marker-alt"></i>
+        </div>
+      </div>
       <a class="card-title mb-2 text-body event__link" target="_blank">
         <h6 class="event__title mb-2"></h6>
       </a>
       <div class="card-text event__content"></div>
     </div>`;
 
-    // TODO: add a container to the landing page
     const hostElement = document.getElementById("landing-events");
 
-    events.slice(0, take).forEach(({ start, title, description, url }) => {
-      const eventItem = fromString(template);
-      eventItem.getElementsByClassName("event__start")[0].innerText = format(
-        new Date(start),
-        "MMM dd, yyyy"
-      );
-      eventItem.getElementsByClassName("event__title")[0].innerText = title;
-      eventItem.getElementsByClassName("event__link")[0].href = url;
-      eventItem.getElementsByClassName("event__content")[0].innerHTML =
-        description;
+    if (!events.length) hostElement.append("No upcoming events");
 
-      hostElement.append(eventItem);
-    });
+    events
+      .slice(0, take)
+      .forEach(({ start, title, description, url, location }) => {
+        const eventItem = fromString(template);
+        eventItem.getElementsByClassName("event__start")[0].innerText = format(
+          new Date(start),
+          "MMM dd, yyyy"
+        );
+        eventItem.getElementsByClassName("event__title")[0].innerText = title;
+        eventItem.getElementsByClassName("event__link")[0].href = url;
+        eventItem.getElementsByClassName("event__content")[0].innerHTML =
+          description;
+
+        if (location && location !== "online") {
+          const [date] = eventItem.getElementsByClassName("event__location");
+          date.classList.remove("d-none");
+          date.append(location);
+        }
+
+        hostElement.append(eventItem);
+      });
   };
 
   const webcasts = (events, take = 3) => {
@@ -152,11 +182,12 @@ import { formatInTimeZone, getTimezoneOffset } from "date-fns-tz";
       end: new Date(end),
       ...rest,
     }))
-    .filter(({ end }) => addDays(end, 1).getTime() > Date.now());
+    .filter(({ end }) => addDays(end, 1).getTime() > Date.now())
+    .sort(({ start: e1 }, { start: e2 }) => e1 - e2);
 
   switch (type) {
     case "landing":
-      landingEvents(eventsMap);
+      landingEvents(eventsMap, take);
       break;
     case "webcast":
       webcasts(eventsMap);

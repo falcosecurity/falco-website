@@ -2,6 +2,6 @@
 {{ $events_sorted := sort $events "start" }}
 
 {{ $params := dict "events" $events_sorted "type" "community" }}
-{{ $js := resources.Get "js/events.js" | js.Build (dict "params" $params) }}
+{{ $js := resources.Get "js/events.js" | js.Build (dict "params" $params) | minify | fingerprint }}
 
 <script src="{{ $js.RelPermalink}}" async></script>
