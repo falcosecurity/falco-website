@@ -1,0 +1,11 @@
+{{ $facts := (index site.Data site.Language.Lang).facts }}
+
+{{ range $fact := $facts }}
+<div class="card card-md td-box--info">
+  <div class="card-body card-body-md">
+    <div class="card-text h-100 w-100 d-flex justify-content-center align-items-center font-weight-bold text-center">
+      {{ . | safeHTML }}
+    </div>
+  </div>
+</div>
+{{ end }}

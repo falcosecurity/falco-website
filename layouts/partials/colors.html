@@ -1,0 +1,14 @@
+{{ $colors := site.Data.colors }}
+
+{{ range $color := $colors }}
+<div class="d-flex align-items-start gap-3">
+  <div class="color-icon td-box--{{ .color }} {{if eq .color "white"}}border{{end}}"></div>
+  <div class="d-flex justify-start flex-column mt-1">
+    <h6 class="mb-0">{{ .name }}</h6>
+    <h6 class="mb-0 mt-1 font-weight-normal"><span class="text-secondary">RGB</span> {{ .rgb }}</h6>
+    {{ with .pms }}
+    <h6 class="mb-0 font-weight-normal"><span class="text-secondary">PMS</span> {{ . }}</h6>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

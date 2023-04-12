@@ -1,0 +1,32 @@
+{{ $slideTemplates := (index site.Data site.Language.Lang).slideTemplates }}
+
+{{ range $i, $template := $slideTemplates }}
+  {{ if and (ge $i $.start) (le $i $.end) }}
+    <div class="mt-4">
+      <a href="{{ .link }}" role="button" class="btn w-100">
+        <div class="card card-md btn btn-light td-box--light">
+          <div class="card-body card-body-md">
+            <div class="card-text h-100 w-100">
+              <div class="d-flex flex-column flex-md-row align-items-center gap-4 text-left ">
+                <div class="icon-button shadow flex-shrink-0">
+                  <img class="align-self-center icon-4 icon-lg-5" src="{{ .img }}" alt="{{ .name }}" loading="lazy">
+                </div>
+                <div class="d-flex align-items-center justify-content-between flex-grow-1">
+                  <div>
+                    <h5 class="mb-0">{{ .name }}</h5>
+                    <div class="d-flex gap-3">
+                      <div>{{ .item }}</div><span>·</span>
+                      <div class="text-muted">LAST MODIFIED</div>
+                      <div>{{ .lastModified }}</div>
+                    </div>
+                  </div>
+                  <i class="fa fa-arrow-right pl-4 text-primary d-none d-md-block"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  {{ end }}
+{{ end }}

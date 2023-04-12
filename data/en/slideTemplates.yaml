@@ -1,0 +1,20 @@
+- name: Empty Falco slide template
+  link: https://docs.google.com/presentation/d/1j7r-YTbCB5qL8MTzLTPDvSHIF6xO5STNBLTIf_UqDjQ/edit?usp=sharing
+  img: /icons/collection.svg
+  item: 11 slides
+  lastModified: Mar 20, 2023
+- name: Turnkey, scripted Falco slides
+  link: https://docs.google.com/presentation/d/14GoUgYHE8dR1sELb7VWdyIWqw0FwTWW-rM9X-C2KQb4/edit#slide=id.g22d6f266885_0_0
+  img: /icons/collection-fill.svg
+  item: 11 slides
+  lastModified: Mar 20, 2023
+- name: Example video on Falco basics
+  link: https://www.youtube.com/watch?v=MTgfstE0U7E&t=3s
+  img: /icons/play-circle-fill.svg
+  item: 1 VIDEO
+  lastModified: Mar 20, 2023
+- name: Diagrams developed in SVG and PNG
+  link: https://github.com/falcosecurity/falco-website/tree/master/static/img
+  img: /icons/diagram-fill.svg
+  item: 10 diagrames
+  lastModified: Mar 20, 2023

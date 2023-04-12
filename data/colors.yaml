@@ -1,0 +1,14 @@
+- name: Teal
+  color: cyan-700
+  rgb: 0 174 199
+  pms: 3125
+- name: Cool grey
+  color: gray-650
+  rgb: 83 86 90
+  pms: 11
+- name: Black
+  color: black
+  rgb: 0 0 0
+- name: White
+  color: white
+  rgb: 255 255 255
