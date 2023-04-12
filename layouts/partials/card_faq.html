@@ -1,27 +1,23 @@
 <div class="card faq-card bg-{{ .col_id }} {{ .class }}">
   <div class="card-body">
-    <div class="d-flex align-items-center">
-      <h5 class="card-title flex-grow-1 m-0">
-        {{ .title | markdownify }}
-      </h5>
-      <button
-        data-toggle="collapse"
-        data-target="#faq-{{ .index }}"
-        class="btn text-body align-self-start px-0"
-        aria-expanded="false"
-        aria-controls="faq-{{ .index }}"
-        aria-label="Expand"
-      >
-        <i class="fa fa-plus"></i>
-      </button>
-    </div>
+    <button
+      data-toggle="collapse"
+      data-target="#faq-{{ .index }}"
+      class="btn text-body p-0 w-100 d-flex align-items-center text-left"
+      aria-expanded="false"
+      aria-controls="faq-{{ .index }}"
+      aria-label="Expand"
+    >
+      <h5 class="card-title flex-grow-1 m-0">{{ .title | markdownify }}</h5>
+      <i class="fa fa-plus"></i>
+    </button>
     <div
       class="card-text -text-700 collapse"
       id="faq-{{ .index }}"
       class="collapse multi-collapse"
       aria-labelledby="faq-{{ .index }}"
     >
-        {{ .content | markdownify }}
+      {{ .content | markdownify }}
     </div>
   </div>
 </div>
