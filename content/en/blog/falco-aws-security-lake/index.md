@@ -8,84 +8,120 @@ slug: falco-aws-security-lake
 
 Last November at re:Invent (2022) AWS introduced the new security oriented data lake: [`Amazon Security Lake`](https://aws.amazon.com/fr/blogs/aws/preview-amazon-security-lake-a-purpose-built-customer-owned-data-lake-service/). The AWS team leading the development of the new service contacted the Falco community and proposed a collaboration to develop the first custom source. We greatly accepted and partnered with AWS engineers to prepare a new plugin and service announcement. To support the community with this integration we are introducing best practices for getting started with the AWS Security Lake and Falco plugin.
 
-This blog post describes key concepts around the integration of AWS Security Lake as output for Falco through [Falcosidekick](https://github.com/falcosecurity/falcosidekick) and how to get started.
+This blog post describes key concepts around the integration of AWS Security Lake as output for Falco through [Falcosidekick](https://github.com/falcosecurity/falcosidekick) in EKS and how to get started.
 
-- [Create the AWS Security Lake bucket](#create-the-aws-security-lake-bucket)
-- [OCSF](#ocsf)
-- [Parquet](#parquet)
-- [Configurations](#configurations)
-  - [IAM Policy](#iam-policy)
-  - [Falcosidekick's configuration](#falcosidekicks-configuration)
+- [Concepts](#concepts)
+  - [OCSF](#ocsf)
+  - [Parquet](#parquet)
+- [Register Falco as Custom Source](#register-falco-as-custom-source)
+- [Configuration of Falcosidekick](#configuration-of-falcosidekick)
 - [Deployment of Falco \& Falcosidekick](#deployment-of-falco--falcosidekick)
 - [Results](#results)
   - [Falcosidekick logs](#falcosidekick-logs)
   - [In S3](#in-s3)
 - [Conclusion](#conclusion)
 
-## Create the AWS Security Lake bucket
 
-The first step you need to accomplish is to set up your S3 service for storage and create a bucket.
-AWS Security Lake relies on S3 for the storage, use the following [official documentation](https://docs.aws.amazon.com/security-lake/latest/userguide/what-is-security-lake.html?refid=9bc21f40-12f4-4d2b-8b8d-6f6f65ab19e6) to create a bucket and obtain its endpoint.
+## Concepts
 
-Next, you will need to create a bucket and use the following naming convention: `aws-security-data-lake-{region}-{id}`. Keep it, we'll use it to configure Falcosidekick later.
-
-## OCSF
+### OCSF
 
 Since AWS follows the [Open Cybersecurity Schema Framework (OCSF)](https://github.com/ocsf) for event format, ensure that you have the same standard. This helps to facilitate the extension to a multiple number of sources and consumers. For Falco events, as they may match to several use cases, they can be extended to additional sources by leveraging [plugins](https://falco.org/docs/plugins/). The recommended schema to use is: [Security Finding](https://schema.ocsf.io/classes/security_finding). Falcosidekick will be in charge of converting the Falco events into a JSON payload with the following [schema](https://schema.ocsf.io/api/classes/security_finding). 
 
-## Parquet
+### Parquet
 
 AWS Security Lake requires to group events in [`parquet`](https://parquet.apache.org/) files format, this best practices optimizes for analysis and treatments. Once again, Falcosidekick will receive these events from Falco, group them into a parquet file and upload them to your S3 bucket, running continuously every 5 minutes (it's a requirement from AWS Security Lake, for better analysis, it requires a minimum of 5 minutes between two files).
 
-## Configurations
+## Register Falco as Custom Source
 
-### IAM Policy
+For custom sources, Amazon Security Lake is responsible for provisioning the S3 bucket location, creating the Lake Formation table associated with that location, creating a role in the customer’s account that will be used to write the custom source data, setting up a Glue crawler to maintain partition metadata, and coordinating subscriber access to the source after it is written to Amazon Security Lake. 
 
-Security is important, and there's a few ways to ensure that you are using best practices. There's a few options such as the use of a role, an instance profile or direct user, as well as configuring the associated IAM Policy.
+Please follow [the official documentation](https://docs.aws.amazon.com/security-lake/latest/userguide/custom-sources.html) to register Falco as a custom source.
 
-Please follow the [official documentation](https://docs.aws.amazon.com/security-lake/latest/userguide/custom-sources.html) to correctly set the IAM Policies to the role/profile you will use.
+The OCSF Event class to use is `Security Finding` and we'll name our custom source `falco`
 
-> `sts:GetCallerIdentity` must also be added to allow Falcosidekick to check its accesses to AWS API at bootstrap, you can avoid it and set `aws.checkidentity=false` in the configuration of Falcosidekick (see below).
+![](images/aws_security_lake_custom_source.png)
 
-### Falcosidekick's configuration
+You should now have the name of the `bucket`, the `prefix` and the `role` to use in the configuration.
+
+For the bucket, the pattern will be `s3://aws-security-data-lake-{region}-xxxx/ext/falco` with:
+* `bucket`: `aws-security-data-lake-{region}-xxxx`
+* `prefix`: `ext/falco/`
+
+For the role, 2 roles have been created:
+- `arn:aws:iam::{accountID}:role/service-role/AmazonSecurityLakeCustomDataGlueCrawler-falco`
+- `arn:aws:iam::{accountID}:role/service-role/AmazonSecurityLake-Provider-falco-{region}`
+
+We will use the role `arn:aws:iam::{accountID}:role/service-role/AmazonSecurityLake-Provider-falco-{region}` as [IRSA](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html).
+
+Update its `Trust relationships` as follow (adapt the values to your env) to allow your deployment of Falcosidekick to use it. 
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "1",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::{accountID}:root"
+            },
+            "Action": "sts:AssumeRole"
+        },
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::{accountID}:oidc-provider/oidc.eks.{region}.amazonaws.com/id/xxxx"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringEquals": {
+                    "oidc.eks.{region}.amazonaws.com/id/xxxx:sub": "system:serviceaccount:falco:falco",
+                    "oidc.eks.{region}.amazonaws.com/id/xxxx:aud": "sts.amazonaws.com"
+                }
+            }
+        }
+    ]
+}
+```
+
+For the OIDC details, replace the `xxxx` by the result of the command:
+```
+aws eks describe-cluster --name {cluster-name} --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5
+```
+
+> Note: for that, you must have created an OIDC prodiver your cluster. See the [docs](https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html).
+
+## Configuration of Falcosidekick
 
 Since you made it this far it means that you have everything ready on AWS' side, now it's time to configure Falco and Falcosidekick. The easiest way to get started is by using the official [Helm chart](https://github.com/falcosecurity/charts/tree/master/falco).
 
-To configure Falcosidekick at minimum use the `values.yaml` this has all the necessary values to complete the configuration, see [here](https://github.com/falcosecurity/charts/blob/master/falcosidekick/values.yaml)):
+To configure Falcosidekick at minimum use this `values.yaml` with all the necessary values to complete the configuration, see [here](https://github.com/falcosecurity/charts/blob/master/falcosidekick/values.yaml):
 
 ```yaml
 falcosidekick:
   enabled: true
-  podAnnotations: # Annotations to add to the service account, useful if you use an OIDC provider with your EKS cluster
-    - eks.amazonaws.com/role-arn: "arn:aws:iam::{accountId}:role/{role}"
   aws:
-    # rolearn: "" # AWS IAM role ARN for falcosidekick service account to associate with (optionnal if you use EC2 Instance Profile)
-    # accesskeyid: "" # AWS Access Key Id (optionnal if you use EC2 Instance Profile)
-    # secretaccesskey: "" # AWS Secret Access Key (optionnal if you use EC2 Instance Profile)
-    # region: "" # AWS Region (optionnal if you use EC2 Instance Profile)
-    checkidentity: true # check the identity credentials, set to false for locale developments
+    rolearn: "arn:aws:iam::{accountID}:role/service-role/AmazonSecurityLake-Provider-falco-{region}"
+    checkidentity: false
     securitylake:
-      bucket: "arn:aws:s3:::aws-security-data-lake-{region}-{id}" # Bucket for AWS SecurityLake data, if not empty, AWS SecurityLake output is enabled
-      region: "{region}" # Region
-      prefix: "falco" # Prefix for keys
-      accountid: "{accountId}" # Account ID
-      interval: 5 # Time in minutes between two puts to S3 (must be between 5 and 60min)
-      batchsize: 1000 # Max number of events by parquet file
-      minimumpriority: "" # minimum priority of event to use this output, order is `emergency|alert|critical|error|warning|notice|informational|debug or ""`
+      bucket: "aws-security-data-lake-{region}-xxxx"
+      prefix: "ext/falco"
+      region: "{region}"
+      accountid: "{accountID}"
+      interval: 5
+      batchsize: 1000
 ```
 
 Details to note about the settings:
-- `podAnnotations`: if you use an OIDC provider for your EKS cluster, you can associate the serviceAccount of Falcosidekick with an IAM Role, replace {accountId} and {role} with your relevant values
-- `accesskeyid`, `secretaccesskey`: must be set if you use keys to access to AWS API, might be useful outside the AWS Ecosystem, we encourage you to use an instance profile or IAM role instead
-- `rolearn`: set it to specify the role Falcosidekick will use, useless if you use an instance profile or IAM role
-- `region`: specify the region to use to create the session, useless if you use an instance profile or IAM role
-- `checkidentity`: Falcosidekick will try its accesses to AWS at bootstrap, if it fails, all AWS outputs are disabled
-- `securitylake.bucket`: the bucket name returned by AWS Security Lake at Custom source creation (mandatory to enable the output)
+- `rolearn`: the `ARN` of the role created by AWS Security Lake at the Custom Source registration, see above.
+- `checkidentity`: must be set to `false` because the role created by AWS Security Lake doesn't allow to call `sts:GetCallerIdentity`
+- `securitylake.bucket`: the bucket name returned by AWS Security Lake at Custom source registration (mandatory to enable the output)
+- `securitylake.prefix`: the prefix returned by AWS Security Lake at Custom source registration (mandatory to enable the output)
 - `securitylake.region`: the region of the events, as a single bucket can store events from different regions (mandatory)
-- `securitylake.accountid`: the accountId of the account where the events have been created, as a single bucket can store events from different accounts (mandatory)
+- `securitylake.accountId`: the accountId of the account where the events have been created, as a single bucket can store events from different accounts (mandatory)
 - `securitylake.interval`: time in minutes between 2 PUTs of parquet files into S3 to follow the service's requirements
 - `securitylake.batchsize`: max number of events by parquet file, to avoid to reach max allowed size
-- `securitylake.minimumpriority`: filter the events we send to AWS Security Lake by their priority
 
 ## Deployment of Falco & Falcosidekick
 
@@ -133,7 +169,7 @@ When Falco triggers any rules, Falcosidekick will receive and queue them every 5
 
 ### In S3
 
-If you take a look at your S3 console now, you'll see the resulting parquet files, correctly ordered by region, account id and hour in your AWS Security Lake bucket:
+If you take a look at your S3 console now, you'll see the resulting parquet files, correctly ordered by region, account id and day in your AWS Security Lake bucket:
 
 ![](images/aws_security_lake_s3.png)
 
