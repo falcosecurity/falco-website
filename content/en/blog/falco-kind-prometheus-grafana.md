@@ -34,7 +34,7 @@ You can quickly generate cert materials using [falcoctl](https://github.com/falc
 ```
 FALCOCTL_NAME=falco-grpc.default.svc.cluster.local FALCOCTL_PATH=/tmp/certs falcoctl install tls 
 ```
-Otherwise you can manually generate them as explained [here](https://falco.org/docs/grpc/#certificates).
+Otherwise you can manually generate them as explained [here](https://falco.org/docs/grpc/grpc-config/#certificates).
 
 Note that in both cases, you have to make sure to set the correct CommonName. In this example, we are using the default hostname used by the Helm chart.
 
