@@ -35,6 +35,7 @@
 
 // FAQ card
 .faq-card {
+  scroll-margin-top: 4rem;
 
   &:not(:last-child) {
     margin-bottom: 1rem;
@@ -51,6 +52,10 @@
     }
   }
 
+  &__control {
+    min-width: 2rem;
+  }
+
   button[data-toggle="collapse"] {
     &:focus,
     :active {
@@ -60,10 +65,11 @@
     i {
       color: $gray-600;
       transition: rotate 0.5s;
+      font-size: 1rem;
     }
 
     &[aria-expanded="true"] {
-      i {
+      i.fa-plus {
         rotate: 45deg;
         color: $primary;
       }

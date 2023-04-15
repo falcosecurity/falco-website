@@ -1,16 +1,33 @@
-<div class="card faq-card bg-{{ .col_id }} {{ .class }}">
+{{ $id := urlize .title }}
+<div id="{{ $id }}" class="card faq-card bg-{{ .col_id }} {{ .class }}">
   <div class="card-body">
-    <button
-      data-toggle="collapse"
-      data-target="#faq-{{ .index }}"
-      class="btn text-body p-0 w-100 d-flex align-items-center text-left"
-      aria-expanded="false"
-      aria-controls="faq-{{ .index }}"
-      aria-label="Expand"
-    >
-      <h5 class="card-title flex-grow-1 m-0">{{ .title | markdownify }}</h5>
-      <i class="fa fa-plus"></i>
-    </button>
+    <div class="d-flex align-items-center">
+      <button
+        data-toggle="collapse"
+        data-target="#faq-{{ .index }}"
+        class="btn text-body p-0 text-left"
+        aria-expanded="false"
+        aria-controls="faq-{{ .index }}"
+        aria-label="Expand"
+      >
+        <h5 class="card-title m-0">
+          {{ .title | markdownify }}
+        </h5>
+      </button>
+      <button data-faq-id="{{ $id }}" class="btn p-0 -text-600" aria-label="Copy link">
+        <i class="fa fa-link ml-2 align-self-center"></i>
+      </button>
+      <button
+        data-toggle="collapse"
+        data-target="#faq-{{ .index }}"
+        class="btn text-body p-0 text-right flex-grow-1 faq-card__control"
+        aria-expanded="false"
+        aria-controls="faq-{{ .index }}"
+        aria-label="Expand"
+      >
+        <i class="fa fa-plus"></i>
+      </button>
+    </div>
     <div
       class="card-text -text-700 collapse"
       id="faq-{{ .index }}"
