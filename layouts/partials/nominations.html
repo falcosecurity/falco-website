@@ -1,24 +1,29 @@
 {{ $nominations := site.Data.nominations }}
-{{ $length := len $nominations }}
 
-{{ range $i, $nomination := $nominations }}
-  {{ if and (ge $i (sub $length 3)) (le $i (sub $length 1)) }}
-    {{ if eq $i (sub $length 3) }}
-      <tr class="text-secondary">
-        <td>{{ $nomination.month }}</td>
-        <td>{{ $nomination.open }}</td>
-        <td>{{ $nomination.close }}</td>
-        <td>{{ $nomination.period }}</td>
-        <td>{{ $nomination.announcement }}</td>
-      </tr>
-    {{ else if or (eq $i (sub $length 1)) (eq $i (sub $length 2)) }}
-        <tr>
-          <td><a class="font-weight-bold" href="{{ $nomination.link }}">{{ $nomination.month }}</a></td>
-          <td>{{ $nomination.open }}</td>
-          <td>{{ $nomination.close }}</td>
-          <td>{{ $nomination.period }}</td>
-          <td>{{ $nomination.announcement }}</td>
-        </tr>
-    {{ end }}
-  {{ end }}
+{{ range $nominations }}
+  <tr class="nomination-item">
+    {{ $link := .link }}
+    <td><a class="font-weight-bold nomination-item__link" {{ with $link}} href="{{ $link }}"{{ end }}>{{ .month }}</a></td>
+    <td>{{ .open }}</td>
+    <td>{{ .close }}</td>
+    <td>{{ .period }}</td>
+    <td class="nomination-item__date">{{ .announcement }}</td>
+  </tr>
 {{ end }}
+
+<script>
+  (() =>
+    Array.from(document.getElementsByClassName("nomination-item")).forEach(
+      (item) => {
+        const [date] = item.getElementsByClassName("nomination-item__date");
+        const month = new Date(date.innerText).getMonth();
+        const currentMonth = new Date().getMonth();
+
+        if (currentMonth > month) {
+          const [link] = item.getElementsByClassName("nomination-item__link");
+          link.replaceWith(link.innerText);
+          item.classList.add("text-secondary");
+        }
+      }
+    ))();
+</script>
