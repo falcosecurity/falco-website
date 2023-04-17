@@ -141,7 +141,7 @@ id = "UA-40398182-19"
     identifier = "what-is-falco"
     name = "What is Falco?"
     weight = 2
-    url = "/about/falco/"
+    url = "/about/"
     parent = "about"
     [menu.main.params]
         description = "Learn about Falco and how it works"
