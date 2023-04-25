@@ -201,7 +201,9 @@ We have already seen [the installation steps](#installation-details) on a Debian
     yum erase -y falco
     ```
  > _Note_: If you are using UEFI enabled systems please run:
- >         sudo mokutil --import /var/lib/dkms/mok.pub
+ >         1. Import the DKMS Machine Owner Key
+ >         $ sudo mokutil --import /var/lib/dkms/mok.pub
+ >
  >         2. Restart the system and wait for the MOK key enrollment prompt
  >
  >         3. Choose the option:  Enroll MOK
