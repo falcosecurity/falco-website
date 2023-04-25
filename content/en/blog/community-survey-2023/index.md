@@ -7,15 +7,15 @@ slug: community-survey-2023
 
 ## TLDR;
 
-* Falco users prefer deploying on AWS and adopting it for security threat detection, auditing and compliance, and sandbox testing
+* Falco users prefer deploying on AWS and adopting it for security threat detection, auditing and compliance, and sandbox testing.
 * Security and DevOps teams are the most common users of Falco.
-* The official Helm chart and official container images are the preferred deployment methods
+* The official Helm chart and official container images are the preferred deployment methods.
 * Respondents reported kernel module/eBPF probes installations, rule management, and integration with third parties as the main challenges.
-* The most commonly used Falcosidekick integrations include Slack, PagerDuty, CloudWatch, and Elasticsearch
-* Suggestions for improving documentation include more examples, use cases, and platform compatibility information
+* The most commonly used Falcosidekick integrations include Slack, PagerDuty, CloudWatch, and Elasticsearch.
+* Suggestions for improving documentation include more examples, use cases, and platform compatibility information.
 * Community support received a high satisfaction rating of 4.2 out of 5.
-* One-third of respondents were active contributors, while the majority were not interested in sharing their Falco adoption story
-* Review the full [report](https://survey.typeform.com/report/JseepIQh/uuuvE53CWnIsmqFX)
+* One-third of respondents were active contributors, while the majority were not interested in sharing their Falco adoption story.
+* Review the full [report](https://survey.typeform.com/report/JseepIQh/uuuvE53CWnIsmqFX).
 
 ---
 
@@ -31,7 +31,7 @@ Of the 24 individuals who participated in the survey, 22 shared their profession
 
 **1. What is your role?**
 
-* Total respondents: 22 (out of 24 answered)
+* Total respondents: 22 (out of 24 answered).
 * Roles included: Director of DevOps and Cybersecurity, Software Engineer, Founder/Cloud Architect, Product, DevOps, Senior Solutions Architect, Security Engineer, CEO, Principal MTS, Cloud Architect, Senior DevOps, Solutions Architect, and Student Developer.
 
 ## Reasons for Adopting Falco
@@ -40,11 +40,11 @@ Security threat detection tops the list as the driving force behind Falco adopti
 
 **2. Why are you adopting Falco?**
 
-* Majority adopted Falco for security threat detection (58.3%)
-* Auditing and compliance were common reasons (45.8% each)
-* Sandbox testing and incident response also mentioned
-* Unique use cases: integrating Falco libraries into projects
-* Growing popularity as versatile security solution across fields
+* Majority adopted Falco for security threat detection (58.3%).
+* Auditing and compliance were common reasons (45.8% each).
+* Sandbox testing and incident response also mentioned.
+* Unique use cases: integrating Falco libraries into projects.
+* Growing popularity as versatile security solution across fields.
 
 ![](images/reasons-for-adopting-falco.png)
 
@@ -54,14 +54,13 @@ Falco predominantly finds a home within security teams, though DevOps squads are
 
 **3. Which teams use Falco at your company?**
 
-* Security teams most common users (45.8%)
-* DevOps teams also prominent (41.7%)
-* Platform engineering, R&D, agent developers, and early-adopting solution architects mentioned
-* 25% reported no Falco usage in their company
-* Some teams utilize Falco libraries directly
+* Security teams most common users (45.8%).
+* DevOps teams also prominent (41.7%).
+* Platform engineering, R&D, agent developers, and early-adopting solution architects mentioned.
+* 25% reported no Falco usage in their company.
+* Some teams utilize Falco libraries directly.
 
 ![](images/teams-that-use-falco.png)
-![](/blog/[slug]/images/teams-that-use-falco.png)
 
 ## Falco Deployment Methods
 
@@ -69,11 +68,11 @@ Most Falco enthusiasts opt for the official Helm chart when it comes to deployme
 
 **4. How are you deploying Falco?**
 
-* Majority using official Helm chart (62.5%)
-* Official container images (20.8%)
-* Custom manifest files (16.7%)
-* Official packages (.deb/.rpm/.tar.gz) (12.5%)
-* Various alternative methods (16.7%)
+* Majority using official Helm chart (62.5%).
+* Official container images (20.8%).
+* Custom manifest files (16.7%).
+* Official packages (.deb/.rpm/.tar.gz) (12.5%).
+* Various alternative methods (16.7%).
 
 ![](images/deploying-falco.png)
 
@@ -83,10 +82,10 @@ Most users rely on the default ruleset when using Falco, while a significant num
 
 **5. What ruleset do you use with Falco?**
 
-* Default ruleset used by 54.2%
-* 50% maintain their own ruleset
-* New ruleset feature utilized by 29.2%
-* Other methods account for 4.2%
+* Default ruleset used by 54.2%.
+* 50% maintain their own ruleset.
+* New ruleset feature utilized by 29.2%.
+* Other methods account for 4.2%.
 
 ![](images/rulesets.png)
 
@@ -96,9 +95,9 @@ The survey revealed some of the key challenges encountered when adopting Falco. 
 
 **6. What challenges have you faced with adopting Falco?**
 
-* The top two challenges faced by adopters of Falco were kernel module/eBPF probe installations (41.7%) and management of rules (41.7%)
-* Integrations with third parties were also identified as a challenge by 37.5% of the respondents
-* Tuning, management of plugins, and performance were also mentioned as challenges by a significant number of participants (33.3%, 29.2%, and 16.7%, respectively)
+* The top two challenges faced by adopters of Falco were kernel module/eBPF probe installations (41.7%) and management of rules (41.7%).
+* Integrations with third parties were also identified as a challenge by 37.5% of the respondents.
+* Tuning, management of plugins, and performance were also mentioned as challenges by a significant number of participants (33.3%, 29.2%, and 16.7%, respectively).
 * Some respondents (12.5%) indicated that they do not use Falco, while others mentioned other challenges, such as integrating Falco security event logs with AWS CloudWatch and using AWS FireLens and Fluent Bit log event forwarding.
 
 ![](images/challenges-adopting.png)
@@ -111,11 +110,11 @@ On the other hand, when asked about integrations they would like to see, some pa
 
 **7. What integrations with Falcosidekick are you using? What would you like to see?**
 
-* Slack, PagerDuty, and CloudWatch are the most commonly used integrations with Falcosidekick, among the 13 participants who answered this question
-* Some respondents expressed interest in additional integrations, such as Elastic search, AWS Lambda, custom ones, and falco-exporter
-* One participant mentioned they would like Falcosidekick to be usable by other threat detection systems like Tetragon
-* Others expressed interest in direct integrations with CloudWatch and/or Container Insights, as well as more cloud outputs
-* A few respondents mentioned that they do not use Falcosidekick and instead push events directly to things like S3 or Elastic
+* Slack, PagerDuty, and CloudWatch are the most commonly used integrations with Falcosidekick, among the 13 participants who answered this question.
+* Some respondents expressed interest in additional integrations, such as Elastic search, AWS Lambda, custom ones, and falco-exporter.
+* One participant mentioned they would like Falcosidekick to be usable by other threat detection systems like Tetragon.
+* Others expressed interest in direct integrations with CloudWatch and/or Container Insights, as well as more cloud outputs.
+* A few respondents mentioned that they do not use Falcosidekick and instead push events directly to things like S3 or Elastic.
 
 ## Plugins
 
@@ -124,12 +123,12 @@ Out of 24 respondents, 12 answered the question on their usage and desired integ
 Regarding desired integrations, a few respondents expressed interest in more diverse plugins, such as EKS Kubernetes kernel monitoring, which could enhance the monitoring of their Kubernetes infrastructure. Other respondents suggested new plugins for monitoring and analyzing different system events, such as DNS resolution or SSL handshake failures. The results suggest that there is a desire for more plugins that can address diverse security issues in different system components.
 
 **8. Which plugin(s) are you using? What would you like to see?**
-* k8s_audit and Cloudtrail are the most commonly used plugins among the respondents
-* Several participants mentioned using a combination of plugins such as K8saudit, Cloudtrail, and JSON
+* k8s_audit and Cloudtrail are the most commonly used plugins among the respondents.
+* Several participants mentioned using a combination of plugins such as K8saudit, Cloudtrail, and JSON.
 * Some respondents do not use any plugins or did not provide a response.
-* One participant mentioned using EKS Kubernetes kernel monitoring, while another used audit logging
+* One participant mentioned using EKS Kubernetes kernel monitoring, while another used audit logging.
 * Github integration was also mentioned by a couple of respondents.
-* There were no clear requests for new plugins or features, although some participants did not provide a response to this question
+* There were no clear requests for new plugins or features, although some participants did not provide a response to this question.
 
 ## Documentation
 
@@ -137,11 +136,11 @@ The survey asked participants to rate Falco's documentation on a scale from 1 to
 
 **9. On a scale of 1 - 5, how would you rate Falco’s documentation?**
 
-* The average rating was 3.7
-* 41.7% of respondents rated the documentation 2 out of 5
-* 29.2% of respondents rated the documentation 3 out of 5
-* 25% of respondents rated the documentation 4 out of 5
-* 4.2% of respondents rated the documentation 1 out of 5
+* The average rating was 3.7.
+* 41.7% of respondents rated the documentation 2 out of 5.
+* 29.2% of respondents rated the documentation 3 out of 5.
+* 25% of respondents rated the documentation 4 out of 5.
+* 4.2% of respondents rated the documentation 1 out of 5.
 
 ![](images/documentation-rating.png)
 
@@ -155,9 +154,9 @@ Other recommendations included a contributing guide and templates, end-to-end tu
 
 **10. What type of documentation and support do you believe is needed to improve the onboarding and getting started experience for new community members?**
 
-* Improving documentation and support can enhance the onboarding and getting started experience for new members of the Falco community
-* Respondents suggest more examples, tutorials, use case implementation tutorials, and specific examples of custom security monitoring with rules configuration and integration with cloud providers' services
-* Respondents also suggest more working samples of integrations with AWS services, more information on probes, documentation recency, and freshness, and more analysis of performance impact across different workload types
+* Improving documentation and support can enhance the onboarding and getting started experience for new members of the Falco community.
+* Respondents suggest more examples, tutorials, use case implementation tutorials, and specific examples of custom security monitoring with rules configuration and integration with cloud providers' services.
+* Respondents also suggest more working samples of integrations with AWS services, more information on probes, documentation recency, and freshness, and more analysis of performance impact across different workload types.
 
 ## Community support
 
@@ -165,10 +164,10 @@ The survey measured the quality of community support for Falco on a scale of 1-5
 
 **11. On a scale of 1 - 5, how would you rate Falco’s community support?**
 
-* All 24 respondents rated Falco's community support on a scale of 1-5, with an average rating of 4.2
-* Over 45% of respondents rated the community support as "Very helpful" (5), while 37.5% rated it as "Helpful" (4)
-* Only one respondent rated the community support as "Not helpful" (1)
-* The results indicate that Falco has a strong and supportive community, with the majority of respondents finding the support helpful or very helpful
+* All 24 respondents rated Falco's community support on a scale of 1-5, with an average rating of 4.2.
+* Over 45% of respondents rated the community support as "Very helpful" (5), while 37.5% rated it as "Helpful" (4).
+* Only one respondent rated the community support as "Not helpful" (1).
+* The results indicate that Falco has a strong and supportive community, with the majority of respondents finding the support helpful or very helpful.
 
 ![](images/community-support.png)
 
@@ -177,9 +176,10 @@ The survey measured the quality of community support for Falco on a scale of 1-5
 The results highlight a mix of engagement levels within the community and potential for increased involvement from those who would like to contribute.
 
 **12. Are you an active contributor to the project?**
-* Out of 24 respondents, 33.3% were active contributors to the Falco project
-* An equal percentage of respondents (33.3%) expressed interest in becoming contributors in the future
-* 33.3% of respondents were not active contributors to the project
+
+* Out of 24 respondents, 33.3% were active contributors to the Falco project.
+* An equal percentage of respondents (33.3%) expressed interest in becoming contributors in the future.
+* 33.3% of respondents were not active contributors to the project.
 
 ![](images/contributor.png)
 
@@ -189,11 +189,11 @@ When it comes to effective communication, Falco is hitting the mark according to
 
 **13. On a scale of 1 - 5, how satisfied are you with the communication of the Falco project?**
 
-* The survey asked participants to rate their satisfaction with the communication of the Falco project on a scale of 1-5
-* The average rating of the Falco project's communication was 4.2
-* A majority of respondents rated Falco's communication as either highly satisfactory (37.5%) or satisfactory (50%)
-* Only a small percentage of respondents were either neutral or not satisfied with Falco's communication (8.3% and 4.2% respectively)
-* These results demonstrate that overall, respondents are satisfied with the communication of the Falco project
+* The survey asked participants to rate their satisfaction with the communication of the Falco project on a scale of 1-5.
+* The average rating of the Falco project's communication was 4.2.
+* A majority of respondents rated Falco's communication as either highly satisfactory (37.5%) or satisfactory (50%).
+* Only a small percentage of respondents were either neutral or not satisfied with Falco's communication (8.3% and 4.2% respectively).
+* These results demonstrate that overall, respondents are satisfied with the communication of the Falco project.
 
 ![](images/communication-satisfaction.png)
 
@@ -203,10 +203,10 @@ Falco's community calls are an essential part of its communication strategy, all
 
 **14. Do you attend the weekly community calls?**
 
-* 29.2% of respondents do not attend the calls
-* Another 29.2% are not attending, but plan to in the future
-* Another 29.2% attend the calls from time to time
-* Only 12.5% of respondents attend the weekly community calls almost every week
+* 29.2% of respondents do not attend the calls.
+* Another 29.2% are not attending, but plan to in the future.
+* Another 29.2% attend the calls from time to time.
+* Only 12.5% of respondents attend the weekly community calls almost every week.
 
 ![](images/community-call.png)
 
