@@ -204,7 +204,8 @@ We have already seen [the installation steps](#installation-details) on a Debian
  >         sudo mokutil --import /var/lib/dkms/mok.pub
  >         Restart the system (A MOK key enrollment will prompt)
  >         Enroll MOK
- >         insmod /var/lib/dkms/falco/4.0.0+driver/$(uname -r)/x86_64/module/falco.ko.xz     
+ >         4. Load the Falco driver
+ >         $ insmod /var/lib/dkms/falco/4.0.0+driver/$(uname -r)/x86_64/module/falco.ko.xz     
 
 #### openSUSE {#suse}
 
