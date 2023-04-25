@@ -202,7 +202,8 @@ We have already seen [the installation steps](#installation-details) on a Debian
     ```
  > _Note_: If you are using UEFI enabled systems please run:
  >         sudo mokutil --import /var/lib/dkms/mok.pub
- >         Restart the system (A MOK key enrollment will prompt)
+ >         2. Restart the system and wait for the MOK key enrollment prompt
+ >
  >         3. Choose the option:  Enroll MOK
  >
  >         4. Load the Falco driver
