@@ -62,27 +62,34 @@ Let's see an example of how to install the package in a Debian-like system, for 
 1. Trust the `falcosecurity` GPG key
 
     ```bash
-    curl -fsSL https://falco.org/repo/falcosecurity-packages.asc | sudo gpg --dearmor -o /usr/share/keyrings/falco-archive-keyring.gpg
+    curl -fsSL https://falco.org/repo/falcosecurity-packages.asc | \
+      sudo gpg --dearmor -o /usr/share/keyrings/falco-archive-keyring.gpg
     ```
 
 2. Configure the apt repository
 
     ```bash
-    echo "deb [signed-by=/usr/share/keyrings/falco-archive-keyring.gpg] https://download.falco.org/packages/deb stable main" | sudo tee -a /etc/apt/sources.list.d/falcosecurity.list
+    sudo cat >>/etc/apt/sources.list.d/falcosecurity.list <<EOF
+    [signed-by=/usr/share/keyrings/falco-archive-keyring.gpg] https://download.falco.org/packages/deb stable main
+    EOF
     ```
 
+{{% pageinfo color="info" %}}
+
+In older releases of Debian (Debian 9 and older ones), you might need to additionally install the package `apt-transport-https` to allow access to the Falco repository using the `https` protocol.
+
+The following command with install that package in your system:
+
+$ sudo apt-get install apt-transport-https
+
+{{% /pageinfo %}}
+    
 3. Update the package list
 
     ```bash
     sudo apt-get update -y
     ```
     
-    > In older versions of Debian (those previous to Debian 10), you might need to additionally install the package `apt-transport-https` to allow access to the Falco repository.
-    > To do so, you can run the following command:
-    >
-    > sudo apt-get install apt-transport-https
-    
-
 4. Install some required dependencies that are needed to build the kernel module and the BPF probe
 
     ```bash
