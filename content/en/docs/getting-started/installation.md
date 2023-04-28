@@ -74,13 +74,13 @@ Let's see an example of how to install the package in a Debian-like system, for 
 3. Update the package list
 
     ```bash
-    sudo apt-get update -y
+    ```
     
     > In older versions of Debian (those previous to Debian 10), you might need to additionally install the package `apt-transport-https` to allow access to the Falco repository.
     > To do so, you can run the following command:
     >
     > sudo apt-get install apt-transport-https
-    ```
+    
 
 4. Install some required dependencies that are needed to build the kernel module and the BPF probe
 
