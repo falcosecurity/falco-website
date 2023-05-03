@@ -11,12 +11,12 @@ images:
 
 Falco rules management has been a discussed topic for quite a long time. When we start building and customizing rules for our environment, we need a simple way to effectively update and distribute them to our Falco fleet. Starting from Falco 0.34, we can easily do it by using OCI artifacts and leveraging any private or public container registry to store and retrieve them.
 
-Besides what [OCI artifact](#OCI-artifacts) are, in this blog we are going to learn 2 main concepts: 
+Besides what [OCI artifact](#oci-artifacts) are, in this blog we are going to learn 2 main concepts: 
 
-- How we can [create OCI artifacts containing our Falco rules in an automated way](#Rules-management-à-la-DevOps).
-- How Falco can [retrieve those OCI artifacts to update its local configuration](#Testing-our-Rules-Workflow):
-    - In a [Linux server](#Falco-and-Falcoctl-running-as-Linux-services).
-    - In a [Kubernetes cluster](#Falco-and-Falcoctl-running-on-Kubernetes).
+- How we can [create OCI artifacts containing our Falco rules in an automated way](#rules-management-à-la-devops).
+- How Falco can [retrieve those OCI artifacts to update its local configuration](#testing-our-rules-workflow):
+    - In a [Linux server](#falco-and-falcoctl-running-as-linux-services).
+    - In a [Kubernetes cluster](#falco-and-falcoctl-running-on-kubernetes).
 
 As you can see, there's a lot of content to cover, so let's start right away.
 
@@ -28,7 +28,7 @@ In other words, our OCI artifacts will be similar to container images. They will
 
 Does it mean we need a container runtime to use it? Not at all.
 
-OCI artifacts for Falco are created using the `falcoctl` tool. This tool takes either a plain rules file or a set of them, inside a compressed file, and will, in a single step, create the OCI artifact and upload it to a OCI-complaint container registry.
+OCI artifacts for Falco are created using the [falcoctl](https://github.com/falcosecurity/falcoctl) tool. This tool takes either a plain rules file or a set of them, inside a compressed file, and will, in a single step, create the OCI artifact and upload it to an OCI-complaint container registry.
 
 In the node, where the `falco` daemon runs, `falcoctl` will retrieve that same OCI artifact, extract its content, and place it on the right place so `falco` can detect the latest threats.
 
@@ -38,7 +38,7 @@ In the node, where the `falco` daemon runs, `falcoctl` will retrieve that same O
 
 Git has become the de-facto technology to maintain a versioned copy of our most precious bits. Besides, it allows for automation and collaboration. These features makes it the perfect place to store our rules files. But what about distribution?
 
-Using known CI/CD techniques we can pack the latests rules in a distributable object. Maybe we prefer to stick to a stable version, or maybe we want to be flexible offering multiple versions. Combining the power of Git with the standards of OCI, Falco is able to selectively retrieve the rules more adequate for each platform.
+Using known CI/CD techniques we can pack the latests rules in a distributable object. Maybe we prefer to stick to a stable version, or maybe we want to be flexible offering multiple versions. Combining the power of Git with the standards of OCI, Falco is able to selectively retrieve the most suitable rules for each platform.
 
 ### Choose your weapons, here are mine
 
@@ -46,10 +46,8 @@ Time to get our hands busy. We'll need for this tutorial:
 
 - An empty [GitHub](https://github.com/) repo.
 - A Falco ruleset file.
-- A Falco installation.
-  (This tutorial will use both, [Falco running as a _systemd-service_](#Falco-and-Falcoctl-running-as-Linux-services) and also [deployed using a Helm chart on Kubernetes](#Falco-and-Falcoctl-running-on-Kubernetes)).
-- A container registry.
-  (We're going to use [GitHub packages](https://docs.github.com/en/packages/learn-github-packages/introduction-to-github-packages) that comes with any public GitHub repository for free!).
+- A Falco installation. This tutorial will use both, [Falco running as a _systemd-service_](#falco-and-falcoctl-running-as-linux-services) and also [deployed using a Helm chart on Kubernetes](#falco-and-falcoctl-running-on-kubernetes).
+- A container registry. We're going to use [GitHub packages](https://docs.github.com/en/packages/learn-github-packages/introduction-to-github-packages) that comes with any public GitHub repository for free!
 
 And here is a high-level descriptions of the steps to follow:
 
@@ -103,13 +101,13 @@ Again, a high-level description of the steps to follow will surely help:
 - Retrieve content of the rules repository - the file we want to distribute as an OCI artifact.
 - Upload the OCI artifact to the container registry.
 
-You might be wondering whether we forgot any step. We surely did, intentionally. Just some little tasks that’ll help us set up the workflow properly. What we didn’t miss is a the step to convert the ruleset file into an OCI artifact. That’s `falcoctl` job.
+You might be wondering whether we forgot any step. We surely did, intentionally. Just some little tasks that’ll help us set up the workflow properly. What we haven’t missed is the step to convert the ruleset file into an OCI artifact. That’s `falcoctl` job.
 
 Now, let’s create an outline for the workflow.
 
 {{% pageinfo color="info" %}}
 
-Feel free to jump to the [resulting workflow file](#Final-Workflow-file). You can always come back here to see through the process of creating it.
+Feel free to jump to the [resulting workflow file](#final-workflow-file). You can always come back here to see through the process of creating it.
 
 {{% /pageinfo %}}
 
@@ -118,22 +116,15 @@ $ mkdir -p .github/workflows/
 $ vim .github/workflows/release.yaml
 ---
 name: Release Rulesfile
-
 on: push
-
 jobs:
-
   Release-Rulesfile:
-
     runs-on: ubuntu-latest
-
     steps:
-
       - name: step 1
         ...
       - name: step 2
         ...
-      
 ```
 
 To add some flexibility to our example, we'll add a few environmental variables that can be easily tuned for experimentation. These will be the name of the rules file, the container registry that'll store the artifact, and the name and version of it.
@@ -142,22 +133,16 @@ To add some flexibility to our example, we'll add a few environmental variables 
 jobs:
 
   Release-Rulesfile:
-
     ...
-
     env:
-
       # Only one ruleset file for our demo
       RULESET_FILE: custom_falco_rules.yaml
-
       # Used to setup Auth and OCI artifact location
       OCI_REGISTRY: ghcr.io
-
       # Assuming we are in the main branch, our OCI artifact will
       # look something like ghcr.io/user/repo/custom-rules:main
       OCI_ARTIFACT_NAME: custom-rules
       OCI_ARTIFACT_VERSION: ${{ github.ref_name }}
-
     steps:
       ...
 ```
@@ -171,9 +156,7 @@ Be aware that we are using the GitHub container registry. You wouldn't need thos
 
 ```
 jobs:
-
   Release-Rulesfile:
-
     ...
 
     # These permissions are needed to interact with GitHub's OIDC Token endpoint.
@@ -181,10 +164,8 @@ jobs:
       id-token: write
       contents: read
       packages: write
-
     env:
        ...
-
     steps:
        ...
 ```
@@ -265,7 +246,7 @@ Here it is were the magic happens. This example spreads across multiple lines to
 
 The systax will look like: `falcoctl registry push [--option ...] destination-url source-file`. Let's dissect the command for a better understanding.
 
-- Line 2, uses a | symbol, which indicates that the all the segments at the same indentation level will be interpreted as a single line. YAML specifics.
+- Line 2, uses the **|** symbol, which indicates that all the segments at the same indentation level will be interpreted as a single line. YAML specifics.
 - Line 3, contains the **cli** verbs, the fresly compiled `falcoctl` tool with the subverbs `registry push` as shown above. The options will come later.
 - Line 4, `--config /dev/null`, is required to tell `falcoctl` not to use a configuration file. Otherwise it will try to create the directory `/etc/falcoctl` and we might not have permissions for that.
 Using a config file is an alternative, but for simplicity and pedagogical reasons we've kept everything on the command line.
@@ -287,19 +268,15 @@ env:
   FALCOCTL_REGISTRY_AUTH_BASIC: ${{ env.OCI_REGISTRY }},${{ github.repository_owner }},${{ secrets.GITHUB_TOKEN }}
 ```
 
-### Final Workflow file
+### Final Workflow File
 
 Once our workflow is complete, it should look like:
 ```
 ---
 name: Release Rulesfile
-
 on: push
-
 jobs:
-
   Release-Rulesfile:
-
     runs-on: ubuntu-latest
 
     # These permissions are needed to interact with GitHub's OIDC Token endpoint.
@@ -309,13 +286,10 @@ jobs:
       packages: write
 
     env:
-
       # Only one ruleset file for our demo
       RULESET_FILE: custom_falco_rules.yaml
-
       # Used to setup Auth and OCI artifact location
       OCI_REGISTRY: ghcr.io
-
       # Assuming we are in the main branch, our OCI artifact will
       # look something like ghcr.io/user/repo/custom-rules:main
       OCI_ARTIFACT_NAME: custom-rules
@@ -431,11 +405,13 @@ First, we can observe it contains 2 configuration sections, **artifact** and **i
 
 The **artifact** section instructs `falcoctl` to update the rules files when necessary, checking for updates every 6 hours. The _files_ to be updated are referenced under the `refs:` section. That list contains a single element at the moment: **falco-rules:0**. That should ring a bell, right?
 
-Now, to understand what **falco-rules:0** means, we should look into the **indexes** section. An index is a file describing where to download a OCI artifact from, and what to do with it. At the moment, it only support passing the file via http, however using a local file will also be an option in the future.
+Now, to understand what **falco-rules:0** means, we should look into the **indexes** section. An index is a file describing where to download an OCI artifact from, and what to do with it. At the moment, it only supports passing the file via http. However, using a local file will also be an option in the future.
+
+In the following command, we'll extract the 14 lines that are relevant to to the **falco-rules** artifact:
 
 ```
 $ curl -s https://falcosecurity.github.io/falcoctl/index.yaml | \
-  grep -A13 -- "- name: falco-rules" 
+  grep --after-context=13 -- "^- name: falco-rules" 
 
 - name: falco-rules
   type: rulesfile
@@ -482,7 +458,6 @@ First, we are installing new custom rules, so we'll add that to the **artifact.i
 artifact:
 ...
   install:
-    rulesfilesdir: /etc/falco/rules.d/
     refs:     
       - ghcr.io/vjjmiras/cool-falco-rules/custom-rules:main
 ```
@@ -494,20 +469,10 @@ artifact:
   follow:
     every: 5m0s
     ...
-    rulesfilesdir: /etc/falco/rules.d
     refs:
-      # Leave out the predefined ruleset for the moment
-      # - falco-rules:0
+      - falco-rules:0
       - ghcr.io/vjjmiras/cool-falco-rules/custom-rules:main
 ```
-
-{{% pageinfo color="info" %}}
- 
-The reason why we are leaving out the `falco-rules:0` ruleset is that it exists in the `/etc/falco` directory and we want to download the followed artifacts to the `/etc/falco/rules.d` directory, so we don't have to apply any extra configuration to falco.
-
-The global `rulesfilesdir` location is a limitation of the current `falcoctl` tool but it'll surely be remediated in the future.
-
-{{% /pageinfo %}}
 
 The final `falcoctl.yaml` file would look like that, depending on the changes you have done:
 
@@ -518,10 +483,8 @@ artifact:
   follow:
     every: 5m0s
     falcoVersions: http://localhost:8765/versions
-    rulesfilesdir: /etc/falco/rules.d
     refs:
-      # Leave out the predefined ruleset for the moment
-      # - falco-rules:0
+      - falco-rules:0
       - ghcr.io/vjjmiras/cool-falco-rules/custom-rules:main
 indexes:
   - name: falcosecurity
@@ -530,12 +493,28 @@ indexes:
 
 To verify the `custom_falco_rules.yaml` file doesn't exist, we'll
 ```
-$ stat /etc/falco/rules.d/custom_falco_rules.yaml
-stat: cannot access '/etc/falco/rules.d/custom_falco_rules.yaml': No such file or directory
+$ stat /etc/falco/custom_falco_rules.yaml
+stat: cannot access '/etc/falco/custom_falco_rules.yaml': No such file or directory
+```
 
+Before we fully apply those changes, instruct Falco to read this new file. Open the file `/etc/falco/falco.yaml` and add the new rules file:
+
+```
+...
+rules_file:
+  - /etc/falco/falco_rules.yaml
+  - /etc/falco/falco_rules.local.yaml
+  - /etc/falco/custom_falco_rules.yaml <-- Add this line
+  - /etc/falco/rules.d
+
+```
+
+Time to let `falcoctl` _follow_ the new artifact:
+
+```
 $ sudo systemctl restart falcoctl-artifact-follow
 $ sudo systemctl status falcoctl-artifact-follow
-$ sudo cat /etc/falco/rules.d/custom_falco_rules.yaml
+$ sudo cat /etc/falco/custom_falco_rules.yaml
 
 - list: falco_binaries
   items: [falcoctl]
@@ -585,7 +564,7 @@ To https://github.com/vjjmiras/cool-falco-rules.git
 This should trigger the GitHub actions workflow and in a few minutes, we should have an updated ruleset file in our `/etc/falco` directory:
  
 ```
-$ sudo cat /etc/falco/rules.d/custom_falco_rules.yaml
+$ sudo cat /etc/falco/custom_falco_rules.yaml
 
 - list: falco_binaries
   items: [falcoctl]
@@ -595,7 +574,7 @@ $ sudo cat /etc/falco/rules.d/custom_falco_rules.yaml
   condition: and not proc.pname in (falco_binaries)
  ```
  
- `falcoctl` also takes care of telling `falco` that a new rules file is present. If you look at the status of the `falco` service you should see the following line:
+If you look at the status of the `falco` service you should see the line indicating the reload of Falco's configuration:
  
 ```
 falco[...]: SIGHUP received, restarting...
@@ -640,7 +619,7 @@ falcoctl-artifact-follow    docker.io/falcosecurity/falcoctl:0.4.0
 
 The first container seems to be based on the `falco-no-driver` image (the driver is loaded separately), and the second one has the name `falcoctl-artifact-follow`. If you went through the previous section, you'll see the name of the container matches the service name in Linux.
 
-Now we need to look for the configuration file, We saw in the previous section its name was `/etc/falcoctl/falcoctl.yaml`. Let's start extracting the volumes on the `falcoctl-artifact-follow` container:
+Now we need to look for the configuration file. We saw in the previous section its name was `/etc/falcoctl/falcoctl.yaml`. Let's start extracting the volumes on the `falcoctl-artifact-follow` container:
 
 ```
 $ kubectl -n falco get pod falco-8dv99 -o json | jq '.spec.volumes[]'
@@ -664,6 +643,7 @@ $ kubectl -n falco get pod falco-8dv99 -o json | jq '.spec.volumes[]'
 Now that we have the configMap name, we can proceed to update its configuration.
 
 #### Customing the Falcoctl ConfigMap
+
 It is a good practice to observe what normal logs look like before changing a program to a newer configuration. So just to keep track of it:
 
 ```
@@ -751,8 +731,8 @@ $ kubectl -n falco exec falco-np6hj -c falco -it -- ls -l /etc/falco/
 -rw-r--r-- 1 root root   1626 Apr 14 17:11 falco.yaml
 -rw-r--r-- 1 root root 147885 Apr 14 17:11 falco_rules.yaml
 
-$ kubectl -n falco exec falco-np6hj -c falco -it -- \
-  cat /etc/falco/custom_falco_rules.yaml
+$ kubectl -n falco exec falco-np6hj -c falco -it -- cat
+    /etc/falco/custom_falco_rules.yaml
 
 - list: falco_binaries
   items: [falcoctl]
