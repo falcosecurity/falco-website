@@ -687,7 +687,9 @@ data:
       url: https://falcosecurity.github.io/falcoctl/index.yaml
 ... output omitted ...
 ```
-and here are the changes that we want to do on it so it checks every 2 minutes, as before, and for a newer OCI artifact. We are not updating the rulesfilesDir parameter here since the subdirectory `etc/falco/rules.d/` doesn't exist on the `falco` container.
+
+and here are the changes that we want to do on it so it checks every 2 minutes, as before, and for a newer OCI artifact. 
+
 ```
 ...
     artifact:
@@ -699,10 +701,33 @@ and here are the changes that we want to do on it so it checks every 2 minutes, 
 ...
 ```
 
-Once we save those changes, we can delete the older Pod and see the new one starting with the newest configuration:
+Translated into our Helm chart `values.yaml`, the fields to modify would look like:
 
 ```
-$ kubectl -n falco delete pod falco-8dv99
+...
+falcoctl:
+  ...
+  config:
+    ...
+    artifact:
+      ...
+      follow:
+        refs:
+          - falco-rules:0
+          - ghcr.io/vjjmiras/cool-falco-ruleset/custom-rules:main  <-- Add this line
+        every: 2m                                                  <-- Modify this line
+        ...
+```
+
+Followed by Helm upgrade command:
+
+```
+$ helm upgrade falco -n falco --set tty=true falcosecurity/falco
+```
+
+Once we have updated those changes, we can wait for the new Pods with the current configuration:
+
+```
 $ kubectl -n falco get pods -w
 NAME          READY   STATUS     RESTARTS   AGE
 falco-np6hj   0/2     Init:1/2   0          4s
@@ -753,20 +778,25 @@ $ kubectl -n falco exec falco-np6hj -c falco -it -- \
   append: true
   condition: and not proc.pname in (falco_binaries)
 ```
-To make `falco` use this file (be aware that we haven't modified the rules directory this time), we'd need to tell Falco where to find these new rules. This is done in the configMap:
+To make `falco` use this file, we'd need to tell Falco where to find these new rules. We can do that by editing the Helm `values.yaml` file again to make Falco aware of our custom rules file:
 
 ```
-$ kubectl -n falco edit cm falco
-    ...
-    rules_file:
-    - /etc/falco/falco_rules.yaml
-    - /etc/falco/falco_rules.local.yaml
-    - /etc/falco/rules.d
-    - /etc/falco/custom_falco_rules.yaml
-    ...
+falco:
+  ...
+  rules_file:
+  - /etc/falco/falco_rules.yaml
+  - /etc/falco/falco_rules.local.yaml
+  - /etc/falco/rules.d
+  - /etc/falco/custom_falco_rules.yaml   <-- Add this line
 ```
 
-And send the `SIGHUP` signal to Falco to reread the configuration. The logs should look like the following:
+Followed again by the respective Helm upgrade command:
+
+```
+$ helm upgrade falco -n falco --set tty=true falcosecurity/falco
+```
+
+Once updated the deployment, we can wait for the Pods with the newest configuration. Their logs will look like the following:
 
 ```
  $ kubectl -n falco logs falco-np6hj -c falco
@@ -777,6 +807,8 @@ Fri Apr 14 17:24:20 2023: Loading rules from file /etc/falco/falco_rules.yaml
 Fri Apr 14 17:24:20 2023: Loading rules from file /etc/falco/custom_falco_rules.yaml
 ... output omitted ...
 ```
+
+And we can continue updating our rules files in the GitHub repository, the GitHub Actions pipeline will take care of creating the OCI artifacts, and `falcoctl` will distribute those rules to wherever we have configured. 
 
 ## Conclusion
 
