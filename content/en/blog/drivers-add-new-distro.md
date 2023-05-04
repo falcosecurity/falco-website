@@ -1,28 +1,27 @@
 ---
 title: Add prebuilt drivers for new distro
-date: 2023-03-21
+date: 2023-05-04
 author: Federico Di Pierro
 slug: falco-prebuilt-drivers-new-distro
 ---
 
 Hi everyone!  
 Today we are going to learn how to add support for a new distro prebuilt drivers.  
-There are multiple repositories involved with it, and while most of the time it should be a pretty simple job,  
-other times it can become really cumbersome.  
+There are multiple repositories involved with it, and while most of the time it should be a pretty simple job, other times it can become really cumbersome.  
 That's why we are writing this guide of course!  
 
 The involved repositories will be:
 * [Kernel-crawler](https://github.com/falcosecurity/kernel-crawler)
 * [Driverkit](https://github.com/falcosecurity/driverkit)
-* [Test-infra](https://github.com/falcosecurity/test-infra)
 * [Falco](https://github.com/falcosecurity/falco)
+* [Test-infra](https://github.com/falcosecurity/test-infra)
 
 ## Kernel-crawler
 
 > **NOTE**: this step is only needed if kernel-crawler does not already support the distro.
 
 Kernel-crawler is a python project that is capable of fetching all existing kernels by scraping multiple distros repositories.  
-It is ran weekly on Monday, by a [github action](https://github.com/falcosecurity/kernel-crawler/blob/main/.github/workflows/update-kernels.yml), to update the jsons for all supported architectures (at the moment of writing `x86_64` and `aarch64`) by opening a PR on same kernel-crawler against the `kernels` branch.  
+It is ran weekly each Monday at 6.30am UTC, by a [github action](https://github.com/falcosecurity/kernel-crawler/blob/main/.github/workflows/update-kernels.yml), to update the jsons for all supported architectures (at the moment of writing `x86_64` and `aarch64`) by opening a PR on same kernel-crawler against the `kernels` branch.  
 The `kernels` branch is also used as a source for the [github pages](https://falcosecurity.github.io/kernel-crawler/).  
 In the end, the project code lives in the `main` branch, while the jsons and the github page live under the `kernels` branch.
 
@@ -130,7 +129,7 @@ DISTROS = {
 }
 ```
 
-Time to test the changes! From the repository root, issue:
+Time to test the changes! From the repository root, run:
 ```bash
 python -m kernel_crawler.main crawl --distro ArchLinux
 ```
@@ -148,27 +147,21 @@ It internally uses docker or kubernetes runners to fetch the kernel headers and 
 Driverkit is also capable of finding correct headers to be used given a `target` distro and a `kernelrelease`.  
 Unfortunately, this internal logic is in no way as smart as the kernel-crawler one (given that it does not really crawl anything, but just builds up expected headers urls using custom logic for each supported distro), therefore the preferred method is to always enforce the `kernelurls` parameter to pass required urls, and that logic should be treated as a fallback instead. This is what test-infra does,  by thew way.  
 
-Each driverkit [builder](https://github.com/falcosecurity/driverkit/tree/master/pkg/driverbuilder/builder) is composed of a GO source file plus a small bash script template.
+Each driverkit [builder](https://github.com/falcosecurity/driverkit/tree/master/pkg/driverbuilder/builder) is composed of a Go source file plus a small bash script template.
 The template gets filled with data during the run, and will be the exact bash script that gets ran in the container to build the drivers.
 
 To add a new builder, there is a comprehensive documentation in the driverkit repo itself: https://github.com/falcosecurity/driverkit/blob/master/docs/builder.md.
 
 Make sure to follow the guide and then test that you are able to build drivers for the new distro, before opening the PR!
 
-Once the PR is merged, and a new Driverkit release is tagged, you can go on to test-infra repo.
-
-## Test-infra
-
-// TODO: bump driverkit version if needed
-// TODO: add job
-// TODO: explain dbg and push to s3
+Once the PR is merged, and a new Driverkit release is tagged, you can go on to Falco repo.
 
 ## Falco
 
 > **NOTE**: this step is only needed if `falco-driver-loader::get_target_id` needs tricks to pick up the correct target id (see eg: "flatcar" or "minikube" cases)
 
 Falco ships a not-so-tiny bash script, under `scripts/falco-driver-loader`, that is used at runtime to either:
-* download a prebuilt driver from download.falco.org
+* download a prebuilt driver from https://download.falco.org
 * try to build a driver
 
 It supports both eBPF and kmod of course; to download the prebuilt driver, the script must be able to re-create the name used to push the artifact on the [s3 bucket](https://download.falco.org/?prefix=driver/).  
@@ -177,6 +170,28 @@ Ideally, no change will be needed in falco-driver-loader script, given that `get
 Other times, like for example "amazonlinux", "minikube" or "flatcar", there is need to compute the correct parameters to match the ones used by pushed artifacts.  
 In these cases, a change is needed. Unfortunately, as of today, the `falco-driver-loader` is bundled within each Falco release, therefore each change will be reflected after a new Falco release, making the process a bit slow.  
 We can still manage to make an ad-hoc patch release though; feel free to ask maintainers to do so during a [community call](https://github.com/falcosecurity/community#community-calls) or on [slack channel](https://github.com/falcosecurity/community#slack-channel).
+
+## Test-infra
+
+Test-infra is the repository mirroring kubernetes/test-infra, where our internal infra is maintained.  
+It also has an eks cluster where we run the drivers building jobs.  
+Under the hood, is uses [Prow](https://docs.prow.k8s.io/docs/overview/) from kubernetes as a CI system.
+You can easily check our Prow jobs queue here: https://prow.falco.org/; moreover, you can also access monitoring at: https://monitoring.prow.falco.org/.
+
+Luckily, the required changes for the test-infra repo are really simple.  
+If a new driverkit release was needed, we need to bump the driverkit version in the [build-drivers image](https://github.com/falcosecurity/test-infra/blob/master/images/build-drivers/Dockerfile#L7).  
+Then, we will need to add a [prow job](https://docs.prow.k8s.io/docs/life-of-a-prow-job/) for the new distro; as you can imagine, the easiest thing is to start from another distro job, and update the required lines.  
+Head to [`config/jobs/build-drivers`](https://github.com/falcosecurity/test-infra/tree/master/config/jobs/build-drivers) folder and copy/paste `build-new-debian.yaml` content to the newly created `build-new-arch.yaml`.  
+Finally, open the new file and update all `debian` references to `arch` (remember the `ID` loaded from `/etc/os-release`?).  
+You should be ready to open the PR! Once it gets merged, you will enjoy all the new shiny prebuilt drivers on https://download.falco.org as soon as the kernel-crawler runs again!
+
+## References
+
+Following are the list of PRs needed to add support for AmazonLinux2023, as a reference:
+* kernel-crawler: https://github.com/falcosecurity/kernel-crawler/pull/118
+* driverkit: https://github.com/falcosecurity/driverkit/pull/268
+* Falco: https://github.com/falcosecurity/falco/pull/2494
+* test-infra: https://github.com/falcosecurity/test-infra/pull/1099
 
 ## Conclusion
 
