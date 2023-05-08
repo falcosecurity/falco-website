@@ -273,7 +273,7 @@ docker run --rm -i -t \
 
 #### Least privileged
 
-Right now **is not officialy supported** but the following command should work great:
+The following capabilities should be enough to run Falco:
 
 ```bash
 docker run --rm -i -t \
