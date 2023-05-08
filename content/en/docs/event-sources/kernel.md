@@ -14,12 +14,12 @@ There are different supported syscall sources:
 - Kernel module *(default)*
 - eBPF probe
 - Userspace instrumentation
-- modern eBPF probe *(experimental)*
+- modern eBPF probe
 
 |             | Kernel module | eBPF probe | Userspace       | modern eBPF probe |
 | ----------- | ------------- | ---------- | --------------- | ----------------- |
-| **x86_64**  | >= 2.6        | >= 4.14    | No requirements | >= 5.8            |
-| **aarch64** | >= 3.4        | >= 4.17    | No requirements | >= 5.8            |
+| **x86_64**  | >= 2.6        | >= 4.14    | No requirements | [Minimal set of features](/docs/event-sources/drivers/#requirements) |
+| **aarch64** | >= 3.4        | >= 4.17    | No requirements | [Minimal set of features](/docs/event-sources/drivers/#requirements) |
 
 ## Kernel module
 
@@ -66,40 +66,22 @@ There are attempts at making the installation process easier, but the community 
 
 As you probably already understood, the userspace instrumentation drivers are a bit different, handle them with care!
 
-## Modern eBPF probe (experimental)
+## Modern eBPF probe
 
-Falco `0.34` ships a new experimental driver: the modern eBPF Probe. It is experimental for 2 main reasons:
-
-* It implements only `~80` syscalls. (The `-A` flag will not add further syscalls.)
-* It is not production-proven like the kernel module and the current eBPF probe.
+The modern probe is an alternative driver for Falco. The main advantage it brings to the table is that it is embedded into Falco, which means that you don't have to download or build anything, if your kernel is recent enough Falco will automatically inject it!
 
 ### What's new
-
-The modern probe will be embedded into Falco, which means that you don't have to download or build anything, if your kernel is recent enough Falco will automatically inject it!
 
 The new probe is highly customizable, you are not obliged to use one buffer [for each CPU](https://github.com/falcosecurity/falco/blob/660da98e4c37f4d4f79ec4bebf4379d9b90b0892/falco.yaml#L292) you can also use just one huge buffer for all your CPUs! And obviously, also the [buffer size](https://github.com/falcosecurity/falco/blob/660da98e4c37f4d4f79ec4bebf4379d9b90b0892/falco.yaml#L226) is customizable! All this is possible thanks to new outstanding features like [the CO-RE paradigm](https://nakryiko.com/posts/bpf-portability-and-co-re/), [the BPF ring buffer](https://nakryiko.com/posts/bpf-ringbuf/) and many others, if you are curious you can read more about them in this [blog post](/blog/falco-modern-bpf#what-s-new).
 
 ### Requirements
 
-1. A Linux kernel version `>=5.8`. Some features could also be backported into older kernels, so it wouldn't be completely fair to define the `5.8` as the first supported version, this is just a strict assumption that we put in place for this first release. If your kernel is older than `5.8` you should face this error:
+The modern BPF probe has no strict requirements! Usually, a kernel version `>=5.8` is enough but there are cases in which the required features could also be backported into older kernels, so it wouldn't be completely fair to define `5.8` as the first supported version. The 2 main required features are:
 
-    ```text
-    Error: Actual kernel version is: 'x.y.z' while the minimum required is: '5.8.0'
-    ```
+1. [BPF ring buffer](https://www.kernel.org/doc/html/next/bpf/ringbuf.html) support.
+2. A kernel that exposes [BTF](https://docs.kernel.org/bpf/btf.html).
 
-2. A kernel that exposes [BTF](https://docs.kernel.org/bpf/btf.html). This shouldn't be a big issue since we already require a kernel version `>=5.8` and most [recent Linux distributions](https://github.com/libbpf/libbpf#bpf-co-re-compile-once--run-everywhere) come with kernel BTF capabilities.
-
-    If you want to be sure you can easily check their presence by typing:
-
-    ```bash
-    ls /sys/kernel/btf/vmlinux
-    ```
-
-    If your kernel supports them you should see:
-
-    ```text
-    /sys/kernel/btf/vmlinux
-    ```
+Falco can detect if these features are available on the running machine and can notify you if something is missing. You only have to run Falco and see what happens!
 
 ### How to run it
 
@@ -114,5 +96,4 @@ The modern eBPF probe supports all the installation methods of other drivers:
 
 * [Modern BPF blog post](/blog/falco-modern-bpf/)
 * [Modern BPF proposal](https://github.com/falcosecurity/libs/blob/master/proposals/20220329-modern-bpf-probe.md)
-* [Supported syscalls](https://github.com/falcosecurity/libs/issues/513)
 * [eBPF day presentation](https://youtu.be/BxoKztfHnYY)
