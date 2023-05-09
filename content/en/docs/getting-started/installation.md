@@ -70,7 +70,7 @@ Let's see an example of how to install the package in a Debian-like system, for 
 
     ```bash
     sudo cat >>/etc/apt/sources.list.d/falcosecurity.list <<EOF
-    [signed-by=/usr/share/keyrings/falco-archive-keyring.gpg] https://download.falco.org/packages/deb stable main
+    deb [signed-by=/usr/share/keyrings/falco-archive-keyring.gpg] https://download.falco.org/packages/deb stable main
     EOF
     ```
 
