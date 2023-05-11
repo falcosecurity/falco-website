@@ -33,7 +33,7 @@ Also, this scenario requires Falco installation as described in [Try Falco on Ub
 For simplicity, this scenario uses local containers, so it requires a container runtime like Docker or Podman. Run the following command on Ubuntu to install Docker:
 
 ```plain
-$ sudo apt install -y docker.io
+sudo apt install -y docker.io
 ```
 
 ### 0.3 Verify that Falco is running
@@ -43,7 +43,7 @@ The current environment should have Falco already running as described in [Try F
 The following command will verify Falco is installed and running:
 
 ```
-$ sudo systemctl status falco
+sudo systemctl status falco
 
 ● falco-kmod.service - Falco: Container Native Runtime Security with kmod
    Loaded: loaded (/usr/lib/systemd/system/falco-kmod.service; enabled; vendor preset: disabled)
@@ -67,7 +67,7 @@ Assuming Falco is already installed, here are the main steps to use Falcosidekic
 Falcosidekick-UI uses Redis to store and search data. A Redis container is the easiest way to make Redis available.
 
 ```plain
-$ sudo docker run --detach --rm --network=host \
+sudo docker run --detach --rm --network=host \
 --name redis docker.io/redis/redis-stack-server:latest
 
 Unable to find image 'redis/redis-stack-server:latest' locally
@@ -81,7 +81,7 @@ Status: Downloaded newer image for redis/redis-stack-server:latest
 We are going to use the container image to run Falcosidekick in the background. To enable the WebUI, set the `WEBUI_URL` environment variable when starting the container:
 
 ```plain
-$ sudo docker run --detach --rm --network=host \
+sudo docker run --detach --rm --network=host \
 --env WEBUI_URL=http://localhost:2802 \
 --name falcosidekick falcosecurity/falcosidekick:2.27.0
 
@@ -94,7 +94,7 @@ Status: Downloaded newer image for falcosecurity/falcosidekick:2.27.0
 Falcosidekick output should look like the following:
 
 ```plain
-$ sudo docker logs falcosidekick
+sudo docker logs falcosidekick
 
 2023/01/26 12:26:38 [INFO]  : Falco Sidekick version: 2.27.0
 2023/01/26 12:26:38 [INFO]  : Enabled Outputs : [WebUI]
@@ -108,7 +108,7 @@ $ sudo docker logs falcosidekick
 Let's start Falocsidekick-UI to interact through a much more comfortable interface. The following command will start a Docker container based on the Falcosidekick UI image.
 
 ```plain
-$ sudo docker run --detach --rm --network=host \
+sudo docker run --detach --rm --network=host \
 --name falcosidekick-ui falcosecurity/falcosidekick-ui
 
 Unable to find image 'falcosecurity/falcosidekick-ui:latest' locally
@@ -120,7 +120,7 @@ Status: Downloaded newer image for falcosecurity/falcosidekick-ui:latest
 Falcosidekick UI output should look like the following:
 
 ```plain
-$ sudo docker logs falcosidekick-ui
+sudo docker logs falcosidekick-ui
 
 2023/01/26 15:56:12 [WARN] : Index does not exist
 2023/01/26 15:56:12 [WARN] : Create Index
@@ -132,7 +132,7 @@ $ sudo docker logs falcosidekick-ui
 
 It's always useful to double check that every required container is running. Verify it with the `docker ps` command.
 ```
-$ sudo docker ps
+sudo docker ps
 
 CONTAINER ID   IMAGE                                COMMAND                CREATED              STATUS              PORTS     NAMES
 6bf43d19fe7e   falcosecurity/falcosidekick-ui       "./falcosidekick-ui"   About a minute ago   Up About a minute             falcosidekick-ui
@@ -156,7 +156,7 @@ http_output:
 Restart Falco to apply these changes:
 
 ```plain
-$ sudo systemctl restart falco
+sudo systemctl restart falco
 ```
 
 At this moment, Falco should be sending every alert to Falcosidekick. 
@@ -169,7 +169,7 @@ At this moment, Falco should be sending every alert to Falcosidekick.
 Run the following command to simulate a suspicious event:
 
 ```plain
-$ sudo cat /etc/shadow > /dev/null
+sudo cat /etc/shadow > /dev/null
 ```
 
 ### 2.2 Access the Falcosidekick UI Dashboard
@@ -192,7 +192,7 @@ There must be already a few events. Click on them to see the events detail.
 It is better to explore the Falcosidekick UI with more events. Run the following command to use [event-generator](https://github.com/falcosecurity/event-generator) to generate a variety of suspect actions that are detected by Falco rulesets.
 
 ```plain
-$ sudo docker run -it --rm falcosecurity/event-generator \
+sudo docker run -it --rm falcosecurity/event-generator \
 run syscall --loop
 
 Unable to find image 'falcosecurity/event-generator:latest' locally

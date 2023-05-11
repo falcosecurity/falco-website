@@ -20,7 +20,7 @@ These are the main steps to install Falco on Kubernetes using Helm. Follow them 
 
 Run the following command to install the kernel headers on every Kubernetes node:
 ```plain
-$ sudo apt-get -y install linux-headers-$(uname -r)
+sudo apt-get -y install linux-headers-$(uname -r)
 ```
 > This step might not even be necessary if the specific driver for the Linux kernel in your Kubernetes cluster [is prebuilt and offered by Falco](https://download.falco.org/).
 >
@@ -30,28 +30,28 @@ $ sudo apt-get -y install linux-headers-$(uname -r)
 
 Run the following command to add the `falcosecurity` charts repository:
 ```plain
-$ helm repo add falcosecurity https://falcosecurity.github.io/charts
-$ helm repo update
+helm repo add falcosecurity https://falcosecurity.github.io/charts
+helm repo update
 ```
 
 ### 1.3 Install the chart
 
 Run the following command to create a namespace for Falco and install the Falco chart:
 ```plain
-$ kubectl create namespace falco
-$ helm install falco -n falco --set tty=true falcosecurity/falco
+kubectl create namespace falco
+helm install falco -n falco --set tty=true falcosecurity/falco
 ```
 
 ### 1.4 Verify the Falco deployment
 
 Verify that Falco is deployed correctly using the `kubectl` command:
 ```plain
-$ kubectl get pods -n falco
+kubectl get pods -n falco
 ```
 
 Falco pod(s) might need a few seconds to start. Wait until they are ready:
 ```plain
-$ kubectl wait pods --for=condition=Ready --all -n falco
+kubectl wait pods --for=condition=Ready --all -n falco
 ```
 
 ## 2. Trying Falco in action
@@ -60,13 +60,13 @@ $ kubectl wait pods --for=condition=Ready --all -n falco
 
 Run the following command to simulate a suspicious event:
 ```plain
-$ kubectl exec -it alpine -- sh -c "uptime"
+kubectl exec -it alpine -- sh -c "uptime"
 ```
 
 ### 2.2 Look at Falco logs
 Run the following command to look at Falco logs.
 ```plain
-$ kubectl logs -l app.kubernetes.io/name=falco -n falco
+kubectl logs -l app.kubernetes.io/name=falco -n falco
 ```
 
 Check the logs to see the following notice:
