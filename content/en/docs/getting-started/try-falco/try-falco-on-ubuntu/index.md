@@ -34,25 +34,27 @@ These are the main steps to install Falco on Ubuntu. Follow them and you should 
 
 Add Falco repository key to allow the package verification when installing it.
 ```plain
-$ curl -s https://falco.org/repo/falcosecurity-packages.asc | sudo apt-key add -
+curl -fsSL https://falco.org/repo/falcosecurity-packages.asc | \
+  sudo gpg --dearmor -o /usr/share/keyrings/falco-archive-keyring.gpg
 ```
 
 Add Falco repository. This is where Falco package is located.
 ```plain
-$ echo "deb https://download.falco.org/packages/deb stable main" | \
-  sudo tee /etc/apt/sources.list.d/falcosecurity.list
+sudo cat >/etc/apt/sources.list.d/falcosecurity.list <<EOF
+deb [signed-by=/usr/share/keyrings/falco-archive-keyring.gpg] https://download.falco.org/packages/deb stable main
+EOF
 ```
 
 Read the repository contents
 ```plain
-$ sudo apt-get update
+sudo apt-get update -y
 ```
 
 ### 1.2 Install kernel headers
 
 Kernel headers are required to compile the Falco driver. Run the following command to install them:
 ```plain
-$ sudo apt-get -y install linux-headers-$(uname -r)
+sudo apt-get install -y dkms make linux-headers-$(uname -r)
 ```
 > This step might not even be necessary if the specific driver for the Linux kernel in your host [is prebuilt and offered by Falco](https://download.falco.org/).
 
@@ -61,14 +63,14 @@ $ sudo apt-get -y install linux-headers-$(uname -r)
 The package `dialog` is required by Falco to be able to select at installation time which driver Falco will use.
 
 ```plain
-$ sudo apt-get install -y dialog
+sudo apt-get install -y dialog
 ```
 
 ### 1.4 Install the package `falco` and its dependencies
 
 Install the latest version of the Falco package:
 ```plain
-$ sudo apt-get install -y falco
+sudo apt-get install -y falco
 ```
 > Dependencies are automatically included. The total installation time will depend on the current state of the server.
 
@@ -83,14 +85,14 @@ Choose the first option here. Although we won't work with it on this scenario, i
 After some seconds, if everything went as expected, Falco will be enabled and running. The quickest way to verify this is executing the following command:
 
 ```plain
-$ sudo systemctl is-active falco
+sudo systemctl is-active falco
 
 active
 ```
 
 If you see that the output is different, you might need to start it manually:
 ```plain
-$ sudo systemctl start falco
+sudo systemctl start falco
 ```
 
 ### 1.5 Verify the Falco installation
@@ -98,7 +100,7 @@ $ sudo systemctl start falco
 To verify that Falco is running correctly and obtain more detailed information about the service, use the following `systemctl` command:
 
 ```plain
-$ sudo systemctl status falco
+sudo systemctl status falco
 ```
 
 The output should look like the following with the green color:
@@ -133,7 +135,7 @@ Jan 25 10:44:04 ubuntu falco[26488]: Opening capture with Kernel module
 
 Run the following command to simulate a suspicious event:
 ```plain
-$ sudo cat /etc/shadow > /dev/null
+sudo cat /etc/shadow > /dev/null
 ```
 
 ### 2.2 Look at Falco logs
@@ -144,7 +146,7 @@ There are different ways to access Falco logs in this installation:
 
 `jounalctl` allows us to interact with journald to inspect our services. Run the following command to retrieve Falco messages that have been generated with a priority of `warning`:
 ```
-$ sudo journalctl _COMM=falco -p warning
+sudo journalctl _COMM=falco -p warning
 ...
 Jan 25 10:52:54 ubuntu falco: 10:52:54.144872253: Warning Sensitive file opened for 
  reading by non-trusted program (user=root user_loginuid=-1 program=cat command=cat 
@@ -157,7 +159,7 @@ Jan 25 10:52:54 ubuntu falco: 10:52:54.144872253: Warning Sensitive file opened 
 
 Log messages describing Falco's activity are logged to syslog. Run the following command to retrieve Falco logs:
 ```
-$ sudo grep falco /var/log/syslog
+sudo grep falco /var/log/syslog
 ...
 Jan 25 10:52:54 ubuntu falco: 10:52:54.144872253: Warning Sensitive file opened for 
  reading by non-trusted program (user=root user_loginuid=-1 program=cat command=cat 

@@ -20,7 +20,7 @@ These are the main steps to deploy Falcosidekick on Kubernetes using Helm. Follo
 
 Run the following command to install the kernel headers on every Kubernetes node:
 ```plain
-$ sudo apt-get -y install linux-headers-$(uname -r)
+sudo apt-get -y install linux-headers-$(uname -r)
 ```
 > This step might not even be necessary if the specific driver for the Linux kernel in your Kubernetes cluster [is prebuilt and offered by Falco](https://download.falco.org/).
 >
@@ -30,8 +30,8 @@ $ sudo apt-get -y install linux-headers-$(uname -r)
 
 Run the following command to add the `falcosecurity` charts repository:
 ```plain
-$ helm repo add falcosecurity https://falcosecurity.github.io/charts
-$ helm repo update
+helm repo add falcosecurity https://falcosecurity.github.io/charts
+helm repo update
 ```
 
 ### 1.3 Deploy Falco including Falcosidekick
@@ -39,8 +39,8 @@ $ helm repo update
 Run the following command to deploy Falco, Falcosidekick and Falcosidekick-UI:
 
 ```plain
-$ kubectl create namespace falco
-$ helm install falco -n falco --set tty=true falcosecurity/falco \
+kubectl create namespace falco
+helm install falco -n falco --set tty=true falcosecurity/falco \
   --set falcosidekick.enabled=true \
   --set falcosidekick.webui.enabled=true
 ```
@@ -52,17 +52,17 @@ $ helm install falco -n falco --set tty=true falcosecurity/falco \
 Verify that Falcosidekick and Falcosidekick-UI are running correctly using
 the `kubectl` command:
 ```plain
-$ kubectl get pods -n falco
+kubectl get pods -n falco
 ```
 
 Wait until all the pods are ready:
 ```plain
-$ kubectl wait pods --for=condition=Ready --all -n falco
+kubectl wait pods --for=condition=Ready --all -n falco
 ```
 
 Run the following command to look at Falcosidekick logs.
 ```plain
-$ kubectl logs -l app.kubernetes.io/name=falcosidekick -n falco
+kubectl logs -l app.kubernetes.io/name=falcosidekick -n falco
 ```
 
 The output should be similar to the following:
@@ -77,12 +77,12 @@ The output should be similar to the following:
 
 Run the following command to simulate a suspicious event:
 ```plain
-$ kubectl exec -it alpine -- sh -c "uptime"
+kubectl exec -it alpine -- sh -c "uptime"
 ```
 
 Check the logs again:
 ```plain
-$ kubectl logs -l app.kubernetes.io/name=falcosidekick -n falco | grep "OK"
+kubectl logs -l app.kubernetes.io/name=falcosidekick -n falco | grep "OK"
 ```
 
 The output should be similar to the following:
@@ -95,7 +95,7 @@ The output should be similar to the following:
 To access the Falcosidekick UI, create a port forward to expose the service:
 
 ```plain
-$ kubectl port-forward svc/falco-falcosidekick-ui \
+kubectl port-forward svc/falco-falcosidekick-ui \
   -n falco --address 0.0.0.0 2802 &> /dev/null &
 ```
 
@@ -110,14 +110,14 @@ It is better to explore the Falcosidekick UI with more events.
 Run the following command to use [event-generator](https://github.com/falcosecurity/event-generator) to generate a variety of suspect actions that are detected by Falco rulesets.
 
 ```plain
-$ kubectl run event-generator -n falco --image falcosecurity/event-generator \
+kubectl run event-generator -n falco --image falcosecurity/event-generator \
   -- run syscall --loop
 ```
 
 Alternatively, if you can run Docker containers on the Kubernetes node:
 
 ```plain
-$ sudo docker run -it --rm falcosecurity/event-generator \
+sudo docker run -it --rm falcosecurity/event-generator \
   run syscall --loop
 ```
 
