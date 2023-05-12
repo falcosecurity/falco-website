@@ -1,7 +1,7 @@
 ---
 title: GitOps your Falco Rules
 description: Delivering Falco rules from the source to the node becomes easier with OCI artifacts. 
-date: 2023-04-29
+date: 2023-05-12
 author: Vicente J. Jiménez Miras
 slug: gitops-your-falco-rules
 tags: ["Rules","Falcoctl"]
