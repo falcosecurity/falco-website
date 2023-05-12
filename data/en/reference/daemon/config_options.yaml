@@ -56,7 +56,7 @@
 - name: json_output
   type: Boolean
   description: |
-    If `true` (default is `false`), print falco alert messages and rules file loading/validation results as json, which allows for easier consumption by downstream programs. Default is `false`.
+    If `true` (default is `false`), print falco alert messages and rules file loading/validation results as json, which allows for easier consumption by downstream programs. Also changes falco `--version` CLI argument output as json.
 
 - name: json_include_output_property
   type: Boolean
