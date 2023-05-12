@@ -6,7 +6,7 @@ author: Vicente J. Jiménez Miras
 slug: gitops-your-falco-rules
 tags: ["Rules","Falcoctl"]
 images:
-  - images/gitops-your-falco-rules-featured.png
+  - /blog/gitops-your-falco-rules/images/gitops-your-falco-rules-featured.png
 ---
 
 Falco rules management has been a discussed topic for quite a long time. When we start building and customizing rules for our environment, we need a simple way to effectively update and distribute them to our Falco fleet. Starting from Falco 0.34, we can easily do it by using OCI artifacts and leveraging any private or public container registry to store and retrieve them.
