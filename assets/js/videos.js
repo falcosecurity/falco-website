@@ -51,13 +51,13 @@ async function handler() {
 }
 
 function replace(template, { id, description, title, published }) {
-  let tpl = template.replace("%id%", id);
-  tpl = tpl.replace("%title%", title);
-  tpl = tpl.replace(
+  let tpl = template.replaceAll("%id%", id);
+  tpl = tpl.replaceAll("%title%", title);
+  tpl = tpl.replaceAll(
     "%description%",
     description.length > 140 ? `${description.slice(0, 140)}...` : description
   );
-  tpl = tpl.replace("%published%", format(new Date(published), "MMM dd, yyyy"));
+  tpl = tpl.replaceAll("%published%", format(new Date(published), "MMM dd, yyyy"));
 
   return tpl;
 }
