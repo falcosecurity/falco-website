@@ -299,7 +299,8 @@ In these steps, we are targeting a Debian-like system on `x86_64` architecture. 
     ```
 
 4. Run `falco-driver-loader` binary to install the kernel module or the BPF probe. If you want to use other sources like the modern BPF probe or plugins you can skip this step.
-> **_NOTE:_**  /tmp directory must be able to execute scripts.
+> To install the driver, the `falco-driver-loader` script requires write and execution permissions on the `/tmp` directory, as it will try to create and execute a script from there.
+
     ```bash
     # If you want to install the kernel module
     falco-driver-loader module
