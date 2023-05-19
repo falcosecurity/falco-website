@@ -112,9 +112,57 @@ Usage:
     subheader="With the -A option Falco monitors all events, including those not interesting to Falco itself (allowing high volume of I/O syscalls). This option has effect only on live captures."
     class="inline-config-options"
     contentPath="reference.daemon.cli_options"
-    columnTitles="Category,evt.type,Default (without -A),With -A,.scap file"
-    columnKeys="category,evt_type,default,with_a,scap_file"
+    columnTitles="Category,evt.type,Default (without -A),With -A,custom_set, custom_set + repair,.scap file"
+    columnKeys="category,evt_type,default,with_a,custom_set,custom_set_repair,scap_file"
 >}}
+
+### Adaptive syscalls
+
+Falco offers to users the flexibility to choose from several behaviours based on their specific use cases. These behaviours provide different levels of control and customization for activating system calls in Falco rules. This documentation section will outline the three available options and their implications.
+
+#### Behaviour 1 (default)
+
+This configuration activates all system calls from Falco rules except for I/O system calls, which can be allowed using the `-A` flag.
+Additionally, Falco activates a predefined set of system calls that are deemed useful for building Falco's state engine. However, in this configuration, the end user has no control over this static set (defined at compile time).
+
+
+#### Behaviour 2: user defined `custom_set` (**use with caution**)
+
+In addition to the system calls from Falco rules except the I/O syscalls (that can be enabled via `-A` flag), this option allows users to specify a set of system calls to be activated (through the configuration key `base_syscalls.custom_set`).
+The final set of activated system calls is the union of Falco rules and the user-defined `custom_set` set.
+It offers complete control to the end user, but improper usage can lead to issues such as breaking Falco or incomplete and incorrect logs.
+
+#### Behaviour 3: `repair`
+
+This is recommended for users who want Falco to be more resourceful and intelligent in an automated manner (setting the configuration key `base_syscalls.repair` to `true`).
+This option activates all system calls from Falco rules, excluding I/O system calls (that can be enabled via `-A` flag). Furthermore, Falco automatically determines and activates the additional system calls required to build up its state engine. By scanning the system calls in each Falco rule, Falco ensures complete and accurate logs while running smoothly.
+
+Falco's state engine refers to the struct created in memory that caches information about processes. It enables various functionalities such as looking up parent processes. Certain system calls can modify this process information, and monitoring relevant system calls ensures the state engine remains accurate. For example, monitoring the close system call ensures proper management of file descriptors.
+
+
+### Scenarios
+
+These different behaviours offer flexibility to address various scenarios.
+
+1. Scenario: **Monitoring spawned processes with resource constraints**
+   - Behaviour 1: Insufficient for this goal.
+   - Behaviour 2 and Behaviour 3: Both options can be used to monitor spawned processes.
+     - Behaviour 3 ensures automatic correctness of data fields, while Behaviour 2 requires manual understanding of certain data fields retrieved from relevant system calls (e.g., clone*/fork syscalls).
+
+2. Scenario: **Monitoring spawned processes and network activity while excluding file opens due to kernel event drops**
+   - Behaviour 1: Insufficient for this goal.
+   - Behaviour 2 and Behaviour 3: Both options allow monitoring of spawned processes and network activity without file opens.
+     - Behaviour 3 ensures automatic correctness of data fields, while Behaviour 2 requires manual configuration and understanding of data fields.
+
+3. Various scenarios: **Configurability and usefulness**
+   - There are numerous scenarios where configurability is useful, such as:
+     - Using Falco for specific tasks (x) and relying on other tools for different tasks (y), thus avoiding duplication of work.
+     - Enhancing network monitoring in the ecosystem while freeing up resources by using Falco selectively.
+   - The flexibility of Falco's options allows users to tailor the tool to their specific needs and address a wide range of use cases.
+
+4. Scenario: **Monitoring all system calls**
+   - All three options can provide an equivalent solution for monitoring all system calls.
+   - Users can choose any option based on their preference and requirements.
 
 ### Notes:
 

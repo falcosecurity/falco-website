@@ -9,6 +9,7 @@
     `EC_SYSCALL`
   evt_type: |
     - `accept`
+    - `accept4`
     - `access`
     - `bind`
     - `bpf`
@@ -31,6 +32,7 @@
     - `epoll_create1`
     - `epoll_wait`
     - `eventfd`
+    - `eventfd2`
     - `execve`
     - `execveat`
     - `fchdir`
@@ -59,10 +61,11 @@
     - `getsockopt`
     - `getuid`
     - `inotify_init`
+    - `inotify_init1`
+    - `ioctl`
     - `io_uring_enter`
     - `io_uring_register`
     - `io_uring_setup`
-    - `ioctl`
     - `kill`
     - `lchown`
     - `link`
@@ -86,12 +89,14 @@
     - `munmap`
     - `nanosleep`
     - `open`
-    - `open_by_handle_at`
     - `openat`
     - `openat2`
+    - `open_by_handle_at`
     - `pipe`
+    - `pipe2`
     - `poll`
     - `ppoll`
+    - `prctl`
     - `pread`
     - `preadv`
     - `prlimit`
@@ -130,6 +135,7 @@
     - `setuid`
     - `shutdown`
     - `signalfd`
+    - `signalfd4`
     - `socket`
     - `socketpair`
     - `splice`
@@ -142,6 +148,7 @@
     - `timerfd_create`
     - `tkill`
     - `umount`
+    - `umount2`
     - `unlink`
     - `unlinkat`
     - `unshare`
@@ -150,95 +157,72 @@
     - `write`
     - `writev`
   default: |
-    Only syscalls in *simple_set*:
-    - `accept`
+    Syscalls required by the loaded rules **union** syscalls in *sinsp_state_sc_set*:
     - `accept4`
+    - `accept`
     - `bind`
-    - `bpf`
     - `capset`
     - `chdir`
-    - `chmod`
     - `chroot`
-    - `clone`
     - `clone3`
+    - `clone`
     - `close`
     - `connect`
     - `creat`
-    - `dup`
     - `dup2`
     - `dup3`
-    - `eventfd`
+    - `dup`
+    - `epoll_create1`
+    - `epoll_create`
     - `eventfd2`
+    - `eventfd`
     - `execve`
     - `execveat`
     - `fchdir`
-    - `fchmod`
-    - `fchmodat`
     - `fcntl`
-    - `fcntl64`
-    - `flock`
     - `fork`
     - `getsockopt`
-    - `inotify_init`
     - `inotify_init1`
-    - `ioctl`
+    - `inotify_init`
     - `io_uring_setup`
-    - `kill`
-    - `link`
-    - `linkat`
-    - `listen`
-    - `mkdir`
-    - `mkdirat`
     - `mount`
-    - `open`
     - `open_by_handle_at`
-    - `openat`
+    - `open`
     - `openat2`
-    - `pipe`
+    - `openat`
     - `pipe2`
-    - `prlimit64`
-    - `ptrace`
-    - `quotactl`
+    - `pipe`
+    - `prctl`
+    - `prlimit`
+    - `procexit`
     - `recvfrom`
     - `recvmsg`
-    - `rename`
-    - `renameat`
-    - `renameat2`
-    - `rmdir`
-    - `seccomp`
     - `sendmsg`
     - `sendto`
     - `setgid`
-    - `setgid32`
-    - `setns`
     - `setpgid`
     - `setresgid`
-    - `setresgid32`
     - `setresuid`
-    - `setresuid32`
     - `setrlimit`
     - `setsid`
     - `setuid`
-    - `setuid32`
     - `shutdown`
-    - `signalfd`
     - `signalfd4`
+    - `signalfd`
     - `socket`
     - `socketpair`
-    - `symlink`
-    - `symlinkat`
-    - `tgkill`
     - `timerfd_create`
-    - `tkill`
     - `umount2`
-    - `unlink`
-    - `unlinkat`
-    - `unshare`
+    - `umount`
     - `userfaultfd`
     - `vfork`
   with_a: All
   scap_file: |
     All, including `EF_OLD_VERSION`
+  custom_set:
+    Syscalls required by the loaded rules union user defined syscalls in `custom_set`.
+  custom_set_repair:
+    Syscalls required by the loaded rules union user defined syscalls in `custom_set` union all the syscall required to build up the necessary state in userspace and ensure the proper functioning of Falco’s runtime.
 - category: |
     `EC_TRACEPOINT`
   evt_type: |
