@@ -3,6 +3,8 @@ title: Kernel Events
 description: 'Events related to the Kernel tells us most of what happens above.'
 linktitle: Kernel Events
 weight: 20
+aliases:
+  - /docs/event-sources/drivers
 ---
 
 Falco uses different instrumentations to analyze the system workload and pass security events to userspace. We usually refer to these instrumentations as **syscall sources** since the generated events are strictly related to the syscall context.
