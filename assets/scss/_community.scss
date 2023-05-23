@@ -233,6 +233,12 @@
     }
   }
 
+  .event__info,
+  hr {
+     display: none;
+  }
+
+/*
   &:first-of-type {
     .event__info,
     hr {
@@ -245,6 +251,7 @@
       display: none;
     }
   }
+*/
 }
 
 .webcast {
