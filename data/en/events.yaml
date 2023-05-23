@@ -1,15 +1,432 @@
-- title: Up & Running with Runtime Security
-  start: 2023-05-23T09:00:00-0700
-  end: 2023-05-23T11:00:00-0700
+
+- title: "Falco on Tour: Virtual"
+  start: "2023-05-23T09:00:00-0700"
+  end: "2023-05-23T10:00:00-0700"
   timezone: America/Los_Angeles
   timezoneName: PDT
   location: online
   type: workshop
-  description: Up & Running with Runtime Security
-  img: https://www.aicamp.ai/img/w2023052309b.png
+  description: "Up & Running with Runtime Security Workshop"
   url: https://www.aicamp.ai/event/eventdetails/W2023052309?utm_source=falconcom0411
   schedule:
-    - start: 2023-05-23T09:00:00-0700
+    - start: "2023-05-23T09:00:00-0700"
       time:
-        - start: 2023-05-23T09:00:00-0700
-          content: Up & Running with Runtime Security
+        - start: "2023-05-23T09:00:00-0700"
+          end: "2023-05-23T10:00:00-0700"
+          content: <a href="https://www.aicamp.ai/event/eventdetails/W2023052309?utm_source=falconcom0411" target="_blank">Up & Running with Runtime Security Workshop</a><br>online<br>
+
+- title: "Falco on Tour: Dallas (Special Guest, Chainguard's Wolfi!)"
+  start: "2023-06-20T09:00:00-0500"
+  end: "2023-06-20T16:00:00-0500"
+  timezone: America/Chicago
+  timezoneName: CDT
+  location: Dallas, TX at Topgolf!
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/624750544697
+  schedule:
+    - start: "2023-06-20T09:00:00-0500"
+      time:
+        - start: "2023-06-20T09:00:00-0500"
+          end: "2023-06-20T16:00:00-0500"
+          content: <a href="https://www.eventbrite.com/e/624750544697" target="_blank">Up & Running with Runtime Security Workshop</a><br>Dallas, TX at Topgolf!<br>
+
+- title: "Falco on Tour: Paris"
+  start: "2023-06-20T09:00:00+0200"
+  end: "2023-06-20T13:30:00+0200"
+  timezone: Europe/Paris
+  timezoneName: CEST
+  location: Paris, France at Paris Opera Ambassador Hotel
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/falco-on-tour-paris-tickets-627315155517
+  schedule:
+    - start: "2023-06-20T09:00:00+0200"
+      time:
+        - start: "2023-06-20T09:00:00+0200"
+          end: "2023-06-20T13:30:00+0200"
+          content: <a href="https://www.eventbrite.com/e/falco-on-tour-paris-tickets-627315155517" target="_blank">Up & Running with Runtime Security Workshop</a><br>Paris, France at Paris Opera Ambassador Hotel<br>
+
+- title: "Falco on Tour: Austin"
+  start: "2023-06-21T10:00:00-0500"
+  end: "2023-06-21T14:30:00-0500"
+  timezone: America/Chicago
+  timezoneName: CDT
+  location: Austin, TX at Topgolf!
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/627275316357
+  schedule:
+    - start: "2023-06-21T10:00:00-0500"
+      time:
+        - start: "2023-06-21T10:00:00-0500"
+          end: "2023-06-21T14:30:00-0500"
+          content: <a href="https://www.eventbrite.com/e/627275316357" target="_blank">Up & Running with Runtime Security Workshop</a><br>Austin, TX at Topgolf!<br>
+
+- title: "Falco on Tour: Denver (Special Guest, Chainguard's Wolfi!)"
+  start: "2023-06-22T10:00:00-0600"
+  end: "2023-06-22T16:00:00-0600"
+  timezone: America/Denver
+  timezoneName: MDT
+  location: Denver, CO at Shift Workspaces!
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/627307342147
+  schedule:
+    - start: "2023-06-22T10:00:00-0600"
+      time:
+        - start: "2023-06-22T10:00:00-0600"
+          end: "2023-06-22T16:00:00-0600"
+          content: <a href="https://www.eventbrite.com/e/627307342147" target="_blank">Up & Running with Runtime Security Workshop</a><br>Denver, CO at Shift Workspaces!<br>
+
+- title: "Falco on Tour: London"
+  start: "2023-06-22T16:00:00+0100"
+  end: "2023-06-22T20:00:00+0100"
+  timezone: Europe/London
+  timezoneName: BST
+  location: London, England
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/falco-on-tour-london-tickets-636830646607
+  schedule:
+    - start: "2023-06-22T16:00:00+0100"
+      time:
+        - start: "2023-06-22T16:00:00+0100"
+          end: "2023-06-22T20:00:00+0100"
+          content: <a href="https://www.eventbrite.com/e/falco-on-tour-london-tickets-636830646607" target="_blank">Up & Running with Runtime Security Workshop</a><br>London, England<br>
+
+- title: "Falco on Tour: Dublin"
+  start: "2023-06-20T15:00:00+0100"
+  end: "2023-06-20T19:00:00+0100"
+  timezone: Europe/Dublin
+  timezoneName: BST
+  location: Dublin, Ireland
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/627321715137
+  schedule:
+    - start: "2023-06-20T15:00:00+0100"
+      time:
+        - start: "2023-06-20T15:00:00+0100"
+          end: "2023-06-20T19:00:00+0100"
+          content: <a href="https://www.eventbrite.com/e/627321715137" target="_blank">Up & Running with Runtime Security Workshop</a><br>Dublin, Ireland<br>
+
+- title: "Falco on Tour: Seattle"
+  start: "2023-06-27T14:00:00-0700"
+  end: "2023-06-27T17:30:00-0700"
+  timezone: America/Los_Angeles
+  timezoneName: PDT
+  location: Seattle, WA at SPIN!
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/627344563477
+  schedule:
+    - start: "2023-06-27T14:00:00-0700"
+      time:
+        - start: "2023-06-27T14:00:00-0700"
+          end: "2023-06-27T17:30:00-0700"
+          content: <a href="https://www.eventbrite.com/e/627344563477" target="_blank">Up & Running with Runtime Security Workshop</a><br>Seattle, WA at SPIN!<br>
+
+- title: "Falco on Tour: Virtual"
+  start: "2023-06-27T09:00:00-0700"
+  end: "2023-06-27T11:00:00-0700"
+  timezone: America/Los_Angeles
+  timezoneName: PDT
+  location: online
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.aicamp.ai/event/eventdetails/W2023062709
+  schedule:
+    - start: "2023-06-27T09:00:00-0700"
+      time:
+        - start: "2023-06-27T09:00:00-0700"
+          end: "2023-06-27T11:00:00-0700"
+          content: <a href="https://www.aicamp.ai/event/eventdetails/W2023062709" target="_blank">Up & Running with Runtime Security Workshop</a><br>online<br>
+
+- title: "Falco on Tour: Zurich"
+  start: "2023-06-27T09:00:00+0200"
+  end: "2023-06-27T12:30:00+0200"
+  timezone: Europe/Zurich
+  timezoneName: CEST
+  location: Zurich, Switzerland
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/falco-on-tour-zurich-tickets-636840957447
+  schedule:
+    - start: "2023-06-27T09:00:00+0200"
+      time:
+        - start: "2023-06-27T09:00:00+0200"
+          end: "2023-06-27T12:30:00+0200"
+          content: <a href="https://www.eventbrite.com/e/falco-on-tour-zurich-tickets-636840957447" target="_blank">Up & Running with Runtime Security Workshop</a><br>Zurich, Switzerland<br>
+
+- title: "Falco on Tour: Geneva"
+  start: "2023-06-28T09:00:00+0200"
+  end: "2023-06-28T12:30:00+0200"
+  timezone: Europe/Zurich
+  timezoneName: CEST
+  location: Geneva, Switzerland
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/636853404677
+  schedule:
+    - start: "2023-06-28T09:00:00+0200"
+      time:
+        - start: "2023-06-28T09:00:00+0200"
+          end: "2023-06-28T12:30:00+0200"
+          content: <a href="https://www.eventbrite.com/e/636853404677" target="_blank">Up & Running with Runtime Security Workshop</a><br>Geneva, Switzerland<br>
+
+- title: "Falco on Tour: Los Angeles"
+  start: "2023-07-11T09:00:00-0700"
+  end: "2023-07-11T12:30:00-0700"
+  timezone: America/Los_Angeles
+  timezoneName: PDT
+  location: Los Angeles, CA
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/636855059627
+  schedule:
+    - start: "2023-07-11T09:00:00-0700"
+      time:
+        - start: "2023-07-11T09:00:00-0700"
+          end: "2023-07-11T12:30:00-0700"
+          content: <a href="https://www.eventbrite.com/e/636855059627" target="_blank">Up & Running with Runtime Security Workshop</a><br>Los Angeles, CA<br>
+
+- title: "Falco on Tour: Munich"
+  start: "2023-07-13T13:00:00+0200"
+  end: "2023-07-13T17:00:00+0200"
+  timezone: Europe/Berlin
+  timezoneName: CEST
+  location: Munich, Germany
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/falco-on-tour-munich-tickets-636858399617
+  schedule:
+    - start: "2023-07-13T13:00:00+0200"
+      time:
+        - start: "2023-07-13T13:00:00+0200"
+          end: "2023-07-13T17:00:00+0200"
+          content: <a href="https://www.eventbrite.com/e/falco-on-tour-munich-tickets-636858399617" target="_blank">Up & Running with Runtime Security Workshop</a><br>Munich, Germany<br>
+
+- title: "Falco on Tour: Irvine"
+  start: "2023-07-12T09:00:00-0700"
+  end: "2023-07-12T12:30:00-0700"
+  timezone: America/Los_Angeles
+  timezoneName: PDT
+  location: Irvine, CA
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/636856584187
+  schedule:
+    - start: "2023-07-12T09:00:00-0700"
+      time:
+        - start: "2023-07-12T09:00:00-0700"
+          end: "2023-07-12T12:30:00-0700"
+          content: <a href="https://www.eventbrite.com/e/636856584187" target="_blank">Up & Running with Runtime Security Workshop</a><br>Irvine, CA<br>
+
+- title: "Falco on Tour: Berlin"
+  start: "2023-07-12T09:00:00+0200"
+  end: "2023-07-12T12:00:00+0200"
+  timezone: Europe/Berlin
+  timezoneName: CEST
+  location: Berlin, Germany
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/falco-on-tour-berlin-tickets-636859914147
+  schedule:
+    - start: "2023-07-12T09:00:00+0200"
+      time:
+        - start: "2023-07-12T09:00:00+0200"
+          end: "2023-07-12T12:00:00+0200"
+          content: <a href="https://www.eventbrite.com/e/falco-on-tour-berlin-tickets-636859914147" target="_blank">Up & Running with Runtime Security Workshop</a><br>Berlin, Germany<br>
+
+- title: "Falco on Tour: San Diego"
+  start: "2023-07-13T09:00:00-0700"
+  end: "2023-07-13T12:00:00-0700"
+  timezone: America/Los_Angeles
+  timezoneName: PDT
+  location: San Diego
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/636860596187
+  schedule:
+    - start: "2023-07-13T09:00:00-0700"
+      time:
+        - start: "2023-07-13T09:00:00-0700"
+          end: "2023-07-13T12:00:00-0700"
+          content: <a href="https://www.eventbrite.com/e/636860596187" target="_blank">Up & Running with Runtime Security Workshop</a><br>San Diego<br>
+
+- title: "Falco on Tour: Hamburg"
+  start: "2023-07-11T09:00:00+0200"
+  end: "2023-07-11T12:30:00+0200"
+  timezone: Europe/Berlin
+  timezoneName: CEST
+  location: Hamburg, Germany
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/636861218047
+  schedule:
+    - start: "2023-07-11T09:00:00+0200"
+      time:
+        - start: "2023-07-11T09:00:00+0200"
+          end: "2023-07-11T12:30:00+0200"
+          content: <a href="https://www.eventbrite.com/e/636861218047" target="_blank">Up & Running with Runtime Security Workshop</a><br>Hamburg, Germany<br>
+
+- title: "Falco on Tour: Virtual"
+  start: "2023-07-25T09:00:00-0700"
+  end: "2023-07-25T12:00:00-0700"
+  timezone: America/Los_Angeles
+  timezoneName: PDT
+  location: online
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.aicamp.ai/event/eventdetails/W2023072501
+  schedule:
+    - start: "2023-07-25T09:00:00-0700"
+      time:
+        - start: "2023-07-25T09:00:00-0700"
+          end: "2023-07-25T12:00:00-0700"
+          content: <a href="https://www.aicamp.ai/event/eventdetails/W2023072501" target="_blank">Up & Running with Runtime Security Workshop</a><br>online<br>
+
+- title: "Falco on Tour: Portland"
+  start: "2023-08-15T16:00:00-0700"
+  end: "2023-08-15T20:00:00-0700"
+  timezone: America/Los_Angeles
+  timezoneName: PDT
+  location: Portland, OR
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/627313941887
+  schedule:
+    - start: "2023-08-15T16:00:00-0700"
+      time:
+        - start: "2023-08-15T16:00:00-0700"
+          end: "2023-08-15T20:00:00-0700"
+          content: <a href="https://www.eventbrite.com/e/627313941887" target="_blank">Up & Running with Runtime Security Workshop</a><br>Portland, OR<br>
+
+- title: "Falco on Tour: New York"
+  start: "2023-09-19T09:00:00-0400"
+  end: "2023-09-19T12:30:00-0400"
+  timezone: America/New_York
+  timezoneName: EDT
+  location: New York, NY
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/falco-on-tour-new-york-tickets-636867677367
+  schedule:
+    - start: "2023-09-19T09:00:00-0400"
+      time:
+        - start: "2023-09-19T09:00:00-0400"
+          end: "2023-09-19T12:30:00-0400"
+          content: <a href="https://www.eventbrite.com/e/falco-on-tour-new-york-tickets-636867677367" target="_blank">Up & Running with Runtime Security Workshop</a><br>New York, NY<br>
+
+- title: "Falco on Tour: Boston"
+  start: "2023-09-20T09:00:00-0400"
+  end: "2023-09-20T12:30:00-0400"
+  timezone: America/New_York
+  timezoneName: EDT
+  location: Boston, MA
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/636986713407
+  schedule:
+    - start: "2023-09-20T09:00:00-0400"
+      time:
+        - start: "2023-09-20T09:00:00-0400"
+          end: "2023-09-20T12:30:00-0400"
+          content: <a href="https://www.eventbrite.com/e/636986713407" target="_blank">Up & Running with Runtime Security Workshop</a><br>Boston, MA<br>
+
+- title: "Falco on Tour: Toronto"
+  start: "2023-09-21T09:00:00-0400"
+  end: "2023-09-21T12:30:00-0400"
+  timezone: America/Toronto
+  timezoneName: EDT
+  location: Toronto, Canada
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/632747634207
+  schedule:
+    - start: "2023-09-21T09:00:00-0400"
+      time:
+        - start: "2023-09-21T09:00:00-0400"
+          end: "2023-09-21T12:30:00-0400"
+          content: <a href="https://www.eventbrite.com/e/632747634207" target="_blank">Up & Running with Runtime Security Workshop</a><br>Toronto, Canada<br>
+
+- title: "Falco on Tour: Houston"
+  start: "2023-10-11T09:00:00-0500"
+  end: "2023-10-11T12:30:00-0500"
+  timezone: America/Chicago
+  timezoneName: CDT
+  location: Houston, TX
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/627311855647
+  schedule:
+    - start: "2023-10-11T09:00:00-0500"
+      time:
+        - start: "2023-10-11T09:00:00-0500"
+          end: "2023-10-11T12:30:00-0500"
+          content: <a href="https://www.eventbrite.com/e/627311855647" target="_blank">Up & Running with Runtime Security Workshop</a><br>Houston, TX<br>
+
+- title: "Falco on Tour: Atlanta"
+  start: "2023-10-12T09:00:00-0500"
+  end: "2023-10-12T12:30:00-0500"
+  timezone: America/Chicago
+  timezoneName: CDT
+  location: Atlanta, GA
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/636990424507
+  schedule:
+    - start: "2023-10-12T09:00:00-0500"
+      time:
+        - start: "2023-10-12T09:00:00-0500"
+          end: "2023-10-12T12:30:00-0500"
+          content: <a href="https://www.eventbrite.com/e/636990424507" target="_blank">Up & Running with Runtime Security Workshop</a><br>Atlanta, GA<br>
+
+- title: "Falco on Tour: Nashville"
+  start: "2023-10-13T09:00:00-0500"
+  end: "2023-10-13T12:00:00-0500"
+  timezone: America/Chicago
+  timezoneName: CDT
+  location: Nashville, TN
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/636992891887
+  schedule:
+    - start: "2023-10-13T09:00:00-0500"
+      time:
+        - start: "2023-10-13T09:00:00-0500"
+          end: "2023-10-13T12:00:00-0500"
+          content: <a href="https://www.eventbrite.com/e/636992891887" target="_blank">Up & Running with Runtime Security Workshop</a><br>Nashville, TN<br>
+
+- title: "Falco on Tour: Raleigh"
+  start: "2023-10-16T09:00:00-0500"
+  end: "2023-10-16T12:00:00-0500"
+  timezone: America/Chicago
+  timezoneName: CDT
+  location: Raleigh, NC
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/636993433507
+  schedule:
+    - start: "2023-10-16T09:00:00-0500"
+      time:
+        - start: "2023-10-16T09:00:00-0500"
+          end: "2023-10-16T12:00:00-0500"
+          content: <a href="https://www.eventbrite.com/e/636993433507" target="_blank">Up & Running with Runtime Security Workshop</a><br>Raleigh, NC<br>
+
+- title: "Falco on Tour: Chicago"
+  start: "2023-11-06T09:00:00-0600"
+  end: "2023-11-06T12:30:00-0600"
+  timezone: America/Chicago
+  timezoneName: CST
+  location: Chicago, IL
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/636994255967
+  schedule:
+    - start: "2023-11-06T09:00:00-0600"
+      time:
+        - start: "2023-11-06T09:00:00-0600"
+          end: "2023-11-06T12:30:00-0600"
+          content: <a href="https://www.eventbrite.com/e/636994255967" target="_blank">Up & Running with Runtime Security Workshop</a><br>Chicago, IL<br>
