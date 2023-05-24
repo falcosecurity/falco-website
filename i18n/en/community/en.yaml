@@ -4,6 +4,8 @@ events_subtitle:
   other: Get involved in Falco community events! Swag and recognition await!
 events_list_title:
   other: Upcoming events
+events_list_subtitle:
+  other: "Learn more about the security landscape and Falco! Register below:"
 events_webcasts_title:
   other: Join us for webcasts, livestreams and workshops
 events_webcasts_previous:
