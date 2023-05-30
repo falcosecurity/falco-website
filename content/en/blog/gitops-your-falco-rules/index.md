@@ -715,11 +715,11 @@ and here are the changes that we want to do on it so it checks every 2 minutes, 
       follow:
         every: 2m
         refs:
-        - ghcr.io/vjjmiras/cool-falco-ruleset/custom-rules:main
+        - ghcr.io/vjjmiras/cool-falco-rules/custom-rules:main
 ...
 ```
 
-Translated into our Helm chart `values.yaml`, the fields to modify would look like:
+Translated into our Helm chart [`values.yaml`](https://github.com/falcosecurity/charts/blob/master/falco/values.yaml), the fields to modify would look like:
 
 ```yaml
 ...
@@ -729,18 +729,32 @@ falcoctl:
     ...
     artifact:
       ...
+      install:
+        refs:
+          - falco-rules:0
+          - ghcr.io/vjjmiras/cool-falco-rules/custom-rules:main  <-- Add this line
+      ...
       follow:
         refs:
           - falco-rules:0
-          - ghcr.io/vjjmiras/cool-falco-ruleset/custom-rules:main  <-- Add this line
-        every: 2m                                                  <-- Modify this line
+          - ghcr.io/vjjmiras/cool-falco-rules/custom-rules:main  <-- Add this line
+        every: 2m                                                <-- Modify this line
         ...
 ```
+
+{{% pageinfo color="warning" %}}
+
+The previous and following steps assume you have a local `values.yaml` file that you can customize. 
+We'll  pass it as an argument (`-f` option) to the Helm command updating in this way our Falco deployment. 
+
+You can download a copy of that file from [here](https://github.com/falcosecurity/charts/blob/master/falco/values.yaml).
+
+{{% /pageinfo %}}
 
 Followed by Helm upgrade command:
 
 ```shell
-$ helm upgrade falco -n falco --set tty=true falcosecurity/falco
+$ helm upgrade falco -n falco --set tty=true -f values.yaml falcosecurity/falco 
 ```
 
 Once we have updated those changes, we can wait for the new Pods with the current configuration:
@@ -806,14 +820,14 @@ falco:
   rules_file:
   - /etc/falco/falco_rules.yaml
   - /etc/falco/falco_rules.local.yaml
-  - /etc/falco/rules.d
   - /etc/falco/custom_falco_rules.yaml   <-- Add this line
+  - /etc/falco/rules.d
 ```
 
 Followed again by the respective Helm upgrade command:
 
 ```shell
-$ helm upgrade falco -n falco --set tty=true falcosecurity/falco
+$ helm upgrade falco -n falco --set tty=true -f values.yaml falcosecurity/falco
 ```
 
 Once updated the deployment, we can wait for the Pods with the newest configuration. Their logs will look like the following:
