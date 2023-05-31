@@ -18,6 +18,7 @@ Here you can find a curated list of those tutorials grouped per category.
 ### Falco Deployment
 - [Build Falco drivers with Falco Driverkit and Docker](/blog/falco-driverkit-debian-docker/)
 - [Run Falco on an Apple Silicon Mac](/blog/falco-apple-silicon/)
+- [Add prebuilt drivers for a kernel release](/docs/tutorials/add-prebuilt-driver-config/)
 
 ### Falco Plugins & Integrations
 - [Configure Docker to integrate gVisor with Falco](/blog/intro-gvisor-falco/)
