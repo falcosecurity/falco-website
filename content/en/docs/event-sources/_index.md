@@ -9,7 +9,7 @@ Falco is able to consume streams of events and evaluate them against a set of se
 
 Falco natively supports the `syscall` event source, through which it is able to consume events coming from the Linux Kernel by instrumenting it with the [drivers](./drivers). 
 
-Since [Falco 0.31](/blog/falco-0-31-0.md) and the introduction of the [Plugin System](/docs/plugins), additional event sources can serve as input for Falco. Those event sources are provided by plugins implementing the [event sourcing capability](/docs/plugins#event-sourcing-capability). 
+Since [Falco 0.31](/blog/falco-0-31-0.md) and the introduction of the [Plugin System](/docs/plugins), additional event sources can serve as input for Falco. Those event sources are provided by plugins implementing the [event sourcing capability](/docs/plugins/plugin-api-reference/#event-sourcing-capability-api). 
 
 Examples of event source defined by offically-supported plugins are:
 
