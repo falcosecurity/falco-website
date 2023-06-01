@@ -78,6 +78,10 @@ For example, assume some plugin returned a sample of a metric in events, and the
 
 A question to ask when deciding what to put in an event is "if this were written to a `.scap` capture file and replayed, would this plugin return the same values for fields as it did when the events were first generated?".
 
+Alternatively, the plugin can leverage access to [state tables](/docs/plugins/plugin-api-reference/#state-tables-api) for extracting pieces of information not contained in an event. In such a case, the best practice is for the plugin to implement the [event parsing capability](/docs/plugins#event-parsing-capability) and update its internal state when parsing the events of a given data stream. Functional internal state must not be updated when extracting fields, if not in the case of simple cache updates oriented to performance optimizations. Then, when extracting fields the plugin can read information from both the event's payload and the state it has access to, either owned by itself or from another component registered in the framework.
+
+However, the fundamental question when handling plugin's state updates is always whether that state must be reproducible or not in case the event stream is replayed through a capture file. Given that in most case that is a requirement, the plugin must consider also implementing the [async events capability](/docs/plugins#async-events-capability) for being able to inject an async synthetic event in a live data stream, with the purpose of recording that and make it available for file capture. Those async events will potentially be replayed and the plugin must support parsing them in its event parsing capability functions to reproduce the state changes represented through them.
+
 ### Plugin Authoring Lifecycle
 
 Here are some considerations to keep in mind when releasing the initial version of a new plugin and when releasing updated versions of the plugin.
