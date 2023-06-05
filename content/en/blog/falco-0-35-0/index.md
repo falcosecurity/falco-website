@@ -30,9 +30,9 @@ We worked hard to implement all the remaining syscalls and behaviors to fill in 
 Remember, it is a CO-RE probe; it means it does not need to download any external artifact as it is already built inside Falco!  
 Moreover, it spots better performance compared to the old eBPF probe.  
 
-Finally, while delivering the new eBPF probe, Andrea also shipped a brand new drivers' testing framework, that is today used in libs CI to test each filler consistency between all 3 drivers!  
+Finally, while delivering the new eBPF probe, Andrea Terzolo also shipped a brand new drivers' testing framework, that is today used in libs CI to test each filler consistency between all 3 drivers!  
 I think this alone was worth all the effort!  
-On behalf of the whole community, thank you Andrea for your tremendous job!  
+On behalf of the whole community, thank you for your tremendous job!  
 
 Remember, the new probe has stricter kernel releases requirements; for more info, check out our [blog post](https://falco.org/blog/falco-modern-bpf/)!
 
@@ -57,7 +57,7 @@ Moreover, there are also options to enable CPU and memory usage metrics, interna
 All in all, this is a first, great step to improve Falco resources observability!  
 
 ## Falco images signing
-During this release cycle, we also ported Falco release CI from CircleCI to github actions.  
+During this release cycle, we (Luca Guerra and me) also ported Falco release CI from CircleCI to github actions.  
 Thanks to this big effort, we are now able to sign Falco images through `cosign`. Therefore, `falco`, `falco-driver-loader`, `falco-no-driver` are now signed.  
 Moreover, Falcoctl too has seen improvements in this area, therefore its images are now signed.  
 
@@ -67,7 +67,12 @@ We have now got a protocol to allow plugins to access libsinsp state; moreover, 
 Finally, they are also able to push a new async event to libsinsp main loop, to store data in state tables.  
 
 ## Test-infra revamp
-
+Let me once again start from the thanksgiving: Massimiliamo Giovagnoli and Samuele Cappellin did a tremendous job to improve our infra.  
+Prow is now lighter, quicker and less issue-prone. Multiple prow jobs were moved to github action to improve cluster efficiency; moreover, drivers building jobs are now much less frequently killed (basically never).  
+Also, arm64 drivers are now built on arm64 nodes, without using qemu, speeding up the build time.  
+At the same time, resources allocated to the cluster were enlarged, with autoscaling limits now set to 20 arm nodes and 20 x86 nodes.  
+Indeed, we can now deliver weekly new driver's artifacts much quicker than before!  
+Finally, the cluster does now expose grafana dashboards for monitoring purposes: https://monitoring.prow.falco.org/.  
 
 ## What's Next? 🔮
 
