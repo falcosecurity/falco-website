@@ -8,6 +8,7 @@ slug: extend-falco-inputs-with-a-plugin-the-basics
 > This post is is part of a series of articles about `How to develop Falco plugins`. It's adressed to anybody who would like to understand how plugins are written and want to contribute.
 > See other articles:
 > * [Extend Falco inputs by creating a Plugin: Register the plugin]({{< ref "/blog/extend-falco-inputs-with-a-plugin-register" >}})
+> * [Extend Falco inputs by creating a Plugin: Distribute the plugin]({{< ref "/blog/extend-falco-inputs-with-a-plugin-distribute" >}})
 
 
 > 2022/07/08 - Updates to reflect last features of the Go SDK
