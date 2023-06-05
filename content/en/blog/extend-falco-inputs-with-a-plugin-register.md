@@ -8,6 +8,7 @@ slug: extend-falco-inputs-with-a-plugin-register
 > This post is is part of a series of articles about `How to develop Falco plugins`. It's addressed to anybody who would like to understand how plugins are written and want to contribute.
 > See other articles:
 > * [Extend Falco inputs by creating a Plugin: the basics]({{< ref "/blog/extend-falco-inputs-with-a-plugin-the-basics" >}})
+> * [Extend Falco inputs by creating a Plugin: Distribute the plugin]({{< ref "/blog/extend-falco-inputs-with-a-plugin-distribute" >}})
 
 - [Introduction](#introduction)
 - [The registry](#the-registry)
