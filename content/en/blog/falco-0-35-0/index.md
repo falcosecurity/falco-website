@@ -37,7 +37,7 @@ On behalf of the whole community, thank you for your tremendous job!
 Remember, the new probe has stricter kernel releases requirements; for more info, check out our [blog post](https://falco.org/blog/falco-modern-bpf/)!
 
 ## Improved Falco performance
-Thanks to the collaborative effort from Melissa Kilby, Jason Dellaluce, Andrea and me, we were able to completely revamp the way that Falco detects syscalls that needs to be captured.  
+Thanks to the collaborative effort from Melissa Kilby, Jason Dellaluce, Andrea Terzolo and Federico Di Pierro, we were able to completely revamp the way that Falco detects syscalls that needs to be captured.  
 Basically, with the new **adaptive syscalls** feature, Falco will only enable syscalls that are needed to detect the ruleset it is being ran with.  
 It will also enable a bunch of syscalls that are needed for libsinsp internal state parsers, and that's it.  
 Consequently, the `-A` flag meaning was updated. By default, ie: without the flag, heavy syscalls (like I/O ones) won't be captured, even if the ruleset ships with them, and a warning is shown to the user.  
@@ -49,7 +49,7 @@ A related blog post will be published in the following days, stay tuned!
 Greatest thing you ask me? The huge libs refactor needed for this feature is the ground work for another highly requested feature: LSM and kprobes support!  
 
 ## Falco metrics
-Thanks to another collaborative effort lead by Melissa, Falco does now expose a new, experimental `metrics` feature.  
+Thanks to yet another collaborative effort lead by Melissa, Falco does now expose a new, experimental `metrics` feature.  
 It introduces a redesigned stats/metrics system, emitted as monotonic counters at predefined intervals (prometheus like).  
 There are multiple options available: one can enable the output of these metrics as internal metric shapshot rule, allowing them to be notified as outputs.  
 One can also choose to output metrics to a file, that is **not** rotated by Falco.  
@@ -57,9 +57,17 @@ Moreover, there are also options to enable CPU and memory usage metrics, interna
 All in all, this is a first, great step to improve Falco resources observability!  
 
 ## Falco images signing
-During this release cycle, we (Luca Guerra and me) also ported Falco release CI from CircleCI to github actions.  
-Thanks to this big effort, we are now able to sign Falco images through `cosign`. Therefore, `falco`, `falco-driver-loader`, `falco-no-driver` are now signed.  
-Moreover, Falcoctl too has seen improvements in this area, therefore its images are now signed.  
+Starting from 0.35.0, all Falco images that you can deploy in your cluster are now signed with [cosign 2.0](https://github.com/sigstore/cosign) in keyless mode.  
+This means that you can always verify that the Falco image you downloaded is an official Falco image coming from us, regardless of which registry you downloaded it from.  
+Moreover, you don't have to install or explicitly trust any public key for it to work. This is the magic of cosign in action :magic_wand: !
+So, how do you verify our brand new images? Install cosign 2 and run:
+```
+cosign verify docker.io/falcosecurity/falco:0.35.0 --certificate-oidc-issuer=https://token.actions.githubusercontent.com --certificate-identity-regexp=https://github.com/falcosecurity/falco/ --certificate-github-workflow-ref=refs/tags/0.35.0
+```
+And of course, you can do the same for all the deployable images including `falco`, `falco-driver-loader`, `falco-no-driver` and `falcoctl` (see its [repo](https://github.com/falcosecurity/falcoctl) for more details).  
+This wouldn't have been possible without a big effort from Luca Guerra and Federico Di Pierro to migrate our entire release pipeline from CircleCI to GitHub Actions.  
+The work is part of a larger effort from the Falco Supply Chain Working Group to bring all the Falco official artifacts up to date with the latest supply chain security standards.  
+Special thanks to Massimiliano Giovagnoli, Batuhan Apaydın and Carlos Panato for your help and expertise in this area!
 
 ## Plugins workstream
 Plugin API has seen quite a big effort, mainly from Jason, for further improvements.  
