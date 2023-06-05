@@ -12,7 +12,7 @@ We are thrilled to share this release and its goodies with the community.
 To read a more detailed account of the release, see [v0.35.0 in the changelog](https://github.com/falcosecurity/falco/blob/master/CHANGELOG.md#v0350).
 
 ## What’s new? 🆕
-During this release cycle, we had 90+ PRs on Falco and a grand total of 170+ PRs for libs 0.11.0 and 60+ for drivers 5.0.0.  
+During this release cycle, we had 90+ PRs on Falco and a grand total of 170+ PRs for libs 0.11.0 and 60+ for drivers 5.0.1.  
 Thank you to our maintainers and contributors, as this would not happen without your support, dedication, and contribution!
 
 ## Updates - TL;DR 🩳
