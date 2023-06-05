@@ -70,9 +70,15 @@ The work is part of a larger effort from the Falco Supply Chain Working Group to
 Special thanks to Massimiliano Giovagnoli, Batuhan Apaydın and Carlos Panato for your help and expertise in this area!
 
 ## Plugins workstream
-Plugin API has seen quite a big effort, mainly from Jason, for further improvements.  
-We have now got a protocol to allow plugins to access libsinsp state; moreover, they can now declare a state table that can be accessed by other plugins.  
-Finally, they are also able to push a new async event to libsinsp main loop, to store data in state tables.  
+The Plugin API has seen quite a big effort, mainly from Jason, for further improvements.
+
+The first big change is that the plugin framework is now totally compatible with all the events supported by the Falco libraries, including all system calls and kernel events! The plugin API now shares all the event definitions of libscap and allows plugins to both produce syscall events and extract fields from them. This feature has been on big demand since the first plugin system release ([#410](https://github.com/falcosecurity/libs/issues/410), [#992](https://github.com/falcosecurity/libs/issues/992)), and opens the door to countless new opportunities for Falco extensions.
+
+Second, plugins now have a standard way for managing and maintaining internal state. Up until now, plugins were only able to extract fields from the information available in the payloads of each event, thus being stateless components by definition. Now, plugins have defined protocol ([#991](https://github.com/falcosecurity/libs/issues/991)) for hooking into the event stream, reconstructing an internal state, and using it for extracting fields for Falco rules! Also, plugins can inject asynchronous metadata events in open data streams to notify about state transition and make them reproduceable when replaying capture files, just like it always happened with container-related events in the Falco libraries.
+
+Last, building on top of the previous two points, plugins are now able to communicate bidirectionally with the Falco libraries and access their internal state, both in read and write modes! For instance, this enables creating plugins that extract metadata fields from syscall event streams and that have access to all the thread information reconstructed by libsinsp, also with the opportunity of enriching it dynamically at runtime. The API surface also allows cross-plugin state access, in which a plugin is capable of interacting with the state defined by other plugins. We hope the developer community will get lots of fun out of this, the possibilities are endless.
+
+This big feature package required altering the plugin API in a way that is **incompatible** with the previous versions (the API version major has been bumped). As such, plugins released after Falco version 0.35 will not be compatible with Falco versions <= 0.34.1, and plugins released before version 0.35 will not be compatible with Falco from version 0.35 onwards. So, the **action required** for you is to **remember to also update all your plugins to the latest versions when updating Falco to v0.35**!
 
 ## Test-infra revamp
 Let me once again start from the thanksgiving: Massimiliamo Giovagnoli and Samuele Cappellin did a tremendous job to improve our infra.  
