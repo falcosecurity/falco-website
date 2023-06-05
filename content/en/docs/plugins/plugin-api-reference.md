@@ -227,30 +227,7 @@ This function is used to return a set of next events to the plugin framework, gi
 
 `*evts` should be updated to an allocated contiguous array of `ss_plugin_event` pointers. The memory for the structs array is owned by the plugin and should be held until the next call to `plugin_next_batch`. `*nevts` should be updated with the number of events returned.
 
-An event is represented by a `ss_plugin_event` struct, which observes the same format of the [libscap event block specification](#libscap-event-block-specification):
-
-```CPP
-typedef struct ss_plugin_event {
-    uint64_t ts;        /* timestamp, in nanoseconds from epoch */
-    uint64_t tid;       /* the tid of the thread that generated this event */
-    uint32_t len;       /* the event len, including the header */
-    uint16_t type;      /* the event type */
-    uint32_t nparams;   /* the number of parameters of the event */
-} ss_plugin_event;
-```
-
-An event is represented as a contiguous region of memory composed by a header struct and a list of parameters appended, in the form of:
-
-```
-| evt header | len param 1 (2B/4B) | ... | len param N (2B/4B) | data param 1 | ... | data param N |
-```
-
-The event header is composed of:
-- `ts`: the event timestamp, in nanoseconds since the epoch. Can be (uint64_t)-1, in which case the framework will automatically fill the event time with the current time.
-- `tid`: the tid of the thread that generated this event. Can be (uint64_t)-1 in case no thread is specified, such as when generating a plugin event (type code 322).
-- `len`: the event len, including the header
-- `type`: the code of the event, as per the ones supported by the [libscap specific](#libscap-event-block-specification). This dictates the number and kind of parameters, and whether the lenght is encoded as a 2 bytes or 4 bytes integer.
-- `nparams`: the number of parameters of the event
+An event is represented by a `ss_plugin_event` struct, which observes the same format of the [libscap event block specification](#libscap-event-block-specification).
 
 This function should return:
 
@@ -609,11 +586,29 @@ Async events encode a string representing their event name, which is used for ru
 
 ## Libscap Event Block Specification
 
-The event codes and their associated parameters supported by libscap are regulated by [the libscap's event table](https://github.com/falcosecurity/libs/blob/0.11.0/driver/event_table.c).
+Libscap, the Falcosecurity libs component responsible of event captures and control, proposes and supports a specification that regulates the way system, kernel, and plugin events are encoded. The same specification also defines the encoding of SCAP capture files, that can be used by the Falcosecurity libs to record and replay event streams. In the specification, events are defined as a specific block type of the [pcap-ng file format](https://pcapng.com/). All the event types and the associated parameters supported by libscap are defined by [the libscap's event table](https://github.com/falcosecurity/libs/blob/0.11.0/driver/event_table.c). The plugin API fully shares and observes the libscap's event definitions, and uses them for both reading and writing events from/to the framework.
 
-*Coming soon...*
+As for the libscap specific, an event is represented as a contiguous region of memory composed by a header and a list of parameters appended to it, in the form of:
 
-<!-- todo(jasondellaluce): document libscap specification for event definitions -->
+```CPP
+// | evt header | len param 1 (2B/4B) | ... | len param N (2B/4B) | data param 1 | ... | data param N |
+typedef struct ss_plugin_event {
+    uint64_t ts;        /* timestamp, in nanoseconds from epoch */
+    uint64_t tid;       /* the tid of the thread that generated this event */
+    uint32_t len;       /* the event len, including the header */
+    uint16_t type;      /* the event type */
+    uint32_t nparams;   /* the number of parameters of the event */
+} ss_plugin_event;
+```
+
+The event header is composed of:
+- `ts`: the event timestamp, in nanoseconds since the epoch. Can be (uint64_t)-1, in which case the framework will automatically fill the event time with the current time.
+- `tid`: the tid of the thread that generated this event. Can be (uint64_t)-1 in case no thread is specified, such as when generating a plugin event (type code 322).
+- `len`: the event len, including the header
+- `type`: the code of the event, as per the ones supported by the [libscap specific](#libscap-event-block-specification). This dictates the number and kind of parameters, and whether the lenght is encoded as a 2 bytes or 4 bytes integer.
+- `nparams`: the number of parameters of the event
+
+*Further and more formal documentation will be available in the future...*
 
 ## State Tables API
 
