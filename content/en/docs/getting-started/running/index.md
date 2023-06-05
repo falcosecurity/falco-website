@@ -273,7 +273,14 @@ docker run --rm -i -t \
 
 #### Least privileged
 
-The following capabilities should be enough to run Falco:
+The following capabilities should be enough to run Falco with the Modern eBPF probe:
+
+- `CAP_SYS_PTRACE`
+- `CAP_SYS_RESOURCE`
+- `CAP_BPF`
+- `CAP_PERFMON`
+
+Here we have the docker command to run with the modern probe.
 
 ```bash
 docker run --rm -i -t \
@@ -286,7 +293,7 @@ docker run --rm -i -t \
            falcosecurity/falco-no-driver:latest falco --modern-bpf
 ```
 
-> __Note__: we cannot use `CAP_BPF` and `CAP_PERFMON` since [docker doesn't support](https://github.com/moby/moby/pull/41563) them yet
+> __Note__: in the command we use `CAP_SYS_ADMIN` because [docker doesn't support](https://github.com/moby/moby/pull/41563) `CAP_BPF` and `CAP_PERFMON` yet
 
 ## Rules validation
 

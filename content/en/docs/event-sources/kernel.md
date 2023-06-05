@@ -76,7 +76,7 @@ The new probe is highly customizable, you are not obliged to use one buffer [for
 
 ### Requirements
 
-The modern BPF probe has no strict requirements! Usually, a kernel version `>=5.8` is enough but there are cases in which the required features could also be backported into older kernels, so it wouldn't be completely fair to define `5.8` as the first supported version. The 2 main required features are:
+The modern BPF probe doesn't require a specific kernel version. Usually, all versions `>=5.8` are enough but there are cases in which the required features could also be backported into older kernels, so it wouldn't be completely fair to define `5.8` as the first supported version. The 2 main required features are:
 
 1. [BPF ring buffer](https://www.kernel.org/doc/html/next/bpf/ringbuf.html) support.
 2. A kernel that exposes [BTF](https://docs.kernel.org/bpf/btf.html).
