@@ -167,6 +167,9 @@ To run Falco in least privileged mode with the eBPF driver, we list all the requ
         -v /etc:/host/etc \
         -v /proc:/host/proc:ro \
         falcosecurity/falco-no-driver:latest
+
+	# Please remember to add '-v /sys/kernel/debug:/sys/kernel/debug:ro \' to the above docker command
+	# if you are running a kernel version < 4.14
     ```
 
 {{% pageinfo color="warning" %}}
@@ -209,6 +212,9 @@ docker run --rm -i -t \
     -v /usr:/host/usr:ro \
     -v /etc:/host/etc:ro \
     falcosecurity/falco:latest
+
+# Please remember to add '-v /sys/kernel/debug:/sys/kernel/debug:ro \' to the above docker command
+# if you are running a kernel version < 4.14
 ```
 
 It is also possible to use `falco-no-driver` and `falco-driver-loader` images in fully privileged mode.
