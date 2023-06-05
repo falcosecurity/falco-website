@@ -21,7 +21,7 @@ In release v0.35.0 the community focused on addressing the following key feature
 - Improving Falco performance, allowing to perfectly tailoring Falco to one's needs
 - New Falco metrics
 - Falco images signing
-- Improving plugins SDK making the ground for the next big things :tm:
+- Improving plugins SDK making the ground for the next big things
 - test-infra revamp
 
 ## Modern eBPF probe 👨‍🚀
@@ -59,7 +59,7 @@ All in all, this is a first, great step to improve Falco resources observability
 ## Falco images signing
 Starting from 0.35.0, all Falco images that you can deploy in your cluster are now signed with [cosign 2.0](https://github.com/sigstore/cosign) in keyless mode.  
 This means that you can always verify that the Falco image you downloaded is an official Falco image coming from us, regardless of which registry you downloaded it from.  
-Moreover, you don't have to install or explicitly trust any public key for it to work. This is the magic of cosign in action :magic_wand: !
+Moreover, you don't have to install or explicitly trust any public key for it to work. This is the magic of cosign in action!
 So, how do you verify our brand new images? Install cosign 2 and run:
 ```
 cosign verify docker.io/falcosecurity/falco:0.35.0 --certificate-oidc-issuer=https://token.actions.githubusercontent.com --certificate-identity-regexp=https://github.com/falcosecurity/falco/ --certificate-github-workflow-ref=refs/tags/0.35.0
@@ -102,7 +102,7 @@ It’s time to try out the new release! Here are some pointers for getting start
 * [Linux binary package](/docs/getting-started/installation/#linux-binary)
 
 The community is active on many topics and we are thrilled for the next workstreams!  
-We hope to deliver great features and many stability fixes once again during the next release cycle :rocket:
+We hope to deliver great features and many stability fixes once again during the next release cycle!
 
 We will revisit and improve libsinsp API, for a more coherent developer experience.
 
