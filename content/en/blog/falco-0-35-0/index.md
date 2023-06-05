@@ -94,7 +94,7 @@ We will revisit and improve libsinsp API, for a more coherent developer experien
 
 Finally, LSM and kprobes are going to get implemented, and that means...security goodies!
 
-As i shared, plugin API has seen huge improvements; we expect new plugins using the new features very soon!
+As I shared, plugin API has seen huge improvements; we expect new plugins using the new features very soon!
 
 Fixes, fixes and also fixes everywhere; above all, we will surely work to improve thread tables and process trees inconsistencies; that's a huge topic and we plan to tackle it in multiple ways!  
 
