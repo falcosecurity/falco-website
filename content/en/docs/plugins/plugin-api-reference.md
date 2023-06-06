@@ -20,7 +20,7 @@ The C header files [plugin_api.h](hhttps://github.com/falcosecurity/libs/blob/0.
 
 Remember, however, that from the perspective of the plugin, each function name has a prefix `plugin_` e.g. `plugin_get_required_api_version`, `plugin_get_name`, etc.
 
-Since [Falco v0.33.0](../../../blog/falco-0-33-0), some function symbols of **the plugin API started supporting concurrent invocations** from multiple threads. If not explicitly specified in each symbol's API reference, the plugin API assumes that functions are invoked always from the same thread with no concurrency.
+Since [Falco v0.33.0](/blog/falco-0-33-0), some function symbols of **the plugin API started supporting concurrent invocations** from multiple threads. If not explicitly specified in each symbol's API reference, the plugin API assumes that functions are invoked always from the same thread with no concurrency.
 
 ### Plugin API Versioning
 
@@ -169,7 +169,7 @@ Writing the dummy enum value `SS_PLUGIN_SCHEMA_NONE` inside `schema_type` is equ
 uint32_t plugin_get_id()    [Required: varies]
 ```
 
-This should return the [event ID](../../plugins#plugin-event-ids) allocated to your plugin. During development and before receiving an official event ID, you can use the "Test" value of 999.
+This should return the [event ID](/docs/plugins#plugin-event-ids) allocated to your plugin. During development and before receiving an official event ID, you can use the "Test" value of 999.
 
 This function is required if `get_event_source` is defined and returns a non-empty string, otherwise it is considered optional. Returning zero is equivalent to not implementing the function. If the plugin has a non-zero ID and a non-empty event source, then its `next_batch` function is allowed to only return events of plugin type (code 322) with its own plugin ID and event source.
 
@@ -179,7 +179,7 @@ This function is required if `get_event_source` is defined and returns a non-emp
 const char* plugin_get_event_source()   [Required: varies]
 ```
 
-This function returns a C string, with memory owned by the plugin, containing the plugin's [event source](../../plugins/#plugin-event-sources-and-interoperability). This event source is used for:
+This function returns a C string, with memory owned by the plugin, containing the plugin's [event source](/docs/plugins/#plugin-event-sources-and-interoperability). This event source is used for:
 
 * Associating Falco rules with plugin events--A Falco rule with a `source: gizmo` property will run on all events returned by the gizmo plugin's `next_batch` function.
 * Linking together plugins with field extraction capability and plugins with event sourcing capability. The first can list a given event source like `gizmo` in its `get_extract_event_sources` function, and they will get an opportunity to extract fields from all events returned by the "gizmo" plugin.
@@ -612,6 +612,192 @@ The event header is composed of:
 
 ## State Tables API
 
-*Coming soon...*
+In the plugin framework, **state tables** are simple key-value mappings representing a piece of state owned by a component of the Falcosecurity libs or defined by a plugin. The plugin API declares formal abstract definitions for state tables and provides means for plugins to access the state owned by other components of the framework, define and own their own state, and make it accessible externally. In this context, a component of the framework is an abstract entity that could represent a given piece of machinery within the Falco libraries or any other plugin loaded at runtime.
 
-<!-- todo(jasondellaluce): document state access API -->
+### Basic Concepts
+
+A state table is a key-value map that can be used for storing pieces of state within the plugin framework. State tables are an abstract concept, and the plugin API does not enforce any specific implementation. Instead, the API specifies interface boundaries in the form of C virtual tables of methods representing the behavior of state tables. This allows the plugin API to remain flexible, abstract, and multi-language by nature. The model by which state tables work is defined by the notions of ownership, registration, and discovery.
+
+Every state table must have an owner, which is responsible of managing the table's memory and of implementing all the functions of the state tables API. Owners can either plugins or any of the other actors that are part of the Falcosecurity libraries. For example, libsinsp is the ower of the `threads` table, which is a key-value store where the key is a thread ID of a Linux machine and the value is a set of information describing a Linux thread. Plugins can access the `threads` table of libsinsp for retrieving thread information given a thread ID, reading and writing the info fields, extending the info with additional metadata, and do much more. However, plugins are never responsible of managing the memory and the implementation of the `threads` table, as it is owned by libsinsp only. Instead, plugins can do the same by defining their own stateful components and implementing the required interface functions to register them as "state tables". Stateful components must be registered in the framework in order to be considered "state tables". Libsinsp, which is owns the plugins loaded at runtime, also holds a "table registry" that is the source of thruth for all the state tables known at runtime. Once a state table is registered in the table registry, it is discoverable by all the actors and plugins running in the context of the same Falcosecurity libs instance.
+
+The way plugins can interact with state tables is through discovery and the usage of accessors. At initialization time (in the `init` function), plugins are provided interface functions that allow them to list all the state tables available at runtime and obtaining "accessors" for later usage. An *accessor* is an opaque pointers obtained at initialization time and that can be used later (e.g. when parsing an event or when extracting a field) for accessing a given table or the fields of its entries. Considering the example of the `threads` table, in its `init` function a given plugin could obtain an accessor to the table and to some of the fields of each thread info (such as the `pid` or the `comm`) and store them in its plugin state. Later, when extracting a field, the same plugin would be available to query the `threads` table for a given thread ID (perhaps obtained by reading the event payload of a syscall) by using the table accessor, and then reading the `pid` of the obtained thread by using the field accessor.
+
+Inherently, the plugin API also enable plugins to define their own state tables and register them in the table registry. Once that's done, the registered state table will be visible to all other plugins just like the `threads` table, without knowing nor caring about which actor is owning it. The state table owned by the plugin will be discoverable through the table registry by the plugin iself too. However, plugins owning a given table are not forced to go through the state tables interface in order to operate on it (conversely, this could also be the less efficient choice). Plugins can implement their own state as they prefer, whereas the purpose of the state tables interface is solely to make that state available to other actors in the framework. Coherently, stable owners can also decide "how much" of a table they want the other components to have visibility of. For example, libsinsp can access more info and functionalities on the `threads` table than what it makes available through the state table interface, which is also natural considering that its implementation is hidden and can be arbitrary.
+
+The set of state tables made available by a given plugin or Falcosecurity libs actor, and the set of fields and operations available for each of those table, **take part of the semantic versioned UX contract of that plugin or actor**. For example, removing a given table or table field from libsinsp can be considered a breaking change that must reflected by the version number of the Falcosecurity libs. The same applies for the version of each plugin and the state tables declared by them.
+
+### Access and Consistency
+
+State tables are dynamic structures. Each table is defined by a given key type, which can be any of the types supported by the `ss_plugin_state_type` enumeration. Then, the each key-value mappings contained in the table are referred to as *table entries*. Each entry has a specific set of information fields, which is shared across all the entries of the same table. Each field is named and has a specific type. The set of fields for the entries of a given table is defined dynamically at runtime and can be extended by different actors. For example, libsinsp populates the `threads` table with a given set of information fields for each table's entry (representing a given thread info), and plugins can read and write the value of those fields by obtaining accessors for those. However, plugins also have the opportunity of defining new fields inside the `threads` table, with a new unique name and a specific type, and libsinsp will be responsible of hosting that new piece of information for each thread and make it available to all actors in the framework. The same can happen for tables defined by any plugin.
+
+Given that state tables can get modified by different actors at runtime, there has to be a deterministic disambiguation about consistency of table edits and visibility of those changes. The plugin API implements this by guaranteeting a deterministic and non-changing total ordering of all the actors in the system. Considering a given ordering, an actor will have visibility only over the changes applied by actors coming before it in the given ordering. In the Falcosecurity libs and the plugin framework, the guaranteed order is the one by which plugins are loaded at runtime. The first actor in the order is always libsinsp itself, which means that all plugins will always see all the table modifications authored by libsinsp at a given point in time. Then, plugins are ordered by following their loading order at runtime. This means that if Plugin B is loaded in Falco after Plugin A, then Plugin B will see all the table changes performed by Plugin A at runtime, but not the countrary (however, they'll both have visibility over the changes performed by libsinsp). As such [the plugins loading order in Falco](/docs/plugins/usage/#loading-plugins-in-falco) can be functionally relevant.
+
+### Obtaining Accessors
+
+Before performing any operation over state tables, plugins must first obtain accessors for each of them. This can happen only at initialization time through a vtable that is passed only to the `init` plugin function. The vtable allows plugins to discover all the tables registered in the framework, get accessors for them, and [register their own tables](#registering-state-tables). Once an accessor is obtained, plugins must maintain it up until they are destroyed, and use it during functions related to specific capabilities (e.g. field extraction, event parsing). The vtable passed to `init` is reported below.
+
+```CPP
+// Vtable for controlling and the fields for the entries of a state table.
+// This allows discovering the fields available in the table, defining new ones,
+// and obtaining accessors usable at runtime for reading and writing the fields'
+// data from each entry of a given state table.
+typedef struct
+{
+	// Returns a pointer to an array containing info about all the fields
+	// available in the entries of the table. nfields will be filled with the number
+	// of elements of the returned array. The array's memory is owned by the
+	// tables's owner. Returns NULL in case of error.
+	ss_plugin_table_fieldinfo* (*list_table_fields)(ss_plugin_table_t* t, uint32_t* nfields);
+	//
+	// Returns an opaque pointer representing an accessor to a data field
+	// present in all entries of the table, given its name and type.
+	// This can later be used for read and write operations for all entries of
+	// the table. The pointer is owned by the table's owner.
+	// Returns NULL in case of issues (including when the field is not defined
+	// or it has a type different than the specified one).
+	ss_plugin_table_field_t* (*get_table_field)(ss_plugin_table_t* t, const char* name, ss_plugin_state_type data_type);
+	//
+	// Defines a new field in the table given its name and data type,
+	// which will then be available in all entries contained in the table.
+	// Returns an opaque pointer representing an accessor to the newly-defined
+	// field. This can later be used for read and write operations for all entries of
+	// the table. The pointer is owned by the table's owner.
+	// Returns NULL in case of issues (including when a field is defined multiple
+	// times with different data types).
+	ss_plugin_table_field_t* (*add_table_field)(ss_plugin_table_t* t, const char* name, ss_plugin_state_type data_type);
+} ss_plugin_table_fields_vtable;
+
+typedef struct
+{
+	// Returns a pointer to an array containing info about all the tables
+	// registered in the plugin's owner. ntables will be filled with the number
+	// of elements of the returned array. The array's memory is owned by the
+	// plugin's owner. Returns NULL in case of error.
+	ss_plugin_table_info* (*list_tables)(ss_plugin_owner_t* o, uint32_t* ntables);
+	//
+	// Returns an opaque accessor to a state table registered in the plugin's
+	// owner, given its name and key type. Returns NULL if an case of error.
+	ss_plugin_table_t* (*get_table)(ss_plugin_owner_t* o, const char* name, ss_plugin_state_type key_type);
+	//
+	// Registers a new state table in the plugin's owner. Returns
+	// SS_PLUGIN_SUCCESS in case of success, and SS_PLUGIN_FAILURE otherwise.
+	// The state table is owned by the plugin itself, and the input will be used
+	// by other actors of the plugin's owner to interact with the state table.
+	ss_plugin_rc (*add_table)(ss_plugin_owner_t* o, const ss_plugin_table_input* in);
+	//
+	// Vtable for controlling operations related to fields on the state tables
+	// registeted in the plugin's owner.
+	ss_plugin_table_fields_vtable fields;
+} ss_plugin_init_tables_input;
+```
+
+### Accessing Tables
+
+After obtaining accessors for all the tables and fields a given plugin is interested into, they can be used for performong operations over tables at runtime. Table operations are splitted in the two "reading" and "writing" categories, each having their own vtable and set of functions. The "reader" and the "writer" vtables are passed to the interested plugin functions for different capabilities, depending on their scope. For example, the `extract_fields` function of the field extraction capability gets passed the state tables reader vtable, whereas the `parse_event` function of the event parsing capability has access to both the reader and writer vtables. This enforces users to only apply state tables modifications at event parsing time, leaving field extraction a "stateless" code path. The reader and writer vtables and their respective functions are reported below.
+
+```CPP
+// Vtable for controlling a state table for read operations.
+typedef struct
+{
+	// Returns the table's name, or NULL in case of error.
+	// The returned pointer is owned by the table's owner.
+	const char*	(*get_table_name)(ss_plugin_table_t* t);
+	//
+	// Returns the number of entries in the table, or ((uint64_t) -1) in
+	// case of error.
+	uint64_t (*get_table_size)(ss_plugin_table_t* t);
+	//
+	// Returns an opaque pointer to an entry present in the table at the given
+	// key, or NULL in case of issues (including if no entry is found at the
+	// given key). The returned pointer is owned by the table's owner.
+	ss_plugin_table_entry_t* (*get_table_entry)(ss_plugin_table_t* t, const ss_plugin_state_data* key);
+	//
+	// Reads the value of an entry field from a table's entry.
+	// The field accessor must be obtainied during plugin_init().
+	// The read value is stored in the "out" parameter.
+	// Returns SS_PLUGIN_SUCCESS if successful, and SS_PLUGIN_FAILURE otherwise.
+	ss_plugin_rc (*read_entry_field)(ss_plugin_table_t* t, ss_plugin_table_entry_t* e, const ss_plugin_table_field_t* f, ss_plugin_state_data* out);
+} ss_plugin_table_reader_vtable;
+
+// Vtable for controlling a state table for write operations.
+typedef struct
+{
+	// Erases all the entries of the table.
+	// Returns SS_PLUGIN_SUCCESS if successful, and SS_PLUGIN_FAILURE otherwise.
+	ss_plugin_rc (*clear_table)(ss_plugin_table_t* t);
+	//
+	// Erases an entry from a table at the given key.
+	// Returns SS_PLUGIN_SUCCESS if successful, and SS_PLUGIN_FAILURE otherwise.
+	ss_plugin_rc (*erase_table_entry)(ss_plugin_table_t* t, const ss_plugin_state_data* key);
+	//
+	// Creates a new entry that can later be added to the same table it was
+	// created from. The entry is represented as an opaque pointer owned
+	// by the plugin. Once obtained, the plugin can either add the entry
+	// to the table through add_table_entry(), or destroy it throgh
+	// destroy_table_entry(). Returns an opaque pointer to the newly-created
+	// entry, or NULL in case of error.
+	ss_plugin_table_entry_t* (*create_table_entry)(ss_plugin_table_t* t);
+	//
+	// Destroys a table entry obtained by from previous invocation of create_table_entry().
+	void (*destroy_table_entry)(ss_plugin_table_t* t, ss_plugin_table_entry_t* e);
+	//
+	// Adds a new entry to a table obtained by from previous invocation of
+	// create_table_entry() on the same table. The entry is inserted in the table
+	// with the given key. If another entry is already present with the same key,
+	// it gets replaced. After insertion, table will be come the owner of the
+	// entry's pointer. Returns an opaque pointer to the newly-added table's entry,
+	// or NULL in case of error.
+	ss_plugin_table_entry_t* (*add_table_entry)(ss_plugin_table_t* t, const ss_plugin_state_data* key, ss_plugin_table_entry_t* entry);
+	//
+	// Updates a table's entry by writing a value for one of its fields.
+	// The field accessor must be obtainied during plugin_init().
+	// The written value is read from the "in" parameter.
+	// Returns SS_PLUGIN_SUCCESS if successful, and SS_PLUGIN_FAILURE otherwise.
+	ss_plugin_rc (*write_entry_field)(ss_plugin_table_t* t, ss_plugin_table_entry_t* e, const ss_plugin_table_field_t* f, const ss_plugin_state_data* in);
+} ss_plugin_table_writer_vtable;
+```
+
+### Registering State Tables
+
+On top of accessing tables owned by the framework or other plugins, each plugin can also make part (or all) of its state available to other actors in the framework in the form of state tables. In this case, the plugin is responsible of providing all the necessary vtables and their respective functions, just like the Falcosecurity libraries do for the tables owned by them (e.g. the `threads` table). Plugins have total freedom towards how the table is actually implemented, as long as they respect the API functions in the vtables and they own all the memory related to the table and its entries. Plugins also have the freedom of not supporting some of the functions of the vtables, however they are not allowed to pass NULL-pointing function references. The struct by which plugins register their state table and the related vtable functions is reported below.
+
+```CPP
+// Plugin-provided input passed to the add_table() callback of
+// ss_plugin_init_tables_input, that can be used by the plugin to inform its
+// owner about one of the state tables owned by the plugin. The plugin
+// is responsible of owning all the memory pointed by this struct and
+// of implementing all the API functions. These will be used by other
+// plugins loaded by the falcosecurity libraries to interact with the state
+// of a given plugin to implement cross-plugin state access.
+typedef struct
+{
+	// The name of the state table.
+	const char* name;
+	//
+	// The type of the sta table's key.
+	ss_plugin_state_type key_type;
+	//
+	// A non-NULL opaque pointer to the state table.
+	// This will be passed as parameters to all the callbacks defined below.
+	ss_plugin_table_t* table;
+	//
+	// Vtable for controlling read operations on the state table.
+	ss_plugin_table_reader_vtable reader;
+	//
+	// Vtable for controlling write operations on the state table.
+	ss_plugin_table_writer_vtable writer;
+	//
+	// Vtable for controlling operations related to fields on the state table.
+	ss_plugin_table_fields_vtable fields;
+} ss_plugin_table_input;
+```
+
+### Thread-safety and Reproducibility
+
+State access is not thread-safe. Operations related to either discovery, reading, or writing, must all be executed in the synchronous context and within the thread in which the framework invokes the given plugin function that is capable of accessing tables. For example, plugins are only allowed to read from a table during the exection of `extract_fields` or `parse_event`, but they are not allowed to launch an asynchronous thread that reuses the same accessors to read from a table after any of those functions have returned.
+
+Also, the previous sections imply that state tables can be operated on during the execution of varios plugin functions, but that however only the `parse_event` function of the event parsing capability can perform write operations. This is by purpose and design due to the architecture of the Falcosecurity libraries themselves.
+
+There may be use cases in which state updates are the result of some asynchrnous job and computation. For example, the Falcosecurity libraries implement the container metadata enrichment support by connecting to one or more container runtime sockets and fetching information from them asynchronously from a separate thread, outside of the main event processing loop. In those cases, state updates must still happen synchronously. The strategy provided by the plugin framework is the [async events capability](/docs/plugins/plugin-api-reference/#async-events-capability-api). With that, plugins are provided with a thread-safe callback that they can use to inject asynchronous events in the currently-open event stream, and the framework will guarantee those events to be later received by functions such as `parse_event` or `extract_fields` just like any other events. This massaging-like communication mode is the only way by which plugins are allowed to safely use asynchronously-obtained information to perform state updates and field extraction.
+
+An additional effect of injecting asynchronous events in an event stream is that they can so be recorder in SCAP capture files, and thus being reproducible when reading events later from that capture files. By having the asynchronous information recorded in the event stream, the event parsing and field extraction plugin functions will be able to work just like in live capture mode by also making all the state transitions reproducible and deterministic.
