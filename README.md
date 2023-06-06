@@ -1,5 +1,7 @@
 # falco-website
 
+[![Falco Core Repository](https://github.com/falcosecurity/evolution/blob/main/repos/badges/falco-core-blue.svg)](https://github.com/falcosecurity/evolution/blob/main/REPOSITORIES.md#core-scope) [![Stable](https://img.shields.io/badge/status-stable-brightgreen?style=for-the-badge)](https://github.com/falcosecurity/evolution/blob/main/REPOSITORIES.md#stable) [![License](https://img.shields.io/github/license/falcosecurity/falco-website?style=for-the-badge)](./LICENSE)
+
 ## Contributing logos
 
 In order to contribute a logo you must meet one of the following adopter types.
