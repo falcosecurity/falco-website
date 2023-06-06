@@ -1,20 +1,4 @@
 
-- title: "Falco on Tour: Virtual"
-  start: "2023-05-23T09:00:00-0700"
-  end: "2023-05-23T10:00:00-0700"
-  timezone: America/Los_Angeles
-  timezoneName: PDT
-  location: online
-  type: workshop
-  description: "Up & Running with Runtime Security Workshop"
-  url: https://www.aicamp.ai/event/eventdetails/W2023052309?utm_source=falconcom0411
-  schedule:
-    - start: "2023-05-23T09:00:00-0700"
-      time:
-        - start: "2023-05-23T09:00:00-0700"
-          end: "2023-05-23T10:00:00-0700"
-          content: <a href="https://www.aicamp.ai/event/eventdetails/W2023052309?utm_source=falconcom0411" target="_blank">Up & Running with Runtime Security Workshop</a><br>online<br>
-
 - title: "Falco on Tour: Dallas (Special Guest, Chainguard's Wolfi!)"
   start: "2023-06-20T09:00:00-0500"
   end: "2023-06-20T16:00:00-0500"
@@ -110,6 +94,22 @@
         - start: "2023-06-20T15:00:00+0100"
           end: "2023-06-20T19:00:00+0100"
           content: <a href="https://www.eventbrite.com/e/627321715137" target="_blank">Up & Running with Runtime Security Workshop</a><br>Dublin, Ireland<br>
+
+- title: "Falco on Tour: Bellevue"
+  start: "2023-06-26T09:00:00-0700"
+  end: "2023-06-26T14:00:00-0700"
+  timezone: America/Los_Angeles
+  timezoneName: PDT
+  location: Bellevue, WA
+  type: workshop
+  description: "Up & Running with Runtime Security Workshop"
+  url: https://www.eventbrite.com/e/falco-on-tour-bellevue-tickets-638165669697?aff=oddtdtcreator
+  schedule:
+    - start: "2023-06-26T09:00:00-0700"
+      time:
+        - start: "2023-06-26T09:00:00-0700"
+          end: "2023-06-26T14:00:00-0700"
+          content: <a href="https://www.eventbrite.com/e/falco-on-tour-bellevue-tickets-638165669697?aff=oddtdtcreator" target="_blank">Up & Running with Runtime Security Workshop</a><br>Bellevue, WA<br>
 
 - title: "Falco on Tour: Seattle"
   start: "2023-06-27T14:00:00-0700"
