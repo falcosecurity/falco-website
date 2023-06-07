@@ -21,6 +21,9 @@ In release v0.35.0,  we focused on addressing the following key features:
 - Improving plugins SDK
 - Test infra revamp
 
+{{< youtube-80 id="wGwXiYYUgAs" title="What's New in Falco 0.35" >}}
+For more information check out the 0.35 [overview video[(https://www.youtube.com/watch?v=wGwXiYYUgAs) on YouTube
+
 ## Modern eBPF probe 👨‍🚀
 
 The new, modern eBPF probe was released as experimental during the 0.34.0 release cycle.  Since then we worked hard to implement all the remaining syscalls and behaviors, and now the same eBPF probe has left experimental status.
