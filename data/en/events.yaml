@@ -4,7 +4,7 @@
   end: "2023-06-20T16:00:00-0500"
   timezone: America/Chicago
   timezoneName: CDT
-  location: Dallas, TX at Topgolf!
+  location: Dallas, TX
   type: workshop
   description: "Up & Running with Runtime Security Workshop"
   url: https://www.eventbrite.com/e/624750544697
@@ -13,14 +13,14 @@
       time:
         - start: "2023-06-20T09:00:00-0500"
           end: "2023-06-20T16:00:00-0500"
-          content: <a href="https://www.eventbrite.com/e/624750544697" target="_blank">Up & Running with Runtime Security Workshop</a><br>Dallas, TX at Topgolf!<br>
+          content: <a href="https://www.eventbrite.com/e/624750544697" target="_blank">Up & Running with Runtime Security Workshop</a><br>Dallas, TX<br>
 
 - title: "Falco on Tour: Paris"
   start: "2023-06-20T09:00:00+0200"
   end: "2023-06-20T13:30:00+0200"
   timezone: Europe/Paris
   timezoneName: CEST
-  location: Paris, France at Paris Opera Ambassador Hotel
+  location: Paris, France
   type: workshop
   description: "Up & Running with Runtime Security Workshop"
   url: https://www.eventbrite.com/e/falco-on-tour-paris-tickets-627315155517
@@ -29,14 +29,14 @@
       time:
         - start: "2023-06-20T09:00:00+0200"
           end: "2023-06-20T13:30:00+0200"
-          content: <a href="https://www.eventbrite.com/e/falco-on-tour-paris-tickets-627315155517" target="_blank">Up & Running with Runtime Security Workshop</a><br>Paris, France at Paris Opera Ambassador Hotel<br>
+          content: <a href="https://www.eventbrite.com/e/falco-on-tour-paris-tickets-627315155517" target="_blank">Up & Running with Runtime Security Workshop</a><br>Paris, France<br>
 
 - title: "Falco on Tour: Austin"
   start: "2023-06-21T10:00:00-0500"
   end: "2023-06-21T14:30:00-0500"
   timezone: America/Chicago
   timezoneName: CDT
-  location: Austin, TX at Topgolf!
+  location: Austin, TX
   type: workshop
   description: "Up & Running with Runtime Security Workshop"
   url: https://www.eventbrite.com/e/627275316357
@@ -45,14 +45,14 @@
       time:
         - start: "2023-06-21T10:00:00-0500"
           end: "2023-06-21T14:30:00-0500"
-          content: <a href="https://www.eventbrite.com/e/627275316357" target="_blank">Up & Running with Runtime Security Workshop</a><br>Austin, TX at Topgolf!<br>
+          content: <a href="https://www.eventbrite.com/e/627275316357" target="_blank">Up & Running with Runtime Security Workshop</a><br>Austin, TX<br>
 
 - title: "Falco on Tour: Denver (Special Guest, Chainguard's Wolfi!)"
   start: "2023-06-22T10:00:00-0600"
   end: "2023-06-22T16:00:00-0600"
   timezone: America/Denver
   timezoneName: MDT
-  location: Denver, CO at Shift Workspaces!
+  location: Denver, CO
   type: workshop
   description: "Up & Running with Runtime Security Workshop"
   url: https://www.eventbrite.com/e/627307342147
@@ -61,7 +61,7 @@
       time:
         - start: "2023-06-22T10:00:00-0600"
           end: "2023-06-22T16:00:00-0600"
-          content: <a href="https://www.eventbrite.com/e/627307342147" target="_blank">Up & Running with Runtime Security Workshop</a><br>Denver, CO at Shift Workspaces!<br>
+          content: <a href="https://www.eventbrite.com/e/627307342147" target="_blank">Up & Running with Runtime Security Workshop</a><br>Denver, CO<br>
 
 - title: "Falco on Tour: London"
   start: "2023-06-22T16:00:00+0100"
@@ -116,7 +116,7 @@
   end: "2023-06-27T17:30:00-0700"
   timezone: America/Los_Angeles
   timezoneName: PDT
-  location: Seattle, WA at SPIN!
+  location: Seattle, WA
   type: workshop
   description: "Up & Running with Runtime Security Workshop"
   url: https://www.eventbrite.com/e/627344563477
@@ -125,7 +125,7 @@
       time:
         - start: "2023-06-27T14:00:00-0700"
           end: "2023-06-27T17:30:00-0700"
-          content: <a href="https://www.eventbrite.com/e/627344563477" target="_blank">Up & Running with Runtime Security Workshop</a><br>Seattle, WA at SPIN!<br>
+          content: <a href="https://www.eventbrite.com/e/627344563477" target="_blank">Up & Running with Runtime Security Workshop</a><br>Seattle, WA<br>
 
 - title: "Falco on Tour: Virtual"
   start: "2023-06-27T09:00:00-0700"
