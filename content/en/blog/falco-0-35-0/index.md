@@ -3,6 +3,7 @@ title: Falco 0.35.0
 date: 2023-06-07
 author: Federico Di Pierro, Andrea Terzolo, Lorenzo Susini
 slug: falco-0-35-0
+tags: ["Falco","Release"]
 ---
 
 Dear Community, today we are delighted to announce the release of Falco 0.35.0!
