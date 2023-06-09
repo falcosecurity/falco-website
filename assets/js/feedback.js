@@ -10,24 +10,14 @@
     yesButton.disabled = true;
     noButton.disabled = true;
   };
+
   const sendFeedback = (value) => {
-    if (typeof ga !== "function") return;
-    const args = {
-      command: "send",
-      hitType: "event",
-      category: "Helpful",
-      action: "click",
-      label: window.location.pathname,
-      value: value,
-    };
-    ga(
-      args.command,
-      args.hitType,
-      args.category,
-      args.action,
-      args.label,
-      args.value
-    );
+    if (typeof gtag !== 'function') return;
+    gtag('event', 'page_helpful', {
+      'event_category': 'Helpful',
+      'event_label': window.location.pathname,
+      'value': value
+    });
   };
 
   if (yesButton)
@@ -36,7 +26,7 @@
       disableButtons();
       sendFeedback(1);
     });
-    
+
   if (noButton)
     noButton.addEventListener("click", () => {
       noResponse.classList.remove("d-none");

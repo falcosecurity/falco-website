@@ -129,7 +129,7 @@ anchor = "smart"
 [services.googleAnalytics]
 # Fake GA ID so the Docsy feedback feature remains enabled.
 # The actual ID is set via Netlify.
-id = "UA-00000000-00"
+id = "UA-00000000-0"
 
 # Additional menu items
 
