@@ -42,8 +42,11 @@ Name | Type | Description
 `evt.reltime` | RELTIME | number of nanoseconds from the beginning of the capture.
 `evt.reltime.s` | RELTIME | number of seconds from the beginning of the capture.
 `evt.reltime.ns` | RELTIME | fractional part (in ns) of the time from the beginning of the capture.
-`evt.pluginname` | CHARBUF | if the event comes from a plugin, the name of the plugin that generated it. The plugin must be currently loaded.
-`evt.plugininfo` | CHARBUF | if the event comes from a plugin, a summary of the event as formatted by the plugin. The plugin must be currently loaded.
+`evt.pluginname` | CHARBUF | if the event comes from a plugin-defined event source, the name of the plugin that generated it. The plugin must be currently loaded.
+`evt.plugininfo` | CHARBUF | if the event comes from a plugin-defined event source, a summary of the event as formatted by the plugin. The plugin must be currently loaded.
+`evt.source` | CHARBUF | the name of the source that produced the event.
+`evt.is_async` | BOOL | 'true' for asynchronous events, 'false' otherwise.
+`evt.asynctype` | CHARBUF | If the event is asynchronous, the type of the event (e.g. 'container').
 
 ### Field Class: evt (for system calls)
 
@@ -101,66 +104,76 @@ Additional information about the process and thread executing the syscall event.
 
 Name | Type | Description
 :----|:-----|:-----------
-`proc.pid` | INT64 | the id of the process generating the event.
-`proc.exe` | CHARBUF | the first command line argument (usually the executable name or a custom one).
-`proc.name` | CHARBUF | the name (excluding the path) of the executable generating the event.
-`proc.args` | CHARBUF | the arguments passed on the command line when starting the process generating the event.
-`proc.env` | CHARBUF | the environment variables of the process generating the event.
-`proc.cmdline` | CHARBUF | full process command line, i.e. proc.name + proc.args.
-`proc.exeline` | CHARBUF | full process command line, with exe as first argument, i.e. proc.exe + proc.args.
-`proc.cwd` | CHARBUF | the current working directory of the event.
-`proc.nthreads` | UINT32 | the number of threads that the process generating the event currently has, including the main process thread.
-`proc.nchilds` | UINT32 | the number of child threads that the process generating the event currently has. This excludes the main process thread.
-`proc.ppid` | INT64 | the pid of the parent of the process generating the event.
-`proc.pname` | CHARBUF | the name (excluding the path) of the parent of the process generating the event.
-`proc.pcmdline` | CHARBUF | the full command line (proc.name + proc.args) of the parent of the process generating the event.
-`proc.apid` | INT64 | the pid of one of the process ancestors. E.g. proc.apid[1] returns the parent pid, proc.apid[2] returns the grandparent pid, and so on. proc.apid[0] is the pid of the current process. proc.apid without arguments can be used in filters only and matches any of the process ancestors, e.g. proc.apid=1234.
-`proc.aname` | CHARBUF | the name (excluding the path) of one of the process ancestors. E.g. proc.aname[1] returns the parent name, proc.aname[2] returns the grandparent name, and so on. proc.aname[0] is the name of the current process. proc.aname without arguments can be used in filters only and matches any of the process ancestors, e.g. proc.aname=bash.
-`proc.loginshellid` | INT64 | the pid of the oldest shell among the ancestors of the current process, if there is one. This field can be used to separate different user sessions, and is useful in conjunction with chisels like spy_user.
-`proc.duration` | RELTIME | number of nanoseconds since the process started.
-`proc.fdopencount` | UINT64 | number of open FDs for the process
-`proc.fdlimit` | INT64 | maximum number of FDs the process can open.
-`proc.fdusage` | DOUBLE | the ratio between open FDs and maximum available FDs for the process.
-`proc.vmsize` | UINT64 | total virtual memory for the process (as kb).
-`proc.vmrss` | UINT64 | resident non-swapped memory for the process (as kb).
-`proc.vmswap` | UINT64 | swapped memory for the process (as kb).
-`thread.pfmajor` | UINT64 | number of major page faults since thread start.
-`thread.pfminor` | UINT64 | number of minor page faults since thread start.
-`thread.tid` | INT64 | the id of the thread generating the event.
-`thread.ismain` | BOOL | 'true' if the thread generating the event is the main one in the process.
-`thread.exectime` | RELTIME | CPU time spent by the last scheduled thread, in nanoseconds. Exported by switch events only.
-`thread.totexectime` | RELTIME | Total CPU time, in nanoseconds since the beginning of the capture, for the current thread. Exported by switch events only.
-`thread.cgroups` | CHARBUF | all the cgroups the thread belongs to, aggregated into a single string.
-`thread.cgroup` | CHARBUF | the cgroup the thread belongs to, for a specific subsystem. E.g. thread.cgroup.cpuacct.
-`thread.vtid` | INT64 | the id of the thread generating the event as seen from its current PID namespace.
-`proc.vpid` | INT64 | the id of the process generating the event as seen from its current PID namespace.
-`thread.cpu` | DOUBLE | the CPU consumed by the thread in the last second.
-`thread.cpu.user` | DOUBLE | the user CPU consumed by the thread in the last second.
-`thread.cpu.system` | DOUBLE | the system CPU consumed by the thread in the last second.
-`thread.vmsize` | UINT64 | For the process main thread, this is the total virtual memory for the process (as kb). For the other threads, this field is zero.
-`thread.vmrss` | UINT64 | For the process main thread, this is the resident non-swapped memory for the process (as kb). For the other threads, this field is zero.
-`proc.sid` | INT64 | the session id of the process generating the event.
-`proc.sname` | CHARBUF | the name of the current process's session leader. This is either the process with pid=proc.sid or the eldest ancestor that has the same sid as the current process.
+`proc.exe` | CHARBUF | The first command line argument argv[0] (truncated after 4096 bytes) which is usually the executable name but it could be also a custom string, it depends on what the user specifies. This field is collected from the syscalls args or, as a fallback, extracted from /proc/<pid>/cmdline.
+`proc.pexe` | CHARBUF | The proc.exe (first command line argument argv[0]) of the parent process.
+`proc.aexe` | CHARBUF | The proc.exe (first command line argument argv[0]) for a specific process ancestor. You can access different levels of ancestors by using indices. For example, proc.aexe[1] retrieves the proc.exe of the parent process, proc.aexe[2] retrieves the proc.exe of the grandparent process, and so on. The current process's proc.exe line can be obtained using proc.aexe[0]. When used without any arguments, proc.aexe is applicable only in filters and matches any of the process ancestors. For instance, you can use `proc.aexe endswith java` to match any process ancestor whose proc.exe ends with the term `java`.
+`proc.exepath` | CHARBUF | The full executable path of the process (truncated after 1024 bytes). This field is collected only if the executable lives on the filesystem. This field is collected from the syscalls args or, as a fallback, extracted resolving the path of /proc/<pid>/exe.
+`proc.pexepath` | CHARBUF | The proc.exepath (full executable path) of the parent process.
+`proc.aexepath` | CHARBUF | The proc.exepath (full executable path) for a specific process ancestor. You can access different levels of ancestors by using indices. For example, proc.aexepath[1] retrieves the proc.exepath of the parent process, proc.aexepath[2] retrieves the proc.exepath of the grandparent process, and so on. The current process's proc.exepath line can be obtained using proc.aexepath[0]. When used without any arguments, proc.aexepath is applicable only in filters and matches any of the process ancestors. For instance, you can use `proc.aexepath endswith java` to match any process ancestor whose path ends with the term `java`.
+`proc.name` | CHARBUF | The process name (truncated after 16 characters) generating the event (task->comm). This field is collected from the syscalls args or, as a fallback, extracted from /proc/<pid>/status. The name of the process and the name of the executable file on disk (if applicable) can be different if a process is given a custom name which is often the case for example for java applications.
+`proc.pname` | CHARBUF | The proc.name truncated after 16 characters) of the process generating the event.
+`proc.aname` | CHARBUF | The proc.name (truncated after 16 characters) for a specific process ancestor. You can access different levels of ancestors by using indices. For example, proc.aname[1] retrieves the proc.name of the parent process, proc.aname[2] retrieves the proc.name of the grandparent process, and so on. The current process's proc.name line can be obtained using proc.aname[0]. When used without any arguments, proc.aname is applicable only in filters and matches any of the process ancestors. For instance, you can use `proc.aname=bash` to match any process ancestor whose name is `bash`.
+`proc.args` | CHARBUF | The arguments passed on the command line when starting the process generating the event excluding argv[0] (truncated after 4096 bytes). This field is collected from the syscalls args or, as a fallback, extracted from /proc/<pid>/cmdline.
+`proc.cmdline` | CHARBUF | The concatenation of `proc.name + proc.args` (truncated after 4096 bytes) when starting the process generating the event.
+`proc.pcmdline` | CHARBUF | The proc.cmdline (full command line (proc.name + proc.args)) of the parent of the process generating the event.
+`proc.acmdline` | CHARBUF | The full command line (proc.name + proc.args) for a specific process ancestor. You can access different levels of ancestors by using indices. For example, proc.acmdline[1] retrieves the full command line of the parent process, proc.acmdline[2] retrieves the proc.cmdline of the grandparent process, and so on. The current process's full command line can be obtained using proc.acmdline[0].  When used without any arguments, proc.acmdline is applicable only in filters and matches any of the process ancestors. For instance, you can use `proc.acmdline contains base64` to match any process ancestor whose command line contains the term base64.
+`proc.cmdnargs` | UINT64 | The number of command line args (proc.args).
+`proc.cmdlenargs` | UINT64 | The total count of characters / length of the comamnd line args (proc.args) combined excluding whitespaces between args.
+`proc.exeline` | CHARBUF | The full command line, with exe as first argument (proc.exe + proc.args) when starting the process generating the event.
+`proc.env` | CHARBUF | The environment variables of the process generating the event.
+`proc.cwd` | CHARBUF | The current working directory of the event.
+`proc.loginshellid` | INT64 | The pid of the oldest shell among the ancestors of the current process, if there is one. This field can be used to separate different user sessions, and is useful in conjunction with chisels like spy_user.
 `proc.tty` | INT32 | The controlling terminal of the process. 0 for processes without a terminal.
-`proc.exepath` | CHARBUF | The full executable path of the process.
-`proc.vpgid` | INT64 | the process group id of the process generating the event, as seen from its current PID namespace.
-`proc.is_container_healthcheck` | BOOL | true if this process is running as a part of the container's health check.
-`proc.is_container_liveness_probe` | BOOL | true if this process is running as a part of the container's liveness probe.
-`proc.is_container_readiness_probe` | BOOL | true if this process is running as a part of the container's readiness probe.
-`proc.is_exe_writable` | BOOL | true if this process' executable file is writable by the same user that spawned the process.
+`proc.pid` | INT64 | The id of the process generating the event.
+`proc.ppid` | INT64 | The pid of the parent of the process generating the event.
+`proc.apid` | INT64 | The pid for a specific process ancestor. You can access different levels of ancestors by using indices. For example, proc.apid[1] retrieves the pid of the parent process, proc.apid[2] retrieves the pid of the grandparent process, and so on. The current process's pid can be obtained using proc.apid[0].  When used without any arguments, proc.acmdline is applicable only in filters and matches any of the process ancestors. For instance, you can use `proc.apid=1337` to match any process ancestor whose pid is equal to 1337.
+`proc.vpid` | INT64 | The id of the process generating the event as seen from its current PID namespace.
+`proc.pvpid` | INT64 | The id of the parent process generating the event as seen from its current PID namespace.
+`proc.sid` | INT64 | The session id of the process generating the event.
+`proc.sname` | CHARBUF | The name of the current process's session leader. This is either the process with pid=proc.sid or the eldest ancestor that has the same sid as the current process.
+`proc.sid.exe` | CHARBUF | The first command line argument argv[0] (usually the executable name or a custom one) of the current process's session leader. This is either the process with pid=proc.sid or the eldest ancestor that has the same sid as the current process.
+`proc.sid.exepath` | CHARBUF | The full executable path of the current process's session leader. This is either the process with pid=proc.sid or the eldest ancestor that has the same sid as the current process.
+`proc.vpgid` | INT64 | The process group id of the process generating the event, as seen from its current PID namespace.
+`proc.duration` | RELTIME | Number of nanoseconds since the process started.
+`proc.ppid.duration` | RELTIME | Number of nanoseconds since the parent process started.
+`proc.pid.ts` | RELTIME | Start of process as epoch timestamp in nanoseconds.
+`proc.ppid.ts` | RELTIME | Start of parent process as epoch timestamp in nanoseconds.
+`proc.is_exe_writable` | BOOL | 'true' if this process' executable file is writable by the same user that spawned the process.
+`proc.is_exe_upper_layer` | BOOL | 'true' if this process' executable file is in upper layer in overlayfs. This field value can only be trusted if the underlying kernel version is greater or equal than 3.18.0, since overlayfs was introduced at that time.
+`proc.exe_ino` | INT64 | The inode number of the executable file on disk. Can be correlated with fd.ino.
+`proc.exe_ino.ctime` | ABSTIME | Last status change time of executable file (inode->ctime) as epoch timestamp in nanoseconds. Time is changed by writing or by setting inode information e.g. owner, group, link count, mode etc.
+`proc.exe_ino.mtime` | ABSTIME | Last modification time of executable file (inode->mtime) as epoch timestamp in nanoseconds. Time is changed by file modifications, e.g. by mknod, truncate, utime, write of more than zero bytes etc. For tracking changes in owner, group, link count or mode, use proc.exe_ino.ctime instead.
+`proc.exe_ino.ctime_duration_proc_start` | ABSTIME | Number of nanoseconds between modifying status of executable image and spawning a new process using the changed executable image.
+`proc.exe_ino.ctime_duration_pidns_start` | ABSTIME | Number of nanoseconds between PID namespace start ts and ctime exe file if PID namespace start predates ctime.
+`proc.pidns_init_start_ts` | UINT64 | Start of PID namespace (container or non container pid namespace) as epoch timestamp in nanoseconds.
 `thread.cap_permitted` | CHARBUF | The permitted capabilities set
 `thread.cap_inheritable` | CHARBUF | The inheritable capabilities set
 `thread.cap_effective` | CHARBUF | The effective capabilities set
-`proc.cmdnargs` | UINT64 | The number of cmd args.
-`proc.cmdlenargs` | UINT64 | The total count of characters / length of all cmd args combined excluding whitespaces.
-`proc.pvpid` | INT64 | the id of the parent process generating the event as seen from its current PID namespace.
-`proc.is_exe_upper_layer` | BOOL | true if this process' executable file is in upper layer in overlayfs. This field value can only be trusted if the underlying kernel version is greater or equal than 3.18.0, since overlayfs was introduced at that time.
-`proc.exe_ino` | INT64 | The inode number of the executable image file on disk. Can be correlated with fd.ino.
-`proc.exe_ino.ctime` | ABSTIME | Last status change time (ctime - epoch nanoseconds) of executable image file on disk (inode->ctime). Time is changed by writing or by setting inode information e.g. owner, group, link count, mode etc.
-`proc.exe_ino.mtime` | ABSTIME | Last modification time (mtime - epoch nanoseconds) of executable image file on disk (inode->mtime). Time is changed by file modifications, e.g. by mknod, truncate, utime, write of more than zero bytes etc. For tracking changes in owner, group, link count or mode, use proc.exe_ino.ctime instead.
-`proc.exe_ino.ctime_duration_proc_start` | ABSTIME | Number of nanoseconds between modifying status of executable image and spawning a new process using the changed executable image.
-`proc.exe_ino.ctime_duration_pidns_start` | ABSTIME | Number of nanoseconds between pid namespace start ts and ctime exe file if pidns start predates ctime.
-`proc.pidns_init_start_ts` | UINT64 | Approximate start ts (epoch ns) of pid namespace (container or non container pid namespace).
+`proc.is_container_healthcheck` | BOOL | 'true' if this process is running as a part of the container's health check.
+`proc.is_container_liveness_probe` | BOOL | 'true' if this process is running as a part of the container's liveness probe.
+`proc.is_container_readiness_probe` | BOOL | 'true' if this process is running as a part of the container's readiness probe.
+`proc.fdopencount` | UINT64 | Number of open FDs for the process
+`proc.fdlimit` | INT64 | Maximum number of FDs the process can open.
+`proc.fdusage` | DOUBLE | The ratio between open FDs and maximum available FDs for the process.
+`proc.vmsize` | UINT64 | Total virtual memory for the process (as kb).
+`proc.vmrss` | UINT64 | Resident non-swapped memory for the process (as kb).
+`proc.vmswap` | UINT64 | Swapped memory for the process (as kb).
+`thread.pfmajor` | UINT64 | Number of major page faults since thread start.
+`thread.pfminor` | UINT64 | Number of minor page faults since thread start.
+`thread.tid` | INT64 | The id of the thread generating the event.
+`thread.ismain` | BOOL | 'true' if the thread generating the event is the main one in the process.
+`thread.vtid` | INT64 | The id of the thread generating the event as seen from its current PID namespace.
+`thread.exectime` | RELTIME | CPU time spent by the last scheduled thread, in nanoseconds. Exported by switch events only.
+`thread.totexectime` | RELTIME | Total CPU time, in nanoseconds since the beginning of the capture, for the current thread. Exported by switch events only.
+`thread.cgroups` | CHARBUF | All cgroups the thread belongs to, aggregated into a single string.
+`thread.cgroup` | CHARBUF | The cgroup the thread belongs to, for a specific subsystem. e.g. thread.cgroup.cpuacct.
+`proc.nthreads` | UINT32 | The number of threads that the process generating the event currently has, including the main process thread.
+`proc.nchilds` | UINT32 | The number of child threads that the process generating the event currently has. This excludes the main process thread.
+`thread.cpu` | DOUBLE | The CPU consumed by the thread in the last second.
+`thread.cpu.user` | DOUBLE | The user CPU consumed by the thread in the last second.
+`thread.cpu.system` | DOUBLE | The system CPU consumed by the thread in the last second.
+`thread.vmsize` | UINT64 | For the process main thread, this is the total virtual memory for the process (as kb). For the other threads, this field is zero.
+`thread.vmrss` | UINT64 | For the process main thread, this is the resident non-swapped memory for the process (as kb). For the other threads, this field is zero.
 
 ### Field Class: user
 
@@ -193,27 +206,29 @@ Container information. If the event is not happening inside a container, both id
 
 Name | Type | Description
 :----|:-----|:-----------
-`container.id` | CHARBUF | the container id.
-`container.name` | CHARBUF | the container name.
-`container.image` | CHARBUF | the container image name (e.g. falcosecurity/falco:latest for docker).
-`container.image.id` | CHARBUF | the container image id (e.g. 6f7e2741b66b).
-`container.type` | CHARBUF | the container type, eg: docker or rkt
-`container.privileged` | BOOL | true for containers running as privileged, false otherwise
+`container.id` | CHARBUF | The truncated container id (first 12 characters).
+`container.name` | CHARBUF | The container name.
+`container.image` | CHARBUF | The container image name (e.g. falcosecurity/falco:latest for docker).
+`container.image.id` | CHARBUF | The container image id (e.g. 6f7e2741b66b).
+`container.type` | CHARBUF | The container type, eg: docker or rkt
+`container.privileged` | BOOL | 'true' for containers running as privileged, false otherwise
 `container.mounts` | CHARBUF | A space-separated list of mount information. Each item in the list has the format <source>:<dest>:<mode>:<rdrw>:<propagation>
 `container.mount` | CHARBUF | Information about a single mount, specified by number (e.g. container.mount[0]) or mount source (container.mount[/usr/local]). The pathname can be a glob (container.mount[/usr/local/*]), in which case the first matching mount will be returned. The information has the format <source>:<dest>:<mode>:<rdrw>:<propagation>. If there is no mount with the specified index or matching the provided source, returns the string "none" instead of a NULL value.
-`container.mount.source` | CHARBUF | the mount source, specified by number (e.g. container.mount.source[0]) or mount destination (container.mount.source[/host/lib/modules]). The pathname can be a glob.
-`container.mount.dest` | CHARBUF | the mount destination, specified by number (e.g. container.mount.dest[0]) or mount source (container.mount.dest[/lib/modules]). The pathname can be a glob.
-`container.mount.mode` | CHARBUF | the mount mode, specified by number (e.g. container.mount.mode[0]) or mount source (container.mount.mode[/usr/local]). The pathname can be a glob.
-`container.mount.rdwr` | CHARBUF | the mount rdwr value, specified by number (e.g. container.mount.rdwr[0]) or mount source (container.mount.rdwr[/usr/local]). The pathname can be a glob.
-`container.mount.propagation` | CHARBUF | the mount propagation value, specified by number (e.g. container.mount.propagation[0]) or mount source (container.mount.propagation[/usr/local]). The pathname can be a glob.
-`container.image.repository` | CHARBUF | the container image repository (e.g. falcosecurity/falco).
-`container.image.tag` | CHARBUF | the container image tag (e.g. stable, latest).
-`container.image.digest` | CHARBUF | the container image registry digest (e.g. sha256:d977378f890d445c15e51795296e4e5062f109ce6da83e0a355fc4ad8699d27).
+`container.mount.source` | CHARBUF | The mount source, specified by number (e.g. container.mount.source[0]) or mount destination (container.mount.source[/host/lib/modules]). The pathname can be a glob.
+`container.mount.dest` | CHARBUF | The mount destination, specified by number (e.g. container.mount.dest[0]) or mount source (container.mount.dest[/lib/modules]). The pathname can be a glob.
+`container.mount.mode` | CHARBUF | The mount mode, specified by number (e.g. container.mount.mode[0]) or mount source (container.mount.mode[/usr/local]). The pathname can be a glob.
+`container.mount.rdwr` | CHARBUF | The mount rdwr value, specified by number (e.g. container.mount.rdwr[0]) or mount source (container.mount.rdwr[/usr/local]). The pathname can be a glob.
+`container.mount.propagation` | CHARBUF | The mount propagation value, specified by number (e.g. container.mount.propagation[0]) or mount source (container.mount.propagation[/usr/local]). The pathname can be a glob.
+`container.image.repository` | CHARBUF | The container image repository (e.g. falcosecurity/falco).
+`container.image.tag` | CHARBUF | The container image tag (e.g. stable, latest).
+`container.image.digest` | CHARBUF | The container image registry digest (e.g. sha256:d977378f890d445c15e51795296e4e5062f109ce6da83e0a355fc4ad8699d27).
 `container.healthcheck` | CHARBUF | The container's health check. Will be the null value ("N/A") if no healthcheck configured, "NONE" if configured but explicitly not created, and the healthcheck command line otherwise
 `container.liveness_probe` | CHARBUF | The container's liveness probe. Will be the null value ("N/A") if no liveness probe configured, the liveness probe command line otherwise
 `container.readiness_probe` | CHARBUF | The container's readiness probe. Will be the null value ("N/A") if no readiness probe configured, the readiness probe command line otherwise
-`container.start_ts` | UINT64 | Approximate container start ts (epoch in ns) based on proc.pidns_init_start_ts.
+`container.start_ts` | UINT64 | Container start as epoch timestamp in nanoseconds based on proc.pidns_init_start_ts.
 `container.duration` | RELTIME | Number of nanoseconds since container.start_ts.
+`container.ip` | CHARBUF | The container's / pod's primary ip address as retrieved from the container engine. Only ipv4 addresses are tracked. Consider container.cni.json (CRI use case) for logging ip addresses for each network interface.
+`container.cni.json` | CHARBUF | The container's / pod's CNI result field from the respective pod status info. It contains ip addresses for each network interface exposed as unparsed escaped JSON string. Supported for CRI container engine (containerd, cri-o runtimes), optimized for containerd (some non-critical JSON keys removed). Useful for tracking ips (ipv4 and ipv6, dual-stack support) for each network interface (multi-interface support).
 
 ### Field Class: fd
 
@@ -295,7 +310,7 @@ Name | Type | Description
 
 ### Field Class: k8s
 
-Kubernetes related context.
+Kubernetes related context. When configured to fetch from the API server, all fields are available. Otherwise, only the `k8s.pod.*` and `k8s.ns.name` fields are populated with data gathered from the container runtime.
 
 {{% alert color="warning" %}}
 
@@ -311,6 +326,8 @@ Name | Type | Description
 `k8s.pod.id` | CHARBUF | Kubernetes pod id.
 `k8s.pod.label` | CHARBUF | Kubernetes pod label. E.g. 'k8s.pod.label.foo'.
 `k8s.pod.labels` | CHARBUF | Kubernetes pod comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'.
+`k8s.pod.ip` | CHARBUF | Kubernetes pod ip, same as container.ip field as each container in a pod shares the network stack of the sandbox / pod. Only ipv4 addresses are tracked. Consider k8s.pod.cni.json for logging ip addresses for each network interface.
+`k8s.pod.cni.json` | CHARBUF | Kubernetes pod CNI result field from the respective pod status info, same as container.cni.json field. It contains ip addresses for each network interface exposed as unparsed escaped JSON string. Supported for CRI container engine (containerd, cri-o runtimes), optimized for containerd (some non-critical JSON keys removed). Useful for tracking ips (ipv4 and ipv6, dual-stack support) for each network interface (multi-interface support).
 `k8s.rc.name` | CHARBUF | Kubernetes replication controller name.
 `k8s.rc.id` | CHARBUF | Kubernetes replication controller id.
 `k8s.rc.label` | CHARBUF | Kubernetes replication controller label. E.g. 'k8s.rc.label.foo'.
@@ -332,25 +349,6 @@ Name | Type | Description
 `k8s.deployment.label` | CHARBUF | Kubernetes deployment label. E.g. 'k8s.rs.label.foo'.
 `k8s.deployment.labels` | CHARBUF | Kubernetes deployment comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'.
 
-### Field Class: mesos
-
-Mesos related context.
-
-
-Name | Type | Description
-:----|:-----|:-----------
-`mesos.task.name` | CHARBUF | Mesos task name.
-`mesos.task.id` | CHARBUF | Mesos task id.
-`mesos.task.label` | CHARBUF | Mesos task label. E.g. 'mesos.task.label.foo'.
-`mesos.task.labels` | CHARBUF | Mesos task comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'.
-`mesos.framework.name` | CHARBUF | Mesos framework name.
-`mesos.framework.id` | CHARBUF | Mesos framework id.
-`marathon.app.name` | CHARBUF | Marathon app name.
-`marathon.app.id` | CHARBUF | Marathon app id.
-`marathon.app.label` | CHARBUF | Marathon app label. E.g. 'marathon.app.label.foo'.
-`marathon.app.labels` | CHARBUF | Marathon app comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'.
-`marathon.group.name` | CHARBUF | Marathon group name.
-`marathon.group.id` | CHARBUF | Marathon group id.
 
 ### Field Class: span
 
@@ -407,3 +405,4 @@ Name | Type | Description
 `evtin.span.m.tag` | CHARBUF | same as evtin.span.id, but accepts all the events generated on the machine during the span, including other threads and other processes.
 `evtin.span.m.args` | CHARBUF | same as evtin.span.id, but accepts all the events generated on the machine during the span, including other threads and other processes.
 `evtin.span.m.arg` | CHARBUF | same as evtin.span.id, but accepts all the events generated on the machine during the span, including other threads and other processes.
+
