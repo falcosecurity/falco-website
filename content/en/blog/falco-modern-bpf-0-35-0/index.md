@@ -6,10 +6,6 @@ date: 2023-06-14
 author: Andrea Terzolo, Vicente J. Jiménez Miras
 slug: falco-modern-bpf-0-35-0
 images:
-  - /blog/falco-modern-bpf-0-35-0/images/falco-modern-bpf-01.png
-  - /blog/falco-modern-bpf-0-35-0/images/falco-modern-bpf-02.png
-  - /blog/falco-modern-bpf-0-35-0/images/falco-modern-bpf-03.png
-  - /blog/falco-modern-bpf-0-35-0/images/falco-modern-bpf-04.png
   - /blog/falco-modern-bpf-0-35-0/images/falco-modern-bpf-featured.png
 tags: ["eBPF"]
 ---
@@ -40,7 +36,7 @@ To elaborate further, we currently search for two crucial features that are esse
 - BPF Ring Buffer
 - BTF Tracing Programs
 
-![](/blog/falco-modern-bpf-0-35-0/images/falco-modern-bpf-01.png)
+![Required features to run the modern eBPF probe](/blog/falco-modern-bpf-0-35-0/images/falco-modern-bpf-01.png)
 
 For a more in-depth understanding of these two concepts, we invite you to explore the [previous blog](https://falco.org/blog/falco-modern-bpf/#what-s-new) discussing the modern eBPF driver.
 
@@ -62,7 +58,7 @@ Now, let's delve into the potential errors that you may encounter if any of thes
 
 Every Falco driver utilizes shared buffers to facilitate the transmission of security events between the kernel and the userspace. To be more specific, there is an individual buffer allocated for each online CPU, ensuring efficient handling of events.
 
-![](/blog/falco-modern-bpf-0-35-0/images/falco-modern-bpf-02.png)
+![Buffers allocation using the current eBPF probe](/blog/falco-modern-bpf-0-35-0/images/falco-modern-bpf-02.png)
 
 We have always followed this particular approach for utilizing shared buffers, and recently we introduced a new feature that allows you to modify the size of these buffers using a custom Falco configuration option called `syscall_buf_size_preset`. By default, each buffer is set to 8 MB, but you have the flexibility to adjust it anywhere between 1 MB and 512 MB.
 
@@ -74,7 +70,7 @@ While the ability to adjust buffer sizes is a cool feature, it is available to a
 
 As an illustration, one such scenario is the allocation of a ring buffer for every 3 CPUs.
 
-![](/blog/falco-modern-bpf-0-35-0/images/falco-modern-bpf-03.png)
+![Buffers allocation using the modern eBPF probe](/blog/falco-modern-bpf-0-35-0/images/falco-modern-bpf-03.png)
 
 {{% pageinfo color="info" %}}
 
@@ -90,7 +86,7 @@ However, feel free to experiment and find the configuration that best suits your
 
 Similar to the current probe, the modern probe can operate in _least privileged_ mode. However, to ensure proper functionality, Falco always mandates a minimum of two capabilities: `CAP_SYS_RESOURCE` and `CAP_SYS_PTRACE`. Additional required capabilities vary depending on your specific kernel version, like the `CAP_SYS_ADMIN` capability for older kernels, which can be replaced by the `CAP_PERFMON` and `CAP_BPF` ones when running on a kernel newer than 5.8.
 
-![](/blog/falco-modern-bpf-0-35-0/images/falco-modern-bpf-04.png)
+![Newer kernels allow more granularity when using Linux capabilities](/blog/falco-modern-bpf-0-35-0/images/falco-modern-bpf-04.png)
 
 Here's an example command to run Falco in _least privileged_ mode using the modern probe:
 
