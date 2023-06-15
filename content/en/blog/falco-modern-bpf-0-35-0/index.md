@@ -111,9 +111,15 @@ Observe we cannot use `CAP_BPF` and `CAP_PERFMON` here since [docker doesn't sup
 
 The modern eBPF probe is compatible with all the installation methods available for other drivers.
 
-Let's start playing with it 🎮
-
 - [Falco packages](/docs/getting-started/installation/#installation-with-dialog)
 - [Falco binary](/docs/getting-started/running/#falco-binary)
 - [Docker](/docs/getting-started/running/#modern-ebpf)
 - [Helm chart](https://github.com/falcosecurity/charts/blob/master/falco/README.md#daemonset)
+
+Also, you can test it live in this interactive environment that we have prepared for you. Let's start playing with it 🎮
+
+<iframe width="1140" height="640" sandbox="allow-forms allow-modals allow-popups allow-same-origin allow-scripts" src="https://play.instruqt.com/embed/sysdig/tracks/falco-modern-ebpf?token=em_Kwn3AXuYeONY6e0v" style="border: 0;" allowfullscreen></iframe>
+
+{{% pageinfo color="info" %}}
+For a better experience, or if your browser didn't let you access the lab within this page, <a target="_blank" href="https://play.instruqt.com/embed/sysdig/tracks/falco-modern-ebpf?token=em_Kwn3AXuYeONY6e0v">click here to open the lab</a> a new window.
+{{% /pageinfo %}}
