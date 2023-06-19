@@ -116,10 +116,8 @@ The modern eBPF probe is compatible with all the installation methods available 
 - [Docker](/docs/getting-started/running/#modern-ebpf)
 - [Helm chart](https://github.com/falcosecurity/charts/blob/master/falco/README.md#daemonset)
 
-Also, you can test it live in this interactive environment that we have prepared for you. Let's start playing with it 🎮
+Also, you can test it live in this interactive environment that we have prepared for you. 
 
-<iframe width="1140" height="640" sandbox="allow-forms allow-modals allow-popups allow-same-origin allow-scripts" src="https://play.instruqt.com/embed/sysdig/tracks/falco-modern-ebpf?token=em_Kwn3AXuYeONY6e0v" style="border: 0;" allowfullscreen></iframe>
+Click on it to start playing with it 🎮
 
-{{% pageinfo color="info" %}}
-For a better experience, or if your browser didn't let you access the lab within this page, <a target="_blank" href="https://play.instruqt.com/embed/sysdig/tracks/falco-modern-ebpf?token=em_Kwn3AXuYeONY6e0v">click here to open the lab</a> a new window.
-{{% /pageinfo %}}
+<a target="_blank" href="https://play.instruqt.com/embed/sysdig/tracks/falco-modern-ebpf?token=em_Kwn3AXuYeONY6e0v"><img src="images/falco-modern-bpf-lab.png"></a>
