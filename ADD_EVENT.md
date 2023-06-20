@@ -1,5 +1,5 @@
 # How to add new event
-Please follow these steps to add your case-study to [Falco endusers](https://falco.org/about/ecosystem/):
+Please follow these steps to add your event to [Falco event page](https://falco.org/community/events/):
 1. Fork [Falco](https://github.com/falcosecurity/falco-website) repository
 2. Add a new event to [data/en/events](https://github.com/falcosecurity/falco-website/blob/master/data/en/events.yaml) in a following format:
 
