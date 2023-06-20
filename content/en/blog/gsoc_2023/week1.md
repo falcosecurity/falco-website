@@ -14,30 +14,42 @@ A huge thank you! to all the community members accepting me as one of them ❤�
 
 # My Project: Falco Playground
 
- Falco provides an intuitive and highly expressive rule language for configuring its powerful runtime security engine. However, the community still lacks an official and frictionless IDE solution for writing and testing Falco rules. Since the last few releases, the Falco libraries increased the support for multiple architectures and platforms, and the integrated rules validator added a new output in machine-readable JSON format. The idea for this project is to add WebAssembly as a new officially-supported compilation target for Falco by leveraging the Emscripten toolchain, and creating a new development environment for security rules in the form of a web single-page application by running Falco right inside the browser. The end result is envisioned to be similar to the Go Playground, but without the need of any backend. The beauty of this idea is the opportunity of experiencing very different technologies of the cloud-native landscape all in a single project: low-level system code close to the Linux kernel, the fast-growing WebAssembly world, and frontend development for a web application.
+Falco is a security tool that comes with a rule language for its runtime security engine. However, there is currently no official
+and user-friendly integrated development environment (IDE) for writing and testing Falco rules. To address this gap, we propose a 
+project that aims to add WebAssembly as a supported compilation target for Falco.
 
+By using the Emscripten toolchain, we plan to create a web-based single-page application that serves as a development 
+environment for security rules. This means you can write and test Falco rules right inside your browser without the need for any
+backend infrastructure. The end result will be similar to the Go Playground, where you can experiment with code in a seamless and
+accessible manner.
 
-# New beginings 🚀
+The project offers an exciting opportunity to explore various technologies within the cloud-native landscape. It involves working
+with low-level system code in close proximity to the Linux kernel, WebAssembly world, and engaging in frontend development for 
+web application. By combining these different aspects, we aim to provide a convenient and comprehensive solution for developing Falco rules with ease.
+
+# New beginnings 🚀
 
 By contributing to the project prior to the GSoC period, I had the opportunity to understand the project's ecosystem, gain insights into its development processes, and establish myself as a valuable member of the community. It provided me with a deeper understanding of the project's goals and challenges, enabling me to better align my proposed solutions and goals for the GSoC period.
 
-During this pre-GSoC contribution phase, [Jason Dellaluce](https://github.com/jasondellaluce), my mentor, played a crucial role in guiding and supporting me. Jason provided valuable feedback on my early contributions, helped me navigate the project's codebase, and encouraged me to explore new areas for improvement. This continued collaborative relationship with Jason contributed to my growth as a contributor and helped set the stage for a successful GSoC journey.
+During this pre-GSoC contribution phase, [Jason Dellaluce](https://github.com/jasondellaluce), my mentor, played a crucial role in guiding and supporting me. Jason provided valuable feedback on my early contributions, helped me navigate the project's codebase, and encouraged me to explore new areas for improvement. My ongoing collaboration with Jason played a crucial role in my development as a contributor, paving the way for a fruitful journey through GSoC.
 
-As Week 1 of the official GSoC period began, my pre-GSoC contributions served as a foundation for diving deeper into the project. The knowledge and familiarity I had gained during this time allowed me to hit the ground running and make meaningful progress from the very beginning. It also reinforced the strong mentor-mentee relationship with Jason, as we had already established a rapport and had a shared understanding of the project's context.
+As Week 1 of the official GSoC period began, my pre-GSoC contributions served as a foundation for diving deeper into the project. The knowledge and familiarity I gained before allowed me to hit the ground running and make meaningful progress from the very beginning. It also reinforced the strong mentor-mentee relationship with Jason, as we had already established a rapport and had a shared understanding of the project's context.
 
-Here is a summary of some of the pull requests (PRs) I have submitted up until today.
+Here is a summary of  pull requests (PRs) I have submitted: 
 
 - [PR #1: Test For command falco -i (ignore default events)](https://github.com/falcosecurity/testing/pull/8)
-    - Description: The [falcosecurity/testing](https://github.com/falcosecurity/testing) repository contains regression test suite for Falco and other tools in its ecosystem. I contributed by adding a new test case for falco's help output when used with -i flag. I contributed to two more of such falgs. 
+    - Description: The [falcosecurity/testing](https://github.com/falcosecurity/testing) repository contains regression a test suite for Falco and other tools in its ecosystem. I contributed by adding a new test case for Falco's help output when used with thie `-i` flag. I contributed to two other flags. 
 
 - [PR #2: Semver check for RequiredAPIVersion values](https://github.com/falcosecurity/plugin-sdk-go/pull/73)
     - Description: This pr checks if user's RequiredAPIVersion follows semver system and checks if is compatible with internally-supported API version
     
 -  [PR #3: Feat: Support for memfd_create syscall](https://github.com/falcosecurity/libs/pull/1127)   
-    - Desciption: Every time when the kernel is updated and released, a new syscall or an updated version of syscall might be added to the release. This can create new ways to expose vulnerabilities by which malicious activity can remain undetected by Falco. Therefore we need to update Falco's internal syscall table to patch vulnerabilities. This PR adds support to `memfd_create` syscall
+    - Desciption: Whenever the kernel is updated and released, a new syscall or updated version of syscall may be added. This can 
+    create new vulnerabilities that can allow malicious activity from Falco to go undetected. Therefore, we need to update Falco's
+    internal syscall table to address vulnerabilities. This PR adds support for the `memfd_create` syscall
 
 - [PR #4: Feat: Support for pidfd_getfd syscall](https://github.com/falcosecurity/libs/pull/1145)
-    - Description: Same as above, his PR adds support to `pidfd_getfd` syscall
+    - Description: Same as above, this PR adds support to the `pidfd_getfd` syscall
 
 # Conclutions 
 
