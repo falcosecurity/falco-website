@@ -4,8 +4,6 @@ description: Setting up Falco on a Linux system
 weight: 3
 ---
 
-Falco is a Linux security tool that uses system calls to secure and monitor a system.
-
 {{% pageinfo color="primary" %}}
 Falco can be used for Kubernetes runtime security.
 The most secure way to run Falco is to install Falco directly on the host system so that Falco is isolated from Kubernetes in the case of compromise.
