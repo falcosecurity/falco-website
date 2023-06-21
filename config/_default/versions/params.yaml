@@ -9,13 +9,13 @@ archived_version: false
 # Used in the "version-banner" partial to display a version number for the
 # current doc set.
 
-version: v0.35.0
+version: v0.35.1
 
 # The archived versions of the docs available for reference.
 # Used in the Releases menu, as well as in the Available Documentation Versions
 
 versions:
-  - fullversion: v0.35.0
+  - fullversion: v0.35.1
     version: v0.35
     githubbranch: master
     docsbranch: master
