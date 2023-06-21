@@ -13,7 +13,7 @@
   - Streaming approach enables real-time response while minimizing storage costs and complexity.
   - Ready out-of-the-box with rules, which you can customize for your environment.
 - title: Open source
-  description: A multi-vendor and broadly supported standard that you can rely on.
+  description: A multi-vendor and broadly supported solution that you can rely on.
   icon: /icons/pentagon-fill.svg
   features: 
   - Created cloud-native in the same community as Kubernetes, Prometheus, and OPA.
