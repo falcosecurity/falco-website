@@ -67,7 +67,7 @@ home_show_more:
 home_show_less:
   other: Show less
 home_falco_what_is_falco_title:
-  other: Detect threats in real time
+  other: Detect security threats in real time
 home_falco_what_is_falco:
   other: Falco is the open source solution for runtime security for hosts, containers, Kubernetes and the cloud. Get real-time visibility into unexpected behaviors, config changes, intrusions, and data theft.
 homa_falco_secured_by_falco:
