@@ -1,8 +1,8 @@
 - title: Container Security
-  description: Secure containerized applications, no matter what scale, using the power of eBPF.
+  description: Detect malicious behavior in containerized applications, no matter what scale, using the power of eBPF.
   url: /about/use-cases/#protect-containers-kubernetes-and-cloud-native-applications
 - title: Host Security
-  description: Protect your applications in real time wherever they run, whether bare metal or VMs.
+  description: Oversee your applications' behavior in real time wherever they run, whether bare metal or VMs.
   url: /about/use-cases/#secure-your-whole-machine-by-instrumenting-the-operating-system
 - title: Kubernetes Security
   description: Falco is Kubernetes-compatible, helping you instantly detect suspicious activity across the control plane.
