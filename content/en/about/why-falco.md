@@ -15,7 +15,7 @@ Falco is highly scalable, due to its containerized architecture and  tight Kuber
 {{< /content_arrow >}}
 
 {{< content_arrow href="#runs-as-a-daemonset" class="mt-2" >}}
-Falco runs as a Kubernetes daemon set, ensuring every node in the cluster is protected by Falco.
+Falco runs as a Kubernetes daemon set, ensuring every node in the cluster is guarded by Falco.
 {{< /content_arrow >}}
 
 {{< content_arrow href="#leverages-the-kubernetes-api" class="mt-2" >}}
@@ -99,7 +99,7 @@ Falco deploys by default using eBPF, providing performance, maintainability and 
 {{< two_column_block_img content="html" src="/img/about/customizable.svg" alt="Customizable" index="1 md-1 lg-1 xl-1" header="Customizable" >}}
 
 {{< content_arrow href="#meet-specific-security-requirements" >}}
-Define your own custom rules to meet specific security requirements
+Define your own custom rules to meet specific security requirements.
 {{< /content_arrow >}}
 
 {{< content_arrow href="#build-your-own-falco-plugins" class="mt-2" >}}
@@ -141,7 +141,7 @@ The language is designed to be easy to use, and it offers a wide range of operat
 <hr class="w-100 my-4"/>
 
 ##### Simplifies Compliance & Auditing
-By using the same language to define all security policies and alerts, it becomes easier to demonstrate compliance with regulations and standards. This is because it is easier to track changes to the policies, identify potential security gaps, and show how security incidents were handled. To better understand how Falco can be used for meeting regulatory compliance in cloud-native environments, check out this [video](https://youtu.be/qce3h0II4yw?t=143)
+By using the same language to define all security policies and alerts, it becomes easier to demonstrate compliance with regulations and standards. This is because it is easier to track changes to the policies, identify potential security gaps, and show how security incidents were handled. To better understand how Falco can be used for meeting regulatory compliance in cloud-native environments, check out this [video](https://youtu.be/qce3h0II4yw?t=143).
 
 {{< /blocks/content >}}
 
@@ -152,7 +152,7 @@ By using the same language to define all security policies and alerts, it become
 
 ##### Compatibility with Container Orchestration Tools
 
-We could write something related to easily exporting Falco metrics to Prometheus and Grafana. If there’s not a good example resource in place, we can just link prospective users to the kind page for setting-up a test cluster with [Falco, Prometheus and Grafana](https://falco.org/blog/falco-kind-prometheus-grafana/)
+Falco's containerized architecture and tight integration with Kubernetes make it highly scalable and compatible with various container orchestration tools. By leveraging Kubernetes, Falco can dynamically adapt to changes in your container environment. It can automatically monitor new containers and workloads as they are deployed, ensuring that security visibility is maintained across your entire infrastructure. Whether you are using Kubernetes, Docker Swarm, or other container orchestration platforms, Falco can seamlessly integrate into your existing setup.
 
 <hr class="w-100 my-4"/>
 
@@ -199,7 +199,7 @@ Falco only monitors relevant events by using filters and rules to define which e
 
 ##### Kernel-level instrumentation to capture system events
 
-Falco uses kernel-level instrumentation to capture system events by intercepting system calls and other kernel-level events in real-time. This approach allows Falco to detect and respond to security incidents more quickly and effectively, as it can analyze events before they are processed by the operating system or applications. Additionally, kernel-level instrumentation ensures that Falco is highly performant, as it can intercept and analyze events with minimal overhead.
+Falco uses kernel-level instrumentation to capture system events by intercepting system calls and other kernel-level events in real-time. This approach allows Falco to detect security incidents more quickly and effectively, as it can analyze events before they are processed by the operating system or applications. Additionally, kernel-level instrumentation ensures that Falco is highly performant, as it can intercept and analyze events with minimal overhead.
 
 {{< /blocks/content >}}
 
