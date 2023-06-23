@@ -15,10 +15,10 @@ There are different supported syscall sources:
 - Classic eBPF probe
 - Modern eBPF probe
 
-|             | Kernel module | classic eBPF probe | modern eBPF probe                                                    |
+|             | Kernel module | Classic eBPF probe | Modern eBPF probe                                                    |
 | ----------- | ------------- | ------------------ | -------------------------------------------------------------------- |
-| **x86_64**  | >= 2.6        | >= 4.14            | [Minimal set of features](/docs/event-sources/drivers/#requirements) |
-| **aarch64** | >= 3.4        | >= 4.17            | [Minimal set of features](/docs/event-sources/drivers/#requirements) |
+| **x86_64**  | >= 2.6        | >= 4.14            | [Minimal set of features](/docs/event-sources/kernel/#requirements) |
+| **aarch64** | >= 3.4        | >= 4.17            | [Minimal set of features](/docs/event-sources/kernel/#requirements) |
 
 ## Kernel module
 
