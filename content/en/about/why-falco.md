@@ -15,7 +15,7 @@ Falco is highly scalable, due to its containerized architecture and  tight Kuber
 {{< /content_arrow >}}
 
 {{< content_arrow href="#runs-as-a-daemonset" class="mt-2" >}}
-Falco runs as a Kubernetes daemon set, ensuring every node in the cluster is guarded by Falco.
+Falco runs as a Kubernetes daemon set, ensuring every node in the cluster is monitored by Falco.
 {{< /content_arrow >}}
 
 {{< content_arrow href="#leverages-the-kubernetes-api" class="mt-2" >}}
@@ -141,7 +141,7 @@ The language is designed to be easy to use, and it offers a wide range of operat
 <hr class="w-100 my-4"/>
 
 ##### Simplifies Compliance & Auditing
-By using the same language to define all security policies and alerts, it becomes easier to demonstrate compliance with regulations and standards. This is because it is easier to track changes to the policies, identify potential security gaps, and show how security incidents were handled. To better understand how Falco can be used for meeting regulatory compliance in cloud-native environments, check out this [video](https://youtu.be/qce3h0II4yw?t=143).
+Falco's rules language can also be used to alert on compliance violations, such as detecting unauthorized changes to files under PCI/DSS. As a result, it becomes easier to demonstrate compliance with regulations and standards. To better understand how Falco can be used for meeting regulatory compliance in cloud-native environments, check out this [video](https://youtu.be/qce3h0II4yw?t=143).
 
 {{< /blocks/content >}}
 
@@ -152,7 +152,7 @@ By using the same language to define all security policies and alerts, it become
 
 ##### Compatibility with Container Orchestration Tools
 
-Falco's containerized architecture and tight integration with Kubernetes make it highly scalable and compatible with various container orchestration tools. By leveraging Kubernetes, Falco can dynamically adapt to changes in your container environment. It can automatically monitor new containers and workloads as they are deployed, ensuring that security visibility is maintained across your entire infrastructure. Whether you are using Kubernetes, Docker Swarm, or other container orchestration platforms, Falco can seamlessly integrate into your existing setup.
+At its core, Falco is a kernel event monitoring and detection agent that captures events, such as syscalls, based on custom rules. Falco can enhance these events by integrating metadata from the container runtime and Kubernetes. This tight integration with various container orchestration tools enables the expansion of Falco's detection capabilities and scope. It can also detect and alert on new containers and workloads being deployed, ensuring that security visibility is comprehensive across your entire infrastructure. In addition, through Falco's native support for daemonset-like deployments, it can seamlessly integrate into your existing setup, whether you are using Kubernetes, Docker Swarm, or other container orchestration platforms.
 
 <hr class="w-100 my-4"/>
 

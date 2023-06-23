@@ -7,7 +7,7 @@ aliases:
 ---
 
 {{< blocks/content wrap="col" >}}
-  ## Threat detection solution for containers, hosts, Kubernetes and the cloud
+  ## Real-time threat detection solution for containers, hosts, Kubernetes and the cloud
 {{< /blocks/content >}}
 
 {{< blocks/content content="html" wrap="col" >}}
@@ -20,7 +20,7 @@ aliases:
 
   ![What is runtime security and why it matters](/img/about/runtime_security.svg#img-fit)
 
-  To effectively detect threats, runtime security solutions must be efficient and alert on suspicious behavior in real time. Attackers have adapted their tactics to the landscape of the cloud and can initiate attacks within seconds of entering your environment. While legacy solutions struggle to detect cloud-native threats, Falco can provide a layer of protection to identify these incidents as they happen. This will give you an opportunity to take the right response action, and minimize the impact of breaches and protect your organization against financial loss and reputational damage.
+  To effectively detect threats, runtime security solutions must be efficient and alert on suspicious behavior in real time. Attackers have adapted their tactics to the landscape of the cloud and can initiate attacks within seconds of entering your environment. While legacy solutions struggle to detect cloud-native threats, Falco can provide a sophisticated security monitoring layer to identify abnormal behaviors as they happen. This will give you an opportunity to take the right response action and minimize the impact of possible breaches, including sustained financial loss and reputational damage.
 {{< /card >}}
 {{< /blocks/content >}}
 
@@ -36,7 +36,7 @@ aliases:
 
 {{< blocks/content content="html" >}}
 {{< two_column_block_img img-aligned="left" src="/img/about/how_it_works.svg" alt="how it works" index="1 md-0 lg-0 xl-0" header="How it works" >}}
-  Falco provides real-time detection capabilities for environments from individual containers, hosts, Kubernetes and the cloud. It is able to detect malicious runtime behavior, such as [crypto mining](https://falco.org/blog/falco-detect-cryptomining/), [file exfiltration](https://falco.org/blog/sysflow-falco-sidekick/), [privilege escalation](https://sysdig.com/blog/mitre-privilege-escalation-falco/) in applications, rootkit installs among many others. These malicious behaviors are detected via user-defined [Falco rules](https://falco.org/docs/rules/) that classify events of application activity as malicious or suspicious.
+  Falco provides real-time detection capabilities for environments from individual containers, hosts, Kubernetes and the cloud. It is able to detect and alert on abnormal behavior and potential security threats in real-time, such as [crypto mining](https://falco.org/blog/falco-detect-cryptomining/), [file exfiltration](https://falco.org/blog/sysflow-falco-sidekick/), [privilege escalation](https://sysdig.com/blog/mitre-privilege-escalation-falco/) in applications, rootkit installs among many others. These malicious behaviors are detected via user-defined [Falco rules](https://falco.org/docs/rules/) that classify events of application activity as malicious or suspicious.
 
   More specifically, Falco collects event data from a _source_ and compares each event against a set of _rules_. Some examples of sources for Falco events are:
   - Linux kernel syscalls
