@@ -152,7 +152,7 @@ Falco's rules language can also be used to alert on compliance violations, such 
 
 ##### Compatibility with Container Orchestration Tools
 
-At its core, Falco is a kernel event monitoring and detection agent that captures events, such as syscalls, based on custom rules. Falco can enhance these events by integrating metadata from the container runtime and Kubernetes. This tight integration with various container orchestration tools enables the expansion of Falco's detection capabilities and scope. It can also detect and alert on new containers and workloads being deployed, ensuring that security visibility is comprehensive across your entire infrastructure. In addition, through Falco's native support for daemonset-like deployments, it can seamlessly integrate into your existing setup, whether you are using Kubernetes, Docker Swarm, or other container orchestration platforms.
+At its core, Falco is a kernel event monitoring and detection agent. Falco can enhance these events by integrating metadata from the container runtime and Kubernetes. This tight integration with various container orchestration tools enables the expansion of Falco's detection capabilities and scope. It can, for example, detect and alert on new containers and workloads being deployed, ensuring that security visibility is comprehensive across your infrastructure. In addition, through Falco's native support for daemonset-like deployments, it can seamlessly integrate into your existing setup, whether you are using Kubernetes, Docker Swarm, or other container orchestration platforms.
 
 <hr class="w-100 my-4"/>
 
