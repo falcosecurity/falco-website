@@ -199,7 +199,7 @@ Falco only monitors relevant events by using filters and rules to define which e
 
 ##### Kernel-level instrumentation to capture system events
 
-Falco uses kernel-level instrumentation to monitor system events by observing system calls and other kernel-level events in real-time. This non-intrusive approach enables Falco to capture rich application activity signals and to detect and alert about abnormal behavior and security threats as soon as they happen. The events gathered can later be examined in SIEM or data lake systems. Additionally, Falco's developers are committed to maximizing the kernel instrumentation performance and ensuring events monitoring and processing come with minimal overhead.
+Falco uses kernel instrumentation to observe system events by monitoring system calls and other kernel-level signals. The Falco kernel components are designed to be fast and non intrusive, as they do not alter the system's behavior. By using this approach, Falco can collect rich information of what applications are doing nearly in real-time while minimizing overhead and preventing interference with regular workload behavior.
 
 {{< /blocks/content >}}
 
