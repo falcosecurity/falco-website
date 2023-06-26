@@ -120,7 +120,7 @@ Retrieving AWS temporary security credentials bound to the EC2 instance role fro
 
 The attacker targeted both the instance metadata endpoints and what commands were executed by the malicious script in order to grep and retrieve the IAM role keys. On EC2 instances, 169.254.169.254 is a special IP used to fetch metadata about the instance. It may be desirable to prevent access to this IP from containers.
 
-```
+```yaml
 - rule: Contact EC2 Instance Metadata Service From Container
   desc: Detect attempts to contact the EC2 Instance Metadata Service from a container
   condition: outbound and fd.sip="169.254.169.254" and container and not ec2_metadata_containers
