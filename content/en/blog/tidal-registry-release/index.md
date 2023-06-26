@@ -112,7 +112,7 @@ During the installation of the cryptominer, the Sysdig team observed a bash scri
   tags: [host, container, process, shell, mitre_execution, T1059.004]
 ```
 
-This rule can be surfaced in Tidal Community Edition's Product Registry [here](https://labsee.tidalcyber.com/capability/fd02337e-cf6b-5523-945e-c6619b9839b6-Run%20shell%20untrusted).
+This rule can be surfaced in Tidal Community Edition's Product Registry [here](https://app.tidalcyber.com/capability/fd02337e-cf6b-5523-945e-c6619b9839b6-Run%20shell%20untrusted).
 
 In order to find credentials, the attacker directly accessed IMDS. IMDS v1 is the version used by default when creating older versions of self-managed clusters or EC2 instances in AWS. It’s used to configure and manage machines.
 
@@ -130,7 +130,7 @@ The attacker targeted both the instance metadata endpoints and what commands wer
   tags: [network, aws, container, mitre_discovery, T1565]
 ```
 
-This rule can be surfaced in Tidal Community Edition's Product Registry [here](https://labsee.tidalcyber.com/capability/03578cc7-45a6-5570-8386-2ec8b7c22a9f-Contact%20EC2%20Instance%20Metadata%20Service%20From%20Container).
+This rule can be surfaced in Tidal Community Edition's Product Registry [here](https://app.tidalcyber.com/capability/03578cc7-45a6-5570-8386-2ec8b7c22a9f-Contact%20EC2%20Instance%20Metadata%20Service%20From%20Container).
 
 Once collected, it is possible to use those credentials for a short period of time in order to run operations on behalf of the impersonated IAM role, calling the AWS API directly. Using CloudTrail logs, the Sysdig team could see that the first API calls from the attacker were using the compromised cluster role.
 
