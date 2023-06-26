@@ -136,7 +136,7 @@ Once collected, it is possible to use those credentials for a short period of ti
 
 The attacker ran some AWS actions to gain persistence on the AWS platform, trying to create new users, groups, and bind new access keys to existing IAM users. Since Falco can handle events from AWS CloudTrail, we can easily detect when new users and groups are created under suspicious circumstances.
 
-```
+```yaml
 - rule: Create AWS user
   desc: Detect creation of a new AWS user.
   condition:
