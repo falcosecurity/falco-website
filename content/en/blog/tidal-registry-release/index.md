@@ -199,7 +199,7 @@ After obtaining the list of functions, the attacker tried to dig deeper by downl
 
 Using curl or wget commands, the attacker successfully exfiltrated the Lambda code and stole proprietary code and software from the Lambda functions. There was also evidence that the attacker executed the stolen software. They took the time to look at the Lambda function’s environment variables and find additional AWS credentials related to IAM users in the same account. However, any attempts to tamper with the Lambda functions configuration would have been instantly detected by Falco:
 
-```
+```yaml
 - rule: Update Lambda Function Code
   desc: Detect updates to a Lambda function code.
   condition:
