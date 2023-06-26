@@ -3,6 +3,8 @@ title: "Operationalize Defensive Capabilities for Container & Cloud Threats With
 date: 2023-06-23
 author: Scott Small
 slug: tidal-registry-release
+images:
+  - /blog/tidal-registry-release/images/scarleteel-matrix.png
 ---
 
 ## Introduction
@@ -15,7 +17,7 @@ This sophisticated attack underscores the imperative of aligning with MITRE ATT&
 
 Falco workload/host-based capabilities were recently added to the Tidal Cyber [Product Registry](https://app.tidalcyber.com/vendors). The community now has a greater ability to operationalize the rules while implementing threat-informed defense using Tidal Cyber’s Community Edition, a freely-availably platform that makes threat and adversary behavior research easy. A summary of the capabilities can be found [here](https://app.tidalcyber.com/products/b3a86cef-804b-5176-ba70-9570350f4e8f-Falco). A Technique Set summarizing & visualizing the ATT&CK-mapped SCARLETEEL techniques described here was also added to the Community Edition Community Spotlight [here](https://app.tidalcyber.com/share/be828b0d-2c95-4e30-b93b-f15de00a9606):
 
-![SCARLETEEL_matrix](/images/scarleteel-matrix.png)
+![SCARLETEEL_matrix](images/scarleteel-matrix.png)
 
 ## Overview
 
