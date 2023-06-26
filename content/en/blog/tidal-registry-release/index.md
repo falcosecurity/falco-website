@@ -1,6 +1,6 @@
 ---
 title: "Operationalize Defensive Capabilities for Container & Cloud Threats With Falco x Tidal"
-date: 2023-06-23
+date: 2023-06-28
 author: Scott Small
 slug: tidal-registry-release
 images:
