@@ -228,7 +228,7 @@ Once the attacker accessed the cloud account, they attempted to disable CloudTra
 
 Since Falco pre-processes all event data from Cloudtrail, we can also see when Cloudtrail audit logging is disabled in a specific AWS region.
 
-```
+```yaml
 - rule: CloudTrail Logging Disabled
   desc: The CloudTrail logging has been disabled, this could be potentially malicious.
   condition:
