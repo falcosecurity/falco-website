@@ -55,7 +55,7 @@ Their initial course of action involved the download and execution of a mining s
 
 It is worth noting that while this behavior is not enabled by default, Falco offers a readily available rule that can detect outbound connections to commonly used miner pool ports or domains. As the connection had already been established in this scenario, the detection falls under the MITRE Execution technique, identified by the associated technique ID ['T1496'](https://attack.mitre.org/techniques/T1496/).
 
-```
+```yaml
 - rule: Detect outbound connections to common miner pool ports
   desc: Miners typically connect to miner pools on common ports.
   condition: net_miner_pool and not trusted_images_query_miner_domain_dns
