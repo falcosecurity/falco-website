@@ -71,7 +71,7 @@ Cryptomining is probably the most common example of resource hijacking. However,
 
 During the installation of the cryptominer, the Sysdig team observed a bash script running simultaneously on the container to enumerate and extract additional information in the environment, such as credentials. Since Falco handles system calls, we can get the same, deep level of visibility into running scripts in containers as we do on the host system.
 
-```
+```yaml
 - rule: Run shell untrusted
   desc: an attempt to spawn a shell below a non-shell application. Specific applications are monitored.
   condition: >
