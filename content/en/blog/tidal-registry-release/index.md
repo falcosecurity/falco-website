@@ -165,7 +165,7 @@ The original intent was to allow the reading of a specific S3 bucket, but the pe
 
 Once the attacker obtained initial access into the cloud account, they started gathering information about the resources deployed in the AWS account. The most common activities reported include the listing of AWS buckets. These API requests were recorded in the AWS account. Again, Falco rules are already curated for these scenarios:
 
-```
+```yaml
 - rule: List Buckets
   desc: Detect listing of all S3 buckets.
   condition:
