@@ -1,6 +1,6 @@
 ---
 title: GSoC Week 1 Reflections
-date: 2023-06-10
+date: 2023-06-27
 author: Rohith Raju
 slug: gsoc-2023-1st-week
 tags: ["Gsoc","Mentorship"]
