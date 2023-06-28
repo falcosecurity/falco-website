@@ -1,9 +1,12 @@
 ---
-Title: "Adaptive syscalls selection"
-Description: "Adaptive syscalls selection with the new base_syscalls options"
+Title: "Adaptive Syscalls Selection in Falco"
+Description: "Adaptive syscalls selection with the new base_syscalls option"
 Date: 2023-06-26
-Author: Roberto Scolaro, Federico Di Pierro, Melissa Kilby
+Author: Melissa Kilby, Roberto Scolaro, Federico Di Pierro
 slug: adaptive-syscalls-selection
+images:
+  - /blog/adaptive-syscalls-selection/images/adaptive-syscalls-selection-featured.png
+tags: ["Falco Libs","Falco"]
 ---
 
 The release of Falco 0.35.0 is a significant milestone, introducing a groundbreaking feature: the ability to select which syscalls to monitor. This empowers users with granular control, optimizing system performance by reducing CPU load through selective syscall monitoring. 
@@ -41,13 +44,11 @@ First, let's define key terms that are crucial for understanding the complexity 
 
 ## Background
 
-
 Before the 0.35.0 release, Falco would monitor a predefined set of commonly used syscalls in its kernel driver for threat detection, regardless of the specific rules being applied. However, this approach had limitations as it would monitor a large number of syscalls. In certain user configurations, Falco would needlessly monitor syscalls not relevant to the loaded rules, consuming system resources without effectively contributing to the intended purpose of threat detection.
 
 You may ask yourself why Falco has been tracing a predetermined set of commonly used syscalls until now. Falco relies on a set of syscalls to establish and maintain its state in userspace. For example, when a new process is spawned or a network connection is created, multiple syscalls are involved. Additionally, Falco maintains a process cache table in userspace, which requires tracking certain syscalls to ensure the accuracy and currency of the cache table. The process table is crucial for retrieving real-time process tree lineages and other functions. 
 
 Initially, tracing a predefined set of syscalls provided a solid foundation for Falco's functionality. However, with the growing computational workload on servers and systems, it became necessary to adopt a new and more efficient approach to optimize performance.
-
 
 ## New Configuration Options
 
@@ -84,7 +85,10 @@ Adaptive syscall selection does not apply to capture files and only affects the 
 </a><br><br>       
 
 In detail, the `base_syscalls` section provides two configuration options:
-- The `custom_set` option enables users to define a custom list of syscalls to monitor in Falco in addition to the syscalls from each Falco rule. It supports both positive notation, where a syscall is specified to be activated, and negative notation, indicated by `!` followed by the syscall name, to deactivate a syscall even if it is used in the ruleset. This flexibility allows users to have precise control over which syscalls are included or excluded, ensuring a tailored configuration that aligns with their specific requirements, use cases and cost budget. To maintain a streamlined and efficient configuration, it is recommended to remove unwanted syscalls directly from the Falco rules instead of excluding them in the `custom_set` configuration. This approach ensures that the rules accurately reflect the desired behavior and reduces unnecessary complexity in the configuration.
+
+- The `custom_set` option enables users to define a custom list of syscalls to monitor in Falco in addition to the syscalls from each Falco rule. It supports both positive notation, where a syscall is specified to be activated, and negative notation, indicated by `!` followed by the syscall name, to deactivate a syscall even if it is used in the ruleset. This flexibility allows users to have precise control over which syscalls are included or excluded, ensuring a tailored configuration that aligns with their specific requirements, use cases and cost budget. 
+
+  To maintain a streamlined and efficient configuration, it is recommended to remove unwanted syscalls directly from the Falco rules instead of excluding them in the `custom_set` configuration. This approach ensures that the rules accurately reflect the desired behavior and reduces unnecessary complexity in the configuration.
 
 - When the `repair` option is set to `true`, it automatically adjusts the custom syscall set to ensure the accurate creation of its state engine, including necessary syscalls such as `close` or `procexit`. However, it is designed to be the most system resource-friendly by activating the least number of additional syscalls (outside of those enabled for enabled rules) as alternative to Falco's default libsinsp state engine enforcement. It dynamically selects necessary syscalls based on the active rules, making it truly adaptive and efficient. The `repair_state` feature helps mitigate issues that may arise from incorrect usage of `custom_set`.
 
@@ -96,7 +100,9 @@ Here are some helpful suggestions:
 
 3. For **tracking process information accurately** consider adding syscalls such as `setresuid`, `setsid`, `setuid`, `setgid`, `setpgid`, `setresgid`, `setsid`, `capset`, `chdir`, `chroot`, `prctl` and `fchdir`; these syscalls help track the correct UID, GID, SID, and PGID etc of a process when it interacts with files or makes network connections.
 
-The provided suggestions serve as a starting point for configuring the `base_syscalls.custom_set` according to users' specific monitoring needs. It is crucial to assess these suggestions within the context of individual use cases and make appropriate adjustments. By adhering to these recommendations and carefully fine-tuning the syscall selection, users can achieve optimal performance, minimize resource utilization and possible kernel side event drops, and maintain precise monitoring and detection of potential security threats with Falco. Tailoring the syscall selection aligns Falco with the unique requirements of the environment, enhancing its effectiveness in threat detection.
+The provided suggestions serve as a starting point for configuring the `base_syscalls.custom_set` according to users' specific monitoring needs. It is crucial to assess these suggestions within the context of individual use cases and make appropriate adjustments.
+
+By adhering to these recommendations and carefully fine-tuning the syscall selection, users can achieve optimal performance, minimize resource utilization and possible kernel side event drops, and maintain precise monitoring and detection of potential security threats with Falco. Tailoring the syscall selection aligns Falco with the unique requirements of the environment, enhancing its effectiveness in threat detection.
 
 <br><a target="_blank" href="images/adaptive-syscalls-selection-04.png">
   <img style="border: 2px solid #00b4c8" 
@@ -149,25 +155,34 @@ Tue May 30 14:01:27 2023: Skipping stopping webserver in dry-run
 This section provides an overview of the underlying refactors that have enabled the implementation of the innovative adaptive syscall selection mechanisms in Falco.
 
 ### Falco's ppm sc API
+
 - A new event set class has been introduced to support efficient set operations natively in the `ppm sc API` in Falco's `libs`. 
-- Additional refinements in the `ppm sc API`  have resulted in robust mechanisms to accurately map syscall and other event strings from the loaded Falco rules to the `PPM_SC_*` or `PPME_*` enumerations. This enhancement was essential to overcome the challenges inherited from previous mapping processes and improve the efficiency and structure of event parsing.
-- The initial separate enumeration for kernel tracepoints has been merged with the `PPM_SC_*` codes (`sc` now reflecting `scap codes` instead of `syscall codes` only), resulting in a single enumeration. This consolidation sets the groundwork for integrating future LSM (Linux Security Modules) hooks into Falco. By combining these codes, Falco achieves a seamless integration of tracepoint activations and syscall event handling within a unified framework.
 
+- Additional refinements in the `ppm sc API`  have resulted in robust mechanisms to accurately map syscall and other event strings from the loaded Falco rules to the `PPM_SC_*` or `PPME_*` enumerations.\
+  This enhancement was essential to overcome the challenges inherited from previous mapping processes and improve the efficiency and structure of event parsing.
 
-
+- The initial separate enumeration for kernel tracepoints has been merged with the `PPM_SC_*` codes (`sc` now reflecting `scap codes` instead of `syscall codes` only), resulting in a single enumeration.\
+  
+  This consolidation sets the groundwork for integrating future LSM (Linux Security Modules) hooks into Falco. By combining these codes, Falco achieves a seamless integration of tracepoint activations and syscall event handling within a unified framework.
 
 ### Syscall Event Type Extraction from Falco's Rules Expression Language
 
 - In order to extract the corresponding event types, Falco traverses the filter Abstract Syntax Tree (AST) of each rule. The traversal process has been improved for robustness and integrated with the modernized `ppm sc API` by moving it to the underlying Falco `libs`. 
 - Additionally, traversals now include support for mapping the rules event strings to both the `PPM_SC_*` and `PPME_*` codes. These changes have allowed for the resolution of technical debt concerning the mapping of event strings to their respective syscall codes.
+
 - Just to emphasize this once more: Falco now has the capability to support any syscall that is supported by its underlying libraries. This expansion of support allows Falco to monitor and analyze a wider range of syscalls for threat detection purposes (see Falco's [supported syscalls](https://github.com/falcosecurity/libs/blob/master/driver/report.md)).
 
 ### Driver Syscall Push Down Filters
 
 - After mapping the event strings from the rules to their corresponding syscall IDs, we utilize a dedicated eBPF map (in the case of `*bpf*` drivers) or an internal bitmask using the ioctl API (in the case of kernel module) to inject this information into the `sys_enter` and `sys_exit` tracepoints within the driver.
+
 - Due to the triggering of the `sys_enter` and `sys_exit` kernel tracepoints for every syscall, our pushdown filter is designed to efficiently ignore unnecessary syscalls before any data field extraction takes place in our kernel drivers. Once again, Falco operates as a passive monitor of syscalls and does not exert any influence or modify the behavior of the syscalls being monitored.
-- Furthermore, the objective of kernel-side filtering is to minimize the number of events that need to be transferred to userspace via the buffer between kernel and userspace, as well as reduce the number of events that are processed and evaluated against Falco rules in userspace. This filtering allows us to achieve these efficiencies without sacrificing visibility, as the ignored syscalls are not utilized in Falco rules.
-- Spoiler alert: Imagine a monitoring experience where Falco adapts in real-time, intelligently adjusting its capabilities as needed. The `ppm sc API` already allows you to dynamically enable or disable syscalls and tracepoints at runtime. This opens up exciting possibilities for the future of Falco. One day, we envision a truly adaptive monitoring system where Falco can supervise itself and automatically adjust the level of logging verbosity on the fly based on the system's needs.
+
+- Furthermore, the objective of kernel-side filtering is to minimize the number of events that need to be transferred to userspace via the buffer between kernel and userspace, as well as reduce the number of events that are processed and evaluated against Falco rules in userspace.\
+  This filtering allows us to achieve these efficiencies without sacrificing visibility, as the ignored syscalls are not utilized in Falco rules.
+
+  _Spoiler alert:_ Imagine a monitoring experience where Falco adapts in real-time, intelligently adjusting its capabilities as needed. The `ppm sc API` already allows you to dynamically enable or disable syscalls and tracepoints at runtime.\
+This opens up exciting possibilities for the future of Falco. One day, we envision a truly adaptive monitoring system where Falco can supervise itself and automatically adjust the level of logging verbosity on the fly based on the system's needs.
 
 
 ### Userspace libsinsp State Engine
