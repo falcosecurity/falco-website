@@ -1,49 +1,58 @@
 ---
-title: "Operationalize Defensive Capabilities for Container & Cloud Threats With Falco x Tidal"
+title: "Defensive Capabilities for Container & Cloud Threats with Tidal"
+description: "Operationalize Defensive Capabilities for Container & Cloud Threats with Falco/Tidal"
 date: 2023-06-28
 author: Scott Small
 slug: tidal-registry-release
 images:
-  - /blog/tidal-registry-release/images/scarleteel-matrix.png
+  - /blog/tidal-registry-release/images/tidal-registry-release-01.png
 ---
 
-## Introduction
-
-The Sysdig Threat Research Team recently made a significant discovery within a customer environment, unveiling a highly intricate cloud operation known as SCARLETEEL. This operation was responsible for the theft of valuable proprietary data. The attacker's strategy involved exploiting a containerized workload, utilizing it as a springboard for privilege escalation within an AWS account, and ultimately pilfering proprietary software and credentials. Notably, they also made attempts to expand their influence across the organization by leveraging a Terraform state file to access other interconnected AWS accounts.
+Recently, a significant compromise was discovered in a user environment, revealing a fascinating cloud operation called [SCARLETEEL](https://thehackernews.com/2023/03/hackers-exploit-containerized.html). This operation was responsible for the theft of valuable proprietary data. The attacker's strategy involved exploiting a containerized workload, utilizing it as a springboard for privilege escalation within an AWS account, and ultimately pilfering proprietary software and credentials. Notably, they also made attempts to expand their influence across the organization by leveraging a Terraform state file to access other interconnected AWS accounts.
 
 What sets this attack apart from others is its elevated level of sophistication. It originated from a compromised Kubernetes container and propagated into the victim's AWS account. Moreover, the attackers exhibited a deep understanding of AWS cloud mechanisms, including Elastic Compute Cloud (EC2) roles, Lambda serverless functions, and Terraform. It is important to note that their intentions surpassed the typical objectives of a cryptojacking attack, as their primary goal was the theft of proprietary software.
 
-This sophisticated attack underscores the imperative of aligning with MITRE ATT&CK principles for containers and the cloud. By embracing these principles, organizations can gain a better understanding of the intricate security challenges faced by cloud-native systems. Open Source Falco, with its extensive collection of preconfigured rules, offers a valuable resource for addressing the insecure behaviors associated with such attacks.
+**Alignment of Falco and MITRE ATT&CK**
 
-Falco workload/host-based capabilities were recently added to the Tidal Cyber [Product Registry](https://app.tidalcyber.com/vendors). The community now has a greater ability to operationalize the rules while implementing threat-informed defense using Tidal Cyber’s Community Edition, a freely-availably platform that makes threat and adversary behavior research easy. A summary of the capabilities can be found [here](https://app.tidalcyber.com/products/b3a86cef-804b-5176-ba70-9570350f4e8f-Falco). A Technique Set summarizing & visualizing the ATT&CK-mapped SCARLETEEL techniques described here was also added to the Community Edition Community Spotlight [here](https://app.tidalcyber.com/share/be828b0d-2c95-4e30-b93b-f15de00a9606):
+This sophisticated attack underscores the imperative of aligning with MITRE ATT&CK principles for containers and the cloud. By embracing these principles, organizations can gain a better understanding of the intricate security challenges faced by cloud-native systems. The CNCF Falco project, with its extensive collection of preconfigured rules, offers a valuable resource for addressing the insecure behaviors associated with such attacks.
 
-![SCARLETEEL_matrix](images/scarleteel-matrix.png)
+Falco's workload/host-based capabilities were recently added to the Tidal Cyber [Product Registry](https://app.tidalcyber.com/vendors). The community now has a greater ability to operationalize the rules while implementing threat-informed defense using Tidal Cyber's Community Edition, a freely-available platform that makes threat and adversary behavior research easy. A summary of the capabilities can be found [here](https://app.tidalcyber.com/products/b3a86cef-804b-5176-ba70-9570350f4e8f-Falco). A Technique Set summarizing & visualizing the ATT&CK-mapped SCARLETEEL techniques described here was also added to the Community Edition Community Spotlight [here](https://app.tidalcyber.com/share/be828b0d-2c95-4e30-b93b-f15de00a9606):
 
-## Overview
+![SCARLETEEL Matrix](images/tidal-registry-release-01.png)
 
-This infographic shows the main steps in the kill chain. Let’s first show the attack at a high level, then provide greater detail of each state:
+{{% pageinfo color="info" %}}
 
-![SCARLETEEL_overview](https://sysdig.com/wp-content/uploads/image-45.png)
+This attack was originally discovered by the Sysdig Threat Research team, and more details can be found in their [blog documenting SCARLETEEL](https://sysdig.com/blog/cloud-breach-terraform-data-theft/).
 
-Step 1: The attacker gained initial access by exploiting a public-facing service in a self-managed Kubernetes cluster hosted inside an AWS cloud account.
+{{% /pageinfo %}}
 
-Step 2: Once the attacker gained access to the pod, the malware was able to perform two initial actions during execution:
+---
 
-1. Launch a crypto miner in order to make money or provide a distraction.
-2. Obtain credential access through a worker’s temporary credentials in Instance Metadata Service (IMDS) v1 to enumerate and collect information on its behalf using the cluster role permissions.
+## Overview of the Attack
 
-Due to excessive granted permissions, the attacker was able to:
+The following diagram shows the main steps in the kill chain. Let's first show the attack at a high level, then provide greater detail of each state:
 
-1. Enumerate AWS resources.
-2. Find credentials of other identity and access management (IAM) users both set as Lambda environment variables and pushed in plain text to Amazon Simple Storage Service (S3) buckets.
+![SCARLETEEL_overview](images/tidal-registry-release-02.png)
 
-Step 3: The attacker used the credentials found in the previous step to move laterally. They directly contacted the AWS API, further enumerated the account, and proceeded with information gathering and data exfiltration. During this step, they were able to:
+__Step 1__: The attacker gained initial access by exploiting a public-facing service in a self-managed Kubernetes cluster hosted inside an AWS cloud account.
 
-1. Disable CloudTrail logs to evade detection.
-2. Steal proprietary software.
-3. Find the credentials of an IAM user related to a different AWS account by discovering Terraform state files in S3 buckets.
+__Step 2__: Once the attacker gained access to the Pod, the malware was able to perform two initial actions during execution:
 
-Step 4: The attacker used the new credentials to move laterally again, repeating the attack and their kill chain from the other AWS account they found. Fortunately, in this case they were not able to enumerate resources, since all of the AWS API requests they attempted failed due to a lack of permissions.
+  - Launch a crypto miner in order to make money or provide a distraction.
+  - Obtain credential access through a worker's temporary credentials in Instance Metadata Service (IMDS) v1 to enumerate and collect information on its behalf using the cluster role permissions.
+
+  Due to excessive granted permissions, the attacker was able to:
+
+  - Enumerate AWS resources.
+  - Find credentials of other identity and access management (IAM) users both set as Lambda environment variables and pushed in plain text to Amazon Simple Storage Service (S3) buckets.
+
+__Step 3__: The attacker used the credentials found in the previous step to move laterally. They directly contacted the AWS API, further enumerated the account, and proceeded with information gathering and data exfiltration. During this step, they were able to:
+
+  - Disable CloudTrail logs to evade detection.
+  - Steal proprietary software.
+  - Find the credentials of an IAM user related to a different AWS account by discovering Terraform state files in S3 buckets.
+
+__Step 4__: The attacker used the new credentials to move laterally again, repeating the attack and their kill chain from the other AWS account they found. Fortunately, in this case they were not able to enumerate resources, since all of the AWS API requests they attempted failed due to a lack of permissions.
 
 ## Technical Analysis
 
@@ -67,9 +76,9 @@ It is worth noting that while this behavior is not enabled by default, Falco off
 
 This rule can be surfaced in Tidal Community Edition's Product Registry [here](https://app.tidalcyber.com/capability/0a6d8ee2-f655-5ca2-ac25-47dea3047b07-Detect%20outbound%20connections%20to%20common%20miner%20pool%20ports).
 
-Cryptomining is probably the most common example of resource hijacking. However, the purpose of the attack went far beyond cryptomining. Either cryptomining was the attacker’s initial goal and the goal changed once they accessed the victim’s environment, or cryptomining was used as a decoy to evade the detection of data exfiltration.
+Cryptomining is probably the most common example of resource hijacking. However, the purpose of the attack went far beyond cryptomining. Either cryptomining was the attacker's initial goal and the goal changed once they accessed the victim's environment, or cryptomining was used as a decoy to evade the detection of data exfiltration.
 
-During the installation of the cryptominer, the Sysdig team observed a bash script running simultaneously on the container to enumerate and extract additional information in the environment, such as credentials. Since Falco handles system calls, we can get the same, deep level of visibility into running scripts in containers as we do on the host system.
+During the installation of the cryptominer, the threat research team observed a bash script running simultaneously on the container to enumerate and extract additional information in the environment, such as credentials. Since Falco handles system calls, we can get the same, deep level of visibility into running scripts in containers as we do on the host system.
 
 ```yaml
 - rule: Run shell untrusted
@@ -114,7 +123,7 @@ During the installation of the cryptominer, the Sysdig team observed a bash scri
 
 This rule can be surfaced in Tidal Community Edition's Product Registry [here](https://app.tidalcyber.com/capability/fd02337e-cf6b-5523-945e-c6619b9839b6-Run%20shell%20untrusted).
 
-In order to find credentials, the attacker directly accessed IMDS. IMDS v1 is the version used by default when creating older versions of self-managed clusters or EC2 instances in AWS. It’s used to configure and manage machines.
+In order to find credentials, the attacker directly accessed IMDS. IMDS v1 is the version used by default when creating older versions of self-managed clusters or EC2 instances in AWS. It's used to configure and manage machines.
 
 Retrieving AWS temporary security credentials bound to the EC2 instance role from IMDS v1 is a very well-known practice. The attacker was looking to discover the IAM role bound to the worker instance in order to obtain the AccessKeyId, SecretAccessKey, and temporary token.
 
@@ -132,7 +141,7 @@ The attacker targeted both the instance metadata endpoints and what commands wer
 
 This rule can be surfaced in Tidal Community Edition's Product Registry [here](https://app.tidalcyber.com/capability/03578cc7-45a6-5570-8386-2ec8b7c22a9f-Contact%20EC2%20Instance%20Metadata%20Service%20From%20Container).
 
-Once collected, it is possible to use those credentials for a short period of time in order to run operations on behalf of the impersonated IAM role, calling the AWS API directly. Using CloudTrail logs, the Sysdig team could see that the first API calls from the attacker were using the compromised cluster role.
+Once collected, it is possible to use those credentials for a short period of time in order to run operations on behalf of the impersonated IAM role, calling the AWS API directly. Using CloudTrail logs, the threat research team could see that the first API calls from the attacker were using the compromised cluster role.
 
 The attacker ran some AWS actions to gain persistence on the AWS platform, trying to create new users, groups, and bind new access keys to existing IAM users. Since Falco can handle events from AWS CloudTrail, we can easily detect when new users and groups are created under suspicious circumstances.
 
@@ -197,7 +206,7 @@ There were different Lambda functions in the affected AWS account, mainly relate
 
 After obtaining the list of functions, the attacker tried to dig deeper by downloading the Lambda code. Calling the AWS API, they were able to get the code location so that they could download the code that makes up the Lambda. In this case, the Lambda function held proprietary software and the keys needed to execute it.
 
-Using curl or wget commands, the attacker successfully exfiltrated the Lambda code and stole proprietary code and software from the Lambda functions. There was also evidence that the attacker executed the stolen software. They took the time to look at the Lambda function’s environment variables and find additional AWS credentials related to IAM users in the same account. However, any attempts to tamper with the Lambda functions configuration would have been instantly detected by Falco:
+Using curl or wget commands, the attacker successfully exfiltrated the Lambda code and stole proprietary code and software from the Lambda functions. There was also evidence that the attacker executed the stolen software. They took the time to look at the Lambda function's environment variables and find additional AWS credentials related to IAM users in the same account. However, any attempts to tamper with the Lambda functions configuration would have been instantly detected by Falco:
 
 ```yaml
 - rule: Update Lambda Function Code
@@ -249,17 +258,17 @@ Since Falco pre-processes all event data from Cloudtrail, we can also see when C
 
 This rule can be surfaced in the Falco Plugin Registry repository [here](https://github.com/falcosecurity/plugins/blob/master/plugins/cloudtrail/rules/aws_cloudtrail_rules.yaml#LL424C1-L439C25).
 
-As a result of this action, the Sysdig team could not retrieve additional attack evidence. When reviewing account permissions, it is critical to keep the ability to disable or delete security logs to as few users as possible. Deletion shouldn’t even be possible in most situations without a solid backup solution.
+As a result of this action, it wasn't possible to continue retrieving additional attack evidence. When reviewing account permissions, it is critical to keep the ability to disable or delete security logs to as few users as possible. Deletion shouldn't even be possible in most situations without a solid backup solution.
 
 ### Lateral Movement – AWS account
 
 With the new credentials acquired, the attacker restarted their enumeration and information-gathering process to determine whether they could gain additional resources from inside this additional compromised account. In addition, CloudTrail recorded suspicious activities in the connected AWS account mentioned above.
 
-The attacker tried to perform enumeration on different AWS resources in the connected cloud account. Fortunately, the IAM user was very well scoped, so all of the requests failed due to a lack of permissions, leaving just the harmless GetCallerIdentity API, which is permitted by default.
+The attacker tried to perform enumeration on different AWS resources in the connected cloud account. Fortunately, the IAM user was very-well scoped, so all of the requests failed due to a lack of permissions, leaving just the harmless GetCallerIdentity API, which is permitted by default.
 
-### Attack Summary and Conclusion
+## Conclusion
 
-In summary, the SCARLETEEL attack began by exploiting a vulnerable pod and leveraging the associated IAM role's identity. The attacker then proceeded to conduct enumeration, search for sensitive data, and steal proprietary software using the compromised role. Upon discovering new credentials, they used them to establish persistence and attempt to gain further privileges.
+The SCARLETEEL attack began by exploiting a vulnerable Pod and leveraging the associated IAM role's identity. The attacker then proceeded to conduct enumeration, search for sensitive data, and steal proprietary software using the compromised role. Upon discovering new credentials, they used them to establish persistence and attempt to gain further privileges.
 
 Following the detection of the attack, several measures were implemented to secure the environment. These included disabling and removing users' access keys and secret access keys, securing vulnerable applications through audits and penetration tests, restricting access to sensitive S3 buckets with stringent policies, and adopting additional least privilege measures to minimize the attack surface and impede lateral movement within the cloud.
 
