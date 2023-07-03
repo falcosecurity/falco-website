@@ -12,7 +12,7 @@ Today we announce the release of **Falco 0.35.1** 🦅!
 
 Here is a tiny patch release! It addresses some small bugs that will not bother us and our users anymore:
 
-* Bug fix in the plugin framework, wa can now associate a thread ID also to async events so that we can access related juicy information when writing rules! We suggest updating to this version to be able to use all the new capabilities that the new Plugin API has to offer!
+* Bug fix in the plugin framework, we can now associate a thread ID also to async events so that we can access related juicy information when writing rules! We suggest updating to this version to be able to use all the new capabilities that the new Plugin API has to offer!
 * Modern BPF can now be used in least privileged mode without any trouble in COS
 * Driver loader now correctly parses the kernel version of Ubuntu’s kernel flavors, and also supports Debian rt and cloud
 * Solved a rule ordering problem on our default ruleset that caused some rules to be shadowed
