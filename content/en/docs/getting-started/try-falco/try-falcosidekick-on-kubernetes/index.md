@@ -10,7 +10,7 @@ weight: 40
 
 ### 0.1 Environment
 
-This environment requires of a Kubernetes environment of at least 1 node. 
+This environment requires a Kubernetes environment of at least 1 node. 
 
 ## 1. Deploying Falcosidekick
 
