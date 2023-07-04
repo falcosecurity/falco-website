@@ -1,7 +1,7 @@
 ---
 Title: "Adaptive Syscalls Selection in Falco"
 Description: "Adaptive syscalls selection with the new base_syscalls option"
-Date: 2023-06-26
+Date: 2023-07-04
 Author: Melissa Kilby, Roberto Scolaro, Federico Di Pierro
 slug: adaptive-syscalls-selection
 images:
