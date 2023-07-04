@@ -1,0 +1,79 @@
+#glossary {
+
+    #tag-container {
+
+        float: left;
+        width: 100%;
+        border-top: 1px solid #8c8c8c;
+        border-bottom: 1px solid #8c8c8c;
+        padding: 7px 0px;
+        margin: 25px 0px;
+    }
+
+    .tag-description {
+        text-align: center;
+        margin: 5px 0px;
+    }
+
+    .preview-text p {
+        display: inline;
+    }
+
+    .permalink {
+        background-image: url(../images/link.png);
+        background-repeat: no-repeat;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 0;
+        color: transparent;
+        width: 17px;
+        height: 17px;
+        margin-left: 10px;
+    }
+
+    .term-anchor {
+        display: block;
+        position: relative;
+        top: -90px;
+        visibility: hidden;
+    }
+
+    .tag-option {
+        padding: 5px 12px 5px 12px;
+        margin: 10px;
+        float: left;
+    }
+
+    .canonical-tag {
+        background-color: inherit;
+        color: $secondary;
+        font-weight: 700;
+        // border-radius: 5px;
+        // border-radius: 1px solid;
+	//border-color: #FFF;
+    }
+
+    .canonical-tag a {
+        color: inherit;
+	font-weight: 400;
+        text-decoration: none !important;
+    }
+
+    .active-tag {
+        background-color: $primary;
+        color: #FFF;
+    }
+
+    .invisible {
+        visibility: hidden;
+    }
+
+    .hide {
+        display: none !important;
+    }
+
+    .no-underline {
+        text-decoration: none !important;
+    }
+  
+}
