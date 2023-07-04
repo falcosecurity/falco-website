@@ -50,15 +50,12 @@ You may ask yourself why Falco has been monitoring a predetermined set of common
 
 Initially, tracing a predefined set of syscalls provided a solid foundation for Falco's functionality. However, with the growing computational workload on servers and systems, it became necessary to adopt a new and more efficient approach to optimize performance.
 
-## New Configuration Options
+## Adaptive Syscall Selection
 
-Falco continues to operate as usual, adhering to its standard behavior. Starting with Falco version 0.35.0, the changes primarily impact the handling of syscall events and the selection of specific syscalls to be monitored and analyzed during live captures.
+Adaptive syscall selection is a new feature that adds the ability to select which syscalls to monitor. This empowers users with granular control, optimizing system performance by reducing CPU load through selective syscall monitoring. Adaptive syscall selection was added to Falco on version 0.35, and, by default, it doesn't change Falco behavior from a high-level view. In other words, by default, Falco continues to operate as usual.
 
-The behavior of Falco will vary depending on the event source, with changes only affecting live syscall events:
-
-- **non syscall event source**: Falco behaves as usual, where for example container events are retrieved and processed from the container runtime, just like before.
-- **syscall event source**:
-  1. Falco determines a base set of syscalls to monitor. This can be either the default minimum set known as the "sinsp state set" (automatically determined by the underlying libsinsp library) to maintain state consistency and stability, or a customized set of syscalls defined by the user via the new `base_syscalls` configuration.
+The changes primarily impact the handling of syscall events and the selection of specific syscalls to be monitored and analyzed. The current changes only affect live syscall events. The sycall selection is now done as follows:
+  1. Falco determines a base set of syscalls to monitor. This can be either the default minimum set known as the "sinsp state set" (automatically determined by the underlying libsinsp library to maintain state consistency and stability), or a customized set of syscalls defined by the user via the new `base_syscalls` configuration (discussed later).
   2. The final set of syscalls selected by Falco is determined as the union of two components: the base set of syscalls computed in the previous step, and the syscalls specified in the loaded rules.
   3. If the `-A` flag is not enabled, performance-heavy syscalls, such as I/O-intensive syscalls, are excluded from the set of syscalls, and a warning is shown to the user.
   4. Falco configures the kernel driver with the chosen set of syscalls and only monitors syscalls that match the selected syscalls on the kernel side.
@@ -84,7 +81,9 @@ Adaptive syscall selection does not apply to capture files and only affects the 
   </img>
 </a><br><br>       
 
-In detail, the `base_syscalls` section provides two configuration options:
+## New Configuration Options
+
+As discussed above, Falco 0.35 allows users to define a customized base set of syscalls to monitor. This is done via the `base_syscalls` setting, which provides two configuration options:
 
 - The `custom_set` option enables users to define a custom list of syscalls to monitor in Falco in addition to the syscalls from each Falco rule. It supports both positive notation, where a syscall is specified to be activated, and negative notation, indicated by `!` followed by the syscall name, to deactivate a syscall even if it is used in the ruleset. This flexibility allows users to have precise control over which syscalls are included or excluded in the `sys_enter` and `sys_exit` tracepoints, ensuring a tailored configuration that aligns with their specific requirements, use cases and cost budget.
 
