@@ -387,66 +387,6 @@ theme = "default"
 [params.print]
 disable_toc = false
 
-# Language definitions.
-
-[languages]
-[languages.en]
-title = "Falco"
-description = "Runtime Security "
-languageName ="English"
-# Weight used for sorting.
-weight = 1
-languagedirection = "ltr"
-
-[languages.zh-cn]
-title = "Falco"
-description = "运行时安全"
-languageName = "中文 Chinese"
-weight = 2
-contentDir = "content/zh-cn"
-languagedirection = "ltr"
-
-[languages.zh-cn.params]
-time_format_blog = "2006.01.02"
-language_alternatives = ["en"]
-
-
-[languages.ko]
-title = "Falco"
-description = "런타임 보안"
-languageName = "한국어 Korean"
-weight = 3
-contentDir = "content/ko"
-languagedirection = "ltr"
-
-[languages.ko.params]
-time_format_blog = "2006.01.02"
-language_alternatives = ["en"]
-
-[languages.ja]
-title = "Falco"
-description = "ランタイムセキュリティ"
-languageName = "日本語 Japanese"
-weight = 4
-contentDir = "content/ja"
-languagedirection = "ltr"
-
-[languages.ja.params]
-time_format_blog = "2006.01.02"
-language_alternatives = ["en"]
-
-[languages.ml]
-title = "Falco"
-description = "റൺടൈം സെക്യൂരിറ്റി"
-languageName = "മലയാളം Malayalam"
-weight = 4
-contentDir = "content/ml"
-languagedirection = "ltr"
-
-[languages.ml.params]
-time_format_blog = "2006.01.02"
-language_alternatives = ["en"]
-
 # To edit the list of Adopters or Training Providers, go to `./params.toml`
 
 [params.training]
