@@ -13,7 +13,7 @@
 
 വ്യത്യസ്ത APIകൾക്കുള്ള കൂടുതൽ ഉദാഹരണങ്ങൾ  [client-go](https://github.com/falcosecurity/client-go) റെപ്പോസിറ്റോറിയിലെ  [examples](https://github.com/falcosecurity/client-go/tree/master/examples) ഡയറക്റ്ററിയിൽ സ്ഥിതിചെയ്യുന്നു .
 
-1. സർട്ടിഫിക്കറ്റുകൾ `/tmp/{client.crt,client.key,ca.crt}` എന്നതിലെ ഉദാഹരണത്തിൻറെ പാതയിൽ ഉണ്ട് എന്ന് ഉറപ്പുവരുത്തുക.
+1. സർട്ടിഫിക്കറ്റുകൾ `/etc/falco/certs/{client.crt,client.key,ca.crt}` എന്നതിലെ ഉദാഹരണത്തിൻറെ പാതയിൽ ഉണ്ട് എന്ന് ഉറപ്പുവരുത്തുക.
 
 2. [client-go](https://github.com/falcosecurity/client-go) റൂട്ട് ഡയറക്റ്ററിയിൽ, ഇത് റൺ ചെയ്യുക:
 
