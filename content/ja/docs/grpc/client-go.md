@@ -10,7 +10,7 @@ weight: 2
 
 [完全に機能する例]（(https://github.com/falcosecurity/client-go/blob/master/examples/output/main.go)を参照して、GoクライアントがFalco gRPC出力APIに接続する方法と、イベントをJSONで表示します。
 
-1. 例のパスの`/tmp/{client.crt,client.key,ca.crt}`に証明書があることを確認します。
+1. 例のパスの`/etc/falco/certs/{client.crt,client.key,ca.crt}`に証明書があることを確認します。
 
 2. [client-go](https://github.com/falcosecurity/client-go)ルートディレクトリから、次のコマンドを実行します：
 

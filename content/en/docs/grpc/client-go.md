@@ -14,7 +14,7 @@ Refer to the [fully-functional example](https://github.com/falcosecurity/client-
 
 Additional examples for various APIs are located in the [examples](https://github.com/falcosecurity/client-go/tree/master/examples) directory of the [client-go](https://github.com/falcosecurity/client-go) repository.
 
-1. Ensure that you have the certificates in the example's path at `/tmp/{client.crt,client.key,ca.crt}`.
+1. Ensure that you have the certificates in the example's path at `/etc/falco/certs/{client.crt,client.key,ca.crt}`.
 
 2. In the [client-go](https://github.com/falcosecurity/client-go) root directory, run:
 
