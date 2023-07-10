@@ -53,18 +53,21 @@ The local subnet network connection rule is designed to alert whenever a contain
 When Falco detects a network connection outside the local subnet, it generates an alert or takes a defined action, such as logging the event, sending notifications to security personnel, or triggering automated responses. This allows security teams to identify and investigate any suspicious activities that violate the separation of duties between development/test and production environments.
 
 ```
-- rule: Launch Privileged Container
-  desc: Detect the initial process started in a privileged container.
-        Exceptions are made for known trusted images.
+- rule: Network Connection outside Local Subnet
+  desc: Detect traffic to image outside local subnet.
   condition: >
-    container_started and container
-    and container.privileged=true
-    and not falco_privileged_containers
-    and not user_privileged_containers
-    and not redhat_image
-  output: Privileged container started (user=%user.name user_loginuid=%user.loginuid command=%proc.cmdline)
-  priority: INFO
-  tags: [container, privilege_escalation, lateral_movement, T1610, PCI_DSS_10.2.5]
+    inbound_outbound and
+    container and
+    not network_local_subnet and
+    k8s.ns.name in (namespace_scope_network_only_subnet)
+  enabled: false
+  output: >
+    Network connection outside local subnet
+    (command=%proc.cmdline pid=%proc.pid connection=%fd.name user=%user.name user_loginuid=%user.loginuid container_id=%container.id
+     image=%container.image.repository namespace=%k8s.ns.name
+     fd.rip.name=%fd.rip.name fd.lip.name=%fd.lip.name fd.cip.name=%fd.cip.name fd.sip.name=%fd.sip.name)
+  priority: WARNING
+  tags: [container, network, mitre_discovery, PCI_DSS_6.4.2]
 ```
 
 By implementing this Falco rule, organizations can ensure that containers in development/test environments adhere to the principle of isolation and prevent potential security breaches or data leaks. It provides an additional layer of security by actively monitoring and alerting on any network connections that violate the defined boundaries, thus aligning with PCI control 6.4.2 requirements.
