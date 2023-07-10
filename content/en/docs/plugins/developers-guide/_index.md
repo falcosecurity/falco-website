@@ -2,7 +2,7 @@
 title: Falco Plugins Developers Guide
 linktitle: Developers Guide
 description: Start writing your own Falco plugins
-weight: 40
+weight: 10
 aliases:
     - /docs/plugins/developers_guide/
 ---
@@ -43,7 +43,7 @@ Here is a high level overview of how the plugin framework uses API functions to 
 
 In order to abstract the complexity related with the low-level details of plugin development, the Falcosecurity organization provides a maintains SDKs to make the life of developers easier. Using an SDK is not mandatory but highly encouraged, and should be the way to go for almost all use cases.
 
-So far, only the [SDK for the Go language](https://github.com/falcosecurity/plugin-sdk-go) is production-ready. Please check the [Go SDK walkthrough section](/docs/plugins/go-sdk-walkthrough) for in-depth details.
+So far, only the [SDK for the Go language](https://github.com/falcosecurity/plugin-sdk-go) is production-ready. Please check the [Go SDK walkthrough section](/docs/reference/plugins/go-sdk-walkthrough) for in-depth details.
 ### API Versioning
 
 The plugins API is versioned with a [semver](https://semver.org/)-style version string. The plugins framework checks the plugin's required api version by calling the `plugin_get_required_api_version` API function. In order for the framework to load the plugin, the major number of the plugin framework must match the major number in the version returned by `plugin_get_required_api_version`. Otherwise, the plugin is incompatible and will not be loaded.
@@ -78,9 +78,9 @@ For example, assume some plugin returned a sample of a metric in events, and the
 
 A question to ask when deciding what to put in an event is "if this were written to a `.scap` capture file and replayed, would this plugin return the same values for fields as it did when the events were first generated?".
 
-Alternatively, the plugin can leverage access to [state tables](/docs/plugins/plugin-api-reference/#state-tables-api) for extracting pieces of information not contained in an event. In such a case, the best practice is for the plugin to implement the [event parsing capability](/docs/plugins/plugin-api-reference/#event-parsing-capability-api) and update its internal state when parsing the events of a given data stream. Functional internal state must not be updated when extracting fields, if not in the case of simple cache updates oriented to performance optimizations. Then, when extracting fields the plugin can read information from both the event's payload and the state it has access to, either owned by itself or from another component registered in the framework.
+Alternatively, the plugin can leverage access to [state tables](/docs/reference/plugins/plugin-api-reference/#state-tables-api) for extracting pieces of information not contained in an event. In such a case, the best practice is for the plugin to implement the [event parsing capability](/docs/reference/plugins/plugin-api-reference/#event-parsing-capability-api) and update its internal state when parsing the events of a given data stream. The functional internal state must not be updated when extracting fields unless they are simple cache updates oriented to performance optimizations. Then, at the extraction, the plugin can read information from the event's payload and the state it has access to, either owned by itself or from another component registered in the framework.
 
-However, the fundamental question when handling plugin's state updates is always whether that state must be reproducible or not in case the event stream is replayed through a capture file. Given that in most case that is a requirement, the plugin must consider also implementing the [async events capability](/docs/plugins/plugin-api-reference/#async-events-capability-api) for being able to inject an async synthetic event in a live data stream, with the purpose of recording that and make it available for file capture. Those async events will potentially be replayed and the plugin must support parsing them in its event parsing capability functions to reproduce the state changes represented through them.
+However, the fundamental question when handling the plugin's state updates is always whether that state must be reproducible or not in case the event stream is replayed through a capture file. Given that in most cases that is a requirement, the plugin must consider also implementing the [async events capability](/docs/reference/plugins/plugin-api-reference/#async-events-capability-api) for being able to inject an async synthetic event in a live data stream, to record that and make it available for file capture. The plugin needs to be capable of parsing those async events in its event parsing functions to potentially replay them and reproduce the corresponding state changes.
 
 ### Plugin Authoring Lifecycle
 
