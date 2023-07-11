@@ -4,6 +4,8 @@ date: 2023-06-27
 author: Rohith Raju
 slug: gsoc-2023-1st-week
 tags: ["Gsoc","Mentorship"]
+images:
+  - /blog/gsoc2023/images/falco-gsoc-featured.jpg
 ---
 
 Hello Folks!, my name is [Rohith](https://github.com/Rohith-Raju), and I am thrilled to share my experiences and reflections on the first week of the Google Summer of Code (GSoC) period. 
