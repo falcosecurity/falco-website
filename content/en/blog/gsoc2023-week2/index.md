@@ -1,10 +1,12 @@
 ---
 title: GSoC Week 2 updates
-date: 2023-07-06
+date: 2023-07-11
 author: Rohith Raju
 tags: ["Gsoc","week2","Mentorship"]
 author: Rohith Raju
-slug: gsoc-2023
+slug: gsoc-2023-2nd-week
+images:
+  - /blog/gsoc2023/images/falco-gsoc-featured.jpg
 ---
 
 Alright, it's week 2 and I've got some updates. This week I learnt the different nuances and difficulties that comes while trying to compile a project for a new
