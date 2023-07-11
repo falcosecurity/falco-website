@@ -22,7 +22,7 @@ So, Falco's core logic is inside the [libs](https://github.com/falcosecurity/lib
 
 We need to filter out libraries that won't be used and can't be compiled to wasm i.e kubernetes, grpc etc. There were a lot of modifications done, most of which are pre-processor checks for emscripten. Emscripten provies tools like `emcmake` and `emmake` to work with projects that are integrated using `cmake` build system. After that we wrote a github workflow that can sucessfully compile libs to wasm. It looks something like this. 
 
-```
+```yaml
  build-libs-emscripten:
     name: build-libs-emscripten 
     runs-on: ubuntu-latest
