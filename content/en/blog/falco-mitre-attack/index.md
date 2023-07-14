@@ -142,7 +142,7 @@ When we bring all these elements together, our rule takes the following form:
   </img>
 </a><br><br>
 
-The team at Cloud Defense developed a Python Script that simulates an attack scenario by emulating system changes. ['Link To The Script'](https://github.com/CloudDefenseAI/falco_extended_rules/blob/master/scripts/test/inhibit_system_recovery.py). To observe the corresponding output in the falco logs, you can try incorporating this rule into your [falco_rules.local.yaml](https://falco.org/docs/rules/default-custom/#local-rules-file) file and running the script. 
+The team at CloudDefense.AI developed a Python Script that simulates an attack scenario by emulating system changes. ['Link To The Script'](https://github.com/CloudDefenseAI/falco_extended_rules/blob/master/scripts/test/inhibit_system_recovery.py). To observe the corresponding output in the falco logs, you can try incorporating this rule into your [falco_rules.local.yaml](https://falco.org/docs/rules/default-custom/#local-rules-file) file and running the script. 
 
 It's important to note that certain system calls are not instantiated by default in falco, so you will need to execute falco with all syscalls instantiated to capture them. This can be achieved by running `falco -A`.
 
