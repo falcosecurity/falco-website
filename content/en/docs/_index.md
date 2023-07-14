@@ -10,7 +10,7 @@ The Falco Project is an open source runtime security tool originally built by [S
 
 ## What does Falco do?
 
-Falco uses system calls to monitor system's activity, by:
+Falco uses system calls to monitor a system's activity, by:
 
  - Parsing the Linux system calls from the kernel at runtime
  - Asserting the stream against a powerful rules engine
