@@ -10,13 +10,15 @@ The Falco Project is an open source runtime security tool originally built by [S
 
 ## What does Falco do?
 
-Falco uses system calls to secure and monitor a system, by:
+Falco uses system calls to monitor system's activity, by:
 
  - Parsing the Linux system calls from the kernel at runtime
  - Asserting the stream against a powerful rules engine
  - Alerting when a rule is violated
 
- For more information, see Falco [Rules](rules).
+For more information, see Falco [Rules](rules).
+
+Falco's monitoring capabilities are not limited to system calls as it can be extended via [plugins](plugins) to ingest data from many more types of sources.
 
 ## What does Falco check for?
 
@@ -54,7 +56,7 @@ Alerts are configurable downstream actions that can be as simple as logging to `
 
 ## What are the Components of Falco?
 
-Falco is composed of three main components:
+Falco is composed of several main components:
 
  - Userspace program - is the CLI tool `falco` that you can use to interact with Falco. The userspace program handles signals, parses information from a Falco driver, and sends alerts.
 
@@ -71,5 +73,6 @@ Currently, Falco supports the following drivers:
 
  - Plugins - allow users to extend the functionality of falco libraries/falco executable by adding new event sources and new fields that can extract information from events. For more information, see [Plugins](plugins).
 
+## What are the ecosystem projects that can interact with Falco?
 
-
+Apart from the Falco core projects, the Falco organization also maintains and distributes ecosystem projects that help adopters get the most out of Falco. To learn more, visit the [Falco Evolution repositories](https://github.com/falcosecurity/evolution/#repositories) list. For example, the [falcosidekick](https://github.com/falcosecurity/falcosidekick) project makes it easier to output Falco events to many applications and channels, while the [falco-exporter](https://github.com/falcosecurity/falco-exporter) tool is used to integrate Falco with Prometheus.
