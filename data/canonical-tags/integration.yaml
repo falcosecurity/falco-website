@@ -1,0 +1,3 @@
+id: integration
+name: Integration
+description: Terms related to Falco integration capabilities to consume logs and send alerts.
