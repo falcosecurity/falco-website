@@ -114,13 +114,15 @@ For further information, please refer to the Falco configuration file and naviga
 
 {{% pageinfo color="info" %}}
 
-If all of this sounds confusing or unclear, the best way to gain a deeper understanding of this new feature is through hands-on experimentation. By actively exploring and testing the feature, you can observe firsthand how it can enhance the performance of your deployment. Also, you can test it live in this interactive environment that we have prepared for you. 
+If all of this sounds confusing or unclear, the best way to gain a deeper understanding of this new feature is through hands-on experimentation. By actively exploring and testing the feature, you can observe firsthand how it can enhance the performance of your deployment.
+
+{{% /pageinfo %}}
+
+Also, you can test it live in this interactive environment that we have prepared for you. 
 
 Click on it to start playing with it 🎮
 
-<a target="_blank" href="https://play.instruqt.com/embed/sysdig/tracks/falco-adaptive-syscalls?token=em_ng2XK3hUZCl4VnTm"><img src="images/falco-adaptive-syscall-lab.png"></a>
-
-{{% /pageinfo %}}
+<a target="_blank" href="https://play.instruqt.com/embed/sysdig/tracks/falco-adaptive-syscalls?token=em_ng2XK3hUZCl4VnTm"><img src="images/falco-adaptive-syscalls-selection-lab.png"></a>
 
 If you wish to examine the final set of syscalls that will be used by Falco on your own envinronment, you can print them to the STDOUT by including the `-o "log_level=debug" -o "log_stderr=true" --dry-run` args during a dry run of Falco. By utilizing this option, you can gain valuable insights into the selected syscalls, aiding in troubleshooting and verifying the configuration.
 
