@@ -12,5 +12,4 @@ tags:
 Rules are conditions under which an {{< glossary_tooltip text="alert" term_id="alerts" >}} should be generated.
 
 <!--more--> 
-
 A rule is accompanied by a descriptive output string that is sent with the {{< glossary_tooltip text="alert" term_id="alerts" >}}.

@@ -12,4 +12,4 @@ tags:
 The ring buffer is a memory buffer that behaves as if it had a circular shape, used for FIFO (first in, first out).
 
 <!--more--> 
-The ring buffer is a memory buffer that behaves as if it had a circular shape, used for FIFO (first in, first out). It uses to pass the events from the driver (kernel space) to the library libscap (user space)
+It uses to pass the events from the driver (kernel space) to the library libscap (user space)

@@ -12,5 +12,5 @@ tags:
 Used to describe the .ko object that would be loaded into the {{< glossary_tooltip text="kernel" term_id="kernel" >}} as a potentially risky {{< glossary_tooltip text="kernel module" term_id="kernel-module" >}}.
 
 <!--more--> 
-Used to describe the .ko object that would be loaded into the {{< glossary_tooltip text="kernel" term_id="kernel" >}} as a potentially risky {{< glossary_tooltip text="kernel module" term_id="kernel-module" >}}. This is one option used to pass {{< glossary_tooltip text="kernel" term_id="kernel" >}} events up to userspace for {{< glossary_tooltip text="Falco" term_id="falco" >}} to consume. Sometimes this word is incorrectly used to refer to a {{< glossary_tooltip text="probe" term_id="probes" >}}.
+This is one option used to pass {{< glossary_tooltip text="kernel" term_id="kernel" >}} events up to userspace for {{< glossary_tooltip text="Falco" term_id="falco" >}} to consume. Sometimes this word is incorrectly used to refer to a {{< glossary_tooltip text="probe" term_id="probes" >}}.
 

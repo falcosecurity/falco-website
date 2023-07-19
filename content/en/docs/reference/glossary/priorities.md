@@ -12,4 +12,4 @@ tags:
 Every Falco {{< glossary_tooltip text="rule" term_id="rules" >}} has a priority which indicates how serious a violation of the {{< glossary_tooltip text="rule" term_id="rules" >}} is.
 
 <!--more-->
-Every Falco {{< glossary_tooltip text="rule" term_id="rules" >}} has a priority which indicates how serious a violation of the {{< glossary_tooltip text="rule" term_id="rules" >}} is. This is similar to what we know as the severity of a syslog message. The priority is included in the message/JSON output/etc.
+This is similar to what we know as the severity of a syslog message. The priority is included in the message/JSON output/etc.
