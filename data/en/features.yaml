@@ -5,7 +5,7 @@
   -  Uses eBPF to monitor  system activity for adverse behavior.
   -  Integrated with Kubernetes, so you can protect your infrastructure at scale.
   -  Use plugins to monitor cloud services such as GitHub, Okta, or AWS Cloudtrail.
-- title: Real Time Protection
+- title: Real Time Detection
   description: Falco provides streaming detection of unexpected behavior, configuration changes, and attacks.
   icon: /icons/shield-fill.svg
   features: 
