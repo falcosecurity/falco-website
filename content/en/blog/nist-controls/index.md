@@ -14,9 +14,9 @@ The NIST organization, a non-regulatory federal agency in the United States, pla
 
 It is worth noting that NIST 800-171 closely aligns with the NIST 800-53 framework. While the latter framework outlines security controls applicable to federal agencies and their contractors, NIST 800-171 specifically addresses the management of CUI, ensuring its protection and confidentiality within non-federal systems and organizations.
 
-The inception of NIST 800-171 can be traced back to Executive Order 13556, signed by President Obama in 2010, which aimed to enhance the protection of CUI within federal agencies. The goal was to establish a standardized policy for data sharing and transparency across all agencies. 
+The inception of NIST 800-171 can be traced back to [Executive Order 13556](https://obamawhitehouse.archives.gov/the-press-office/2010/11/04/executive-order-13556-controlled-unclassified-information), signed by President Obama in 2010, which aimed to enhance the protection of CUI within federal agencies. The goal was to establish a standardized policy for data sharing and transparency across all agencies. 
 
-In the wake of significant breaches in government systems, most notably the 2020 United States federal government data breach that involved the exploitation of U.S. supply chain firms such as Microsoft, SolarWinds, and VMware to gain unauthorized access to federal systems, has exemplified the importance of strong cybersecurity controls at the federal level.
+In the wake of significant breaches in government systems, most notably the [2020 United States federal government data breach](https://en.wikipedia.org/wiki/2020_United_States_federal_government_data_breach) that involved the exploitation of U.S. supply chain firms such as Microsoft, SolarWinds, and VMware to gain unauthorized access to federal systems, has exemplified the importance of strong cybersecurity controls at the federal level.
 
 While delving into the extensive history of the NIST framework is beyond the scope of this article, we will focus on explaining the requirements of NIST 800-171 and explore how the open-source tool Falco can be utilized to detect potential control failures in cloud-native systems.
 
