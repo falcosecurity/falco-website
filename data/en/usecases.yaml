@@ -1,12 +1,20 @@
-- title: Container Security
+- title: Threat Detection
   description: Detect malicious behavior in containerized applications, no matter what scale, using the power of eBPF.
-  url: /about/use-cases/#protect-containers-kubernetes-and-cloud-native-applications
-- title: Host Security
-  description: Oversee your applications' behavior in real time wherever they run, whether bare metal or VMs.
-  url: /about/use-cases/#secure-your-whole-machine-by-instrumenting-the-operating-system
-- title: Kubernetes Security
-  description: Falco is Kubernetes-compatible, helping you instantly detect suspicious activity across the control plane.
-  url: /about/use-cases/#detect-and-alert-on-suspicious-behavior-in-your-cloud-environments
-- title: Cloud Security
-  description: Detect intrusions in real time across your cloud, from AWS, GCP or Azure, to Okta, Github and beyond.
-  url: /about/use-cases/#protect-your-organization-across-the-cloud
+  url: /about/use-cases/
+- title: Regulatory Compliance
+  description: Stay compliant in cloud-native systems with Falco's intelligent monitoring and rule-based detection.
+  url: /about/use-cases/
+
+
+# - title: Container Security
+#   description: Detect malicious behavior in containerized applications, no matter what scale, using the power of eBPF.
+#   url: /about/use-cases/#protect-containers-kubernetes-and-cloud-native-applications
+# - title: Host Security
+#   description: Oversee your applications' behavior in real time wherever they run, whether bare metal or VMs.
+#   url: /about/use-cases/#secure-your-whole-machine-by-instrumenting-the-operating-system
+# - title: Kubernetes Security
+#   description: Falco is Kubernetes-compatible, helping you instantly detect suspicious activity across the control plane.
+#   url: /about/use-cases/#detect-and-alert-on-suspicious-behavior-in-your-cloud-environments
+# - title: Cloud Security
+#   description: Detect intrusions in real time across your cloud, from AWS, GCP or Azure, to Okta, Github and beyond.
+#   url: /about/use-cases/#protect-your-organization-across-the-cloud
