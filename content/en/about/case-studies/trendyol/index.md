@@ -1,5 +1,5 @@
 ---
-title: GitOps your Falco Rules
+title: Trendyol Case Study
 date: 2023-07-31
 author: Emin Aktas, Furkan Türkal, Vicente J. Jiménez Miras
 slug: trendyol.com
