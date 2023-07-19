@@ -47,7 +47,9 @@
             {{ T "layouts_docs_glossary_aka" }}:<i>{{ delimit . ", " }}</i>
             <br>
             {{ end }}
-            <span class="preview-text">{{ .Summary }} <a href="javascript:void(0)" class="click-controller no-underline" data-target="{{ .Params.id }}">[+]</a></span>
+            {{ $more := gt (.Content | strings.TrimPrefix .Summary | len ) 0 }}
+            <span class="preview-text">{{ .Summary }}
+                    {{if $more }}<a href="javascript:void(0)" class="click-controller no-underline" data-target="{{ .Params.id }}">[+]</a></span>{{ end }}
             <div id="{{ .Params.id }}" class="hide">
                 {{ .Content | strings.TrimPrefix .Summary | safeHTML }}
             </div>
