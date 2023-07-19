@@ -1,6 +1,6 @@
 {{ $data := (index site.Data site.Language.Lang).usecases }}
 
-<div class="grid-1 grid-lg-4 gap-3">
+<div class="grid-1 grid-lg-{{ len $data }} gap-3">
   {{ range $index, $item := $data }}
   <div class="use-cases-item">
     <a href="{{ .url }}" class="d-flex align-items-baseline text-decoration-none">
