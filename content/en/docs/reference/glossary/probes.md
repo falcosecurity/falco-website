@@ -12,4 +12,4 @@ tags:
 Used to describe the .o object that would be dynamically loaded into the {{< glossary_tooltip text="kernel" term_id="kernel" >}} as a secure and stable {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}}.
 
 <!--more--> 
-Used to describe the .o object that would be dynamically loaded into the {{< glossary_tooltip text="kernel" term_id="kernel" >}} as a secure and stable {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}}. This is one option used to pass kernel events up to {{< glossary_tooltip text="userspace" term_id="user-space" >}} for Falco to consume. Sometimes this word is incorrectly used to refer to a {{< glossary_tooltip text="module" term_id="kernel-module" >}}.
+This is one option used to pass kernel events up to {{< glossary_tooltip text="userspace" term_id="user-space" >}} for Falco to consume. Sometimes this word is incorrectly used to refer to a {{< glossary_tooltip text="module" term_id="kernel-module" >}}.

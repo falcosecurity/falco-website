@@ -9,6 +9,7 @@ aka:
 tags:
 - extension
 - integration
+- event-source
 ---
 A dynamic shared library (a .so file) that conforms to a documented API and allows to extend the possible inputs for {{< glossary_tooltip text="Falco" term_id="falco" >}}.
 

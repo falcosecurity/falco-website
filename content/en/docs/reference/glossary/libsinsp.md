@@ -9,7 +9,7 @@ aka:
 tags:
 - architecture
 ---
-libsinsp aka library for System INSPection receives the events from the {{< glossary_tooltip text="libscap" term_id="libscap" >}} and enriches them with machine states.
+libsinsp aka library for System INSPection receives the events from {{< glossary_tooltip text="libscap" term_id="libscap" >}} and enriches them with machine states.
 
 <!--more-->
 Ref: https://github.com/falcosecurity/libs
