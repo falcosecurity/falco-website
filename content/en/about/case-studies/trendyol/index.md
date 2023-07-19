@@ -2,8 +2,23 @@
 title: GitOps your Falco Rules
 date: 2023-07-31
 author: Emin Aktas, Furkan Türkal, Vicente J. Jiménez Miras
-slug: trendyol-falco-fluentbit-logs-pipeline
+slug: trendyol.com
 ---
+
+{{< blocks/content content="html" wrap="col" >}}
+
+<div>
+  <img style="width: 50%; margin-left: 25%;"
+       alt="Trendyol Logo"
+       src="images/Trendyol-logo.svg" >
+</div>
+
+<div style="font-weight: 700; font-size: 3rem; text-align: center;">
+    <p>Threat Hunting at Scale:<br>
+       Auditing Hundreds of Clusters with Falco</p>
+</div>
+
+{{< /blocks/content >}}
 
 {{< blocks/content wrap="col" >}}
 
