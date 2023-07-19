@@ -13,4 +13,4 @@ tags:
 A source {{< glossary_tooltip text="plugin" term_id="plugins" >}} provides a new event source.
 
 <!--more--> 
-A source {{< glossary_tooltip text="plugin" term_id="plugins" >}} provides a new event source. It has the ability to "open" and "close" a session that provides events. A source plugin can also be an {{< glossary_tooltip text="extractor" term_id="extractor-plugins" >}}.
+It has the ability to "open" and "close" a session that provides events. A source plugin can also be an {{< glossary_tooltip text="extractor" term_id="extractor-plugins" >}}.

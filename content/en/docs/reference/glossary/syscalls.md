@@ -4,14 +4,15 @@ id: syscalls
 date: 2023-07-17
 full_link: https://man7.org/linux/man-pages/man2/syscalls.2.html
 short_description: >
-  Syscalls are for system calls, the way to communicate with the kernel.
+  Syscalls stands for system calls, a way to request a service from the running kernel.
 aka:
 tags:
 - fundamental
+- event-source
 ---
-Syscalls are for system calls, the way to communicate with the {{< glossary_tooltip text="kernel" term_id="kernel" >}}.
+  Syscalls stands for system calls, a way to request a service from the running {{< glossary_tooltip text="kernel" term_id="kernel" >}}.
 
 <!--more--> 
-Syscalls are system calls, the way that you or your applications can make requests from user space to the Linux {{< glossary_tooltip text="kernel" term_id="kernel" >}} to access the resources (cpu, memory, disk, network, …).
+Syscalls are used by the applications to make requests from user space to the Linux {{< glossary_tooltip text="kernel" term_id="kernel" >}} to access the resources (cpu, memory, disk, network, …).
 
 Ref: https://man7.org/linux/man-pages/man2/syscalls.2.html
