@@ -11,6 +11,10 @@ archived_version: false
 
 version: v0.35.1
 
+# The version of the default rules set
+# Keep it aligned with the version of Falco for compatibility
+rulesversion: 2.0.0
+
 # The archived versions of the docs available for reference.
 # Used in the Releases menu, as well as in the Available Documentation Versions
 

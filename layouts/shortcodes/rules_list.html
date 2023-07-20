@@ -1,0 +1,208 @@
+{{- $stableURL :=  printf "https://raw.githubusercontent.com/falcosecurity/rules/falco-rules-%s/rules/falco_rules.yaml" .Site.Params.rulesversion -}}
+{{- $sandboxURL :=  printf "https://raw.githubusercontent.com/falcosecurity/rules/falco-rules-%s/rules/falco-sandbox_rules.yaml" .Site.Params.rulesversion -}}
+{{- $incubatingURL :=  printf "https://raw.githubusercontent.com/falcosecurity/rules/falco-rules-%s/rules/falco-incubating_rules.yaml" .Site.Params.rulesversion -}}
+{{- $deprecatedURL :=  printf "https://raw.githubusercontent.com/falcosecurity/rules/falco-rules-%s/rules/falco-deprecated_rules.yaml" .Site.Params.rulesversion -}}
+
+{{- $maturities := (dict "deprecated" $deprecatedURL "incubating" $incubatingURL "sandbox" $sandboxURL "stable" $stableURL) }}
+
+<style>
+    .collapsible {
+        padding: 10px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-weight: bold;
+        font-size: 125%;
+        background-color: #ffffff;
+    }
+
+    .collapsible:hover, .collapsible:active {
+        background-color: #00aec7;
+        font-weight: bold;
+    }
+
+    #search {
+        width: 100%;
+        padding: 12px 20px 12px 10px;
+        border: 1px solid #ddd;
+        margin-bottom: 12px;
+    }
+    
+    .rule {
+        background-color: #fff;
+        padding-top: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-left: 0px;
+        display: none;
+        overflow: hidden;
+        border: solid;
+        border-color: #00aec7;
+    }
+
+    .field {
+        font-weight: bold;
+        padding: 10px;
+    }
+
+    .chip {
+        align-items: center;
+        display: inline-flex;
+        justify-content: center;
+        background-color: #d1d5db;
+        border-radius: 0.5rem;
+        padding: 0.25rem 0.5rem;
+        margin-bottom: 10px;
+    }
+    .small {
+        font-size: 70%;
+        float: right;
+        margin-right: 5px;
+    }
+    .chip__content {
+        margin-right: 0.25rem;
+    }
+    .priority, .status, .maturity {
+        color: #fff;
+    }
+    .debug {
+        background-color: #C62828;
+    }
+    .alert {
+        background-color: #D32F2F;
+    }
+    .critical {
+        background-color: #E53935;
+    }
+    .error {
+        background-color: #FF5252;
+    }
+    .warning {
+        background-color: #FB8C00;
+    }
+    .notice {
+        background-color: #1976D2;
+    }
+    .info{
+        background-color: #03A9F4;
+    }
+    .debug {
+        background-color: #29B6F6;
+    }
+    .enabled {
+        background-color: #017f33;
+    }
+    .disabled {
+        background-color: #cc0047d7;
+    }
+    .stable {
+        background-color: #00c58a;
+    }
+    .incubating {
+        background-color: #dd9f41;
+    }
+    .sandbox {
+        background-color:   #c57fff;
+    }
+    .deprecated {
+        background-color: #ff3300;
+    }
+    .unknown {
+        background-color: #818181;
+    }
+</style>
+
+<div class="rules" id="rules">
+    <input type="text" id="search" onkeyup="search()" placeholder="Search for rules...">
+    {{- range $maturity, $url := $maturities }}
+        {{- $dataYAML := resources.GetRemote $url -}}
+        {{- $content := $dataYAML.Content | replaceRE `#.*\n` "" | transform.Unmarshal }}
+        {{- range $content }}
+            {{ if .rule }}
+                <button type="button" class="collapsible">
+                    {{ .rule }}
+                    {{ if eq .enabled false }}
+                    <span class="status disabled chip small">disabled</span>
+                    {{ else }}
+                    <span class="status enabled chip small">enabled</span>
+                    {{ end }}
+                    <span class="priority {{ lower .priority }} chip small">{{ .priority }}</span>
+                    <span class="maturity {{ $maturity }} chip small">{{ $maturity }}</span>
+                </button>
+                <div class="rule">
+                    <div id="descriptionDiv">
+                        <span class="field">Description:</span></br>
+                        <pre><code id="condition" style="white-space: pre-wrap;">{{ .desc }}</code></pre>
+                    </div>
+                    <div id="conditionDiv">
+                        <span class="field">Condition:</span><br>
+                        <pre><code id="condition" style="white-space: pre-wrap;">{{ .condition }}</code></pre>
+                    </div>
+                    <div id="outputDiv">
+                        <span class="field">Output:</span><br>
+                        <pre class="code"><code id="output" style="white-space: pre-wrap;">{{ .output }}</code></pre>
+                    </div>
+                    <div id="maturityDiv">
+                        <span class="field">Maturity: </span><span class="maturity {{ $maturity }} chip"> {{ $maturity }}</span>
+                    </div>
+                    <div id="priorityDiv">
+                        <span class="field">Priority: </span><span class="priority {{ lower .priority }} chip"> {{ .priority }}</span>
+                    </div>
+                    <div id="tagsDiv">
+                        <span class="field">Tags:</span>
+                        {{ range .tags }}
+                        <span class="chip"> {{ .  }}</span>
+                        {{ end }}
+                    </div>
+                    <div id="statusDiv">
+                        <span class="field">Status: </span>
+                        {{ if eq .enabled false }}
+                            <span class="status disabled chip">disabled</span>
+                        {{ else }}
+                            <span class="status enabled chip">enabled</span>
+                        {{ end }}
+                    </div>
+                </div>
+            {{ end }}
+        {{- end -}}
+{{- end -}}
+</div>
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+    
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+                this.style.backgroundColor = "#fff";
+            } else {
+                content.style.display = "block";
+                this.style.backgroundColor = "#00aec7";
+            }
+        });
+    }
+
+    function search() {
+        var input = document.getElementById('search');
+        var filter = input.value.toUpperCase();
+        var div = document.getElementById("rules");
+        var buttons = div.getElementsByTagName('button');
+        
+        for (i = 0; i < buttons.length; i++) {
+            txt = buttons[i].innerText;
+            if (txt.toUpperCase().indexOf(filter) > -1) {
+                buttons[i].style.display = "";
+            } else {
+                buttons[i].style.display = "none";
+                buttons[i].style.backgroundColor = "#fff";
+                var content = buttons[i].nextElementSibling;
+                content.style.display = "none";
+            }
+        }
+    }
+    </script>
