@@ -88,7 +88,12 @@ The modern BPF probe doesn't require a specific kernel version. Usually, all ver
 1. [BPF ring buffer](https://www.kernel.org/doc/html/next/bpf/ringbuf.html) support.
 2. A kernel that exposes [BTF](https://docs.kernel.org/bpf/btf.html).
 
-Falco can detect if these features are available on the running machine and can notify you if something is missing. You only have to run Falco and see what happens!
+Falco can automatically detect if these features are available on the running machine and can notify you if something is missing. As an alternative, you could always use `bpftool`, you just need to type the following commands:
+
+```bash
+sudo bpftool feature probe kernel | grep -q "map_type ringbuf is available" && echo "true" || echo "false" 
+sudo bpftool feature probe kernel | grep -q "program_type tracing is available" && echo "true" || echo "false" 
+```
 
 ### How to run it
 
