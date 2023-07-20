@@ -20,7 +20,7 @@ rules_file:
 
 Changing these configuration entries will affect the location and loading order of the rules files.
 
-## The command line
+> You can find the details of the available default rules in this [page](/docs/reference/rules/default-rules/) or classified by tag and status in the official repository: [**falcosecurity/rules**](https://github.com/falcosecurity/rules/blob/main/rules_inventory/rules_overview.md#falco-rules---summary-stats).
 
 If you are running Falco directly from the command line, you can use the `-r` switch to add as many rules files as needed. e.g.:
 
