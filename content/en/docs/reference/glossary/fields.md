@@ -4,7 +4,7 @@ id: fields
 date: 2023-07-17
 full_link: /docs/reference/rules/rule-fields
 short_description: >
-  The fields are used in the condition of a rule and in the output.
+  Filters available as rules condition or output.
 aka:
 tags:
 - fundamental
