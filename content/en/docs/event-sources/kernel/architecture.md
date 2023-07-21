@@ -5,17 +5,23 @@ linktitle: Kernel Events Architecture Overview
 weight: 20
 ---
 
-This document describes the overall architecture that allows events from kernel sources to be ingested by Falco and how to use the libraries to inspect the data collection flow, and how Falco manages the boundary between the kernel and userspace.
+This document describes the overall architecture that allows events from kernel sources to be ingested by Falco, how to use the libraries to inspect the data collection flow and how Falco manages the boundary between the kernel and userspace. In order to make Falco compatible with a very large number of Linux Kernel versions, the internal APIs and low level communication mechanisms that are employed to cross the kernel and userspace boundary vary greatly between driver types and may be different between driver versions or kernel versions. However, they all implement the same event collection interface as described below.
+
+## How Falco interacts with kernel components
 
 The component of the [Falco libraries](https://github.com/falcosecurity/libs) that gathers data from the syscalls and interacts with the kernel is called `libscap`. Internally, it implements all functionality required to use the drivers to collect kernel events.
 
 When using the kernel module or classic eBPF probe, the driver will need to be installed and deployed separately as a kernel object or probe, while the modern eBPF probe can be installed directly by libscap.
 
-Upon connection to its kernel counterpart, libscap will need to negotiate the API Version and Schema Version that the driver recognizes. These versions are expressed in [semver](https://semver.org/) format and are [documented in the libs repository](https://github.com/falcosecurity/libs/blob/master/driver/README.VERSION.md).
+Upon connection to its kernel counterpart, libscap will need to negotiate the API Version and Schema Version that the driver recognizes. These versions are expressed with a [semver](https://semver.org/) subset and are [documented in the libs repository](https://github.com/falcosecurity/libs/blob/master/driver/README.VERSION.md).
 * The [API version](https://github.com/falcosecurity/libs/blob/master/driver/README.VERSION.md#api-version-number) refers to the communication mechanism between the kernel and userspace. Every driver has a different communication mechanism which changes between versions. The kernel module may use `ioctl`s and a ring buffer, while the eBPF probes can use maps and different APIs depending on the kernel version and eBPF probe edition. Since some drivers can be deployed separately from Falco, at startup libscap will verify if the driver it's connecting to is compatible.
 * The [Schema version](https://github.com/falcosecurity/libs/blob/master/driver/README.VERSION.md#api-version-number) refers to the type of events that the specific driver supports. The [Syscall Events](/docs/reference/rules/supported-events/) documentation page shows the list of fields that are supported for each version of Falco. Every time that list changes the version number is updated as well.
 
-![](/docs/images/kernel_source_start_capture.png)
+<div>
+  <img style="width: 60%; margin: auto" 
+       alt="Initializing kernel source data collection" 
+       src="/docs/images/kernel_source_start_capture.png" >
+</div>
 
 When running Falco it is possible to verify the currently compatible version numbers with `falco --version`. For instance, this is the output for Falco 0.35.1:
 
@@ -59,9 +65,11 @@ Meaning that its encoding will be composed of an header containing the timestamp
 [header] [uint16(8)] [uint16(8)] [uint16(8)] [uint16(32)] [res] [oldfd] [newfd] [flags]
 ```
 
-![](/docs/images/kernel_source_capture.png)
-
-All the supported events can be used in Falco rules, can be enabled or disabled if necessary and are documented in the reference.
+<div>
+  <img style="width: 60%; margin: auto" 
+       alt="Retrieving kernel events" 
+       src="/docs/images/kernel_source_capture.png" >
+</div>
 
 ## Use scap-open to inspect kernel data collection
 
