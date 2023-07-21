@@ -42,7 +42,7 @@ These parameters can also be specified as Helm chart value (`extraArgs`) if you 
 ### Via Custom Rule Definition
 
 Last but not the least, you can just disable a rule that is enabled by default using the `enabled: false` rule property.
-This is especially useful for rules which do not provide a `consider_*` macro in the default condition.
+This is especially useful for rules which do not provide a `user_*` macro in the default condition.
 
 Ensure that the custom configuration file loads after the default configuration file. You can configure the right order using multiple `-r` parameters, directly inside the falco configuration file `falco.yaml` through `rules_file`. If you are using the official Helm chart, then configure the order with the `falco.rulesFile` value.
 
