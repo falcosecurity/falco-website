@@ -73,7 +73,14 @@ The output should be similar to the following:
 ```
 ## 2. Trying Falcosidekick in action
 
-### 2.1 Generate a suspicious event
+### 2.1 Create a new container
+
+Run the following command to start a container in the default namespace:
+```plain
+kubectl run alpine --image alpine -- sh -c "sleep infinity"
+```
+
+### 2.2 Generate a suspicious event
 
 Run the following command to simulate a suspicious event:
 ```plain
@@ -90,7 +97,7 @@ The output should be similar to the following:
 2023/01/26 12:28:16 [INFO]  : WebUI - Post OK (200)
 ```
 
-### 2.2 Access the Falcosidekick UI Dashboard
+### 2.3 Access the Falcosidekick UI Dashboard
 
 To access the Falcosidekick UI, create a port forward to expose the service:
 
@@ -103,7 +110,7 @@ There must be already a few events. Click on them to see the events detail.
 
 ![Scan results](images/falcosidekick-1.png)
 
-### 2.3 Event Generator
+### 2.4 Event Generator
 
 It is better to explore the Falcosidekick UI with more events.
 
@@ -122,6 +129,12 @@ sudo docker run -it --rm falcosecurity/event-generator \
 ```
 
 At this point, you can explore Falcosidekick UI. Notice the different priorities and tags.
+
+### 2.5 Delete the test container
+When you don't need the alpine container anymore, proceed to remove it from the cluster.
+```plain
+kubectl delete alpine --timeout=0s --force --grace-period=0
+```
 
 ---
 ## Congratulations, you finished this scenario!

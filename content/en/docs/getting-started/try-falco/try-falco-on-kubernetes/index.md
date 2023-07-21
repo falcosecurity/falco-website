@@ -56,14 +56,21 @@ kubectl wait pods --for=condition=Ready --all -n falco
 
 ## 2. Trying Falco in action
 
-### 2.1 Generate a suspicious event
+### 2.1 Create a new container
+
+Run the following command to start a container in the default namespace:
+```plain
+kubectl run alpine --image alpine -- sh -c "sleep infinity"
+```
+
+### 2.2 Generate a suspicious event
 
 Run the following command to simulate a suspicious event:
 ```plain
 kubectl exec -it alpine -- sh -c "uptime"
 ```
 
-### 2.2 Look at Falco logs
+### 2.3 Look at Falco logs
 Run the following command to look at Falco logs.
 ```plain
 kubectl logs -l app.kubernetes.io/name=falco -n falco
@@ -75,6 +82,12 @@ Check the logs to see the following notice:
  (user=<NA> user_loginuid=-1 k8s.ns=default k8s.pod=alpine container=07f3751ec492 shell=sh 
  parent=runc cmdline=sh -c uptime pid=32402 terminal=34816 container_id=07f3751ec492 
  image=docker.io/library/alpine)
+```
+
+### 2.4 Delete the test container
+When you don't need the alpine container anymore, proceed to remove it from the cluster.
+```plain
+kubectl delete alpine --timeout=0s --force --grace-period=0
 ```
 
 ---
