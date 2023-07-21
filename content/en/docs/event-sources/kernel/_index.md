@@ -9,7 +9,7 @@ aliases:
 
 Falco uses different instrumentations to analyze the system workload and pass security events to userspace. We usually refer to these instrumentations as **syscall sources** since the generated events are strictly related to the syscall context.
 
-There are different supported syscall sources:
+There are several supported syscall sources:
 
 - Kernel module *(default)*
 - Classic eBPF probe
@@ -123,7 +123,7 @@ The mentioned capabilities require no further explanation since they were alread
 
 > **Please note**: we will try to do our best to keep this as the minimum required set but due to [some issues with CO-RE relocations](https://lore.kernel.org/bpf/CAGQdkDvYU_e=_NX+6DRkL_-TeH3p+QtsdZwHkmH0w3Fuzw0C4w@mail.gmail.com/T/#u) it is possible that this changes in the future.
 
-## Userspace instrumentation (no more maintained)
+## Userspace instrumentation (no longer maintained)
 
 {{% pageinfo color="warning" %}}
 [The pdig project](https://github.com/falcosecurity/pdig) is currently in archived status. Falco still has support for userspace instrumentation, but `pdig` is not actively maintained currently.
