@@ -4,7 +4,7 @@ id: libsinsp
 date: 2023-07-17
 full_link: https://github.com/falcosecurity/libs
 short_description: >
-  libsinsp receives the events from the libscap library and enriches them with machine states.
+  libsinsp receives the events from libscap library and enriches them with machine states.
 aka:
 tags:
 - architecture
