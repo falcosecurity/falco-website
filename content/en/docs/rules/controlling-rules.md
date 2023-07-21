@@ -11,11 +11,11 @@ Even though Falco provides a quite powerful default ruleset, you sometimes need 
 
 ### Via existing Macros
 
-Most of the default rules offer some kind of `consider_*` macros which are already part of the rule conditions. These `consider_*` macros are usually set to `(never_true)` or `(always_true)` which basically enables or disabled the regarding rule. Now if you want to enable a by default disabled rule (e.g. `Unexpected outbound connection destination`), you just have to override the rule's `consider_*` macro (`consider_all_outbound_conns` in this case) inside your custom Falco configuration.
+Most of the default rules offer some kind of `user_*` macros which are already part of the rule conditions. These `user_*` macros are usually set to `(never_true)` or `(always_true)` which basically enables or disabled the regarding rule. Now if you want to disable a default rule (e.g. `Read sensitive file trusted after startup`), you just have to override the rule's `user_*` macro (`user_known_read_sensitive_files_activities` in this case) inside your custom Falco configuration.
 
 Example for your custom Falco configuration (note the `(always_true)` condition):
 ```yaml
-- macro: consider_all_outbound_conns
+- macro: user_known_read_sensitive_files_activities
   condition: (always_true)
 ```
 
