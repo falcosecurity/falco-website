@@ -14,7 +14,7 @@ It is lightweight, efficient, and scalable, making it ideal to use in both devel
 {{< /blocks/content >}}
 
 {{< blocks/content wrap="col-9" >}}
-<h3>Align threat detections with the MITRE ATT&CK Framework</h3>
+<h3 id="threat-detection">Align threat detections with the MITRE ATT&CK Framework</h3>
 
 The landscape of containers, Kubernetes and Cloud is evolving fast, and so are potential attacks. To help InfoSec teams use Falco in their incident response workflows, we have aligned Falco's threat detection capabilities with the well-known MITRE ATT&CK framework. 
 
@@ -22,7 +22,7 @@ Falco's rule alignment with the MITRE ATT&CK matrix enables detection of Tactics
 {{< /blocks/content >}}
 
 {{< blocks/content wrap="col-9" >}}
-<h3>Maintain regulatory compliance</h3>
+<h3 id="compliance">Maintain regulatory compliance</h3>
 
 Falco offers real-time runtime detection powered by eBPF, making it a good solution for organizations seeking to maintain regulatory compliance with frameworks such as PCI DSS, NIST, and others in cloud-native systems. Unlike traditional security tools that struggle with the ephemeral nature of these environments, Falco is purpose-built for cloud-native architectures and integrates with container orchestrators like Kubernetes. 
 
