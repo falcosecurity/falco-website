@@ -13,8 +13,8 @@ Since [Falco 0.31](/blog/falco-0-31-0.md) and the introduction of the [Plugin Sy
 
 Examples of event source defined by offically-supported plugins are:
 
-* [Kubernetes Audit Events](/docs/event-sources/kubernetes-audit/)
-* [AWS CloudTrail](/docs/event-sources/cloudtrail/)
-* [Okta](/docs/event-sources/okta/)
+* [Kubernetes Audit Events](/docs/event-sources/plugins/kubernetes-audit/)
+* [AWS CloudTrail](/docs/event-sources/plugins/cloudtrail/)
+* [Okta](/docs/event-sources/plugins/okta/)
 
 In addition to these plugins hosted by the Falcosecurity organization, others have written third-party [plugins](https://github.com/falcosecurity/plugins#readme) that support additional event sources. Please refer to the [official Plugin Registry](https://github.com/falcosecurity/plugins/blob/master/registry.yaml) for the most up-to-date information regarding the Falco plugins acknowledged by the community.
