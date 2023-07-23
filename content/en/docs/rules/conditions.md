@@ -55,29 +55,6 @@ if evt.type = execve and evt.dir = < and container.id != host and proc.name = ba
 
 Note that you don't even have to look at the `execve` args. That is because once `execve` has returned the process context recorded by Falco is updated, meaning that the `proc.` fields will already refer to all information, including the command line, executable, arguments, related to the new process that was just spawned.
 
-## Rule Condition Best Practices
-
-To allow for grouping rules by event type, which improves performance, Falco prefers rule conditions that have at least one `evt.type=` operator, at the beginning of the condition, before any negative operators (i.e. `not` or `!=`). If a condition does not have any `evt.type=` operator, Falco logs a warning like:
-
-```
-Rule no_evttype: warning (no-evttype):
-proc.name=foo
-     did not contain any evt.type restriction, meaning that it will run for all event types.
-     This has a significant performance penalty. Consider adding an evt.type restriction if possible.
-```
-
-If a rule has an `evt.type` operator in the latter portion of the condition, Falco logs a warning like this:
-
-```
-Rule evttype_not_equals: warning (trailing-evttype):
-evt.type!=execve
-     does not have all evt.type restrictions at the beginning of the condition,
-     or uses a negative match (i.e. "not"/"!=") for some evt.type restriction.
-     This has a performance penalty, as the rule can not be limited to specific event types.
-     Consider moving all evt.type restrictions to the beginning of the rule and/or
-     replacing negative matches with positive matches if possible.
-```
-
 ## Operators
 
 You can use the following operators in conditions:
