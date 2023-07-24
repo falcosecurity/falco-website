@@ -21,7 +21,7 @@ Assuming the cybercriminal has already compromised your environment and installe
 ![](/blog/falco-detect-cryptomining/images/falco-detect-cryptomining-02.png)
 **Source**: [Compass Mining](https://compassmining.io/education/comparison-hashrate-managers-traditional-mining-pools/)
 
-The mining pool is a collection of miners that work together to augment their chances of mining a block, sharing rewards among each other in proportion to the computing power contributed in successfully mining a block. There are lots of pools to choose from. You can find a list at [miningpoolstats.stream/monero](miningpoolstats.stream/monero).
+The mining pool is a collection of miners that work together to augment their chances of mining a block, sharing rewards among each other in proportion to the computing power contributed in successfully mining a block. There are lots of pools to choose from. You can find a list at [miningpoolstats.stream/monero](https://miningpoolstats.stream/monero).
 
 
 ### Lists
@@ -102,7 +102,7 @@ The field fd.sport (File Descriptor - Port) could match any port listed in the `
 
 ### Falco Rule
 
-The final rule will aim to detect anything matching the condition described by the [**`net_miner_pool`**](https://github.com/falcosecurity/falco/blob/master/rules/falco_rules.yaml#L2864) macro, unless it's listed within the [**`trusted_images_query_miner_domain_dns`**](https://github.com/falcosecurity/falco/blob/master/rules/falco_rules.yaml#L2867) macro. Both macros are specified within the `condition` section of the completed Falco rule.
+The final rule will aim to detect anything matching the condition described by the [**`net_miner_pool`**](https://github.com/falcosecurity/falco/blob/e3dbae325935dd2ddec5edb750ee8dfda0b785d6/rules/falco_rules.yaml#L2864) macro, unless it's listed within the [**`trusted_images_query_miner_domain_dns`**](https://github.com/falcosecurity/falco/blob/e3dbae325935dd2ddec5edb750ee8dfda0b785d6/rules/falco_rules.yaml#L2867) macro. Both macros are specified within the `condition` section of the completed Falco rule.
 
 
 ```
@@ -261,7 +261,7 @@ In Linux systems, processes can receive a variety of signals, such as SIGINT or 
 
 The SIGINT signal is sent to a process by its controlling terminal when a user wishes to interrupt the process. This is typically initiated by pressing Ctrl-C, but on some systems, the "delete" character or "break" key can be used. The SIGKILL signal is sent to a process to cause it to terminate immediately (kill). If XMRig is run as root, but the [`SIGINT`](https://www.howtogeek.com/devops/linux-signals-hacks-definition-and-more/) caller must also be [running as root](https://github.com/xmrig/xmrig/issues/2826#:~:text=If%20XMRig%20is%20run%20as%20root%2C%20the%20SIGINT%20caller%20must%20also%20be%20running%20as%20root.) if the adversary plans on interrupting/pausing their operations to evade detection.
 
-As a result, the adversary will need to give themselves *root* permissions by setting their User ID (SetUID) or Group User ID (SetGID) to *root*. Detecting changes to SetUID or SetGID bit is a clear indication of compromise, and we should look to prevent users (whether internal or adversarial) from giving themselves root permissions. Without root permissions, the adversary cannot operate XMRig effectively. The SetUID/SetGID Falco rule is in the rule engine, but [disabled by default](https://github.com/falcosecurity/falco/blob/master/rules/falco_rules.yaml#L2690).
+As a result, the adversary will need to give themselves *root* permissions by setting their User ID (SetUID) or Group User ID (SetGID) to *root*. Detecting changes to SetUID or SetGID bit is a clear indication of compromise, and we should look to prevent users (whether internal or adversarial) from giving themselves root permissions. Without root permissions, the adversary cannot operate XMRig effectively. The SetUID/SetGID Falco rule is in the rule engine, but [disabled by default](https://github.com/falcosecurity/falco/blob/e3dbae325935dd2ddec5edb750ee8dfda0b785d6/rules/falco_rules.yaml#L2690).
 
 ## Container Drift Detection
 
@@ -285,7 +285,7 @@ As mentioned at the beginning of this blog, Kubernetes is an ideal target for cr
   priority: ERROR
 ```
 
-Generally speaking, attackers would look to install the XMRig miner in the /tmp directory. However, the above [Falco rule](https://github.com/falcosecurity/falco/blob/master/rules/falco_rules.yaml#L3019) will detect when executables are created in the container (regardless of the directory). From a forensics perspective, we will receive a Falco notification that tells us which executable was installed and to which directory.
+Generally speaking, attackers would look to install the XMRig miner in the /tmp directory. However, the above [Falco rule](https://github.com/falcosecurity/falco/blob/e3dbae325935dd2ddec5edb750ee8dfda0b785d6/rules/falco_rules.yaml#L3019) will detect when executables are created in the container (regardless of the directory). From a forensics perspective, we will receive a Falco notification that tells us which executable was installed and to which directory.
 
 ## Detect the XMRig Binary
 
@@ -340,9 +340,9 @@ The above list provides more binaries than just ‘XMRig.’ As new miners becom
 
 The monetary gain of mining cryptocurrency is a motivation for threat actors to compromise the endpoints of unsuspecting users and use them for illegitimate mining activities. 
 
-The endpoints are usually part of a botnet that is being controlled by a Command and Control (C2) server. Aside from the rules listed above, Falco can also detect unwanted [outbound connections to C2 servers](https://github.com/falcosecurity/falco/blob/master/rules/falco_rules.yaml#L3055), as well as other IoC's that could indicate a potential incident before the mining has begun.
+The endpoints are usually part of a botnet that is being controlled by a Command and Control (C2) server. Aside from the rules listed above, Falco can also detect unwanted [outbound connections to C2 servers](https://github.com/falcosecurity/falco/blob/e3dbae325935dd2ddec5edb750ee8dfda0b785d6/rules/falco_rules.yaml#L3055), as well as other IoC's that could indicate a potential incident before the mining has begun.
 
-The mode of initial access for threat actors may be through compromised SSH credentials or the exploitation of a vulnerability. Once the threat actor has gained remote access to the endpoints, the cryptomining software is executed on it. Being able to detect suspicious activity, such as [Disallowed SSH connections](https://github.com/falcosecurity/falco/blob/master/rules/falco_rules.yaml#L366) on a Linux server, is critical for your incident response and forensics teams.
+The mode of initial access for threat actors may be through compromised SSH credentials or the exploitation of a vulnerability. Once the threat actor has gained remote access to the endpoints, the cryptomining software is executed on it. Being able to detect suspicious activity, such as [Disallowed SSH connections](https://github.com/falcosecurity/falco/blob/e3dbae325935dd2ddec5edb750ee8dfda0b785d6/rules/falco_rules.yaml#L366) on a Linux server, is critical for your incident response and forensics teams.
 
 If you would like to find out more about Falco:
 
