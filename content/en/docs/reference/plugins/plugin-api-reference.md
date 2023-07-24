@@ -3,8 +3,7 @@ title: Falco Plugins API Reference
 linktitle: API Reference
 description: Learn how the Plugins API works
 weight: 20
-aliases:
-    - /docs/plugins/plugin_api_reference/
+aliases: [/docs/plugins/plugin-api-reference]
 ---
 
 ## Introduction

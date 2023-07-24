@@ -3,8 +3,7 @@ title: Falco Plugins Developers Guide
 linktitle: Developers Guide
 description: Start writing your own Falco plugins
 weight: 10
-aliases:
-    - /docs/plugins/developers_guide/
+aliases: [/docs/plugins/developers_guide/]
 ---
 
 ## Introduction

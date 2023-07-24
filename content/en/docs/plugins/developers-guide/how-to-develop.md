@@ -3,17 +3,15 @@ title: How to develop a plugin
 linktitle: How to develop a plugin
 description: How to develop a plugin with the Go SDK
 weight: 10
-aliases:
-    - /docs/plugins/developers_guide/how_to_develop
 ---
 
 ## Introduction
 
-This section explains how to develop a plugin from scratch with the official [Go SDK](/docs/reference/plugins/go_sdk_walkthrough/).
+This section explains how to develop a plugin from scratch with the official [Go SDK](/docs/reference/plugins/go-sdk-walkthrough/).
 
 We'll create a plugin for the [`docker events`](https://docs.docker.com/engine/reference/commandline/events/) from a local `docker daemon`. It is a basic example of an `event stream` with a basic format and without specific authentication.
 
-To know more about the available feature of the Go SDK and how to see use, you can refer to this [page](/docs/reference/plugins/go_sdk_walkthrough/).
+To know more about the available feature of the Go SDK and how to see use, you can refer to this [page](/docs/reference/plugins/go-sdk-walkthrough/).
 
 ## Awaited result
 
