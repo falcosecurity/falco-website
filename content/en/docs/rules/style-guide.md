@@ -2,7 +2,7 @@
 title: Style Guide of Falco Rules
 description: Adopt best practices when writing and contributing Falco rules
 linktitle: Style Guide of Falco Rules
-weight: 90
+weight: 95
 ---
 
 ## Style Guide
@@ -21,10 +21,9 @@ The order of keys should be:
   priority:
   tags:
 
-... other keys if applicable in no particular order
+ ... other keys if applicable in no particular order
 
 ```
-
 
 ### Naming
 
@@ -32,7 +31,7 @@ Choose a concise title that summarizes the essence of the rule's purpose.
 
 ### Description
 
-Aligning with Falco's rules maturity and adoption [framework](https://github.com/falcosecurity/rules/blob/main/proposals/20230605-rules-adoption-management-maturity-framework.md#rules-maturity-framework), it is encouraged to not just include a longer description of what the rule detects, but also to give advice on how to tune this rule and reduce possible noise. If applicable, elaborate on how to correlate the rule with other rules or data sources for incident response. However, keep them concise.
+Aligning with Falco's rules maturity and adoption [framework](https://github.com/falcosecurity/rules/blob/main/proposals/20230605-rules-adoption-management-maturity-framework.md#rules-maturity-framework), it is encouraged to not just include a longer description of what the rule detects but also to give advice on how to tune this rule and reduce possible noise. If applicable, elaborate on how to correlate the rule with other rules or data sources for incident response. However, keep them concise.
 
 ### Condition Syntax
 
@@ -46,42 +45,40 @@ We explain the high level principles using example rules or snippets.
 - The best practice and requirement for upstream rules are to only define positive `evt.type` expressions. Using `evt.type!=open`, for example, would imply each of the [supported syscalls](https://github.com/falcosecurity/libs/blob/master/driver/report.md), resulting in a significant performance penalty. For more information, read the [Adaptive Syscalls Selection in Falco](https://falco.org/blog/adaptive-syscalls-selection/) blog post.
 - After the `evt.type` filter, place your mainly positive filters to efficiently eliminate the most events step by step. An exception to this rule is the `container` macro, which can quickly eliminate many events. Therefore, the guiding principle of "divide and conquer" commonly used in database query recommendations, also applies to Falco's filter statements.
 
-
 ```yaml
 - macro: open_write
   condition: (evt.type in (open,openat,openat2) and evt.is_open_write=true and fd.typechar=`f` and fd.num>=0)
-...
+ ...
 
 - macro: container
   condition: (container.id != host)
-...
+ ...
 
 - rule: Detect release_agent File Container Escapes
-...
+ ...
   condition: >
     open_write and container and fd.name endswith release_agent and (user.uid=0 or thread.cap_effective contains CAP_DAC_OVERRIDE) and thread.cap_effective contains CAP_SYS_ADMIN
-...
+ ...
 ```
 
 - Effective Falco rules should now already be in a good state. Additionally, use exclusionary statements mostly to filter out common anti-patterns and noise. Often, these statements are based on profiling. You will notice that many upstream rules provide an empty template macro for this purpose, which you can customize.
 
-
 ```yaml
 - macro: spawned_process
   condition: (evt.type in (execve, execveat) and evt.dir=<)
-...
+ ...
 
 - list: known_drop_and_execute_containers
   items: []
 
 - rule: Drop and execute new binary in container
-...
+ ...
   condition: >
     spawned_process
     and container
     and proc.is_exe_upper_layer=true 
     and not container.image.repository in (known_drop_and_execute_containers)
-...
+ ...
 ```
 
 - Use existing macros for reusability purposes, if applicable (e.g. `spawned_process` macro).
@@ -92,17 +89,16 @@ We explain the high level principles using example rules or snippets.
 
 - macro: minerpool_https
   condition: (fd.sport="443" and fd.sip.name in (https_miner_domains))
-...
+ ...
 
-condition: ... and ((minerpool_http) or (minerpool_https) or (minerpool_other))
+condition:  ... and ((minerpool_http) or (minerpool_https) or (minerpool_other))
 ```
 
 - Furthermore, it is preferred to use `and not` to consistently negate a positive sub-expression.
 - Avoid double-negation.
 
-
 ```yaml
-condition: ... and not fd.snet in (rfc_1918_addresses)
+condition:  ... and not fd.snet in (rfc_1918_addresses)
 ```
 
 - For operations involving string comparison, `startswith` or `endswith` should be preferred over `contains` whenever possible, as they are more efficient.
@@ -124,8 +120,7 @@ When writing a rule for container workloads, you should include the fields we au
 output: container_id=%container.id image=%container.image.repository namespace=%k8s.ns.name pod_name=%k8s.pod.name
 ```
 
-And as a general guidance, fields like `%proc.name`, `%proc.tty`, `%proc.cmdline` and fields related to process lineage such as `proc.aexepath[2]`, or fields around user information `%user.uid`, `%user.loginuid` are often of generic relevance to many rules. For specialized use cases, generic fields such as `%container.ip` or `%container.cni.json` can be further helpful for incident response, especially concerning non-network syscall related alerts in Kubernetes. These fields can be correlated, for example, with network proxy logs. 
-
+And as a general guidance, fields like `%evt.type`, `%proc.name`, `%proc.tty`, `%proc.cmdline` and fields related to process lineage such as `proc.aexepath[2]`, or fields around user information `%user.uid`, `%user.loginuid` are often of generic relevance to many rules. For specialized use cases, generic fields such as `%container.ip` or `%container.cni.json` can be further helpful for incident response, especially concerning non-network syscall related alerts in Kubernetes. These fields can be correlated, for example, with network proxy logs. 
 
 ### Priority
 
@@ -154,7 +149,6 @@ Lastly, if the rule is relevant for a compliance use case, please add the corres
 tags: [maturity_incubating, host, container, filesystem, mitre_defense_evasion, NIST_800-53_AU-10]
 ```
 
-
 ## Additional Information
 
 ### Rule Types and Robustness
@@ -168,5 +162,3 @@ Refer to the up-to-date description in the [falco.yaml](https://github.com/falco
 ### Contributing Your Falco Rules
 
 Refer to the [Contributing](/docs/contribute/) page and the [How to Share Your Falco Rules](/docs/contribute/share-rules/) guide.
-
-

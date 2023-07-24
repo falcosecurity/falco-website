@@ -21,3 +21,10 @@ Element | Description
 `required_plugin_versions` | Used to track compatibility between rules content and [plugin versions](/docs/plugins#plugin-versions-and-falco-rules).
 
 The Falco organization maintains a [rules repository](https://github.com/falcosecurity/rules) that provides easy-to-install rules and examples for rule writers. You can learn more about the [default and custom rulesets](/docs/rules/default-custom) in the documentation.
+
+We recommend carefully reading each dedicated guide below. In addition, here is a list of recent Falco blog posts that may be of interest to you and can help guide you in finding the optimal use of Falco and its rules for your use cases:
+
+- [Adaptive Syscalls Selection in Falco](https://falco.org/blog/adaptive-syscalls-selection/)
+- [Validating NIST Requirements with Falco](https://falco.org/blog/falco-nist-controls/) 
+- [PCI/DSS Controls with Falco](https://falco.org/blog/falco-pci-controls/)
+- [Defensive Capabilities for Container & Cloud Threats with Tidal](https://falco.org/blog/tidal-registry-release/)
