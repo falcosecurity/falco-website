@@ -122,7 +122,7 @@ cat /etc/shadow
 touch /etc/example-violation
 ```
 
-You can find the default ruleset [here](https://github.com/falcosecurity/falco/blob/master/rules/falco_rules.yaml). 
+You can find the default ruleset [here](https://github.com/falcosecurity/rules/blob/master/rules/falco_rules.yaml). 
 
 ## Fun with privileged mode 
 
