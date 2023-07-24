@@ -1,35 +1,18 @@
 
-- title: "Cloud Native Live: Falco"
-  start: "2023-07-18T09:00:00-0700"
-  end: "2023-07-18T10:00:00-0700"
-  timezone: America/Los_Angeles
-  timezoneName: PDT
-  location: online
-  format: online
-  type: livestream
-  description: "A peek into the people and the latest features"
-  url: https://community.cncf.io/events/details/cncf-cncf-online-programs-presents-cloud-native-live-falco-a-peek-into-the-people-and-the-latest-features/
-  schedule:
-    - start: "2023-07-18T09:00:00-0700"
-      time:
-        - start: "2023-07-18T09:00:00-0700"
-          end: "2023-07-18T10:00:00-0700"
-          content: '<a href="https://community.cncf.io/events/details/cncf-cncf-online-programs-presents-cloud-native-live-falco-a-peek-into-the-people-and-the-latest-features/" target="_blank">Cloud Native Live: Falco - A peek into the people and the latest features</a><br>online<br>'
-
 - title: "Falco on Tour: Virtual"
-  start: "2023-07-25T09:00:00-0700"
-  end: "2023-07-25T12:00:00-0700"
-  timezone: America/Los_Angeles
-  timezoneName: PDT
+  start: "2023-07-25T10:00:00+0200"
+  end: "2023-07-25T12:00:00+0200"
+  timezone: Europe/Amsterdam
+  timezoneName: CEST
   location: online
   type: workshop
   description: "Up & Running with Runtime Security Workshop"
   url: https://www.aicamp.ai/event/eventdetails/W2023072501
   schedule:
-    - start: "2023-07-25T09:00:00-0700"
+    - start: "2023-07-25T10:00:00+0200"
       time:
-        - start: "2023-07-25T09:00:00-0700"
-          end: "2023-07-25T12:00:00-0700"
+        - start: "2023-07-25T10:00:00+0200"
+          end: "2023-07-25T12:00:00+0200"
           content: <a href="https://www.aicamp.ai/event/eventdetails/W2023072501" target="_blank">Up & Running with Runtime Security Workshop</a><br>online<br>
 
 - title: "Falco on Tour: Portland"
