@@ -80,3 +80,9 @@
         padding-left: 5px;
     }
 }
+
+a.glossary-tooltip {
+  font-weight: $font-weight-normal;
+  border-bottom: 1px dotted $primary;
+  text-decoration: none;
+}
