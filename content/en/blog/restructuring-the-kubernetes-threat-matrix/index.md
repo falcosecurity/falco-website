@@ -20,7 +20,7 @@ This article presents the following findings from the evaluation.
 ## Introduction to Falco, Falco, and scope of tasks
 
 Falco is an open source software that collects system calls (syscalls) executed by the kernel module or eBPF and detects attacks according to predefined rules.
-Rules managed as open source are published in the [Falco repository](https://github.com/falcosecurity/falco/blob/master/rules/falco_rules.yaml) on GitHub, and can detect access to critical files, suspicious program execution, and network access based on these rules.
+Rules managed as open source are published in the [Falco rules repository](https://github.com/falcosecurity/rules/blob/master/rules/falco_rules.yaml) on GitHub, and can detect access to critical files, suspicious program execution, and network access based on these rules.
 
 Falco collects syscalls on the kernel, so it can collect activities executed by processes on containers. Therefore, it is known as a tool to detect attacks on containers and Kubernetes.
 
