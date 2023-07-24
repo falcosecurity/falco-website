@@ -7,10 +7,6 @@ weight: 200
 
 From time to time, we make changes to the rules file format that are not backwards-compatible with older versions of Falco. Similarly, libsinsp and libscap may define new filtercheck fields, operators, etc. We want to denote that a given set of rules depends on the fields/operators from those libraries.
 
-{{% pageinfo color="primary" %}}
-As of Falco version **0.14.0**, the Falco rules support explicit versioning of both the Falco engine and the Falco rules file.
-{{% /pageinfo %}}
-
 There are currently two optional fields in the falco rules file related to versioning:
 
 Element | Description
@@ -20,7 +16,7 @@ Element | Description
 
 ### Falco Engine Versioning
 
-The `falco` executable and the `falco_engine` C++ object now support returning a version number. The initial version is 2 (implying that prior versions were 1). We will increment this version any time we make an incompatible change to the rules file format or add new filtercheck fields/operators to Falco.
+The `falco` executable and the `falco_engine` C++ object now support returning a version number. The initial version is 2 (implying that prior versions were 1). We will increment this version any time we make an incompatible change to the rules file format or add new filtercheck fields/operators to Falco. You can check the Falco engine version that your installation supports by running `falco --version`.
 
 ### Falco Rules File Versioning
 
@@ -32,3 +28,7 @@ The Falco rules files included with Falco include a new top-level object, `requi
 ```
 
 If a rules file has an `engine_version` greater than the Falco engine version, the rules file is loaded and an error is returned.
+
+### Official Rules File Versioning
+
+If you use the official rules distributed by the Falco organization, they are versioned in [the repository](https://github.com/falcosecurity/rules/releases) along with the relevant changelog.
