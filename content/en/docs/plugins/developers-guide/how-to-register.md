@@ -3,8 +3,6 @@ title: How to register a plugin
 linktitle: How to register a plugin
 description: How to register a plugin
 weight: 30
-aliases:
-    - /docs/plugins/developers_guide/how_to_register
 ---
 
 # Introduction
