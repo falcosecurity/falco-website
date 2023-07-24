@@ -34,7 +34,7 @@ For example, some actions modify files and directories below `/bin`, `/etc`, `/d
 
 ### System Call Activity
 
-The `syscall` collection performs a variety of suspect actions that are detected by the [default Falco ruleset](https://github.com/falcosecurity/falco/blob/master/rules/falco_rules.yaml).
+The `syscall` collection performs a variety of suspect actions that are detected by the [default Falco ruleset](https://github.com/falcosecurity/rules/blob/master/rules/falco_rules.yaml).
 
 ```shell
 docker run -it --rm falcosecurity/event-generator run syscall --loop
