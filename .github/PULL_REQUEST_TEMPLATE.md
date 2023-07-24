@@ -22,6 +22,8 @@
 
 > /kind translation
 
+> /kind event
+
 **Any specific area of the project related to this PR?**
 
 > Uncomment one (or more) `/area <>` lines:
@@ -30,7 +32,7 @@
 
 > /area documentation
 
-> /area videos
+> /area community
 
 **What this PR does / why we need it**:
 
