@@ -46,7 +46,7 @@ Finally, remember that keeping any previous ruleset and extending it, although s
 
 ## Rules Structure
 
-Rules in Falco are defined using YAML syntax. Each rule is represented as an element in a list, and this is denoted by using a hyphen - before the first key in the rule. When creating a new rule, there are several essential keys that should be included:
+Rules in Falco are defined using YAML syntax. Each rule is represented as an object in a YAML list, and this is denoted by using a hyphen - before the first key in the rule. When creating a new rule, there are several essential keys that should be included:
 
 ```
 - rule:
@@ -54,10 +54,12 @@ Rules in Falco are defined using YAML syntax. Each rule is represented as an ele
   condition:
   output:
   priority:
+  tags:
 ```
 
 - The `rule` key will indicate this is a rule to consider when processing the full set of rules. Without this key, Falco will ignore that entry. It has to be unique to crete a new rule. Otherwise, it will overwrite any previously defined rule with the same value here.
-- The `desc` key provides a detailed description of the rule's purpose, behavior, or the events it aims to detect. It helps with understanding the rule's intent and assists in documentation.. Missing this key in the rule will make Falco show the error message:
+
+- The `desc` key provides a detailed description of the rule's purpose, behavior, or the events it aims to detect. It helps with understanding the rule's intent and assists in documentation. Missing this key in the rule will make Falco show the error message:
 
   ```
   LOAD_ERR_YAML_VALIDATE (Error validating internal structure of YAML file): Item has no mapping for key 'desc'
@@ -77,6 +79,8 @@ Rules in Falco are defined using YAML syntax. Each rule is represented as an ele
   ```
   LOAD_ERR_YAML_VALIDATE (Error validating internal structure of YAML file): Item has no mapping for key 'output'
   ```
+
+- The `tags` key is used to categorize the ruleset into groups of related rules. Although not mandatory when starting to write a rule, its use is highly recommended at a later stage for management purposes. For further information refer to the [Tags section of the Style Guide of Falco Rules][/docs/rules/style-guide/#tags)
 
 To enhance your Falco rules further, refer to the [Advanced Rule Syntax](/docs/rules/basic-elements/#advanced-rule-syntax) documentation. The [Style Guide of Falco Rules](/docs/rules/style-guide) is also a highly recommended document to ensure your rules are easier to maintain and share with the community. These resources will provide you with valuable information about additional keys that can be used to augment and customize your Falco rules. Exploring these advanced options will allow you to expand the capabilities and effectiveness of your rules.
 
