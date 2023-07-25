@@ -16,7 +16,7 @@ Element | Description
 
 ### Falco Engine Versioning
 
-The `falco` executable and the `falco_engine` C++ object now support returning a version number. The initial version is 2 (implying that prior versions were 1). We will increment this version any time we make an incompatible change to the rules file format or add new filtercheck fields/operators to Falco. You can check the Falco engine version that your installation supports by running `falco --version`.
+The `falco` executable and the `falco_engine` C++ object now support returning a version number. The initial version is 2 (implying that prior versions were 1). We will increment this version whenever we make an incompatible change to the rules file format or add new [fields](/docs/reference/rules/supported-fields), [events](/docs/reference/rules/supported-events) or [syntax elements](/docs/rules/conditions/) to Falco. You can check the Falco engine version that your installation supports by running `falco --version`.
 
 ### Falco Rules File Versioning
 
