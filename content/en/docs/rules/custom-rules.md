@@ -1,5 +1,5 @@
 ---
-title: Custom Rules
+title: Custom Ruleset
 description: Start writing your first custom Falco rules
 weight: 85
 ---
@@ -8,7 +8,7 @@ To write a custom rule for Falco from scratch, it is essential to understand the
 
 ## Rules Placement
 
-When adding a new rule to Falco, the first step is to determine its placement. Falco processes rules in sequential order, ensuring that two rules are not triggered simultaneously. Consequently, more general rules should be positioned at the end of the rule set, while more specific rules should be placed at the beginning. This arrangement prevents general rules from capturing events that should be handled by more specific rules.
+When adding a new rule to Falco, the first step is to determine its placement. When loading the rules, Falco groups them per system call (`evt.type`) for faster matching and processes them later in sequential order, ensuring that two rules are not triggered simultaneously for the same `evt.type` field value. Consequently, more general rules should be positioned at the end of the rule set, while more specific rules should be placed at the beginning. This arrangement prevents general rules from capturing events that should be handled by more specific rules.
 
 It's worth noting that Falco loads a set of predefined rules by default, followed by any custom rules located in the `/etc/falco/rules.d` directory. This configuration is specified in the [`/etc/falco/falco.yaml`](https://github.com/falcosecurity/falco/blob/master/falco.yaml) file, under the `rules_file:` key, as follows:
 
@@ -41,6 +41,8 @@ customRules:
 ```
 
 That will instruct `helm` to create as many rules files as you define here accessible inside the Falco Pods, under the directory `/etc/falco/rules.d`.
+
+Finally, remember that keeping any previous ruleset and extending it, although sometimes recommended, is not enforced. It's acceptable to create a new ruleset by reorganizing the upstream rules, reordering and rewriting them, mixing in custom rules, splitting them into different sets and files, etc. Default Falco rules should be considered more of a guidance than a requirement to adopt.
 
 ## Rules Structure
 
@@ -76,7 +78,7 @@ Rules in Falco are defined using YAML syntax. Each rule is represented as an ele
   LOAD_ERR_YAML_VALIDATE (Error validating internal structure of YAML file): Item has no mapping for key 'output'
   ```
 
-To enhance your Falco rules further, refer to the [Advanced Rule Syntax](https://falco.org/docs/rules/basic-elements/#advanced-rule-syntax) documentation. This resource will provide you with valuable information about additional keys that can be used to augment and customize your Falco rules. Exploring these advanced options will allow you to expand the capabilities and effectiveness of your rules.
+To enhance your Falco rules further, refer to the [Advanced Rule Syntax](/docs/rules/basic-elements/#advanced-rule-syntax) documentation. The [Style Guide of Falco Rules](/docs/rules/style-guide) is also a highly recommended document to ensure your rules are easier to maintain and share with the community. These resources will provide you with valuable information about additional keys that can be used to augment and customize your Falco rules. Exploring these advanced options will allow you to expand the capabilities and effectiveness of your rules.
 
 ## Building up the Condition
 
@@ -84,15 +86,15 @@ A condition in Falco acts as a checklist of requirements that an event must meet
 
 To achieve the desired effect, it is necessary to consider the Boolean operators: `and`, `or`, and `not`. These operators enable the condition to evaluate one or more situations and produce the desired outcome.
 
-Each item on the checklist corresponds to a comparison involving the information present in the syscall invocation, along with any relevant metadata that provides additional context. These comparisons employ operators such as `=`, `!=`, `in`, `contains`, and various others. For a more extensive list of available operators, you can refer to the [section operators](https://falco.org/docs/rules/conditions/#operators) in the documentation.
+Each item on the checklist corresponds to a comparison involving the information present in the syscall invocation, along with any relevant metadata that provides additional context. These comparisons employ operators such as `=`, `!=`, `in`, `contains`, and various others. For a more extensive list of available operators, you can refer to the [section operators](/docs/rules/conditions/#operators) in the documentation.
 
-Before proceeding, it's recommended to refer to the [condition syntax](https://falco.org/docs/rules/conditions/) documentation, which provides detailed guidance on writing conditions. This resource will offer valuable information to ensure accurate and effective condition creation.
+Before proceeding, it's recommended to refer to the [condition syntax](/docs/rules/conditions/) documentation, which provides detailed guidance on writing conditions. This resource will offer valuable information to ensure accurate and effective condition creation.
 
-When constructing comparisons within conditions, there is an extensive set of fields available for use. To simplify the process, you can consult [this list](https://falco.org/docs/reference/rules/supported-fields/), which serves as a handy cheatsheet for writing new rules.
+When constructing comparisons within conditions, there is an extensive set of fields available for use. To simplify the process, you can consult [this list](/docs/reference/rules/supported-fields/), which serves as a handy cheatsheet for writing new rules.
 
 ## Leveraging Macros and Lists
 
-Additionally, it's worth noting the benefits of using [macros](https://falco.org/docs/rules/basic-elements/#macros) and [lists](https://falco.org/docs/rules/basic-elements/#lists) when writing rules. Leveraging these features allows for clearer and more concise rule creation, while promoting the reuse of conditions that have been thoroughly tested. This approach enhances maintainability and efficiency in rule development.
+Additionally, it's worth noting the benefits of using [macros](/docs/rules/basic-elements/#macros) and [lists](/docs/rules/basic-elements/#lists) when writing rules. Leveraging these features allows for clearer and more concise rule creation, while promoting the reuse of conditions that have been thoroughly tested. This approach enhances maintainability and efficiency in rule development.
 
 Observe the following rule that detects when a the `bash` shell is spawned inside a container:
 
