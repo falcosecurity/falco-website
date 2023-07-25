@@ -15,9 +15,9 @@ The current available outputs are chat, alert, log, storage, streaming systems, 
 
 ![Falcosidekick](/docs/images/falcosidekick_forwarding.png)
 
-Falcosidekick can also add custom fields to the alerts, filter by priority and it exposes a prometheus endpoint for metrics.
+Falcosidekick can also add custom fields to the alerts, filter them by priority and expose a Prometheus metrics endpoint.
 
-The full documentation and the repository of the project are [here](https://github.com/falcosecurity/falcosidekick).
+The full documentation and the project repository are [here](https://github.com/falcosecurity/falcosidekick).
 
 Falcosidekick can be deployed with Falco in Kubernetes clusters with the official Falco [Helm chart](https://github.com/falcosecurity/charts).
 
@@ -44,7 +44,7 @@ docker run -d -p 2801:2801 -e SLACK_WEBHOOKURL=XXXX falcosecurity/falcosidekick:
 
 ### Installation on the host
 
-Adapt the version and the architecture to your environment, you can find all the releases [here](https://github.com/falcosecurity/falcosidekick/releases).
+Adapt the version and the architecture to your environment. You can find all the releases [here](https://github.com/falcosecurity/falcosidekick/releases).
 
 ```shell
 sudo mkdir -p /etc/falcosidekick
@@ -81,7 +81,7 @@ Falcosidekick comes with its own interface to visualize the events and get stati
 
 ### Installation in Kubernetes with Helm
 
-The installation is made at same moment than Falcosidekick by adding the argument `--set falcosidekick.webui.enabled=true`
+You can install the UI at the same moment as Falcosidekick by adding the argument `--set falcosidekick.webui.enabled=true`.
 
 ```shell
 helm install falco falcosecurity/falco \
@@ -91,6 +91,6 @@ helm install falco falcosecurity/falco \
 --set tty=true 
 ```
 
-Then creates a port-forward to access to it: `kubectl port-forward svc falco-falcosidekick-ui 2802:2802 -n falco`. The default credentials are `admin/admin`.
+Then create a port-forward to access it: `kubectl port-forward svc falco-falcosidekick-ui 2802:2802 -n falco`. The default credentials are `admin/admin`.
 
 The full documentation and the repository of the project are [here](https://github.com/falcosecurity/falcosidekick-ui).
