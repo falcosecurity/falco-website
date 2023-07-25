@@ -56,11 +56,10 @@
 </section>
 
 <!-- Testimonials -->
-{{/*  TODO: fix later  */}}
-{{/*  <section class="row">
+<section class="row">
   <div class="container slider-wrapper">
     <h3>
-      {{ T "homa_falco_secured_by_falco" | markdownify }}
+      {{ T "home_stories_from_our_users" | markdownify }}
     </h3>
     <div
       class="swiper__container d-flex justify-content-center align-items-center mt-4"
@@ -77,7 +76,7 @@
             {{ partial "quote.html" (dict "text" $quote.text "logoUrl"
             $quote.logoUrl "authorImgUrl" $quote.authorImgUrl "authorName"
             $quote.authorName "authorPosition" $quote.authorPosition
-            "shareStory" $quote.shareStory) }}
+            "shareStory" $quote.shareStory "coauthorImgUrl" $quote.coauthorImgUrl "coauthorName" $quote.coauthorName "coauthorPosition" $quote.coauthorPosition) }}
           </div>
           {{ end }}
         </div>
@@ -91,7 +90,7 @@
       >
     </div>
   </div>
-</section>  */}}
+</section>
 
 <!-- Community -->
 <section class="row">

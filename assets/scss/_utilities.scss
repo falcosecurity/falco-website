@@ -51,3 +51,76 @@ h6[id] {
   scroll-margin-top: 6rem;
 }
 
+.swiper {
+  &-slide {
+    height: auto !important;
+  }
+
+  &__container {
+    @include media-breakpoint-down(md) {
+      margin-left: -1rem;
+      margin-right: -1rem;
+    }
+  }
+
+  &__control {
+    rotate: 90deg;
+
+    & > svg {
+      height: 1.25rem;
+      width: 1.25rem;
+    }
+
+    &-reverse {
+      @extend .swiper__control;
+      rotate: -90deg;
+    }
+
+    &--disabled {
+      color: $gray-500;
+      cursor: default;
+    }
+
+    @include media-breakpoint-down(md) {
+      display: none !important;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  &__pagination {
+    gap: 0.5rem;
+  }
+
+  &__bullet {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50vh;
+    background-color: $gray-500;
+
+    &--active {
+      background: $primary;
+    }
+  }
+}
+
+.quote-slide {
+  &__logo {
+    width: 100%;
+    height: 6.25rem;
+    object-fit: scale-down;
+  }
+
+  &__avatar {
+    height: 3rem;
+    width: 3rem;
+  }
+}
+
+.flex-grow-2 {
+  flex-grow: 2;
+}
+
+.flex-grow-3 {
+  flex-grow: 3;
+}

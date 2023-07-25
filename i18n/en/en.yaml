@@ -50,8 +50,8 @@ home_falco_primary_btn:
   other: Try Falco
 add_your_logo_btn:
   other: Add your logo
-share_your_story_btn:
-  other: Add your logo
+add_your_story_btn:
+  other: Add your story
 falco_blog:
   other: Falco blog
 falco_events:
@@ -70,8 +70,8 @@ home_falco_what_is_falco_title:
   other: Detect security threats in real time
 home_falco_what_is_falco:
   other: Falco is a cloud-native security tool designed for Linux systems. It employs custom rules on kernel events, which are enriched with container and Kubernetes metadata, to provide real-time alerts. Falco helps you gain visibility into abnormal behavior, potential security threats, and compliance violations, contributing to comprehensive runtime security.
-homa_falco_secured_by_falco:
-  other: Secured with Falco
+home_stories_from_our_users:
+  other: Stories From Our Users
 home_falco_cncf:
   other: We are a CNCF incubated project
 
