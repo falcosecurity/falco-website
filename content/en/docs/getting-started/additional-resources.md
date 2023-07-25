@@ -15,4 +15,4 @@ If you'd like to dive deeper into the various components that make up Falco chec
 * Review Falco [alerts]( {{< ref "docs/alerts" >}})
 * Investigate Falco [plugins]( {{< ref "docs/plugins" >}})
 * Try additional [tutorials]( {{< ref "docs/tutorials" >}})
-* Read the Falco glossary
+* Read the Falco [glossary]( {{< ref "docs/reference/glossary" >}})
