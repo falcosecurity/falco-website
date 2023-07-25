@@ -57,7 +57,7 @@ If you are unsure what processor your Apple machine is running, you can find out
 * Shell into the Ubuntu VM and once you're in the VM continue to the Install Falco section
 
 ```plain
-    limactl shell falco-ubuntu
+    limactl shell falco-quickstart
 ```
 
 ## Install Falco
