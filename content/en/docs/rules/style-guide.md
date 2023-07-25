@@ -11,7 +11,7 @@ Before diving in, read the sections on Falco rules [basics](/docs/rules/basic-el
 
 In addition, the resources under [references/rules](/docs/reference/rules/) provide complementary information. We highly recommend regularly revisiting each guide to stay up-to-date with the latest advancements of Falco.
 
-The order of keys should be:
+A rule declaration is represented as a YAML object consisting of multiple keys. The suggested order for these keys is as follows:
 
 ```yaml
 - rule: 
@@ -27,17 +27,17 @@ The order of keys should be:
 
 ### Naming
 
-Choose a concise title that summarizes the essence of the rule's purpose.
+Choose a concise title that summarizes the essence of the rule's purpose. Rule's name must start with an upper-case letter. For `macro` and `list`, use lowercase_separated_by_underscores, for example, `kernel_module_load`.
 
 ### Description
 
-Aligning with Falco's rules maturity and adoption [framework](https://github.com/falcosecurity/rules/blob/main/proposals/20230605-rules-adoption-management-maturity-framework.md#rules-maturity-framework), it is encouraged to not just include a longer description of what the rule detects but also to give advice on how to tune this rule and reduce possible noise. If applicable, elaborate on how to correlate the rule with other rules or data sources for incident response. However, keep them concise.
+Aligning with Falco's rules maturity and adoption [framework](https://github.com/falcosecurity/rules/blob/main/proposals/20230605-rules-adoption-management-maturity-framework.md#rules-maturity-framework), it is encouraged to not just include a longer description of what the rule detects but also to give advice on how to tune this rule and reduce possible noise. If applicable, elaborate on how to correlate the rule with other rules or data sources for incident response. However, keep them concise. The description should end with a period. 
 
 ### Condition Syntax
 
 These recommendations prioritize performance impact while maintaining a consistent style for better understanding and easier customization. This approach ensures more manageable maintenance of the rules in the long run.
 
-We explain the high level principles using example rules or snippets.
+We explain the high-level principles using example rules or snippets.
 
 - Each upstream Falco rule must include an `evt.type` filter; otherwise, you will get a warning.
 
@@ -131,9 +131,21 @@ High-volume syscalls can increase CPU usage and cause kernel side event drops in
 
 ### Output Fields
 
+Each rule must include output fields.
+
 For the output fields, expect that each Falco release typically exposes new [supported output fields](/docs/reference/rules/supported-fields/) that can help you write more expressive rules and/or add more context to a rule for incident response.
 
-Building upon the guide around writing rules with respect to [output](/docs/rules/basic-elements/#output), when considering upstreaming your rule, core output fields relevant for this rule should be included. At the same time, we try to keep them to a minimum, and adopters can add more output fields as they see fit.
+Building upon the guide around writing rules with respect to [output](/docs/rules/basic-elements/#output), when considering upstreaming your rule, core output fields relevant for this rule must be included. At the same time, we try to keep them to a minimum, and adopters can add more output fields as they see fit.
+
+Falco also supports outputting the output as a resolved string. Therefore, use a sentence style, first concisely re-iterating the rule's purpose, and then including the output field in parentheses after the `=` character, with its meaning explained before the `=` character.
+
+```yaml
+output: >
+    Read monitored file via directory traversal (user=%user.name uid=%user.uid user_loginuid=%user.loginuid 
+    process=%proc.name proc_exepath=%proc.exepath command=%proc.cmdline pid=%proc.pid parent=%proc.pname 
+    file=%fd.name fileraw=%fd.nameraw gparent=%proc.aname[2] ggparent=%proc.aname[3] gggparent=%proc.aname[4] 
+    terminal=%proc.tty container_id=%container.id image=%container.image.repository namespace=%k8s.ns.name pod_name=%k8s.pod.name)
+```
 
 When writing a rule for container workloads, you should include the fields we automatically fetch from the container runtime:
 
@@ -151,7 +163,7 @@ Please refer to the relevant [reference/rules](/docs/reference/rules/rule-fields
 
 Tags include various categories to convey relevant information about the rule. 
 
-According to the Falco [rules maturity](https://github.com/falcosecurity/rules/blob/main/proposals/20230605-rules-adoption-management-maturity-framework.md#rules-maturity-framework) framework, the first tag in the tags list always indicates the maturity of the rule. The [rules repo](https://github.com/falcosecurity/rules) contains concrete guidance on how to categorize a rule when considering upstreaming the rule to The Falco Project.
+According to the Falco [rules maturity](https://github.com/falcosecurity/rules/blob/main/proposals/20230605-rules-adoption-management-maturity-framework.md#rules-maturity-framework) framework, the first tag in the tags list must always indicate the maturity of the rule. The [rules repo](https://github.com/falcosecurity/rules) contains concrete guidance on how to categorize a rule when considering upstreaming the rule to The Falco Project.
 
 ```yaml
 maturity_stable
@@ -160,7 +172,7 @@ maturity_sandbox
 maturity_deprecated
 ```
 
-Next, the tags should indicate for what workloads this rule is relevant. Add `host` and `container` if the rule works for any event. You can include additional tags to specify the rule's type, such as `process`, `network`, `k8s`, `aws`, etc. 
+Next, the tags must indicate for what workloads this rule is relevant. Add `host` and `container` if the rule works for any event. You can include additional tags to specify the rule's type, such as `process`, `network`, `k8s`, `aws`, etc. 
 
 When considering upstreaming your rule, we expect the [Mitre Attack](https://attack.mitre.org/techniques/enterprise/) phase followed by the best Tactic or Technique, whichever is the best fit. This information is used to create an [overview document](https://github.com/falcosecurity/rules/blob/main/rules_inventory/rules_overview.md) of Falco's predefined rules and also help the Falco adoption process.
 
