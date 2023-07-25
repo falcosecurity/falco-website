@@ -9,7 +9,7 @@ aka:
 tags:
 - fundamental
 ---
-More robust {{< glossary_tooltip text="eBPF" term_id="ebpf" >}} probe which brings the CO-RE paradigm, better performances and maintainability.
+More robust {{< glossary_tooltip text="eBPF" term_id="ebpf" >}} probe, which brings the CO-RE paradigm, better performances, and maintainability.
 
 <!--more--> 
-It will replace the default {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} in future. 
+It will replace the default {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} in the future.

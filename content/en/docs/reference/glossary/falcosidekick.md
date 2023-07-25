@@ -12,6 +12,6 @@ tags:
 Connect Falco with third parties.
 
 <!--more-->
-A simple daemon for connecting {{< glossary_tooltip text="Falco" term_id="falco" >}} to an ecosystem it takes the events and forwards them to different outputs in a fan-out way.
+A simple daemon for connecting {{< glossary_tooltip text="Falco" term_id="falco" >}} to an ecosystem, it takes the events and forwards them to different outputs in a fan-out way.
 
 Ref: https://github.com/falcosecurity/falcosidekick

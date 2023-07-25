@@ -4,12 +4,12 @@ id: alerts
 date: 2023-07-17
 full_link: /docs/alerts/
 short_description: >
-  Downstream actions executed after a rule triggered.
+  Downstream actions executed after a rule is triggered.
 aka:
 tags:
 - fundamental
 ---
-Downstream actions executed after a rule triggered.
+Downstream actions executed after a rule is triggered.
 
 <!--more--> 
 
@@ -21,5 +21,5 @@ Falco supports sending alerts to:
 - A file
 - Syslog
 - A spawned program
-- A HTTP[s] end point
+- An HTTP[s] endpoint
 - A client through the {{< glossary_tooltip text="gRPC" term_id="grpc" >}} API
