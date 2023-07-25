@@ -14,7 +14,7 @@ weight: 10
 
   Falco operates in both kernel and user space. In kernel space Linux system calls (syscalls) are interpreted by either the Falco kernel module or Falco eBPF probe. Next, syscalls are placed in a ring buffer from which they are moved into user space for processing. The events are filtered using a rules engine which includes a set of Falco rules. Falco ships with a default set of rules, but operators have the option to modify or disable those rules as well as add their own. If Falco detects any suspcious  events those are forwarded to various endpoints. 
 
-![Falco Architecture](/docs/images/falco_architecture.png)
+![Falco Architecture](images/new_falco_architecture.png)
 
 ## Next Steps   
 
