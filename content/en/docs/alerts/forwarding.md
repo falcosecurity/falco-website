@@ -1,17 +1,18 @@
 ---
-title: Forwarding Alerts
+title: Forwarding Alerts to third parties
 description: Forward Falco Alerts to third parties
-linktitle: Forwarding Alerts
+linktitle: Forwarding Alerts to third parties
 weight: 30
 ---
 
-Falco alerts can easily be transmitted to third-party systems. Their JSON format allows them to be easily consumed for storage, analysis and reaction. 
+Falco alerts can easily be forwarded to third-party systems. Their JSON format allows them to be easily consumed for storage, analysis and reaction. 
 
 ## Falcosidekick
 
 Falcosidekick is a proxy forwarder, it acts as central point for any fleet of Falco instances using their http outputs to send their alerts.
 
 The current available outputs are chat, alert, log, storage, streaming systems, etc. The exhaustive list can be found [here](https://github.com/falcosecurity/falcosidekick/tree/master#outputs).
+
 ![Falcosidekick](/docs/images/falcosidekick_forwarding.png)
 
 Falcosidekick can also add custom fields to the alerts, filter by priority and it exposes a prometheus endpoint for metrics.

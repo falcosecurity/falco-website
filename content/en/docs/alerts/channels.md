@@ -144,7 +144,7 @@ http_output:
   url: http://some.url/some/path/
 ```
 
-Currently only unencrypted HTTP endpoints, and valid, secure HTTPS endpoints are supported (i.e. invalid or self signed certificates are not supported).
+Currently only unencrypted HTTP endpoints and valid HTTPS endpoints are supported (i.e. invalid or self signed certificates are not supported).
 
 ## JSON Output
 
@@ -154,29 +154,44 @@ For all output channels, you can switch to JSON output either in the configurati
 * `rule`: the rule that resulted in the alert.
 * `priority`: the priority of the rule that generated the alert.
 * `output`: the formatted output string for the alert.
+* `hostname`: the name of the host running Falco (can be the hostname inside the container).
+* `tags`: the list of tags associated to the rule.
 * `output_fields`: for each templated value in the output expression, the value of that field from the event that triggered the alert.
 
 Here's an example:
 
 ```javascript
-{"output":"16:31:56.746609046: Error File below a known binary directory opened for writing (user=root command=touch /bin/hack file=/bin/hack)","priority":"Error","rule":"Write below binary dir","time":"2017-10-09T23:31:56.746609046Z", "output_fields": {"evt.t\
-ime":1507591916746609046,"fd.name":"/bin/hack","proc.cmdline":"touch /bin/hack","user.name":"root"}}
+{"hostname":"falco-xczjd","output":"13:44:05.478445995: Critical A shell was spawned in a container with an attached terminal (user=root user_loginuid=-1 k8s.ns=default k8s.pod=kubecon container=ee97d9c4186f shell=sh parent=runc cmdline=sh -c clear; (bash || ash || sh) terminal=34816 container_id=ee97d9c4186f image=docker.io/library/alpine)","priority":"Critical","rule":"Terminal shell in container","source":"syscall","tags":["container","mitre_execution","shell"],"time":"2023-05-25T13:44:05.478445995Z", "output_fields": {"container.id":"ee97d9c4186f","container.image.repository":"docker.io/library/alpine","evt.time":1685022245478445995,"k8s.ns.name":"default","k8s.pod.name":"kubecon","proc.cmdline":"sh -c clear; (bash || ash || sh)","proc.name":"sh","proc.pname":"runc","proc.tty":34816,"user.loginuid":-1,"user.name":"root"}}
 ```
 
 Here's the same output, pretty-printed:
 
 ```javascript
 {
-   "output" : "16:31:56.746609046: Error File below a known binary directory opened for writing (user=root command=touch /bin/hack file=/bin/hack)"
-   "priority" : "Error",
-   "rule" : "Write below binary dir",
-   "time" : "2017-10-09T23:31:56.746609046Z",
-   "output_fields" : {
-      "user.name" : "root",
-      "evt.time" : 1507591916746609046,
-      "fd.name" : "/bin/hack",
-      "proc.cmdline" : "touch /bin/hack"
-   }
+    "hostname": "falco-xczjd",
+    "output": "13:44:05.478445995: Critical A shell was spawned in a container with an attached terminal (user=root user_loginuid=-1 k8s.ns=default k8s.pod=kubecon container=ee97d9c4186f shell=sh parent=runc cmdline=sh -c clear; (bash || ash || sh) terminal=34816 container_id=ee97d9c4186f image=docker.io/library/alpine)",
+    "priority": "Critical",
+    "rule": "Terminal shell in container",
+    "source": "syscall",
+    "tags": [
+        "container",
+        "mitre_execution",
+        "shell"
+    ],
+    "time": "2023-05-25T13:44:05.478445995Z",
+    "output_fields": {
+        "container.id": "ee97d9c4186f",
+        "container.image.repository": "docker.io/library/alpine",
+        "evt.time": 1685022245478445995,
+        "k8s.ns.name": "default",
+        "k8s.pod.name": "kubecon",
+        "proc.cmdline": "sh -c clear; (bash || ash || sh)",
+        "proc.name": "sh",
+        "proc.pname": "runc",
+        "proc.tty": 34816,
+        "user.loginuid": -1,
+        "user.name": "root"
+    }
 }
 ```
 
