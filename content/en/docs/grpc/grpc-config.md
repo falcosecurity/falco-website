@@ -7,7 +7,7 @@ weight: 10
 
 ## Enabling the Server
 
-The Falco gRPC server and the Falco gRPC Outputs APIs are not enabled by default.
+The Falco {{< glossary_tooltip text="gRPC" term_id="grpc" >}} server and the Falco gRPC Outputs APIs are not enabled by default.
 
 To enable them, edit the `falco.yaml` Falco configuration file. A sample Falco configuration file is given below:
 

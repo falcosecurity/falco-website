@@ -7,11 +7,11 @@ weight: 50
 
 ## Overview
 
-If you use multiple Falco rules files, you might want to append new items to an existing list, macro or rule. To do that, define an item with the same name as an existing item and add an `append: true` attribute to the YAML object. 
+If you use multiple Falco {{< glossary_tooltip text="rules files" term_id="rules-file" >}}, you might want to append new items to an existing {{< glossary_tooltip text="list" term_id="lists" >}}, {{< glossary_tooltip text="macro" term_id="macros" >}} or {{< glossary_tooltip text="rule" term_id="rules" >}}. To do that, define an item with the same name as an existing item and add an `append: true` attribute to the YAML object. 
 
 {{% alert color="warning" %}}
 When appending to lists, items are automatically added to the **end** of the _list_.\
-When appending to rules or macros, the additional content is appended to the _condition_ field of the referred object.
+When appending to rules or macros, the additional content is appended to the {{< glossary_tooltip text="condition" term_id="conditions" >}} field of the referred object.
 {{% /alert %}}
 
 Note that when appending to lists, rules or macros, the order of the rule configuration files matters! For example if you append to an existing default rule (e.g. `Terminal shell in container`), you must ensure your custom configuration file (e.g. `/etc/falco/rules.d/custom-rules.yaml`) is loaded **after** the default configuration file (`/etc/falco/falco_rules.yaml`).

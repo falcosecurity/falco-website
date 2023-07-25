@@ -17,7 +17,7 @@ You can use `"` to capture these special characters. Here's an example:
   priority: WARNING
 ```
 
-When including items in lists, ensure that the double quotes are not interpreted from your YAML file by surrounding the quoted string with single quotes. Here's an example:
+When including items in {{< glossary_tooltip text="lists" term_id="lists" >}}, ensure that the double quotes are not interpreted from your YAML file by surrounding the quoted string with single quotes. Here's an example:
 
 ```yaml
 - list: systemd_procs

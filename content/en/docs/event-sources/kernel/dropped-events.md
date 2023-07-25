@@ -6,13 +6,13 @@ weight: 60
 ---
 ## Introduction
 
-With the enhancements introduced in v0.15.0, Falco can now intelligently detect dropped system call events and take remedial actions, such as alerting or even exiting Falco entirely. When system call events are dropped, Falco might encounter problems building its internal view of the processes, files, containers, and orchestrator metadata in use, which in turn might affect the rules that depend on that metadata. The explicit signals that Falco now provides make it easier to detect dropped system calls.
+With the enhancements introduced in v0.15.0, Falco can now intelligently detect dropped {{< glossary_tooltip text="system call" term_id="syscalls" >}} events and take remedial actions, such as alerting or even exiting Falco entirely. When system call events are dropped, Falco might encounter problems building its internal view of the processes, files, containers, and orchestrator metadata in use, which in turn might affect the rules that depend on that metadata. The explicit signals that Falco now provides make it easier to detect dropped system calls.
 
 For more information on this feature, see our blog post on [CVE-2019-8339](https://sysdig.com/blog/cve-2019-8339-falco-vulnerability/).
 
 ## Implementation
 
-Every second, Falco reads system call event counts that are populated by the kernel module/eBPF program. The reading includes the number of system calls processed, and most importantly, the number of times the kernel tried to write system call information to the shared buffer between the kernel and user space, but found the buffer was full. These failed write attempts are considered *dropped* system call events.
+Every second, Falco reads system call event counts that are populated by the {{< glossary_tooltip text="kernel module" term_id="kernel-module" >}}/{{< glossary_tooltip text="eBPF" term_id="ebpf" >}} program. The reading includes the number of system calls processed, and most importantly, the number of times the kernel tried to write system call information to the shared buffer between the kernel and user space, but found the buffer was full. These failed write attempts are considered *dropped* system call events.
 
 When at least one dropped event is detected, Falco takes one of the following actions:
 

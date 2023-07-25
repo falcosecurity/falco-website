@@ -7,10 +7,7 @@ weight: 70
 
 ## Introduction
 
-Almost all Falco Rules have cases where the behavior detected by the
-rule should be allowed. For example, The rule Write Below Binary Dir
-has exceptions for specific programs that are known to write below
-these directories as a part of software installation/management:
+Almost all Falco Rules have cases where the behavior {{< glossary_tooltip text="detected" term_id="detection" >}} by the {{< glossary_tooltip text="rule" term_id="rules" >}} should be allowed. For example, The rule `Write below binary dir` has exceptions for specific programs that are known to write below these directories as a part of software installation/management:
 
 ```yaml
 - rule: Write below binary dir
@@ -24,7 +21,7 @@ these directories as a part of software installation/management:
     and not user_known_write_below_binary_dir_activities
 ...
 ```
-Previously, these exceptions were expressed as concatenations to the original rule's condition. For example, looking at the macro package_mgmt_procs:
+Previously, these exceptions were expressed as concatenations to the original rule's condition. For example, looking at the {{< glossary_tooltip text="macro" term_id="macros" >}} package_mgmt_procs:
 
 ```yaml
 - macro: package_mgmt_procs
@@ -36,7 +33,7 @@ The result is appending `and not proc.name in (package_mgmt_binaries)` to the co
 A more extreme case of this is the write_below_etc macro used by Write below etc rule. It had tens of exceptions:
 
 ```
-...
+    ...
     and not sed_temporary_file
     and not exe_running_docker_save
     and not ansible_running_python
@@ -47,14 +44,14 @@ A more extreme case of this is the write_below_etc macro used by Write below etc
     and not run_by_adclient
     and not qualys_writing_conf_files
     and not git_writing_nssdb
-...
+    ...
 ```
 
 The exceptions all generally follow the same structure--naming a program and a directory prefix below /etc where that program is allowed to write files.
 
 ## Rule Exceptions
 
-Starting in 0.28.0, falco supports an optional `exceptions` property to rules. The exceptions key is a list of identifier plus list of tuples of filtercheck fields. Here's an example:
+Starting in 0.28.0, falco supports an optional `exceptions` property to rules. The exceptions key is a {{< glossary_tooltip text="list" term_id="lists" >}} of identifier plus list of tuples of filtercheck fields. Here's an example:
 
 ```yaml
 - rule: Write below binary dir
