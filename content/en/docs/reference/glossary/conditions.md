@@ -12,4 +12,4 @@ tags:
 Criteria to trigger an alert.
 
 <!--more-->
-The key part of a {{< glossary_tooltip text="rules" term_id="rules" >}} is the condition field. A condition is a Boolean predicate expressed using the condition syntax. It is possible to express conditions on all supported events using their respective supported {{< glossary_tooltip text="fields" term_id="fields" >}}.
+A key part of a {{< glossary_tooltip text="rule" term_id="rules" >}} is the condition field. A condition is a Boolean predicate expressed using the condition syntax. It is possible to express conditions on all supported events using their respective supported {{< glossary_tooltip text="fields" term_id="fields" >}}.
