@@ -1,8 +1,8 @@
 ---
-title: Falco Quickstart
-description: Learn how to install Falco on Ubuntu
-slug: falco-quickstart
-aliases: [/falco-quickstart]
+title: Try Falco on Linux
+description: Learn how to install Falco on Linux
+slug: falco-linux-quickstart
+aliases: [/falco-linux-quickstart]
 weight: 20
 ---
 
@@ -199,6 +199,4 @@ You should see output similar to the following
 ---
 ## Congratulations, you finished this scenario!
 
-You should be able to install Falco on your Ubuntu host and watch for suspicious behavior.
-
-Click on [Try Falco](/try-falco) and try out the next scenario.
+Check out other items in our Getting Started section including installing Falco on Kubernetes or learning more about Falco's architecture and features in the additional resources section
