@@ -10,24 +10,6 @@ title: Falco Ecosystem
 
 {{< blocks/content wrap="col" content="html" >}}
   {{< blocks/tabs name="integrations" >}}
-  
-  {{< tab name="Plugins" >}}
-  <p class="mt-4 mb-5">Falco’s capabilities to ingest and analyze events can be extended with Plugins. They are shared libraries that allow you to add new streams of events as inputs to Falco and to enrich your events with more contextual information.</p>
-
-  {{< blocks/grid layout="lg-4 md-3 sm-2 2" gap=4 class="gallery-vendor" >}}
-  {{< docs/plugins_gallery_items plugins icon />}}
-    <div class="d-flex flex-column align-items-center">
-      <a class="icon-button shadow" href="https://github.com/falcosecurity/plugins#registered-plugins" aria-label="go to plugins#registered-plugins" >
-        <img src="/img/icons/box-arrow-up-right.svg" alt="box-arrow-up-right" />
-      </a>
-      <span class="font-weight-bold mt-2">More plugins...</span>
-    </div>
-  {{< /blocks/grid >}}
-  
-  <div class="col-12 col-sm-8 col-md-6 col-lg-4 offset-sm-2 offset-md-3 offset-lg-4 mt-5 mb-3 mb-md-0">
-    <a class="btn btn-lg btn-primary btn-block" href="https://github.com/falcosecurity/plugin-sdk-go" role="button">Build your own plugin</a>
-  </div>
-  {{< /tab >}}
 
   {{< tab name="Integrations" >}}
   <p class="mt-4 mb-5">You can connect Falco with your ecosystem by forwarding the events as output to 50+ targets with <a href="/docs/alerts/forwarding/">Falcosidekick</a>.</p>
@@ -66,6 +48,24 @@ title: Falco Ecosystem
 
   {{< /tab >}}
 
+  {{< tab name="Plugins" >}}
+  <p class="mt-4 mb-5">Falco’s capabilities to ingest and analyze events can be extended with Plugins. They are shared libraries that allow you to add new streams of events as inputs to Falco and to enrich your events with more contextual information.</p>
+
+  {{< blocks/grid layout="lg-4 md-3 sm-2 2" gap=4 class="gallery-vendor" >}}
+  {{< docs/plugins_gallery_items plugins icon />}}
+    <div class="d-flex flex-column align-items-center">
+      <a class="icon-button shadow" href="https://github.com/falcosecurity/plugins#registered-plugins" aria-label="go to plugins#registered-plugins" >
+        <img src="/img/icons/box-arrow-up-right.svg" alt="box-arrow-up-right" />
+      </a>
+      <span class="font-weight-bold mt-2">More plugins...</span>
+    </div>
+  {{< /blocks/grid >}}
+  
+  <div class="col-12 col-sm-8 col-md-6 col-lg-4 offset-sm-2 offset-md-3 offset-lg-4 mt-5 mb-3 mb-md-0">
+    <a class="btn btn-lg btn-primary btn-block" href="https://github.com/falcosecurity/plugin-sdk-go" role="button">Build your own plugin</a>
+  </div>
+  {{< /tab >}}
+
   {{< /blocks/tabs >}}
 
 
@@ -87,7 +87,12 @@ title: Falco Ecosystem
   {{< tab name="End-users" >}}
   <p class="mt-4 mb-5">Falco elevates threat detection and response in companies and organizations around the world.</p>
 
-  {{< blocks/grid layout="lg-3 md-2 sm-1 1" gap=2 >}}
+  <h3 class="mt-5">Falco is used by</h3>
+
+  {{< blocks/grid layout="lg-4 md-3 sm-2 2" gap=4 class="gallery-vendor" >}}
+    {{< docs/vendors_gallery_items endusers />}}
+  {{< /blocks/grid >}}
+  {{< blocks/grid layout="lg-1 md-3 sm-2 2" gap=2 >}}
     <div class="card testimonial-card bg-transparent">
       <div class="card-body d-flex flex-column align-items-start py-5">
         <div class="testimonial-card__icon bg-info rounded-circle d-flex justify-content-center align-items-center p-3">
@@ -99,12 +104,6 @@ title: Falco Ecosystem
     </div>
   {{< /blocks/grid >}}
 
-  <h3 class="mt-5">Also used by</h3>
-
-  {{< blocks/grid layout="lg-4 md-3 sm-2 2" gap=4 class="gallery-vendor" >}}
-    {{< docs/vendors_gallery_items endusers />}}
-  {{< /blocks/grid >}}
-  
   {{< /tab >}}
 
   {{< /blocks/tabs >}}
