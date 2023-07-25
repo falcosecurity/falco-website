@@ -12,7 +12,7 @@
   - Runtime detection is a fundamental layer of defense against security blind spots and zero-day bugs in your software supply chain.
   - Streaming approach enables real-time response while minimizing storage costs and complexity.
   - Ready out-of-the-box with rules, which you can customize for your environment.
-- title: Integrated with 50+ Systems
+- title: Integration with 50+ Systems
   description: Forward Falco alerts to any off-host SIEM and data lake system for analysis, storage or reaction.
   icon: /icons/arrow-right.svg
   features: 
