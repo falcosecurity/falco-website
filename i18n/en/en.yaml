@@ -69,7 +69,7 @@ home_show_less:
 home_falco_what_is_falco_title:
   other: Detect security threats in real time
 home_falco_what_is_falco:
-  other: Falco is a cloud-native security tool designed for Linux systems. It employs custom rules on kernel events, which are enriched with container and Kubernetes metadata, to provide real-time alerts. By enhancing your off-host analysis, Falco helps you gain visibility into abnormal behavior, potential security threats, and compliance violations, contributing to comprehensive runtime security.
+  other: Falco is a cloud-native security tool designed for Linux systems. It employs custom rules on kernel events, which are enriched with container and Kubernetes metadata, to provide real-time alerts. Falco helps you gain visibility into abnormal behavior, potential security threats, and compliance violations, contributing to comprehensive runtime security.
 homa_falco_secured_by_falco:
   other: Secured with Falco
 home_falco_cncf:
