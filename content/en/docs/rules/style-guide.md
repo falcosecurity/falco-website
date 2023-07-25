@@ -39,10 +39,31 @@ These recommendations prioritize performance impact while maintaining a consiste
 
 We explain the high level principles using example rules or snippets.
 
-- Each upstream Falco rule must include an `evt.type` filter.
-- Prioritize the `evt.type` filter first. Falco buckets filters per `evt.type` for efficient rules matching through applying the rule's Abstract Syntax Tree (AST) to relevant event types only. A nice side effect is better readability as well.
+- Each upstream Falco rule must include an `evt.type` filter; otherwise, you will get a warning.
+
+```
+Rule no_evttype: warning (no-evttype):
+proc.name=foo
+     did not contain any evt.type restriction, meaning that it will run for all event types.
+     This has a significant performance penalty. Consider adding an evt.type restriction if possible.
+```
+
+- Prioritize the `evt.type` filter first; otherwise, you will get a warning. Falco buckets filters per `evt.type` for efficient rules matching through applying the rule's Abstract Syntax Tree (AST) to relevant event types only. A nice side effect is better readability as well.
+
+```
+Rule evttype_not_equals: warning (trailing-evttype):
+evt.type!=execve
+     does not have all evt.type restrictions at the beginning of the condition,
+     or uses a negative match (i.e. "not"/"!=") for some evt.type restriction.
+     This has a performance penalty, as the rule can not be limited to specific event types.
+     Consider moving all evt.type restrictions to the beginning of the rule and/or
+     replacing negative matches with positive matches if possible.
+```
+
 - To maintain performance, avoid mixing unrelated event types in one rule. Typically, only variants should be mixed together, for example: `evt.type in (open, openat, openat2)`.
 - The best practice and requirement for upstream rules are to only define positive `evt.type` expressions. Using `evt.type!=open`, for example, would imply each of the [supported syscalls](https://github.com/falcosecurity/libs/blob/master/driver/report.md), resulting in a significant performance penalty. For more information, read the [Adaptive Syscalls Selection in Falco](https://falco.org/blog/adaptive-syscalls-selection/) blog post.
+
+
 - After the `evt.type` filter, place your mainly positive filters to efficiently eliminate the most events step by step. An exception to this rule is the `container` macro, which can quickly eliminate many events. Therefore, the guiding principle of "divide and conquer" commonly used in database query recommendations, also applies to Falco's filter statements.
 
 ```yaml
