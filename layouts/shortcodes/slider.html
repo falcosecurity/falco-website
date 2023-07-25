@@ -1,0 +1,35 @@
+<section class="row">
+  <div class="container slider-wrapper">
+    <h3>
+      {{ T "home_stories_from_our_users" | markdownify }}
+    </h3>
+    <div
+      class="swiper__container d-flex justify-content-center align-items-center mt-4"
+    >
+      <span class="swiper__control"
+      >{{ with resources.Get "icons/chevron-down.svg" }}{{ ( . |
+        minify).Content | safeHTML }}{{ end }}</span
+      >
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          {{ $data := index $.Site.Data .Site.Language.Lang }} {{ range $quote
+          := $data.quotes }}
+          <div class="swiper-slide px-3">
+            {{ partial "quote.html" (dict "text" $quote.text "logoUrl"
+            $quote.logoUrl "authorImgUrl" $quote.authorImgUrl "authorName"
+            $quote.authorName "authorPosition" $quote.authorPosition
+            "shareStory" $quote.shareStory "coauthorImgUrl" $quote.coauthorImgUrl "coauthorName" $quote.coauthorName "coauthorPosition" $quote.coauthorPosition) }}
+          </div>
+          {{ end }}
+        </div>
+        <div
+          class="swiper__pagination d-flex justify-content-center mt-4"
+        ></div>
+      </div>
+      <span class="swiper__control-reverse"
+      >{{ with resources.Get "icons/chevron-down.svg" }}{{ ( . |
+        minify).Content | safeHTML }}{{ end }}</span
+      >
+    </div>
+  </div>
+</section>

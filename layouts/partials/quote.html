@@ -1,25 +1,44 @@
-<div class="card card-rounded card-rounded--shaded h-100">
-  <div class="card-body d-flex flex-column justify-content-between">
-    {{ with .shareStory }}
-      <img class="quote-slide__logo" src="{{ $.logoUrl }}" alt="Quote Logo" />
-      <h3 class="display-3 font-weight-normal card-text mb-0 mt-4 flex-grow-1">{{ $.text | markdownify }}</h3>
-      <a href="#" role="button" class="btn btn-primary d-block">
-        {{ T "share_your_story_btn" | markdownify }}
-      </a>
-    {{ else }}
-      <img class="quote-slide__logo" src="{{ .logoUrl }}" alt="Quote Logo" />
-      <p class="card-text mb-0 mt-4 flex-grow-1">"{{ .text | markdownify }}"</p>
-      <div class="d-flex mt-4">
-        <img
-          class="rounded quote-slide__avatar"
-          src="{{ .authorImgUrl }}"
-          alt="author image"
-        />
-        <div class="pl-3 d-flex flex-column justify-content-center">
-          <span> {{ .authorName }} </span>
-          <span class="text-black-50"> {{ .authorPosition }} </span>
-        </div>
+{{ with .shareStory }}
+  <div class="card testimonial-card bg-transparent h-100">
+    <div class="card-body d-flex flex-column align-items-start py-5">
+      <div class="testimonial-card__icon bg-info rounded-circle d-flex justify-content-center align-items-center p-3">
+        <img class="bg-info" src="{{ $.logoUrl }}" alt="Quote Logo" />
       </div>
-    {{ end }}
+      <h3 class="flex-grow-1 mt-4 font-weight-normal">{{ $.text | markdownify }}</h3>
+      <a class="btn btn-primary btn-lg" role="button" href="https://docs.google.com/forms/d/e/1FAIpQLSeUeha4P3VxqBd-AvNuEybNdc2DzQQyAInyceAqgqoXLy8Ptw/viewform?usp=sf_link" target="_blank">{{ T "add_your_story_btn" | markdownify }}</a>
+    </div>
   </div>
-</div>
+{{ else }}
+  <div class="card card-rounded card-rounded--shaded h-100">
+    <div class="card-body d-flex flex-column justify-content-between">
+        <img class="quote-slide__logo" src="{{ .logoUrl }}" alt="Quote Logo" />
+        <p class="card-text mb-0 mt-4 flex-grow-3">"{{ .text | markdownify }}"</p>
+        <div class="d-flex flex-column flex-grow-2">
+          <div class="d-flex mt-4">
+            <img
+              class="rounded-circle quote-slide__avatar"
+              src="{{ .authorImgUrl }}"
+              alt="author image"
+            />
+            <div class="pl-3 d-flex flex-column justify-content-center">
+              <span> {{ .authorName }} </span>
+              <span class="text-black-50"> {{ .authorPosition }} </span>
+            </div>
+          </div>
+          {{ if .coauthorName }}
+            <div class="d-flex mt-4">
+              <img
+                class="rounded-circle quote-slide__avatar"
+                src="{{ .coauthorImgUrl }}"
+                alt="author image"
+              />
+              <div class="pl-3 d-flex flex-column justify-content-center">
+                <span> {{ .coauthorName }} </span>
+                <span class="text-black-50"> {{ .coauthorPosition }} </span>
+              </div>
+            </div>
+          {{ end }}
+        </div>
+    </div>
+  </div>
+{{ end }}
