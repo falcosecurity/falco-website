@@ -144,7 +144,7 @@ http_output:
   url: http://some.url/some/path/
 ```
 
-Currently only unencrypted HTTP endpoints and valid HTTPS endpoints are supported (i.e. invalid or self signed certificates are not supported).
+Currently, only unencrypted HTTP endpoints and valid HTTPS endpoints are supported (i.e., invalid or self-signed certificates are not supported).
 
 ## JSON Output
 
@@ -155,7 +155,7 @@ For all output channels, you can switch to JSON output either in the configurati
 * `priority`: the priority of the rule that generated the alert.
 * `output`: the formatted output string for the alert.
 * `hostname`: the name of the host running Falco (can be the hostname inside the container).
-* `tags`: the list of tags associated to the rule.
+* `tags`: the list of tags associated with the rule.
 * `output_fields`: for each templated value in the output expression, the value of that field from the event that triggered the alert.
 
 Here's an example:

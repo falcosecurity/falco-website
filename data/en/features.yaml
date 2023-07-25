@@ -13,11 +13,11 @@
   - Streaming approach enables real-time response while minimizing storage costs and complexity.
   - Ready out-of-the-box with rules, which you can customize for your environment.
 - title: Integration with 50+ Systems
-  description: Forward Falco alerts to any off-host SIEM and data lake system for analysis, storage or reaction.
+  description: Forward Falco alerts to any off-host SIEM and data lake system for analysis, storage, or reaction.
   icon: /icons/arrow-right.svg
   features: 
-  - Falco alerts can easily be forwarded to more than 50+ third parties
-  - The JSON format for alerts allows to easily store, analyze or trigger reactions
+  - Falco alerts can easily be forwarded to more than 50+ third parties.
+  - The JSON format for alerts allows for storing, analysis, or triggering reactions easily.
 - title: Open Source
   description: A multi-vendor and widely adopted solution that you can rely on.
   icon: /icons/pentagon-fill.svg
