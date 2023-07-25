@@ -7,7 +7,7 @@ aliases:
   - /docs/event-sources/drivers
 ---
 
-Falco uses different instrumentations to analyze the system workload and pass security events to userspace. We usually refer to these instrumentations as **syscall sources** since the generated events are strictly related to the syscall context.
+Falco uses different instrumentations to analyze the system workload and pass security events to {{< glossary_tooltip text="userspace" term_id="user-space" >}}. We usually refer to these instrumentations as **syscall sources** since the generated events are strictly related to the {{< glossary_tooltip text="syscall" term_id="syscalls" >}} context.
 
 There are several supported syscall sources:
 
@@ -22,7 +22,7 @@ There are several supported syscall sources:
 
 ## Kernel module
 
-By default, the kernel module will be installed when installing the Falco [debian/rpm](/docs/getting-started/installation) package, when running the `falco-driver-loader` script shipped within the [binary package](/docs/getting-started/installation#linux-binary), or when running the `falcosecurity/falco-driver-loader` docker image (that just wraps the aforementioned script).
+By default, the {{< glossary_tooltip text="kernel module" term_id="kernel-module" >}} will be installed when installing the Falco [debian/rpm](/docs/getting-started/installation) package, when running the `falco-driver-loader` script shipped within the [binary package](/docs/getting-started/installation#linux-binary), or when running the `falcosecurity/falco-driver-loader` docker image (that just wraps the aforementioned script).
 
 To install the kernel module, please refer to the [installation](/docs/getting-started/installation/#install-driver) page.
 
@@ -32,7 +32,7 @@ The kernel module requires full privileges and cannot run with Linux capabilitie
 
 ## Classic eBPF probe
 
-The classic eBPF probe is an alternative source to the one described above.
+The classic {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} is an alternative source to the one described above.
 
 To install the eBPF probe, please refer to the [installation](/docs/getting-started/installation/#install-driver) page.
 
@@ -75,7 +75,7 @@ The conditions to satisfy are the following:
 
 ## Modern eBPF probe
 
-The modern probe is an alternative driver for Falco. The main advantage it brings to the table is that it is embedded into Falco, which means that you don't have to download or build anything, if your kernel is recent enough Falco will automatically inject it!
+The {{< glossary_tooltip text="modern probe" term_id="modern-ebpf-probe" >}} is an alternative driver for Falco. The main advantage it brings to the table is that it is embedded into Falco, which means that you don't have to download or build anything, if your kernel is recent enough Falco will automatically inject it!
 
 ### What's new
 

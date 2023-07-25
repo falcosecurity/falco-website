@@ -5,7 +5,7 @@ linktitle: Generating sample events
 weight: 70
 ---
 
-If you'd like to check if Falco is working properly, we have the [`event-generator`](https://github.com/falcosecurity/event-generator) tool that can perform an activity for both our syscall and k8s audit related rules.
+If you'd like to check if Falco is working properly, we have the {{< glossary_tooltip text="event-generator" term_id="event-generator" >}} tool that can perform an activity for both our {{< glossary_tooltip text="syscalls" term_id="syscalls" >}} and {{< glossary_tooltip text="k8s audit" term_id="kubernetes-audit-log" >}} related rules.
 
 The tool provides a command to run either some or all sample events.
 

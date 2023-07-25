@@ -5,7 +5,7 @@ linktitle: Default and Local Rules
 weight: 20
 ---
 
-Starting with Falco 0.8.0, falco officially supports the notion of a _default_ rules file and a _local_ rules file. This has previously been supported by running falco with multiple `-r` arguments. In 0.8.0, we're formalizing this notion to make it easier to customize falco's behavior but still retain access to rule changes as a part of software upgrades. Of course, you can always customize the set of files you want to read by changing the `rules_file` option in `falco.yaml`.
+Starting with Falco 0.8.0, falco officially supports the notion of a _default_ {{< glossary_tooltip text="rules file" term_id="rules-file" >}} and a _local_ rules file. This has previously been supported by running falco with multiple `-r` arguments. In 0.8.0, we're formalizing this notion to make it easier to customize falco's behavior but still retain access to rule changes as a part of software upgrades. Of course, you can always customize the set of files you want to read by changing the `rules_file` option in `falco.yaml`.
 
 The default rules file is always read first, followed by the local rules file.
 

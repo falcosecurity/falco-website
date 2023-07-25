@@ -7,11 +7,11 @@ weight: 80
 
 ## Disable Default Rules
 
-Even though Falco provides a quite powerful default ruleset, you sometimes need to disable some of these default rules since they do not work properly in your environment. Luckily Falco offers you multiple possibilities to do so.
+Even though Falco provides a quite powerful default ruleset, you sometimes need to disable some of these default {{< glossary_tooltip text="rules" term_id="rules" >}} since they do not work properly in your environment. Luckily Falco offers you multiple possibilities to do so.
 
-### Via existing Macros
+### Via existing Macros {#macros}
 
-Most of the default rules offer some kind of `user_*` macros which are already part of the rule conditions. These `user_*` macros are usually set to `(never_true)` or `(always_true)` which basically enables or disables the regarding rule. Now if you want to disable a default rule (e.g. `Read sensitive file trusted after startup`), you just have to override the rule's `user_*` macro (`user_known_read_sensitive_files_activities` in this case) inside your custom Falco configuration.
+Most of the default rules offer some kind of `user_*` {{< glossary_tooltip text="macros" term_id="macros" >}} which are already part of the rule conditions. These `user_*` macros are usually set to `(never_true)` or `(always_true)` which basically enables or disables the regarding rule. Now if you want to disable a default rule (e.g. `Read sensitive file trusted after startup`), you just have to override the rule's `user_*` macro (`user_known_read_sensitive_files_activities` in this case) inside your custom Falco configuration.
 
 Example for your custom Falco configuration (note the `(always_true)` condition):
 ```yaml
@@ -62,7 +62,7 @@ At the same time, disabled rules can be re-enabled by using the `enabled: true` 
 
 ## Rule Tags {#tags}
 
-As of 0.6.0, rules have an optional set of _tags_ that are used to categorize the ruleset into groups of related rules. Here's an example:
+As of 0.6.0, rules have an optional set of {{< glossary_tooltip text="tags" term_id="tags" >}} that are used to categorize the ruleset into groups of related rules. Here's an example:
 
 ```yaml
 - rule: File Open by Privileged Container
