@@ -16,7 +16,7 @@
           := $data.quotes }}
           <div class="swiper-slide px-3">
             {{ partial "quote.html" (dict "text" $quote.text "logoUrl"
-            $quote.logoUrl "authorImgUrl" $quote.authorImgUrl "authorName"
+            $quote.logoUrl "linkUrl" $quote.linkUrl "authorImgUrl" $quote.authorImgUrl "authorName"
             $quote.authorName "authorPosition" $quote.authorPosition
             "shareStory" $quote.shareStory "coauthorImgUrl" $quote.coauthorImgUrl "coauthorName" $quote.coauthorName "coauthorPosition" $quote.coauthorPosition) }}
           </div>
