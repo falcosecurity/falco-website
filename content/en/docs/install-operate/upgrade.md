@@ -1,7 +1,8 @@
 ---
 title: Upgrade
 description: Upgrading Falco on a Linux system
-weight: 3
+aliases: [docs/getting-started/upgrade]
+weight: 30
 ---
 
 This section provides upgrading paths for Falco if previously installed following the [Install](../installation/) section.

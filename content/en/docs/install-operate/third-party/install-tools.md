@@ -1,7 +1,8 @@
 ---
 title: Installation Tools
 description: Installation tools  that are required for integrations built on the Falco core
-weight: 1
+aliases: [/docs/getting-started/third-party/install-tools]
+weight: 10
 ---
 
 ## Scripted install {#scripted}

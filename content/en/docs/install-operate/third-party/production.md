@@ -1,7 +1,8 @@
 ---
 title: Production Environment
 description: Integrations built on the Falco core in a production environment
-weight: 3
+aliases: [docs/getting-started/third-party/production]
+weight: 30
 ---
 
 ## CoreOS
