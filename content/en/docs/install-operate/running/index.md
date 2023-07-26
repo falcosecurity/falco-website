@@ -1,7 +1,7 @@
 ---
 title: Running
 description: Operating and Managing Falco
-weight: 4
+weight: 40
 ---
 
 ## Falco packages

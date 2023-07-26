@@ -1,7 +1,8 @@
 ---
 title: Download
 description: Officially supported Falco artifacts
-weight: 2
+aliases: [/docs/getting-started/download]
+weight: 20
 ---
 
 The Falco Project community only supports two ways for downloading and running Falco:

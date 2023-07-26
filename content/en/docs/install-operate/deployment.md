@@ -1,7 +1,8 @@
 ---
 title: Deployment
 description: Installing Falco on a Cluster
-weight: 4
+aliases: [/docs/getting-started/deployment]
+weight: 40
 ---
 
 ## Kubernetes
