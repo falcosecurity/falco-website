@@ -8,7 +8,7 @@ To write a custom rule for Falco from scratch, it is essential to understand the
 
 ## Rules Placement
 
-When adding a new rule to Falco, the first step is determining its placement. When loading the rules, Falco groups them per system call (`evt.type`) for faster matching and processes them later in sequential order, ensuring that two rules are not triggered simultaneously for the same `evt.type` field value. Consequently, more general rules should be positioned at the end of the rule set, while more specific rules should be placed at the beginning. This arrangement prevents general rules from capturing events that more specific rules should handle.
+When adding a new rule to Falco, the first step is determining its placement. For instance, when loading syscall rules, Falco groups them per system call (`evt.type`) for faster matching and processes them later in sequential order, ensuring that two rules are not triggered simultaneously for the same `evt.type` field value. Consequently, more general rules should be positioned at the end of the rule set, while more specific rules should be placed at the beginning. This arrangement prevents general rules from capturing events that more specific rules should handle.
 
 It's worth noting that Falco loads a set of predefined rules by default, followed by any custom rules located in the `/etc/falco/rules.d` directory. This configuration is specified in the [`/etc/falco/falco.yaml`](https://github.com/falcosecurity/falco/blob/master/falco.yaml) file, under the `rules_file:` key, as follows:
 
@@ -40,7 +40,7 @@ customRules:
       ...
 ```
 
-That will instruct `helm` to create as many rules files as you define here accessible inside the Falco Pods, under the directory `/etc/falco/rules.d`.
+That will instruct Helm to create as many rules files as you define here accessible inside the Falco Pods, under the directory `/etc/falco/rules.d`.
 
 Finally, remember that keeping any previous ruleset and extending it, although sometimes recommended, is not enforced. It's acceptable to create a new ruleset by reorganizing the upstream rules, reordering and rewriting them, mixing in custom rules, splitting them into different sets and files, etc. Default Falco rules should be considered more of a guidance than a requirement to adopt.
 
@@ -82,11 +82,11 @@ Rules in Falco are defined using YAML syntax. Each rule is represented as an obj
 
 - The `tags` key categorizes the ruleset into groups of related rules. Although not mandatory when starting to write a rule, its use is highly recommended at a later stage for management purposes. For further information, refer to the [Tags section of the Style Guide of Falco Rules][/docs/rules/style-guide/#tags)
 
-To enhance your Falco rules further, refer to the [Advanced Rule Syntax](/docs/rules/basic-elements/#advanced-rule-syntax) documentation. The [Style Guide of Falco Rules](/docs/rules/style-guide) is also a highly recommended document to ensure your rules are easier to maintain and share with the community. These resources will provide you with valuable information about additional keys that can be used to augment and customize your Falco rules. Exploring these advanced options will allow you to expand the capabilities and effectiveness of your rules.
+Refer to the [Advanced Rule Syntax](/docs/rules/basic-elements/#advanced-rule-syntax) documentation to enhance your Falco rules further. The [Style Guide of Falco Rules](/docs/rules/style-guide) is also highly recommended to ensure your rules are easier to maintain and share with the community. These resources will provide you with valuable information about additional keys that can be used to augment and customize your Falco rules. Exploring these advanced options will allow you to expand the capabilities and effectiveness of your rules.
 
 ## Building up the Condition
 
-A condition in Falco acts as a checklist of requirements that an event must meet in order for Falco to evaluate the condition as true. To comprehend this evaluation process, it is essential to have a grasp of [Boolean algebra](https://en.wikipedia.org/wiki/Boolean_algebra). Ultimately, the condition will either evaluate to true, triggering the associated alert and bypassing the remaining rules, or evaluate to false, causing the next rule to be evaluated.
+A condition in Falco acts as a checklist of requirements an event must meet to trigger the rule. To comprehend this evaluation process, it is essential to have a grasp of [Boolean algebra](https://en.wikipedia.org/wiki/Boolean_algebra). Ultimately, the condition will either evaluate to true, triggering the associated alert and bypassing the remaining rules, or evaluate to false, causing the next rule to be evaluated.
 
 To achieve the desired effect, it is necessary to consider the Boolean operators: `and`, `or`, and `not`. These operators enable the condition to evaluate one or more situations and produce the desired outcome.
 
