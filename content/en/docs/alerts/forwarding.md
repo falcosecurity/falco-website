@@ -1,6 +1,6 @@
 ---
 title: Forwarding Alerts to third parties
-description: Forward Falco Alerts to third parties
+description: Forward Falco Alerts to third parties with Falcosidekick
 linktitle: Forwarding Alerts to third parties
 weight: 30
 ---
