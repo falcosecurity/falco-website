@@ -7,7 +7,7 @@
       </div>
       <div class="d-flex flex-column h-100">
         <h4 class="display-4 mt-0 pb-1 feature-card__title" style="margin-left: auto; margin-right: auto;">{{ .title }}</h4>
-        <p class="flex-grow-1 mb-2 pb-1">{{ .description }}</p>
+        <p class="flex-grow-1 mb-2 pb-1">{{ .description | markdownify }}</p>
         <ul
           id="falco-features-{{ $index }}"
           class="collapse multi-collapse ml-3 pl-1 mb-2"
