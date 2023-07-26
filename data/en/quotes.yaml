@@ -3,11 +3,13 @@
 
  - text: Falco's threat detection and real-time alerting capabilities, together with Phoenix's mitigation features help effectively address security issues that might evade other security offerings
    logoUrl: /img/case-studies/phoenix/phoenix.png
+   linkUrl: /about/case-studies/r6-security
    authorImgUrl: /img/case-studies/phoenix/zsolt_nemeth.jpg
    authorName: Zsolt Nemeth
    authorPosition: CEO at R6 Security Inc
  - text: At Trendyol, we leverage Falco to develop a threat detection system using Kubernetes audit logs and kernel events to monitor user behavior in production clusters. This lets us detect operational anti-patterns, enhance visibility, and identify malicious actors.
    logoUrl: /img/case-studies/trendyol/trendyol.png
+   linkUrl: /about/case-studies/trendyol
    authorImgUrl: /img/case-studies/trendyol/furkan_tural.png
    authorName: Furkan Türal
    authorPosition: Platform Engineer at Trendyol

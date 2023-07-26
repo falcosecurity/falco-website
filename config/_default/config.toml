@@ -179,6 +179,15 @@ id = "UA-00000000-0"
     weight = 8
     [menu.main.params]
         description = "Integrations, plugins, end users and vendors"
+# TODO: uncomment when case-studies page is ready
+# [[menu.main]]
+#     identifier = "case-studies"
+#     name = "Case Studies"
+#     url = "/about/case-studies/"
+#     parent = "about"
+#     weight = 9
+#     [menu.main.params]
+#         description = "Falco adoption in the industry with specific use cases."
 [[menu.main]]
     identifier = "faq"
     name = "FAQ"

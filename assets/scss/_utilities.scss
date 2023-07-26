@@ -115,6 +115,13 @@ h6[id] {
     height: 3rem;
     width: 3rem;
   }
+  
+  &__link {
+    &:focus,
+    &:hover {
+      opacity: 50%;
+    }
+  }
 }
 
 .flex-grow-2 {
@@ -123,4 +130,10 @@ h6[id] {
 
 .flex-grow-3 {
   flex-grow: 3;
+}
+
+.case-study {
+  &-logo {
+    max-width: 10rem;
+  }
 }

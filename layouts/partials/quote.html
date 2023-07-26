@@ -9,36 +9,38 @@
     </div>
   </div>
 {{ else }}
-  <div class="card card-rounded card-rounded--shaded h-100">
-    <div class="card-body d-flex flex-column justify-content-between">
-        <img class="quote-slide__logo" src="{{ .logoUrl }}" alt="Quote Logo" />
-        <p class="card-text mb-0 mt-4 flex-grow-3">"{{ .text | markdownify }}"</p>
-        <div class="d-flex flex-column flex-grow-2">
-          <div class="d-flex mt-4">
-            <img
-              class="rounded-circle quote-slide__avatar"
-              src="{{ .authorImgUrl }}"
-              alt="author image"
-            />
-            <div class="pl-3 d-flex flex-column justify-content-center">
-              <span> {{ .authorName }} </span>
-              <span class="text-black-50"> {{ .authorPosition }} </span>
-            </div>
-          </div>
-          {{ if .coauthorName }}
+  <a href="{{ .linkUrl }}" class="quote-slide__link font-weight-normal text-decoration-none">
+    <div class="card card-rounded card-rounded--shaded h-100">
+      <div class="card-body d-flex flex-column justify-content-between">
+          <img class="quote-slide__logo" src="{{ .logoUrl }}" alt="Quote Logo" />
+          <p class="card-text mb-0 mt-4 flex-grow-3">"{{ .text | markdownify }}"</p>
+          <div class="d-flex flex-column flex-grow-2">
             <div class="d-flex mt-4">
               <img
                 class="rounded-circle quote-slide__avatar"
-                src="{{ .coauthorImgUrl }}"
+                src="{{ .authorImgUrl }}"
                 alt="author image"
               />
               <div class="pl-3 d-flex flex-column justify-content-center">
-                <span> {{ .coauthorName }} </span>
-                <span class="text-black-50"> {{ .coauthorPosition }} </span>
+                <span> {{ .authorName }} </span>
+                <span class="text-black-50"> {{ .authorPosition }} </span>
               </div>
             </div>
-          {{ end }}
-        </div>
+            {{ if .coauthorName }}
+              <div class="d-flex mt-4">
+                <img
+                  class="rounded-circle quote-slide__avatar"
+                  src="{{ .coauthorImgUrl }}"
+                  alt="author image"
+                />
+                <div class="pl-3 d-flex flex-column justify-content-center">
+                  <span> {{ .coauthorName }} </span>
+                  <span class="text-black-50"> {{ .coauthorPosition }} </span>
+                </div>
+              </div>
+            {{ end }}
+          </div>
+      </div>
     </div>
-  </div>
+  </a>
 {{ end }}
