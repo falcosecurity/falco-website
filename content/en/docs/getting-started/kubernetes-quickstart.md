@@ -7,17 +7,17 @@ weight: 25
 ---
 
 ## Introduction
-Falco is designed to provide real-time notification of suspicious behavior. By default it can send these alerts to stdout, stdrerr, an https endpoint, and a gRPC endpoint. However in most production scenarios you will want to send the output to some other system so you can take further action. Perhaps you would forward notification to Elastic or an SIEM. 
+Falco is designed to provide real-time notification of suspicious behavior. By default, it can send these alerts to stdout, stdrerr, an HTTPs endpoint, and a gRPC endpoint. However, in most production scenarios, you will want to send the output to some other system so you can take further action. Perhaps you would forward notification to Elastic or an SIEM. 
 
-The important point is that, while Falco performs a valuable task, it is most effective as part of a larger security workflow. 
+The important point is that while Falco performs a valuable task, it is most effective as part of a larger security workflow.
 
-You might be asking, how does Falco forward its alerts. One way to accomlish this is through an add-on piece of software, [Falcosidekick](https://github.com/falcosecurity/falcosidekick). Falcosidekick can be used to forward notification to a wide variety of platforms including notification services, function as a service platforms, log aggregators, and many more. 
+You might be asking, how does Falco forward its alerts? One way to accomplish this is through an add-on piece of software, [Falcosidekick](https://github.com/falcosecurity/falcosidekick). Falcosidekick can be used to forward notification to various platforms, including notification services, function as a service platforms, log aggregators, and many more. 
 
-In this walkthrough you will install Falco and Falcosidekick on a Kubernetes cluster. Falcosidekick will be configured to send alerts to a public Slack server. 
+In this walkthrough, you will install Falco and Falcosidekick on a Kubernetes cluster. Falcosidekick will be configured to send alerts to a public Slack server. 
 
 ## Prerequisites
 
-This walkthrough uses Helm to install Falco on a Kubernetes cluster. If you wish to follow the steps exactly as they were tested you'll need the following software: 
+This walkthrough uses Helm to install Falco on a Kubernetes cluster. If you wish to follow the steps precisely as they were tested, you'll need the following software:
 
 ### Mac requirements
 * Lima
@@ -36,7 +36,7 @@ This walkthrough uses Helm to install Falco on a Kubernetes cluster. If you wish
 
 ### Create a K3s Cluster on Mac with Lima
 
-* Install [Helm](https://helm.sh/docs/intro/install/), [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/) and [Lima](https://github.com/lima-vm/lima#installation) according to the documentatioon. 
+* Install [Helm](https://helm.sh/docs/intro/install/), [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/), and [Lima](https://github.com/lima-vm/lima#installation) according to the documentation. 
 
 * Use Lima to create a K3s cluster. 
 
@@ -44,18 +44,18 @@ This walkthrough uses Helm to install Falco on a Kubernetes cluster. If you wish
     limactl start template://k3s
     ```
 
-    When prompted choose "Proceed with current configuration"
+    When prompted, choose "Proceed with current configuration"
 
 * Export the Kubeconfig file as shown in the Lima output
 
-    **Note**:  don't copy and paste from below, copy and paste from your terminal window
+    **Note**:  don't copy and paste from below; copy and paste from your terminal window
 
     For example:
     ```plain
     export KUBECONFIG="/Users/falco.user/.lima/k3s/copied-from-guest/kubeconfig.yaml"
     ```
 
-* Check to see that the Kubernetes cluster is up and runnnig
+* Check to see that the Kubernetes cluster is up and running
 
     ```plain
     kubectl get nodes
@@ -63,7 +63,7 @@ This walkthrough uses Helm to install Falco on a Kubernetes cluster. If you wish
 
 ### Create a K3 cluster on Windows or Linux with Virtual box
 
-**Note**: while you can install K3s natively on Linux, the instructions below have been tested and offer a higher likliehood of success. 
+**Note**: while you can install K3s natively on Linux, the instructions below have been tested and offer a higher likelihood of success. 
 
 * Install [Virtual Box](https://www.virtualbox.org/wiki/Downloads) and [Vagrant](https://developer.hashicorp.com/vagrant/downloads)
 
@@ -82,11 +82,11 @@ This walkthrough uses Helm to install Falco on a Kubernetes cluster. If you wish
 
 * Install [Helm](https://helm.sh/docs/intro/install/), [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/), and [K3s](https://docs.k3s.io/quick-start per the instructions for Ubuntu 20.04
 
-    **Note**: be sure you're installing inside your SSH session, not on your local machine. Also installing K3s last makes the next step easier. 
+    **Note**: be sure you're installing inside your SSH session, not on your local machine. Also, installing K3s last makes the next step easier. 
 
 * Export the Kubeconfig file as shown in the K3s output
 
-    **Note**:  don't copy and paste from below, copy and paste from your terminal window
+    **Note**:  don't copy and paste from below; copy and paste from your terminal window
 
     For example:
 
@@ -94,16 +94,16 @@ This walkthrough uses Helm to install Falco on a Kubernetes cluster. If you wish
     export KUBECONFIG="/Users/falco.user/.lima/k3s/copied-from-guest/kubeconfig.yaml"
     ```
 
-* Check to see that the Kubernetes cluster is up and runnnig
+* Check to see that the Kubernetes cluster is up and running
 
     ```plain
     kubectl get nodes
     ```
 
->Note: For Mac users do the remaining steps from the terminal on your local machine. For Windows and Linux users, do these steps in the terminal session for your Virtualbox VM. 
+**Note**: For Mac users, do the remaining steps from the terminal on your local machine. For Windows and Linux users, do these steps in the terminal session for your Virtualbox VM. 
 
 ## Install Falco using Helm
-Helm is probably the simplest way to deploy Falco and Falcosidekick. In this section you'll add the Falco Helm chart repository. Next you'll deploy Falco and Falcosidekick with the eBPF probe. Becuse we want to send output to a Slack channel you will provide the Slack webhook information. Additionally, we supply a custom parameter (*user*) that you will customize to your username. 
+Helm is the simplest way to deploy Falco and Falcosidekick. In this section, you'll add the Falco Helm chart repository. Next, you'll deploy Falco and Falcosidekick with the eBPF probe. Because we want to send output to a Slack channel, you will provide the Slack webhook information. Additionally, we supply a custom parameter (*user*) that you will customize to your username. 
 
 * Add the Falco Helm repository
 
@@ -118,7 +118,7 @@ Helm is probably the simplest way to deploy Falco and Falcosidekick. In this sec
     kubectl create namespace falco
     ```
 
-* Use Helm to install Falco and Falcosidekick. Notice we are specifying the eBPF probe, as well as the information to forward any alerts with a priority higher than *Notice* to our Slack server. 
+* Use Helm to install Falco and Falcosidekick. Notice we are specifying the eBPF probe and the information to forward any alerts with a priority higher than *Notice* to our Slack server. 
 
 
 
@@ -136,7 +136,7 @@ Helm is probably the simplest way to deploy Falco and Falcosidekick. In this sec
     k get pods -n falco  -w
     ```
 
-You should ultimately see 3 entries similar to below
+You should ultimately see 3 entries similar to those below
 
 ```plain
 NAME                                   READY   STATUS    RESTARTS   AGE
@@ -147,7 +147,7 @@ falco-vdsc8                            2/2     Running   0          3m7s
 
 ## Simulate suspicious activity
 
-One of Falco's rules alerts you if someone runs an interactive shell into a running container. In this section you'll shell into a running Alpine container to trigger a Falco notification
+One of Falco's rules alerts you if someone runs an interactive shell into a running container. In this section, you'll shell into a running Alpine container to trigger a Falco notification
 
 * Start an Alpine container 
 
@@ -166,7 +166,7 @@ NAME     READY   STATUS    RESTARTS   AGE
 alpine   1/1     Running   0          16s
 ```
 
-* Shell into the runnign container and run the *uptime* command. This will trigger Falco to send an Alert
+* Shell into the running container and run the *uptime* command. This will trigger Falco to send an Alert
 
     ```
     kubectl exec -it alpine -- sh -c "uptime"
@@ -193,9 +193,9 @@ You should see output similar to this:
  "proc.pname":"runc","proc.tty":34816,"user.loginuid":-1,"user.name":"root"}}
 ```
 
-Notice that there is a bunch of interesting information in the output including thigs like the pod name, container id, time of the notification, and much more. 
+Notice that there is a bunch of interesting information in the output, including the pod name, container id, time of the notification, and much more. 
 
-* Since we used Falcosidekick to send the information to Slack, you can view it there as well. Simply visit our #falco-notifications channel on the [public slack channel](https://join.slack.com/t/sysdig-workshops/shared_invite/zt-1rd6raamc-UldAmUJe5FgnB5NhsAPeMQ) and look for the alert with your name. 
+* Since we used Falcosidekick to send the information to Slack, you can also view it there. Visit our #falco-notifications channel on the [public slack channel](https://join.slack.com/t/sysdig-workshops/shared_invite/zt-1rd6raamc-UldAmUJe5FgnB5NhsAPeMQ) and look for the alert with your name. 
 
 ![Slack output](../images/slack-output.png)
 
@@ -206,4 +206,4 @@ Notice that there is a bunch of interesting information in the output including 
 
 ## Congratulations, you finished this scenario!
 
-Check out other items in our Getting Started section including installing Falco on Linux or learning more about Falco's architecture and features in the additional resources section
+Check out other items in our Getting Started section, including installing Falco on Linux or learning more about Falco's architecture and features in the additional resources section.
