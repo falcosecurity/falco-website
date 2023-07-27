@@ -128,7 +128,7 @@
 
     `k8s_audit_endpoint` 는 쿠버네티스 감사 이벤트를 수신할 URI를 지정한다. 기본값은 `/k8s-audit` 이다.
 
-    `ssl_enabled` 는 `ssl_certificate` 에 지정된 인증서를 사용하여 웹 서버에 대한 SSL 지원을 활성화한다. 지정된 `ssl_certificate` 파일에는 [civitweb에서 문서화](https://github.com/civetweb/civetweb/blob/master/docs/OpenSSL.md#creating-a-self-signed-certificate)와 같은 키와 서버의 인증서가 포함되어야 한다.
+    `ssl_enabled` 는 `ssl_certificate` 에 지정된 인증서를 사용하여 웹 서버에 대한 SSL 지원을 활성화한다.
 - name: grpc
   type: |
     다음의 하위-키를 포함한 목록:

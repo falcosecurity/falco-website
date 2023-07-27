@@ -128,7 +128,7 @@
 
     `k8s_audit_endpoint`は、Kubernetes監査イベントをリッスンするURIを指定します。デフォルトは`/k8s-audit`です。
 
-    `ssl_enabled`は、`ssl_certificate`で指定された証明書を使用して、ウェブサーバーのSSLサポートを有効にします。指定された`ssl_certificate`ファイルには、サーバーの証明書と[civitwebによって文書化された](https://github.com/civetweb/civetweb/blob/master/docs/OpenSSL.md#creating-a-self-signed-certificate)のキーが含まれている必要があります。
+    `ssl_enabled`は、`ssl_certificate`で指定された証明書を使用して、ウェブサーバーのSSLサポートを有効にします。
 - name: grpc
   type: |
     List containing the following sub-keys:

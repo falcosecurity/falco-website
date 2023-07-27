@@ -227,7 +227,7 @@
 
     `k8s_audit_endpoint` specifies the URI on which to listen for Kubernetes audit events. The default is `/k8s-audit`.
 
-    `ssl_enabled` enables SSL support for the webserver, using the certificate specified in `ssl_certificate`. The specified `ssl_certificate` file should contain the server's certificate as well as the key as [documented by civitweb](https://github.com/civetweb/civetweb/blob/master/docs/OpenSSL.md#creating-a-self-signed-certificate).
+    `ssl_enabled` enables SSL support for the webserver, using the certificate specified in `ssl_certificate`. The specified `ssl_certificate` file should contain the server's certificate as well as the key.
     
     `threadiness` enables configuring the number of threads used by the webserver (Default is 0). When 0, Falco automatically guesses it depending on the number of online cores
 
