@@ -16,7 +16,8 @@ generated with:
 falco --list=syscall --markdown  | sed -E 's/## Field Class/### Field Class/g' | awk '!/^Event Sources: syscall\w*/' | awk '/Field Class: evt/{c++;if(c==2){sub("evt","evt (for system calls)");c=0}}1'
 -->
 
-`syscall` event source fields are provided by the [Falco Drivers](/docs/event-sources/drivers/).
+`syscall` event source fields are provided by the [Falco Drivers](/docs/event-sources/drivers/). See the [supported events](supported-events) documentation to learn about all the available event types. The field `evt.arg`, `evt.args` and `evt.rawarg` is used to access arguments for each event. For example, in order to access the `target` arg of a `symlinkat` exit event you can use `evt.arg.target`.
+
 
 ```
 # System Kernel Fields
