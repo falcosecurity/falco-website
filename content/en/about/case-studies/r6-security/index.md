@@ -1,5 +1,5 @@
 ---
-title: Trendyol Case Study
+title: R6 Security Case Study
 date: 2023-07-25
 author: Zsolt Nemeth, Mike Coleman
 slug: r6-security
@@ -11,7 +11,7 @@ slug: r6-security
   <img class="case-study-logo mb-4" alt="R6 Security Inc. Logo" src="/img/case-studies/phoenix/phoenix.png">
 </div>
 
-<h1>Real-time Event Stream Processing at Scale for Shopify</h1>
+<h1>R6 Security Leverages Falco to Enhance Their Moving Threat Detection Platform, Phoenix</h1>
 
 {{< /blocks/content >}}
 
@@ -19,13 +19,13 @@ slug: r6-security
 
 ## Company Information
 
-R6 security was founded in 2020 to address the unique challenges of securing modern computing environments. Realizing that traditional security offerings based on static signatures were insufficient in today’s cloud native world, R6 created Phoenix to offer a more proactive approach to address the ever-changing security challenges around Kubernetes and containers.
+[R6 Security](https://r6security.com) was founded in 2020 to address the unique challenges of securing modern computing environments. Realizing that traditional security offerings based on static signatures were insufficient in today’s cloud native world, R6 Security created Phoenix to offer a more proactive approach to address the ever-changing security challenges around Kubernetes and containers.
 
-R6’s flagship product, Phoenix, leverages Falco’s threat detection capabilities. Phoenix is a security solution for Kubernetes that takes protection to a higher level by introducing the Moving Target Defense (MTD) paradigm. MTD ensures the monitored system is constantly changing and evolving, helping to render hacker’s efforts ineffective. MTD does this by killing and relabeling pods on fixed or random time intervals, automatic reconfiguration and other complex obfuscation actions.
+R6 Security’s flagship product, Phoenix, leverages Falco’s threat detection capabilities. Phoenix is a security solution for Kubernetes that takes protection to a higher level by introducing the Moving Target Defense (MTD) paradigm. MTD ensures the monitored system is constantly changing and evolving, helping to render hacker’s efforts ineffective. MTD does this by killing and relabeling pods on fixed or random time intervals, automatic reconfiguration and other complex obfuscation actions.
 
 ## Building on Falco
 
-While building Phoenix R6, we received customer feedback that real-time threat detection across various scenarios was a  mandatory feature. The R6 team was familiar with Falco through connections to the wider Falco community and previous experience with the tool. Additionally, the team had previous experience with commercial security offerings, and they evaluated other open source projects as well.
+While building Phoenix, R6 Security received customer feedback that real-time threat detection across various scenarios was a  mandatory feature. The R6 Security team was familiar with Falco through connections to the wider Falco community and previous experience with the tool. Additionally, the team had previous experience with commercial security offerings, and they evaluated other open source projects as well.
 
 However, they ultimately settled on Falco for three key reasons:
 
@@ -55,12 +55,12 @@ The combination of Falco's threat detection capabilities and Phoenix's mitigatio
 
 The addition of real-time alerting via Falco allows Phoenix to adjust the cluster’s configuration as soon as suspicious activity is detected instead of waiting for the next random update interval.
 
-During the development process R6 discovered they needed a way to forward Falco events to their Kubernetes operator.  To achieve this they added a sidecar to the Falco pod that receives events from Falco, and then forwards them to their operator. These changes were submitted as a [PR](https://github.com/falcosecurity/evolution/pull/116) and eventually merged into Falco.
+During the development process R6 Security discovered they needed a way to forward Falco events to their Kubernetes operator.  To achieve this they added a sidecar to the Falco pod that receives events from Falco, and then forwards them to their operator. These changes were submitted as a [PR](https://github.com/falcosecurity/evolution/pull/116) and eventually merged into Falco.
 
 Falco has proven to be very accurate in detecting threats, catching around 80-85% of attacks based on red teaming and real-life scenarios. Reaching this level of detection required a multi-pronged approach. There was, of course, fine tuning of the Falco rules, but also the addition of static application security testing. And, it’s important to note, that there is an amount of overhead associated with using Falco and performing the automated remediation. Estimates put this at approximately 1-8% additional CPU or memory. Of course, this varies by workload, and you should plan on doing your own testing.
 
 ## Conclusion
 
-Today, R6’s Phoenix product is leveraging to help customers deal with attacks that might otherwise have gone undetected. Although there were some challenges integrating the two technologies, the R6 team ultimately found Falco's real-time detection capabilities and the strength of the Falco community to be invaluable.
+Today, R6 Security’s Phoenix product is leveraging to help customers deal with attacks that might otherwise have gone undetected. Although there were some challenges integrating the two technologies, the R6 Security team ultimately found Falco's real-time detection capabilities and the strength of the Falco community to be invaluable.
 
 {{< /blocks/content >}}
