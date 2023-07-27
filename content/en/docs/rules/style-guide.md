@@ -61,7 +61,7 @@ evt.type!=execve
 ```
 
 - To maintain performance, avoid mixing unrelated event types in one rule. Typically, only variants should be mixed together, for example: `evt.type in (open, openat, openat2)`.
-- The best practice and requirement for upstream rules are to only define positive `evt.type` expressions. Using `evt.type!=open`, for example, would imply each of the [supported syscalls](https://github.com/falcosecurity/libs/blob/master/driver/report.md), resulting in a significant performance penalty. For more information, read the [Adaptive Syscalls Selection in Falco](https://falco.org/blog/adaptive-syscalls-selection/) blog post.
+- The best practice and requirement for upstream rules are to only define positive `evt.type` expressions. Using `evt.type!=open`, for example, would imply each of the [supported syscalls](https://falcosecurity.github.io/libs/report/), resulting in a significant performance penalty. For more information, read the [Adaptive Syscalls Selection in Falco](https://falco.org/blog/adaptive-syscalls-selection/) blog post.
 
 
 - After the `evt.type` filter, place your mainly positive filters to efficiently eliminate the most events step by step. An exception to this rule is the `container` macro, which can quickly eliminate many events. Therefore, the guiding principle of "divide and conquer" commonly used in database query recommendations, also applies to Falco's filter statements.

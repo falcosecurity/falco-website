@@ -191,7 +191,7 @@ The modern BPF probe doesn't yet support all the syscalls supported by the curre
 
 [Here](https://github.com/falcosecurity/libs/issues/513) you can find the complete list of syscalls currently supported by the modern probe.
 
-The good news is that we are actively working to include all the syscalls supported by the [current probe](https://github.com/falcosecurity/libs/blob/master/driver/report.md) 💥
+The good news is that we are actively working to include all the syscalls supported by the [current probe](https://falcosecurity.github.io/libs/report/) 💥
 
 ## Next steps 🔮
 

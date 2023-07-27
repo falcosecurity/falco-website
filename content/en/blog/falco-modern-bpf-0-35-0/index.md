@@ -25,7 +25,7 @@ In our driver history, we've supported syscalls in two possible ways:
 
 **Generically instrumented** means that Falco notifies when a syscall is invoked in the system, but nothing more.
 
-Excitingly, in the latest Falco 0.35.0 version, the modern probe extends its support to reach syscall parity with the other drivers. [This report](https://github.com/falcosecurity/libs/blob/master/driver/report.md) outlines the current instrumentation state.
+Excitingly, in the latest Falco 0.35.0 version, the modern probe extends its support to reach syscall parity with the other drivers. [This report](https://falcosecurity.github.io/libs/report/) outlines the current instrumentation state.
 
 ## Advanced support checks
 

@@ -11,7 +11,7 @@ tags: ["Falco Libs","Falco"]
 
 The release of Falco 0.35.0 is a significant milestone, introducing a groundbreaking feature: the ability to select which syscalls to monitor. This empowers users with granular control, optimizing system performance by reducing CPU load through selective syscall monitoring. 
 
-Why stop at just the one groundbreaking feature, such as selecting which syscalls to monitor? Previously, Falco was limited to monitoring a narrower set of syscalls, which was a drawback since its underlying libraries and kernel drivers were capable of monitoring a wider range of syscalls. We addressed this gap, and Falco now has the enhanced capability to monitor every [syscall supported](https://github.com/falcosecurity/libs/blob/master/docs/report.md) by its libraries. This milestone, allowing access to a notable range of syscalls, represents another significant advancement in threat detection.
+Why stop at just the one groundbreaking feature, such as selecting which syscalls to monitor? Previously, Falco was limited to monitoring a narrower set of syscalls, which was a drawback since its underlying libraries and kernel drivers were capable of monitoring a wider range of syscalls. We addressed this gap, and Falco now has the enhanced capability to monitor every [syscall supported](https://falcosecurity.github.io/libs/report/) by its libraries. This milestone, allowing access to a notable range of syscalls, represents another significant advancement in threat detection.
 
 {{% pageinfo color="info" %}}
 
@@ -175,7 +175,7 @@ This section provides an overview of the underlying refactors that have enabled 
 - In order to extract the corresponding event types, Falco traverses the filter Abstract Syntax Tree (AST) of each rule. The traversal process has been improved for robustness and integrated with the modernized `ppm sc API` by moving it to the underlying Falco `libs`. 
 - Additionally, traversals now include support for mapping the rules event strings to both the `PPM_SC_*` and `PPME_*` codes. These changes have allowed for the resolution of technical debt concerning the mapping of event strings to their respective syscall codes.
 
-- Just to emphasize this once more: Falco now has the capability to support any syscall that is supported by its underlying libraries. This expansion of support allows Falco to monitor and analyze a wider range of syscalls for threat detection purposes (see Falco's [supported syscalls](https://github.com/falcosecurity/libs/blob/master/docs/report.md)).
+- Just to emphasize this once more: Falco now has the capability to support any syscall that is supported by its underlying libraries. This expansion of support allows Falco to monitor and analyze a wider range of syscalls for threat detection purposes (see Falco's [supported syscalls](https://falcosecurity.github.io/libs/report/)).
 
 ### Driver Syscall Push Down Filters
 
@@ -205,7 +205,7 @@ This opens up exciting possibilities for the future of Falco. One day, we envisi
 3. Gradually tailor the `base_syscalls` configuration as needed, aiming to optimize resource utilization without compromising threat detection, if feasible.
 4. Experiment and measure changes in resource usage by utilizing the native Falco `metrics` option.
 5. Enhance Falco rules with specific syscalls for increased robustness [see note 1].
-6. Official [syscall string names](https://github.com/falcosecurity/libs/blob/master/docs/report.md) in rules are now required.
+6. Official [syscall string names](https://falcosecurity.github.io/libs/report/) in rules are now required.
 7. Explore new threat detection approaches with Falco's expanded syscall support.
 8. Stay updated on future releases for enhanced kernel monitoring capabilities.
 
