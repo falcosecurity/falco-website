@@ -444,37 +444,7 @@ k8s.deployment.label
 k8s.deployment.labels
                 Kubernetes deployment comma-separated key/value labels. E.g. 'f
                 oo1:bar1,foo2:bar2'.
-```
-
-## `mesos` フィールドクラス
-
-アプリケーション名、タスクなどのMesosphereメタデータでフィルタリングするフィールド
-
-```
-mesos.task.name Mesos task name.
-mesos.task.id   Mesos task id.
-mesos.task.label
-                Mesos task label. E.g. 'mesos.task.label.foo'.
-mesos.task.labels
-                Mesos task comma-separated key/value labels. E.g. 'foo1:bar1,fo
-                o2:bar2'.
-mesos.framework.name
-                Mesos framework name.
-mesos.framework.id
-                Mesos framework id.
-marathon.app.name
-                Marathon app name.
-marathon.app.id Marathon app id.
-marathon.app.label
-                Marathon app label. E.g. 'marathon.app.label.foo'.
-marathon.app.labels
-                Marathon app comma-separated key/value labels. E.g. 'foo1:bar1,
-                foo2:bar2'.
-marathon.group.name
-                Marathon group name.
-marathon.group.id
-                Marathon group id.
-```
+```s
 
 # Kubernetes Audit イベント (ソース `k8s_audit`)
 

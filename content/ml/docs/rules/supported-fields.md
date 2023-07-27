@@ -319,34 +319,6 @@ k8s.deployment.labels
                 Kubernetes വിന്യാസം കോമയാൽ വേർതിരിച്ച കീ/മൂല്യം ലേബലുകൾ. ഉദാ:                 'foo1:bar1,foo2:bar2'.
 ```
 
-## `mesos` ഫീൽഡ് ക്ലാസ്സ്
-
-ആപ്ലിക്കേഷൻ നാമം, ടാസ്ക് മുതലായവ പോലുള്ള മീസോസ്ഫിയർ മെറ്റാഡാറ്റയിൽ ഫിൽട്ടർ ചെയ്യാനുള്ള ഫീൽഡുകൾ.
-
-```
-mesos.task.name മീസോസ് ടാസ്ക് നാമം.
-mesos.task.id   മീസോസ് ടാസ്ക് ഐഡി.
-mesos.task.label
-                മീസോസ് ടാസ്ക് ലേബൽ. ഉദാ: 'mesos.task.label.foo'.
-mesos.task.labels
-                മീസോസ് ടാസ്ക് കോമയാൽ വേർതിരിച്ച കീ/മൂല്യം ലേബലുകൾ. ഉദാ:                       'foo1:bar1,foo2:bar2'.
-mesos.framework.name
-                മീസോസ് ഫ്രെയിംവർക്ക് നാമം.
-mesos.framework.id
-                മീസോസ് ഫ്രെയിംവർക്ക് ഐഡി.
-marathon.app.name
-                മാരത്തോൺ ആപ്പ് നാമം.
-marathon.app.id മാരത്തോൺ ആപ്പ് ഐഡി.
-marathon.app.label
-                മാരത്തോൺ ആപ്പ് ലേബൽ. ഉദാ: 'marathon.app.label.foo'.
-marathon.app.labels
-                മാരത്തോൺ ആപ്പ് കോമയാൽ വേർതിരിച്ച കീ/മൂല്യം ലേബലുകൾ. ഉദാ:                     'foo1:bar1,foo2:bar2'.
-marathon.group.name
-                മാരത്തോൺ ഗ്രൂപ്പ് നാമം.
-marathon.group.id
-                മാരത്തോൺ ഗ്രൂപ്പ് ഐഡി.
-```
-
 # Kubernetes ഓഡിറ്റ് ഇവൻറുകൾ (ഉറവിടം `k8s_audit`)
 
 Kubernetes ഓഡിറ്റ് ഇവൻറ് ഫീൽഡുകൾ Kubernetes ഓഡിറ്റ് ഇവൻറ് ഉറവിടത്താൽ പിന്തുണച്ചതാണ്. കൂടുതൽ വിവരങ്ങൾക്ക് ദയവായി [Kubernetes Audit event source](../../event-sources/kubernetes-audit) ഡോക്യുമെൻറേഷൻ റഫർ ചെയ്യുക.
