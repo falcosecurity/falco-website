@@ -5,7 +5,7 @@ linktitle: Default and Local Rules
 weight: 20
 ---
 
-Falco comes with a default yaml rules file that is loaded if no specific configuration is provided, but that can be completely customized in several ways, depending on how Falco is installed. There are several ways in which you can specify the location of your custom rules and also download them and keep them up to date.
+Falco comes with a default rules file that is loaded if no specific configuration is provided. However, that can be completely customized in several ways, depending on how Falco is installed. There are several ways to specify the location of your custom rules, download them, and keep them up to date.
 
 ## The configuration file
 
@@ -18,7 +18,7 @@ rules_file:
   - /etc/falco/rules.d
 ```
 
-Changing these configuration entries will affect the location and the order of the files that are downloaded.
+Changing these configuration entries will affect the location and loading order of the rules files.
 
 ## The command line
 
@@ -30,14 +30,14 @@ If you are running Falco directly from the command line, you can use the `-r` sw
 
 ## Falcoctl
 
-The [falcoctl](https://github.com/falcosecurity/falcoctl) tool provides functionality to download and update rules files when distributed as OCI artifacts to directories that can be specified by the user. The `install` command of the [falcoctl](https://github.com/falcosecurity/falcoctl) tool will download rulesfile OCI packages to a configurable directory (by default, that is `/etc/falco`). For instance, in order to install a specific version of the default rules file in `/etc/falco` you can run
+The [falcoctl](https://github.com/falcosecurity/falcoctl) tool provides functionality to download and update rules files distributed as OCI artifacts. The `install` command of the [falcoctl](https://github.com/falcosecurity/falcoctl) tool will download rules files to a configurable directory (by default, that is `/etc/falco`). For instance, to install a specific version of the default rules file in `/etc/falco` you can run the following commands:
 
 ```
 # falcoctl index add falcosecurity https://github.io/falcosecurity/index.yaml
 # falcoctl artifact install falco-rules:1.0.0
 ```
 
-Falcoctl is available as a standalone tool, included in the Falco image, packaged as a systemd unit and installed via the Helm chart.
+Falcoctl is available as a standalone tool, included in Falco packages and container images, automatically installed as a systemd unit or deployed as an init container via the Helm chart.
 
 ## Rules installed via the Helm chart
 
@@ -51,7 +51,7 @@ Falco, by default, will **load the latest rules file** that is compatible with y
 
 ### Use the rules embedded in the Falco image
 
-The Falco image ships with a snapshot of the latest version of the official Falco org rules. If you wish to use that without downloading anything at runtime you can install Falco with:
+The Falco image ships with a snapshot of the latest version of the official Falco rules. If you wish to use that without downloading anything at runtime, you can install Falco with:
 
 ```
 helm install falco \
