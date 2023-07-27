@@ -7,15 +7,15 @@ weight: 20
 
 Falco has native support for containers and orchestration environments. With the option `-k`, Falco communicates with the provided K8s API server to decorate events with the K8s pod/namespace/deployment/etc. associated with the event. With `-m`, Falco communicates with the marathon server to do the same thing.
 
-Falco can be run with `-pk`/`-pm`/`-pc`/`-p` arguments that change the formatted output to be a k8s-friendly/container-friendly/general format. However, the source of formatted output is in the set of rules and not on the command line. This page provides more detail on how `-pk`/`-pm`/`-pc`/`-p` interacts with the format strings in the `output` attribute of rules.
+Falco can be run with `-pk`/`-pc`/`-p` arguments that change the formatted output to be a k8s-friendly/container-friendly/general format. However, the source of formatted output is in the set of rules and not on the command line. This page provides more detail on how `-pk`/`-pc`/`-p` interacts with the format strings in the `output` attribute of rules.
 
 The information from k8s/containers is used in conjunction with the command line options in these ways:
 
-* In rule outputs, if the format string contains `%container.info`, that is replaced with the value from `-pk`/`-pm`/`-pc`, if one of those options was provided. If no option was provided, `%container.info` is replaced with a generic `%container.name (id=%container.id)` instead.
+* In rule outputs, if the format string contains `%container.info`, that is replaced with the value from `-pk`/`-pc`, if one of those options was provided. If no option was provided, `%container.info` is replaced with a generic `%container.name (id=%container.id)` instead.
 
-* If the format string does not contain `%container.info`, and one of `-pk`/`-pm`/`-pc` was provided, that is added to the end of the formatting string.
+* If the format string does not contain `%container.info`, and one of `-pk`/`-pc` was provided, that is added to the end of the formatting string.
 
-* If `-p` was specified with a general value (i.e. not `-pk`/`-pm`/`-pc`), the value is simply added to the end and any `%container.info` is replaced with the generic value.
+* If `-p` was specified with a general value (i.e. not `-pk`/`-pc`), the value is simply added to the end and any `%container.info` is replaced with the generic value.
 
 
 ## Examples
