@@ -141,16 +141,16 @@ For the output fields, expect that each Falco release typically exposes new [sup
 
 Building upon the guide around writing rules with respect to [output](/docs/rules/basic-elements/#output), when considering upstreaming your rule, core output fields relevant for this rule must be included. At the same time, we try to keep them to a minimum, and adopters can add more output fields as they see fit.
 
-For each rule include the critical fields listed below related to process and user information. For example, the `tty` field (terminal) can help determine if the process ran in an interactive shell. The exe flags are valuable in identifying new binaries in your container, such as `EXE_UPPER_LAYER`. Additionally, examining the exepath alongside the process name provides insights into whether the binary might be located in more suspicious folders like `tmp`. Understanding the direct parent process is vital for basic process lineage analysis.
+For each rule include the critical fields listed below related to process and user information, as well as the actual event type. For example, the `tty` field (terminal) can help determine if the process ran in an interactive shell. The exe flags are valuable in identifying new binaries in your container, such as `EXE_UPPER_LAYER`. Additionally, examining the exepath alongside the process name provides insights into whether the binary might be located in more suspicious folders like `tmp`. Understanding the direct parent process is vital for basic process lineage analysis.
 
 ```yaml
-user=%user.name user_uid=%user.uid user_loginuid=%user.loginuid process=%proc.name proc_exepath=%proc.exepath parent=%proc.pname command=%proc.cmdline terminal=%proc.tty exe_flags=%evt.arg.flags
+evt_type=%evt.type user=%user.name user_uid=%user.uid user_loginuid=%user.loginuid process=%proc.name proc_exepath=%proc.exepath parent=%proc.pname command=%proc.cmdline terminal=%proc.tty exe_flags=%evt.arg.flags
 ```
 
 For network-related rules include:
 
 ```yaml
-connection=%fd.name lport=%fd.lport rport=%fd.rport fd_type=%fd.type
+connection=%fd.name lport=%fd.lport rport=%fd.rport fd_type=%fd.type fd_proto=fd.l4proto
 ```
 
 For file-related rules include:
