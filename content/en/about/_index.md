@@ -12,9 +12,9 @@ aliases:
 
 {{< blocks/content content="html" wrap="col" >}}
 {{< card class="shadow" >}}
-  ### How Falco's runtime security protects your organization
+  ### How Falco's runtime security can help your organization
 
-  Multi-level defense is essential for effective cybersecurity. Whether it's securing your software supply chain, controlling access, or protecting against cloud misconfigurations, the acceleration of cloud adoption has rapidly expanded the potential attack surface companies need to protect.
+  Multi-level defense is essential for effective cybersecurity. Whether it's securing your software supply chain, controlling access, or protecting against cloud misconfigurations, the acceleration of cloud adoption has rapidly expanded the potential attack surface companies need to address.
 
   The ultimate line of defense, however, is runtime security. Security is an ever evolving war against attacks, and one of the most powerful ways to protect your cloud-native environment is to detect threats as they occur. With the increasing number of cyber attacks and breaches, it’s crucial to have real-time visibility across your cloud, workloads, and user activity. 
 
