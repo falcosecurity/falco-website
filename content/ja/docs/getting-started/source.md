@@ -182,7 +182,6 @@ make bpf
 - b64
 - cares
 - curl
-- civetweb
 - grpc
 - jq
 - libyaml

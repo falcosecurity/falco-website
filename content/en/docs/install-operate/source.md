@@ -281,7 +281,6 @@ For the sake of completeness this is the complete list of Falco dependencies:
 - b64
 - cares
 - curl
-- civetweb
 - grpc
 - jq
 - libyaml
