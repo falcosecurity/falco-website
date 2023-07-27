@@ -8,7 +8,7 @@ weight: 30
 
 ## Learn more about Falco
 
-If you'd like to dive deeper into the various components that make up Falco check out the following resources:
+If you'd like to dive deeper into the various components that make up Falco, check out the following resources:
 
 * Understand Falco's [event sources]( {{< ref "docs/event-sources" >}})
 * Learn more about Falco [rules]( {{< ref "docs/rules" >}})

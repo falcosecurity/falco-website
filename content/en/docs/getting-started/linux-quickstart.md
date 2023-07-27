@@ -6,14 +6,14 @@ aliases: [/falco-linux-quickstart]
 weight: 20
 ---
 
-In this scenario you will learn how to install Falco on an Ubuntu 20.04 host, trigger a falco rule, and then examine the output. 
+In this scenario, you will learn how to install Falco on an Ubuntu 20.04 host, trigger a Falco rule, and then examine the output.
 
-The goal of this activity is to give you a quick example of how Falco works. After you complete it you should be able to move on to a more advanced [tutorial]( {{< ref "docs/tutorials" >}}) or spend some time reading up on [additional Falco concepts]( ../falco-additional ). 
+This activity aims to give you a quick example of how Falco works. After you complete it, you should be able to move on to a more advanced [tutorial]( {{< ref "docs/tutorials" >}}) or spend some time reading up on [additional Falco concepts]( ../falco-additional ). 
 
 ## Prerequisites
 This lab is based on installing Falco using the kernel module on Ubuntu. 
 
-The scenario has been tested specifically using Virutual Box and Lima for MacBooks running Apple Silicon. 
+The scenario has been tested using Virtual Box and Lima (for MacBooks running Apple Silicon).
 
 While this tutorial may work with Ubuntu running on a cloud provider or another virtualization platform, it has not been tested. 
 
@@ -38,9 +38,9 @@ The following steps will set up a Virtual Box virtual machine running Ubuntu 20.
 ### Lima setup for Apple silicon (M1/M2)
 This section explains how to create an Ubuntu 22.04 VM on Apple computers running M1 silicon (as opposed to Intel). 
 
-If you are unsure what processor your Apple machine is running, you can find out by clicking the Apple icon in the upper left, and choosing "About this Mac". The first item listed, Chip, tells you what silicon you're running on 
+If you are unsure what processor your Apple machine is running, you can find out by clicking the Apple icon in the upper left and choosing "About this Mac". The first item listed, Chip, tells you what silicon you're running on 
 
-* Install Brew according to the projects documentation
+* Install Brew according to the project's documentation
 
 * Use Brew to install Lima
 
@@ -54,7 +54,7 @@ If you are unsure what processor your Apple machine is running, you can find out
     limactl start --name=falco-quickstart template://ubuntu-lts
 ```
 
-* Shell into the Ubuntu VM and once you're in the VM continue to the Install Falco section
+* Shell into the Ubuntu VM, and once you're in the VM, continue to the Install Falco section
 
 ```plain
     limactl shell falco-quickstart
@@ -62,7 +62,7 @@ If you are unsure what processor your Apple machine is running, you can find out
 
 ## Install Falco
 
-This section will show you how to install Falco on a host system. You'll begin by updating the package repsoitory. Next you'll install the Linux headers and the dialog package. Then you'll actually install Falco and ensure it's up and running.
+This section will show you how to install Falco on a host system. You'll begin by updating the package repository. Next, you'll install the Linux headers and the dialog package. Then you'll install Falco and ensure it's up and running.
 
 ### Set up the package repository
 
@@ -88,12 +88,12 @@ This section will show you how to install Falco on a host system. You'll begin b
 ```
 ### Install the Linux headers and dialog
 
-* Install the Linux kernel headers which are required to compile the Falco driver
+* Install the Linux kernel headers, which are required to compile the Falco driver
 
 ```plain
     sudo apt-get install -y dkms make linux-headers-$(uname -r)
 ```
-* Install *dialog* which is required by the Falco installer
+* Install *dialog*, which is required by the Falco installer
 
 ```plain
     sudo apt-get install -y dialog
@@ -106,11 +106,11 @@ This section will show you how to install Falco on a host system. You'll begin b
     sudo apt-get install -y falco
 ```
 
-* When prompted choose the **Kmod** option. This will compile the Falco module for your specific kernel version.
+* When prompted, choose the **Kmod** option. This will compile the Falco module for your specific kernel version.
 
     ![Dialog window - Choose the Kmod driver](../images/dialog-1.png)
 
-* When prompted choose **Yes**. Although we won't work use the functionality in this exercise, this option allows Falco to update its rules automatically.
+* When prompted, choose **Yes**. Although we won't use the functionality in this exercise, this option allows Falco to update its rules automatically.
 
     ![Dialog window - Choose the follow automatic ruleset updates](../images/dialog-2.png)
 
@@ -124,7 +124,7 @@ Wait for the Falco installation to complete - this should only take a few minute
 sudo systemctl status falco
 ```
 
-The output should similar to the following
+The output should be similar to the following
 
 ```
 ● falco-kmod.service - Falco: Container Native Runtime Security
@@ -162,7 +162,7 @@ Jan 25 10:44:04 ubuntu falco[26488]: Opening capture with Kernel module
 
 ### See Falco's output
 
-One of the endpoints that Falco can write output to is *syslog*. There are multiple ways to examine the system logs, but for our exercise we have featured two: using *journalctl* and simply using *cat* on the log file. 
+One of the endpoints that Falco can write output to is *syslog*. There are multiple ways to examine the system logs, but we have featured two for our exercise: using *journalctl* and simply using *cat* on the log file. 
 
 ***Using journalctl***
  
@@ -199,4 +199,4 @@ You should see output similar to the following
 ---
 ## Congratulations, you finished this scenario!
 
-Check out other items in our Getting Started section including installing Falco on Kubernetes or learning more about Falco's architecture and features in the additional resources section
+Check out other items in our Getting Started section, including installing Falco on Kubernetes or learning more about Falco's architecture and features in the additional resources section.
