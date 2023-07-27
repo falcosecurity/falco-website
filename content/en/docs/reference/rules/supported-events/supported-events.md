@@ -1,7 +1,7 @@
 *Schema Version*: 2.0.0
 ## Syscall events
 
-Default | Dir | Name | Params 
+Default | Dir | Name | Args 
 :-------|:----|:-----|:-----
 Yes | `>` | `open` | FSPATH **name**, FLAGS32 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*, UINT32 **mode**
 Yes | `<` | `open` | FD **fd**, FSPATH **name**, FLAGS32 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*, UINT32 **mode**, UINT32 **dev**, UINT64 **ino**
@@ -791,7 +791,7 @@ Yes | `<` | `mknodat` | SYSCALLID **ID**
 
 ## Tracepoint events
 
-Default | Dir | Name | Params 
+Default | Dir | Name | Args 
 :-------|:----|:-----|:-----
 Yes | `>` | `switch` | PID **next**, UINT64 **pgft_maj**, UINT64 **pgft_min**, UINT32 **vm_size**, UINT32 **vm_rss**, UINT32 **vm_swap**
 Yes | `>` | `procexit` | ERRNO **status**, ERRNO **ret**, SIGTYPE **sig**, UINT8 **core**
@@ -801,14 +801,14 @@ Yes | `>` | `page_fault` | UINT64 **addr**, UINT64 **ip**, FLAGS32 **error**: *P
 
 ## Plugin events
 
-Default | Dir | Name | Params 
+Default | Dir | Name | Args 
 :-------|:----|:-----|:-----
 Yes | `>` | `pluginevent` | UINT32 **plugin_id**, BYTEBUF **event_data**
 
 
 ## Metaevents
 
-Default | Dir | Name | Params 
+Default | Dir | Name | Args 
 :-------|:----|:-----|:-----
 Yes | `>` | `drop` | UINT32 **ratio**
 Yes | `<` | `drop` | UINT32 **ratio**
