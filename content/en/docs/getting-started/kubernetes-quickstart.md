@@ -7,7 +7,7 @@ weight: 25
 ---
 
 ## Introduction
-Falco is designed to provide real-time notification of suspicious behavior. By default, it can send these alerts to stdout, stdrerr, an HTTPs endpoint, and a gRPC endpoint. However, in most production scenarios, you will want to send the output to some other system so you can take further action. Perhaps you would forward notification to Elastic or an SIEM. 
+Falco is designed to provide real-time notification of suspicious behavior. By default, it can send these alerts to stdout, stdrerr, an HTTPs endpoint, and a gRPC endpoint. However, in most production scenarios, you will want to send the output to some other system so you can take further action.
 
 The important point is that while Falco performs a valuable task, it is most effective as part of a larger security workflow.
 

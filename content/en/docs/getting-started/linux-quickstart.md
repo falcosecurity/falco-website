@@ -62,7 +62,7 @@ If you are unsure what processor your Apple machine is running, you can find out
 
 ## Install Falco
 
-This section will show you how to install Falco on a host system. You'll begin by updating the package repository. Next, you'll install the Linux headers and the dialog package. Then you'll install Falco and ensure it's up and running.
+Regardless of which setup you used above, this section will show you how to install Falco on a host system. You'll begin by updating the package repository. Next, you'll install the Linux headers and the dialog package. Then you'll install Falco and ensure it's up and running.
 
 ### Set up the package repository
 
