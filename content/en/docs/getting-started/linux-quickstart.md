@@ -8,53 +8,53 @@ weight: 20
 
 In this scenario, you will learn how to install Falco on an Ubuntu 20.04 host, trigger a Falco rule, and then examine the output.
 
-This activity aims to give you a quick example of how Falco works. After you complete it, you should be able to move on to a more advanced [tutorial]( {{< ref "docs/tutorials" >}}) or spend some time reading up on [additional Falco concepts]( ../falco-additional ). 
+This activity aims to give you a quick example of how Falco works. After you complete it, you should be able to move on to a more advanced [tutorial]( {{< ref "docs/tutorials" >}}) or spend some time reading up on [additional Falco concepts]( ../falco-additional ).
 
 ## Prerequisites
-This lab is based on installing Falco using the kernel module on Ubuntu. 
+This lab is based on installing Falco using the kernel module on Ubuntu.
 
-The scenario has been tested using Virtual Box and Lima (for MacBooks running Apple Silicon).
+The scenario has been tested using VirtualBox and Lima (for MacBooks running Apple Silicon).
 
-While this tutorial may work with Ubuntu running on a cloud provider or another virtualization platform, it has not been tested. 
+While this tutorial may work with Ubuntu running on a cloud provider or another virtualization platform, it has not been tested.
 
-### Virtual box setup 
-The following steps will set up a Virtual Box virtual machine running Ubuntu 20.04.
+### VirtualBox setup
+The following steps will set up a VirtualBox virtual machine running Ubuntu 20.04.
 
-* Install Virtual Box and Vagrant according to the instructions appropriate for your local system
+* Install VirtualBox and Vagrant according to the instructions appropriate for your local system.
 
-* Issue the following commands from the command line to create an Ubuntu 20.04 virtual machine
+* Issue the following commands from the command line to create an Ubuntu 20.04 virtual machine.
 
 ```plain
     vagrant init bento/ubuntu-20.04
     vagrant up
 ```
 
-* Log into the newly launched virtual machine and continue to the *Install Falco* section below (the default password is *vagrant*)
+* Log into the newly launched virtual machine and continue to the *Install Falco* section below (the default password is *vagrant*).
 
 ```plain
-    ssh -p 2222 vagrant@127.0.0.1
+    vagrant ssh
 ```
 
 ### Lima setup for Apple silicon (M1/M2)
-This section explains how to create an Ubuntu 22.04 VM on Apple computers running M1 silicon (as opposed to Intel). 
+This section explains how to create an Ubuntu 22.04 VM on Apple computers running M1 silicon (as opposed to Intel).
 
-If you are unsure what processor your Apple machine is running, you can find out by clicking the Apple icon in the upper left and choosing "About this Mac". The first item listed, Chip, tells you what silicon you're running on 
+If you are unsure what processor your Apple machine is running, you can find out by clicking the Apple icon in the upper left and choosing "About this Mac". The first item listed, Chip, tells you what silicon you're running on.
 
-* Install Brew according to the project's documentation
+* Install Brew according to the project's documentation.
 
-* Use Brew to install Lima
+* Use Brew to install Lima.
 
 ```plain
     brew install lima
 ```
 
-* Create an Ubuntu 20.04 VM with Lima
+* Create an Ubuntu 20.04 VM with Lima.
 
 ```plain
     limactl start --name=falco-quickstart template://ubuntu-lts
 ```
 
-* Shell into the Ubuntu VM, and once you're in the VM, continue to the Install Falco section
+* Shell into the Ubuntu VM, and once you're in the VM, continue to the Install Falco section.
 
 ```plain
     limactl shell falco-quickstart
@@ -66,41 +66,43 @@ Regardless of which setup you used above, this section will show you how to inst
 
 ### Set up the package repository
 
-* Add the Falco repository key 
+* Add the Falco repository key.
 
 ```plain
     curl -fsSL https://falco.org/repo/falcosecurity-packages.asc | \
     sudo gpg --dearmor -o /usr/share/keyrings/falco-archive-keyring.gpg
 ```
 
-* Add the Falco repository 
+* Add the Falco repository.
 
 ```plain
-    sudo bash -c 'cat << EOF > /etc/apt/sources.list.d/falcosecurity.list 
-    deb [signed-by=/usr/share/keyrings/falco-archive-keyring.gpg] https://download.falco.org/packages/deb stable main 
-    EOF'    
+    sudo bash -c 'cat << EOF > /etc/apt/sources.list.d/falcosecurity.list
+    deb [signed-by=/usr/share/keyrings/falco-archive-keyring.gpg] https://download.falco.org/packages/deb stable main
+    EOF'
 ```
 
-* Read the repository contents
+* Read the repository contents.
 
 ```plain
     sudo apt-get update -y
 ```
+
 ### Install the Linux headers and dialog
 
-* Install the Linux kernel headers, which are required to compile the Falco driver
+* Install the Linux kernel headers, which are required to compile the Falco driver.
 
 ```plain
     sudo apt-get install -y dkms make linux-headers-$(uname -r)
 ```
-* Install *dialog*, which is required by the Falco installer
+* Install *dialog*, which is required by the Falco installer.
 
 ```plain
     sudo apt-get install -y dialog
 ```
+
 ### Install Falco
 
-* Install the latest Falco version
+* Install the latest Falco version.
 
 ```plain
     sudo apt-get install -y falco
@@ -114,19 +116,19 @@ Regardless of which setup you used above, this section will show you how to inst
 
     ![Dialog window - Choose the follow automatic ruleset updates](../images/dialog-2.png)
 
-Wait for the Falco installation to complete - this should only take a few minutes. 
+Wait for the Falco installation to complete - this should only take a few minutes.
 
 ### Verify Falco is running
 
-* Make sure the Falco service is running
+* Make sure the Falco service is running.
 
 ```plain
 sudo systemctl status falco
 ```
 
-The output should be similar to the following
+The output should be similar to the following:
 
-```
+```plain
 ● falco-kmod.service - Falco: Container Native Runtime Security
      Loaded: loaded (/lib/systemd/system/falco-kmod.service; enabled; vendor preset: enabled)
      Active: active (running) since Wed 2023-01-25 10:44:04 UTC; 12s ago
@@ -154,25 +156,30 @@ Jan 25 10:44:04 ubuntu falco[26488]: Opening capture with Kernel module
 
 ### Generate a suspicious event
 
-* Run the following command to simulate a suspicious event. 
+* Run the following command to simulate a suspicious event.
+
 ```plain
     sudo cat /etc/shadow > /dev/null
 ```
-> There is a Falco rule that is designed to trigger whenever someone accesses a sensitive file (of which, /etc/shadow is one)
+
+{{% pageinfo color=info %}}
+There is a Falco rule that is designed to trigger whenever someone accesses a sensitive file (of which, /etc/shadow is one)
+{{% /pageinfo %}}
 
 ### See Falco's output
 
-One of the endpoints that Falco can write output to is *syslog*. There are multiple ways to examine the system logs, but we have featured two for our exercise: using *journalctl* and simply using *cat* on the log file. 
+One of the endpoints that Falco can write output to is *syslog*. There are multiple ways to examine the system logs, but we have featured two for our exercise: using *journalctl* and simply using *cat* on the log file.
 
 ***Using journalctl***
- 
+
 * Run the following command to retrieve Falco messages that have been generated with a priority of `warning`:
-```
+```plain
     sudo journalctl _COMM=falco -p warning
 ```
-You should see output similar to the following
+You should see output similar to the following:
 
-``` ...
+```plain
+    ...
     Jan 25 10:52:54 ubuntu falco: 10:52:54.144872253: Warning Sensitive file opened for 
     reading by non-trusted program (user=root user_loginuid=-1 program=cat command=cat 
     /etc/shadow pid=27550 file=/etc/shadow parent=bash gparent=kc-terminal ggparent=bash 
@@ -184,12 +191,14 @@ You should see output similar to the following
 
 * Log messages describing Falco's activity are logged to syslog. Run the following command to retrieve Falco logs:
 
-```
+```plain
     sudo grep Sensitive /var/log/syslog
 ```
-You should see output similar to the following
 
-``` ...
+You should see output similar to the following:
+
+```plain
+    ...
     Jan 25 10:52:54 ubuntu falco: 10:52:54.144872253: Warning Sensitive file opened for 
     reading by non-trusted program (user=root user_loginuid=-1 program=cat command=cat 
     /etc/shadow pid=27550 file=/etc/shadow parent=bash gparent=kc-terminal ggparent=bash 
