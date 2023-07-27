@@ -11,7 +11,7 @@ Here are the system call event types and args supported by the [kernel module an
 Note that several event types exist:
 * [Syscall events](#syscall-events) correspond to Linux system calls. Most of them have parameters, documented below, while some are detected as generic and they only offer the syscall ID.
 * [Tracepoint events](#tracepoint-events) represent internal kernel events that may be significant but don't directly translate to any syscall.
-* [Metaevents](#metaevents) are internal Falco events.
+* [Metaevents](#metaevents) are generated from supplementary data sources, for instance, during data enrichment procedures or when the need for asynchronous actions arises. This group also encompasses some of Falco's internally produced events (such as the `drop` event) that are unavailable for rules.
 * [Plugin events](#plugin-events) are internal Falco events. They act as an envelope for actual plugin event data and are not available to rules. In order to write rules that use plugins use the fields documented in the individual plugin.
 
 <!--
