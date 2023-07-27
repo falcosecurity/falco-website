@@ -73,6 +73,8 @@ Currently, Falco supports the following drivers:
 
  - Plugins - allow users to extend the functionality of falco libraries/falco executable by adding new event sources and new fields that can extract information from events. For more information, see [Plugins](plugins).
 
+ - [Falcoctl](https://github.com/falcosecurity/falcoctl) - allows users to easily install rules and plugins and perform administrative tasks with Falco. It is bundled together with Falco.
+
 ## What are the ecosystem projects that can interact with Falco?
 
-Apart from the Falco core projects, the Falco organization also maintains and distributes ecosystem projects that help adopters get the most out of Falco. To learn more, visit the [Falco Evolution repositories](https://github.com/falcosecurity/evolution/#repositories) list. For example, the [falcosidekick](https://github.com/falcosecurity/falcosidekick) project makes it easier to output Falco events to many applications and channels, while the [falco-exporter](https://github.com/falcosecurity/falco-exporter) tool is used to integrate Falco with Prometheus.
+Apart from the Falco core projects, the Falco organization also maintains and distributes ecosystem projects that help adopters get the most out of Falco. To learn more, visit the [Falco Evolution repositories](https://github.com/falcosecurity/evolution/#repositories) list. For example, the [falcosidekick](https://github.com/falcosecurity/falcosidekick) project makes it easier to output Falco events to many applications and channels, [falcoctl](https://github.com/falcosecurity/falcoctl) makes it easier to perform a number of administrative tasks for Falco, including installing and updating rules and plugins, while the [falco-exporter](https://github.com/falcosecurity/falco-exporter) tool is used to integrate Falco with Prometheus.
