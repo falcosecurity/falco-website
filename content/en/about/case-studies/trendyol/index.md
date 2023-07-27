@@ -2,7 +2,7 @@
 title: Trendyol Case Study
 date: 2023-07-26
 author: Emin Aktas, Furkan Türkal, Vicente J. Jiménez Miras
-slug: trendyol.com
+slug: trendyol
 ---
 
 {{< blocks/content content="html" wrap="col" color="light" >}}
