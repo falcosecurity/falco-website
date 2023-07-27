@@ -5,6 +5,10 @@ linktitle: Style Guide of Falco Rules
 weight: 95
 ---
 
+{{% alert color="warning" %}}
+This style guide only applies to Falco 0.36 and above.
+{{% /alert %}}
+
 ## Style Guide
 
 Before diving in, read the sections on Falco rules [basics](/docs/rules/basic-elements/) and [condition syntax](/docs/rules/conditions/). Also, check out existing [upstream rules](https://github.com/falcosecurity/rules/blob/main/rules/falco_rules.yaml) for best practices in writing rules.
@@ -31,7 +35,7 @@ Choose a concise title that summarizes the essence of the rule's purpose. Rule's
 
 ### Description
 
-Aligning with Falco's rules maturity and adoption [framework](https://github.com/falcosecurity/rules/blob/main/proposals/20230605-rules-adoption-management-maturity-framework.md#rules-maturity-framework), it is encouraged to not just include a longer description of what the rule detects but also to give advice on how to tune this rule and reduce possible noise. If applicable, elaborate on how to correlate the rule with other rules or data sources for incident response. However, keep them concise. The description should end with a period. 
+Aligning with Falco's rules maturity and adoption [framework](https://github.com/falcosecurity/rules/blob/main/CONTRIBUTING.md#rules-maturity-framework), it is encouraged to not just include a longer description of what the rule detects but also to give advice on how to tune this rule and reduce possible noise. If applicable, elaborate on how to correlate the rule with other rules or data sources for incident response. However, keep them concise. The description should end with a period. 
 
 ### Condition Syntax
 
@@ -137,23 +141,53 @@ For the output fields, expect that each Falco release typically exposes new [sup
 
 Building upon the guide around writing rules with respect to [output](/docs/rules/basic-elements/#output), when considering upstreaming your rule, core output fields relevant for this rule must be included. At the same time, we try to keep them to a minimum, and adopters can add more output fields as they see fit.
 
+For each rule include the critical fields listed below related to process and user information. For example, the `tty` field (terminal) can help determine if the process ran in an interactive shell. The exe flags are valuable in identifying new binaries in your container, such as `EXE_UPPER_LAYER`. Additionally, examining the exepath alongside the process name provides insights into whether the binary might be located in more suspicious folders like `tmp`. Understanding the direct parent process is vital for basic process lineage analysis.
+
+```yaml
+user=%user.name user_uid=%user.uid user_loginuid=%user.loginuid process=%proc.name proc_exepath=%proc.exepath parent=%proc.pname command=%proc.cmdline terminal=%proc.tty exe_flags=%evt.arg.flags
+```
+
+For network-related rules include:
+
+```yaml
+connection=%fd.name lport=%fd.lport rport=%fd.rport fd_type=%fd.type
+```
+
+For file-related rules include:
+
+```yaml
+file=%fd.name
+```
+... and additional specialized fields from the raw args if applicable, such as `newpath=%evt.arg.newpath` for non-file descriptor events like symlinking or renaming. Alternatively, you can explore more recent `fs.path.*` variants to simplify the consistent logging of file or directory paths, even for non-file descriptor events. Previously, tapping into the raw args as described above was required for such events.
+
+When writing a rule for container workloads, you should include the fields we automatically fetch from the container runtime. Falco supports a special placeholder for this purpose:
+
+```yaml
+%container.info
+```
+
+This special placeholder will be automatically replaced with common container-related fields and, when used in conjunction with `-pk` (see the [CLI arguments page](https://falco.org/docs/reference/daemon/cli-arguments/) for more details) it will also add [basic Kubernetes fields](https://falco.org/docs/reference/rules/supported-fields/#field-class-k8s) (this does *not* require the *Kubernetes Metadata Enrichment*, i.e. `-k/-K`, functionality to be enabled). Using `%container.info` in conjunction with `-pk` is equivalent to:
+
+```yaml
+container_id=%container.id container_image=%container.image.repository container_image_tag=%container.image.tag container_name=%container.name k8s_ns=%k8s.ns.name k8s_pod_name=%k8s.pod.name
+```
+
+All of these fields are incredibly crucial for effective incident response and play a vital role in determining the workload owner.
+
+For specialized use cases, generic fields such as `%container.ip` or `%container.cni.json` can be further helpful for incident response, especially concerning non-network syscall related alerts in Kubernetes. These fields can be correlated, for example, with network proxy logs. Additionally, for certain rules, it can be important to traverse the parent process lineage for up to 7 levels. In some cases, instead of relying solely on the process name, it might be more effective to traverse the exepath, for example, `proc.aexepath[2]`. The process name and executable of the session leader (`%proc.sname`, `%proc.sid.*`) and process group leader (`%proc.vpgid.*`) can also be of high value.
+
+We kindly ask you to add fields related to IDs later in your customization process to keep the upstream Falco output fields to a minimum. This is because there are many ID-related fields, such as `%proc.pid %proc.ppid %proc.vpid %proc.pvpid %proc.sid %proc.vpgid ...`. You can explore the `-p` option for this purpose and add these fields to each rules' output fields.
+
 Falco also supports outputting the output as a resolved string. Therefore, use a sentence style, first concisely re-iterating the rule's purpose, and then including the output field in parentheses after the `=` character, with its meaning explained before the `=` character.
 
 ```yaml
 output: >
-    Read monitored file via directory traversal (user=%user.name uid=%user.uid user_loginuid=%user.loginuid 
-    process=%proc.name proc_exepath=%proc.exepath command=%proc.cmdline pid=%proc.pid parent=%proc.pname 
-    file=%fd.name fileraw=%fd.nameraw gparent=%proc.aname[2] ggparent=%proc.aname[3] gggparent=%proc.aname[4] 
-    terminal=%proc.tty container_id=%container.id image=%container.image.repository namespace=%k8s.ns.name pod_name=%k8s.pod.name)
+    Read monitored file via directory traversal (file=%fd.name fileraw=%fd.nameraw 
+    gparent=%proc.aname[2] ggparent=%proc.aname[3] gggparent=%proc.aname[4] user=%user.name 
+    user_uid=%user.uid user_loginuid=%user.loginuid process=%proc.name proc_exepath=%proc.exepath 
+    parent=%proc.pname command=%proc.cmdline terminal=%proc.tty exe_flags=%evt.arg.flags 
+    %container.info)
 ```
-
-When writing a rule for container workloads, you should include the fields we automatically fetch from the container runtime:
-
-```yaml
-output: container_id=%container.id image=%container.image.repository namespace=%k8s.ns.name pod_name=%k8s.pod.name
-```
-
-And as a general guidance, fields like `%evt.type`, `%proc.name`, `%proc.tty`, `%proc.cmdline` and fields related to process lineage such as `proc.aexepath[2]`, or fields around user information `%user.uid`, `%user.loginuid` are often of generic relevance to many rules. For specialized use cases, generic fields such as `%container.ip` or `%container.cni.json` can be further helpful for incident response, especially concerning non-network syscall related alerts in Kubernetes. These fields can be correlated, for example, with network proxy logs. 
 
 ### Priority
 
@@ -163,7 +197,7 @@ Please refer to the relevant [reference/rules](/docs/reference/rules/rule-fields
 
 Tags include various categories to convey relevant information about the rule. 
 
-According to the Falco [rules maturity](https://github.com/falcosecurity/rules/blob/main/proposals/20230605-rules-adoption-management-maturity-framework.md#rules-maturity-framework) framework, the first tag in the tags list must always indicate the maturity of the rule. The [rules repo](https://github.com/falcosecurity/rules) contains concrete guidance on how to categorize a rule when considering upstreaming the rule to The Falco Project.
+According to the Falco rules maturity [framework](https://github.com/falcosecurity/rules/blob/main/CONTRIBUTING.md#rules-maturity-framework), the first tag in the tags list must always indicate the maturity of the rule. The [rules repo](https://github.com/falcosecurity/rules) contains concrete guidance on how to categorize a rule when considering upstreaming the rule to The Falco Project.
 
 ```yaml
 maturity_stable
