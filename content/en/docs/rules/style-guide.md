@@ -178,7 +178,7 @@ For specialized use cases, generic fields such as `%container.ip` or `%container
 
 We kindly ask you to add fields related to IDs later in your customization process to keep the upstream Falco output fields to a minimum. This is because there are many ID-related fields, such as `%proc.pid %proc.ppid %proc.vpid %proc.pvpid %proc.sid %proc.vpgid ...`. You can explore the `-p` option for this purpose and add these fields to each rules' output fields.
 
-Falco also supports outputting the output as a resolved string. Therefore, use a sentence style, first concisely re-iterating the rule's purpose, and then including the output field in parentheses after the `=` character, with its meaning explained before the `=` character.
+Falco also supports outputting the output as a resolved string. Therefore, use a sentence style, first concisely re-iterating the rule's purpose, and then including the output field in parentheses after the `=` character, with its meaning explained before the `=` character, adhering to the snake_case variable naming convention.
 
 ```yaml
 output: >
