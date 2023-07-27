@@ -4,7 +4,6 @@ $( document ).ready(function() {
   var selectAllKey = "all";
   var deselectAllKey = "none";
 
-  var defaultActiveTag = "fundamental";
   var activeTags = {};
 
   var paramSize = function(paramHash) {
@@ -27,7 +26,7 @@ $( document ).ready(function() {
       }
 
       if (paramSize(paramHash) == 0) {
-        paramHash[defaultActiveTag] = true;
+        paramHash[selectAllKey] = true;
       }
 
       return paramHash;
