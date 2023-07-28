@@ -6,9 +6,9 @@ aliases: [/falco-linux-quickstart]
 weight: 20
 ---
 
-In this scenario, you will learn how to install Falco on an Ubuntu 20.04 host, trigger a Falco rule, and then examine the output.
+In this scenario, you will learn how to install Falco on an Ubuntu host, trigger a Falco rule by generating a suspicious event, and then examine the output.
 
-This activity aims to give you a quick example of how Falco works. After you complete it, you should be able to move on to a more advanced [tutorial]( {{< ref "docs/tutorials" >}}) or spend some time reading up on [additional Falco concepts]( ../falco-additional ).
+This activity aims to give you a quick example of how Falco works. After you complete it, you should be able to move on to [trying falco on  kubernetes](../falco-kubernetes-quickstart/) or spend some time reading some [additional resources]( ../falco-additional ).
 
 ## Prerequisites
 This lab is based on installing Falco using the kernel module on Ubuntu.
@@ -40,9 +40,9 @@ This section explains how to create an Ubuntu 22.04 VM on Apple computers runnin
 
 If you are unsure what processor your Apple machine is running, you can find out by clicking the Apple icon in the upper left and choosing "About this Mac". The first item listed, Chip, tells you what silicon you're running on.
 
-* Install Brew according to the project's documentation.
+* Install Homebrew according to the project's documentation.
 
-* Use Brew to install Lima.
+* Use Homebrew to install Lima.
 
 ```plain
     brew install lima
@@ -89,15 +89,10 @@ Regardless of which setup you used above, this section will show you how to inst
 
 ### Install the Linux headers and dialog
 
-* Install the Linux kernel headers, which are required to compile the Falco driver.
+* Install the Linux kernel headers, *dkms*, and *make* which are required to compile the Falco driver and *dialog* which is used by the Falco installer.
 
 ```plain
-    sudo apt-get install -y dkms make linux-headers-$(uname -r)
-```
-* Install *dialog*, which is required by the Falco installer.
-
-```plain
-    sudo apt-get install -y dialog
+    sudo apt-get install -y dkms make linux-headers-$(uname -r) dialog
 ```
 
 ### Install Falco
@@ -150,23 +145,17 @@ Jan 25 10:44:04 ubuntu falco[26488]: Enabled event sources: syscall
 Jan 25 10:44:04 ubuntu falco[26488]: Opening capture with Kernel module
 ```
 
-> Notice that, despite interacting with the `falco.service` unit, it shows `falco-kmod.service` status and also the logs.
-
 ## See Falco in action
 
 ### Generate a suspicious event
 
-* Run the following command to simulate a suspicious event.
+* There is a Falco rule that is designed to trigger whenever someone accesses a sensitive file (of which, /etc/shadow is one). Run the following command to trigger that rule.
 
 ```plain
     sudo cat /etc/shadow > /dev/null
 ```
 
-{{% pageinfo color=info %}}
-There is a Falco rule that is designed to trigger whenever someone accesses a sensitive file (of which, /etc/shadow is one)
-{{% /pageinfo %}}
-
-### See Falco's output
+### Exmamine Falco's output
 
 One of the endpoints that Falco can write output to is *syslog*. There are multiple ways to examine the system logs, but we have featured two for our exercise: using *journalctl* and simply using *cat* on the log file.
 
@@ -204,6 +193,27 @@ You should see output similar to the following:
     /etc/shadow pid=27550 file=/etc/shadow parent=bash gparent=kc-terminal ggparent=bash 
     gggparent=systemd container_id=host image=<NA>)
 ```
+
+## Cleanup
+
+### Remove the Lima virtual machine
+
+* If you wish, remove the Lima virtual machine
+
+    ```plain
+    limactl delete falco-quickstart --force
+    ```
+
+### Remove the Virtualbox virtual machine
+
+* If you wish, remove the Virtualbox virtual machine
+
+    ```plain
+    vagrant destroy
+    ```
+{{% pageinfo color=info %}}
+Be sure you are in same subdirectory as the Vagrantfile
+{{% /pageinfo %}}
 
 ---
 ## Congratulations, you finished this scenario!
