@@ -7,9 +7,9 @@ aliases:
   - /docs/event-sources/drivers
 ---
 
-Falco uses different instrumentations to analyze the system workload and pass security events to {{< glossary_tooltip text="userspace" term_id="user-space" >}}. We usually refer to these instrumentations as **syscall sources** since the generated events are strictly related to the {{< glossary_tooltip text="syscall" term_id="syscalls" >}} context.
+Falco uses different instrumentations to analyze the system workload and pass security events to {{< glossary_tooltip text="userspace" term_id="user-space" >}}. We usually refer to these instrumentations as {{< glossary_tooltip text="drivers" term_id="drivers" >}} since a driver runs in {{< glossary_tooltip text="kernelspace" term_id="kernel-space" >}}. The driver provides the **syscall event source** since the monitored events are strictly related to the {{< glossary_tooltip text="syscall" term_id="syscalls" >}} context.
 
-There are several supported syscall sources:
+There are several supported drivers:
 
 - Kernel module *(default)*
 - Classic eBPF probe
