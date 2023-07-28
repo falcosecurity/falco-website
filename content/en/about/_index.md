@@ -16,7 +16,7 @@ aliases:
 
   Multi-level defense is essential for effective cybersecurity. Whether it's securing your software supply chain, controlling access, or protecting against cloud misconfigurations, the acceleration of cloud adoption has rapidly expanded the potential attack surface companies need to address.
 
-  The ultimate line of defense, however, is runtime security. Security is an ever evolving war against attacks, and one of the most powerful ways to protect your cloud-native environment is to detect threats as they occur. With the increasing number of cyber attacks and breaches, it’s crucial to have real-time visibility across your cloud, workloads, and user activity. 
+  The ultimate line of defense, however, is runtime security. Security is an ever evolving war against attacks, and one of the most powerful ways to improve the security posture of your cloud-native environment is to detect threats as they occur. With the increasing number of cyber attacks and breaches, it’s crucial to have real-time visibility across your cloud, workloads, and user activity. 
 
   ![What is runtime security and why it matters](/img/about/runtime_security.svg#img-fit)
 
@@ -64,7 +64,7 @@ aliases:
 
 {{< blocks/content content="html" >}}
 {{< two_column_block_img img-aligned="left" src="/img/about/response_to_threats.svg" alt="respond to threats" index="1 md-0 lg-0 xl-0" header="Respond to threats" >}}
-  With Falco and [Falcosidekick](https://github.com/falcosecurity/falcosidekick), you can forward suspicious events to serverless systems to trigger actions and remediate threats. It creates a full response engine to protect your environments.
+  With Falco and [Falcosidekick](https://github.com/falcosecurity/falcosidekick), you can also forward suspicious events to serverless systems to trigger actions and remediate threats.
 
 [Falcosidekick](https://github.com/falcosecurity/falcosidekick) is a companion application to Falco  forwards Falco events. It allows you to distribute events to more than 50 systems, such as email, chat, message queues, serverless functions, databases and more. It’s easy to configure and use both locally and inside Kubernetes.
 {{< /two_column_block_img >}}
