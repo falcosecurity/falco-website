@@ -61,6 +61,6 @@ Falco has proven to be very accurate in detecting threats, catching around 80-85
 
 ## Conclusion
 
-Today, R6 Security’s Phoenix product is leveraging to help customers deal with attacks that might otherwise have gone undetected. Although there were some challenges integrating the two technologies, the R6 Security team ultimately found Falco's real-time detection capabilities and the strength of the Falco community to be invaluable.
+Today, R6 Security’s Phoenix product is leveraging Falco to help customers deal with attacks that might otherwise have gone undetected. Although there were some challenges integrating the two technologies, the R6 Security team ultimately found Falco's real-time detection capabilities and the strength of the Falco community to be invaluable.
 
 {{< /blocks/content >}}
