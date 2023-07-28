@@ -51,7 +51,7 @@ aliases:
 
 {{< blocks/content content="html" >}}
 {{< two_column_block_img img-aligned="right" src="/img/about/instrumenting_system_calls.svg" alt="Instrumenting system calls" index="1 md-1 lg-1 xl-1" header="Instrumenting system calls" >}}
-  Observing system calls is performance-critical, and there are two ways in which Falco achieves this: an {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} or a {{< glossary_tooltip text="kernel module" term_id="kernel-module" >}}.
+  Observing system calls is performance-critical, and there are two ways in which Falco achieves this: an {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} or a {{< glossary_tooltip text="kernel module" term_id="kernel-module-driver" >}}.
 
   {{< glossary_tooltip text="eBPF" term_id="ebpf" >}} is a revolutionary technology that allows us to run sandboxed programs inside an operating system. eBPF scripts are flexible and safe, and run extremely fast, making them perfect for capturing runtime security. This makes it ideal for instrumenting system calls for Falco.
 
