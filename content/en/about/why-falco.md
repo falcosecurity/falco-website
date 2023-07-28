@@ -181,7 +181,7 @@ Falco integrates with Prometheus and Grafana to provide users with a scalable so
 
 ##### Event-driven Architecture
 
-Falco's high performance is due to several factors, including its low overhead, event-driven architecture, and kernel-level instrumentation. The low overhead of Falco's design allows it to analyze events with minimal impact on system performance. The event-driven architecture enables Falco to respond quickly to security incidents, while kernel-level instrumentation ensures that it can process events in real-time, further enhancing its performance.
+Falco's high performance is due to several factors, including its low overhead, event-driven architecture, and kernel-level instrumentation. The low overhead of Falco's design allows it to analyze events with minimal impact on system performance. The event-driven architecture enables Falco to quickly detect and alert, while kernel-level instrumentation ensures that it can process events in real-time, further enhancing its performance.
 
 <hr class="w-100 my-4"/>
 
@@ -222,7 +222,7 @@ By installing Falco as a containerized pod within Kubernetes, it becomes easier 
 
 ##### Deploy Additional Components
 
-The benefit of Falco installation playing nice with common cloud-native services such as Prometheus or Grafana is that it enables seamless integration with existing monitoring and observability toolchains. This integration can help organizations streamline their security workflows, enabling faster detection and response to security incidents. It can also provide a more holistic view of the security landscape, allowing security teams to identify and mitigate potential threats more effectively.
+The benefit of Falco installation playing nice with common cloud-native services such as Prometheus or Grafana is that it enables seamless integration with existing monitoring and observability toolchains. This integration can help organizations streamline their security workflows, enabling faster detection and alerting. It can also provide a more holistic view of the security landscape, allowing security teams to identify and mitigate potential threats more effectively.
 
 <hr class="w-100 my-4"/>
 
