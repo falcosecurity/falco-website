@@ -12,7 +12,7 @@ If you'd like to dive deeper into the various components that make up Falco, che
 
 * Understand Falco's [event sources]( {{< ref "docs/event-sources" >}})
 * Learn more about Falco [rules]( {{< ref "docs/rules" >}})
-* Review Falco [alerts]( {{< ref "docs/alerts" >}})
+* Review Falco [alerts]( {{< ref "docs/outputs" >}})
 * Investigate Falco [plugins]( {{< ref "docs/plugins" >}})
 * Try additional [tutorials]( {{< ref "docs/tutorials" >}})
 * Read the Falco [glossary]( {{< ref "docs/reference/glossary" >}})

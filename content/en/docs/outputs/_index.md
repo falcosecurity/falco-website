@@ -1,11 +1,12 @@
 ---
-title: Falco Alerts
-description: Integrate Falco and send Falco Alerts in your desired platform
-linktitle: Falco Alerts
+title: Falco Outputs
+description: Work with Falco Outputs and send Falco Alerts in your desired platform
+linktitle: Falco Outputs
+aliases: [/docs/alerts/]
 weight: 40
 ---
 
-Falco can send alerts to one or more channels:
+Falco can send alerts to one or more output channels:
 
 * Standard Output
 * A file
@@ -14,10 +15,10 @@ Falco can send alerts to one or more channels:
 * A HTTP/HTTPS endpoint
 * A client via the gRPC API
 
-The channels are configured via the falco configuration file `falco.yaml`. See the [Falco Configuration](/docs/reference/daemon/config-options/) page for more details.
+The channels are configured via the Falco configuration file `falco.yaml`. See the [Falco Configuration](/docs/reference/daemon/config-options/) page for more details.
 
-Find further information about how to configure each of those channels under [Alert Channels](/docs/alerts/channels/).
+Find further information about how to configure each of those channels under [Output Channels](/docs/outputs/channels/).
 
 ## Integration with third parties
 
-Falco alerts can easily be forwarded to third-party systems like off-host SIEM, databases, or Faas. While many tools can natively connect to the generic alert channels that Falco provides such as files and standrd output, a forwarder proxy, [Falcosidekick](/docs/alerts/forwarding), was created to facilitate integration with more than 50 different systems.
+Falco alerts can easily be forwarded to third-party systems like off-host SIEM, databases, or Faas. While many tools can natively connect to the generic outputks channels that Falco provides such as files and standrd output, a forwarder proxy, [Falcosidekick](/docs/outputs/forwarding), was created to facilitate integration with more than 50 different systems.

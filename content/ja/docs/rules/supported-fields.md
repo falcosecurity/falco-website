@@ -5,7 +5,7 @@ weight: 3
 
 # はじめに
 
-Falcoがサポートするフィールドは次のとおりです。これらのフィールドは、Falcoルールの`condition` keyと`output` keyで使用できます。ルールの `output`keyに含まれるフィールドは、[`json_output`](../../alerts/#json-output)が`true`に設定されている場合、アラートの`output_fields`オブジェクトにも含まれます。
+Falcoがサポートするフィールドは次のとおりです。これらのフィールドは、Falcoルールの`condition` keyと`output` keyで使用できます。ルールの `output`keyに含まれるフィールドは、[`json_output`](../../outputs/#json-output)が`true`に設定されている場合、アラートの`output_fields`オブジェクトにも含まれます。
 
 このフィールドのセットは、`falco --list=<source>`でも確認できます。`<source>`は以下のソースの1つです。
 

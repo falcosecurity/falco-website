@@ -121,7 +121,7 @@ The rule source is `aws_cloudtrail`. When Falco is run with a loaded Cloudtrail 
 
 The JSON plugin can also be used because the underlying event payload is JSON with [this format](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-event-reference.html). The JSON plugin can use its `json.value` field, which takes a JSON pointer as argument, to extract any part of the JSON object. For example, matching json.value[/responseElements/ConsoleLogin] with "Success" represents a successful login attempt, and json.value[/additionalEventData/MFAUsed] with "No" represents a console login where MFA was not used.
 
-When an event matches this rule, Falco will emit an [alert](https://falco.org/docs/alerts/) that can be sent to a file, stdout, syslog, etc. as well as [Falcosidekick](https://falco.org/blog/extend-falco-outputs-with-falcosidekick/):
+When an event matches this rule, Falco will emit an [alert](https://falco.org/docs/outputs/) that can be sent to a file, stdout, syslog, etc. as well as [Falcosidekick](https://falco.org/blog/extend-falco-outputs-with-falcosidekick/):
 
 ```
 00:40:32.000000000: Critical Detected a console login without MFA (requesting user=bob.user, requesting IP=192.0.2.24, AWS region=us-east-1)

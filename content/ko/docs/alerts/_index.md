@@ -16,4 +16,4 @@ weight: 40
 
 채널은 팔코 구성파일 `falco.yaml`을 통해 설정된다. 자세한 내용은 [팔코 구성](../configuration) 페이지를 확인한다.
 
-[경고 채널](/docs/alerts/channels/)에서 각 채널을 구성하는 방법에 대해 자세한 정보를 찾는다.
+[경고 채널](/docs/outputs/channels/)에서 각 채널을 구성하는 방법에 대해 자세한 정보를 찾는다.

@@ -1,7 +1,8 @@
 ---
-title: Formatting Alerts
+title: Output Formatting
 description: Format Falco Alerts for Containers and Kubernetes
-linktitle: Formatting Alerts
+linktitle: Output Formatting
+aliases: [/docs/alerts/formatting/]
 weight: 20
 ---
 
