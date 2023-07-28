@@ -158,4 +158,4 @@ To do so, simply run Falco. For example:
 $ falco -c falco.yaml -r rules/falco_rules.yaml -r rules/falco_rules.local.yaml
 ```
 
-Refer to the [Go client](./client-go) or [Python client](./client-py) documentation to learn how to receive and consume Falco [output](./outputs) events.
+Refer to the [Go client](./client-go) documentation to learn how to receive and consume Falco [output](./outputs) events.

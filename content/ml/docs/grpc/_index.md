@@ -12,8 +12,6 @@
 ഈ APIകളുമായി സംവദിക്കുന്നതിന് , ഫാൽക്കോ സെക്യൂരിറ്റി സംഘടന ചില ക്ലൈൻറുകൾ/SDKകൾ നൽകുന്നു:
 
 - [client-go](./client-go)
-- [client-py](./client-py)
-- [client-rs](https://github.com/falcosecurity/client-rs)
 
 ## ക്രമീകരണം
 
