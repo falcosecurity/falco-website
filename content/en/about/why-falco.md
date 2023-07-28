@@ -33,7 +33,7 @@ Falco's integration with cloud-native technologies like Prometheus and Grafana p
 {{< two_column_block_img content="html" src="/img/about/highly_perfomant.svg" alt="highly performant" index="1 md-0 lg-0 xl-0" header="Highly Performant" >}}
 
 {{< content_arrow href="#event-driven-architecture" >}}
-Falco is highly performant due to its low overhead, streaming event architecture, and the ability to leverage kernel-level instrumentation to capture system events.
+Falco is highly performant due to its low overhead, streaming event architecture, and the ability to leverage kernel-level instrumentation to observe system events.
 {{< /content_arrow >}}
 
 {{< content_arrow href="#uses-a-minimal-set-of-resources" class="mt-2" >}}
@@ -44,8 +44,8 @@ Falco keeps its footprint small by using a minimal set of resources, including C
 Falco's event-driven architecture allows it to monitor only relevant events, reducing noise, decreasing latency, and dramatically reducing storage costs.
 {{< /content_arrow >}}
 
-{{< content_arrow href="#kernel-level-instrumentation-to-capture-system-events" class="mt-2" >}}
-Falco uses eBPF or kernel modules capturing system and application behavior and detecting a broad range of security issues.
+{{< content_arrow href="#kernel-level-instrumentation-to-observe-system-events" class="mt-2" >}}
+Falco uses eBPF or kernel modules observing system and application behavior and detecting a broad range of security issues.
 {{< /content_arrow >}}
 
 {{< /two_column_block_img >}}
@@ -181,7 +181,7 @@ Falco integrates with Prometheus and Grafana to provide users with a scalable so
 
 ##### Event-driven Architecture
 
-Falco's high performance is due to several factors, including its low overhead, event-driven architecture, and kernel-level instrumentation. The low overhead of Falco's design allows it to capture and analyze events with minimal impact on system performance. The event-driven architecture enables Falco to respond quickly to security incidents, while kernel-level instrumentation ensures that it can capture and analyze events in real-time, further enhancing its performance.
+Falco's high performance is due to several factors, including its low overhead, event-driven architecture, and kernel-level instrumentation. The low overhead of Falco's design allows it to analyze events with minimal impact on system performance. The event-driven architecture enables Falco to respond quickly to security incidents, while kernel-level instrumentation ensures that it can process events in real-time, further enhancing its performance.
 
 <hr class="w-100 my-4"/>
 
@@ -197,7 +197,7 @@ Falco only monitors relevant events by using filters and rules to define which e
 
 <hr class="w-100 my-4"/>
 
-##### Kernel-level instrumentation to capture system events
+##### Kernel-level instrumentation to observe system events
 
 Falco uses kernel instrumentation to observe system events by monitoring system calls and other kernel-level signals. The Falco kernel components are designed to be fast and non intrusive, as they do not alter the system's behavior. By using this approach, Falco can collect rich information of what applications are doing nearly in real-time while minimizing overhead and preventing interference with regular workload behavior.
 
