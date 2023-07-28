@@ -67,14 +67,6 @@ kind create cluster --config=./kind-config.yaml
 
 Helmは、KubernetesにFalcoをインストールする方法です。 Falcoコミュニティは、Helm chartとそれを使用する方法に関するドキュメントをサポートしています[ここにあります](https://github.com/falcosecurity/charts/tree/master/falco)。
 
-## Puppet
-
-Falco用の [Puppet](https://puppet.com/)モジュール、 `sysdig-falco`は[Puppet Forge](https://forge.puppet.com/sysdig/falco/readme)で入手できます。
-
-## Ansible
-
-[@juju4](https://github.com/juju4/)は、Falcoの`juju4.falco`の[Ansible](https://ansible.com)ロールを作成してくれました。[GitHub](https://github.com/juju4/ansible-falco/)および[Ansible Galaxy](https://galaxy.ansible.com/juju4/falco/)から入手できます。Ansible Galaxy（v0.7）の最新バージョンはFalco 0.9では動作しませんが、GitHubのバージョンでは動作します。
-
 ## CoreOS
 
 CoreOSでFalcoを実行するための推奨される方法は、[Dockerセクション](/docs/getting-started/running#docker)のインストールコマンドを使用して、自身のDockerコンテナ内で行うことです。 この方法では、ホストOS上のすべてのコンテナを完全に可視化できます。

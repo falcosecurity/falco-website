@@ -67,14 +67,6 @@ kind create cluster --config=./kind-config.yaml
 
 Helm 은 쿠버네티스에 팔코를 설치하는 한 가지 방법이다. 팔코 커뮤니티는 헬름 차트와 이를 사용하는 방법에 대한 문서를 [여기서](https://github.com/falcosecurity/charts/tree/master/falco) 제공한다.
 
-## Puppet
-
-팔코용 [Puppet](https://puppet.com/) 모듈인 `sysdig-falco` 는 [Puppet Forge](https://forge.puppet.com/sysdig/falco/readme) 에서 사용할 수 있다.
-
-## Ansible
-
-[@juju4](https://github.com/juju4/)가 팔코의 유용한 [Ansible](https://ansible.com) 롤인 `juju4.falco` 를 작성했다. 이는 [GitHub](https://github.com/juju4/ansible-falco/) 와 [Ansible Galaxy](https://galaxy.ansible.com/juju4/falco/) 에서 사용할 수 있다. 최신 버전의 Ansible Galaxy (v0.7)는 팔코 0.9에서 동작하지 않지만, GitHub의 버전은 동작한다.
-
 ## CoreOS
 
 CoreOS 에서 팔코를 실행하는 권장 방법은 [도커 섹션](/docs/getting-started/running#docker)의 설치 명령을 이용해 도커 컨테이너에서 자체에서 하는 방법이다. 이 방법은 호스트 OS 의 모든 컨테이너를 완전히 시각화할 수 있다.

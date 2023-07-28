@@ -320,18 +320,6 @@ Falco镜像在`/etc/falco/falco_rules.yaml`文件中有一组内置的规则，�
 为了使用自定义规则，除了默认的`falco_rules.yaml`。您可以将自定义规则放在本地目录中。然后通过添加`-v path-to-custom-rules/:/etc/falco/rules.d`到您的`docker run`命令，以挂载这个目录。
 
 
-### 配置管理系统
-
-您还可以使用[Puppet](#puppet)和[Ansible](#ansible)等配置管理系统安装Falco。
-
-#### Puppet
-
-Falco的[Puppet](https://puppet.com/)模块`sysdig-falco`可在[Puppet Forge](https://forge.puppet.com/sysdig/falco/readme)上找到。
-
-#### Ansible
-
-[@juju4](https://github.com/juju4/)为Falco写了一个很有帮助的[Ansible](https://ansible.com) role，`juju4.falco`。它可以在[GitHub](https://github.com/juju4/ansible-falco/)和[Ansible Galaxy](https://galaxy.ansible.com/juju4/falco/)上找到。Ansible Galaxy的最新版本(v0.7)不支持Falco 0.9，但GitHub上的版本可以。
-
 ### CoreOS
 
 在CoreOS上运行Falco的推荐方法是使用上面的[Docker章节](#docker)中的安装命令，在自己的Docker容器中运行。此方法允许对主机操作系统上的所有容器进行完全的可见性。
