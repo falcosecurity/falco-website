@@ -41,7 +41,7 @@
     A list of plugin names, corresponding to the name sub-key from the plugins config item. Example:
 
     `load_plugins: [cloudtrail, json]`
-  description: Defines the set of plugins that will actually be loaded. This is optional--if the property is not present, all plugins named in the plugins list will be loaded. All loaded plugins supporting the [event sourcing capability](../plugins#event-sourcing-capability) will add a new event source in Falco. By default, all event sources known by Falco are enabled for live captures and can be turned on and off with the `--enabled-source` and `--disable-source` command line options.
+  description: Defines the set of plugins that will actually be loaded. This is optional--if the property is not present, all plugins named in the plugins list will be loaded. All loaded plugins supporting the [event sourcing capability](../plugins#event-sourcing-capability) will add a new event source in Falco. By default, all event sources known by Falco are enabled for live sessions and can be turned on and off with the `--enabled-source` and `--disable-source` command line options.
 
 - name: watch_config_files
   type: Boolean
