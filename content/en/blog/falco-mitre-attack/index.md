@@ -28,7 +28,7 @@ To create a rule that identifies a specific ATT&CK technique, you need to get in
 
 ### Know where to look
 
-In order to detect malicious activities using static rules, Falco relies heavily on system events (syscalls) generated within the user’s environment. To effectively capture these system behaviors, we must carefully consider the relevant system calls that occur during an attack. If network activity is involved, we must  pay attention to the corresponding network traffic and alert on known malicious IP addresses. Additionally, we need to capture the events that occur for files and directories during an attack. Armed with this knowledge, we can proceed to write rules that capture malicious activities as they unfold, ultimately triggering relevant events for further analysis and response.
+In order to detect malicious activities using static rules, Falco relies heavily on system events (syscalls) generated within the user’s environment. To effectively observe these system behaviors, we must carefully consider the relevant system calls that occur during an attack. If network activity is involved, we must  pay attention to the corresponding network traffic and alert on known malicious IP addresses. Additionally, we need to monitor the events that occur for files and directories during an attack. Armed with this knowledge, we can proceed to write rules that detect malicious activities as they unfold, ultimately triggering relevant events for further analysis and response.
 
 ### Bring in Falco
 
@@ -144,7 +144,7 @@ When we bring all these elements together, our rule takes the following form:
 
 The team at [CloudDefense.AI](https://www.clouddefense.ai/) developed a Python Script that simulates an attack scenario by emulating system changes. ['Link To The Script'](https://github.com/CloudDefenseAI/falco_extended_rules/blob/master/scripts/test/inhibit_system_recovery.py). To observe the corresponding output in the falco logs, you can try incorporating this rule into your [falco_rules.local.yaml](https://falco.org/docs/rules/default-custom/#local-rules-file) file and running the script. 
 
-It's important to note that certain system calls are not instantiated by default in falco, so you will need to execute falco with all syscalls instantiated to capture them. This can be achieved by running `falco -A`.
+It's important to note that certain system calls are not instantiated by default in Falco, so you will need to execute Falco with all syscalls enabled. This can be achieved by running `falco -A`.
 
 ## Conclusion
 
