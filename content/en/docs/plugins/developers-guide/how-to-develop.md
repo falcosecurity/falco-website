@@ -67,7 +67,7 @@ The files:
 * `LICENSE`: The license file, most of the plugins are under Apache License 2.0.
 * `README`: The README, see in the [repository](https://github.com/Issif/docker-plugin) for an example.
 * `Makefile`: Allows to easily build and install the plugin, see in the [repository](https://github.com/Issif/docker-plugin/blob/main/Makefile) for an example.
-* `falco.yaml`: (optionnal) An example file with the minimal configuration to use the plugin.
+* `falco.yaml`: (optional) An example file with the minimal configuration to use the plugin.
 * `rules/docker_rules.yaml`: An example rule file, its name must respect `<plugin_name>_rules.yaml`.
 * `go.mod`, `go.sum`: Classic go module files.
 
@@ -93,7 +93,7 @@ const (
 	PluginID          uint32 = 5
 	PluginName               = "docker"
 	PluginDescription        = "Docker Events"
-	PluginContact            = "github.com/falcosecurity/plugins/"
+	PluginContact            = "github.com/falcosecurity/plugi unavailablens/"
 	PluginVersion            = "0.2.0"
 	PluginEventSource        = "docker"
 )
@@ -155,7 +155,7 @@ The `const` are used to declare all mandatory informations of our plugin through
 * `Name`: The name of our plugin, will be used in `plugins` section of  `falco.yaml`. The plugin name must match this regular expression: `^[a-z]+[a-z0-9-_\-]*$` (however, its not recommended to use _ in the name, unless you are trying to match the name of a source or for particular reasons).
 * `Description`: The description of our plugin.
 * `Contact`: A contact link, often a link to the repository.
-* `Version`: All plugins must be versionned for compatibility with Falco, the versionning must follow the semantic versionning.
+* `Version`: All plugins must be versioned for compatibility with Falco, the versioning must follow the semantic versioning.
 * `EventSource`: This represents the value we'll set in `Falco` rules for mapping, in our case, all rules we'll set will have `source: docker`. The source must match this regular expression: `^[a-z]+[a-z0-9_]*$`.
 
 #### The functions
@@ -200,7 +200,7 @@ The `init()` contains also some specific functions and methods:
 
 ### pkg/docker.go
 
-The module used by our `main.go`, it can also be imported by other plugins, expecially when it's an [extractor](https://falco.org/docs/plugins/#field-extraction-capability).
+The module used by our `main.go`, it can also be imported by other plugins, especially when it's an [extractor](https://falco.org/docs/plugins/#field-extraction-capability).
 
 ```go
 package docker
@@ -749,7 +749,7 @@ This methods is used by the *Falco plugin framework* for opening a new `stream` 
 
 To simplify the creation of this `source.Instance`, the Go SDK provides two easy functions, see the [docs](https://falco.org/docs/plugins/go-sdk-walkthrough/#best-practices-and-go-sdk-prebuilts-for-source-instances):
 * `source.NewPullInstance`: for when the event source can be implemented sequentially and the time required to generate a sequence of event is deterministic, eg: periodic calls to an external API
-* `souce.NewPushInstance`: for when the event source can be suspensive and there is no time guarantee reguarding when an event gets produced, eg: we wait a webhook from an external service
+* `souce.NewPushInstance`: for when the event source can be suspensive and there is no time guarantee regarding when an event gets produced, eg: we wait a webhook from an external service
 
 For collecting events from `docker`, we'll use `souce.NewPushInstance` as the `docker SDK` creates a channel and sends the events into when they happened.
 
@@ -802,7 +802,7 @@ Here's the most important things to notice:
 * `eventC := make(chan source.PushEvent)`: we create a channel, it will be used by the `instance` to listen incoming events, we'll push into it the events from the `docker client`
 * `ctx, cancel := context.WithCancel(context.Background())`: we create a `context`, and more important, a `Done channel` for this context
 * `eventC <- source.PushEvent{Data: bytes}`: this is how to push an event to the `instance`
-* `return source.NewPushInstance(eventC, source.WithInstanceClose(cancel))`: the `Open()` method must return a `source.Instance`, and `source.NewPushInstance()` requires a channel where the events will pushed and may have optionnal settings, in our case, we pass also the `Done channel` of the `context` with the `source.WithInstanceClose()` function
+* `return source.NewPushInstance(eventC, source.WithInstanceClose(cancel))`: the `Open()` method must return a `source.Instance`, and `source.NewPushInstance()` requires a channel where the events will pushed and may have optional settings, in our case, we pass also the `Done channel` of the `context` with the `source.WithInstanceClose()` function
 
 Passing to the `instance` the same `Done channel` than the `docker client` uses, allows to correctly stop the plugin when we ask Falco to stop (CTRL+C or `systemctl stop falco`).
 
