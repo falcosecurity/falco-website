@@ -166,7 +166,7 @@ When writing a rule for container workloads, you should include the fields we au
 %container.info
 ```
 
-This special placeholder will be automatically replaced with common container-related fields and, when used in conjunction with `-pk` (see the [CLI arguments page](https://falco.org/docs/reference/daemon/cli-arguments/) for more details) it will also add [basic Kubernetes fields](https://falco.org/docs/reference/rules/supported-fields/#field-class-k8s) (this does *not* require the *Kubernetes Metadata Enrichment*, i.e. `-k/-K`, functionality to be enabled). Using `%container.info` in conjunction with `-pk` is equivalent to:
+This special placeholder will be automatically replaced with common container-related fields and, when used in conjunction with `-pk` (see the [output formatting](/docs/outputs/formatting/) page for more details) it will also add [basic Kubernetes fields](/docs/reference/rules/supported-fields/#field-class-k8s) (this does *not* require the *Kubernetes Metadata Enrichment*, i.e. `-k/-K`, functionality to be enabled). Using `%container.info` in conjunction with `-pk` is equivalent to:
 
 ```yaml
 container_id=%container.id container_image=%container.image.repository container_image_tag=%container.image.tag container_name=%container.name k8s_ns=%k8s.ns.name k8s_pod_name=%k8s.pod.name

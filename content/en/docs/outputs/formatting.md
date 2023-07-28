@@ -6,11 +6,11 @@ aliases: [/docs/alerts/formatting/]
 weight: 20
 ---
 
-Falco has native support for containers and orchestration environments. With the option `-k`, Falco communicates with the provided K8s API server to decorate events with the K8s pod/namespace/deployment/etc. associated with the event. With `-m`, Falco communicates with the marathon server to do the same thing.
+Previous guides introduced the [output field of Falco rules](/docs/rules/basic-elements/#output) and provided [guidelines](https://deploy-preview-1108--falcosecurity.netlify.app/docs/rules/style-guide/#output-fields) on how to use it. This section specifically highlights additional global formatting options for your deployment, complementing the information previously provided.
 
-Falco can be run with `-pk`/`-pc`/`-p` arguments that change the formatted output to be a k8s-friendly/container-friendly/general format. However, the source of formatted output is in the set of rules and not on the command line. This page provides more detail on how `-pk`/`-pc`/`-p` interacts with the format strings in the `output` attribute of rules.
+Falco natively supports the decoration of events with associated containers and Kubernetes metadata. When Falco runs with `-pk`/`-pc`/`-p` command-line options, it changes the output format to a format that is friendly to k8s/containers/general usage. However, the source of this formatted output lies within the ruleset, not the command line. This page elaborates on how `-pk`/`-pc`/`-p` interacts with the format strings in the `output` field of rules.
 
-The information from k8s/containers is used in conjunction with the command line options in these ways:
+The information from k8s/containers is used in conjunction with the command-line options in these ways:
 
 * In rule outputs, if the format string contains `%container.info`, that is replaced with the value from `-pk`/`-pc`, if one of those options was provided. If no option was provided, `%container.info` is replaced with a generic `%container.name (id=%container.id)` instead.
 
