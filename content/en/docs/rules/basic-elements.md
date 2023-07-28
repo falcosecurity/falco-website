@@ -93,6 +93,8 @@ Disallowed SSH Connection
 
 Note that it's not necessary that all fields are set in the specific event. As you can see in the example above if the connection happens outside a container the field `%container.image.repository` would not be set and `<NA>` is displayed instead.
 
+To learn more about how Falco processes the output and related settings, see the [output formatting](/docs/outputs/formatting/) page.
+
 ### Priority
 
 {{% alert color="warning" %}}
