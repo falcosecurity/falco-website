@@ -66,6 +66,8 @@ Instead, copy and paste from your terminal window.
     kubectl get nodes
     ```
 
+* Proceed to **Install Falco using Helm**
+
 ### Create a K3 cluster on Windows or Linux with VirtualBox
 
 {{% pageinfo color=info %}}
@@ -119,6 +121,9 @@ Instead, copy and paste from your terminal window.
     kubectl get nodes
     ```
 
+
+## Install Falco using Helm
+
 {{% pageinfo color=warning %}}
 **Important**
 
@@ -127,7 +132,6 @@ For Mac users, do the remaining steps from the terminal on your local machine.
 For Windows and Linux users, do these steps in the terminal session for your VirtualBox VM.
 {{% /pageinfo %}}
 
-## Install Falco using Helm
 Helm is the simplest way to deploy Falco and Falcosidekick. In this section, you'll add the Falco Helm chart repository. Next, you'll deploy Falco and Falcosidekick with the eBPF probe. Because we want to send output to a Slack channel, you will provide the Slack webhook information. Additionally, we supply a custom parameter (*user*) that you will customize to your username.
 
 * Add the Falco Helm repository.
@@ -143,15 +147,22 @@ Helm is the simplest way to deploy Falco and Falcosidekick. In this section, you
     kubectl create namespace falco
     ```
 
-* Use Helm to install Falco and Falcosidekick. Notice we are specifying the eBPF probe and the information to forward any alerts with a priority higher than *Notice* to our Slack server.
+* Use Helm to install Falco and Falcosidekick. Notice we are specifying the eBPF probe and the information to forward any alerts with a priority higher than *Notice* to our Slack server. Be sure to change the last parameter from *changeme* to your name. 
 
     ```plain
     helm install falco -n falco --set driver.kind=ebpf --set tty=true falcosecurity/falco \
     --set falcosidekick.enabled=true \
-    --set falcosidekick.config.slack.webhookurl="https://hooks.slack.com/services/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" \
+    --set falcosidekick.config.slack.webhookurl=$(base64 --decode <<< "aHR0cHM6Ly9ob29rcy5zbGFjay5jb20vc2VydmljZXMvVDA0QUhTRktMTTgvQjA1SzA3NkgyNlMvV2ZHRGQ5MFFDcENwNnFzNmFKNkV0dEg4") \
     --set falcosidekick.config.slack.minimumpriority=notice \
-    --set falcosidekick.config.customfields="user:<changeme>"
+    --set falcosidekick.config.customfields="user:changeme"
     ```
+
+{{% pageinfo color=warning %}}
+**Important**
+
+Be sure to change the last parameter from *changeme* to your name.
+
+{{% /pageinfo %}}
 
 * Wait for the Falco and Falcosidekick pods to come online.
 
@@ -166,6 +177,27 @@ NAME                                   READY   STATUS    RESTARTS   AGE
 falco-falcosidekick-59c5d6cc45-l2qjz   1/1     Running   0          3m7s
 falco-falcosidekick-59c5d6cc45-kpcws   1/1     Running   0          3m7s
 falco-vdsc8                            2/2     Running   0          3m7s
+```
+
+* Press ctrl-c to return to the terminal prompt. 
+
+* Check the Falco pod logs to verify falco loaded appropriately. 
+
+    ```plain
+    kubectl logs -l app.kubernetes.io/name=falco -n falco -c falco
+    ```
+
+You should see something similar to this:
+
+```plain
+Fri Jul 28 11:24:52 2023: Falco version: 0.35.1 (aarch64)
+Fri Jul 28 11:24:52 2023: Falco initialized with configuration file: /etc/falco/falco.yaml
+Fri Jul 28 11:24:52 2023: Loading rules from file /etc/falco/falco_rules.yaml
+Fri Jul 28 11:24:52 2023: The chosen syscall buffer dimension is: 8388608 bytes (8 MBs)
+Fri Jul 28 11:24:52 2023: Starting health webserver with threadiness 4, listening on port 8765
+Fri Jul 28 11:24:52 2023: Loaded event sources: syscall
+Fri Jul 28 11:24:52 2023: Enabled event sources: syscall
+Fri Jul 28 11:24:52 2023: Opening 'syscall' source with BPF probe. BPF probe path: /root/.falco/falco-bpf.o
 ```
 
 ## Simulate suspicious activity
@@ -188,6 +220,8 @@ You should see something similar to this:
 NAME     READY   STATUS    RESTARTS   AGE
 alpine   1/1     Running   0          16s
 ```
+
+* Press ctrl-c to return to the terminal prompt. 
 
 * Shell into the running container and run the *uptime* command. This will trigger Falco to send an Alert.
 
@@ -225,7 +259,24 @@ Notice that there is a bunch of interesting information in the output, including
 
 
 
+## Cleanup
+If you wish to remove the resources created during this walkthrough, please follow the instructions below.
 
+### Mac
+
+* Remove the K3s Cluster
+
+    ```plain
+    limactl delete k3s --force
+    ```
+
+### Windows and Linux
+
+* Remove the Virtualbox VM
+
+    ```plain
+    vagrant destroy
+    ```
 
 ## Congratulations, you finished this scenario!
 
