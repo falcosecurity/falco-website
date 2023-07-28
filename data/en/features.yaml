@@ -2,8 +2,8 @@
   description: Falco detects threats across containers, Kubernetes, hosts and cloud services.
   icon: /icons/cloud-fill.svg
   features: 
-  -  Uses eBPF to monitor  system activity for adverse behavior.
-  -  Integrated with Kubernetes, so you can protect your infrastructure at scale.
+  -  Uses eBPF to monitor system activity for adverse behavior.
+  -  Integrated with Kubernetes.
   -  Use plugins to monitor cloud services such as GitHub, Okta, or AWS Cloudtrail.
 - title: Real Time Detection
   description: Falco provides streaming detection of unexpected behavior, configuration changes, and attacks.

@@ -63,7 +63,7 @@ aliases:
 {{< /blocks/content >}}
 
 {{< blocks/content content="html" >}}
-{{< two_column_block_img img-aligned="left" src="/img/about/response_to_threats.svg" alt="respond to threats" index="1 md-0 lg-0 xl-0" header="Respond to threats" >}}
+{{< two_column_block_img img-aligned="left" src="/img/about/response_to_threats.svg" alt="react to threats" index="1 md-0 lg-0 xl-0" header="React to threats" >}}
   With Falco and [Falcosidekick](https://github.com/falcosecurity/falcosidekick), you can also forward suspicious events to serverless systems to trigger actions and remediate threats.
 
 [Falcosidekick](https://github.com/falcosecurity/falcosidekick) is a companion application to Falco  forwards Falco events. It allows you to distribute events to more than 50 systems, such as email, chat, message queues, serverless functions, databases and more. It’s easy to configure and use both locally and inside Kubernetes.
