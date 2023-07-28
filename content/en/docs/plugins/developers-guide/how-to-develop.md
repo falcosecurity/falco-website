@@ -93,7 +93,7 @@ const (
 	PluginID          uint32 = 5
 	PluginName               = "docker"
 	PluginDescription        = "Docker Events"
-	PluginContact            = "github.com/falcosecurity/plugi unavailablens/"
+	PluginContact            = "github.com/falcosecurity/plugins/"
 	PluginVersion            = "0.2.0"
 	PluginEventSource        = "docker"
 )
