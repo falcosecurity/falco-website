@@ -12,7 +12,7 @@ title: Falco Ecosystem
   {{< blocks/tabs name="integrations" >}}
 
   {{< tab name="Integrations" >}}
-  <p class="mt-4 mb-5">You can connect Falco with your ecosystem by forwarding the events as output to 50+ targets with <a href="/docs/alerts/forwarding/">Falcosidekick</a>.</p>
+  <p class="mt-4 mb-5">You can connect Falco with your ecosystem by forwarding the events as output to 50+ targets with <a href="/docs/outputs/forwarding/">Falcosidekick</a>.</p>
   
   {{< blocks/grid layout="lg-4 md-3 sm-2 2" gap=4 class="gallery-vendor" >}}
   {{< docs/vendors_gallery_items integrations />}}

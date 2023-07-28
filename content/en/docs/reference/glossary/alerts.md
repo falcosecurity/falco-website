@@ -2,7 +2,7 @@
 title: Alerts
 id: alerts
 date: 2023-07-17
-full_link: /docs/alerts/
+full_link: /docs/outputs/
 short_description: >
   Downstream actions executed after a rule is triggered.
 aka:

@@ -1,7 +1,8 @@
 ---
-title: Alert Channels
-description: Supported channels for Falco Alerts
-linktitle: Alert Channels
+title: Output Channels
+description: Supported output channels for Falco Alerts
+linktitle: Output Channels
+aliases: [/docs/alerts/channels/]
 weight: 10
 ---
 
@@ -35,7 +36,7 @@ with the `-U/--unbuffered` command line option which will ensure the output is f
 
 ## File Output
 
-When configured to send alerts to a file, a message is written to the file for each alert. The configuration is very similar to the [Standard Output](/docs/alerts/channels/#standard-output) format:
+When configured to send alerts to a file, a message is written to the file for each alert. The configuration is very similar to the [Standard Output](/docs/outputs/channels/#standard-output) format:
 
 ```yaml
 file_output:
