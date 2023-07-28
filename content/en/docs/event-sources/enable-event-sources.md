@@ -42,8 +42,8 @@ Since Falco will always load `syscall` implicitly, single event-source deploymen
 Likewise, this also means that passing `--enable-source=syscall` won't have an effect on Falco unless a plugin with event source capability had been already enabled.
 {{% /alert %}}
 
-{{% alert title="Offline Captures" color="primary" %}}
-Offline captures based on trace files are not affected by this logic. In that case, Falco is capable of processing events coming from different event sources out of the box with no additional configuration.
+{{% alert title="Capture Files" color="primary" %}}
+This logic does not apply when Falco is reproducing events from a capture file. In that case, Falco is capable of processing events coming from different event sources out of the box with no additional configuration.
 {{% /alert %}}
 
 ### Plugins Implementing the `syscall` Source
