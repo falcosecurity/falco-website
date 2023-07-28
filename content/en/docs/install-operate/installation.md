@@ -323,6 +323,82 @@ In these steps, we are targeting a Debian-like system on `x86_64` architecture. 
 
 You are finally ready to [run the Falco binary](../running#falco-binary)!
 
+## Enable Falco on Systemd manually
+
+If you installed Falco using the official packages skipping the `dialog` configuration, or you just downloaded the Falco binary, you might still want to enable the daemon to automatically start every time the server starts.
+
+To do so, you can use the `.service` file units located under `/lib/systemd/system`. If your system doesn't have those files, in case of downloading the binary package, for instance, you can still download them from the [Falco repo](https://github.com/falcosecurity/falco/tree/master/scripts/systemd) and place them on that directory.
+
+Verify the unit files are available:
+
+```plain
+$ sudo systemctl list-unit-files "falco*"
+
+UNIT FILE                        STATE    VENDOR PRESET
+falco-bpf.service                disabled enabled
+falco-custom.service             disabled enabled
+falco-kmod-inject.service        static   enabled
+falco-kmod.service               disabled enabled
+falco-modern-bpf.service         disabled enabled
+falcoctl-artifact-follow.service disabled enabled
+```
+
+Using the `systemctl` command, you can now enable the desired unit to start at boot time.
+
+Let's say you want to enable the modern eBPF probe:
+
+```plain
+$ sudo systemctl enable falco-modern-bpf.service
+Created symlink /etc/systemd/system/multi-user.target.wants/falco-modern-bpf.service → /lib/systemd/system/falco-modern-bpf.service.
+
+$ sudo systemctl list-unit-files "falco*"
+
+UNIT FILE                        STATE    VENDOR PRESET
+falco-bpf.service                disabled enabled
+falco-custom.service             disabled enabled
+falco-kmod-inject.service        static   enabled
+falco-kmod.service               disabled enabled
+falco-modern-bpf.service         enabled  enabled
+falcoctl-artifact-follow.service disabled enabled
+```
+
+Or you'd like to switch to using the kernel module:
+
+```plain
+$ sudo systemctl disable falco-modern-bpf.service
+Removed /etc/systemd/system/multi-user.target.wants/falco-modern-bpf.service.
+
+$ sudo systemctl enable falco-kmod.service
+Created symlink /etc/systemd/system/falco.service → /lib/systemd/system/falco-kmod.service.
+Created symlink /etc/systemd/system/multi-user.target.wants/falco-kmod.service → /lib/systemd/system/falco-kmod.service.
+
+$ sudo systemctl list-unit-files "falco*"
+
+UNIT FILE                        STATE    VENDOR PRESET
+falco-bpf.service                disabled enabled
+falco-custom.service             disabled enabled
+falco-kmod-inject.service        static   enabled
+falco-kmod.service               enabled  enabled
+falco-modern-bpf.service         disabled enabled
+falco.service                    enabled  enabled
+falcoctl-artifact-follow.service disabled enabled
+
+7 unit files listed.
+```
+
+{{% pageinfo color=info %}}
+
+Be aware that enabling the `falco-kmod.service` also creates a new alias/service called `falco.service` for compatibility reasons.
+
+{{% /pageinfo %}}
+
+As a side note, if you preferred not to use the `falcoctl` tool to automatically update your rules, you can mask it as follows. Otherwise, as explained [here](/docs/install-operate/installation/#rule-update), Falco will enable it too.
+
+```
+$ sudo systemctl mask falcoctl-artifact-follow.service
+Created symlink /etc/systemd/system/falcoctl-artifact-follow.service → /dev/null.
+```
+
 ## Package signing
 
 Most Falco packages available at [download.falco.org](https://download.falco.org/?prefix=packages/) are provided with a detached signature that can be used to verify that the package information downloaded from the remote repository can be trusted.
