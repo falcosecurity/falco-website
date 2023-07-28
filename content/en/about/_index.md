@@ -18,9 +18,7 @@ aliases:
 
   The ultimate line of defense, however, is runtime security. Security is an ever evolving war against attacks, and one of the most powerful ways to improve the security posture of your cloud-native environment is to detect threats as they occur. With the increasing number of cyber attacks and breaches, it’s crucial to have real-time visibility across your cloud, workloads, and user activity. 
 
-  ![What is runtime security and why it matters](/img/about/runtime_security.svg#img-fit)
-
-  To effectively detect threats, runtime security solutions must be efficient and alert on suspicious behavior in real time. Attackers have adapted their tactics to the landscape of the cloud and can initiate attacks within seconds of entering your environment. While legacy solutions struggle to detect cloud-native threats, Falco can provide a sophisticated security monitoring layer to identify abnormal behaviors as they happen. This will give you an opportunity to take the right response action and minimize the impact of possible breaches, including sustained financial loss and reputational damage.
+  To effectively detect threats, runtime security systems must be efficient and alert on suspicious behavior in real time. Attackers have adapted their tactics to the landscape of the cloud and can initiate attacks within seconds of entering your environment. While legacy tools struggle to detect cloud-native threats, Falco can provide a sophisticated security monitoring layer to identify abnormal behaviors as they happen. This will give you an opportunity to take the right response action and minimize the impact of possible breaches, including sustained financial loss and reputational damage.
 {{< /card >}}
 {{< /blocks/content >}}
 
@@ -53,9 +51,9 @@ aliases:
 
 {{< blocks/content content="html" >}}
 {{< two_column_block_img img-aligned="right" src="/img/about/instrumenting_system_calls.svg" alt="Instrumenting system calls" index="1 md-1 lg-1 xl-1" header="Instrumenting system calls" >}}
-  Observing system calls is performance-critical, and there are two ways in which Falco achieves this: an eBPF probe or a kernel module.
+  Observing system calls is performance-critical, and there are two ways in which Falco achieves this: an {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} or a {{< glossary_tooltip text="kernel module" term_id="kernel-module" >}}.
 
-  eBPF is a revolutionary technology that allows us to run sandboxed programs inside an operating system. eBPF scripts are flexible and safe, and run extremely fast, making them perfect for capturing runtime security. This makes it ideal for instrumenting system calls for Falco.
+  {{< glossary_tooltip text="eBPF" term_id="ebpf" >}} is a revolutionary technology that allows us to run sandboxed programs inside an operating system. eBPF scripts are flexible and safe, and run extremely fast, making them perfect for capturing runtime security. This makes it ideal for instrumenting system calls for Falco.
 
   Before the emergence of eBPF, kernel modules were the norm for extending functionality in the Linux kernel. They run in privileged mode, and are written in C, making them very efficient and therefore a great option for performance-critical work. Falco offers a kernel module for situations where eBPF isn't the best fit.
 
@@ -66,7 +64,7 @@ aliases:
 {{< two_column_block_img img-aligned="left" src="/img/about/response_to_threats.svg" alt="react to threats" index="1 md-0 lg-0 xl-0" header="React to threats" >}}
   With Falco and [Falcosidekick](https://github.com/falcosecurity/falcosidekick), you can also forward suspicious events to serverless systems to trigger actions and remediate threats.
 
-[Falcosidekick](https://github.com/falcosecurity/falcosidekick) is a companion application to Falco  forwards Falco events. It allows you to distribute events to more than 50 systems, such as email, chat, message queues, serverless functions, databases and more. It’s easy to configure and use both locally and inside Kubernetes.
+[Falcosidekick](https://github.com/falcosecurity/falcosidekick) is a companion application to Falco that forwards Falco events. It allows you to distribute events to more than 50 systems, such as email, chat, message queues, serverless functions, databases and more. It’s easy to configure and use both locally and inside Kubernetes.
 {{< /two_column_block_img >}}
 {{< /blocks/content >}}
 
