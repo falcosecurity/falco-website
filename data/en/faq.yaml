@@ -1,6 +1,6 @@
 - title: What is runtime security and how does Falco help?
   content: |
-    Runtime security is the process of providing protection for your host, containers, and applications while they’re running against a variety of threats, such as:
+    Runtime security is the process of providing real-time monitoring or observability capabilities for your host, containers, and applications while they're running. This allows you to detect a variety of threats, such as:
     - Privilege escalation attacks through exploiting security bugs.
     - The deployment of unauthorized workloads by an attacker.
     - Unauthorized access to secrets or other sensitive information.
