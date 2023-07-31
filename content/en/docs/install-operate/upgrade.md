@@ -8,11 +8,15 @@ weight: 30
 This section provides upgrading paths for Falco if previously installed following the [Install](../installation/) section.
 
 {{% pageinfo color="warning" %}}
-If you are using the kernel module, please remove it before upgrading Falco to avoid issues during the upgrade.
+If you are using the kernel module, please remove it with root priviliges before upgrading Falco to avoid issues during the upgrade.
 
 ```bash
 rmmod falco
 ```
+
+When utilizing the traditional BPF driver, there is no requirement for explicit removal. Instead, the corresponding `.o` object file is simply overridden during the upgrade process.
+
+With modern BPF, updating Falco is as simple as upgrading the package or replacing the binary, as the driver is bundled within the Falco binary.
 
 {{% /pageinfo %}}
 
@@ -101,3 +105,13 @@ zypper update falco
 ## Falco binary
 
 For the Falco binary we don't provide specific update paths, you just have to remove files installed by the old `tar.gz` and download the new version of Falco as described [here](../installation/#falco-binary)
+
+
+## Special Note on Kernel Drivers and Kernel Upgrades
+
+
+When performing kernel upgrades on your host, a reboot is required. Consequently, the Falco binary restarts, and additionally, you must ensure that a new kernel driver corresponding to the updated kernel release (`uname -r`) is available when using the kernel module or traditional BPF driver. By using Falco's `falco-driver-loader`, these processes are automated for you, making it easy to handle kernel upgrades. The Falco Project features a kernel crawler and automated CI, ensuring you can always obtain the necessary pre-built driver artifact, even for the latest kernel releases we support.
+
+The great news is that modern BPF driver is more resilient to it, because of the CO-RE "Compile Once - Run Everywhere" feature that made it possible to bundle the driver into the Falco binary - it will just continue to work on the upgraded kernel. If possible, use modern BPF!
+
+
