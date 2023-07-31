@@ -6,7 +6,7 @@ aliases: [/docs/alerts/formatting/]
 weight: 20
 ---
 
-Previous guides introduced the [output field of Falco rules](/docs/rules/basic-elements/#output) and provided [guidelines](https://deploy-preview-1108--falcosecurity.netlify.app/docs/rules/style-guide/#output-fields) on how to use it. This section specifically highlights additional global formatting options for your deployment, complementing the information previously provided.
+Previous guides introduced the [output field of Falco rules](/docs/rules/basic-elements/#output) and provided [guidelines](/docs/rules/style-guide/#output-fields) on how to use it. This section specifically highlights additional global formatting options for your deployment, complementing the information previously provided.
 
 Falco natively supports the decoration of events with associated containers and Kubernetes metadata. When Falco runs with `-pk`/`-pc`/`-p` command-line options, it changes the output format to a format that is friendly to k8s/containers/general usage. However, the source of this formatted output lies within the ruleset, not the command line. This page elaborates on how `-pk`/`-pc`/`-p` interacts with the format strings in the `output` field of rules.
 
