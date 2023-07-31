@@ -36,14 +36,6 @@ information about how to download and install Helm.
 
 <a class="btn btn-primary" href="https://helm.sh/docs/intro/install/" role="button" aria-label="View Installing Helm Guide">View Installing Helm Guide</a>
 
-## kubectl
+## Kubernetes Manifests
 
-The Kubernetes command-line tool, `kubectl`, allows you to run commands against
-Kubernetes clusters. You can use `kubectl` to deploy applications, inspect and
-manage cluster resources, and view logs.
-
-See [Install and Set Up `kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/) for
-information about how to download and install `kubectl` and set it up for
-accessing your cluster.
-
-<a class="btn btn-primary" href="https://kubernetes.io/docs/tasks/tools/install-kubectl/" role="button" aria-label="View kubectl Install and Set Up Guide">View kubectl Install and Set Up Guide</a>
+It is possible to deploy Falco in Kubernetes simply by using the [kubectl tool](https://kubernetes.io/docs/tasks/tools/install-kubectl/) and deploying Kubernetes manifests. For further details, [you can find an example here](https://github.com/falcosecurity/deploy-kubernetes/tree/main/kubernetes/falco/templates).
