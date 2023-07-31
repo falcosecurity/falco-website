@@ -13,10 +13,15 @@ Then the Falco alerts can be consumed through read-only agents running in Kubern
 You can also run Falco directly in Kubernetes as a Daemonset using Helm, see the [third-party integrations](../third-party)
 {{% /pageinfo %}}
 
-There are 2 main ways to install Falco on your host:
+There are 2 main ways to install the Falco binary on your host:
 
 1. Falco packages (`.deb`, `.rpm`)
 2. Falco binary (`.tar.gz`)
+
+These packages include the default [configuration](https://github.com/falcosecurity/falco/blob/master/falco.yaml) and Falco [rules](https://github.com/falcosecurity/rules) files.
+
+The installation of the kernel driver varies depending on the type of driver and your setup. The sections below outline the available options, building upon the information provided in the previous [Download](/docs/install-operate/download/) guide.
+
 
 ## Falco packages
 
@@ -34,6 +39,8 @@ The Falco packages shipped with `Falco 0.34` support for the first time other dr
 This is still an experimental solution so our suggestion is to avoid relying on Falco systemd unit names since they could change between releases. The final idea would be to have a single `falco.service` configurable through usual systemd logic, but due to how Falco works today this solution is not viable.
 
 Even if different units are available, you shouldn't run multiple Falco in parallel! Our units are not meant to be run in parallel!
+
+Each driver option has different kernel requirements, explore the [support matrix](https://github.com/falcosecurity/libs#drivers-officially-supported-architectures).
 
 {{% /pageinfo %}}
 
@@ -119,10 +126,11 @@ Here we select the `Kmod` case as an example. After the first dialog, you should
 
 ![](/docs/getting-started/images/systemd_dialog_2.png)
 
-[Falcoctl](https://github.com/falcosecurity/falcoctl) is a tool revamped with `Falco 0.34` that offers shiny new features! One of the most important is the [automatic rulesets update](https://github.com/falcosecurity/falcoctl#falcoctl-artifact-follow),
-our suggestion is to enable it by default, in this way you will always have your Falco instance running with the most updated rules.
 
 ##### Rule update
+
+[Falcoctl](https://github.com/falcosecurity/falcoctl) is a tool revamped with `Falco 0.34` that offers shiny new features! One of the most important is the [automatic rulesets update](https://github.com/falcosecurity/falcoctl#falcoctl-artifact-follow),
+our suggestion is to enable it by default, in this way you will always have your Falco instance running with the most updated rules.
 
 If you set the rule update as default, typing `systemctl list-units | grep falco` you should see something similar to this:
 

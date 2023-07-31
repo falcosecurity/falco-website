@@ -62,6 +62,8 @@ If you are using the eBPF probe, in order to ensure that performance is not degr
 
 ## Docker {#docker}
 
+To learn how to run Falco from a container in a Kubernetes setting, checkout the [Deployment](/docs/install-operate/deployment/) guide next.
+
 {{% pageinfo color="primary" %}}
 
 Even using container images, Falco needs kernel headers installed on the host as prerequisite to correctly build the driver (the [kernel module](/docs/event-sources/drivers/#kernel-module) or the [eBPF probe](/docs/event-sources/drivers/#ebpf-probe)) on the fly. This step is not needed when a prebuilt driver is already available.

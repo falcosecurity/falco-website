@@ -1,13 +1,23 @@
 ---
 title: Deployment
-description: Installing Falco on a Cluster
+description: Installing Falco on a Kubernetes Cluster
 aliases: [/docs/getting-started/deployment]
-weight: 40
+weight: 45
 ---
+
+The guides - [Download](/docs/install-operate/download/), [Install](/docs/install-operate/installation/), [Running](/docs/install-operate/running/) - focused on the systemd service deployment method, detailing how to primarily install and run Falco directly on the host. Additionally, these guides explored the alternative options of installing and running Falco within a container, with a driver installed on the underlying host.
+
+The container deployment option is particularly enticing for Kubernetes settings, which will be discussed in more detail now. 
+
+{{% pageinfo color="info" %}}
+
+Falco only needs to run once per Linux operating system, irrespective of the deployment strategy, whether on a bare-metal server or a virtual machine (VM). It takes advantage of the shared kernel in containerized infrastructures like Kubernetes through the installation of a kernel driver on the underlying host. Thus, deploying Falco within a container with the driver installed on the host is equivalent to deploying it directly on the Linux host. This allows seamless monitoring of both host and container workloads *without* the need for sidecars.
+
+{{% /pageinfo %}}
 
 ## Kubernetes
 
-Falco can be deployed in Kubernetes as a [DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) to monitor the system events in each node of your cluster.
+Falco can be deployed in Kubernetes as a [DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) to monitor the system events of every container in each pod and the underlying host itself on each node of your cluster.
 
 ### Helm
 
