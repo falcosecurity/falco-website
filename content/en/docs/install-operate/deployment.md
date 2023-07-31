@@ -11,7 +11,11 @@ The container deployment option is particularly enticing for Kubernetes settings
 
 {{% pageinfo color="info" %}}
 
-Falco only needs to run once per Linux operating system, irrespective of the deployment strategy, whether on a bare-metal server or a virtual machine (VM). It takes advantage of the shared kernel in containerized infrastructures like Kubernetes through the installation of a kernel driver on the underlying host. Thus, deploying Falco within a container with the driver installed on the host is equivalent to deploying it directly on the Linux host. This allows seamless monitoring of both host and container workloads *without* the need for sidecars.
+Falco is designed to run once per instance of the Linux kernel, regardless of whether the deployment is on a bare-metal host or a virtual machine (VM). In third-party managed Kubernetes platforms (EKS, GKS, AKS, etc.), the latter option (VM) is prevalent.
+
+Falco leverages the shared kernel in containerized environments like Kubernetes by installing a kernel driver on the underlying host.
+
+This means that deploying Falco within a container, with the kernel driver installed on the host, is functionally equivalent to deploying it directly on the Linux host. This setup allows seamless monitoring of both host and container workloads *without* the need for sidecars.
 
 {{% /pageinfo %}}
 
