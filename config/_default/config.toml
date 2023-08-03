@@ -161,7 +161,7 @@ id = "UA-00000000-0"
     parent = "about"
     weight = 4
     [menu.main.params]
-        description = "Solutions for threat detection and response"
+        description = "Threat detection and regulatory compliance"
 # TODO: uncomment when MITRE content is ready
 # [[menu.main]]
 #     identifier = "mitre"
