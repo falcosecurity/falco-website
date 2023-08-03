@@ -120,4 +120,4 @@ Also, you can test it live in this interactive environment that we have prepared
 
 Click on it to start playing with it 🎮
 
-<a target="_blank" href="https://play.instruqt.com/embed/sysdig/tracks/falco-modern-ebpf?token=em_Kwn3AXuYeONY6e0v"><img src="images/falco-modern-bpf-lab.png"></a>
+<a target="_blank" href="https://play.instruqt.com/embed/sysdig/tracks/falco-modern-ebpf?token=em_Kwn3AXuYeONY6e0v&icp_embed_source=blog-falco-modern-bpf-0-35-0&icp_owner=oss"><img src="images/falco-modern-bpf-lab.png"></a>
