@@ -11,15 +11,15 @@ This section explains how the fields `fs.path.*` work and when they can be used.
 
 ### Motivation
 
-A variety of different syscalls take file system paths as arguments. However, there is little consistency in the fields that can access those file system paths. Depending on the syscall, the file system path might be available in `evt.rawarg.path`, `evt.rawarg.pathname`, `evt.rawarg.name`, `fd.name`, etc. And for some system calls, the file system path is actually in the enter event instead of the exit event. This makes it very difficult to write simple Falco rules that act on file system paths, because the field must depend on the syscall as well as the event direction.
+A variety of different syscalls take file system paths as arguments. However, there is little consistency in the fields that can access those file system paths. Depending on the syscall, the file system path might be available in `evt.rawarg.path`, `evt.rawarg.pathname`, `evt.rawarg.name`, `fd.name`, etc. And for some system calls, the file system path is in the enter event instead of the exit event. This makes writing simple Falco rules that act on file system paths challenging because the field must depend on the syscall and the event direction.
 
-To help address this inconsistency, in Falco version 0.36 we added a new set of fields that normalize file system paths across a variety of syscalls.
+To help address this inconsistency, in Falco version 0.36, we added a new set of fields that normalize file system paths across various syscalls.
 
 #### What Counts As A File System Path?
 
 Lots of existing fields also refer to file system paths. For example, `proc.exepath` contains the file system path for an executable, and there are related fields `proc.pexepath`/`proc.aexepath`. `container.mount.*` fields all contain the file system paths for file systems mounted into a container.
 
-The `fs.path.*` fields are *only* populated for syscalls that are generally related to reading, writing, or modifying some file system object and that have a file system path as an argument. The goal is to have a single set of fields that can be always relied on to refer to those paths, as compared to checking the widely varying per-event fields.
+The `fs.path.*` fields are *only* populated for syscalls generally related to reading, writing, or modifying some file system object and have a file system path as an argument. The goal is to have a single set of fields that can always be relied on to refer to those paths, compared to checking the widely varying per-event fields.
 
 ### `fs.path.*` fields
 
@@ -32,13 +32,13 @@ The following fields are available for any syscall that operates on a file syste
 * fs.path.target
 * fs.path.targetraw
 
-`fs.path.name` is for file operations that work on a path like open, unlink, rmdir, etc. For other file operations that have a source and target, like cp, symlink, link, mv, etc, there are fields `fs.path.source` and `fs.path.target`.
+`fs.path.name` is for file operations that work on a path like open, unlink, rmdir, etc. For other file operations that have a source and target, like cp, symlink, link, mv, etc., there are fields `fs.path.source` and `fs.path.target`.
 
-All of these convert relative paths to absolute paths when needed, using the thread's current working directory (cwd).
+These convert relative paths to absolute paths when needed, using the thread's current working directory (cwd).
 
 `fs.path.nameraw/fs.path.sourceraw/fs.path.targetraw` are like the above but do *not* convert relative paths to absolute paths. They always contain the original path, which may or may not be relative.
 
-The fields only work for exit events and only return a value if the syscall was successful.
+The fields only work for exit events and only return a value if the syscall succeeds.
 
 The below tables show:
 * the specific syscalls that are are supported
