@@ -48,47 +48,39 @@ The below tables show:
 
 #### Single Argument File System Syscalls
 
-| Syscall  | Falco Libs Event Identifier   | `fs.path.name` field | From Enter Event?|
-| -------  | ------------------------------| ---------------------|------------------|
-| mkdir    | `PPME_SYSCALL_MKDIR`          | `evt.rawarg.path`    | Yes              |
-| mkdir    | `PPME_SYSCALL_MKDIR_2`        | `evt.rawarg.path`    | No               |
-| mkdirat  | `PPME_SYSCALL_MKDIRAT`        | `evt.rawarg.path`    | No               |
-| rmdir    | `PPME_SYSCALL_RMDIR`          | `evt.rawarg.path`    | Yes              |
-| rmdir    | `PPME_SYSCALL_RMDIR_2`        | `evt.rawarg.path`    | No               |
-| unlink   | `PPME_SYSCALL_UNLINK`         | `evt.rawarg.path`    | Yes              |
-| unlink   | `PPME_SYSCALL_UNLINK_2`       | `evt.rawarg.path`    | No               |
-| unlinkat | `PPME_SYSCALL_UNLINKAT`       | `evt.rawarg.name`    | Yes              |
-| unlinkat | `PPME_SYSCALL_UNLINKAT_2`     | `evt.rawarg.name`    | No               |
-| open     | `PPME_SYSCALL_OPEN`           | `evt.rawarg.name`    | No               |
-| openat   | `PPME_SYSCALL_OPENAT`         | `evt.rawarg.name`    | Yes              |
-| openat   | `PPME_SYSCALL_OPENAT_2`       | `evt.rawarg.name`    | No               |
-| openat2  | `PPME_SYSCALL_OPENAT2`        | `evt.rawarg.name`    | No               |
-| fchmod   | `PPME_SYSCALL_FCHMOD`         | `fd.name`            | No               |
-| fchmodat | `PPME_SYSCALL_FCHMODAT`       | `evt.rawarg.filename`| No               |
-| chmod    | `PPME_SYSCALL_CHMOD`          | `evt.rawarg.filename`| No               |
-| chown    | `PPME_SYSCALL_CHOWN`          | `evt.rawarg.path`    | No               |
-| lchown   | `PPME_SYSCALL_LCHOWN`         | `evt.rawarg.path`    | No               |
-| fchown   | `PPME_SYSCALL_FCHOWN`         | `fd.name`            | No               |
-| fchownat | `PPME_SYSCALL_FCHOWNAT`       | `evt.rawarg.pathname`| No               |
-| quotactl | `PPME_SYSCALL_QUOTACTL`       | `evt.rawarg.special` | No               |
-| umount   | `PPME_SYSCALL_UMOUNT`         | `evt.rawarg.name`    | No               |
-| umount   | `PPME_SYSCALL_UMOUNT_1`       | `evt.rawarg.name`    | No               |
-| umount2  | `PPME_SYSCALL_UMOUNT2`        | `evt.rawarg.name`    | No               |
+| Syscall  | `fs.path.name` field |
+| -------  | ---------------------|
+| mkdir    | `evt.rawarg.path`    |
+| mkdirat  | `evt.rawarg.path`    |
+| rmdir    | `evt.rawarg.path`    |
+| unlink   | `evt.rawarg.path`    |
+| unlinkat | `evt.rawarg.name`    |
+| open     | `evt.rawarg.name`    |
+| openat   | `evt.rawarg.name`    |
+| openat2  | `evt.rawarg.name`    |
+| fchmod   | `fd.name`            |
+| fchmodat | `evt.rawarg.filename`|
+| chmod    | `evt.rawarg.filename`|
+| chown    | `evt.rawarg.path`    |
+| lchown   | `evt.rawarg.path`    |
+| fchown   | `fd.name`            |
+| fchownat | `evt.rawarg.pathname`|
+| quotactl | `evt.rawarg.special` |
+| umount   | `evt.rawarg.name`    |
+| umount2  | `evt.rawarg.name`    |
 
 #### Source/Target File System Syscalls
 
-| Syscall    | Falco Libs Event Identifier   | `fs.path.source` field | `fs.path.target` field | From Enter Event? |
-| ---------- | ------------------------------| -----------------------| -----------------------| ------------------|
-| rename     | `PPME_SYSCALL_RENAME`         | `evt.rawarg.oldpath`   | `evt.arg.newpath`      | No                |
-| renameat   | `PPME_SYSCALL_RENAMEAT`       | `evt.rawarg.oldpath`   | `evt.arg.newpath`      | No                |
-| renameat2  | `PPME_SYSCALL_RENAMEAT2`      | `evt.rawarg.oldpath`   | `evt.arg.newpath`      | No                |
-| link       | `PPME_SYSCALL_LINK`           | `evt.rawarg.newpath`   | `evt.rawarg.oldpath`   | Yes               |
-| link       | `PPME_SYSCALL_LINK_2`         | `evt.arg.newpath`      | `evt.rawarg.oldpath`   | No                |
-| linkat     | `PPME_SYSCALL_LINKAT`         | `evt.rawarg.newpath`   | `evt.rawarg.oldpath`   | Yes               |
-| linkat     | `PPME_SYSCALL_LINKAT_2`       | `evt.arg.newpath`      | `evt.rawarg.oldpath`   | No                |
-| symlink    | `PPME_SYSCALL_SYMLINK`        | `evt.arg.linkpath`     | `evt.rawarg.target`    | No                |
-| symlinkat  | `PPME_SYSCALL_SYMLINKAT`      | `evt.arg.linkpath`     | `evt.rawarg.target`    | No                |
-| mount      | `PPME_SYSCALL_MOUNT`          | `evt.rawarg.dev`       | `evt.rawarg.dir`       | No                |
+| Syscall    | `fs.path.source` field | `fs.path.target` field |
+| ---------- | -----------------------| -----------------------|
+| rename     | `evt.rawarg.oldpath`   | `evt.arg.newpath`      |
+| renameat   | `evt.rawarg.oldpath`   | `evt.arg.newpath`      |
+| renameat2  | `evt.rawarg.oldpath`   | `evt.arg.newpath`      |
+| link       | `evt.arg.newpath`      | `evt.rawarg.oldpath`   |
+| linkat     | `evt.arg.newpath`      | `evt.rawarg.oldpath`   |
+| symlink    | `evt.arg.linkpath`     | `evt.rawarg.target`    |
+| symlinkat  | `evt.arg.linkpath`     | `evt.rawarg.target`    |
+| mount      | `evt.rawarg.dev`       | `evt.rawarg.dir`       |
 
 ### Example Rule Using `fs.path.*` Fields
 
