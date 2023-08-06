@@ -6,7 +6,7 @@ weight: 10
  
 Falco is a cloud-native security tool. It provides near real-time threat detection for cloud, container, and Kubernetes workloads by leveraging runtime insights. Falco can monitor events from various sources, including the Linux kernel, and enrich them with metadata from the Kubernetes API server, container runtime, and more.
  
- Once Falco has received these events, it compares them to a set of {{< glossary_tooltip text="rules" term_id="rules" >}} to determine if the actions being performed need further investigation. If they do, Falco can forward the {{< glossary_tooltip text="output" term_id="outputs" >}} to multiple different endpoints either natively (syslog, stdout, HTTPS, and gRPC endpoints) or with the help of [Falcosidekick](https://github.com/falcosecurity/falcosidekick), and companion tool that offers integrations to several different applications and services. 
+ Once Falco has received these events, it compares them to a set of rules to determine if the actions being performed need further investigation. If they do, Falco can forward the output to multiple different endpoints either natively (syslog, stdout, HTTPS, and gRPC endpoints) or with the help of [Falcosidekick](https://github.com/falcosecurity/falcosidekick), a companion tool that offers integrations to several different applications and services. 
 
 ## Falco Architecture
 
