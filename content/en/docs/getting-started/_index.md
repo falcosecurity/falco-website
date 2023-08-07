@@ -12,7 +12,7 @@ Once Falco has received these events, it compares them to a set of {{< glossary_
 
   Falco operates in both kernel and user space. In kernel space, Linux system calls ({{< glossary_tooltip text="syscalls" term_id="syscalls" >}}) are collected by a {{< glossary_tooltip text="driver" term_id="drivers" >}}, for example, the Falco kernel module or Falco eBPF probe. Next, syscalls are placed in a {{< glossary_tooltip text="ring buffer" term_id="ring-buffer" >}} from which they are moved into user space for processing. The events are filtered using a rules engine with a Falco rule set. Falco ships with a default set of rules, but operators can modify or turn off those rules and add their own. If Falco detects any suspicious events those are forwarded to various endpoints.
 
-![Falco Architecture](images/new_falco_architecture.png)
+![Falco Architecture](images/falco-architecture-v2.png)
 
 ## Next Steps   
 
