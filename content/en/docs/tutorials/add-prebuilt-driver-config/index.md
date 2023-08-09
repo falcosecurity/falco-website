@@ -125,6 +125,6 @@ Driverkit already provides a plumbing to easy with the development. You can foll
 
 ## More on the Driverkit Build Grid
 
-Driverkit Build Grid configurations are [weekly](https://github.com/falcosecurity/test-infra/blob/master/config/jobs/update-dbg/update-dbg) fed by a [kernel crawler](https://github.com/falcosecurity/kernel-crawler), and kept only for the last result, as the crawler represents the uniqe source of truth. Therefore, added configurations will be dropped on Driverkit Build Grid updates but the driver artifacts will be still available at the repository [download.falco.org](https://download.falco.org).
+Driverkit Build Grid configurations are [weekly](https://github.com/falcosecurity/test-infra/blob/master/config/jobs/update-dbg/update-dbg) fed by a [kernel crawler](https://github.com/falcosecurity/kernel-crawler), and kept only for the last result, as the crawler represents the unique source of truth. Therefore, added configurations will be dropped on Driverkit Build Grid updates but the driver artifacts will be still available at the repository [download.falco.org](https://download.falco.org).
 
 You can find more info about the Driverkit Build Grid toolkit [here](https://github.com/falcosecurity/test-infra/blob/master/driverkit/README.md#driverkit-build-grid).
