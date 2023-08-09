@@ -52,7 +52,7 @@ make -C driverkit generate -e TARGET_DISTRO=arch -e TARGET_KERNEL_RELEASE=6.3.4-
 
 ## Propose the configuration
 
-Now you're ready to propose the configuation, by sending a pull request to the [test-infra](https://github.com/falcosecurity/test-infra) upstream repository, with the changes:
+Now you're ready to propose the configuration, by sending a pull request to the [test-infra](https://github.com/falcosecurity/test-infra) upstream repository, with the changes:
 
 ```shell
 git add driverkit/config
