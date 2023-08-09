@@ -76,7 +76,7 @@ You can find examples of configurations in the repository at the paths structure
 
 This is a configuration for the Arch Linux kernel specified above, release `6.3.0-4-generic`, which would be located at `driverkit/config/5.0.1+driver/x86_64/arch_6.3.4-arch1-1_1.yaml`:
 
-```yml
+```yaml
 kernelversion: 1
 kernelrelease: 6.3.4-arch1-1
 target: arch
