@@ -100,7 +100,7 @@ You can filter the configurations you want to validate using the same [filters s
 
 ### Specify the kernel headers location
 
-As Driverkit downloads the specified kernel release headers, the location of the related packages depends on the specific Linux distribution.
+The location from where Driverkit will download the specified kernel release headers will depend on the specific Linux distribution.
 
 Nevertheless, you can specify a different URL of the kernel headers package in the Driverkit configuration, with the `kernelurls` field. For example:
 
