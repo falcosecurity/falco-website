@@ -359,7 +359,7 @@ And you'll be able to easily verify that the image in your registry was not tamp
 
 This error explains that the falco driver loader tool, which loads the Falco driver, was not able to find a pre-built driver, whether as eBPF probe or kernel module, from the repository available at [download.falco.org](https://download.falco.org) - you can easily search the supported targets at [download.falco.org/driver/site](https://download.falco.org/driver/site/index.html).
 
-This means that there's no prebuilt driver available for the the kernel running on the machine where Falco is going to be installed.
+This means that there's no prebuilt driver available for the kernel running on the machine where Falco is going to be installed.
 
 Anyway, you can add your kernel release version to the [build grid](https://github.com/falcosecurity/test-infra/tree/master/driverkit/config) the drivers are going to be built for. You can follow [this tutorial](tutorials/add-prebuilt-driver-config.md) to contribute the required configuration.
 
