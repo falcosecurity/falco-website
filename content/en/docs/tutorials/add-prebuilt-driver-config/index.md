@@ -94,7 +94,7 @@ You validate the configurations you generate by running, from the `driverkit` di
 make -C driverkit validate -e TARGET_DISTRO=arch -e TARGET_KERNEL_RELEASE=6.3.4-arch1-1 -e TARGET_KERNEL_VERSION=1
 ```
 
-You can filter the configuarations you want to validate, by using the same [filters supported](https://github.com/falcosecurity/test-infra/blob/master/driverkit/README.md#available-make-targets) by the `generate` Make target.
+You can filter the configurations you want to validate using the same [filters supported](https://github.com/falcosecurity/test-infra/blob/master/driverkit/README.md#available-make-targets) the `generate` _Make target_ supports.
 
 ## More on the Driverkit configuration
 
