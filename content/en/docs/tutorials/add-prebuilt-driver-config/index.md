@@ -27,7 +27,10 @@ git checkout -b new/driver-build-config
 and run:
 
 ```shell
-make -C driverkit generate -e TARGET_DISTRO=arch -e TARGET_KERNEL_RELEASE=<release name> -e TARGET_KERNEL_VERSION=<build version>
+make -C driverkit generate \
+  -e TARGET_DISTRO=<linux distro> \
+  -e TARGET_KERNEL_RELEASE=<release name> \
+  -e TARGET_KERNEL_VERSION=<build version>
 ```
 
 filling it with:
