@@ -84,7 +84,7 @@ output:
 ```
 
 You can find other example configurations [here](https://github.com/falcosecurity/driverkit/blob/master/Example_configs.md).
-Please refer to the [Driverkit](https://github.com/falcosecurity/driverkit) documentation for the [configuaration reference](https://github.com/falcosecurity/driverkit#build-using-a-configuration-file).
+Please refer to the [Driverkit](https://github.com/falcosecurity/driverkit) documentation for the [configuration reference](https://github.com/falcosecurity/driverkit#build-using-a-configuration-file).
 
 ## Validate the configuration
 
