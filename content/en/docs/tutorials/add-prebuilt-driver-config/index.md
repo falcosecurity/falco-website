@@ -121,7 +121,7 @@ You can read more about this in the Driverkit [documentation](https://github.com
 
 To introduce support for a new distribution, the logic to retrieve the kernel headers needs to be implemented.
 
-Driverkit already provides a plumbing to easy with the development. You can follow [this guide](https://github.com/falcosecurity/driverkit/blob/master/docs/builder.md#support-a-new-distro) to develop a new Driverkit builder target.
+Driverkit already provides plumbing to ease the development. [This guide](https://github.com/falcosecurity/driverkit/blob/master/docs/builder.md#support-a-new-distro) will help you to develop a new Driverkit builder target.
 
 ## More on the Driverkit Build Grid
 
