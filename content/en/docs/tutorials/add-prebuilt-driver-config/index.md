@@ -11,7 +11,7 @@ You can generate and contribute configurations for your OS, as follows.
 
 Let's start by [forking](https://docs.github.com/en/get-started/quickstart/fork-a-repo) the [test-infra](https://github.com/falcosecurity/test-infra) repository.
 
-For example using the [GitHub CLI](https://cli.github.com/), run:
+For example, using the [GitHub CLI](https://cli.github.com/) in your terminal:
 
 ```shell
 gh repo fork falcosecurity/test-infra
