@@ -88,7 +88,7 @@ Please refer to the [Driverkit](https://github.com/falcosecurity/driverkit) docu
 
 ## Validate the configuration
 
-You validate the configurations you generate by running, from the `driverkit` directory:
+You can validate the generated configuration using the `validate` sub-command:
 
 ```shell
 make -C driverkit validate -e TARGET_DISTRO=arch -e TARGET_KERNEL_RELEASE=6.3.4-arch1-1 -e TARGET_KERNEL_VERSION=1
