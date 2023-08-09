@@ -46,10 +46,6 @@ make -C driverkit generate -e TARGET_DISTRO=arch -e TARGET_KERNEL_RELEASE=6.3.4-
 
 > Available values for `$TARGET_DISTRO` can be found [here](https://github.com/falcosecurity/driverkit/blob/master/docs/driverkit.md).
 
-### Advanced settings
-
-> Besides `$TARGET_DISTRO`, `$TARGET_KERNEL_RELEASE` and `TARGET_KERNEL_VERSION`, you can find all the supported filters [here](https://github.com/falcosecurity/test-infra/blob/master/driverkit/README.md#available-make-targets), that help you to target specific kernel releases.
-
 ## Propose the configuration
 
 Now you're ready to propose the configuration, by sending a pull request to the [test-infra](https://github.com/falcosecurity/test-infra) upstream repository, with the changes:
@@ -131,3 +127,8 @@ Driverkit already provides plumbing to ease the development. [This guide](https:
 Driverkit Build Grid configurations are [weekly](https://github.com/falcosecurity/test-infra/blob/master/config/jobs/update-dbg/update-dbg) fed by a [kernel crawler](https://github.com/falcosecurity/kernel-crawler), and kept only for the last result, as the crawler represents the unique source of truth. Therefore, added configurations will be dropped on Driverkit Build Grid updates but the driver artifacts will be still available at the repository [download.falco.org](https://download.falco.org).
 
 You can find more info about the Driverkit Build Grid toolkit [here](https://github.com/falcosecurity/test-infra/blob/master/driverkit/README.md#driverkit-build-grid).
+
+### Advanced settings
+
+Besides `$TARGET_DISTRO`, `$TARGET_KERNEL_RELEASE` and `TARGET_KERNEL_VERSION`, you can find all the supported filters [here](https://github.com/falcosecurity/test-infra/blob/master/driverkit/README.md#available-make-targets), that help you to target specific kernel releases.
+
