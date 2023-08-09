@@ -13,7 +13,7 @@ Plugins are versioned using semantic versioning to minimize regressions and comp
 
 Plugins can be written in any language, as long as they export the required functions. Go, however, is the preferred language to write plugins, followed by C/C++.
 
-Plugins can implement one or more capabilities. In the scope of plugins, a *capability* is an extension of Falco's features in the form of a specific set of C function symbols exported by shared libraries. Currently, there are two plugin capabilities supported by the framework: *event sourcing* and *field extraction*.
+Plugins can implement one or more capabilities. In the scope of plugins, a *capability* is an extension of Falco's features in the form of a specific set of C function symbols exported by shared libraries. Currently, there are four plugin capabilities supported by the framework: *event sourcing*, *field extraction*, *event parsing* and *async event*
 
 ### Plugins are Coresident with Falco
 
@@ -43,7 +43,7 @@ Plugins with [event parsing capability](/docs/reference/plugins/plugin-api-refer
 
 Plugins with [async events capability](/docs/reference/plugins/plugin-api-reference/#async-events-capability-api) can enrich an event stream from a given source (not necessarily implemented by itself) by injecting events asynchronously in the stream. Such a feature can be used for implementing notification systems or recording state transitions in the event-driven model of the Falcosecurity libraries, so that they can be available to other components at runtime or when the event stream is replayed through a capture file.
 
-For example, the Falcosecurity libraries leverage this feature internally to implement metadata enrichment systems such as the one relative to container runtimes. In that case, the libraries implement asynchronous jobs responsible of retrieving such information externally outside of the main event processing loop so that it's non-blocking. The worker jobs produce a notification event every time a new container is detected and inject it asynchronosly in the system event stream to be later processed for state updates and for evaluating Falco rules.
+For example, the Falcosecurity libraries leverage this feature internally to implement metadata enrichment systems such as the one relative to container runtimes. In that case, the libraries implement asynchronous jobs responsible of retrieving such information externally outside of the main event processing loop so that it's non-blocking. The worker jobs produce a notification event every time a new container is detected and inject it asynchronously in the system event stream to be later processed for state updates and for evaluating Falco rules.
 
 ### Composability of Capabilities
 
