@@ -355,7 +355,12 @@ And you'll be able to easily verify that the image in your registry was not tamp
 
 ## Troubleshooting
 
-### falco-driver-loader: Unable to find a prebuilt falco eBPF probe / module
+
+This section aims to offer further guidance when something doesn't go as expected in the installation of Falco.
+
+### Driver issues
+
+* `falco-driver-loader: Unable to find a prebuilt falco eBPF probe / module`
 
 This error message appears when the falco driver loader tool, which looks for the Falco driver and loads it in memory, is not able to find a pre-built driver, neither as an eBPF probe nor as a kernel module, at the [Falco driver repository] (https://download.falco.org).
 
