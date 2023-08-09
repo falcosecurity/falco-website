@@ -83,7 +83,7 @@ output:
   probe: output/5.0.1+driver/x86_64/falco_arch_6.3.4-arch1-1_1.o
 ```
 
-You can find other example configurations [here](https://github.com/falcosecurity/driverkit/blob/master/Example_configs.md).
+Find [here](https://github.com/falcosecurity/driverkit/blob/master/Example_configs.md) more examples for your configuration.
 Please refer to the [Driverkit](https://github.com/falcosecurity/driverkit) documentation for the [configuration reference](https://github.com/falcosecurity/driverkit#build-using-a-configuration-file).
 
 ## Validate the configuration
