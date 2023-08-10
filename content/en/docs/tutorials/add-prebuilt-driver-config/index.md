@@ -50,24 +50,6 @@ make -C driverkit generate -e TARGET_DISTRO=arch -e TARGET_KERNEL_RELEASE=6.3.4-
 
 > Besides `$TARGET_DISTRO`, `$TARGET_KERNEL_RELEASE` and `TARGET_KERNEL_VERSION`, you can find all the supported filters [here](https://github.com/falcosecurity/test-infra/blob/master/driverkit/README.md#available-make-targets), that help you to target specific kernel releases.
 
-## Propose the configuration
-
-Now you're ready to propose the configuration, by sending a pull request to the [test-infra](https://github.com/falcosecurity/test-infra) upstream repository, with the changes:
-
-```shell
-git add driverkit/config
-git commit --signoff --message 'new(driverkit/config): add build config for 6.3.4-arch1-1_1'
-git push origin new/driver-build-config
-```
-
-and open a pull request on the upstream repository:
-
-```shell
-gh pr create --fill --repo falcosecurity/test-infra
-```
-
-When accepted, the configurations will be then consumed by [Driverkit](https://github.com/falcosecurity/driverkit) in the [CI pipeline](https://github.com/falcosecurity/test-infra/tree/master/config/jobs/build-drivers), through the [Driverkit Build Grid](https://github.com/falcosecurity/test-infra/tree/master/driverkit#driverkit-build-grid).
-
 ## Examples
 
 You can find examples of configurations in the repository at the paths structured as follows:
@@ -101,6 +83,24 @@ make -C driverkit validate \
 ```
 
 You can filter the configurations you want to validate using the same [filters supported](https://github.com/falcosecurity/test-infra/blob/master/driverkit/README.md#available-make-targets) the `generate` _Make target_ supports.
+
+## Propose the configuration
+
+Now you're ready to propose the configuration, by sending a pull request to the [test-infra](https://github.com/falcosecurity/test-infra) upstream repository, with the changes:
+
+```shell
+git add driverkit/config
+git commit --signoff --message 'new(driverkit/config): add build config for 6.3.4-arch1-1_1'
+git push origin new/driver-build-config
+```
+
+and open a pull request on the upstream repository:
+
+```shell
+gh pr create --fill --repo falcosecurity/test-infra
+```
+
+When accepted, the configurations will be then consumed by [Driverkit](https://github.com/falcosecurity/driverkit) in the [CI pipeline](https://github.com/falcosecurity/test-infra/tree/master/config/jobs/build-drivers), through the [Driverkit Build Grid](https://github.com/falcosecurity/test-infra/tree/master/driverkit#driverkit-build-grid).
 
 ## More on the Driverkit configuration
 
