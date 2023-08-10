@@ -90,7 +90,10 @@ Please refer to the [Driverkit](https://github.com/falcosecurity/driverkit) docu
 You can validate the generated configuration using the `validate` sub-command:
 
 ```shell
-make -C driverkit validate -e TARGET_DISTRO=arch -e TARGET_KERNEL_RELEASE=6.3.4-arch1-1 -e TARGET_KERNEL_VERSION=1
+make -C driverkit validate \
+  -e TARGET_DISTRO=arch \
+  -e TARGET_KERNEL_RELEASE=6.3.4-arch1-1 \
+  -e TARGET_KERNEL_VERSION=1
 ```
 
 You can filter the configurations you want to validate using the same [filters supported](https://github.com/falcosecurity/test-infra/blob/master/driverkit/README.md#available-make-targets) the `generate` _Make target_ supports.
