@@ -456,7 +456,7 @@ You can easily browse and search the supported targets at [download.falco.org/dr
 
 This means that there's no prebuilt driver available for the kernel running on the machine where Falco is going to be installed.
 
-However, you can add your kernel release version to the [build grid](https://github.com/falcosecurity/test-infra/tree/master/driverkit/config) the pipeline refers to building the drivers. Follow [this tutorial](tutorials/add-prebuilt-driver-config.md) to contribute the required configuration.
+However, you can add your kernel release version to the [build grid](https://github.com/falcosecurity/test-infra/tree/master/driverkit/config) the pipeline refers to building the drivers. Follow [this tutorial](/docs/tutorials/add-prebuilt-driver-config/) to contribute the required configuration.
 
 {{% pageinfo color=warning %}}
  
