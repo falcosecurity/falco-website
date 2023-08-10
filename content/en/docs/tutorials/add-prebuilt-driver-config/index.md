@@ -38,7 +38,7 @@ filling it with:
 * `TARGET_KERNEL_RELEASE`: the Linux kernel release name of the target host. You can fill it with the output of the command `"$(uname -r)"`, running it on a shell on the target host.
 * `TARGET_KERNEL_VERSION`: the Linux kernel build version of the target host. You can fill it with output of the command: `"$(uname -v | sed 's/#\([[:digit:]]\+\).*/\1/')"`, running it on a shell on the target host.
 
-for example:
+Here is an example to use for the Arch Linux distribution with the kernel: `6.3.4-arch1-1`:
 
 ```shell
 make -C driverkit generate -e TARGET_DISTRO=arch -e TARGET_KERNEL_RELEASE=6.3.4-arch1-1 -e TARGET_KERNEL_VERSION=1
