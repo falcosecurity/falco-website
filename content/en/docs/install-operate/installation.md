@@ -374,4 +374,10 @@ This means that there's no prebuilt driver available for the kernel running on t
 
 However, you can add your kernel release version to the [build grid](https://github.com/falcosecurity/test-infra/tree/master/driverkit/config) the pipeline refers to building the drivers. Follow [this tutorial](tutorials/add-prebuilt-driver-config.md) to contribute the required configuration.
 
-> **Note** that there's a specific set of Linux distrbutions for which kernel are released, supported by the current pipeline to distribute prebuilt drivers. In detail, [driverkit](https://github.com/falcosecurity/driverkit) is the tool is leveraged under the hood, and that needs to support the specific Linux distribution. You can verify it [here](https://github.com/falcosecurity/driverkit/tree/master/pkg/driverbuilder/builder).
+{{% pageinfo color=warning %}}
+ 
+There are a limited set of Linux distributions whose kernels are supported by the current prebuilt driver distribution pipeline.
+
+[driverkit](https://github.com/falcosecurity/driverkit) is the tool used to build those drivers. Hence, it needs to support the specific Linux distribution. Find whether your Linux distribution is supported [here](https://github.com/falcosecurity/driverkit/tree/master/pkg/driverbuilder/builder).
+
+{{% /pageinfo %}}
