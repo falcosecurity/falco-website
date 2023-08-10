@@ -1,4 +1,8 @@
-# Add prebuilt drivers for a kernel release
+---
+title: Add prebuilt drivers for a kernel release
+description: Tutorial for adding new prebuilt drivers for specific kernel releases
+weight: 100
+---
 
 ## Requirements
 
