@@ -128,6 +128,7 @@ condition:  ... and not fd.snet in (rfc_1918_addresses)
 
 - For operations involving string comparison, `startswith` or `endswith` should be preferred over `contains` whenever possible, as they are more efficient.
 - Whenever possible, try to avoid making a rule expression too long.
+- Upstream rules shall *not* contain any `exceptions` to ensure simpler rules and facilitate better adoption.
 
 {{% alert color="warning" %}}
 High-volume syscalls can increase CPU usage and cause kernel side event drops in production systems. When deploying Falco, consider trade-offs and experiments, particularly with I/O related syscalls, as it depends on your unique environment. The upstream rules do not include rules enabled by default regarding I/O syscalls.
@@ -192,6 +193,8 @@ output: >
 ### Priority
 
 Please refer to the relevant [reference/rules](/docs/reference/rules/rule-fields/) section and the [basic rules guide](/docs/rules/basic-elements/#priority) for more information.
+
+When considering upstreaming the rule to The Falco Project, the `priority` level shall not be set to `DEBUG` and instead shall be at a minimum of `INFO`.
 
 ### Tags
 
