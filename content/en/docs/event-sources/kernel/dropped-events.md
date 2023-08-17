@@ -3,6 +3,7 @@ title: Actions For Dropped System Call Events
 description: Let Falco say *basta* when your system reaches its limit
 linktitle: Dropped Syscall Events
 weight: 60
+aliases: [/docs/event-sources/dropped-events/]
 ---
 ## Introduction
 

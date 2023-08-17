@@ -1,7 +1,7 @@
 ---
 title: Upgrade
 description: Upgrading Falco on a Linux system
-aliases: [docs/getting-started/upgrade]
+aliases: [/docs/getting-started/upgrade]
 weight: 30
 ---
 
