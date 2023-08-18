@@ -209,7 +209,7 @@ The most important have been:
 
 The respective Helm charts are also updated and allow you to test for yourself all these great new features. Just issue the `helm repo update; helm upgrade --reuse-values -n falco` command to do so.
 
-Falcosidekick is now mentioned in the official [Falco docs](https://falco.org/docs/alerts/forwarding/). It's a shy beginning, but more details will come shortly.
+Falcosidekick is now mentioned in the official [Falco docs](/docs/outputs/forwarding/). It's a shy beginning, but more details will come shortly.
 
 Once again, thanks to all the adopters and contributors who helped and contributed to this project all these years. We would never have reached this success without you.
 

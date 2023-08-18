@@ -86,9 +86,8 @@ We are free to make the subscriber of the Trigger be _anything_ we want it to be
 as long as it is routable from the Broker, and it accepts HTTP POSTs. The
 request will be a CloudEvent in Binary mode, and Falco makes JSON events, so the
 payload will be the standard JSON Falco is known for. In-fact, we can replace
-the KService in with a
-[Kubeless function](https://falco.org/blog/falcosidekick-kubeless/) and it will
-work.
+the KService in with a [Kubeless function](/blog/falcosidekick-response-engine-part-1-kubeless/) 
+and it will work.
 
 ## Demo
 
