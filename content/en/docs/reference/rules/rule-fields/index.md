@@ -9,5 +9,5 @@ A Falco rule can contain the following keys:
 
 {{< markdown_inline  
     format = "raw"
-    contentPath = "docs/reference/rules/rule-fields/rule-fields.md"
+    contentPath = "/docs/reference/rules/rule-fields/rule-fields.md"
 >}}
