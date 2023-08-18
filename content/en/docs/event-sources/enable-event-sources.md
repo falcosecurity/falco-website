@@ -7,9 +7,9 @@ weight: 10
 
 Historically, Falco supported consuming events coming from one event source only. This means that to consume events from more than one event source, users needed to deploy many instances of Falco, each configured with a different source. 
 
-The only exception was the legacy implementation of the [Kubernetes Audit Events](./kubernetes-audit), which allowed receiving events from the `k8s_audit` event sources in parallel with the `syscall` one. However, it wasn't standardized and has been substituted in favor of a [plugin-based porting](https://github.com/falcosecurity/plugins/blob/master/plugins/k8saudit/README.md) starting from [Falco 0.32.0](/blog/falco-0-32-0.md). 
+The only exception was the legacy implementation of the [Kubernetes Audit Events](/docs/event-sources/plugins/kubernetes-audit/), which allowed receiving events from the `k8s_audit` event sources in parallel with the `syscall` one. However, it wasn't standardized and has been substituted in favor of a [plugin-based porting](https://github.com/falcosecurity/plugins/blob/master/plugins/k8saudit/README.md) starting from [Falco 0.32.0](/blog/falco-0-32-0/). 
 
-Since [version 0.33.0](/blog/falco-0-33-0.md), Falco introduced a standard **support for consuming events from multiple event sources** running in parallel within the same Falco instance. You can check this feature's design principles and rationale at [falcosecurity/falco/issues/2074](https://github.com/falcosecurity/falco/issues/2074).
+Since [version 0.33.0](/blog/falco-0-33-0/), Falco introduced a standard **support for consuming events from multiple event sources** running in parallel within the same Falco instance. You can check this feature's design principles and rationale at [falcosecurity/falco/issues/2074](https://github.com/falcosecurity/falco/issues/2074).
 
 Falco's default behavior is enabling event collection from all the event sources it knows. The set of known event sources includes the `syscall` one by default, plus any other sources defined by [plugins with event sourcing capability](/docs/reference/plugins/plugin-api-reference/#event-sourcing-capability-api) loaded through [Falco's configuration](/docs/reference/daemon/config-options/).
 

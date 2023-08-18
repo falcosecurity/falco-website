@@ -2,7 +2,7 @@
 title: Try Falco on Linux
 description: Learn how to install Falco on Linux
 slug: falco-linux-quickstart
-aliases: [/falco-linux-quickstart]
+aliases: [/try-falco-on-ubuntu/]
 weight: 20
 ---
 

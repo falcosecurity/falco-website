@@ -2,7 +2,7 @@
 title: Try Falco on Kubernetes
 description: Learn how to deploy Falco on Kubernetes
 slug: falco-kubernetes-quickstart
-aliases: [/falco-kubernetes-quickstart]
+aliases: [/try-falco-on-kubernetes]
 weight: 25
 ---
 
