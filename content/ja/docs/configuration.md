@@ -9,7 +9,7 @@ notoc: true
 
 これはFalcoデーモンの設定オプションのためのものです。
 
-これらのオプションについては、[rules](/jp/docs/rules)または[alerts](/jp/docs/alerts)を参照してください。
+これらのオプションについては、[rules](/ja/docs/rules)または[alerts](/ja/docs/alerts)を参照してください。
 
 {{% /pageinfo %}}
 
