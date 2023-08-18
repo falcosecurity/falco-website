@@ -254,7 +254,7 @@ Notice that there is a bunch of interesting information in the output, including
 
 * Since we used Falcosidekick to send the information to Slack, you can also view it there. Visit our `#falco-notifications` channel on the [public slack channel](https://join.slack.com/t/sysdig-workshops/shared_invite/zt-1rd6raamc-UldAmUJe5FgnB5NhsAPeMQ) and look for the alert with your name.
 
-![Slack output](../images/slack-output.png)
+![Slack output](/docs/getting-started/images/slack-output.png)
 
 
 
