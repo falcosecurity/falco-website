@@ -74,7 +74,7 @@ to define conditions to exclude certain alerts from happening when the exception
 You can read [@mstemm](https://github.com/mstemm)'s proposal [here](https://github.com/falcosecurity/falco/blob/master/proposals/20200828-structured-exception-handling.md).
 
 Moreover, we are very close to releasing ARM (armv7 and aarch64 builds) of Falco within the next releases.
-[Lore](https://github.com/fntlnz) worked on [PR#1442](https://github.com/falcosecurity/falco/pull/1442) to port Falco to those architectures and [Jonahjon](https://github.com/jonahjon) is working [to make our infrastructure support](falcosecurity/test-infra/pull/284) for building, testing and releasing for those as well.
+[Lore](https://github.com/fntlnz) worked on [PR#1442](https://github.com/falcosecurity/falco/pull/1442) to port Falco to those architectures and [Jonahjon](https://github.com/jonahjon) is working [to make our infrastructure support](https://github.com/falcosecurity/test-infra/pull/284) for building, testing and releasing for those as well.
 
 ## Let's meet!
 
