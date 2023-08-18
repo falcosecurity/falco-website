@@ -105,11 +105,11 @@ Regardless of which setup you used above, this section will show you how to inst
 
 * When prompted, choose the **Kmod** option. This will compile the Falco module for your specific kernel version.
 
-    ![Dialog window - Choose the Kmod driver](../images/dialog-1.png)
+    ![Dialog window - Choose the Kmod driver](/docs/getting-started/images/dialog-1.png)
 
 * When prompted, choose **Yes**. Although we won't use the functionality in this exercise, this option allows Falco to update its rules automatically.
 
-    ![Dialog window - Choose the follow automatic ruleset updates](../images/dialog-2.png)
+    ![Dialog window - Choose the follow automatic ruleset updates](/docs/getting-started/images/dialog-2.png)
 
 Wait for the Falco installation to complete - this should only take a few minutes.
 
