@@ -1,11 +1,11 @@
 ---
-aliases: ["/docs/configuration/"]
 title: Falco Configuration Options
 linktitle: Config Options
 description: Configuration for the Falco daemon
 weight: 40
 notoc: true
 no_edit: true
+aliases: ["/docs/configuration/"]
 categories: ["Installation", "Deployment", "Configuration"]
 tags: ["Falco Daemon", "falco.yaml", "rules files"]
 ---

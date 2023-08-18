@@ -210,7 +210,7 @@ Falco uses kernel instrumentation to observe system events by monitoring system 
 
 ##### Tailor the install process to your specific needs
 
-Users can select which components to install. You can configure specific settings for your needs. And you can even choose the deployment environment, whether it be in Kubernetes, on a bare metal VM, an IoT device or Edge computing. More documentation on install options can be seen [here](https://falco.org/docs/getting-started/running/).
+Users can select which components to install. You can configure specific settings for your needs. And you can even choose the deployment environment, whether it be in Kubernetes, on a bare metal VM, an IoT device or Edge computing. More documentation on install options can be seen [here](/docs/install-operate/running/).
 
 <hr class="w-100 my-4"/>
 

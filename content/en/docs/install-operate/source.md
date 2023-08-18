@@ -19,7 +19,7 @@ CentOS 7 / RHEL 7
 yum install gcc gcc-c++ git make autoconf automake pkg-config patch libtool glibc-static libstdc++-static elfutils-libelf-devel
 ```
 
-You will also need `cmake` version `3.5.1` or higher which is not included in CentOS 7. You can follow the [official guide](https://cmake.org/install/) or look at how that is done in the [Falco builder Dockerfile](https://github.com/falcosecurity/falco/blob/master/docker/builder/Dockerfile).
+You will also need `cmake` version `3.5.1` or higher which is not included in CentOS 7. You can follow the [official guide](https://cmake.org/install/) or look at how that is done in the [Falco builder Dockerfile](https://github.com/falcosecurity/falco/blob/master/docker/builder/modern-falco-builder.Dockerfile).
 
 CentOS 8 / RHEL 8
 
@@ -527,7 +527,7 @@ You will need the following dependencies for the regression testing framework to
 
 You will also need to obtain some test fixtures from the internet for the regression test suites to work.
 
-For the python dependencies, how to setup the virtualenv, how to obtain test fixtures, read more [here](https://github.com/falcosecurity/falco/tree/master/test/README.md).
+For the python dependencies, how to setup the virtualenv, how to obtain test fixtures, read more [here](https://github.com/falcosecurity/falco/blob/fefd23f2f1316dcffd74239168f2e19bda78e428/test/README.md).
 
 ##### Run the tests
 

@@ -32,16 +32,16 @@
     If `init_config` is present, it contains the configuration that will be provided as an argument to the init() function.
     This can either be in string or object form. If a string is used, the plugin is configured with the string content as-is.
     If an object is used, by convention its contents are formatted into a JSON string and then passed to the plugin.
-    In both cases, the configuration string is automatically parsed against a schema before being passed to the plugin if the [`get_init_schema`](../plugins/plugin-api-reference/#get-init-schema) function is implemented, otherwise it gets directly passed as an opaque string.
+    In both cases, the configuration string is automatically parsed against a schema before being passed to the plugin if the [`get_init_schema`](/docs/reference/plugins/plugin-api-reference/#get-init-schema) function is implemented, otherwise it gets directly passed as an opaque string.
 
-    if `open_params`: is present, it contains the exact params string that will be provided as an argument to the open() function, which is used in [plugins with event sourcing capability](../plugins#event-sourcing-capability) only.
+    if `open_params`: is present, it contains the exact params string that will be provided as an argument to the open() function, which is used in [plugins with event sourcing capability](/docs/plugins/architecture/#event-sourcing-capability) only.
 
 - name: load_plugins
   type: |
     A list of plugin names, corresponding to the name sub-key from the plugins config item. Example:
 
     `load_plugins: [cloudtrail, json]`
-  description: Defines the set of plugins that will actually be loaded. This is optional--if the property is not present, all plugins named in the plugins list will be loaded. All loaded plugins supporting the [event sourcing capability](../plugins#event-sourcing-capability) will add a new event source in Falco. By default, all event sources known by Falco are enabled for live sessions and can be turned on and off with the `--enabled-source` and `--disable-source` command line options.
+  description: Defines the set of plugins that will actually be loaded. This is optional--if the property is not present, all plugins named in the plugins list will be loaded. All loaded plugins supporting the [event sourcing capability](/docs/plugins/architecture/#event-sourcing-capability) will add a new event source in Falco. By default, all event sources known by Falco are enabled for live sessions and can be turned on and off with the `--enabled-source` and `--disable-source` command line options.
 
 - name: watch_config_files
   type: Boolean
@@ -113,7 +113,7 @@
       * `exit`: exit Falco with a non-zero rc.
     * `rate`: The steady-state rate at which actions can be taken. Units of actions/second. Default 0.03333 (one action per 30 seconds).
     * `max_burst`: The maximum number of actions that can be taken before the steady-state rate is applied.
-  description: Controls [Actions For Dropped System Call Events](../event-sources/dropped-events/).
+  description: Controls [Actions For Dropped System Call Events](/docs/event-sources/kernel/dropped-events/).
 
 - name: syscall_event_timeouts
   type: |

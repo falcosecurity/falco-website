@@ -152,7 +152,7 @@ So let us look at some yaml.
 
 #### The go code
 
-I have adapted the code that Batuhan Apaydın wrote in [Falcosidekick + OpenFaas = a Kubernetes Response Engine, Part 2](https://falco.org/blog/falcosidekick-openfaas/) to listen for json in an environment variable instead of a http request.
+I have adapted the code that Batuhan Apaydın wrote in [Falcosidekick + OpenFaas = a Kubernetes Response Engine, Part 2](/blog/falcosidekick-response-engine-part-2-openfaas/) to listen for json in an environment variable instead of a http request.
 
 Below you can see the code, in short it does the following:
 
