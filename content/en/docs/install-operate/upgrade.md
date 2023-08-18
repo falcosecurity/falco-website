@@ -5,7 +5,7 @@ aliases: [/docs/getting-started/upgrade]
 weight: 30
 ---
 
-This section provides upgrading paths for Falco if previously installed following the [Install](../installation/) section.
+This section provides upgrading paths for Falco if previously installed following the [Install](/docs/install-operate/installation/) section.
 
 {{% pageinfo color="warning" %}}
 If you are using the kernel module, please remove it with root priviliges before upgrading Falco to avoid issues during the upgrade.
@@ -40,7 +40,7 @@ Check in the `apt-get update` log that `https://download.falco.org/packages/deb`
 
 {{% /pageinfo %}}
 
-If you installed Falco by following the [provided instructions](../installation/#installation-details):
+If you installed Falco by following the [provided instructions](/docs/install-operate/installation/#installation-details):
 
 ```shell
 apt-get --only-upgrade install falco
@@ -64,7 +64,7 @@ yum repolist -v falcosecurity-rpm
 
 {{% /pageinfo %}}
 
-If you installed Falco by following the [provided instructions](../installation/#centos-rhel):
+If you installed Falco by following the [provided instructions](/docs/install-operate/installation/#centos-rhel):
 
 1. Check for updates:
 
@@ -96,7 +96,7 @@ zypper lr falcosecurity-rpm
 
 {{% /pageinfo %}}
 
-If you installed Falco by following the [provided instructions](../installation/#suse):
+If you installed Falco by following the [provided instructions](/docs/install-operate/installation/#suse):
 
 ```shell
 zypper update falco
@@ -104,7 +104,7 @@ zypper update falco
 
 ## Falco binary
 
-For the Falco binary we don't provide specific update paths, you just have to remove files installed by the old `tar.gz` and download the new version of Falco as described [here](../installation/#falco-binary)
+For the Falco binary we don't provide specific update paths, you just have to remove files installed by the old `tar.gz` and download the new version of Falco as described [here](/docs/install-operate/installation/#falco-binary)
 
 ## Special Note on Kernel Drivers and Kernel Upgrades
 

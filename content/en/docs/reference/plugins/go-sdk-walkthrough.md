@@ -76,7 +76,7 @@ type InitSchema interface {
 }
 ```
 
-Plugins with field extraction capability can optionally implement the `sdk.Destroyer` interface. In that case, `Destroy()` will be called when the plugin gets destroyed and can be used to release any allocated resource. they can also also optionally implement the `sdk.InitSchema` interface. In that case, `InitSchema()` will be used to to return a schema describing the data expected to be passed as a configuration during the plugin initialization. This follows the semantics documented for [`get_init_schema`](../plugin-api-reference/#get-init-schema). Currently, the schema must follow the [JSON Schema specific](https://json-schema.org/), which in Go can also be easily auto-generated with external packages (e.g. [alecthomas/jsonschema](https:/github.com/alecthomas/jsonschema)).
+Plugins with field extraction capability can optionally implement the `sdk.Destroyer` interface. In that case, `Destroy()` will be called when the plugin gets destroyed and can be used to release any allocated resource. they can also also optionally implement the `sdk.InitSchema` interface. In that case, `InitSchema()` will be used to to return a schema describing the data expected to be passed as a configuration during the plugin initialization. This follows the semantics documented for [`get_init_schema`](/docs/reference/plugins/plugin-api-reference/#get-init-schema). Currently, the schema must follow the [JSON Schema specific](https://json-schema.org/), which in Go can also be easily auto-generated with external packages (e.g. [alecthomas/jsonschema](https:/github.com/alecthomas/jsonschema)).
 
 ### Defining a Plugin with Event Sourcing Capability
 
@@ -135,7 +135,7 @@ type Stringer interface {
 
 Plugins with event sourcing capabilities can optionally implement the `sdk.Destroyer` and `sdk.InitSchema` interfaces, just like mentioned in the section above.
 
-Additionally, they can also implement the `sdk.OpenParams` interface. If requested by the application, the framework may call `OpenParams()` before opening the event stream to obtains some suggested values that would valid parameters for `Open()`. For more details, see the documentation of [`list_open_params`](../plugin-api-reference/#list-open-params).
+Additionally, they can also implement the `sdk.OpenParams` interface. If requested by the application, the framework may call `OpenParams()` before opening the event stream to obtains some suggested values that would valid parameters for `Open()`. For more details, see the documentation of [`list_open_params`](/docs/reference/plugins/plugin-api-reference/#list-open-params).
 
 Plugin instances can optionally implement the `sdk.Closer`, `sdk.Progresser`, and `sdk.Stringer` interfaces. If `sdk.Closer` is implemented, the `Close()` method is called while closing the event stream and can be used to release the resources used by the plugin instance. If `sdk.Progresser` is implemented, the `Progress()` method is called by the SDK when the framework requests progress data about the event stream of the plugin instance. `Progress()` must return a `float64` with a value between 0 and 1 representing the current progress percentage, and a string representation of the same progress value. If `sdk.Stringer` is implemented, the `String()` method must return a string representation of an event created by the plugin, which is used by the framework as an extraction value of the `evt.plugininfo` field. The string representation should be on a single line and contain important information about the event.
 

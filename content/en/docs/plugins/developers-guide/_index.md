@@ -14,7 +14,7 @@ If you're not interested in writing your own plugin, or modifying one of the exi
 
 Although plugins can be written in many languages, the Plugins API uses C functions, so you should be comfortable with C language concepts to understand the API.
 
-Before reading this page, read the main [plugins](../../plugins) page for an overview of what plugins are and how they are used by Falco/Falco libs.
+Before reading this page, read the main [plugins](/docs/plugins/plugins) page for an overview of what plugins are and how they are used by Falco/Falco libs.
 
 ## High Level Overview
 
