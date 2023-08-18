@@ -69,7 +69,7 @@ Falco gRPC版サービスでは、Falcoエンジン版も公開されるよう�
 ここでは、[@mstemm](https://github.com/mstemm)の提案を読むことができます](https://github.com/falcosecurity/falco/blob/master/proposals/20200828-structured-exception-handling.md)。
 
 さらに、私たちは次のリリースで ARM 版 (armv7 と aarch64 ビルド) の Falco をリリースしようとしています。
-[Lore](https://github.com/fntlnz)は、これらのアーキテクチャにFalcoを移植するために[PR#1442](https://github.com/falcosecurity/falco/pull/1442)に取り組み、[Jonahjon](https://github.com/jonahjon)は、これらのアーキテクチャにも対応したビルド、テスト、リリースのために[私たちのインフラストラクチャーサポート](falcosecurity/test-infra/pull/284)に取り組んでいます。
+[Lore](https://github.com/fntlnz)は、これらのアーキテクチャにFalcoを移植するために[PR#1442](https://github.com/falcosecurity/falco/pull/1442)に取り組み、[Jonahjon](https://github.com/jonahjon)は、これらのアーキテクチャにも対応したビルド、テスト、リリースのために[私たちのインフラストラクチャーサポート](https://github.com/falcosecurity/test-infra/pull/284)に取り組んでいます。
 
 ## 会いましょう！
 
