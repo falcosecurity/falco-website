@@ -329,7 +329,7 @@ In these steps, we are targeting a Debian-like system on `x86_64` architecture. 
     /a259b4bf49c3330d9ad6c3eed9eb1a31954259a6/falco_amazonlinux2_4.14.128-112.105.amzn2.x86_64_1.ko
     ```
 
-You are finally ready to [run the Falco binary](../running#falco-binary)!
+You are finally ready to [run the Falco binary](/docs/install-operate/running#falco-binary)!
 
 ## Enable Falco on Systemd manually
 

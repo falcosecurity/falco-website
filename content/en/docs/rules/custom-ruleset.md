@@ -44,7 +44,7 @@ That will instruct Helm to create as many rules files as you define here accessi
 
 Finally, remember that keeping any previous ruleset and extending it, although sometimes recommended, is not enforced. It's acceptable to create a new ruleset by reorganizing the upstream rules, reordering and rewriting them, mixing in custom rules, splitting them into different sets and files, etc. Default Falco rules should be considered more of a guidance than a requirement to adopt.
 
- To learn more about tweaking the Falco configuration to install new rules, see the documentation about [default and local rules](../default-custom).
+ To learn more about tweaking the Falco configuration to install new rules, see the documentation about [default and local rules](/docs/rules/default-custom).
 
 ## Rules Structure
 
