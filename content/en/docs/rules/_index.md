@@ -24,7 +24,7 @@ The Falco organization maintains a [rules repository](https://github.com/falcose
 
 We recommend carefully reading each dedicated guide below. In addition, here is a list of recent Falco blog posts that may be of interest to you and can help guide you in finding the optimal use of Falco and its rules for your use cases:
 
-- [Adaptive Syscalls Selection in Falco](https://falco.org/blog/adaptive-syscalls-selection/)
-- [Validating NIST Requirements with Falco](https://falco.org/blog/falco-nist-controls/) 
-- [PCI/DSS Controls with Falco](https://falco.org/blog/falco-pci-controls/)
-- [Defensive Capabilities for Container & Cloud Threats with Tidal](https://falco.org/blog/tidal-registry-release/)
+- [Adaptive Syscalls Selection in Falco](/blog/adaptive-syscalls-selection/)
+- [Validating NIST Requirements with Falco](/blog/falco-nist-controls/) 
+- [PCI/DSS Controls with Falco](/blog/falco-pci-controls/)
+- [Defensive Capabilities for Container & Cloud Threats with Tidal](/blog/tidal-registry-release/)

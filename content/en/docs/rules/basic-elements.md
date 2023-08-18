@@ -140,9 +140,9 @@ Key | Required | Description | Default
 `exceptions` | no | A set of [exceptions](/docs/rules/exceptions) that cause the rule to not generate an alert. |
 `enabled` | no | If set to `false`, a rule is neither loaded nor matched against any events. | `true`
 `tags` | no | A list of tags applied to the rule (more on this [here](/docs/rules/controlling-rules/#tags)). |
-`warn_evttypes` | no | If set to `false`, Falco suppresses warnings related to a rule not having an event type (more on this [here](/docs/rules/conditions/#rule-condition-best-practices)). | `true`
-`skip-if-unknown-filter` | no | If set to `true`, if a rule conditions contains a filtercheck, e.g. `fd.some_new_field`, that is not known to this version of Falco, Falco silently accepts the rule but does not execute it; if set to `false`, Falco repots an error and exists when finding an unknown filtercheck. | `false`
-`source` | no | The event source for which this rule should be evaluated. Typical values are `syscall`, `k8s_audit`, or the source advertised by a source [plugin](../plugins). | `syscall`
+`warn_evttypes` | no | If set to `false`, Falco suppresses warnings related to a rule not having an event type (more on this [here](/docs/rules/style-guide/)). | `true`
+`skip-if-unknown-filter` | no | If set to `true`, if a rule conditions contains a filtercheck, e.g. `fd.some_new_field`, that is not known to this version of Falco, Falco silently accepts the rule but does not execute it; if set to `false`, Falco reports an error and exits when finding an unknown filtercheck. | `false`
+`source` | no | The event source for which this rule should be evaluated. Typical values are `syscall`, `k8s_audit`, or the source advertised by a source [plugin](/docs/plugins/). | `syscall`
 
 ## Macros
 

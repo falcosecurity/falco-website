@@ -10,7 +10,7 @@ Falco can be used for Kubernetes runtime security.
 The most secure way to run Falco is to install Falco directly on the host system so that Falco is isolated from Kubernetes in the case of compromise.
 Then the Falco alerts can be consumed through read-only agents running in Kubernetes.
 
-You can also run Falco directly in Kubernetes as a Daemonset using Helm, see the [third-party integrations](../third-party)
+You can also run Falco directly in Kubernetes as a Daemonset using Helm, see the [third-party integrations](/docs/install-operate/third-party)
 {{% /pageinfo %}}
 
 There are 2 main ways to install the Falco binary on your host:
@@ -46,7 +46,7 @@ Each driver option has different kernel requirements, explore the [support matri
 
 {{% pageinfo color="warning" %}}
 
-On January 18th, 2023 the GPG key used to sign Falco packages has been rotated. Check out [the related blog post](/blog/falco-packages-gpg-key-rotated/) and make sure you're using the most up-to-date key available at [falco.org/repo/falcosecurity-packages.asc](https://falco.org/repo/falcosecurity-packages.asc), and that you read the [section below about package signing](#package-signing).
+On January 18th, 2023 the GPG key used to sign Falco packages has been rotated. Check out [the related blog post](/blog/falco-packages-gpg-key-rotated/) and make sure you're using the most up-to-date key available at [falco.org/repo/falcosecurity-packages.asc](https://falco.org/repo/falcosecurity-packages.asc), and that you read the [section below about package signing](/docs/install-operate/installation#package-signing).
 
 {{% /pageinfo %}}
 
@@ -120,7 +120,7 @@ If you have the `dialog` binary installed on your system, you will be prompted w
 
 ![](/docs/getting-started/images/systemd_dialog_1.png)
 
-From here you can choose one of our 3 drivers `Kmod`, `eBPF`, `Modern eBPF` or a [`Manual configuration`](#installation-without-dialog-manual-configuration).
+From here you can choose one of our 3 drivers `Kmod`, `eBPF`, `Modern eBPF` or a [`Manual configuration`](/docs/install-operate/installation#installation-without-dialog-manual-configuration).
 
 Here we select the `Kmod` case as an example. After the first dialog, you should see a second one:
 
@@ -168,11 +168,11 @@ When you choose a driver from the dialog (in our case `Kmod`), the `systemd` ser
 
 If you remember well, in the dialog we also had the `Manual configuration`. This option installs only the Falco units into the system without starting any service, this is the equivalent of not having the `dialog` binary installed on the system.
 
-Since no service is started, you have to manually configure services after the installation phase. You can see an example of how to configure the `falco-bpf` service in the [Running section](../running#falco-packages)
+Since no service is started, you have to manually configure services after the installation phase. You can see an example of how to configure the `falco-bpf` service in the [Running section](/docs/install-operate/running#falco-packages)
 
 ### Installation on different Distros
 
-We have already seen [the installation steps](#installation-details) on a Debian-like system, let's see some other Distros.
+We have already seen [the installation steps](/docs/install-operate/installation#installation-details) on a Debian-like system, let's see some other Distros.
 
 #### CentOS/RHEL/Fedora/Amazon Linux {#centos-rhel}
 

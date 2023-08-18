@@ -24,7 +24,7 @@ In the next sections we'll describe how to:
 This tutorial is based on a Github repo, with the possibility to run workflows in Github Actions and store OCI artifacts in Github Packages. If you use a different system or even just private repositories, you'll need to adapt the examples to your context.
 
 {{% pageinfo color="warning" %}}
-To make it work, you must have the code organization proposed in [how to develop a plugin](/docs/plugins/developers_guide/how_to_develop) page.
+To make it work, you must have the code organization proposed in [how to develop a plugin](/docs/plugins/developers-guide/how-to-develop) page.
 {{% /pageinfo %}}
 
 

@@ -65,7 +65,7 @@ evt.type!=execve
 ```
 
 - To maintain performance, avoid mixing unrelated event types in one rule. Typically, only variants should be mixed together, for example: `evt.type in (open, openat, openat2)`.
-- The best practice and requirement for upstream rules are to only define positive `evt.type` expressions. Using `evt.type!=open`, for example, would imply each of the [supported syscalls](https://falcosecurity.github.io/libs/report/), resulting in a significant performance penalty. For more information, read the [Adaptive Syscalls Selection in Falco](https://falco.org/blog/adaptive-syscalls-selection/) blog post.
+- The best practice and requirement for upstream rules are to only define positive `evt.type` expressions. Using `evt.type!=open`, for example, would imply each of the [supported syscalls](https://falcosecurity.github.io/libs/report/), resulting in a significant performance penalty. For more information, read the [Adaptive Syscalls Selection in Falco](/blog/adaptive-syscalls-selection/) blog post.
 
 
 - After the `evt.type` filter, place your mainly positive filters to efficiently eliminate the most events step by step. An exception to this rule is the `container` macro, which can quickly eliminate many events. Therefore, the guiding principle of "divide and conquer" commonly used in database query recommendations, also applies to Falco's filter statements.
@@ -210,7 +210,7 @@ Next, the tags must indicate for what workloads this rule is relevant. Add `host
 
 When considering upstreaming your rule, we expect the [Mitre Attack](https://attack.mitre.org/techniques/enterprise/) phase followed by the best Tactic or Technique, whichever is the best fit. This information is used to create an [overview document](https://github.com/falcosecurity/rules/blob/main/rules_inventory/rules_overview.md) of Falco's predefined rules and also help the Falco adoption process.
 
-Lastly, if the rule is relevant for a compliance use case, please add the corresponding `PCI_DSS_*` or `NIST_*` tag, referring to the [Validating NIST Requirements with Falco](https://falco.org/blog/falco-nist-controls/) and [PCI/DSS Controls with Falco](https://falco.org/blog/falco-pci-controls/) blog posts and rules contributing criteria outlined in the [rules repo](https://github.com/falcosecurity/rules).
+Lastly, if the rule is relevant for a compliance use case, please add the corresponding `PCI_DSS_*` or `NIST_*` tag, referring to the [Validating NIST Requirements with Falco](/blog/falco-nist-controls/) and [PCI/DSS Controls with Falco](/blog/falco-pci-controls/) blog posts and rules contributing criteria outlined in the [rules repo](https://github.com/falcosecurity/rules).
 
 ```yaml
 tags: [maturity_incubating, host, container, filesystem, mitre_defense_evasion, NIST_800-53_AU-10]

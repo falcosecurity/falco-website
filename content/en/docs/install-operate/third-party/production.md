@@ -56,7 +56,7 @@ to the file:
 Environment='FALCO_BPF_PROBE=""'
 ```
 
-If you are [installing Falco with Helm](https://falco.org/docs/getting-started/third-party/install-tools/#helm), you will need to set the `driver.kind` option to `ebpf`:
+If you are [installing Falco with Helm](/docs/getting-started/third-party/install-tools/#helm), you will need to set the `driver.kind` option to `ebpf`:
 
 ```
 helm install falco falcosecurity/falco --set driver.kind=ebpf
