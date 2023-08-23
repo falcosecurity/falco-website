@@ -4,6 +4,8 @@ linktitle: "In memory of Kris Nóva"
 date: 2023-08-23
 author: The Falco Maintainers
 slug: kris-nova
+images:
+  - /blog/kris-nova/images/kris-featured.png
 tags: []
 ---
 
