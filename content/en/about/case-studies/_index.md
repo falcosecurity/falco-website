@@ -30,6 +30,10 @@ title: Case Studies
 
       {{< /blocks/grid >}}
 
+      <div class="mt-5 d-flex justify-content-center">
+        <a href="https://github.com/falcosecurity/falco-website/blob/master/ADD_LANDING_LOGO.md" role="button" class="btn btn-primary px-4 py-2">Add your logo</a>
+      </div>
+
     {{< /tab >}}
 
   <!-- Vendors -->
