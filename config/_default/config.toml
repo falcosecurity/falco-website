@@ -162,6 +162,14 @@ id = "UA-00000000-0"
     weight = 4
     [menu.main.params]
         description = "Threat detection and regulatory compliance"
+[[menu.main]]
+    identifier = "case-studies"
+    name = "Case studies"
+    url = "/about/case-studies/"
+    parent = "about"
+    weight = 6
+    [menu.main.params]
+        description = "Discover how the industry is adopting Falco"
 # TODO: uncomment when MITRE content is ready
 # [[menu.main]]
 #     identifier = "mitre"
@@ -178,7 +186,7 @@ id = "UA-00000000-0"
     parent = "about"
     weight = 8
     [menu.main.params]
-        description = "Integrations, plugins, end users and vendors"
+        description = "Integrations and plugins"
 # TODO: uncomment when case-studies page is ready
 # [[menu.main]]
 #     identifier = "case-studies"
