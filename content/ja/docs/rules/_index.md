@@ -1,6 +1,7 @@
 ---
 title: ルール
 weight: 2
+aliases: [/jp/docs/rules/]
 ---
 
 Falco *ルールファイル*は、3種類の要素を含む[YAML](https://www.yaml.org/)ファイルです：

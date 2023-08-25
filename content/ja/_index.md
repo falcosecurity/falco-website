@@ -1,5 +1,6 @@
 ---
 title: Falco
+aliases: [/jp/]
 ---
 
 {{< blocks/section >}}

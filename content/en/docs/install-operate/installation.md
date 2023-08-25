@@ -1,7 +1,7 @@
 ---
 title: Install
 description: Setting up Falco on a Linux system
-aliases: [/docs/getting-started/installation]
+aliases: [/docs/installation/,/docs/getting-started/installation/]
 weight: 30
 ---
 

@@ -2,6 +2,7 @@
 title: The Falco Project
 description: クラウドネイティブランタイムセキュリティ
 weight: 1
+aliases: [/jp/docs/]
 ---
 
 ## Falcoとは?

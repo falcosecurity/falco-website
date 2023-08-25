@@ -2,6 +2,8 @@
 title: The Falco Project
 description: Cloud Native Runtime Security
 weight: 10
+aliases:
+  - /docs/psp-support/
 ---
 
 ## What is Falco?
