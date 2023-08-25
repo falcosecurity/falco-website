@@ -2,6 +2,7 @@
 title: Falco 中文文档
 description: Falco 容器安全系统概览
 weight: 1
+aliases: [/zh/docs/]
 ---
 
 ## 关于 Falco

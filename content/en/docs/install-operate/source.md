@@ -1,7 +1,7 @@
 ---
 title: Build Falco from source
 description: Build Falco or its libraries yourself from the source code
-aliases: [/docs/getting-started/source]
+aliases: [/docs/source/,/docs/getting-started/source/]
 weight: 50
 ---
 

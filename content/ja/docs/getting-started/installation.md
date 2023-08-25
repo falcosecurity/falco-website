@@ -2,6 +2,7 @@
 title: インストール
 description: LinuxシステムでのFalcoのセットアップ
 weight: 3
+aliases: [/jp/docs/installation/]
 ---
 
 Falcoは、システムコールを使用してシステムを保護および監視するLinuxセキュリティツールです。
