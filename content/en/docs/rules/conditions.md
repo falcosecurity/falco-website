@@ -66,7 +66,8 @@ Operators | Description
 `contains`, `icontains` | For strings will evaluate to true if a string contains another, and `icontains` is the case insensitive version. For flags it will evaluate to true if the flag is set. Examples: `proc.cmdline contains "-jar"`, `evt.arg.flags contains O_TRUNC`.
 `startswith`, `endswith` | Check prefix or suffix of strings.
 `glob` | Evaluate standard glob patterns. Example: `fd.name glob "/home/*/.ssh/*"`.
-`in`, `intersects` | Set operations.
+`in` | Evaluate if the provided set (could have just one element) is completely contained in another set. Example: `(b,c,d) in (a,b,c)` will evaluate `FALSE` since `d` is not contained in the compared set `(a,b,c)`.
+`intersects` | Evaluate if the provided set (could have just one element) has at least one element in common with another set. Example: `(b,c,d) intersects (a,b,c)` will evaluate `TRUE` since both sets contain `b` and `c`.
 `pmatch` | Compare a file path against a set of file or directory prefixes. Example: `fd.name pmatch (/tmp/hello)` will evaluate to true against `/tmp/hello`, `/tmp/hello/world` but not `/tmp/hello_world`.
 `exists` | Check if a field is set. Example: `k8s.pod.name exists`.
 `bcontains`, `bstartswith` | These operators work similarly to `contains` and `startswith` and allow performing byte matching against a raw string of bytes, accepting as input a hexadecimal string. Examples: `evt.buffer bcontains CAFEBABE`, `evt.buffer bstartswith 012AB3CC`.
