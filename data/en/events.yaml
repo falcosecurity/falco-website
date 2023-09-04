@@ -63,6 +63,22 @@
           end: "2023-09-06T14:00:00+0100"
           content: '<a href="https://www.civo.com/navigate/register" target="_blank">Up & Running with Runtime Security Workshop</a><br>London, England<br>'
 
+- title: "Réagir à temps aux menaces dans vos clusters Kubernetes avec Falco et son écosystème"
+  start: "2023-09-19T19:00:00+0200"
+  end: "2023-09-19T22:00:00+0200"
+  timezone: Europe/Paris
+  timezoneName: CEST
+  location: Paris, France
+  type: talk
+  description: "Kubernetes et la sécurité: réaction aux menaces et gestion des secrets"
+  url: https://www.meetup.com/fr-FR/cloud-native-computing-paris/events/295167585/
+  schedule:
+    - start: "2023-09-19T19:00:00+0200"
+      time:
+        - start: "2023-09-19T19:00:00+0200"
+          end: "2023-09-19T22:00:00+0200"
+          content: '<a href="https://www.meetup.com/fr-FR/cloud-native-computing-paris/events/295167585/" target="_blank">Réagir à temps aux menaces dans vos clusters Kubernetes avec Falco et son écosystème</a><br>Paris, France<br>'
+
 - title: "Falco on Tour: New York"
   start: "2023-09-19T17:00:00-0400"
   end: "2023-09-19T20:00:00-0400"
