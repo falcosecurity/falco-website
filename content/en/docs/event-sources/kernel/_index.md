@@ -123,10 +123,10 @@ The mentioned capabilities require no further explanation since they were alread
 
 > **Please note**: we will try to do our best to keep this as the minimum required set but due to [some issues with CO-RE relocations](https://lore.kernel.org/bpf/CAGQdkDvYU_e=_NX+6DRkL_-TeH3p+QtsdZwHkmH0w3Fuzw0C4w@mail.gmail.com/T/#u) it is possible that this changes in the future.
 
-## Userspace instrumentation (no longer maintained)
+## Userspace instrumentation (deprecated)
 
 {{% pageinfo color="warning" %}}
-[The pdig project](https://github.com/falcosecurity/pdig) is currently in archived status. Falco still has support for userspace instrumentation, but `pdig` is not actively maintained currently.
+The userspace instrumentation is deprecated and it will be removed in Falco `0.37.0`.
 {{% /pageinfo %}}
 
 Differently from the other drivers, as the name suggests, userspace instrumentation happens 100% in userspace.
