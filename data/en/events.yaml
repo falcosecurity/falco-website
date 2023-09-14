@@ -54,13 +54,13 @@
   location: Amsterdam, Netherlands
   type: workshop
   description: "Up & Running with Runtime Security Workshop"
-  url: https://www.eventbrite.com/e/falco-on-tour-amsterdam-tickets-691062244777?aff=oddtdtcreator
+  url: https://www.aicamp.ai/event/eventdetails/W2023092708
   schedule:
     - start: "2023-09-27T17:00:00+0200"
       time:
         - start: "2023-09-27T17:00:00+0200"
           end: "2023-09-27T19:00:00+0200"
-          content: '<a href="https://www.eventbrite.com/e/falco-on-tour-amsterdam-tickets-691062244777?aff=oddtdtcreator" target="_blank">Up & Running with Runtime Security Workshop</a><br>Amsterdam, Netherlands<br>'
+          content: '<a href="https://www.aicamp.ai/event/eventdetails/W2023092708" target="_blank">Up & Running with Runtime Security Workshop</a><br>Amsterdam, Netherlands<br>'
 
 - title: "Falco on Tour: Seattle"
   start: "2023-09-26T17:00:00-0700"
