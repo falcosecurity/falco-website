@@ -1,11 +1,14 @@
 ---
-title: Kernel testing framework
-date: 2023-09-14
+title:  Introducing a framework for drivers regression testing against Linux kernels
+date: 2023-09-20
 author: Federico Di Pierro, Aldo Lacuku
-slug: kernel-testing-framework
+slug: Falco-kernel-testing
+tags: [Falco", "Kmod", "eBPF"]
 ---
 
-Historically, in the Falcosecurity organization, we faced a significant challenge: there was no established method to ensure that with each iteration of our drivers, supported kernels remained unaffected. This essential process is commonly referred to as regression testing. To elaborate, we lacked a means to guarantee that a new driver release could:
+There are a few foundational technologies that empower the Cloud Native ecosystem. Containers is one. And one of the basis for containerization is the Linux Kernel itself. With Falco, we are developing a runtime security tool that hooks directly in the kernel to collect information about the system and notifies about malicious behavior.  
+We have found the need to validate our drivers against various versions of the Linux kernel, to properly ensure that with each iteration of our drivers, supported kernels remained unaffected.  
+To elaborate, we lacked a means to guarantee that a new driver release could:
 
 * Successfully compile on multiple kernel versions.
 * Pass the eBPF verifier when executed on various kernel versions.
