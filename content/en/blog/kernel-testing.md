@@ -13,7 +13,7 @@ Historically, in the Falcosecurity organization, we faced a significant challeng
 
 To address this issue, we started a major intervention. Initially, a [proposal](https://github.com/falcosecurity/libs/blob/master/proposals/20230530-driver-kernel-testing-framework.md) was discussed and incorporated into the libs repository.
 
-Since this was a pretty novel area, there were no pre-existing tools available to tackle it. Consequently, we embarked on the development of a new completely framework.  
+Since this was a pretty novel area, there were no pre-existing tools available to tackle it. Consequently, we embarked on the development of a completely new framework.  
 Allow us to introduce you to the `kernel testing framework`.
 
 ### Overview
@@ -22,11 +22,11 @@ Considering the inherent characteristics of the challenge, we need to set up a c
 These tests should be executed automatically each time new code is integrated into our drivers, serving as a means to promptly identify any issue or flaw in the tested kernel versions.  
 With these objectives in mind, our approach should fulfill the following requirements:
 
-* Rapid and cost-effective VM creation: The process of creating these virtual machines should be efficient and budget-friendly.
-* Effortless distribution of VM images: We should ensure easy sharing and deployment of the virtual machine images.
-* Parallel execution of tests on multiple VMs: Tests should run concurrently on each virtual machine to expedite the process.
-* Reproducibility in local environments for debugging purposes: Developers should be able to replicate the test environment locally to investigate and troubleshoot issues.
-* Straightforward and user-friendly presentation of test results: The test results should be presented in a simple and intuitive manner to immediately spot failures.
+* Rapid and cost-effective VM creation: the process of creating these virtual machines should be efficient and budget-friendly.
+* Effortless distribution of VM images: we should ensure easy sharing and deployment of the virtual machine images.
+* Parallel execution of tests on multiple VMs: tests should run concurrently on each virtual machine to expedite the process.
+* Reproducibility in local environments for debugging purposes: developers should be able to replicate the test environment locally to investigate and troubleshoot issues.
+* Straightforward and user-friendly presentation of the test results: they should be presented in a simple and intuitive manner to immediately spot failures.
 
 #### Ignite a Firecracker microVM
 
@@ -51,7 +51,7 @@ Automation is accomplished through the utilization of [Ansible](https://docs.ans
 #### Results Presentation
 
 We wanted the test data to be publicly and easily accessible by anyone, thus we had to find a way to represent the test output.  
-Since there are 3 possible ways of instrumenting the kernel, that is using a kernel module or one of the available eBPF probes, the playbooks perform up to 3 tests. Taking into account that the modern eBPF probe is built in the Falco libraries, only 2 drivers need to be compiled.
+Since there are 3 possible ways of instrumenting the kernel, that are using a kernel module or one of the available eBPF probes, the playbooks perform up to 3 tests. Taking into account that the modern eBPF probe is built in the Falco libraries, only 2 drivers need to be compiled.
 We have 3 possible results for each of them:
 * success, when the test goes fine
 * error, when the test fails
@@ -163,9 +163,10 @@ Pretty nice, uh?
 There are quite a few gaps that still need to be addressed by our framework. First of all, the images being used by Ignite to spawn FireCracker VMs are still under a development Docker repository and need to be moved under Falcosecurity.  
 Moreover, we need to implement a CI to automatically build and push those images.  
 
-As previously said, the kernel tests are currently running `scap-open` binary to check whether any event gets received. It would be great to use `drivers_test` binary instead, to fully test the expected behavior of the drivers.  
+As previously said, the kernel tests are currently running [`scap-open`](https://github.com/falcosecurity/libs/tree/master/userspace/libscap/examples/01-open) binary to check whether any event gets received. It is a small libscap C example that loads a driver and waits for events, nothing more.  
+It would be great to run [drivers tests](https://github.com/falcosecurity/libs/tree/master/test/drivers) instead, to fully test the expected behavior of the drivers.  
 
-Finally, a utopian idea: imagine if we were able to run [`kernel-crawler`](https://github.com/falcosecurity/kernel-crawler) to fetch kernel images, and then **automatically** build new kernel testing matrix entries for newly discovered images.  
+Finally, an utopian idea: imagine if we were able to run [`kernel-crawler`](https://github.com/falcosecurity/kernel-crawler) to fetch kernel images, and then **automatically** build new kernel testing matrix entries for newly discovered images.  
 This would mean that our kernel testing matrix coverage increases steadily week after week, giving users even more guarantees about the stability of the Falco drivers!
 
 Here is the libs tracking issue: https://github.com/falcosecurity/libs/issues/1224.
