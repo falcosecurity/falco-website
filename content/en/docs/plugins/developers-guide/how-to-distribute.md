@@ -10,7 +10,7 @@ weight: 20
 In this article, we'll focus on the steps to build the OCI artifacts containing the plugin and its rules and how to distribute them on Github Packages.
 
 {{% pageinfo color="info" %}}
-To get more familiar with the OCI artifacts, you can read our blog posts about [falcoctl]({{< ref "/blog/falcoctl-install-manage-rules-plugins" >}}) and [GitOps for rules]({{< ref "/blog/gitops-your-falco-rules" >}})
+To get more familiar with the OCI artifacts, you can read our blog posts about [falcoctl](/blog/falcoctl-install-manage-rules-plugins) and [GitOps for rules](/blog/gitops-your-falco-rules)
 {{% /pageinfo %}}
 
 In the next sections we'll describe how to:
@@ -201,7 +201,7 @@ jobs:
 
 #### Create the release
 
-`GoReleaser` can automatically generate a Changelog at the same time we publish the new artifacts. This step isn't imperative to generate the OCI artifacts but it's a good practice among Go developers. To achieve that, make sure to have a correct `.goreleaser.yml` file as explained [here]({{< ref "/blog/extend-falco-inputs-with-a-plugin-distribute#goreleaser" >}}).
+`GoReleaser` can automatically generate a Changelog at the same time we publish the new artifacts. This step isn't imperative to generate the OCI artifacts but it's a good practice among Go developers. To achieve that, make sure to have a correct `.goreleaser.yml` file as explained [here](/blog/extend-falco-inputs-with-a-plugin-distribute#goreleaser).
 
 ```yaml
   release:
@@ -331,7 +331,7 @@ Replace `PLUGIN_NAME` with the name of your plugin.
 
 ## The index.yaml file for falcoctl
 
-This file is used by `falcoctl` to know where to download your plugin and rules. Please read this [blog post]({{< ref "blog/falcoctl-install-manage-rules-plugins#index" >}}) to understand better how it works.
+This file is used by `falcoctl` to know where to download your plugin and rules. Please read this [blog post](/blog/falcoctl-install-manage-rules-plugins#index) to understand better how it works.
 
 We'll create our own file to allow like the following:
 
@@ -416,7 +416,7 @@ Few seconds after, your workflow should be started and you will have your first 
 
 ## Installation of your plugin and rules
 
-The process is now the same as the one described [here]({{< ref "/blog/falcoctl-install-manage-rules-plugins" >}}), except we'll use your specific `index.yaml` to register a new index:
+The process is now the same as the one described [here](/blog/falcoctl-install-manage-rules-plugins), except we'll use your specific `index.yaml` to register a new index:
 
 ```shell
 sudo falcoctl index add {PLUGIN_NAME} https://{OWNER_NAME}.github.io/{REPO_NAME}/index.yaml
