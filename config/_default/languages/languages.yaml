@@ -13,7 +13,6 @@ zh-cn:
   title: "Falco"
   languageName: "中文 Chinese"
   weight: 2
-  contentDir: "content/zh-cn"
   languagedirection: "ltr"
   params:
     time_format_blog: "2006.01.02"
@@ -24,7 +23,6 @@ ko:
   title: "Falco"
   languageName: "한국어 Korean"
   weight: 3
-  contentDir: "content/ko"
   languagedirection: "ltr"
   params:
     time_format_blog: "2006.01.02"
@@ -35,7 +33,6 @@ ja:
   title: "Falco"
   languageName: "日本語 Japanese"
   weight: 4
-  contentDir: "content/ja"
   languagedirection: "ltr"
   params:
     time_format_blog: "2006.01.02"
@@ -46,7 +43,6 @@ ml:
   title: "Falco"
   languageName: "മലയാളം Malayalam"
   weight: 4
-  contentDir: "content/ml"
   languagedirection: "ltr"
   params:
     time_format_blog: "2006.01.02"
