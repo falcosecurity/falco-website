@@ -3,7 +3,6 @@ title = "The Falco Project"
 theme = ["docsy"]
 
 # Language settings
-contentDir = "content/en"
 defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
 enableRobotsTXT = true
