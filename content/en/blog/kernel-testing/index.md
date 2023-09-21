@@ -1,6 +1,6 @@
 ---
 title:  Introducing a framework for regression testing against Linux kernels
-date: 2023-09-20
+date: 2023-09-21
 author: Federico Di Pierro, Aldo Lacuku
 slug: Falco-kernel-testing
 tags: [Falco", "Kmod", "eBPF"]
