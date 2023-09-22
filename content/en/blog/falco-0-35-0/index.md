@@ -4,6 +4,7 @@ date: 2023-06-07
 author: Federico Di Pierro, Andrea Terzolo, Lorenzo Susini
 slug: falco-0-35-0
 tags: ["Falco","Release"]
+featured_image: https://falco.org/blog/falco-nist-controls/images/falco-nist-controls-featured.png
 ---
 
 Dear Community, today we are delighted to announce the release of Falco 0.35.0!
