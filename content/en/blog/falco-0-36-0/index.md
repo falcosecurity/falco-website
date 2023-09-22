@@ -113,7 +113,12 @@ With each release, Falco gets more quality-of-life improvements, such as:
 
 ## Deprecated features
 
+It's sad to see features go, but sometimes we need to remove them in order to focus on what matters for the adopters. This is what maintainers are proposing for deprecation in the next Falco version:
 
+- The optional rate-limiter mechanism, since it seems to be no longer used and it also can discard events including potentially critical alerts
+- The `--userspace` option, since the corresponding feature and the associated projects in the Falco organization have not been maintained for years
+- The `stats` command args option. This is being replaced by the `metrics` configuration.
+- The `falco-driver-loader` script. This is going to be implemented in `falcoctl` to improve Falco's driver loading capabilities and make it easier to maintain and contribute to.
 
 ## Try it out
 
@@ -132,9 +137,12 @@ It’s time to try out the new release! Here are some pointers for getting start
 
 The community is active on many topics and we hope to deliver great features and many stability fixes once again during the next release cycle!
 
-<!--
- TODO
--->
+- The old `falco-driver-loader` script is showing its age and it's time to work on a more maintainable solution. `falcoctl` is a great candidate to host everything driver related, implement new features and make our lives easier when we need to install Falco drivers on a new machine.
+- Lately we have expanded the syscall coverage that Falco can provide. We wish to improve these efforts across all drivers with even more 32 bit syscalls.
+- Our rule framework is brand new and we forsee many improvements and active development work on it.
+- The latest Falco versions brought many improvements to the plugin framework; we wish to use those to create a more scalable Kubernetes client plugin that will be able to withstand much heavier loads and will be easier to maintain.
+
+And many, many, more enhancements!
 
 ## Stay tuned 🤗
 
@@ -143,5 +151,7 @@ The community is active on many topics and we hope to deliver great features and
 You can find all the most up to date information at https://falco.org/community/.
 
 See you for the next release!  
+
+Enjoy,
 
 _Luca, Andrea, Rohit_
