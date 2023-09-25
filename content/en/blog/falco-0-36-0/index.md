@@ -103,7 +103,7 @@ It’s worth noting that certain features, such as kernel modules and Kubernetes
 
 ### Falco Playground
 
-Falco playground is simple web application where you can create, edit and validate [falco rules](https://github.com/falcosecurity/rules). This is a quick solution for users wanting to easily check the accuracy of their custom rules. This application is completely client side and doesn’t make calls to any backend server. It leverages the power of [WebAssembly](https://webassembly.org/) to test your rules.
+[Falco playground](https://falcosecurity.github.io/falco-playground/) is simple web application where you can create, edit and validate [falco rules](https://github.com/falcosecurity/rules). This is a quick solution for users wanting to easily check the accuracy of their custom rules. This application is completely client side and doesn’t make calls to any backend server. It leverages the power of [WebAssembly](https://webassembly.org/) to test your rules. You can [try it live](https://falcosecurity.github.io/falco-playground/) and find the code in the [falco-playground](https://github.com/falcosecurity/falco-playground) repository!
 
 ## Additional UX improvements
 
@@ -113,12 +113,12 @@ With each release, Falco gets more quality-of-life improvements, such as:
 
 ## Deprecated features
 
-It's sad to see features go, but sometimes we need to remove them in order to focus on what matters for the adopters. This is what maintainers are proposing for deprecation in the next Falco version:
+It's sad to see features go, but sometimes we need to remove something in order to focus on what matters for our adopters. This is what maintainers are proposing for deprecation in the next Falco version 0.37.0:
 
 - The optional rate-limiter mechanism, since it seems to be no longer used and it also can discard events including potentially critical alerts
 - The `--userspace` option, since the corresponding feature and the associated projects in the Falco organization have not been maintained for years
 - The `stats` command args option. This is being replaced by the `metrics` configuration.
-- The `falco-driver-loader` script. This is going to be implemented in `falcoctl` to improve Falco's driver loading capabilities and make it easier to maintain and contribute to.
+- The `falco-driver-loader` bash script. The driver loading functionality is going to be implemented in `falcoctl` to improve Falco's driver loading capabilities and make it easier to maintain and contribute to.
 
 ## Try it out
 
