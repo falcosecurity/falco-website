@@ -75,9 +75,8 @@ Let's see an example of how to install the package in a Debian-like system, for 
 2. Configure the apt repository
 
     ```bash
-    sudo cat >>/etc/apt/sources.list.d/falcosecurity.list <<EOF
-    deb [signed-by=/usr/share/keyrings/falco-archive-keyring.gpg] https://download.falco.org/packages/deb stable main
-    EOF
+   echo "deb [signed-by=/usr/share/keyrings/falco-archive-keyring.gpg] https://download.falco.org/packages/deb stable main" | \
+    sudo tee -a /etc/apt/sources.list.d/falcosecurity.list
     ```
 
 {{% pageinfo color="info" %}}
