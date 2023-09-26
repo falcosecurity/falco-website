@@ -1,6 +1,6 @@
 ---
 title: Falco 0.36.0
-date: 2023-09-25
+date: 2023-09-26
 author: Luca Guerra, Andrea Terzolo, Rohit Raju
 slug: falco-0-36-0
 tags: ["Falco","Release"]
@@ -20,14 +20,14 @@ This release comes with many **brand new features**, some long awaited **UX impr
 In release v0.36.0, we focused on the following features:
 - Brand new Falco [rule framework](#new-falco-rules-framework) and ruleset
 - More robust executable [file path detection, symlink resolution and ancestors detection](#process-executable-and-lineage)
-- Falco is no longer limited to one rule firing per event!
-- Signatures are now automatically verified in Falcoctl for plugins and rules
-- Upgrade of the default Falco images
+- Falco is [no longer limited to one rule](#multiple-rules-can-be-matched-on-each-event) firing per event!
+- Signatures are now [automatically verified in Falcoctl](#falcoctl-cosign) for plugins and rules
+- [Upgrade](#container-image-changes) of the default Falco images
 
 We have also some massive experimental upgrades that the community has spent incredible amounts of effort on:
-- WASM support
-- Kernel driver testing *at scale*!
-- Falco now has an experimental distroless container image based on Wolfi
+- [WASM support](#falco-wasm)
+- [Kernel driver testing](#falco-kernel-testing-framework) *at scale*!
+- Falco now has an experimental [distroless container image](#container-image-changes) based on Wolfi
 
 
 ## Breaking changes ⚠️
