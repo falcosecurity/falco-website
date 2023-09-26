@@ -16,7 +16,7 @@ Note that several event types exist:
 
 <!--
 generated with:
-falco --list-syscall-events --markdown
+falco --list-events --markdown
 -->
 
 {{< markdown_inline
