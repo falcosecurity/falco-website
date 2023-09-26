@@ -1,10 +1,10 @@
-*Schema Version*: 2.0.0
+The events below are valid for Falco *Schema Version*: 2.0.0
 ## Syscall events
 
-Default | Dir | Name | Args 
+Default | Dir | Name | Params 
 :-------|:----|:-----|:-----
-Yes | `>` | `open` | FSPATH **name**, FLAGS32 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*, UINT32 **mode**
-Yes | `<` | `open` | FD **fd**, FSPATH **name**, FLAGS32 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*, UINT32 **mode**, UINT32 **dev**, UINT64 **ino**
+Yes | `>` | `open` | FSPATH **name**, FLAGS32 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*, *O_F_CREATED*, UINT32 **mode**
+Yes | `<` | `open` | FD **fd**, FSPATH **name**, FLAGS32 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*, *O_F_CREATED*, UINT32 **mode**, UINT32 **dev**, UINT64 **ino**
 Yes | `>` | `close` | FD **fd**
 Yes | `<` | `close` | ERRNO **res**
 No | `>` | `read` | FD **fd**, UINT32 **size**
@@ -17,7 +17,7 @@ Yes | `>` | `bind` | FD **fd**
 Yes | `<` | `bind` | ERRNO **res**, SOCKADDR **addr**
 Yes | `>` | `connect` | FD **fd**, SOCKADDR **addr**
 Yes | `<` | `connect` | ERRNO **res**, SOCKTUPLE **tuple**, FD **fd**
-Yes | `>` | `listen` | FD **fd**, UINT32 **backlog**
+Yes | `>` | `listen` | FD **fd**, INT32 **backlog**
 Yes | `<` | `listen` | ERRNO **res**
 No | `>` | `send` | FD **fd**, UINT32 **size**
 No | `<` | `send` | ERRNO **res**, BYTEBUF **data**
@@ -116,7 +116,7 @@ Yes | `<` | `setrlimit` | ERRNO **res**, INT64 **cur**, INT64 **max**
 Yes | `>` | `prlimit` | PID **pid**, ENUMFLAGS8 **resource**: *RLIMIT_UNKNOWN*, *RLIMIT_RTTIME*, *RLIMIT_RTPRIO*, *RLIMIT_NICE*, *RLIMIT_MSGQUEUE*, *RLIMIT_SIGPENDING*, *RLIMIT_LOCKS*, *RLIMIT_AS*, *RLIMIT_MEMLOCK*, *RLIMIT_NOFILE*, *RLIMIT_NPROC*, *RLIMIT_RSS*, *RLIMIT_CORE*, *RLIMIT_STACK*, *RLIMIT_DATA*, *RLIMIT_FSIZE*, *RLIMIT_CPU*
 Yes | `<` | `prlimit` | ERRNO **res**, INT64 **newcur**, INT64 **newmax**, INT64 **oldcur**, INT64 **oldmax**
 Yes | `>` | `fcntl` | FD **fd**, ENUMFLAGS8 **cmd**: *F_GETPIPE_SZ*, *F_SETPIPE_SZ*, *F_NOTIFY*, *F_DUPFD_CLOEXEC*, *F_CANCELLK*, *F_GETLEASE*, *F_SETLEASE*, *F_GETOWN_EX*, *F_SETOWN_EX*, *F_SETLKW64*, *F_SETLK64*, *F_GETLK64*, *F_GETSIG*, *F_SETSIG*, *F_GETOWN*, *F_SETOWN*, *F_SETLKW*, *F_SETLK*, *F_GETLK*, *F_SETFL*, *F_GETFL*, *F_SETFD*, *F_GETFD*, *F_DUPFD*, *F_OFD_GETLK*, *F_OFD_SETLK*, *F_OFD_SETLKW*, *UNKNOWN*
-Yes | `<` | `fcntl` | FD **res**
+Yes | `<` | `fcntl` | FD **res**, FD **fd**, ENUMFLAGS8 **cmd**: *F_GETPIPE_SZ*, *F_SETPIPE_SZ*, *F_NOTIFY*, *F_DUPFD_CLOEXEC*, *F_CANCELLK*, *F_GETLEASE*, *F_SETLEASE*, *F_GETOWN_EX*, *F_SETOWN_EX*, *F_SETLKW64*, *F_SETLK64*, *F_GETLK64*, *F_GETSIG*, *F_SETSIG*, *F_GETOWN*, *F_SETOWN*, *F_SETLKW*, *F_SETLK*, *F_GETLK*, *F_SETFL*, *F_GETFL*, *F_SETFD*, *F_GETFD*, *F_DUPFD*, *F_OFD_GETLK*, *F_OFD_SETLK*, *F_OFD_SETLKW*, *UNKNOWN*
 Yes | `>` | `brk` | UINT64 **addr**
 Yes | `<` | `brk` | UINT64 **res**, UINT32 **vm_size**, UINT32 **vm_rss**, UINT32 **vm_swap**
 Yes | `>` | `mmap` | UINT64 **addr**, UINT64 **length**, FLAGS32 **prot**: *PROT_READ*, *PROT_WRITE*, *PROT_EXEC*, *PROT_SEM*, *PROT_GROWSDOWN*, *PROT_GROWSUP*, *PROT_SAO*, *PROT_NONE*, FLAGS32 **flags**: *MAP_SHARED*, *MAP_PRIVATE*, *MAP_FIXED*, *MAP_ANONYMOUS*, *MAP_32BIT*, *MAP_RENAME*, *MAP_NORESERVE*, *MAP_POPULATE*, *MAP_NONBLOCK*, *MAP_GROWSDOWN*, *MAP_DENYWRITE*, *MAP_EXECUTABLE*, *MAP_INHERIT*, *MAP_FILE*, *MAP_LOCKED*, FD **fd**, UINT64 **offset**
@@ -202,7 +202,7 @@ Yes | `<` | `rmdir` | ERRNO **res**, FSPATH **path**
 Yes | `>` | `unshare` | FLAGS32 **flags**: *CLONE_FILES*, *CLONE_FS*, *CLONE_IO*, *CLONE_NEWIPC*, *CLONE_NEWNET*, *CLONE_NEWNS*, *CLONE_NEWPID*, *CLONE_NEWUTS*, *CLONE_PARENT*, *CLONE_PARENT_SETTID*, *CLONE_PTRACE*, *CLONE_SIGHAND*, *CLONE_SYSVSEM*, *CLONE_THREAD*, *CLONE_UNTRACED*, *CLONE_VM*, *CLONE_INVERTED*, *NAME_CHANGED*, *CLOSED*, *CLONE_NEWUSER*, *CLONE_CHILD_CLEARTID*, *CLONE_CHILD_SETTID*, *CLONE_SETTLS*, *CLONE_STOPPED*, *CLONE_VFORK*, *CLONE_NEWCGROUP*
 Yes | `<` | `unshare` | ERRNO **res**
 Yes | `>` | `execve` | FSPATH **filename**
-Yes | `<` | `execve` | ERRNO **res**, CHARBUF **exe**, BYTEBUF **args**, PID **tid**, PID **pid**, PID **ptid**, CHARBUF **cwd**, UINT64 **fdlimit**, UINT64 **pgft_maj**, UINT64 **pgft_min**, UINT32 **vm_size**, UINT32 **vm_rss**, UINT32 **vm_swap**, CHARBUF **comm**, BYTEBUF **cgroups**, BYTEBUF **env**, INT32 **tty**, PID **pgid**, INT32 **loginuid**, FLAGS32 **flags**: *EXE_WRITABLE*, *EXE_UPPER_LAYER*, UINT64 **cap_inheritable**, UINT64 **cap_permitted**, UINT64 **cap_effective**, UINT64 **exe_ino**, ABSTIME **exe_ino_ctime**, ABSTIME **exe_ino_mtime**, INT32 **uid**
+Yes | `<` | `execve` | ERRNO **res**, CHARBUF **exe**, BYTEBUF **args**, PID **tid**, PID **pid**, PID **ptid**, CHARBUF **cwd**, UINT64 **fdlimit**, UINT64 **pgft_maj**, UINT64 **pgft_min**, UINT32 **vm_size**, UINT32 **vm_rss**, UINT32 **vm_swap**, CHARBUF **comm**, BYTEBUF **cgroups**, BYTEBUF **env**, UINT32 **tty**, PID **pgid**, UID **loginuid**, FLAGS32 **flags**: *EXE_WRITABLE*, *EXE_UPPER_LAYER*, *EXE_FROM_MEMFD*, UINT64 **cap_inheritable**, UINT64 **cap_permitted**, UINT64 **cap_effective**, UINT64 **exe_ino**, ABSTIME **exe_ino_ctime**, ABSTIME **exe_ino_mtime**, UID **uid**, FSPATH **trusted_exepath**
 Yes | `>` | `setpgid` | PID **pid**, PID **pgid**
 Yes | `<` | `setpgid` | PID **res**
 Yes | `>` | `seccomp` | UINT64 **op**
@@ -213,8 +213,8 @@ Yes | `>` | `unlinkat` |
 Yes | `<` | `unlinkat` | ERRNO **res**, FD **dirfd**, FSRELPATH **name**, FLAGS32 **flags**: *AT_REMOVEDIR*
 Yes | `>` | `mkdirat` | 
 Yes | `<` | `mkdirat` | ERRNO **res**, FD **dirfd**, FSRELPATH **path**, UINT32 **mode**
-Yes | `>` | `openat` | FD **dirfd**, FSRELPATH **name**, FLAGS32 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*, UINT32 **mode**
-Yes | `<` | `openat` | FD **fd**, FD **dirfd**, FSRELPATH **name**, FLAGS32 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*, UINT32 **mode**, UINT32 **dev**, UINT64 **ino**
+Yes | `>` | `openat` | FD **dirfd**, FSRELPATH **name**, FLAGS32 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*, *O_F_CREATED*, UINT32 **mode**
+Yes | `<` | `openat` | FD **fd**, FD **dirfd**, FSRELPATH **name**, FLAGS32 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*, *O_F_CREATED*, UINT32 **mode**, UINT32 **dev**, UINT64 **ino**
 Yes | `>` | `link` | 
 Yes | `<` | `link` | ERRNO **res**, FSPATH **oldpath**, FSPATH **newpath**
 Yes | `>` | `linkat` | 
@@ -228,19 +228,19 @@ Yes | `<` | `fchmod` | ERRNO **res**, FD **fd**, MODE **mode**
 Yes | `>` | `renameat2` | 
 Yes | `<` | `renameat2` | ERRNO **res**, FD **olddirfd**, FSRELPATH **oldpath**, FD **newdirfd**, FSRELPATH **newpath**, FLAGS32 **flags**: *RENAME_NOREPLACE*, *RENAME_EXCHANGE*, *RENAME_WHITEOUT*
 Yes | `>` | `userfaultfd` | 
-Yes | `<` | `userfaultfd` | ERRNO **res**, FLAGS32 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*
-Yes | `>` | `openat2` | FD **dirfd**, FSRELPATH **name**, FLAGS32 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*, UINT32 **mode**, FLAGS32 **resolve**: *RESOLVE_BENEATH*, *RESOLVE_IN_ROOT*, *RESOLVE_NO_MAGICLINKS*, *RESOLVE_NO_SYMLINKS*, *RESOLVE_NO_XDEV*, *RESOLVE_CACHED*
-Yes | `<` | `openat2` | FD **fd**, FD **dirfd**, FSRELPATH **name**, FLAGS32 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*, UINT32 **mode**, FLAGS32 **resolve**: *RESOLVE_BENEATH*, *RESOLVE_IN_ROOT*, *RESOLVE_NO_MAGICLINKS*, *RESOLVE_NO_SYMLINKS*, *RESOLVE_NO_XDEV*, *RESOLVE_CACHED*
+Yes | `<` | `userfaultfd` | ERRNO **res**, FLAGS32 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*, *O_F_CREATED*
+Yes | `>` | `openat2` | FD **dirfd**, FSRELPATH **name**, FLAGS32 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*, *O_F_CREATED*, UINT32 **mode**, FLAGS32 **resolve**: *RESOLVE_BENEATH*, *RESOLVE_IN_ROOT*, *RESOLVE_NO_MAGICLINKS*, *RESOLVE_NO_SYMLINKS*, *RESOLVE_NO_XDEV*, *RESOLVE_CACHED*
+Yes | `<` | `openat2` | FD **fd**, FD **dirfd**, FSRELPATH **name**, FLAGS32 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*, *O_F_CREATED*, UINT32 **mode**, FLAGS32 **resolve**: *RESOLVE_BENEATH*, *RESOLVE_IN_ROOT*, *RESOLVE_NO_MAGICLINKS*, *RESOLVE_NO_SYMLINKS*, *RESOLVE_NO_XDEV*, *RESOLVE_CACHED*
 Yes | `>` | `mprotect` | UINT64 **addr**, UINT64 **length**, FLAGS32 **prot**: *PROT_READ*, *PROT_WRITE*, *PROT_EXEC*, *PROT_SEM*, *PROT_GROWSDOWN*, *PROT_GROWSUP*, *PROT_SAO*, *PROT_NONE*
 Yes | `<` | `mprotect` | ERRNO **res**
 Yes | `>` | `execveat` | FD **dirfd**, FSRELPATH **pathname**, FLAGS32 **flags**: *AT_EMPTY_PATH*, *AT_SYMLINK_NOFOLLOW*
-Yes | `<` | `execveat` | ERRNO **res**, CHARBUF **exe**, BYTEBUF **args**, PID **tid**, PID **pid**, PID **ptid**, CHARBUF **cwd**, UINT64 **fdlimit**, UINT64 **pgft_maj**, UINT64 **pgft_min**, UINT32 **vm_size**, UINT32 **vm_rss**, UINT32 **vm_swap**, CHARBUF **comm**, BYTEBUF **cgroups**, BYTEBUF **env**, INT32 **tty**, PID **pgid**, INT32 **loginuid**, FLAGS32 **flags**: *EXE_WRITABLE*, *EXE_UPPER_LAYER*, UINT64 **cap_inheritable**, UINT64 **cap_permitted**, UINT64 **cap_effective**, UINT64 **exe_ino**, ABSTIME **exe_ino_ctime**, ABSTIME **exe_ino_mtime**, INT32 **uid**
+Yes | `<` | `execveat` | ERRNO **res**, CHARBUF **exe**, BYTEBUF **args**, PID **tid**, PID **pid**, PID **ptid**, CHARBUF **cwd**, UINT64 **fdlimit**, UINT64 **pgft_maj**, UINT64 **pgft_min**, UINT32 **vm_size**, UINT32 **vm_rss**, UINT32 **vm_swap**, CHARBUF **comm**, BYTEBUF **cgroups**, BYTEBUF **env**, UINT32 **tty**, PID **pgid**, UID **loginuid**, FLAGS32 **flags**: *EXE_WRITABLE*, *EXE_UPPER_LAYER*, *EXE_FROM_MEMFD*, UINT64 **cap_inheritable**, UINT64 **cap_permitted**, UINT64 **cap_effective**, UINT64 **exe_ino**, ABSTIME **exe_ino_ctime**, ABSTIME **exe_ino_mtime**, UID **uid**, FSPATH **trusted_exepath**
 Yes | `>` | `copy_file_range` | FD **fdin**, UINT64 **offin**, UINT64 **len**
 Yes | `<` | `copy_file_range` | ERRNO **res**, FD **fdout**, UINT64 **offout**
 Yes | `>` | `clone3` | 
 Yes | `<` | `clone3` | PID **res**, CHARBUF **exe**, BYTEBUF **args**, PID **tid**, PID **pid**, PID **ptid**, CHARBUF **cwd**, INT64 **fdlimit**, UINT64 **pgft_maj**, UINT64 **pgft_min**, UINT32 **vm_size**, UINT32 **vm_rss**, UINT32 **vm_swap**, CHARBUF **comm**, BYTEBUF **cgroups**, FLAGS32 **flags**: *CLONE_FILES*, *CLONE_FS*, *CLONE_IO*, *CLONE_NEWIPC*, *CLONE_NEWNET*, *CLONE_NEWNS*, *CLONE_NEWPID*, *CLONE_NEWUTS*, *CLONE_PARENT*, *CLONE_PARENT_SETTID*, *CLONE_PTRACE*, *CLONE_SIGHAND*, *CLONE_SYSVSEM*, *CLONE_THREAD*, *CLONE_UNTRACED*, *CLONE_VM*, *CLONE_INVERTED*, *NAME_CHANGED*, *CLOSED*, *CLONE_NEWUSER*, *CLONE_CHILD_CLEARTID*, *CLONE_CHILD_SETTID*, *CLONE_SETTLS*, *CLONE_STOPPED*, *CLONE_VFORK*, *CLONE_NEWCGROUP*, UINT32 **uid**, UINT32 **gid**, PID **vtid**, PID **vpid**, UINT64 **pidns_init_start_ts**
 Yes | `>` | `open_by_handle_at` | 
-Yes | `<` | `open_by_handle_at` | FD **fd**, FD **mountfd**, FLAGS32 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*, FSPATH **path**
+Yes | `<` | `open_by_handle_at` | FD **fd**, FD **mountfd**, FLAGS32 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*, *O_F_CREATED*, FSPATH **path**
 Yes | `>` | `io_uring_setup` | 
 Yes | `<` | `io_uring_setup` | ERRNO **res**, UINT32 **entries**, UINT32 **sq_entries**, UINT32 **cq_entries**, FLAGS32 **flags**: *IORING_SETUP_IOPOLL*, *IORING_SETUP_SQPOLL*, *IORING_SQ_NEED_WAKEUP*, *IORING_SETUP_SQ_AFF*, *IORING_SETUP_CQSIZE*, *IORING_SETUP_CLAMP*, *IORING_SETUP_ATTACH_RW*, *IORING_SETUP_R_DISABLED*, UINT32 **sq_thread_cpu**, UINT32 **sq_thread_idle**, FLAGS32 **features**: *IORING_FEAT_SINGLE_MMAP*, *IORING_FEAT_NODROP*, *IORING_FEAT_SUBMIT_STABLE*, *IORING_FEAT_RW_CUR_POS*, *IORING_FEAT_CUR_PERSONALITY*, *IORING_FEAT_FAST_POLL*, *IORING_FEAT_POLL_32BITS*, *IORING_FEAT_SQPOLL_NONFIXED*, *IORING_FEAT_ENTER_EXT_ARG*, *IORING_FEAT_NATIVE_WORKERS*, *IORING_FEAT_RSRC_TAGS*
 Yes | `>` | `io_uring_enter` | 
@@ -260,7 +260,7 @@ Yes | `<` | `capset` | ERRNO **res**, UINT64 **cap_inheritable**, UINT64 **cap_p
 Yes | `>` | `dup2` | FD **fd**
 Yes | `<` | `dup2` | FD **res**, FD **oldfd**, FD **newfd**
 Yes | `>` | `dup3` | FD **fd**
-Yes | `<` | `dup3` | FD **res**, FD **oldfd**, FD **newfd**, FLAGS32 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*
+Yes | `<` | `dup3` | FD **res**, FD **oldfd**, FD **newfd**, FLAGS32 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*, *O_F_CREATED*
 Yes | `>` | `dup` | FD **fd**
 Yes | `<` | `dup` | FD **res**, FD **oldfd**
 Yes | `>` | `bpf` | INT64 **cmd**
@@ -288,15 +288,29 @@ Yes | `<` | `accept4` | FD **fd**, SOCKTUPLE **tuple**, UINT8 **queuepct**, UINT
 Yes | `>` | `umount2` | FLAGS32 **flags**: *FORCE*, *DETACH*, *EXPIRE*, *NOFOLLOW*
 Yes | `<` | `umount2` | ERRNO **res**, FSPATH **name**
 Yes | `>` | `pipe2` | 
-Yes | `<` | `pipe2` | ERRNO **res**, FD **fd1**, FD **fd2**, UINT64 **ino**, FLAGS32 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*
+Yes | `<` | `pipe2` | ERRNO **res**, FD **fd1**, FD **fd2**, UINT64 **ino**, FLAGS32 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*, *O_F_CREATED*
 Yes | `>` | `inotify_init1` | 
-Yes | `<` | `inotify_init1` | FD **res**, FLAGS16 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*
+Yes | `<` | `inotify_init1` | FD **res**, FLAGS16 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*, *O_F_CREATED*
 Yes | `>` | `eventfd2` | UINT64 **initval**
-Yes | `<` | `eventfd2` | FD **res**, FLAGS16 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*
+Yes | `<` | `eventfd2` | FD **res**, FLAGS16 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*, *O_F_CREATED*
 Yes | `>` | `signalfd4` | FD **fd**, UINT32 **mask**
 Yes | `<` | `signalfd4` | FD **res**, FLAGS16 **flags**
 Yes | `>` | `prctl` | 
 Yes | `<` | `prctl` | ERRNO **res**, ENUMFLAGS32 **option**: *PR_GET_DUMPABLE*, *PR_SET_DUMPABLE*, *PR_GET_KEEPCAPS*, *PR_SET_KEEPCAPS*, *PR_SET_NAME*, *PR_GET_NAME*, *PR_GET_SECCOMP*, *PR_SET_SECCOMP*, *PR_CAPBSET_READ*, *PR_CAPBSET_DROP*, *PR_GET_SECUREBITS*, *PR_SET_SECUREBITS*, *PR_MCE_KILL*, *PR_MCE_KILL*, *PR_SET_MM*, *PR_SET_CHILD_SUBREAPER*, *PR_GET_CHILD_SUBREAPER*, *PR_SET_NO_NEW_PRIVS*, *PR_GET_NO_NEW_PRIVS*, *PR_GET_TID_ADDRESS*, *PR_SET_THP_DISABLE*, *PR_GET_THP_DISABLE*, *PR_CAP_AMBIENT*, CHARBUF **arg2_str**, INT64 **arg2_int**
+Yes | `>` | `memfd_create` | 
+Yes | `<` | `memfd_create` | FD **fd**, CHARBUF **name**, FLAGS32 **flags**: *MFD_CLOEXEC*, *MFD_ALLOW_SEALING*, *MFD_HUGETLB*
+Yes | `>` | `pidfd_getfd` | 
+Yes | `<` | `pidfd_getfd` | FD **fd**, FD **pid_fd**, FD **target_fd**, FLAGS32 **flags**
+Yes | `>` | `pidfd_open` | 
+Yes | `<` | `pidfd_open` | FD **fd**, PID **pid**, FLAGS32 **flags**
+Yes | `>` | `init_module` | 
+Yes | `<` | `init_module` | ERRNO **res**, BYTEBUF **img**, UINT64 **length**, CHARBUF **uargs**
+Yes | `>` | `finit_module` | 
+Yes | `<` | `finit_module` | ERRNO **res**, FD **fd**, CHARBUF **uargs**, FLAGS32 **flags**
+Yes | `>` | `mknod` | 
+Yes | `<` | `mknod` | ERRNO **res**, FSPATH **path**, MODE **mode**, UINT32 **dev**
+Yes | `>` | `mknodat` | 
+Yes | `<` | `mknodat` | ERRNO **res**, FD **dirfd**, FSRELPATH **path**, MODE **mode**, UINT32 **dev**
 Yes | `>` | `sigreturn` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `sigreturn` | SYSCALLID **ID**
 Yes | `>` | `s390_runtime_instr` | SYSCALLID **ID**, UINT16 **nativeID**
@@ -339,24 +353,18 @@ Yes | `>` | `landlock_restrict_self` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `landlock_restrict_self` | SYSCALLID **ID**
 Yes | `>` | `pkey_alloc` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `pkey_alloc` | SYSCALLID **ID**
-Yes | `>` | `pidfd_open` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `pidfd_open` | SYSCALLID **ID**
 Yes | `>` | `close_range` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `close_range` | SYSCALLID **ID**
 Yes | `>` | `kexec_file_load` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `kexec_file_load` | SYSCALLID **ID**
 Yes | `>` | `memfd_secret` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `memfd_secret` | SYSCALLID **ID**
-Yes | `>` | `memfd_create` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `memfd_create` | SYSCALLID **ID**
 Yes | `>` | `fadvise64` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `fadvise64` | SYSCALLID **ID**
 Yes | `>` | `getrandom` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `getrandom` | SYSCALLID **ID**
 Yes | `>` | `sigaltstack` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `sigaltstack` | SYSCALLID **ID**
-Yes | `>` | `finit_module` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `finit_module` | SYSCALLID **ID**
 Yes | `>` | `process_vm_writev` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `process_vm_writev` | SYSCALLID **ID**
 Yes | `>` | `fallocate` | SYSCALLID **ID**, UINT16 **nativeID**
@@ -395,18 +403,30 @@ Yes | `>` | `perf_event_open` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `perf_event_open` | SYSCALLID **ID**
 Yes | `>` | `getcpu` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `getcpu` | SYSCALLID **ID**
-Yes | `>` | `shmctl` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `shmctl` | SYSCALLID **ID**
-Yes | `>` | `set_robust_list` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `set_robust_list` | SYSCALLID **ID**
-Yes | `>` | `pselect6` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `pselect6` | SYSCALLID **ID**
+Yes | `>` | `create_module` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `create_module` | SYSCALLID **ID**
+Yes | `>` | `preadv2` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `preadv2` | SYSCALLID **ID**
+Yes | `>` | `vmsplice` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `vmsplice` | SYSCALLID **ID**
+Yes | `>` | `rt_sigtimedwait` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `rt_sigtimedwait` | SYSCALLID **ID**
+Yes | `>` | `mq_open` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `mq_open` | SYSCALLID **ID**
 Yes | `>` | `modify_ldt` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `modify_ldt` | SYSCALLID **ID**
 Yes | `>` | `timerfd_settime` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `timerfd_settime` | SYSCALLID **ID**
 Yes | `>` | `getitimer` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `getitimer` | SYSCALLID **ID**
+Yes | `>` | `semtimedop` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `semtimedop` | SYSCALLID **ID**
+Yes | `>` | `rt_sigreturn` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `rt_sigreturn` | SYSCALLID **ID**
+Yes | `>` | `rt_sigpending` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `rt_sigpending` | SYSCALLID **ID**
+Yes | `>` | `sched_get_priority_min` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sched_get_priority_min` | SYSCALLID **ID**
 Yes | `>` | `sched_getscheduler` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `sched_getscheduler` | SYSCALLID **ID**
 Yes | `>` | `kcmp` | SYSCALLID **ID**, UINT16 **nativeID**
@@ -417,34 +437,26 @@ Yes | `>` | `setpriority` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `setpriority` | SYSCALLID **ID**
 Yes | `>` | `sched_setscheduler` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `sched_setscheduler` | SYSCALLID **ID**
+Yes | `>` | `sched_getparam` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sched_getparam` | SYSCALLID **ID**
 Yes | `>` | `fdatasync` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `fdatasync` | SYSCALLID **ID**
 Yes | `>` | `pkey_mprotect` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `pkey_mprotect` | SYSCALLID **ID**
 Yes | `>` | `clock_nanosleep` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `clock_nanosleep` | SYSCALLID **ID**
+Yes | `>` | `getsid` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `getsid` | SYSCALLID **ID**
 Yes | `>` | `signal` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `signal` | SYSCALLID **ID**
 Yes | `>` | `sched_yield` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `sched_yield` | SYSCALLID **ID**
-Yes | `>` | `pidfd_getfd` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `pidfd_getfd` | SYSCALLID **ID**
 Yes | `>` | `get_robust_list` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `get_robust_list` | SYSCALLID **ID**
 Yes | `>` | `set_tid_address` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `set_tid_address` | SYSCALLID **ID**
 Yes | `>` | `getpgid` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `getpgid` | SYSCALLID **ID**
-Yes | `>` | `getsid` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `getsid` | SYSCALLID **ID**
-Yes | `>` | `sched_getparam` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sched_getparam` | SYSCALLID **ID**
-Yes | `>` | `init_module` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `init_module` | SYSCALLID **ID**
-Yes | `>` | `ioperm` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `ioperm` | SYSCALLID **ID**
-Yes | `>` | `syslog` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `syslog` | SYSCALLID **ID**
 Yes | `>` | `wait4` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `wait4` | SYSCALLID **ID**
 Yes | `>` | `rt_sigaction` | SYSCALLID **ID**, UINT16 **nativeID**
@@ -461,18 +473,16 @@ Yes | `>` | `epoll_wait_old` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `epoll_wait_old` | SYSCALLID **ID**
 Yes | `>` | `vhangup` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `vhangup` | SYSCALLID **ID**
-Yes | `>` | `sched_get_priority_min` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sched_get_priority_min` | SYSCALLID **ID**
-Yes | `>` | `semtimedop` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `semtimedop` | SYSCALLID **ID**
-Yes | `>` | `rt_sigreturn` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `rt_sigreturn` | SYSCALLID **ID**
-Yes | `>` | `rt_sigpending` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `rt_sigpending` | SYSCALLID **ID**
 Yes | `>` | `io_destroy` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `io_destroy` | SYSCALLID **ID**
+Yes | `>` | `getppid` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `getppid` | SYSCALLID **ID**
+Yes | `>` | `exit` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `exit` | SYSCALLID **ID**
 Yes | `>` | `pivot_root` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `pivot_root` | SYSCALLID **ID**
+Yes | `>` | `cachestat` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `cachestat` | SYSCALLID **ID**
 Yes | `>` | `mincore` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `mincore` | SYSCALLID **ID**
 Yes | `>` | `msgsnd` | SYSCALLID **ID**, UINT16 **nativeID**
@@ -485,10 +495,16 @@ Yes | `>` | `epoll_pwait` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `epoll_pwait` | SYSCALLID **ID**
 Yes | `>` | `sysfs` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `sysfs` | SYSCALLID **ID**
+Yes | `>` | `restart_syscall` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `restart_syscall` | SYSCALLID **ID**
 Yes | `>` | `clock_adjtime` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `clock_adjtime` | SYSCALLID **ID**
 Yes | `>` | `sync` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `sync` | SYSCALLID **ID**
+Yes | `>` | `getpid` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `getpid` | SYSCALLID **ID**
+Yes | `>` | `utime` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `utime` | SYSCALLID **ID**
 Yes | `>` | `name_to_handle_at` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `name_to_handle_at` | SYSCALLID **ID**
 Yes | `>` | `sched_setparam` | SYSCALLID **ID**, UINT16 **nativeID**
@@ -509,8 +525,6 @@ Yes | `>` | `lremovexattr` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `lremovexattr` | SYSCALLID **ID**
 Yes | `>` | `remap_file_pages` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `remap_file_pages` | SYSCALLID **ID**
-Yes | `>` | `restart_syscall` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `restart_syscall` | SYSCALLID **ID**
 Yes | `>` | `times` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `times` | SYSCALLID **ID**
 Yes | `>` | `sched_get_priority_max` | SYSCALLID **ID**, UINT16 **nativeID**
@@ -519,26 +533,22 @@ Yes | `>` | `fanotify_mark` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `fanotify_mark` | SYSCALLID **ID**
 Yes | `>` | `statfs` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `statfs` | SYSCALLID **ID**
-Yes | `>` | `utime` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `utime` | SYSCALLID **ID**
-Yes | `>` | `getpid` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `getpid` | SYSCALLID **ID**
-Yes | `>` | `mknod` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `mknod` | SYSCALLID **ID**
-Yes | `>` | `uname` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `uname` | SYSCALLID **ID**
-Yes | `>` | `process_madvise` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `process_madvise` | SYSCALLID **ID**
-Yes | `>` | `ioprio_get` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `ioprio_get` | SYSCALLID **ID**
-Yes | `>` | `swapon` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `swapon` | SYSCALLID **ID**
 Yes | `>` | `readahead` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `readahead` | SYSCALLID **ID**
 Yes | `>` | `pkey_free` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `pkey_free` | SYSCALLID **ID**
 Yes | `>` | `time` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `time` | SYSCALLID **ID**
+Yes | `>` | `uname` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `uname` | SYSCALLID **ID**
+Yes | `>` | `process_madvise` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `process_madvise` | SYSCALLID **ID**
+Yes | `>` | `ioprio_get` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `ioprio_get` | SYSCALLID **ID**
+Yes | `>` | `pselect6` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `pselect6` | SYSCALLID **ID**
+Yes | `>` | `swapon` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `swapon` | SYSCALLID **ID**
 Yes | `>` | `settimeofday` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `settimeofday` | SYSCALLID **ID**
 Yes | `>` | `iopl` | SYSCALLID **ID**, UINT16 **nativeID**
@@ -571,6 +581,10 @@ Yes | `>` | `get_kernel_syms` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `get_kernel_syms` | SYSCALLID **ID**
 Yes | `>` | `uselib` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `uselib` | SYSCALLID **ID**
+Yes | `>` | `ioperm` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `ioperm` | SYSCALLID **ID**
+Yes | `>` | `syslog` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `syslog` | SYSCALLID **ID**
 Yes | `>` | `mremap` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `mremap` | SYSCALLID **ID**
 Yes | `>` | `truncate` | SYSCALLID **ID**, UINT16 **nativeID**
@@ -603,26 +617,8 @@ Yes | `>` | `getpgrp` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `getpgrp` | SYSCALLID **ID**
 Yes | `>` | `fstatfs` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `fstatfs` | SYSCALLID **ID**
-Yes | `>` | `create_module` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `create_module` | SYSCALLID **ID**
-Yes | `>` | `preadv2` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `preadv2` | SYSCALLID **ID**
-Yes | `>` | `vmsplice` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `vmsplice` | SYSCALLID **ID**
-Yes | `>` | `rt_sigtimedwait` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `rt_sigtimedwait` | SYSCALLID **ID**
-Yes | `>` | `mq_open` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `mq_open` | SYSCALLID **ID**
 Yes | `>` | `mq_getsetattr` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `mq_getsetattr` | SYSCALLID **ID**
-Yes | `>` | `fspick` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `fspick` | SYSCALLID **ID**
-Yes | `>` | `newfstatat` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `newfstatat` | SYSCALLID **ID**
-Yes | `>` | `faccessat` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `faccessat` | SYSCALLID **ID**
-Yes | `>` | `capget` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `capget` | SYSCALLID **ID**
 Yes | `>` | `setreuid` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `setreuid` | SYSCALLID **ID**
 Yes | `>` | `setregid` | SYSCALLID **ID**, UINT16 **nativeID**
@@ -757,6 +753,10 @@ Yes | `>` | `shmget` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `shmget` | SYSCALLID **ID**
 Yes | `>` | `readlinkat` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `readlinkat` | SYSCALLID **ID**
+Yes | `>` | `shmctl` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `shmctl` | SYSCALLID **ID**
+Yes | `>` | `set_robust_list` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `set_robust_list` | SYSCALLID **ID**
 Yes | `>` | `utimes` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `utimes` | SYSCALLID **ID**
 Yes | `>` | `adjtimex` | SYSCALLID **ID**, UINT16 **nativeID**
@@ -781,34 +781,36 @@ Yes | `>` | `getgroups` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `getgroups` | SYSCALLID **ID**
 Yes | `>` | `inotify_rm_watch` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `inotify_rm_watch` | SYSCALLID **ID**
-Yes | `>` | `exit` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `exit` | SYSCALLID **ID**
-Yes | `>` | `getppid` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `getppid` | SYSCALLID **ID**
-Yes | `>` | `mknodat` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `mknodat` | SYSCALLID **ID**
+Yes | `>` | `fspick` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `fspick` | SYSCALLID **ID**
+Yes | `>` | `newfstatat` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `newfstatat` | SYSCALLID **ID**
+Yes | `>` | `capget` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `capget` | SYSCALLID **ID**
+Yes | `>` | `faccessat` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `faccessat` | SYSCALLID **ID**
 
 
 ## Tracepoint events
 
-Default | Dir | Name | Args 
+Default | Dir | Name | Params 
 :-------|:----|:-----|:-----
 Yes | `>` | `switch` | PID **next**, UINT64 **pgft_maj**, UINT64 **pgft_min**, UINT32 **vm_size**, UINT32 **vm_rss**, UINT32 **vm_swap**
-Yes | `>` | `procexit` | ERRNO **status**, ERRNO **ret**, SIGTYPE **sig**, UINT8 **core**
+Yes | `>` | `procexit` | ERRNO **status**, ERRNO **ret**, SIGTYPE **sig**, UINT8 **core**, PID **reaper_tid**
 Yes | `>` | `signaldeliver` | PID **spid**, PID **dpid**, SIGTYPE **sig**
 Yes | `>` | `page_fault` | UINT64 **addr**, UINT64 **ip**, FLAGS32 **error**: *PROTECTION_VIOLATION*, *PAGE_NOT_PRESENT*, *WRITE_ACCESS*, *READ_ACCESS*, *USER_FAULT*, *SUPERVISOR_FAULT*, *RESERVED_PAGE*, *INSTRUCTION_FETCH*
 
 
 ## Plugin events
 
-Default | Dir | Name | Args 
+Default | Dir | Name | Params 
 :-------|:----|:-----|:-----
 Yes | `>` | `pluginevent` | UINT32 **plugin_id**, BYTEBUF **event_data**
 
 
 ## Metaevents
 
-Default | Dir | Name | Args 
+Default | Dir | Name | Params 
 :-------|:----|:-----|:-----
 Yes | `>` | `drop` | UINT32 **ratio**
 Yes | `<` | `drop` | UINT32 **ratio**
