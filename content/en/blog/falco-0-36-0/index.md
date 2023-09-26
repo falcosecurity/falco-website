@@ -43,7 +43,7 @@ We have seen many requests from the community in the form of questions and issue
 - The `-p` option is now changed:
     - when only `-pc` is set Falco will print `container_id=%container.id container_image=%container.image.repository container_image_tag=%container.image.tag container_name=%container.name`
     - when `-pk` is set it will print as above, but with `k8s_ns=%k8s.ns.name k8s_pod_name=%k8s.pod.name` appended
-
+- Command line options `s` and `stats-interval` have been removed in favor of `metrics` config in `falco.yaml`.
 
 ## Major features and improvements
 
@@ -117,7 +117,6 @@ It's sad to see features go, but sometimes we need to remove something in order 
 
 - The optional rate-limiter mechanism, since it seems to be no longer used and it also can discard events including potentially critical alerts
 - The `--userspace` option, since the corresponding feature and the associated projects in the Falco organization have not been maintained for years
-- The `stats` command args option. This is being replaced by the `metrics` configuration.
 - The `falco-driver-loader` bash script. The driver loading functionality is going to be implemented in `falcoctl` to improve Falco's driver loading capabilities and make it easier to maintain and contribute to.
 
 ## Try it out
