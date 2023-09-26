@@ -17,9 +17,9 @@ version: v0.35.1
 versions:
   - fullversion: v0.35.1
     version: v0.35
-    githubbranch: master
-    docsbranch: master
-    url: https://falco.org/
+    githubbranch: 0.35.1
+    docsbranch: v0.35
+    url: https://v0-35.falco.org/
         
   - fullversion: v0.34.1
     version: v0.34
