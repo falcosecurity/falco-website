@@ -24,6 +24,6 @@ Where the option `falcoctl.config.artifact.install.refs` governs which rules are
 
 {{% /pageinfo %}}
 
-You can find all the rules in their official [repository](https://github.com/falcosecurity/rules/blob/main/rules/falco_rules.yaml).
+You can find all the rules in their official [repository](https://github.com/falcosecurity/rules/blob/main/rules/).
 
 {{< rules_list >}}
