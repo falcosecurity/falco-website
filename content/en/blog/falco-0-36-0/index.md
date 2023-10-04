@@ -1,7 +1,7 @@
 ---
 title: Falco 0.36.0
 date: 2023-09-26
-author: Luca Guerra, Andrea Terzolo, Rohit Raju
+author: Luca Guerra, Andrea Terzolo, Rohith Raju
 slug: falco-0-36-0
 tags: ["Falco","Release"]
 ---
@@ -113,7 +113,7 @@ With each release, Falco gets more quality-of-life improvements, such as:
 
 ## Deprecated features
 
-It's sad to see features go, but sometimes we need to remove something in order to focus on what matters for our adopters. This is what maintainers are proposing for deprecation in the next Falco version 0.37.0:
+It's sad to see features go, but sometimes we need to remove something in order to focus on what matters for our adopters. This is what maintainers are proposing for deprecation in this release and removal in the next Falco version 0.37.0:
 
 - The optional rate-limiter mechanism, since it seems to be no longer used and it also can discard events including potentially critical alerts
 - The `--userspace` option, since the corresponding feature and the associated projects in the Falco organization have not been maintained for years
@@ -153,4 +153,4 @@ See you for the next release!
 
 Enjoy,
 
-_Luca, Andrea, Rohit_
+_Luca, Andrea, Rohith_
