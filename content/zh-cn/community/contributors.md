@@ -1,1 +1,0 @@
-../../en/community/contributors.md
