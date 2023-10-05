@@ -14,12 +14,3 @@ Falco's configuration file is a YAML file containing a collection of `key: value
 
 Any configuration option can be overridden on the command line via the `-o/--option key=value` flag. 
 For `key: [value list]` options, you can specify individual list items using `--option key.subkey=value`.
-
-{{< yaml_table_inline  
-    header="Falco options"
-    subheader="Apply either via falco.yaml or with the -o/--option argument."
-    class="inline-config-options"
-    contentPath="reference.daemon.config_options"
-    columnTitles="Option Name,Option Type,Description"
-    columnKeys="name,type,description"
->}}
