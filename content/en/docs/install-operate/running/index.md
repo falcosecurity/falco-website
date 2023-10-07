@@ -2,7 +2,8 @@
 title: Running
 description: Operating and Managing Falco
 weight: 40
-aliases: [/docs/getting-started/running/]
+aliases:
+- ../../getting-started/running
 ---
 
 ## Falco packages

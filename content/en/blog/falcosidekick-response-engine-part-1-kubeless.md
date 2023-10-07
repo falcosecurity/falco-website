@@ -1,10 +1,13 @@
 ---
-title: "Kubernetes Response Engine, Part 1: Falcosidekick + Kubeless"
+title: 'Kubernetes Response Engine, Part 1: Falcosidekick + Kubeless'
 date: 2021-01-15
 author: Thomas Labarussias
 slug: falcosidekick-response-engine-part-1-kubeless
-tags: ["Falcosidekick","Integration"]
-aliases: [/blog/falcosidekick-kubeless/]
+tags:
+- Falcosidekick
+- Integration
+aliases:
+- falcosidekick-kubeless
 ---
 
 > *This blog post is part of a series of articles about how to create a `Kubernetes` response engine with `Falco`, `Falcosidekick` and a `FaaS`.*

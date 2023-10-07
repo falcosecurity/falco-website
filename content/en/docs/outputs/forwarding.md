@@ -3,7 +3,8 @@ title: Forwarding Alerts
 description: Forward Falco Alerts to third parties with Falcosidekick
 linktitle: Forwarding Alerts
 weight: 30
-aliases: [/docs/alerts/forwarding/]
+aliases:
+- ../alerts/forwarding
 ---
 
 Falco alerts can easily be forwarded to third-party systems. Their JSON format allows them to be easily consumed for storage, analysis and reaction. 

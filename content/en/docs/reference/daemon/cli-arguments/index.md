@@ -1,13 +1,17 @@
 ---
-aliases: ["/docs/getting-started/running/arguments"]
+aliases:
+- ../../../getting-started/running/arguments
 title: Falco Daemon Arguments
 linktitle: Falco Arguments
 description: List of CLI arguments allowed by Falco
 weight: 20
 no_edit: true
 notoc: true
-categories: ["Installation", "Deployment"]
-tags: ["Falco Daemon"]
+categories:
+- Installation
+- Deployment
+tags:
+- Falco Daemon
 ---
 
 This page lists all arguments you can pass to Falco in your command line:

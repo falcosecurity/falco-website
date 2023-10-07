@@ -2,7 +2,8 @@
 title: Additional Resources
 description: Learn More About Falco
 slug: falco-additional
-aliases: [/falco-additional]
+aliases:
+- ../../falco-additional
 weight: 30
 ---
 

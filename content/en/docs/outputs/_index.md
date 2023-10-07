@@ -2,7 +2,8 @@
 title: Falco Outputs
 description: Work with Falco Outputs and send Falco Alerts in your desired platform
 linktitle: Falco Outputs
-aliases: [/docs/alerts/]
+aliases:
+- alerts
 weight: 40
 ---
 
