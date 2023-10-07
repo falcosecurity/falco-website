@@ -5,9 +5,16 @@ description: Configuration for the Falco daemon
 weight: 40
 notoc: true
 no_edit: true
-aliases: ["/docs/configuration/"]
-categories: ["Installation", "Deployment", "Configuration"]
-tags: ["Falco Daemon", "falco.yaml", "rules files"]
+aliases:
+- ../../../configuration
+categories:
+- Installation
+- Deployment
+- Configuration
+tags:
+- Falco Daemon
+- falco.yaml
+- rules files
 ---
 
 Falco's configuration file is a YAML file containing a collection of `key: value` or `key: [value list]` pairs.

@@ -1,7 +1,8 @@
 ---
 title: Production Environment
 description: Integrations built on the Falco core in a production environment
-aliases: [/docs/getting-started/third-party/production]
+aliases:
+- ../../getting-started/third-party/production
 weight: 30
 ---
 

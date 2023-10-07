@@ -1,7 +1,9 @@
 ---
 title: Download
 description: Officially supported Falco artifacts
-aliases: [/docs/download/,/docs/getting-started/download]
+aliases:
+- ../download
+- ../getting-started/download
 weight: 20
 ---
 

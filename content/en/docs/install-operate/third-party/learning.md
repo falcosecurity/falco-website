@@ -1,7 +1,8 @@
 ---
 title: Learning Environment
 description: Integrations built on the Falco core in a learning environment
-aliases: [/docs/getting-started/third-party/learning]
+aliases:
+- ../../getting-started/third-party/learning
 weight: 20
 ---
 

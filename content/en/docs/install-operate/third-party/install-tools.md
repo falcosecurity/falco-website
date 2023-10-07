@@ -1,7 +1,9 @@
 ---
 title: Installation Tools
-description: Installation tools  that are required for integrations built on the Falco core
-aliases: [/docs/getting-started/third-party/install-tools]
+description: Installation tools  that are required for integrations built on the Falco
+  core
+aliases:
+- ../../getting-started/third-party/install-tools
 weight: 10
 ---
 
