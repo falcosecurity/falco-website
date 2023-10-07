@@ -2,7 +2,6 @@
 title: What is Falco?
 keywords: Falco, Runtime security, kubernetes security, k8s security, Threat detection, intrusion detection, Falcosidekick
 aliases: 
-  - /about/
   - /about/falco/
 ---
 
