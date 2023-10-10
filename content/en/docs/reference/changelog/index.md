@@ -3,7 +3,7 @@ title: Changelog
 linktitle: Changelog
 description: List of changes throughout Falco versions
 aliases:
-- ../../changelog
+- ../changelog
 weight: 200
 notoc: true
 no_edit: true
