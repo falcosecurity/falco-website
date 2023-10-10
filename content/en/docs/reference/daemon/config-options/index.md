@@ -6,7 +6,7 @@ weight: 40
 notoc: true
 no_edit: true
 aliases:
-- ../../../configuration
+- ../../configuration
 categories:
 - Installation
 - Deployment

@@ -3,7 +3,7 @@ title: Supported Events
 linktitle: Supported Events
 description: Find out which events Falco supports
 aliases:
-- ../../../rules/supported-events
+- ../../rules/supported-events
 weight: 40
 ---
 

@@ -3,7 +3,7 @@ title: Running
 description: Operating and Managing Falco
 weight: 40
 aliases:
-- ../../getting-started/running
+- ../getting-started/running
 ---
 
 ## Falco packages
