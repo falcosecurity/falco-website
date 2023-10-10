@@ -1,6 +1,6 @@
 ---
 aliases:
-- ../../../getting-started/running/arguments
+- ../../getting-started/running/arguments
 title: Falco Daemon Arguments
 linktitle: Falco Arguments
 description: List of CLI arguments allowed by Falco

@@ -1,6 +1,6 @@
 ---
 aliases:
-- ../../../examples
+- ../../examples
 title: Rules Examples
 description: Several examples of Falco Rules
 weight: 80
