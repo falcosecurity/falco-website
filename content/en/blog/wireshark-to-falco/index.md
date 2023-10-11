@@ -4,7 +4,7 @@ date: 2023-10-11
 author: Nigel Douglas
 slug: wireshark-to-falco
 images:
-  - /blog/wireshark-to-falco/images/falcon-shark.png
+  - /blog/wireshark-to-falco/images/falcon-shark-featured.png
 tags: ["Falco","Wireshark", "Linux"]
 ---
 
