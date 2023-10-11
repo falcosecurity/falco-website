@@ -3,8 +3,8 @@ title: Linux Introspection - From BPF to Wireshark to Falco
 date: 2023-10-11
 author: Nigel Douglas
 slug: wireshark-to-falco
-images: 
-  - /blog/wireshark-to-falco/images/falcon_shark.png
+images:
+  - /blog/wireshark-to-falco/images/falcon-shark.png
 tags: ["Falco","Wireshark", "Linux"]
 ---
 
