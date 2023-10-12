@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: 팔코 프로젝트
 description: 클라우드 네이티브 런타임 보안
 weight: 1

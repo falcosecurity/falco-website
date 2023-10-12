@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: Falco 0.25.0 a.k.a. "the summer release"
 date: 2020-08-25
 author: Lorenzo Fontana, Leonardo Grasso

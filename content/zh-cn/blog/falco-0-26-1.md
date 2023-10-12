@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: Falco 0.26.1 a.k.a. "the static release"
 date: 2020-10-01
 author: Leonardo Di Donato, Lorenzo Fontana

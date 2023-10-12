@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: ഫാൽക്കോ ഉദാഹരണങ്ങൾ
 weight: 9
 ---

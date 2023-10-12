@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: 実行する
 description: Falcoの運用と管理
 weight: 4

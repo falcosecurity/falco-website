@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: Falco 0.20.0 is released
 date: 2020-02-24
 author: Lorenzo Fontana

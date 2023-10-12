@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: Falco 0.28.1
 date: 2021-05-07
 author: Carlos Panato

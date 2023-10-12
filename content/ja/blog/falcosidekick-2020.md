@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: Falcosidekick 2020
 date: 2021-01-12
 author: Thomas Labarussias

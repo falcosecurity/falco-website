@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: ഫാൽകോ പ്രോജക്റ്റ്
 description: ക്ലൗഡ് നേറ്റീവ് റൺടൈം സെക്യൂരിറ്റി
 weight: 1

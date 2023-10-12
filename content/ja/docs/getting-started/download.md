@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: ダウンロード
 description: 公式にサポートされているFalcoアーティファクト
 weight: 2

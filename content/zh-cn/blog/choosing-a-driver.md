@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: Choosing a Falco driver
 description: Understanding which Falco driver is right for you
 date: 2020-09-23

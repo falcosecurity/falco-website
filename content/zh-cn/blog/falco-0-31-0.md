@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: Falco 0.31.0 a.k.a. "the Gyrfalcon"
 date: 2022-01-31
 author: Jason Dellaluce, Leonardo Grasso

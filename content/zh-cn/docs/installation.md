@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: 安装Falco
 description: 在Linux系统和各种容器平台上运行
 weight: 2

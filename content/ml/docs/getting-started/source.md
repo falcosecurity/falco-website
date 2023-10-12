@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: സോഴ്സിൽ നിന്ന് ഫാൽക്കോ നിർമ്മിക്കുക
 weight: 5
 ---

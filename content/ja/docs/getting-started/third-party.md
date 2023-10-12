@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: サードパーティ統合
 description: Falcoコア上に構築されたコミュニティ主導の統合
 weight: 5

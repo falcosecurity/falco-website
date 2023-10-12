@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: Pythonクライアント
 weight: 3
 ---

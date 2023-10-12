@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: 써드파티 통합
 description: 팔코 코어에 구축된 커뮤니티 기반 통합
 weight: 5

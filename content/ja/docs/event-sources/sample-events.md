@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: サンプルイベントの生成
 weight: 4
 ---

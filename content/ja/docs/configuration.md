@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: 設定
 description: Falco デーモンの設定
 weight: 4

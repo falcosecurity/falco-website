@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: 2020年におけるFalco
 description: パンデミックイヤーにおけるFalcoとそのコミュニティの進行状況のレビュー
 date: 2021-01-03

@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: ആമുഖം
 description: ഫാൽക്കോയ്‌ക്ക് ആമുഖം
 weight: 2

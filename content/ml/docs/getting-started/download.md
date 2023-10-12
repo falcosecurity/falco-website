@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: ഡൌൺലോഡ്
 description: ഔദ്യോഗികമായി പിന്തുണയ്ക്കുന്ന ഫാൽക്കോ ആർട്ടിഫാക്ടസ്
 weight: 2

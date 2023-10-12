@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: Falco Rules Now Support Exceptions
 date: 2021-01-19
 author: Mark Stemm

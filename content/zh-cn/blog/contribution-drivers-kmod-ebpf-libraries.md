@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: Contribution of the drivers and the libraries
 date: 2021-02-23
 author: Leonardo Di Donato, Leonardo Grasso

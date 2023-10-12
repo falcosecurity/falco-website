@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: 소스로 팔코 빌드하기
 weight: 6
 ---

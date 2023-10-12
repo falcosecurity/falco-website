@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: "通过Falco发布插件和云安全"
 linktitle: "通过Falco发布插件和云安全"
 date: 2022-02-09

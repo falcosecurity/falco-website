@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: 설치
 description: 리눅스 시스템에서 팔코 설치하기
 weight: 3

@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: 구성
 description: 팔코 데몬을 위한 구성
 weight: 5
