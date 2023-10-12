@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 Title: "Extend Falco inputs by creating a Plugin: the basics"
 Date: 2022-02-15
 Author: Thomas Labarussias

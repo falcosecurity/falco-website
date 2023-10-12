@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: Falco 0.23.0 a.k.a. "the artifacts scope release"
 date: 2020-05-18
 author: Leonardo Grasso, Lorenzo Fontana

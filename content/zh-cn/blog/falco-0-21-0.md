@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: Falco 0.21.0 is out!
 date: 2020-03-18
 author: Leonardo Di Donato

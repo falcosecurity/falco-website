@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: 다운로드
 description: 공식 지원 팔코 아티팩트
 weight: 2

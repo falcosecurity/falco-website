@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: Falco അലേർട്ട്സ്
 weight: 8
 ---

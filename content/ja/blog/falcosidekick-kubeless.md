@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: Falcosidekick + Kubeless = a Kubernetes Response Engine
 date: 2021-01-15
 author: Thomas Labarussias

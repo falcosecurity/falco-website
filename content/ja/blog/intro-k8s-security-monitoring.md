@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: Falcoを使ったKubernetesセキュリティの入門
 description: Falcoを使ったKubernetesセキュリティ監視の簡単な紹介
 date: 2021-01-07

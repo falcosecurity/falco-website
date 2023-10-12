@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: 규칙
 weight: 2
 ---

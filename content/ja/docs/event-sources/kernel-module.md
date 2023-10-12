@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: Falcoカーネルモジュール
 weight: 1
 ---

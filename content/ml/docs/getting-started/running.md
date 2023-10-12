@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: Running
 description: Operating and Managing Falco
 weight: 4

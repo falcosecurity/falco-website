@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: ルール
 weight: 2
 aliases: [/jp/docs/rules/]

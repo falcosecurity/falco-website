@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: デフォルトマクロ
 weight: 2
 ---

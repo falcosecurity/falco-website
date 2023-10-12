@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: 기본 매크로
 weight: 2
 ---

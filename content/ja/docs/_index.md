@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: The Falco Project
 description: クラウドネイティブランタイムセキュリティ
 weight: 1

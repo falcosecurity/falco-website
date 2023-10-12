@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: Kubernetes監査イベント
 weight: 2
 ---

@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: はじめに
 description: Falcoの使用を開始する
 weight: 2

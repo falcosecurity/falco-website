@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: gRPC API
 weight: 10
 ---

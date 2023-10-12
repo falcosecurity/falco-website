@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: 팔코 경고
 description: Falco를 통합하고 원하는 플랫폼에서 Falco 경고를 전송
 linktitle: 팔코 경고

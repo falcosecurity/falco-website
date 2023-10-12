@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: カスタムカーネルを使ったWSL2上のFalco
 description: WSL2 で Falco カーネルモジュールを有効にする方法
 date: 2021-01-05

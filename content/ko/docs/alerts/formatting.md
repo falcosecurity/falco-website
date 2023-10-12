@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: 경고 형식
 description: 컨테이너 및 Kubernetes용 팔코 형식 경고
 linktitle: 형식 경고

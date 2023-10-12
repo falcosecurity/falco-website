@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: Falcoのルールが例外をサポートするようになりました
 date: 2021-01-19
 author: Mark Stemm

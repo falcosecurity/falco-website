@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: Falco in 2020
 description: Reviewing the progress of Falco and its community during the pandemic year
 date: 2021-01-03

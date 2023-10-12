@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: Cloud Native Security Hub
 date: 2019-11-18
 author: Kris Nova

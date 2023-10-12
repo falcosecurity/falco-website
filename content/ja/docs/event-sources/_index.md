@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: イベントソース
 weight: 3
 ---

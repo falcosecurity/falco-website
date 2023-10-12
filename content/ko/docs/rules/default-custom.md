@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: 기본 및 로컬 규칙 파일
 weight: 1
 ---

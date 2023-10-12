@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 title: ഇൻസ്റ്റാൾ
 description: ലിനക്സ് സിസ്റ്റത്തിൽ ഫാൽക്കോ സജ്ജമാക്കുന്ന വിധം
 weight: 3

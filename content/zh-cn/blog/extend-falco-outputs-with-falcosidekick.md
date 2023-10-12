@@ -1,4 +1,5 @@
 ---
+exclude_search: true
 Title: Extend Falco outputs with falcosidekick
 Date: 2020-06-22
 Author: Thomas Labarussias
