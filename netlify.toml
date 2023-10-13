@@ -14,10 +14,12 @@ HUGO_ENV = "production"
 HUGO_ENABLEGITINFO = "true"
 
 [context.deploy-preview]
+HUGO_ENV = "development"
 command = "make preview-build"
 
 [context.branch-deploy]
-command = "make preview-build"
+HUGO_ENV = "archive"
+command = "make branch-build"
 
 [functions]
 node_bundler = "esbuild"
