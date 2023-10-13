@@ -1,3 +1,11 @@
+ifndef DEPLOY_PRIME_URL
+override DEPLOY_PRIME_URL = localhost
+endif
+
+ifndef HUGO_ENV
+override HUGO_ENV = development
+endif
+
 clean:
 	rm -rf public
 
@@ -11,16 +19,25 @@ serve: dependencies
 
 production-build: dependencies
 	make check-github-rate-limit
-	hugo --minify
+	hugo --minify --environment $(HUGO_ENV)
+	make check-links
+
+branch-build: dependencies
+	make check-github-rate-limit
+	hugo \
+		--minify \
+		--environment $(HUGO_ENV) \
+		--baseURL $(DEPLOY_PRIME_URL)
 	make check-links
 
 preview-build: dependencies
 	make check-github-rate-limit
 	hugo \
-		--baseURL $(DEPLOY_PRIME_URL) \
 		--buildDrafts \
 		--buildFuture \
-		--minify
+		--minify \
+		--environment $(HUGO_ENV) \
+		--baseURL $(DEPLOY_PRIME_URL)
 	make check-links
 
 link-checker-setup:
