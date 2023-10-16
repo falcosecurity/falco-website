@@ -1,5 +1,5 @@
 ---
-title: Falco 0.36.1
+title: Introducing Falco 0.36.1
 date: 2023-10-16
 author: Andrea Terzolo, Luca Guerra
 slug: falco-0-36-1
@@ -10,11 +10,11 @@ Today we announce the release of **Falco 0.36.1** 🦅!
 
 ## Fixes
 
-Here is a tiny patch release! It addresses some small bugs that will not bother us and our users anymore:
+Falco's 0.36.1 release is a small patch aimed at protecting our uses by addressing a few minor bugs. It includes the following:
 
 * Address a **HIGH** severity vulnerability in libcurl **[CVE-2023-38545](https://curl.se/docs/CVE-2023-38545.html)**, bumping the library to the patched version `8.4.0`. You can find more details in the [section below](#vulnerability-in-libcurl).
 * The legacy eBPF probe can now handle systems with CPU hotplug enabled, opening the right number of kernel buffers. (https://github.com/falcosecurity/falco/issues/2843)
-* Remove a no more useful experimental Falco config `outputs_queue.recovery`. This was introduced in Falco `0.36.0` as an experiment.
+* Remove a no longer useful experimental Falco config `outputs_queue.recovery`. This was introduced in Falco `0.36.0` as an experiment.
 * Fix a possible segfault caused by a faulty implementation of [`timer_delete`](https://bugs.launchpad.net/ubuntu/+source/glibc/+bug/1940296). (https://github.com/falcosecurity/falco/issues/2850)
 
 Thanks to everyone in the community for helping us in spotting these annoying bugs 🐛! You make Falco successful 🦅!
@@ -29,7 +29,7 @@ According to the excellent [in-depth description](https://daniel.haxx.se/blog/20
 * A **SOCKS5 HTTP(S) proxy has been configured**. This happens if you have set the standard environment variables that control proxy connections, such as `http_proxy`/`https_proxy`/`no_proxy` or libcurl-specific ones as indicated in the [advisory](https://curl.se/docs/CVE-2023-38545.html) or the libcurl documentation.
 * An **attacker controls** the server that Falco is connecting to, namely the **server configured to receive http_output** or a **custom prebuilt driver repository server**, and the SOCKS5 proxy is "slow enough" to allow the attack to happen.
 
-Having an environment that is exploitable does not appear to be common, but possible nonetheless, for this reason, Falco maintainers have shipped a patch release 🦅
+While it may be rare that users have an exploitable environment, it's still a possibility. For this reason, Falco maintainers decided to ship this patch release 🦅
 
 ## Try it! 🏎️
 
@@ -40,7 +40,7 @@ As usual, in case you just want to try out the stable **Falco 0.36.1**, you can 
 * [openSUSE](https://falco.org/docs/getting-started/installation/#suse)
 * [Linux binary package](https://falco.org/docs/getting-started/installation/#linux-binary)
 
-Do you rather prefer using the container images? No problem at all! 🐳
+Prefer to use a container image? No problem at all! 🐳
 
 You can read more about running Falco with Docker in the [docs](https://falco.org/docs/getting-started/running/#docker).
 
@@ -63,7 +63,7 @@ And many, many, more enhancements!
 
 ## Let's meet 🤝
 
-We meet every week in our [community calls](https://github.com/falcosecurity/community),
+We meet every Wednesday in our [community calls](https://github.com/falcosecurity/community),
 if you want to know the latest and the greatest you should join us there!
 
 If you have any questions
