@@ -44,7 +44,7 @@ Please follow these steps to add your blog to [Falco blog folder](https://falco.
 9. In the header of the `index.md` file (the [front matter](https://gohugo.io/content-management/front-matter/)), set the web featured image. It will be displayed when sharing the blog post on social networks.
     - Use the URL path (without the domain name). If the _slug_ does't match the directory name, use use the former.
     - The recommended size of the featured image is 1200 x 628 pixels.
-    - Add only one featured image to this list.
+    - Add only one featured image to this list that will be displayed as cover. Make sure that the file name contains the word `featured`.
     - Example:
       ```
       ---
