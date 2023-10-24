@@ -1,8 +1,9 @@
 ---
-Title: "Integrate Runtime Security into Your Environment with Falcosidekick"
-Date: 2023-10-24
-Author: Mike Coleman
+title: "Integrate Runtime Security into Your Environment with Falcosidekick"
+date: 2023-10-24
+author: Mike Coleman
 slug: integrate-runtime-security-with-falcosidekick
+tags: ["tool"]
 ---
 
 If you’re looking to integrate runtime security into your existing environment, [Falco](https://falco.org) is an obvious choice. Falco is a Cloud Native Computing Foundation backed open source project that provides real-time threat detection for cloud, container, and Kubernetes workloads. With over 80 million downloads Falco has been adopted by some of the largest companies in the world. 
