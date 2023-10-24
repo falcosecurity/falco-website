@@ -5,7 +5,7 @@ author: Mike Coleman
 slug: integrate-runtime-security-with-falcosidekick
 tags: ["tool"]
 images:
-  - /blog/integrate-runtime-security-with-falcosidekick/logo-featured.png
+  - /blog/integrate-runtime-security-with-falcosidekick/sidekick-featured.png
 ---
 
 If you’re looking to integrate runtime security into your existing environment, [Falco](https://falco.org) is an obvious choice. Falco is a Cloud Native Computing Foundation backed open source project that provides real-time threat detection for cloud, container, and Kubernetes workloads. With over 80 million downloads Falco has been adopted by some of the largest companies in the world. 
@@ -14,7 +14,7 @@ However, what many Falco users discover early on is that Falco’s default event
 
 While these outputs might be enough to get you started, most practitioners want to integrate Falco with the tooling they already use. This is where [Falcosidekick](https://github.com/falcosecurity/falcosidekick) comes in. 
 
-![](images/sidekick.png)
+![](images/sidekick-featured.png)
 
 Falcosidekick is a companion (i.e. a side-kick ;)) project for Falco that allows Falco events to be forwarded to 60 different services (with more being added all the time) allowing practitioners to monitor and react to Falco events with the tools they are already using. 
 
