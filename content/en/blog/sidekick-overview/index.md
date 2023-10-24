@@ -1,7 +1,7 @@
 ---
 Title: "Integrate Runtime Security into Your Environment with Falcosidekick"
-Date: 2023-06-26
-Author: Thomas Labarussias
+Date: 2023-10-24
+Author: Mike Coleman
 slug: integrate-runtime-security-with-falcosidekick
 ---
 
