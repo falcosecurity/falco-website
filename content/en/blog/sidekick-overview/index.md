@@ -11,7 +11,7 @@ However, what many Falco users discover early on is that Falco’s default event
 
 While these outputs might be enough to get you started, most practitioners want to integrate Falco with the tooling they already use. This is where [Falcosidekick](https://github.com/falcosecurity/falcosidekick) comes in. 
 
-!![](images/sidekick.png)
+![](images/sidekick.png)
 
 Falcosidekick is a companion (i.e. a side-kick ;)) project for Falco that allows Falco events to be forwarded to 60 different services (with more being added all the time) allowing practitioners to monitor and react to Falco events with the tools they are already using. 
 
