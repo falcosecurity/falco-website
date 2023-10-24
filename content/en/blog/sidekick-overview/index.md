@@ -5,9 +5,6 @@ Author: Thomas Labarussias
 slug: integrate-runtime-security-with-falcosidekick
 ---
 
-## Integrate Runtime Security into Your Environment with Falcosidekick
-
-
 If you’re looking to integrate runtime security into your existing environment, [Falco](https://falco.org) is an obvious choice. Falco is a Cloud Native Computing Foundation backed open source project that provides real-time threat detection for cloud, container, and Kubernetes workloads. With over 80 million downloads Falco has been adopted by some of the largest companies in the world. 
 
 However, what many Falco users discover early on is that Falco’s default event output is rather limited. Out of the box, Falco can only send output to five different endpoints: syslog, stdout, stderr, and gRPC or HTTPS endpoints. 
