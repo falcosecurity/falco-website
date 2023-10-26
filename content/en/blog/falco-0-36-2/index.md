@@ -15,6 +15,7 @@ Falco's 0.36.2 release is a small patch addressing a few bugs. It includes the f
 * Fixed a possible segfault caused by uninitialized variable in libsinsp::next() method call. (https://github.com/falcosecurity/falco/issues/2878)
 * Improved supported program type detection for modern BPF; this ensures we can actually be sure that our BPF program type is unsupported when returning an error to the user. (https://github.com/falcosecurity/libs/pull/1404)
 * Fixed a subtle bug in `rawarg` filtercheck for non-string types. (https://github.com/falcosecurity/libs/pull/1428)
+* Fixed an uninitialized variable in the libscap bpf engine that lead to `stdin` getting closed while Falco soft restarted. (https://github.com/falcosecurity/libs/issues/1448)
 
 Thanks to everyone in the community for helping us in spotting these annoying bugs 🐛! You make Falco successful 🦅!
 
