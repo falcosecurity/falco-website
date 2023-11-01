@@ -1,144 +1,47 @@
-- title: "Réagir à temps aux menaces dans vos clusters Kubernetes avec Falco et son écosystème"
-  start: "2023-09-19T19:00:00+0200"
-  end: "2023-09-19T22:00:00+0200"
-  timezone: Europe/Paris
-  timezoneName: CEST
-  location: Paris, France
-  type: talk
-  description: "Kubernetes et la sécurité: réaction aux menaces et gestion des secrets"
-  url: https://www.meetup.com/fr-FR/cloud-native-computing-paris/events/295167585/
-  schedule:
-    - start: "2023-09-19T19:00:00+0200"
-      time:
-        - start: "2023-09-19T19:00:00+0200"
-          end: "2023-09-19T22:00:00+0200"
-          content: '<a href="https://www.meetup.com/fr-FR/cloud-native-computing-paris/events/295167585/" target="_blank">Réagir à temps aux menaces dans vos clusters Kubernetes avec Falco et son écosystème</a><br>Paris, France<br>'
-
-- title: "Falco on Tour: New York with Wolfi!"
-  start: "2023-09-19T17:00:00-0400"
-  end: "2023-09-19T20:00:00-0400"
-  timezone: America/New_York
-  timezoneName: EDT
-  location: New York, NY
-  type: workshop
-  description: "Up & Running with Runtime Security Workshop"
-  url: https://www.aicamp.ai/event/eventdetails/W2023091914?utm_source=sysdig0919
-  schedule:
-    - start: "2023-09-19T17:00:00-0400"
-      time:
-        - start: "2023-09-19T17:00:00-0400"
-          end: "2023-09-19T20:00:00-0400"
-          content: '<a href="https://www.aicamp.ai/event/eventdetails/W2023091914?utm_source=sysdig0919" target="_blank">Up & Running with Runtime Security Workshop</a><br>New York, NY<br>'
-
-- title: "Falco on Tour: Toronto with PwC!"
-  start: "2023-09-21T17:30:00-0400"
-  end: "2023-09-21T20:30:00-0400"
-  timezone: America/Toronto
-  timezoneName: EDT
-  location: Toronto, Canada
-  type: workshop
-  description: "Up & Running with Runtime Security Workshop"
-  url: https://www.eventbrite.com/e/632747634207
-  schedule:
-    - start: "2023-09-21T17:30:00-0400"
-      time:
-        - start: "2023-09-21T17:30:00-0400"
-          end: "2023-09-21T20:30:00-0400"
-          content: '<a href="https://www.eventbrite.com/e/632747634207" target="_blank">Up & Running with Runtime Security Workshop</a><br>Toronto, Canada<br>'
-
-- title: "Falco on Tour: Amsterdam"
-  start: "2023-09-27T17:00:00+0200"
-  end: "2023-09-27T19:00:00+0200"
-  timezone: Europe/Amsterdam
-  timezoneName: CEST
-  location: Amsterdam, Netherlands
-  type: workshop
-  description: "Up & Running with Runtime Security Workshop"
-  url: https://www.aicamp.ai/event/eventdetails/W2023092708
-  schedule:
-    - start: "2023-09-27T17:00:00+0200"
-      time:
-        - start: "2023-09-27T17:00:00+0200"
-          end: "2023-09-27T19:00:00+0200"
-          content: '<a href="https://www.aicamp.ai/event/eventdetails/W2023092708" target="_blank">Up & Running with Runtime Security Workshop</a><br>Amsterdam, Netherlands<br>'
-
-- title: "Falco on Tour: Seattle"
-  start: "2023-09-26T17:00:00-0700"
-  end: "2023-09-26T20:30:00-0700"
-  timezone: America/Los_Angeles
-  timezoneName: PDT
-  location: Seattle, WA
-  type: workshop
-  description: "Up & Running with Runtime Security Workshop"
-  url: https://www.eventbrite.com/e/falco-on-tour-seattle-tickets-695521271847?aff=oddtdtcreator
-  schedule:
-    - start: "2023-09-26T17:00:00-0700"
-      time:
-        - start: "2023-09-26T17:00:00-0700"
-          end: "2023-09-26T20:30:00-0700"
-          content: '<a href="https://www.eventbrite.com/e/falco-on-tour-seattle-tickets-695521271847?aff=oddtdtcreator" target="_blank">Up & Running with Runtime Security Workshop</a><br>Seattle, WA<br>'
-
-
-- title: "Falco on Tour: Virtual"
-  start: "2023-09-28T09:00:00-0700"
-  end: "2023-09-28T11:00:00-0700"
-  timezone: America/Los_Angeles
-  timezoneName: PDT
-  location: Virtual
-  type: workshop
-  description: "Up & Running with Runtime Security Workshop"
-  url: https://www.aicamp.ai/event/eventdetails/W2023092809
-  schedule:
-    - start: "2023-09-28T09:00:00-0700"
-      time:
-        - start: "2023-09-28T09:00:00-0700"
-          end: "2023-09-28T11:00:00-0700"
-          content: '<a href="https://www.aicamp.ai/event/eventdetails/W2023092809" target="_blank">Up & Running with Runtime Security Workshop</a><br>Virtual<br>'
-
-- title: "Deep Dive into Falco: Empower DevSecOps with Real-time Container Security"
-  start: "2023-10-17T12:00:00+0200"
-  end: "2023-10-17T13:00:00+0200"
-  timezone: Europe/Berlin
-  timezoneName: CEST
-  location: Virtual
-  type: workshop
-  description: "Up & Running with Runtime Security Workshop"
-  url: https://www.meetup.com/devseccon-germany/events/295438432/
-  schedule:
-    - start: "2023-10-17T12:00:00+0200"
-      time:
-        - start: "2023-10-17T12:00:00+0200"
-          end: "2023-10-17T13:00:00+0200"
-          content: '<a href="https://www.meetup.com/devseccon-germany/events/295438432/" target="_blank">Up & Running with Runtime Security Workshop</a><br>Virtual<br>'
-
-- title: "Falco on Tour: Sharkfest!"
-  start: "2023-11-01T10:15:00+0200"
-  end: "2023-11-01T13:00:00+0200"
-  timezone: Europe/Brussels
-  timezoneName: CEST
-  location: Brussels, Belgium
-  type: workshop
-  description: "From Packets to System Calls: Evolving Cloud Visibility to Detect Attacks"
-  url: https://sharkfest.wireshark.org/sfeu/registration-options/
-  schedule:
-    - start: "2023-11-01T10:15:00+0200"
-      time:
-        - start: "2023-11-01T10:15:00+0200"
-          end: "2023-11-01T13:00:00+0200"
-          content: '<a href="https://sharkfest.wireshark.org/sfeu/registration-options/" target="_blank">From Packets to System Calls: Evolving Cloud Visibility to Detect Attacks</a><br>Brussels, Belgium<br>'
-
-- title: "Falco on Tour: Chicago"
+- title: "Falco at KubeCon North America! Day of Security"
   start: "2023-11-06T13:00:00-0600"
   end: "2023-11-06T17:30:00-0600"
   timezone: America/Chicago
   timezoneName: CST
   location: Chicago, IL
   type: workshop
-  description: "Up & Running with Runtime Security Workshop"
+  description: "Day of Security featuring Falco, Istio, and Wolfi!"
   url: https://www.eventbrite.com/e/636994255967
   schedule:
     - start: "2023-11-06T13:00:00-0600"
       time:
         - start: "2023-11-06T13:00:00-0600"
           end: "2023-11-06T17:30:00-0600"
-          content: '<a href="https://www.eventbrite.com/e/636994255967" target="_blank">Up & Running with Runtime Security Workshop</a><br>Chicago, IL<br>'
+          content: '<a href="https://www.eventbrite.com/e/636994255967" target="_blank">Day of Security featuring Falco, Istio, and Wolfi!</a><br>Chicago, IL<br>'
+
+- title: "Guardians of the Cloud: A Hands on Journey into Cloud-Native Security"
+  start: "2023-11-14T09:00:00-0700"
+  end: "2023-11-14T11:00:00-0700"
+  timezone: America/Los_Angeles
+  timezoneName: PDT
+  location: Virtual
+  type: workshop
+  description: "Guardians of the Cloud: A Hands on Journey into Cloud-Native Security"
+  url: https://www.aicamp.ai/event/eventdetails/W2023111409
+  schedule:
+    - start: "2023-11-14T09:00:00-0700"
+      time:
+        - start: "2023-11-14T09:00:00-0700"
+          end: "2023-11-14T11:00:00-0700"
+          content: '<a href="https://www.aicamp.ai/event/eventdetails/W2023111409" target="_blank">Guardians of the Cloud: A Hands on Journey into Cloud-Native Security</a><br>Virtual<br>'
+
+- title: "Guardians of the Cloud: A Hands on Journey into Cloud-Native Security"
+  start: "2023-12-12T09:00:00-0700"
+  end: "2023-12-12T11:00:00-0700"
+  timezone: America/Los_Angeles
+  timezoneName: PDT
+  location: Virtual
+  type: workshop
+  description: "Guardians of the Cloud: A Hands on Journey into Cloud-Native Security"
+  url: https://www.aicamp.ai/event/eventdetails/W2023121209
+  schedule:
+    - start: "2023-12-12T09:00:00-0700"
+      time:
+        - start: "2023-12-12T09:00:00-0700"
+          end: "2023-12-12T11:00:00-0700"
+          content: '<a href="https://www.aicamp.ai/event/eventdetails/W2023121209" target="_blank">Guardians of the Cloud: A Hands on Journey into Cloud-Native Security</a><br>Virtual<br>'
