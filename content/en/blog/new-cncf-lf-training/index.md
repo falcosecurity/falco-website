@@ -30,7 +30,7 @@ The course also thoroughly covers conditions and fields, delving into the realm 
 
 Finally, the course guides you through Falco's configuration process and fine-tuning strategies. It concludes by streamlining the process of writing new Falco rules, presenting a development methodology, along with key considerations to bear in mind when crafting rules.
 
-#### Sneek Peak
+#### Sneek Peek
 
 In one of the course exercises, we explain the Log4j vulnerability and the Log4Shell exploit. We detail each step of the attack, allowing you to simulate it in the lab environment.
 
