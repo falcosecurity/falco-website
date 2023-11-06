@@ -1,0 +1,11 @@
+---
+name: Detecting Cloud Runtime Threats with Falco (LFS254)
+type: course
+link: https://training.linuxfoundation.org/training/detecting-cloud-runtime-threats-with-falco-lfs254/
+description: Learn about Falco and how to install and use it in securing cloud native environments.
+thumbnail: lfs254.png
+duration: 20 hours
+provider:
+  name: linux-foundation
+  order: 1
+...
