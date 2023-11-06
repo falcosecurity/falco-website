@@ -21,16 +21,17 @@
 
 <section class="row td-box td-box--transparent">
   <div class="container">
-      <h3 class="mb-5">Courses</h3>
+    <h3 class="mb-5">Courses</h3>
+    {{- range $provider,$provider_data := $providers }}
+      {{ $logo := print "/images/training/providers/" .logo | relURL }}
       <div class="d-flex align-items-center">
         <h4 class="text-dark mb-0">Courtesy of</h4>
-        <img width="97px" class="ml-3" src="/images/training/providers/sysdig.svg" alt="Falco Training by Sysdig">
+        <img width="97px" class="ml-3" src="{{ $logo }}" alt="{{ .alt }}">
       </div>
-    <div class="row">
-      {{- range $provider,$provider_data := $providers }}
-      {{ $provider_offerings := where $courses "provider.name" $provider }}
-        {{ range $offering, $offering_data := sort $provider_offerings "provider.order" }}
-        {{ $thumbnail := print "/images/training/offerings/" .thumbnail | relURL }}
+      <div class="row">
+        {{ $provider_offerings := where $courses "provider.name" $provider }}
+          {{ range $offering, $offering_data := sort $provider_offerings "provider.order" }}
+          {{ $thumbnail := print "/images/training/offerings/" .thumbnail | relURL }}
           <div class="col-12 col-md-6 mt-4">
             <a class="text-decoration-none"  href="{{ .link }}" target="_blank" title="Course Description: {{ .description }}">
               <div class="card btn btn-light p-0 shadow">
@@ -49,8 +50,8 @@
             </a>
           </div>
         {{ end }}
-      {{- end }}
-    </div>
+      </div>
+    {{- end }}
   </div>
 </section>
 
