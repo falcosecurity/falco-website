@@ -43,6 +43,6 @@ In one of the course exercises, we explain the Log4j vulnerability and the Log4S
 
 Then, we walk you through how to write a new rule to detect this type of attack in Falco.
 
-### Enrol Now
+### Enroll Now
 
 Ready to embark on this transformative journey? Visit [the course page](https://training.linuxfoundation.org/training/detecting-cloud-runtime-threats-with-falco-lfs254/) to enroll and step into the world of cloud-native security mastery with Falco.
