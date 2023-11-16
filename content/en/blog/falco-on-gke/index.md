@@ -94,6 +94,8 @@ If you’d like to follow along, you will need the following:
 
     > **NOTE:** Ensure that your kubectl context is set to the cluster on which you wish to install Falco. 
 
+With the pre-requisites out of the way, let's get started with the actual install. 
+
 * Add the Falco chart to the Helm repository.
 
     ```
