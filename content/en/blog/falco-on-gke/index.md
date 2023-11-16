@@ -1,14 +1,13 @@
 ---
 title: "Adding runtime threat detection to Google Kubernetes Engine with Falco"
 linktitle: "Adding runtime threat detection to Google Kubernetes Engine with Falco"
-date: 2023-11-16
+date: 2023-11-20
 author: Mike Coleman
 slug: falco-on-gke
 images:
   - /blog/falco-on-gke/images/falco-on-gke-featured.png
-tags: [Falco, GKE, Google Kubernetes Engine, Google Cloud]
+tags: ["Falco", "GKE", "Google Kubernetes Engine", "Google Cloud"]
 ---
-
 
 One of the big advantages of running your workloads on a managed Kubernetes service like Google Kubernetes Engine (GKE) is that Google ensures your clusters are being deployed and managed following industry best practices. 
 
@@ -16,10 +15,9 @@ While GKE clusters are incredibly secure and reliable, there is always room for 
 
 In this blog, we’re going to describe how you can enhance GKE’s already great security by adding runtime threat detection with Falco. 
 
-
 ## What is Falco?
 
-Falco is a Cloud Native Computing Foundation project that provides runtime threat detection. Out of the box, Falco examines syscalls to alert you to any suspicious activity. And, since containers share the same kernel as their host, Falco can monitor not only activity on the host but also all the containers running on that host. Moreover, Falco pulls data from both Kubernetes and the container runtime to add additional context to its alerts. 
+Falco is a Cloud Native Computing Foundation project that provides runtime threat detection. Out of the box, Falco examines syscalls to alert you to any suspicious activity. And, since containers share the same kernel as their host, Falco can monitor not only activity on the host but also activity on all of the containers running on that host. Moreover, Falco pulls data from both Kubernetes and the container runtime to add additional context to its alerts. 
 
 With Falco running on your GKE clusters you can be notified of a wide variety of events, such as: 
 
@@ -29,17 +27,15 @@ With Falco running on your GKE clusters you can be notified of a wide variety of
 
 These are just a few examples. Falco has over 80 rules that can be used to make you aware of not only external threats but also when clusters aren’t being operated in accordance with industry best practices. 
 
-
 ## GKE Installation considerations
 
 There are two different ways to install Falco on GKE. The first is using the prepackaged click-to-run offering in the Google Cloud Marketplace. The second is using Falco’s helm chart. The click-to-run offering is probably the simplest way to get up and running with Falco on GKE, but the drawback is that the version offered often lags behind the latest release. 
 
 It’s also important to note that as of this writing, you cannot run Falco on GKE clusters running in Autopilot mode. This is primarily because Falco uses an init container running with privileged access to install its driver, and Autopilot does not allow the execution of privileged containers. 
 
-Something else to be aware of is that Falco on GKE needs to use one of  Falco’s eBPF drivers. Falco uses a driver to capture syscall events, and this driver is offered as a loadable kernel module or as an eBPF probe. There are actually two eBPF probes with Falco. One is called ‘eBPF’ (or classic eBPF) and the other is referred to as  ‘modern eBPF’ - you can learn more about them in the [Falco docs](https://falco.org/docs/event-sources/kernel/).
+Something else to be aware of is that Falco on GKE needs to use one of Falco’s eBPF drivers. Falco uses a driver to capture syscall events, and this driver is offered as a loadable kernel module or as an eBPF probe. There are actually two eBPF probes with Falco. One is called ‘eBPF’ (or classic eBPF) and the other is referred to as  ‘modern eBPF’ - you can learn more about them in the [Falco docs](https://falco.org/docs/event-sources/kernel/).
 
 On the Google Cloud side, GKE uses Container-Optimized OS (COS) as the default operating system for its worker node pools. COS is a security-enhanced operating system that limits access to certain parts of the underlying OS. Because of this security constraint, Falco cannot insert its kernel module to process system calls. However, COS does support eBPF, so that’s the option we’ll use (more specifically we’ll use the classic eBPF probe)
-
 
 ## Installing Falco via the Google Cloud Marketplace
 
@@ -47,9 +43,7 @@ Note: If you’d like to follow along, you’ll need to ensure your Google Cloud
 
 Installing Falco via the Google Cloud Marketplace is a pretty straightforward process. 
 
-
-
-* Log into your Google Cloud account, and ensure you have the required permissions to deploy a new GKE cluster or operate an existing one. \
+* Log into your Google Cloud account, and ensure you have the required permissions to deploy a new GKE cluster or operate an existing one.
 
 * Navigate to the Falco offering in the [Google Cloud Marketplace](https://console.cloud.google.com/marketplace/product/google/falco).
 
@@ -70,15 +64,11 @@ Installing Falco via the Google Cloud Marketplace is a pretty straightforward pr
 
 * Stackdriver is the old name for Google Cloud’s logging and monitoring suite. If you’d like to examine Falco’s metrics (not the actual alerts, but metrics on how Falco is performing) you can select that option. We won’t be covering that in this blog, so go ahead and leave it unchecked. 
 
-
     ![Screenshot of the configured options](./images/configuration.png "Screenshot of the configured options")
 
-* Click `DEPLOY` to deploy Falco onto the target cluster. 
+* Click `DEPLOY` to deploy Falco onto the target cluster. (If you choose to deploy a new cluster, you will need to wait until that finishes to click the `DEPLOY` button.)
 
-    > If you choose to deploy a new cluster, you will need to wait until that finishes to click the `DEPLOY` button. 
-
-With that Falco should be running on your GKE cluster. You can skip the next section, and continue with “Testing Falco”.
-
+With that, Falco should be running on your GKE cluster. You can skip the next section, and continue with “Testing Falco”.
 
 ## Installing Falco with Helm
 
@@ -90,9 +80,11 @@ If you’d like to follow along, you will need the following:
 
 * A GKE cluster that you can operate 
 
-* Helm and kubectl installed on your local computer or, alternatively, you can use Google Cloud Shell which has both Helm and kubectl already installed. 
+* Helm and `kubectl` installed on your local computer or, alternatively, you can use Google Cloud Shell which has both Helm and kubectl already installed. 
 
     > **NOTE:** Ensure that your kubectl context is set to the cluster on which you wish to install Falco. 
+
+With the pre-requisites out of the way, let's get started with the actual install. 
 
 * Add the Falco chart to the Helm repository.
 
@@ -102,7 +94,7 @@ If you’d like to follow along, you will need the following:
     helm repo update
     ```
 
-* Create a namespace (`falco```) for Falco to run in. 
+* Create the `falco` namespace for Falco to run in.
 
     ```
     kubectl create namespace falco
@@ -140,7 +132,7 @@ If you’d like to follow along, you will need the following:
 
 
     ```
-    kubectl logs -n falco -c falco -l app.kubernetes.io/name=falco`
+    kubectl logs -n falco -c falco -l app.kubernetes.io/name=falco
     ```
     
     You should see entries similar to this:
@@ -154,14 +146,13 @@ If you’d like to follow along, you will need the following:
     Fri Nov  3 15:48:07 2023: Loaded event sources: syscall
     Fri Nov  3 15:48:07 2023: Enabled event sources: syscall
     Fri Nov  3 15:48:07 2023: Opening 'syscall' source with BPF probe. BPF probe path: /root/.falco/falco-bpf.o
-
     ```
 
 Falco is now successfully running on your GKE cluster. The next step is to simulate some suspicious activity and verify that Falco detects it. 
 
 ## Testing Falco
 
-One of Falco’s default rules fires an alert if someone shells into a running container.  Follow the steps below to fire off that rule. 
+One of Falco’s default rules fires an alert if someone shells into a running container. Follow the steps below to fire off that rule. 
 
 * Start an Alpine container and have it sleep so it stays running. 
  
@@ -188,7 +179,7 @@ One of Falco’s default rules fires an alert if someone shells into a running c
     18:52:06.630209324: Notice A shell was spawned in a container with an attached terminal (evt_type=execve user=root user_uid=0 user_loginuid=-1 process=sh proc_exepath=/bin/busybox parent=runc command=sh -c ls -al terminal=34816 exe_flags=EXE_WRITABLE container_id=e71eac85a570 container_image=docker.io/library/alpine container_image_tag=latest container_name=alpine k8s_ns=default k8s_pod_name=alpine)
     ``` 
  
-Notice all the data the alert provides including the container ID, image, and name, as well as the executed command. 
+    Notice all the details the alert provides including the container ID, image, and name, as well as the executed command. 
 
 ## Conclusion
 
