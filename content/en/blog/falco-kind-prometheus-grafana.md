@@ -39,7 +39,7 @@ Otherwise you can manually generate them as explained [here](https://falco.org/d
 Note that in both cases, you have to make sure to set the correct CommonName. In this example, we are using the default hostname used by the Helm chart.
 
 ## Install Falco
-The official [Falco Helm Chart](https://github.com/falcosecurity/charts/tree/master/falco) is a straightforward way to deploy Falco. The chart adds Falco to all nodes in your cluster using a DaemonSet.
+The official [Falco Helm Chart](https://github.com/falcosecurity/charts/tree/master/charts/falco) is a straightforward way to deploy Falco. The chart adds Falco to all nodes in your cluster using a DaemonSet.
 
 Enable the Falco charts repository:
 
@@ -56,7 +56,7 @@ helm install falco falcosecurity/falco \
 ```
 
 ## Install falco-exporter
-[falco-exporter](https://github.com/falcosecurity/falco-exporter) is the Prometheus metrics exporter for Falco output events. Again here, using [the provided Helm chart](https://github.com/falcosecurity/charts/tree/master/falco-exporter) is the easiest way to deploy it.
+[falco-exporter](https://github.com/falcosecurity/falco-exporter) is the Prometheus metrics exporter for Falco output events. Again here, using [the provided Helm chart](https://github.com/falcosecurity/charts/tree/master/charts/falco-exporter) is the easiest way to deploy it.
 
 So you only have to run the helm install command:
 

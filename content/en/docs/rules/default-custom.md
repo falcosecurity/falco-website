@@ -61,7 +61,7 @@ helm install falco \
 
 ### Add custom rules with a configmap
 
-You can always add the `customRules` value to add your own custom rules in a configmap. For instance, if we create a file as [described in the documentation](https://github.com/falcosecurity/charts/tree/master/falco#loading-custom-rules) and then add it to our one of the above command lines with:
+You can always add the `customRules` value to add your own custom rules in a configmap. For instance, if we create a file as [described in the documentation](https://github.com/falcosecurity/charts/tree/master/charts/falco#loading-custom-rules) and then add it to our one of the above command lines with:
 
 ```
 -f custom_rules.yaml

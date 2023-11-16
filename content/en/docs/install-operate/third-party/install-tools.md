@@ -31,7 +31,7 @@ sudo bash install_falco
 
 ## Helm
 
-You can install Falco in Kubernetes using Helm. The Falco community supports a helm chart and documentation on how to use it can [be found here](https://github.com/falcosecurity/charts/tree/master/falco).
+You can install Falco in Kubernetes using Helm. The Falco community supports a helm chart and documentation on how to use it can [be found here](https://github.com/falcosecurity/charts/tree/master/charts/falco).
 
 See [Installing Helm](https://helm.sh/docs/intro/install/) for
 information about how to download and install Helm.

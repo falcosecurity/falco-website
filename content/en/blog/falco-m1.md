@@ -234,7 +234,7 @@ kube-system    kube-scheduler-lima-falco-k8s            1/1     Running   0     
 
 #### Deploying Falco via Helm
 
-We leverage [Helm](https://helm.sh) to deploy Falco on our Kubernetes cluster using the official [Falco helm chart](https://github.com/falcosecurity/charts/tree/master/falco).
+We leverage [Helm](https://helm.sh) to deploy Falco on our Kubernetes cluster using the official [Falco helm chart](https://github.com/falcosecurity/charts/tree/master/charts/falco).
 
 To install Helm, we can use brew as:
 
@@ -244,7 +244,7 @@ $ brew install helm
 
 Then, we need to add the `falcosecurity` helm repository and install the `falcosecurity/falco` chart.
 
-  > For this basic example we are just going to enable eBPF as we did before, but there are tons of parameters and configurations that can be tweaked. Check the [official documentation](https://github.com/falcosecurity/charts/tree/master/falco) to know more.
+  > For this basic example we are just going to enable eBPF as we did before, but there are tons of parameters and configurations that can be tweaked. Check the [official documentation](https://github.com/falcosecurity/charts/tree/master/charts/falco) to know more.
 
 ```shell
 $ helm repo add falcosecurity https://falcosecurity.github.io/charts

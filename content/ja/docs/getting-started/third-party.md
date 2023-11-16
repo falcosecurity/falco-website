@@ -65,7 +65,7 @@ kind create cluster --config=./kind-config.yaml
 
 ## Helm
 
-Helmは、KubernetesにFalcoをインストールする方法です。 Falcoコミュニティは、Helm chartとそれを使用する方法に関するドキュメントをサポートしています[ここにあります](https://github.com/falcosecurity/charts/tree/master/falco)。
+Helmは、KubernetesにFalcoをインストールする方法です。 Falcoコミュニティは、Helm chartとそれを使用する方法に関するドキュメントをサポートしています[ここにあります](https://github.com/falcosecurity/charts/tree/master/charts/falco)。
 
 ## CoreOS
 

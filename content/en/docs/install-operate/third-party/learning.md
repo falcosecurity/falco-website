@@ -73,7 +73,7 @@ In order to install Falco with the `kernel module` or the `bpf probe`:
 
     Tip: 
     You can easily forward Falco events to Slack, Kafka, AWS Lambda and more with falcosidekick. 
-    Full list of outputs: https://github.com/falcosecurity/charts/tree/master/falcosidekick.
+    Full list of outputs: https://github.com/falcosecurity/charts/tree/master/charts/falcosidekick.
     You can enable its deployment with `--set falcosidekick.enabled=true` or in your values.yaml. 
     See: https://github.com/falcosecurity/charts/blob/master/falcosidekick/values.yaml for configuration values.
     ```
@@ -405,7 +405,7 @@ To run Falco on a `kind` cluster is as follows:
     kind create cluster --config=./kind-config.yaml
     ```
 
-4. [Install](/docs/getting-started/installation) Falco on a node in the kind cluster. To install Falco as a daemonset on a Kubernetes cluster use Helm. For more information about the configuration of Falco charts, see https://github.com/falcosecurity/charts/tree/master/falco.
+4. [Install](/docs/getting-started/installation) Falco on a node in the kind cluster. To install Falco as a daemonset on a Kubernetes cluster use Helm. For more information about the configuration of Falco charts, see https://github.com/falcosecurity/charts/tree/master/charts/falco.
 
 ## MicroK8s
 
@@ -418,4 +418,4 @@ You can follow the official
 
 To run Falco on MicroK8s:
 
-1. [Install](/docs/getting-started/installation) Falco on a node in the MicroK8s cluster. To install Falco as a daemonset on a Kubernetes cluster use Helm. For more information about the configuration of Falco charts, see https://github.com/falcosecurity/charts/tree/master/falco.
+1. [Install](/docs/getting-started/installation) Falco on a node in the MicroK8s cluster. To install Falco as a daemonset on a Kubernetes cluster use Helm. For more information about the configuration of Falco charts, see https://github.com/falcosecurity/charts/tree/master/charts/falco.

@@ -26,7 +26,7 @@ From many different sources I heard about the open-source project <a href="https
 
 ### Decisions
 
-It is possible to install Falco as DeamonSet with a provided <a href="https://github.com/falcosecurity/charts/tree/master/falco" target="_blank">Helm Chart</a>. The recommended way is to install Falco as kernel module directly on the nodes. As kernel module, it is outside the scope of Kubernetes and it is not possible to disable or remove it with cluster access. We will install it directly on the nodes, so it is not affected by any cluster misbehavior.
+It is possible to install Falco as DeamonSet with a provided <a href="https://github.com/falcosecurity/charts/tree/master/charts/falco" target="_blank">Helm Chart</a>. The recommended way is to install Falco as kernel module directly on the nodes. As kernel module, it is outside the scope of Kubernetes and it is not possible to disable or remove it with cluster access. We will install it directly on the nodes, so it is not affected by any cluster misbehavior.
 
 We need to configure the cluster to send <a href="https://falco.org/docs/event-sources/kubernetes-audit/" target="_blank">Kubernetes Audit Events</a> to Falco and be able to monitor both our cluster and the nodes themselves.
 
@@ -207,7 +207,7 @@ Falco is installed and running on all cluster nodes. The provided configuration 
 
 While Falco is up and running on all nodes there is no central place for an overview of all rule violations. Because Falco is installed on the host there is no access point within the cluster. To solve this problem I will use <a href="https://github.com/falcosecurity/falcosidekick" target="_blank">Falcosidekick</a>. Each Falco service will send its alerts to a centralized Falcosidekick application which will provide different targets to monitor them.
 
-I'm using the provided <a href="https://github.com/falcosecurity/charts/tree/master/falcosidekick" target="_blank">Helm Chart</a> from the Falco community to install it. As workload in the cluster, I can send the alerts to the internal cluster Monitoring.
+I'm using the provided <a href="https://github.com/falcosecurity/charts/tree/master/charts/falcosidekick" target="_blank">Helm Chart</a> from the Falco community to install it. As workload in the cluster, I can send the alerts to the internal cluster Monitoring.
 
 ```bash
 helm repo add falcosecurity https://falcosecurity.github.io/charts
