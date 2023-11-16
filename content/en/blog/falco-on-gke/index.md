@@ -79,7 +79,6 @@ Installing Falco via the Google Cloud Marketplace is a pretty straightforward pr
 
 With that Falco should be running on your GKE cluster. You can skip the next section, and continue with “Testing Falco”.
 
-
 ## Installing Falco with Helm
 
 Helm is the defacto way to install Falco on Kubernetes. Falco maintains an official Helm chart, and that chart is maintained as part of the overall Falco project. 
