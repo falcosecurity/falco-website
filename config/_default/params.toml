@@ -84,6 +84,11 @@ src = "sysdig.png"
 alt = "Sysdig"
 url = "https://sysdig.com"
 
+[[adopters.vendors]]
+src = "hpe.png"
+alt = "Hewlett Packard Enterprise"
+url = "https://docs.ezmeral.hpe.com/runtime-enterprise/56/reference/kubernetes/kubernetes-administrator/clusters/cluster-add-ons/Falco_Container_Security.html"
+
 [[adopters.integrations]]
 src = "helm.png"
 alt = "Helm"
