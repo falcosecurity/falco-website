@@ -33,7 +33,7 @@ weight: 2
 
 ### Helm
 
-Helm是在Kubernetes上安装Falco的首选方法之一。[Falco Helm chart](https://github.com/falcosecurity/charts)提供了丰富的[可配值](https://github.com/falcosecurity/charts/tree/master/falco#configuration)，以使用不同的配置启动Falco。
+Helm是在Kubernetes上安装Falco的首选方法之一。[Falco Helm chart](https://github.com/falcosecurity/charts)提供了丰富的[可配值](https://github.com/falcosecurity/charts/tree/master/charts/falco#configuration)，以使用不同的配置启动Falco。
 
 在部署Helm的集群上，以默认配置部署Falco，请运行：
 

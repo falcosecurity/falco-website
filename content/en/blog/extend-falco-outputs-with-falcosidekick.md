@@ -54,7 +54,7 @@ Beyond that, it provides metrics about the number of events and let you add `cus
 
 In this article, we'll see how to deploy together in a Kubernetes cluster [`Falco`](https://github.com/falcosecurity/falco), [`Falcosidekick`](https://github.com/falcosecurity/falcosidekick) and [`Falcosidekick-UI`](https://github.com/falcosecurity/falcosidekick-ui). 
 
-We'll use `Helm` (*version 3*) for installing all components and for a better user experience, the official `Falco` [chart](https://github.com/falcosecurity/charts/tree/master/falco) is able to install and set all configurations for us:
+We'll use `Helm` (*version 3*) for installing all components and for a better user experience, the official `Falco` [chart](https://github.com/falcosecurity/charts/tree/master/charts/falco) is able to install and set all configurations for us:
 
 For this tutorial, we'll send the events in a **Slack** channel, so [get your webhook URL](https://api.slack.com/messaging/webhooks#create_a_webhook) first.
 

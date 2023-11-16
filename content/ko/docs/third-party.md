@@ -65,7 +65,7 @@ kind create cluster --config=./kind-config.yaml
 
 ## Helm
 
-Helm 은 쿠버네티스에 팔코를 설치하는 한 가지 방법이다. 팔코 커뮤니티는 헬름 차트와 이를 사용하는 방법에 대한 문서를 [여기서](https://github.com/falcosecurity/charts/tree/master/falco) 제공한다.
+Helm 은 쿠버네티스에 팔코를 설치하는 한 가지 방법이다. 팔코 커뮤니티는 헬름 차트와 이를 사용하는 방법에 대한 문서를 [여기서](https://github.com/falcosecurity/charts/tree/master/charts/falco) 제공한다.
 
 ## CoreOS
 

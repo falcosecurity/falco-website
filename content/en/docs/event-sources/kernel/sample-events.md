@@ -60,7 +60,7 @@ The above command loops forever, creating resources in the current namespace and
 
 ## Running the Event Generator in K8s
 
-We've also provided a [helm chart](https://github.com/falcosecurity/charts/tree/master/event-generator) that make it easy to run the event generator in K8s Clusters.
+We've also provided a [helm chart](https://github.com/falcosecurity/charts/tree/master/charts/event-generator) that make it easy to run the event generator in K8s Clusters.
 
 First thing, we need to add the `falcosecurity` charts repository:
 
@@ -80,4 +80,4 @@ helm install event-generator falcosecurity/event-generator \
 
 The above command applies to the `event-generator` namespace. Use the `--namespace` option to deploy in a different namespace. Events will be generated in the same namespace.
 
-You can also find more examples in the [event-generator](https://github.com/falcosecurity/event-generator#with-kubernetes) and [charts](https://github.com/falcosecurity/charts/tree/master/event-generator) repositories.
+You can also find more examples in the [event-generator](https://github.com/falcosecurity/event-generator#with-kubernetes) and [charts](https://github.com/falcosecurity/charts/tree/master/charts/event-generator) repositories.
