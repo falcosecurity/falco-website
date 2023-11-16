@@ -6,7 +6,7 @@ author: Mike Coleman
 slug: falco-on-gke
 images:
   - /blog/falco-on-gke/images/falco-on-gke-featured.png
-tags: [Falco, GKE, Google Kubernetes Engine, Google Cloud]
+tags: ["Falco", "GKE", "Google Kubernetes Engine", "Google Cloud"]
 ---
 
 
