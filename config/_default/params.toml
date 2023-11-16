@@ -60,6 +60,11 @@ alt = "Sky Scanner"
 url = "https://medium.com/@SkyscannerEng/kubernetes-security-monitoring-at-scale-with-sysdig-falco-a60cfdb0f67a"
 
 [[adopters.vendors]]
+src = "hpe.png"
+alt = "Hewlett Packard Enterprise"
+url = "https://docs.ezmeral.hpe.com/runtime-enterprise/56/reference/kubernetes/kubernetes-administrator/clusters/cluster-add-ons/Falco_Container_Security.html"
+
+[[adopters.vendors]]
 src = "logzio.png"
 alt = "Logz.io"
 url = "https://logz.io/"
@@ -83,11 +88,6 @@ url = "https://www.sumologic.com/"
 src = "sysdig.png"
 alt = "Sysdig"
 url = "https://sysdig.com"
-
-[[adopters.vendors]]
-src = "hpe.png"
-alt = "Hewlett Packard Enterprise"
-url = "https://docs.ezmeral.hpe.com/runtime-enterprise/56/reference/kubernetes/kubernetes-administrator/clusters/cluster-add-ons/Falco_Container_Security.html"
 
 [[adopters.integrations]]
 src = "helm.png"
