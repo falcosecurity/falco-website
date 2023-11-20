@@ -155,7 +155,6 @@ With the pre-requisites out of the way, let's get started with the actual instal
     Fri Nov  3 15:48:07 2023: Loaded event sources: syscall
     Fri Nov  3 15:48:07 2023: Enabled event sources: syscall
     Fri Nov  3 15:48:07 2023: Opening 'syscall' source with BPF probe. BPF probe path: /root/.falco/falco-bpf.o
-
     ```
 
 Falco is now successfully running on your GKE cluster. The next step is to simulate some suspicious activity and verify that Falco detects it. 
