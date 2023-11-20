@@ -188,7 +188,7 @@ One of Falco’s default rules fires an alert if someone shells into a running c
     18:52:06.630209324: Notice A shell was spawned in a container with an attached terminal (evt_type=execve user=root user_uid=0 user_loginuid=-1 process=sh proc_exepath=/bin/busybox parent=runc command=sh -c ls -al terminal=34816 exe_flags=EXE_WRITABLE container_id=e71eac85a570 container_image=docker.io/library/alpine container_image_tag=latest container_name=alpine k8s_ns=default k8s_pod_name=alpine)
     ``` 
  
-Notice all the data the alert provides including the container ID, image, and name, as well as the executed command. 
+    Notice all the details the alert provides including the container ID, image, and name, as well as the executed command. 
 
 ## Conclusion
 
