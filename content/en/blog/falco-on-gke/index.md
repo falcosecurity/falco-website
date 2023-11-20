@@ -159,7 +159,7 @@ Falco is now successfully running on your GKE cluster. The next step is to simul
 
 ## Testing Falco
 
-One of Falco’s default rules fires an alert if someone shells into a running container.  Follow the steps below to fire off that rule. 
+One of Falco’s default rules fires an alert if someone shells into a running container. Follow the steps below to fire off that rule. 
 
 * Start an Alpine container and have it sleep so it stays running. 
  
