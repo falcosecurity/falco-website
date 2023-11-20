@@ -1,7 +1,7 @@
 ---
 title: "Adding runtime threat detection to Google Kubernetes Engine with Falco"
 linktitle: "Adding runtime threat detection to Google Kubernetes Engine with Falco"
-date: 2023-11-16
+date: 2023-11-20
 author: Mike Coleman
 slug: falco-on-gke
 images:
