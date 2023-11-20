@@ -95,7 +95,7 @@ With the pre-requisites out of the way, let's get started with the actual instal
     helm repo update
     ```
 
-* Create a namespace (`falco```) for Falco to run in. 
+* Create the `falco` namespace for Falco to run in.
 
     ```
     kubectl create namespace falco
