@@ -77,7 +77,7 @@ Installing Falco via the Google Cloud Marketplace is a pretty straightforward pr
 
     > If you choose to deploy a new cluster, you will need to wait until that finishes to click the `DEPLOY` button. 
 
-With that Falco should be running on your GKE cluster. You can skip the next section, and continue with “Testing Falco”.
+With that, Falco should be running on your GKE cluster. You can skip the next section, and continue with “Testing Falco”.
 
 ## Installing Falco with Helm
 
