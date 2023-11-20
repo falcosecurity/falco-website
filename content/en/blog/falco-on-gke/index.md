@@ -16,7 +16,6 @@ While GKE clusters are incredibly secure and reliable, there is always room for 
 
 In this blog, we’re going to describe how you can enhance GKE’s already great security by adding runtime threat detection with Falco. 
 
-
 ## What is Falco?
 
 Falco is a Cloud Native Computing Foundation project that provides runtime threat detection. Out of the box, Falco examines syscalls to alert you to any suspicious activity. And, since containers share the same kernel as their host, Falco can monitor not only activity on the host but also activity on all of the containers running on that host. Moreover, Falco pulls data from both Kubernetes and the container runtime to add additional context to its alerts. 
@@ -29,7 +28,6 @@ With Falco running on your GKE clusters you can be notified of a wide variety of
 
 These are just a few examples. Falco has over 80 rules that can be used to make you aware of not only external threats but also when clusters aren’t being operated in accordance with industry best practices. 
 
-
 ## GKE Installation considerations
 
 There are two different ways to install Falco on GKE. The first is using the prepackaged click-to-run offering in the Google Cloud Marketplace. The second is using Falco’s helm chart. The click-to-run offering is probably the simplest way to get up and running with Falco on GKE, but the drawback is that the version offered often lags behind the latest release. 
@@ -40,14 +38,11 @@ Something else to be aware of is that Falco on GKE needs to use one of Falco’s
 
 On the Google Cloud side, GKE uses Container-Optimized OS (COS) as the default operating system for its worker node pools. COS is a security-enhanced operating system that limits access to certain parts of the underlying OS. Because of this security constraint, Falco cannot insert its kernel module to process system calls. However, COS does support eBPF, so that’s the option we’ll use (more specifically we’ll use the classic eBPF probe)
 
-
 ## Installing Falco via the Google Cloud Marketplace
 
 Note: If you’d like to follow along, you’ll need to ensure your Google Cloud account has the appropriate permissions. 
 
 Installing Falco via the Google Cloud Marketplace is a pretty straightforward process. 
-
-
 
 * Log into your Google Cloud account, and ensure you have the required permissions to deploy a new GKE cluster or operate an existing one.
 
@@ -69,7 +64,6 @@ Installing Falco via the Google Cloud Marketplace is a pretty straightforward pr
 * Falco rules have different priority levels, you can choose the minimum priority level you’d like to run. The priority levels are ordered by severity, and typically the higher you make the minimum level, the fewer alerts you will receive (which helps to cut down on noise). For this example just leave it as `debug`.
 
 * Stackdriver is the old name for Google Cloud’s logging and monitoring suite. If you’d like to examine Falco’s metrics (not the actual alerts, but metrics on how Falco is performing) you can select that option. We won’t be covering that in this blog, so go ahead and leave it unchecked. 
-
 
     ![Screenshot of the configured options](./images/configuration.png "Screenshot of the configured options")
 
