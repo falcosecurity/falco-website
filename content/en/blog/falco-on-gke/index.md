@@ -9,7 +9,6 @@ images:
 tags: ["Falco", "GKE", "Google Kubernetes Engine", "Google Cloud"]
 ---
 
-
 One of the big advantages of running your workloads on a managed Kubernetes service like Google Kubernetes Engine (GKE) is that Google ensures your clusters are being deployed and managed following industry best practices. 
 
 While GKE clusters are incredibly secure and reliable, there is always room for improvement. 
@@ -81,7 +80,7 @@ If you’d like to follow along, you will need the following:
 
 * A GKE cluster that you can operate 
 
-* Helm and kubectl installed on your local computer or, alternatively, you can use Google Cloud Shell which has both Helm and kubectl already installed. 
+* Helm and `kubectl` installed on your local computer or, alternatively, you can use Google Cloud Shell which has both Helm and kubectl already installed. 
 
     > **NOTE:** Ensure that your kubectl context is set to the cluster on which you wish to install Falco. 
 
