@@ -49,7 +49,7 @@ Installing Falco via the Google Cloud Marketplace is a pretty straightforward pr
 
 
 
-* Log into your Google Cloud account, and ensure you have the required permissions to deploy a new GKE cluster or operate an existing one. \
+* Log into your Google Cloud account, and ensure you have the required permissions to deploy a new GKE cluster or operate an existing one.
 
 * Navigate to the Falco offering in the [Google Cloud Marketplace](https://console.cloud.google.com/marketplace/product/google/falco).
 
