@@ -141,7 +141,7 @@ With the pre-requisites out of the way, let's get started with the actual instal
 
 
     ```
-    kubectl logs -n falco -c falco -l app.kubernetes.io/name=falco`
+    kubectl logs -n falco -c falco -l app.kubernetes.io/name=falco
     ```
     
     You should see entries similar to this:
