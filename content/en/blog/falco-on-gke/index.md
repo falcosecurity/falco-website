@@ -36,7 +36,7 @@ There are two different ways to install Falco on GKE. The first is using the pre
 
 It’s also important to note that as of this writing, you cannot run Falco on GKE clusters running in Autopilot mode. This is primarily because Falco uses an init container running with privileged access to install its driver, and Autopilot does not allow the execution of privileged containers. 
 
-Something else to be aware of is that Falco on GKE needs to use one of  Falco’s eBPF drivers. Falco uses a driver to capture syscall events, and this driver is offered as a loadable kernel module or as an eBPF probe. There are actually two eBPF probes with Falco. One is called ‘eBPF’ (or classic eBPF) and the other is referred to as  ‘modern eBPF’ - you can learn more about them in the [Falco docs](https://falco.org/docs/event-sources/kernel/).
+Something else to be aware of is that Falco on GKE needs to use one of Falco’s eBPF drivers. Falco uses a driver to capture syscall events, and this driver is offered as a loadable kernel module or as an eBPF probe. There are actually two eBPF probes with Falco. One is called ‘eBPF’ (or classic eBPF) and the other is referred to as  ‘modern eBPF’ - you can learn more about them in the [Falco docs](https://falco.org/docs/event-sources/kernel/).
 
 On the Google Cloud side, GKE uses Container-Optimized OS (COS) as the default operating system for its worker node pools. COS is a security-enhanced operating system that limits access to certain parts of the underlying OS. Because of this security constraint, Falco cannot insert its kernel module to process system calls. However, COS does support eBPF, so that’s the option we’ll use (more specifically we’ll use the classic eBPF probe)
 
