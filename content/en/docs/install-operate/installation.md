@@ -307,28 +307,28 @@ In these steps, we are targeting a Debian-like system on `x86_64` architecture. 
     ```
 
 4. Run `falco-driver-loader` binary to install the kernel module or the BPF probe. If you want to use other sources like the modern BPF probe or plugins you can skip this step.
-> To install the driver, the `falco-driver-loader` script requires write and execution permissions on the `/tmp` directory, as it will try to create and execute a script from there.
+   > To install the driver, the `falco-driver-loader` script requires write and execution permissions on the `/tmp` directory, as it will try to create and execute a script from there.
 
-    ```bash
-    # If you want to install the kernel module
-    falco-driver-loader module
-    # If you want to install the eBPF probe
-    falco-driver-loader bpf
-    ```
+   ```bash
+   # If you want to install the kernel module
+   falco-driver-loader module
+   # If you want to install the eBPF probe
+   falco-driver-loader bpf
+   ```
 
-    By default, the `falco-driver-loader` script tries to download a prebuilt driver from [the official Falco download s3 bucket](https://download.falco.org/?prefix=driver/). If a driver is found then it is inserted into `${HOME}/.falco/`. Otherwise, the script tries to compile the driver locally, for this reason, you need the dependencies at step [3].
+   By default, the `falco-driver-loader` script tries to download a prebuilt driver from [the official Falco download s3 bucket](https://download.falco.org/?prefix=driver/). If a driver is found then it is inserted into `${HOME}/.falco/`. Otherwise, the script tries to compile the driver locally, for this reason, you need the dependencies at step [3].
 
-    You can use the env variable `DRIVERS_REPO` to override the default repository URL for prebuilt drivers. The URL must not have the trailing slash, i.e. `https://myhost.mydomain.com` or if the server has a subdirectories structure `https://myhost.mydomain.com/drivers`. The drivers must be hosted with the following structure:
+   You can use the env variable `DRIVERS_REPO` to override the default repository URL for prebuilt drivers. The URL must not have the trailing slash, i.e. `https://myhost.mydomain.com` or if the server has a subdirectories structure `https://myhost.mydomain.com/drivers`. The drivers must be hosted with the following structure:
 
-    ```bash
-    /${driver_version}/falco_${target}_${kernelrelease}_${kernelversion}.[ko|o]
-    ```
+   ```bash
+   /${driver_version}/falco_${target}_${kernelrelease}_${kernelversion}.[ko|o]
+   ```
 
-    where `ko` and `o` stand for Kernel module and `eBPF` probe respectively. This is an example:
+   where `ko` and `o` stand for Kernel module and `eBPF` probe respectively. This is an example:
 
-    ```text
-    /a259b4bf49c3330d9ad6c3eed9eb1a31954259a6/falco_amazonlinux2_4.14.128-112.105.amzn2.x86_64_1.ko
-    ```
+   ```text
+   /a259b4bf49c3330d9ad6c3eed9eb1a31954259a6/falco_amazonlinux2_4.14.128-112.105.amzn2.x86_64_1.ko
+   ```
 
 You are finally ready to [run the Falco binary](/docs/install-operate/running#falco-binary)!
 
