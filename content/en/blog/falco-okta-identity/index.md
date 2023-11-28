@@ -7,7 +7,7 @@ author: Nigel Douglas
 slug: falco-okta-identity
 images:
   - /blog/falco-okta-identity/images/falco-okta-featured.png
-tags: ["Falco", "Okta", "Plugin", "Identity"]
+tags: ["architecture", "event-source"]
 ---
 
 Identity Threat Detection & Response (ITDR) in the cloud is of paramount importance to limit access to sensitive data and maintain the integrity of cloud infrastructure. Leading cloud providers like AWS, Microsoft Azure, and Google Cloud have implemented robust Identity and Access Management (IAM) controls, as well as Multi-Factor Authentication (MFA) options, to ensure that users have the standardized access control limitations. 
