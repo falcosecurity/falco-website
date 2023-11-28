@@ -23,20 +23,20 @@ The Falco Okta plugin comes with a set of valuable [default rules](https://githu
 
 A typical illustration of the importance of these rules lies in the process of initiating a password reset within the Okta platform. In practice, an insider threat might reset a password, opt not to inform the end-user about the reset, and potentially carry out an account takeover in this context. Whenever a specific action is executed through the Okta user interface, there is a straightforward method to access the associated activity logs on the web user interface
 
-![](/images/okta1.png)
+![](images/okta1.png)
 
 
 Nonetheless, this default perspective is not particularly suitable for our Falco rule since it's focused on a specific user making changes to another specific user account. The system log focus is on algorithmically-generated actor IDs linked to both the user initiating the password reset and the user whose account password has been reset. 
 
 While this event information may serve a purpose if you only wish to trigger detection events between these specific accounts, in practical scenarios, a more comprehensive view encompassing all users is typically required.
 
-![](/images/okta2.png)
+![](images/okta2.png)
 
 For a more efficient approach, it's advisable to select the `User updated password in Okta` event behavior shown at the bottom of the screenshot above. This action will automatically narrow down the search view to display event information exclusively related to password updates in Okta. With this method, we can effectively set up alerts for all password update activities. 
 
 Utilizing Falco, we can extract the precise event type value from the system log and incorporate it into a Falco rule.
 
-![](/images/okta3.png)
+![](images/okta3.png)
 
 Fortunately, this task has already been handled for us in the Okta plugin ruleset. It's worth noting that the value found in the system logs aligns with our specified Falco conditions, ensuring that we attain equivalent visibility within Falco as we do in the Okta UI. However, it's important to be aware that in extensive production environments, this rule can generate a significant amount of noise. If needed, you have the option to filter this activity specifically for password resets targeting the 'Admin' privileged group, as they are frequently the primary targets of cyberattacks.
 
@@ -53,16 +53,16 @@ Fortunately, this task has already been handled for us in the Okta plugin rulese
 Here is the output displayed in our Falcosidekick UI, presenting the context of the actor's name and the corresponding IP address responsible for the change. It could be advantageous to explore the possibility of incorporating additional `Output` fields to enhance incident response capabilities when addressing identity threats.
 
 
-![](/images/okta4.png)
+![](images/okta4.png)
 
 ## Building a custom Falco rule
 The next example extends beyond the scope of the default Falco rules. For instance, if an identity integration or application were to be disassociated from the user `Nigel Douglas`, it might be an attempt to compromise security measures within established workflows or systems - a good example of `Impair Defenses` technique in the MITRE ATT&CK matrix. 
 
 Consequently, we will replicate this specific action and create a custom Falco rule to identify such behavior. As shown in the screenshot below, the admin user is seen removing the application assignment from the user Nigel.
 
-![](/images/okta5.png)
+![](images/okta5.png)
 
-![](/images/okta6.png)
+![](images/okta6.png)
 
 After the application has been unassigned, we receive the updated event type data in Okta, much like our previous workflow. The Okta query that provides the results of the application removal is as follows:
 
@@ -70,7 +70,7 @@ After the application has been unassigned, we receive the updated event type dat
 eventType eq "application.user_membership.remove"
 ```
 
-![](/images/okta7.png)
+![](images/okta7.png)
 
 With this understanding, we can navigate to the [falco_rules.local.yaml](https://falco.org/docs/rules/default-custom/#the-configuration-file) file linked to our Falco installation, which serves as a local repository for our Falco rules. Having grasped the construction of the previous Falco rule, we will substitute `okta.evt.type` for the Okta attribute `eventType` and assign it the precise string identified in the screenshot above. In your case, the Falco rule should be structured as follows:
 
@@ -95,20 +95,20 @@ docker compose -f docker-compose.yaml up -d
 ```
 
 
-![](/images/okta8.png)
+![](images/okta8.png)
 
 In order to assist with incident response initiatives, you will now notice the custom tags linked to MITRE ATT&CK tactics and techniques in your alert output. This enhanced alert output facilitates incident responders in recognizing the specific issues related to this behavior, enabling them to potentially detect insider threats at the earliest stage. These custom tags are then integrated into the Falco rule for further context.
 
 ## Why Falco instead of a traditional logging solution?
 While it's possible to forward all your Okta logs to a centralized Security Incident & Event Management (SIEM) system, certain limitations become apparent. One prominent concern pertains to storage, as a substantial number of events must be retained in a centralized backend database, requiring aggregation and indexing to produce security alerts. This can impose a significant operational burden on organizations since they are effectively storing a multitude of events, a significant portion of which may be extraneous, potentially resulting in substantial costs associated with ingestion charges.
 
-![](https://github.com/falcosecurity/falco-website/tree/master/content/en//blog/falco-okta-identity/images/okta9.png)
+![](images/okta9.png)
 
 Similarly, once the events are in the system, it becomes crucial to have a solid grasp of crafting effective detection rules. Instead of managing intricate scripts and queries to minimize false positives, Falco streamlines the process by offering a unified rules language applicable across host endpoints, cloud services, CI/CD services, and Okta logs. This approach enables swift rule development and immediate testing within your environment without incurring ingestion charges. Furthermore, Falco addresses the issue of centralized storage bloat through its intelligent streaming engine, which processes event context and makes decisions on whether to trigger alerts based on specific event metadata, rather than indiscriminately ingesting all associated events.
 
 
-![](/images/okta9.png)
-![](/images/okta10.png)
+![](images/okta9.png)
+![](images/okta10.png)
 
 Finally, the entire process of manually executing Okta search queries in the web UI, or managing intricate detection scripts, can be time-consuming and often results in coverage gaps. Falco offers a solution by delivering a nearly real-time detection engine that enables the use of macros and lists for complex querying. For instance, consider the task of verifying whether the user `Nigel Douglas` is logging in from their usual IP address. Instead of navigating through complex Okta queries, you can simply use the actor ID, cross-referencing it with the typical IP they use for sign-ins, and also taking into account the context of their access, such as interactions with the `Admin Dashboard` or other elements within the Okta user interface. 
 
@@ -142,7 +142,7 @@ Next, we create a list that compiles all potentially identified malicious actors
 Finally, we get the detection that there was a login from a suspicious IP address. We changed the `Priority` to `CRITICAL` to reflect the severity of a suspicious login from a malicious IP.
 
 
-![](/images/okta11.png)
+![](images/okta11.png)
 
 This is just one instance demonstrating the capabilities of Falco. I encourage you, as the reader, to explore various innovative approaches for crafting customized detection rules that align with your unique zero-trust architecture strategy. Should you have recommendations on enhancing default detection rules in Falco for Okta identity logs, please don't hesitate to reach out to us directly. We are always open to discussions: [https://falco.org/community/](https://falco.org/community/) .
 
