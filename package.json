@@ -3,7 +3,7 @@
   "devDependencies": {
     "autoprefixer": "^10.4.16",
     "lodash": ">=4.17.21",
-    "postcss": ">=8.4.31",
+    "postcss": ">=8.4.32",
     "postcss-cli": "^10.1.0"
   },
   "dependencies": {
