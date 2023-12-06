@@ -72,7 +72,7 @@ eventType eq "application.user_membership.remove"
 
 ![](images/okta7.png)
 
-With this understanding, we can navigate to the [falco_rules.local.yaml](https://falco.org/docs/rules/default-custom/#the-configuration-file) file linked to our Falco installation, which serves as a local repository for our Falco rules. Having grasped the construction of the previous Falco rule, we will substitute `okta.evt.type` for the Okta attribute `eventType` and assign it the precise string identified in the screenshot above. In your case, the Falco rule should be structured as follows:
+With this understanding, we can navigate to the [falco_rules.local.yaml](https://falco.org/docs/rules/default-custom/#the-configuration-file) file in our Falco installation, which is often used to define a custom ruleset. Based on the construction of the previous Falco rule and the string identified in the screenshot above `application.user_membership.remove`, we will update the condition to check for this type. In your case, the Falco rule should be structured as follows:
 
 ```
 - rule: Remove app membership
@@ -84,7 +84,7 @@ With this understanding, we can navigate to the [falco_rules.local.yaml](https:/
   tags: [custom_rule, mitre_defense_evasion, T1562, impair_defenses]
 ```
 
-To ensure the custom rule is applied, it is necessary to restart the Falco service. If you have deployed Falco and Falcosidekick via a Docker compose file, this can be achieved by simply executing a `stop` command to halt the containers, followed by the `up -d` command, which restarts the Docker containers with the same configurations specified in the docker-compose.yaml file. 
+To ensure the custom rule is applied, you might need to restart Falco (depending on the version). If you have deployed Falco and Falcosidekick via a Docker compose file, this can be achieved by simply executing a `stop` command to halt the containers, followed by the `up -d` command, which restarts the Docker containers with the same configurations specified in the docker-compose.yaml file. 
 
 
 While Docker is not the only [deployment option](https://falco.org/docs/install-operate/deployment/) for Falco, it is undeniably a very convenient option for these types of test environments. The source of the docker-compose.yaml can be [accessed here](https://github.com/LucaGuerra/falcosidekick-ui-compose/blob/main/docker-compose.yaml) .
