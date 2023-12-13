@@ -52,6 +52,10 @@ In order to install Falco with the `kernel module` or the `bpf probe`:
         ```shell
         helm install falco --set driver.kind=ebpf --set tty=true falcosecurity/falco
         ```
+    3. With modern-bpf probe(recommended):
+        ```shell
+        helm install falco --set driver.kind=modern-bpf --set tty=true falcosecurity/falco
+        ```
 
     The output is similar to:
 
@@ -248,7 +252,7 @@ Here we run Falco in `minikube` cluster with multiple sources: `syscall` and `k8
     # Default value: kernel module.
     driver:
       enabled: true
-      kind: module
+      kind: modern-bpf
 
     # Enable the collectors used to enrich the events with metadata.
     # Check the values.yaml file for fine-grained options.
@@ -344,7 +348,7 @@ Here we run Falco in `minikube` cluster with multiple sources: `syscall` and `k8
    The command will follow the log stream of the Falco pod by printing the logs as soon as Falco emits them. And make sure that the following lines are present:
    ```bash
    Mon Oct 24 15:24:06 2022: Opening capture with plugin 'k8saudit'
-   Mon Oct 24 15:24:06 2022: Opening capture with Kernel module
+   Mon Oct 24 15:24:06 2022: Opening 'syscall' source with modern BPF probe
    ```
    It means that Falco is running with the configured sources.
 
