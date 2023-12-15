@@ -2,8 +2,10 @@
 title: Falco Weekly 47
 date: 2023-11-24
 author: Federico Di Pierro
-slug: falco-w-47
+slug: falco-w-47, 2023, weekly-recap
 tags: ["Falco"]
+images:
+  - /blog/falco-week-47/images/falco-reading-featured.png
 ---
 
 Another week, another load of improvements everywhere in the falcosecurity!

@@ -2,8 +2,10 @@
 title: Falco Weekly 46
 date: 2023-11-17
 author: Aldo Lacuku, Andrea Terzolo, Federico Di Pierro
-slug: falco-w-46
+slug: falco-w-46, 2023, weekly-recap
 tags: ["Falco"]
+images:
+  - /blog/falco-week-46/images/falco-reading-featured.png
 ---
 
 This is the first of a series of weekly blog post whose aim is to give a quick overview about the development of Falco and its related projects.  
