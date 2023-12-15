@@ -6,8 +6,6 @@ slug: falco-w-48-2023-weekly-recap
 aliases:
   - falco-w-48
 tags: ["Falco"]
-images:
-  - /blog/falco-week-48/images/falco-reading-featured.png
 ---
 
 ## What happened in Falco this week?

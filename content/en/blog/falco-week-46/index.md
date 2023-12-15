@@ -6,8 +6,6 @@ slug: falco-w-46-2023-weekly-recap
 aliases:
   - falco-w-46
 tags: ["Falco"]
-images:
-  - /blog/falco-week-46/images/falco-reading-featured.png
 ---
 
 This is the first of a series of weekly blog post whose aim is to give a quick overview about the development of Falco and its related projects.  

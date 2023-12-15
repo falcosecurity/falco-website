@@ -4,8 +4,6 @@ date: 2023-12-15
 author: Aldo Lacuku, Andrea Terzolo, Federico Di Pierro
 slug: falco-w-50-2023-weekly-recap
 tags: ["Falco"]
-images:
-  - /blog/falco-week-50/images/falco-reading-featured.png
 ---
 
 ## What happened in Falco this week?
