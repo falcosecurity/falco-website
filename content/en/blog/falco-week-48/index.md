@@ -2,7 +2,9 @@
 title: Falco Weekly 48
 date: 2023-12-01
 author: Aldo Lacuku, Federico Di Pierro
-slug: falco-w-48, 2023, weekly-recap
+slug: falco-w-48-2023-weekly-recap
+aliases:
+  - falco-w-48
 tags: ["Falco"]
 images:
   - /blog/falco-week-48/images/falco-reading-featured.png

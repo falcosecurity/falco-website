@@ -2,7 +2,7 @@
 title: Falco Weekly 50
 date: 2023-12-15
 author: Aldo Lacuku, Andrea Terzolo, Federico Di Pierro
-slug: falco-w-50, 2023, weekly-recap
+slug: falco-w-50-2023-weekly-recap
 tags: ["Falco"]
 images:
   - /blog/falco-week-50/images/falco-reading-featured.png
@@ -78,7 +78,7 @@ It contains a fix to docker go package multiplexed output support: https://githu
 Moreover, we merged a PR  that opens up the possibility for Driverkit to directly use `cmake` to configure and then build our drivers: https://github.com/falcosecurity/driverkit/pull/309.  
 
 What's next?  
-The `cmake` PR is opened and works super good; build times are as good as before, so no penalty there :rocket: https://github.com/falcosecurity/driverkit/pull/302.  
+The `cmake` PR is opened and works super good; build times are as good as before, so no penalty! https://github.com/falcosecurity/driverkit/pull/302.  
 Moreover, we are going to make use of actuated.dev arm64 runners in driverkit too, porting its CI to github actions: https://github.com/falcosecurity/driverkit/pull/311.
 
 ## Join relevant discussions!
