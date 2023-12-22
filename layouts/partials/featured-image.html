@@ -11,7 +11,7 @@
     <figcaption class="mt-2 mt-md-0"><small class="text-muted">{{ . | html }}</small></figcaption>
   {{ end }}
   </figure>
-{{ else if strings.Contains $title $falco_weekly_prefix }}
+{{ else if strings.HasPrefix $title $falco_weekly_prefix }}
   <img src="/images/featured/falco-reading-featured.png" alt="Featured Image for {{ $p.Title }}"  class="{{ $class }}" >
 {{ else }}
   <img src="/images/featured/default-01.png" alt="Featured Image for {{ $p.Title }}"  class="{{ $class }}" >
