@@ -188,11 +188,15 @@ Be sure to change the last parameter from *changeme* to your name.
 You should ultimately see 3 entries similar to those below:
 
 ```plain
-NAME                                   READY   STATUS    RESTARTS   AGE
-falco-falcosidekick-59c5d6cc45-l2qjz   1/1     Running   0          3m7s
-falco-falcosidekick-59c5d6cc45-kpcws   1/1     Running   0          3m7s
-falco-vdsc8                            2/2     Running   0          3m7s
+NAME                                    READY   STATUS    RESTARTS        AGE
+falco-falcosidekick-689f55b785-flqrw    1/1     Running   0               3m16s
+falco-falcosidekick-689f55b785-fssmc    1/1     Running   0               3m16s
+falco-falcosidekick-ui-6568c775-227dn   1/1     Running   3 (2m24s ago)   3m16s
+falco-falcosidekick-ui-6568c775-tqprv   1/1     Running   3 (2m23s ago)   3m16s
+falco-falcosidekick-ui-redis-0          1/1     Running   0               3m16s
+falco-jk7c2                             2/2     Running   0               3m16s
 ```
+
 
 * Press ctrl-c to return to the terminal prompt. 
 
