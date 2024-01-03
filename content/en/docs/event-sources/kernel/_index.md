@@ -102,7 +102,7 @@ The modern eBPF probe supports all the installation methods of other drivers:
 * [Falco packages](/docs/getting-started/installation/#installation-with-dialog)
 * [Falco binary](/docs/getting-started/running/#falco-binary)
 * [Docker](/docs/getting-started/running/#modern-ebpf)
-* [Helm chart](https://github.com/falcosecurity/charts/blob/master/falco/README.md#daemonset)
+* [Helm chart](https://github.com/falcosecurity/charts/tree/master/charts/falco#daemonset)
 
 ### Useful resources
 
