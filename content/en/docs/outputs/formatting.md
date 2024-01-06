@@ -7,48 +7,96 @@ aliases:
 weight: 20
 ---
 
-Previous guides introduced the [output field of Falco rules](/docs/rules/basic-elements/#output) and provided [guidelines](/docs/rules/style-guide/#output-fields) on how to use it. This section specifically highlights additional global formatting options for your deployment, complementing the information previously provided.
+Previous guides introduced the [Output Fields of Falco Rules](/docs/rules/basic-elements/#output) and provided [Guidelines](/docs/rules/style-guide/#output-fields) on how to use them. This section specifically highlights additional global formatting options for your deployment, complementing the information previously provided.
 
-Falco natively supports the decoration of events with associated containers and Kubernetes metadata. When Falco runs with `-pk`/`-pc`/`-p` command-line options, it changes the output format to a format that is friendly to k8s/containers/general usage. However, the source of this formatted output lies within the ruleset, not the command line. This page elaborates on how `-pk`/`-pc`/`-p` interacts with the format strings in the `output` field of rules.
-
-The information from k8s/containers is used in conjunction with the command-line options in these ways:
-
-* In rule outputs, if the format string contains `%container.info`, that is replaced with the value from `-pk`/`-pc`, if one of those options was provided. If no option was provided, `%container.info` is replaced with a generic `%container.name (id=%container.id)` instead.
-
-* If the format string does not contain `%container.info`, and one of `-pk`/`-pc` was provided, that is added to the end of the formatting string.
-
-* If `-p` was specified with a general value (i.e. not `-pk`/`-pc`), the value is simply added to the end and any `%container.info` is replaced with the generic value.
+First, note that you can always manually edit each rule to output more or fewer fields by simply removing or adding fields directly to the `output` within the rules' YAML file.
 
 
-## Examples
+```yaml
+# Original rule output
+output: Executing binary not part of base image (proc_sname=%proc.sname user=%user.name process=%proc.name proc_exepath=%proc.exepath parent=%proc.pname command=%proc.cmdline terminal=%proc.tty %container.info)
 
-Here are some examples of Falco command lines, output strings in rules, and the resulting output:
+# Remove output fields
+output: %proc.sname %user.name
 
-### Output contains `%container.info`
-```
-output: "Namespace change (setns) by unexpected program (user=%user.name command=%proc.cmdline parent=%proc.pname %container.info)"
-
-$ falco
-15:42:35.347416068: Warning Namespace change (setns) by unexpected program (user=root command=test_program parent=hyperkube k8s-kubelet (id=4a4021c50439))
-
-$ falco -pk -k <k8s api server url>
-15:42:35.347416068: Warning Namespace change (setns) by unexpected program (user=root command=test_program parent=hyperkube k8s.pod=jclient-3160134038-qqaaz container=4a4021c50439)
-
-$ falco -p "This is Some Extra" -k <k8s api server url>
-15:42:35.347416068: Warning Namespace change (setns) by unexpected program (user=root command=test_program parent=hyperkube k8s-kubelet (id=4a4021c50439)) This is Some Extra
+# Add more output fields again
+output: %proc.sname %user.name %proc.is_exe_upper_layer
 ```
 
-### Output does not contain `%container.info`
+However, if you want to add the same output field to every rule, doing so manually is tedious. You might seek a shortcut to generically add specific output fields to every rule. The following explanation details how to achieve this.
 
+Falco inherently supports event decoration with associated [Container](https://falco.org/docs/reference/rules/supported-fields/#field-class-container) and [Kubernetes Fields](https://falco.org/docs/reference/rules/supported-fields/#field-class-k8s). To accomplish this, you'll need a special placeholder field in your rules' output fields, denoted as `%container.info`, and you'll need to run Falco with either the `-pk` or `-pc` command-line option. If your rule does not include `%container.info` no container or Kubernetes fields will be added.
+
+Do you have an even more customized use case? We have you covered! We also provide a `-p` flag where you can define custom additional output fields to be included in each rule.
+
+## Example Rule
+
+```yaml
+- rule: Drop and execute new binary in container
+  desc: >
+    SKIPPED
+  condition: >
+    spawned_process
+    and container
+    and proc.is_exe_upper_layer=true 
+    and not container.image.repository in (known_drop_and_execute_containers)
+  output: Executing binary not part of base image (proc_sname=%proc.sname user=%user.name process=%proc.name proc_exepath=%proc.exepath parent=%proc.pname command=%proc.cmdline terminal=%proc.tty %container.info)
+  priority: CRITICAL
+  tags: [maturity_stable, container, process, mitre_persistence, TA0003, PCI_DSS_11.5.1]
 ```
-output: "File below a known binary directory opened for writing (user=%user.name command=%proc.cmdline file=%fd.name)"
 
-$ falco
-15:50:18.866559081: Warning File below a known binary directory opened for writing (user=root command=touch /bin/hack file=/bin/hack) k8s-kubelet (id=4a4021c50439)
+### Scenario 1
 
-$ falco -pk -k <k8s api server url>
-15:50:18.866559081: Warning File below a known binary directory opened for writing (user=root command=touch /bin/hack file=/bin/hack) k8s.pod=jclient-3160134038-qqaaz container=4a4021c50439
+The rule outputs include `%container.info`, no command-line flags:
 
-$ falco -p "This is Some Extra" -k <k8s api server url>
-15:50:18.866559081: Warning File below a known binary directory opened for writing (user=root command=touch /bin/hack file=/bin/hack) This is Some Extra
+```bash 
+sudo /usr/bin/falco  -c /etc/falco/falco.yaml -r falco_rules_test.yaml -p
+```
+
+Nevertheless, we continue to output `%container.id` and `%container.name`:
+
+```bash
+03:00:45.104332605: Critical Executing binary not part of base image (proc_sname=bash user=root process=sleep proc_exepath=/tmp/sleep parent=bash command=sleep 10000 terminal=34816 container_id=0fdb3cd5b5fc container_name=optimistic_newton)
+```
+
+### Scenario 2
+
+The rule outputs include `%container.info`, and to enable this functionality, you run Falco with the `-pc` flag:
+
+```bash 
+sudo /usr/bin/falco  -c /etc/falco/falco.yaml -r falco_rules_test.yaml -pc
+```
+
+Output includes the default container fields:
+
+```bash
+03:02:52.019002207: Critical Executing binary not part of base image (proc_sname=bash user=root process=sleep proc_exepath=/tmp/sleep parent=bash command=sleep 10000 terminal=34816 container_id=0fdb3cd5b5fc container_image=ubuntu container_image_tag=latest container_name=optimistic_newton)
+```
+
+### Scenario 3
+
+The rule outputs include `%container.info`, and to enable this functionality, you run Falco with the `-pk` flag:
+
+```bash 
+sudo /usr/bin/falco  -c /etc/falco/falco.yaml -r falco_rules_test.yaml -pk
+```
+
+Output includes the default container plus Kubernetes fields:
+
+```bash
+03:03:23.573329751: Critical Executing binary not part of base image (proc_sname=bash user=root process=sleep proc_exepath=/tmp/sleep parent=bash command=sleep 10000 terminal=34816 container_id=0fdb3cd5b5fc container_image=ubuntu container_image_tag=latest container_name=optimistic_newton k8s_ns=my_ns k8s_pod_name=my_pod_name)
+```
+
+### Scenario 4
+
+The rule outputs include `%container.info`, and you run Falco with the `-p` flag with providing custom output fields:
+
+```bash 
+sudo /usr/bin/falco  -c /etc/falco/falco.yaml -r falco_rules_test.yaml -p "k8s_pod_uid=%k8s.pod.uid proc_pexepath=%proc.pexepath"
+```
+
+The output includes your custom output fields along with the default `%container.id` and `%container.name` because the rule still contained the `%container.info` placeholder field:
+
+```bash
+03:05:34.475000383: Critical Executing binary not part of base image (proc_sname=bash user=root process=sleep proc_exepath=/tmp/sleep parent=bash command=sleep 10000 terminal=34816 container_id=0fdb3cd5b5fc container_name=optimistic_newton) k8s_pod_uid=my_pod_uid proc_pexepath=/usr/bin/bash
 ```
