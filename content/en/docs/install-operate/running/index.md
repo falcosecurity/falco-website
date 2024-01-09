@@ -272,6 +272,7 @@ docker run --rm -i -t \
            --privileged \
            -v /var/run/docker.sock:/host/var/run/docker.sock \
            -v /proc:/host/proc:ro \
+           -v /etc:/host/etc:ro \
            falcosecurity/falco-no-driver:latest falco --modern-bpf
 ```
 
@@ -294,6 +295,7 @@ docker run --rm -i -t \
            --cap-add sys_ptrace \
            -v /var/run/docker.sock:/host/var/run/docker.sock \
            -v /proc:/host/proc:ro \
+           -v /etc:/host/etc:ro \
            falcosecurity/falco-no-driver:latest falco --modern-bpf
 ```
 
