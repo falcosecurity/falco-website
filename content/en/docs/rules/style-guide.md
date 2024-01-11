@@ -148,11 +148,13 @@ For each rule include the critical fields listed below related to process and us
 evt_type=%evt.type user=%user.name user_uid=%user.uid user_loginuid=%user.loginuid process=%proc.name proc_exepath=%proc.exepath parent=%proc.pname command=%proc.cmdline terminal=%proc.tty
 ```
 
-When the syscall event contains `flags` as an argument, please include it in the output fields as well. Refer to the [Event Table Definitions](https://github.com/falcosecurity/libs/blob/master/driver/event_table.c) for the `evt.arg.*` fields for each supported syscall, for which we extract and parse the arguments. If a rule involves multiple syscalls, please include only the `evt.arg.*` fields that are valid for each syscall. Our agreement specifies excluding output fields that may be empty or NA in certain cases.
+For rules involving only `spawned_process`, please also include `%evt.arg.flags` in the output fields. If a rule involves multiple syscalls beyond `spawned_process`, do not include `%evt.arg.flags`. Our agreement specifies excluding output fields that may be empty or `<NA>` in certain cases.
 
 ```yaml
-flags=%evt.arg.flags
+exe_flags=%evt.arg.flags
 ```
+
+General tip: Refer to the [Event Table Definitions](https://github.com/falcosecurity/libs/blob/master/driver/event_table.c) for the `evt.arg.*` fields for each supported syscall, for which we extract and parse the arguments.
 
 For network-related rules include:
 
