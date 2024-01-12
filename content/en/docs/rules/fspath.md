@@ -95,10 +95,10 @@ Here is an example rule that allows monitoring a wide variety of different file 
 
 - rule: Any File Related Operation on Path
   desc: Detect any file operation on a single path
-  condition: (fs.path.name pmatch (file_operation_paths) or fs.path.source pmatch (file_operation_paths) or fs.target.name pmatch (file_operation_paths)) and file_operation
+  condition: (fs.path.name pmatch (file_operation_paths) or fs.path.source pmatch (file_operation_paths) or fs.path.target pmatch (file_operation_paths)) and file_operation
   output: >
       Some File Related Operation on Path (evt.type=%evt.type path=%fs.path.name source=%fs.path.source
-           target=%fs.target.name %user.name=%user.name proc.cmdline=%proc.cmdline proc.pcmdline=%proc.pcmdline
+           target=%fs.path.target %user.name=%user.name proc.cmdline=%proc.cmdline proc.pcmdline=%proc.pcmdline
 	   container.id=%container.id container.name=%container.name image=%container.image.repository)
   priority: DEBUG
   source: syscall
