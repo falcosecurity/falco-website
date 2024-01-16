@@ -12,12 +12,12 @@ The recommended way to run Falco on CoreOS is inside of its own Docker container
 
 This method is automatically updated, includes some nice features such as automatic setup and bash completion, and is a generic approach that can be used on other distributions outside CoreOS as well.
 
-However, some users may prefer to run Falco in the CoreOS toolbox. While not the recommended method, this can be achieved by installing Falco inside the toolbox using the normal installation method, and then manually running the `falco-driver-loader` script:
+However, some users may prefer to run Falco in the CoreOS toolbox. While not the recommended method, this can be achieved by installing Falco inside the toolbox using the normal installation method, and then manually running the `falcoctl driver` tool:
 
 ```shell
 toolbox --bind=/dev --bind=/var/run/docker.sock
 curl -s https://falco.org/script/install | bash
-falco-driver-loader
+falcoctl driver install
 ```
 
 
@@ -33,10 +33,10 @@ eBPF is currently supported only on GKE and COS, however here we provide install
  If you want to specify an alternative path for the probe file, you can also set `FALCO_BPF_PROBE` to the path of an existing eBPF probe.
 {{% /pageinfo %}}
 
-When using the official container images, setting this environment variable will trigger the `falco-driver-loader` script to download the kernel headers for the appropriate version of COS, and then compile the appropriate eBPF probe. In all the other environments you can call the `falco-driver-loader` script yourself to obtain it in this way:
+When using the official container images, setting this environment variable will trigger the `falcoctl driver` tool to download the kernel headers for the appropriate version of COS, and then compile the appropriate eBPF probe. In all the other environments you can call the `falcoctl driver` tool yourself to obtain it in this way:
 
 ```bash
-sudo FALCO_VERSION="{{< latest >}}" FALCO_BPF_PROBE="" falco-driver-loader
+sudo falcoctl driver install --type ebpf
 ```
 
 To execute the script above successfully, you will need `clang` and `llvm` installed.
