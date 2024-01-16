@@ -36,7 +36,7 @@ The classic {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} is a
 
 To install the eBPF probe, please refer to the [installation](/docs/getting-started/installation/#install-driver) page.
 
-To enable the eBPF support in Falco set the `FALCO_BPF_PROBE` environment variable to an empty value (ie. `FALCO_BPF_PROBE=""`, in this way Falco will search under `$HOME/.falco` directory for a file called `falco-bpf.o`) or otherwise explicitly set it to the path where the eBPF probe resides.
+To enable the eBPF support in Falco set the `engine.kind` configuration key to `ebpf` and eventually customize `engine.ebpf.probe`  to the path where the eBPF probe resides; the default path is the location used by `falcoctl driver` tool to install the eBPF probe.
 
 ### Least privileged mode
 

@@ -25,12 +25,12 @@ falcoctl driver install
 
 Google Kubernetes Engine (GKE) uses Container-Optimized OS (COS) as the default operating system for its worker node pools. COS is a security-enhanced operating system that limits access to certain parts of the underlying OS. Because of this security constraint, Falco cannot insert its kernel module to process events for system calls. However, COS provides the ability to leverage eBPF (extended Berkeley Packet Filter) to supply the stream of system calls to the Falco engine.
 
-Falco can use eBPF with minimal configuration changes. To do so, set the `FALCO_BPF_PROBE` environment variable to an empty value: `FALCO_BPF_PROBE=""`.
+Falco can use eBPF with minimal configuration changes. To do so, set the `engine.kind` configuration key to `ebpf` in the Falco config file.
 
 eBPF is currently supported only on GKE and COS, however here we provide installation details for a wider set of platforms
 
 {{% pageinfo color="primary" %}}
- If you want to specify an alternative path for the probe file, you can also set `FALCO_BPF_PROBE` to the path of an existing eBPF probe.
+ If you want to specify an alternative path for the probe file, you can also set `engine.kind.probe` to the path of an existing eBPF probe.
 {{% /pageinfo %}}
 
 When using the official container images, setting this environment variable will trigger the `falcoctl driver` tool to download the kernel headers for the appropriate version of COS, and then compile the appropriate eBPF probe. In all the other environments you can call the `falcoctl driver` tool yourself to obtain it in this way:
@@ -41,21 +41,8 @@ sudo falcoctl driver install --type ebpf
 
 To execute the script above successfully, you will need `clang` and `llvm` installed.
 
-If you are installing Falco from packages, you will need to edit the `falco` systemd unit.
-
-You can do that by executing the following command:
-
-```bash
-systemctl edit falco
-```
-
-It will open your editor, at this point you can set the environment variable for the unit by adding this content
-to the file:
-
-```
-[Service]
-Environment='FALCO_BPF_PROBE=""'
-```
+If you are installing Falco from packages, you can start and enable `falco-bpf.service` systemd unit,
+that takes care of forcing the eBPF driver for you.  
 
 If you are [installing Falco with Helm](/docs/getting-started/third-party/install-tools/#helm), you will need to set the `driver.kind` option to `ebpf`:
 
