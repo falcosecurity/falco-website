@@ -59,7 +59,10 @@ The Falco package will look into your system for the `dialog` binary, if the bin
 
 > _Note_:  If you don't have the `dialog` binary installed on your system a manual configuration is always required to start Falco services.
 
-Even if you have the `dialog` binary installed, you can disable the interactive prompt by using the `FALCO_FRONTEND` env variable, you should simply set its value to `noninteractive` when installing the package.
+Even if you have the `dialog` binary installed, you can disable the interactive prompt by using the `FALCO_FRONTEND` env variable, you should simply set its value to `noninteractive` when installing the package.  
+Also, if you wish to skip the interactive prompt but still be able to set a custom driver, you can use `FALCO_DRIVER_CHOICE` env variable, setting it to `kmod`, `ebpf` or `modern_ebpf`.  
+At the same time, you can also enable the `falcoctl` automatic ruleset by setting `FALCOCTL_ENABLED` to a non empty string.  
+The latter environment variables are also useful when you don't want to install `dialog` binary at all.
 
 ```bash
 FALCO_FRONTEND=noninteractive apt-get install -y falco
@@ -101,7 +104,7 @@ $ sudo apt-get install apt-transport-https
 
     ```bash
     sudo apt install -y dkms make linux-headers-$(uname -r)
-    # If you use the falco-driver-loader to build the BPF probe locally you need also clang toolchain
+    # If you use falcoctl driver loader to build the BPF probe locally you need also clang toolchain
     sudo apt install -y clang llvm
     # You can install also the dialog package if you want it
     sudo apt install -y dialog
@@ -202,7 +205,7 @@ We have already seen [the installation steps](/docs/install-operate/installation
     yum install -y dkms make
     # If the package was not found by the below command, you might need to run `yum distro-sync` in order to fix it. Rebooting the system may be required.
     yum install -y kernel-devel-$(uname -r)
-    # If you use the falco-driver-loader to build the BPF probe locally you need also clang toolchain
+    # If you use falcoctl driver loader to build the BPF probe locally you need also clang toolchain
     yum install -y clang llvm
     # You can install also the dialog package if you want it
     yum install -y dialog
@@ -260,7 +263,7 @@ We have already seen [the installation steps](/docs/install-operate/installation
     zypper -n install dkms make
     # If the package was not found by the below command, you might need to run `zypper -n dist-upgrade` in order to fix it. Rebooting the system may be required.
     zypper -n install kernel-default-devel-$(uname -r | sed s/\-default//g)
-    # If you use the falco-driver-loader to build the BPF probe locally you need also clang toolchain
+    # If you use falcoctl driver loader to build the BPF probe locally you need also clang toolchain
     zypper -n install clang llvm
     # You can install also the dialog package if you want it
     zypper -n install dialog
@@ -302,37 +305,47 @@ In these steps, we are targeting a Debian-like system on `x86_64` architecture. 
     ```bash
     apt update -y
     apt install -y dkms make linux-headers-$(uname -r)
-    # If you use the falco-driver-loader to build the BPF probe locally you need also clang toolchain
+    # If you use falcoctl driver loader to build the BPF probe locally you need also clang toolchain
     apt install -y clang llvm
     ```
 
-4. Run `falco-driver-loader` binary to install the kernel module or the BPF probe. If you want to use other sources like the modern BPF probe or plugins you can skip this step.
-   {{% pageinfo color="info" %}}
+4. Use `falcoctl driver` tool to configure Falco and install the kernel module or the BPF probe. If you want to use other sources like the modern BPF probe or plugins you can skip this step.
 
-   To install the driver, the `falco-driver-loader` script requires write and execution permissions on the `/tmp` directory, as it will try to create and execute a script from there.
-   
-   {{% /pageinfo %}}
+{{% pageinfo color="info" %}}
 
-   ```bash
-   # If you want to install the kernel module
-   falco-driver-loader module
-   # If you want to install the eBPF probe
-   falco-driver-loader bpf
-   ```
+To install the driver, write and execution permissions on the `/tmp` directory are required, since `falcoctl` will try to create and execute a script from there.
 
-   By default, the `falco-driver-loader` script tries to download a prebuilt driver from [the official Falco download s3 bucket](https://download.falco.org/?prefix=driver/). If a driver is found then it is inserted into `${HOME}/.falco/`. Otherwise, the script tries to compile the driver locally, for this reason, you need the dependencies at step [3].
+{{% /pageinfo %}}
 
-   You can use the env variable `DRIVERS_REPO` to override the default repository URL for prebuilt drivers. The URL must not have the trailing slash, i.e. `https://myhost.mydomain.com` or if the server has a subdirectories structure `https://myhost.mydomain.com/drivers`. The drivers must be hosted with the following structure:
+    ```bash
+    # If you want to use the kernel module, configure Falco for it
+    falcoctl driver config --type kmod
+    # If you want to use the eBPF probe, configure Falco for it
+    falcoctl driver config --type ebpf
+    # Install the chosen driver
+    falcoctl driver install
+    ```
 
-   ```bash
-   /${driver_version}/falco_${target}_${kernelrelease}_${kernelversion}.[ko|o]
+    By default, the `falcoctl driver install` command tries to download a prebuilt driver from [the official Falco download s3 bucket](https://download.falco.org/?prefix=driver/). If a driver is found then it is inserted into `${HOME}/.falco/`. Otherwise, the script tries to compile the driver locally, for this reason, you need the dependencies at step [3].
+
+    You can use the env variable `FALCOCTL_DRIVER_REPOS` to override the default repository URL for prebuilt drivers. The URL must not have the trailing slash, i.e. `https://myhost.mydomain.com` or if the server has a subdirectories structure `https://myhost.mydomain.com/drivers`. The drivers must be hosted with the following structure:
+
+    ```bash
+    /${driver_version}/${arch}/falco_${target}_${kernelrelease}_${kernelversion}.[ko|o]
    ```
 
    where `ko` and `o` stand for Kernel module and `eBPF` probe respectively. This is an example:
 
-   ```text
-   /a259b4bf49c3330d9ad6c3eed9eb1a31954259a6/falco_amazonlinux2_4.14.128-112.105.amzn2.x86_64_1.ko
-   ```
+    ```text
+    /7.0.0+driver/x86_64/falco_amazonlinux2022_5.10.75-82.359.amzn2022.x86_64_1.ko
+    ```
+    
+> If you wish to print some debug info, you can use:
+
+    ```bash
+    # If you want to use the kernel module, configure Falco for it
+    falcoctl driver printenv
+    ```
 
 You are finally ready to [run the Falco binary](/docs/install-operate/running#falco-binary)!
 
@@ -449,9 +462,9 @@ This section aims to offer further guidance when something doesn't go as expecte
 
 ### Driver issues
 
-* `falco-driver-loader: Unable to find a prebuilt falco eBPF probe / module`
+* `ERROR failed: unable to find a prebuilt driver`
 
-This error message appears when the falco driver loader tool, which looks for the Falco driver and loads it in memory, is not able to find a pre-built driver, neither as an eBPF probe nor as a kernel module, at the [Falco driver repository] (https://download.falco.org).
+This error message appears when the falcoctl driver loader tool, which looks for the Falco driver and loads it in memory, is not able to find a pre-built driver, neither as an eBPF probe nor as a kernel module, at the [Falco driver repository] (https://download.falco.org).
 
 {{% pageinfo color=info %}}
 
