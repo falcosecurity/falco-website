@@ -408,3 +408,8 @@ disable_toc = false
 [params.training]
 
 [params.adopters]
+
+[params.tacking_pixels]
+main_url = "https://static.scarf.sh/a.png?x-pxid=91d2b9ed-2cd3-43e5-8eee-dbaa47affa14"
+blog_url = "https://static.scarf.sh/a.png?x-pxid=29c6e383-a814-4868-aa21-7d0b143ba609"
+docs_url = "https://static.scarf.sh/a.png?x-pxid=db2b8d9b-d667-42d5-8ee3-62b4b59dc8bc"
