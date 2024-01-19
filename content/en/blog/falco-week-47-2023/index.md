@@ -1,10 +1,10 @@
 ---
-title: Falco Weekly 47
+title: Falco Weekly 47 - 2023
 date: 2023-11-24
 author: Federico Di Pierro
 slug: falco-w-47-2023-weekly-recap
 aliases:
-  - falco-w-47
+  - falco-w-47-2023
 tags: ["Falco"]
 ---
 
