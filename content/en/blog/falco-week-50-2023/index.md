@@ -1,8 +1,10 @@
 ---
-title: Falco Weekly 50
+title: Falco Weekly 50 - 2023
 date: 2023-12-15
 author: Aldo Lacuku, Andrea Terzolo, Federico Di Pierro
 slug: falco-w-50-2023-weekly-recap
+aliases:
+  - falco-w-50-2023
 tags: ["Falco"]
 ---
 
