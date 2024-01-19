@@ -43,7 +43,7 @@ this does not require you to generate certificates for mTLS but also comes witho
 # gRPC server using an unix socket
 grpc:
   enabled: true
-  bind_address: "unix:///var/run/falco.sock"
+  bind_address: "unix:///run/falco/falco.sock"
   threadiness: 8
 ```
 

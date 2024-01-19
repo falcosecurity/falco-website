@@ -106,7 +106,7 @@ slug: falco-performance-testing
       threadiness: 0
   
       # gRPC unix socket with no authentication
-      unixSocketPath: "unix:///var/run/falco/falco.sock"
+      unixSocketPath: "unix:///run/falco/falco.sock"
   
       # gRPC over the network (mTLS) / required when unixSocketPath is empty
       listenPort: 5060
@@ -192,7 +192,7 @@ slug: falco-performance-testing
   >       --grpc-hostname string           Falco gRPCサーバに接続するためのホスト名(デフォルトは "localhost "です)
   >       --grpc-key string                Falco gRPCサーバに接続するためのキーファイルのパス (デフォルトは"/etc/falco/certs/client.key")
   >       --grpc-port uint16               Falco gRPCサーバに接続するためのポート(デフォルト5060)
-  >       --grpc-unix-socket string        Falco gRPCサーバに接続するためのUnixソケットパス (デフォルトは "unix:///var/run/falco.sock")
+  >       --grpc-unix-socket string        Falco gRPCサーバに接続するためのUnixソケットパス (デフォルトは "unix:///run/falco/falco.sock")
   >   -h, --help                           benchヘルプ
   >       --humanize                       統計情報をプリントする際に値を人に読みやすくする（デフォルトはtrue）
   >       --insecure-skip-tls-verify       true の場合、サーバの証明書の有効性はチェックされません。これにより、HTTPS 接続は安全ではなくなります
