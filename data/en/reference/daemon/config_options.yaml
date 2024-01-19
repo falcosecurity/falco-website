@@ -249,7 +249,7 @@
     * Over a local unix socket with no authentication
     * Over the network with mandatory mutual TLS authentication (mTLS)
 
-    `bind_address` specifies either the unix socket path or the address and port on which the gRPC server will listen. The default is `unix:///var/run/falco.sock`.
+    `bind_address` specifies either the unix socket path or the address and port on which the gRPC server will listen. The default is `unix:///run/falco/falco.sock`.
 
     `threadiness` defines the number of threads to use to serve gRPC requests. When `threadiness` is `0`, Falco automatically guesses it depending on the number of online cores. The default is `0`.
 
