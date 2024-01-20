@@ -20,7 +20,7 @@ As the name suggests, the GCP Audit Logs plugin ingests GCP Audit Logs for sever
 The  plugin uses an optimized GCP logging sink to send the most critical events from the monitored services to a user-defined Pub/Sub subscription. The GCP Audit Logs plugin subscribes to the Pub/Sub topic. It forwards the events from Pub/Sub to the Falco engine, which then filters the events and enriches the output with [custom metadata](https://github.com/falcosecurity/plugins/tree/master/plugins/gcpaudit#supported-fields). 
 
 
-<img border="2" src="images/featured.png"></img>
+<img style='border:1px solid black' src="images/featured.png"></img>
 
 The filtering process is based on a set of custom Falco rules authored with the [Mitre Att&ck framework](https://www.mitre.org/focus-areas/cybersecurity/mitre-attack) in mind. When an action, such as deleting a VM, triggers one of the rules, Falco sends out an alert. 
 
@@ -175,6 +175,8 @@ gcloud compute ssh falco --zone=us-central1-a
 
 Now you will install Falco, move the plugin and plugin rules files into the appropriate directory, and edit the Falco configuration file to enable the plugin. 
 
+In this example we are configuring Falco to capture both system calls with the modern eBPF probe and GCP events via the plugin. Enabling sytem call collecition is not necessary, but its included here so we can make sure Falco is running appropriately before installing the plugin. 
+
 Start by trusting the Falcosecurity key.
 
 ```
@@ -191,9 +193,7 @@ echo "deb [signed-by=/usr/share/keyrings/falco-archive-keyring.gpg] https://down
 sudo tee -a /etc/apt/sources.list.d/falcosecurity.list
 ```
 
-
 Update the packages list. 
-
 
 ```
 sudo apt-get update -y
@@ -202,19 +202,15 @@ sudo apt-get update -y
 
 The Falco installer needs to have the `dialog` package installed, so install that now. 
 
-
 ```
 sudo apt install -y dialog
 ```
 
-
 Install the Falco binary.
-
 
 ```
 sudo apt-get install -y falco
 ```
-
 
 You will be prompted to choose a Falco driver: choose **_Modern eBPF_**. 
 
@@ -224,11 +220,9 @@ When asked if you want to automatically update the rulesets choose **_No_**.
 
 Check to ensure Falco is up and running. 
 
-
 ```
 sudo systemctl status falco-modern-bpf
 ```
-
 
 You should see something similar to the following. 
 
@@ -238,29 +232,23 @@ Press **_Q_** to continue.
 
 Verify that Falco is running appropriately. 
 
-
 ```
 sudo cat /etc/shadow
 cat /var/log/syslog | grep Warning
 ```
 
-
 You should see something similar to the following output. 
-
 
 ```
 Jan  3 19:39:42 falco falco: 19:39:42.522581168: Warning Sensitive file opened for reading by non-trusted program (file=/etc/shadow gparent=bash ggparent=sshd gggparent=sshd evt_type=openat user=root user_uid=0 user_loginuid=1001 process=cat proc_exepath=/usr/bin/cat parent=sudo command=cat /etc/shadow terminal=34816 exe_flags=O_RDONLY container_id=host container_name=host)
 ```
 
-
 Copy the plugin and rules files into the appropriate directories. 
-
 
 ```
 sudo cp libgcpaudit.so /usr/share/falco/plugins
 sudo cp gcp_auditlog_rules.yaml /etc/falco
 ```
-
 
 Next, you need to edit the Falco configuration file. You’re going to be editing three sections. The first will tell Falco to load the plugin’s rules. The second will instruct Falco to load the plugin (along with the JSON plugin which is also required), and the third will provide configuration information for Falco. 
 
@@ -270,7 +258,6 @@ With whatever text editor you prefer open `/etc/falco/falco.yaml`.
 
 Find the `rules_file:` section and add an entry for `/etc/falco/gcp_auditlog_rules.yaml`.
 
-
 ```
 rules_file:
 - /etc/falco/falco_rules.yaml
@@ -279,19 +266,15 @@ rules_file:
 - /etc/falco/gcp_auditlog_rules.yaml
 ```
 
-
 Find the `load_plugins:` section, and add entries for `json` and `gcpaudit`. 
-
 
 ```
 load_plugins: [json, gcpaudit]
 ```
 
-
 Finally find the `plugins:` section and append an entry for the GCP Audit Logs plugin. 
 
-> **Note**: Make sure to specify your [PROEJECT ID ] in the last line
-
+> **Note**: Make sure to specify your [PROJECT ID ] in the last line
 
 ```
 plugins:
@@ -314,9 +297,7 @@ plugins:
       project_id: "[PROJECT ID]"
 ```
 
-
 Falco is configured to monitor changes to its configuration files, so there is no need to restart the service. 
-
 
 ### Step 3: Test the Plugin
 
@@ -328,12 +309,10 @@ Since the VM you created to run Falco does not have `gcloud` installed, the easi
 
 In the newly instantiated shell, create and delete a Pub/Sub topic.
 
-
 ```
 gcloud pubsub topics create test && \
 gcloud pubsub topics delete test
 ```
-
 
 Move back into the SSH session for the Falco VM and check the Falco logs to see if they show entries for the Pub/Sub activity. 
 
@@ -355,19 +334,13 @@ If you’re interested in testing out other rules, go ahead and examine the rule
 
 If you want to tear down the services you created during the walkthrough you have two choices.
 
-
-
 1. Delete the entire project.
 
 ```
 gcloud projects delete $PROJECT_ID
 ```
 
-
 2. Delete just the resources that were created during the walkthrough. From the machine where you ran the gcloud commands originally: 
-
- 
-
 
 ```
 gcloud compute instances delete falco --zone=us-central1-a
@@ -376,9 +349,7 @@ gcloud pubsub topics delete falco-plugin-topic
 gcloud logging sinks delete falco-plugin-sink
 ```
 
-
 You might also want to delete the GitHub repo you cloned. 
-
 
 ## Conclusion
 
