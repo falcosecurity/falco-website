@@ -16,6 +16,7 @@ Let's go step by step:
 - [Setting up the environment](#setting-up-the-environment)
   - [Creating a VM](#creating-a-vm)
   - [Creating an Emulated `x86_64` VM](#creating-an-emulated-x86_64-vm)
+  - [Lima Tips](#lima-tips)
 - [Installing Falco](#installing-falco)
   - [Installing the Falco driver](#installing-the-falco-driver)
 - [Running Falco](#running-falco)
@@ -46,7 +47,7 @@ $ brew install lima
 
 #### Creating a VM
 
-Lima has different templates already available to choose from:
+Lima has different [templates](https://lima-vm.io/docs/templates/) already available to choose from:
 
 ```shell
 $ limactl start --list-templates
@@ -119,8 +120,6 @@ After a few minutes, the VM is updated and rebooted. Now it is time to install F
 Would you like to test in an emulated `x86_64` VM? Let's set up the same Fedora VM for the `x86_64` architecture.
 
 ```shell
-$ limactl stop -f falco-fedora-x86_64 || true;
-$ limactl delete falco-fedora-x86_64 || true;
 $ limactl start --vm-type=qemu --arch=x86_64 --name=falco-fedora-x86_64 template://fedora
 ```
 
@@ -137,6 +136,11 @@ Fedora release 39 (Thirty Nine)
 
 __NOTE__ : You can always install your own custom kernel and reboot the VM into that new kernel.
 
+#### Lima Tips
+
+- Checkout the [Advanced Configuration](https://lima-vm.io/docs/examples/#advanced-configuration). For example, using additional flags such as `--memory 8 --cpus 8 --mount-type "reverse-sshfs" --mount-writable` when starting the VM allows for easy testing of your custom rules since your cwd from your macOS host is automatically mounted.
+- After rebooting the VM, we observed that mounts may not work anymore. However, leveraging [limactl edit](https://lima-vm.io/docs/reference/limactl_edit/) can fix it.
+- If you encounter issues, you can force stop and delete the VM, and then rebuild it. For instance, you can use the following commands: `limactl stop -f falco-fedora-x86_64 || true; limactl delete falco-fedora-x86_64 || true;`.
 
 ### Installing Falco
 
