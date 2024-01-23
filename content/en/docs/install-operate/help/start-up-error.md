@@ -33,12 +33,12 @@ Falco kernel driver issues are the most common source of frustrating errors. Her
    - Ensure the DKMS package is installed for the `kmod` driver, and your system may require custom-signed kernel modules. Also, verify the availability of the host `/dev` mount (e.g. `/dev:/host/dev` when running Falco over a container).
    - In general, check that Falco has all host mounts when running from a container or as a daemonset in Kubernetes. Critical mounts for running Falco, assuming the kernel driver is available, include: `/etc:/host/etc`,  `/proc:/host/proc`, `/boot:/host/boot`, `/dev:/host/dev`.
 - For `ebpf` and `kmod` drivers, the kernel object code needs to be available for the exact kernel release (`uname -r`) of your system. This invites a wide range of possible issues:
-  - Assuming you use Falco's open-source artifacts and open-source kernels, one source of error can be that the pre-built kernel driver (published by The Falco Project) is not available for download.
+  - If you use the Falco open-source binary on Linux distributions such as stock Ubuntu, Fedora, Debian, Arch Linux, Oracle Linux, Rocky Linux, AlmaLinux, etc., you may encounter an issue if the pre-built kernel driver from The Falco Project is not available for download. Verify on the [Driver Index](https://download.falco.org/driver/site/index.html) page if the driver is available for your specific OS and kernel.
   - Your network ACLs may be blocking the download.
   - In case the download fails, building the driver on the fly (over the init container in Kubernetes, for example) can fail for many reasons.
-  - Lastly, if you intend to run Falco on custom kernels, you'll need to compile the kernel driver yourself (`ebpf` or `kmod` only) or use the  `modern_ebpf` driver if applicable.
+  - Lastly, if you run a custom kernel, you'll need to build your own drivers (`ebpf` or `kmod` only) or explore the option of using the `modern_ebpf` driver if applicable.
 - If your kernel version is >= 5.8, consider using the  `modern_ebpf` driver first. It's bundled into the userspace binary and works out of the box, regardless of the kernel release, thanks to the eBPF feature called 'Compile Once Run Everywhere' (CO-RE).
-- If you are using the `ebpf` of `modern_ebpf` driver and encounter verbose and lengthy instruction printouts, you may have encountered a dreaded eBPF verifier failure. In such cases, kindly reach out to the Falco maintainers, providing the kernel release (`uname -r`). Resolving such instances involves modifying the driver code to ensure the eBPF verifier is happy again.
+- If you are using the `ebpf` or `modern_ebpf` driver and encounter verbose and lengthy instruction printouts, you may have encountered a dreaded eBPF verifier failure. In such cases, kindly reach out to the Falco maintainers, providing the kernel release (`uname -r`). Resolving such instances involves modifying the driver code to ensure the eBPF verifier is happy again.
 
 ### Userspace
 
@@ -54,3 +54,4 @@ Falco is a C/C++ application for performance reasons, and as such, it is not unh
 
 - [[UMBRELLA] Errors at Falco start-up related to Falco's kernel driver {kmod, ebpf, modern_ebpf}](https://github.com/falcosecurity/falco/issues/2873)
 - [Falco Performance in Production](https://falco.org/docs/install-operate/production-performance/)
+- [Driver Index](https://download.falco.org/driver/site/index.html)
