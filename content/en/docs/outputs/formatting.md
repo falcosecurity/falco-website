@@ -33,9 +33,8 @@ Do you have an even more customized use case? We have you covered! We also provi
 
 ```yaml
 - rule: Drop and execute new binary in container
-  desc: >
-    SKIPPED
-  condition: >
+  desc: SKIPPED
+  condition: 
     spawned_process
     and container
     and proc.is_exe_upper_layer=true 
@@ -45,12 +44,12 @@ Do you have an even more customized use case? We have you covered! We also provi
   tags: [maturity_stable, container, process, mitre_persistence, TA0003, PCI_DSS_11.5.1]
 ```
 
-### Scenario 1
+*Scenario 1*
 
 The rule outputs include `%container.info`, no command-line flags:
 
 ```bash 
-sudo /usr/bin/falco  -c /etc/falco/falco.yaml -r falco_rules_test.yaml -p
+sudo /usr/bin/falco  -c /etc/falco/falco.yaml -r falco_rules_test.yaml
 ```
 
 Nevertheless, we continue to output `%container.id` and `%container.name`:
@@ -59,7 +58,7 @@ Nevertheless, we continue to output `%container.id` and `%container.name`:
 03:00:45.104332605: Critical Executing binary not part of base image (proc_sname=bash user=root process=sleep proc_exepath=/tmp/sleep parent=bash command=sleep 10000 terminal=34816 container_id=0fdb3cd5b5fc container_name=optimistic_newton)
 ```
 
-### Scenario 2
+*Scenario 2*
 
 The rule outputs include `%container.info`, and to enable this functionality, you run Falco with the `-pc` flag:
 
@@ -73,7 +72,7 @@ Output includes the default container fields:
 03:02:52.019002207: Critical Executing binary not part of base image (proc_sname=bash user=root process=sleep proc_exepath=/tmp/sleep parent=bash command=sleep 10000 terminal=34816 container_id=0fdb3cd5b5fc container_image=ubuntu container_image_tag=latest container_name=optimistic_newton)
 ```
 
-### Scenario 3
+*Scenario 3*
 
 The rule outputs include `%container.info`, and to enable this functionality, you run Falco with the `-pk` flag:
 
@@ -87,7 +86,7 @@ Output includes the default container plus Kubernetes fields:
 03:03:23.573329751: Critical Executing binary not part of base image (proc_sname=bash user=root process=sleep proc_exepath=/tmp/sleep parent=bash command=sleep 10000 terminal=34816 container_id=0fdb3cd5b5fc container_image=ubuntu container_image_tag=latest container_name=optimistic_newton k8s_ns=my_ns k8s_pod_name=my_pod_name)
 ```
 
-### Scenario 4
+*Scenario 4*
 
 The rule outputs include `%container.info`, and you run Falco with the `-p` flag with providing custom output fields:
 
