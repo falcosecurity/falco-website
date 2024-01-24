@@ -279,4 +279,4 @@
     * `chunk_wait_us`: number (Default: 1000)
     * `watch_freq_sec`: number (Default: 1)
   description: |
-    Since Falco 0.30.0, this allows configuring the how the container orchestrator metadata is downloaded.
+    Since Falco 0.30.0, this allows configuring how the container orchestrator metadata is downloaded.
