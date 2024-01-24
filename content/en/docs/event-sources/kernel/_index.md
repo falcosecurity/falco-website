@@ -12,8 +12,8 @@ Falco uses different instrumentations to analyze the system workload and pass se
 There are several supported drivers:
 
 - Kernel module *(default)*
-- Classic eBPF probe
 - Modern eBPF probe
+- Classic eBPF probe
 
 |             | Kernel module | Classic eBPF probe | Modern eBPF probe                                                    |
 | ----------- | ------------- | ------------------ | -------------------------------------------------------------------- |
@@ -30,9 +30,62 @@ To install the kernel module, please refer to the [installation](/docs/getting-s
 
 The kernel module requires full privileges and cannot run with Linux capabilities
 
+## Modern eBPF probe
+
+The {{< glossary_tooltip text="modern probe" term_id="modern-ebpf-probe" >}} is an alternative driver for Falco. The main advantage it brings to the table is that it is embedded into Falco, which means that you don't have to download or build anything, if your kernel is recent enough Falco will automatically inject it!
+
+### What's new
+
+The new probe is highly customizable, you are not obliged to use one buffer [for each CPU](https://github.com/falcosecurity/falco/blob/660da98e4c37f4d4f79ec4bebf4379d9b90b0892/falco.yaml#L292) you can also use just one huge buffer for all your CPUs! And obviously, also the [buffer size](https://github.com/falcosecurity/falco/blob/660da98e4c37f4d4f79ec4bebf4379d9b90b0892/falco.yaml#L226) is customizable! All this is possible thanks to new outstanding features like [the CO-RE paradigm](https://nakryiko.com/posts/bpf-portability-and-co-re/), [the BPF ring buffer](https://nakryiko.com/posts/bpf-ringbuf/) and many others, if you are curious you can read more about them in this [blog post](/blog/falco-modern-bpf#what-s-new).
+
+### Requirements
+
+The modern BPF probe doesn't require a specific kernel version. Usually, all versions `>=5.8` are enough but there are cases in which the required features could also be backported into older kernels, so it wouldn't be completely fair to define `5.8` as the first supported version. The 2 main required features are:
+
+1. [BPF ring buffer](https://www.kernel.org/doc/html/next/bpf/ringbuf.html) support.
+2. A kernel that exposes [BTF](https://docs.kernel.org/bpf/btf.html).
+
+Falco can automatically detect if these features are available on the running machine and can notify you if something is missing. As an alternative, you could always use `bpftool`, you just need to type the following commands:
+
+```bash
+sudo bpftool feature probe kernel | grep -q "map_type ringbuf is available" && echo "true" || echo "false" 
+sudo bpftool feature probe kernel | grep -q "program_type tracing is available" && echo "true" || echo "false" 
+```
+
+### How to run it
+
+To enable the modern eBPF support in Falco, just set the `engine.kind` configuration key to `modern_ebpf`. Nothing else will be needed since no external artifact is required for it to work.
+
+It is supported in all the installation methods of other drivers:
+
+* [Falco packages](/docs/getting-started/installation/#installation-with-dialog)
+* [Falco binary](/docs/getting-started/running/#falco-binary)
+* [Docker](/docs/getting-started/running/#modern-ebpf)
+* [Helm chart](https://github.com/falcosecurity/charts/tree/master/charts/falco#daemonset)
+
+
+### Useful resources
+
+* [Modern BPF blog post](/blog/falco-modern-bpf/)
+* [Modern BPF proposal](https://github.com/falcosecurity/libs/blob/master/proposals/20220329-modern-bpf-probe.md)
+* [eBPF day presentation](https://youtu.be/BxoKztfHnYY)
+
+### Least privileged mode
+
+The minimal set of capabilities required by Falco to run the modern eBPF probe is the following:
+
+- `CAP_SYS_BPF`
+- `CAP_SYS_PERFMON`
+- `CAP_SYS_RESOURCE`
+- `CAP_SYS_PTRACE`
+
+The mentioned capabilities require no further explanation since they were already discussed in detail in the classic eBPF probe section. This set of capabilities should always work since here there are no issues with `kernel.perf_event_paranoid`.
+
+> **Please note**: we will try to do our best to keep this as the minimum required set but due to [some issues with CO-RE relocations](https://lore.kernel.org/bpf/CAGQdkDvYU_e=_NX+6DRkL_-TeH3p+QtsdZwHkmH0w3Fuzw0C4w@mail.gmail.com/T/#u) it is possible that this changes in the future.
+
 ## Classic eBPF probe
 
-The classic {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} is an alternative source to the one described above.
+The classic {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} is an alternative source to the ones described above, leveraging greater compatibility than the modern BPF one, since it requires older kernel versions.
 
 To install the eBPF probe, please refer to the [installation](/docs/getting-started/installation/#install-driver) page.
 
@@ -72,53 +125,3 @@ The conditions to satisfy are the following:
 
  	As you can notice, when your `kernel.perf_event_paranoid` is `>2` the capability `CAP_PERFMON` won't suffice, you would still need `CAP_SYS_ADMIN`.
  	So before disabling `CAP_SYS_ADMIN` check your `perf_event_paranoid` value with `sysctl kernel.perf_event_paranoid` and make sure their values are compatible with your distribution enforcement.
-
-## Modern eBPF probe
-
-The {{< glossary_tooltip text="modern probe" term_id="modern-ebpf-probe" >}} is an alternative driver for Falco. The main advantage it brings to the table is that it is embedded into Falco, which means that you don't have to download or build anything, if your kernel is recent enough Falco will automatically inject it!
-
-### What's new
-
-The new probe is highly customizable, you are not obliged to use one buffer [for each CPU](https://github.com/falcosecurity/falco/blob/660da98e4c37f4d4f79ec4bebf4379d9b90b0892/falco.yaml#L292) you can also use just one huge buffer for all your CPUs! And obviously, also the [buffer size](https://github.com/falcosecurity/falco/blob/660da98e4c37f4d4f79ec4bebf4379d9b90b0892/falco.yaml#L226) is customizable! All this is possible thanks to new outstanding features like [the CO-RE paradigm](https://nakryiko.com/posts/bpf-portability-and-co-re/), [the BPF ring buffer](https://nakryiko.com/posts/bpf-ringbuf/) and many others, if you are curious you can read more about them in this [blog post](/blog/falco-modern-bpf#what-s-new).
-
-### Requirements
-
-The modern BPF probe doesn't require a specific kernel version. Usually, all versions `>=5.8` are enough but there are cases in which the required features could also be backported into older kernels, so it wouldn't be completely fair to define `5.8` as the first supported version. The 2 main required features are:
-
-1. [BPF ring buffer](https://www.kernel.org/doc/html/next/bpf/ringbuf.html) support.
-2. A kernel that exposes [BTF](https://docs.kernel.org/bpf/btf.html).
-
-Falco can automatically detect if these features are available on the running machine and can notify you if something is missing. As an alternative, you could always use `bpftool`, you just need to type the following commands:
-
-```bash
-sudo bpftool feature probe kernel | grep -q "map_type ringbuf is available" && echo "true" || echo "false" 
-sudo bpftool feature probe kernel | grep -q "program_type tracing is available" && echo "true" || echo "false" 
-```
-
-### How to run it
-
-The modern eBPF probe supports all the installation methods of other drivers:
-
-* [Falco packages](/docs/getting-started/installation/#installation-with-dialog)
-* [Falco binary](/docs/getting-started/running/#falco-binary)
-* [Docker](/docs/getting-started/running/#modern-ebpf)
-* [Helm chart](https://github.com/falcosecurity/charts/tree/master/charts/falco#daemonset)
-
-### Useful resources
-
-* [Modern BPF blog post](/blog/falco-modern-bpf/)
-* [Modern BPF proposal](https://github.com/falcosecurity/libs/blob/master/proposals/20220329-modern-bpf-probe.md)
-* [eBPF day presentation](https://youtu.be/BxoKztfHnYY)
-
-### Least privileged mode
-
-The minimal set of capabilities required by Falco to run the modern eBPF probe is the following:
-
-- `CAP_SYS_BPF`
-- `CAP_SYS_PERFMON`
-- `CAP_SYS_RESOURCE`
-- `CAP_SYS_PTRACE`
-
-The mentioned capabilities require no further explanation since they were already discussed in detail in the classic eBPF probe section. This set of capabilities should always work since here there are no issues with `kernel.perf_event_paranoid`.
-
-> **Please note**: we will try to do our best to keep this as the minimum required set but due to [some issues with CO-RE relocations](https://lore.kernel.org/bpf/CAGQdkDvYU_e=_NX+6DRkL_-TeH3p+QtsdZwHkmH0w3Fuzw0C4w@mail.gmail.com/T/#u) it is possible that this changes in the future.
