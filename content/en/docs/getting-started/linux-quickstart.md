@@ -156,7 +156,7 @@ Jan 25 10:44:04 ubuntu falco[26488]: Opening capture with Kernel module
     sudo cat /etc/shadow > /dev/null
 ```
 
-### Exmamine Falco's output
+### Examine Falco's output
 
 One of the endpoints that Falco can write output to is *syslog*. There are multiple ways to examine the system logs, but we have featured two for our exercise: using *journalctl* and simply using *cat* on the log file.
 
