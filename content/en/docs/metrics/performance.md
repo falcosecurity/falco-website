@@ -42,7 +42,7 @@ Read [Falco Metrics](../falco-metrics/) next.
 
 A common misconception is to think that Falco has constant resource utilization. However, that is not accurate. Falco's utilization is directly dependent on the current workload on the host. The more system calls the applications make, the more work Falco has to handle. You can read our [Kernel Testing Framework Proposal](https://github.com/falcosecurity/libs/blob/master/proposals/20230530-driver-kernel-testing-framework.md#why-does-kernel-testing-matter) for more insights into this topic.
 
-Read [Help, Falco Is Dropping Syscalls Events!](../../help/dropping/) next.
+Read [Help, Falco Is Dropping Syscalls Events!](/docs/help/dropping/) next.
 
 Top metrics:
 

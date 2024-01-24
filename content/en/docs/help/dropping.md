@@ -27,12 +27,12 @@ Lastly, while it may sound appealing to push all filtering into the kernel, it i
 
 ## Kernel-side Syscalls Drops Metrics
 
-Falco's [metrics](https://github.com/falcosecurity/falco/blob/master/falco.yaml) config (see also [Falco Metrics](../../metrics/falco-metrics/)) enables you to measure Falco's kernel-side syscall drops and provides a range of useful metrics related to software functioning. Key settings include:
+Falco's [metrics](https://github.com/falcosecurity/falco/blob/master/falco.yaml) config (see also [Falco Metrics](/docs/metrics/falco-metrics/)) enables you to measure Falco's kernel-side syscall drops and provides a range of useful metrics related to software functioning. Key settings include:
 
 - `kernel_event_counters_enabled: true`
 - `libbpf_stats_enabled: true` (for `ebpf` or `modern_ebpf` drivers, enable `/proc/sys/kernel/bpf_stats_enabled`)
 
-Here is an example metrics log snippet highlighting the fields crucial for this analysis. Pay close attention to `falco.evts_rate_sec` and `scap.evts_rate_sec`, as well as the monotonic drop counters categorizing syscalls into coarse-grained (non-comprehensive) categories. For more details, refer to the dedicated metrics section in the [Falco Performance](../../metrics/performance/) guide for a more detailed explanation.
+Here is an example metrics log snippet highlighting the fields crucial for this analysis. Pay close attention to `falco.evts_rate_sec` and `scap.evts_rate_sec`, as well as the monotonic drop counters categorizing syscalls into coarse-grained (non-comprehensive) categories. For more details, refer to the dedicated metrics section in the [Falco Performance](/docs/metrics/performance/) guide for a more detailed explanation.
 
 ```yaml
 {

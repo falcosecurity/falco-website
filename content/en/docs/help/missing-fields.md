@@ -6,17 +6,17 @@ weight: 30
 
 ## Action Items (TL;DR)
 
-- Read [Install and Operate](../../install-operate/) Guides and review [falco.yaml](https://github.com/falcosecurity/falco/blob/master/falco.yaml) for necessary preconditions.
+- Read [Install and Operate](/docs/install-operate/) Guides and review [falco.yaml](https://github.com/falcosecurity/falco/blob/master/falco.yaml) for necessary preconditions.
 - Refer to the relevant debugging guide based on suspected missing fields.
 - Acknowledge that certain missing fields or data in Falco are legitimate.
 
 ## Background
 
-Many of the [Supported Output Fields](../../reference/rules/supported-fields/) are derived from multiple events and mechanisms. To provide a more concrete explanation, for each spawned process, Falco extracts and derives fields from the `clone*/*fork/execve*` syscalls. Falco generates a struct in userspace, stores the relevant information within this struct, and then adds it to the process cache table in memory. If a process makes additional system calls during its lifetime, such as opening a file, in a Falco rule, you typically also export process fields — assuming we haven't missed the spawned process event and the information is available. These details extend to various use cases, and, in essence, dropped events can lead to missing fields as well as race conditions.
+Many of the [Supported Output Fields](/docs/reference/rules/supported-fields/) are derived from multiple events and mechanisms. To provide a more concrete explanation, for each spawned process, Falco extracts and derives fields from the `clone*/*fork/execve*` syscalls. Falco generates a struct in userspace, stores the relevant information within this struct, and then adds it to the process cache table in memory. If a process makes additional system calls during its lifetime, such as opening a file, in a Falco rule, you typically also export process fields — assuming we haven't missed the spawned process event and the information is available. These details extend to various use cases, and, in essence, dropped events can lead to missing fields as well as race conditions.
 
 As a result, Falco logs can never be perfect, and null values can occur. We are constantly aiming to improve the robustness in this regard. We encourage you to [contribute](/docs/contribute/) to the project if you encounter such cases or have improvement ideas. Also be aware that, unfortunately, missing fields can have different natures. Sometimes the field may be an empty string, or the string `<NA>`, or, if numeric, the default numeric value. These inconsistencies may be more difficult to address, as many Falco rules rely on legacy declarations.
 
-Furthermore, sometimes Linux may not operate exactly as expected. One concrete example is that shell built-ins like `echo` do not cause a new spawned process, and the `echo` command does not get logged with Falco. Similarly, if a base64 encoded string gets interpreted during decoding, you do not have the original base64 blob in the command args unless the command was passed with the `sh -c` flag. Lastly, some fields only work for certain kernel versions or system configs (e.g. [proc.is_exe_upper_layer](../../reference/rules/supported-fields/#field-class-process) requires a container overlayfs).
+Furthermore, sometimes Linux may not operate exactly as expected. One concrete example is that shell built-ins like `echo` do not cause a new spawned process, and the `echo` command does not get logged with Falco. Similarly, if a base64 encoded string gets interpreted during decoding, you do not have the original base64 blob in the command args unless the command was passed with the `sh -c` flag. Lastly, some fields only work for certain kernel versions or system configs (e.g. [proc.is_exe_upper_layer](/docs/reference/rules/supported-fields/#field-class-process) requires a container overlayfs).
 
 ## Missing Container Images
 
@@ -25,7 +25,7 @@ Check the basics:
 - Is the container runtime socket correctly mounted? For Kubernetes, mount with the `HOST_ROOT` prefix: `/host/run/k3s/containerd/containerd.sock`. See [deploy-kubernetes](https://github.com/falcosecurity/deploy-kubernetes/tree/main/kubernetes) example template.
 - Is a custom path specified for the container runtime socket in Kubernetes? If yes, use the `--cri` command line option when running Falco. The default paths include: `/run/containerd/containerd.sock`, `/run/k3s/containerd/containerd.sock`, `/run/crio/crio.sock`.
 - To expedite lookups, attempt to disable asynchronous CRI API calls by using the `--disable-cri-async` command line option when running Falco.
-- If you run the upstream Falco rules containing the `%container.info` placeholder output field, run Falco with the `-pc` or `-pk` command line option to automatically include and resolve crucial container and Kubernetes-related output fields. For additional details, consult the [Outputs Formatting](../../outputs/formatting/) Guide, and consider adding more [Supported Output Fields](../../reference/rules/supported-fields/#field-class-container).
+- If you run the upstream Falco rules containing the `%container.info` placeholder output field, run Falco with the `-pc` or `-pk` command line option to automatically include and resolve crucial container and Kubernetes-related output fields. For additional details, consult the [Outputs Formatting](/doc/outputs/formatting/) Guide, and consider adding more [Supported Output Fields](/docs/reference/rules/supported-fields/#field-class-container).
 - Falco monitors both host and container processes. If the `container.id` is set to `host`, it indicates that the process is running on the host, and therefore, no container image is associated with it.
 
 {{% pageinfo color=info %}}
@@ -34,12 +34,12 @@ The `k8s.*` fields are extracted from the container runtime socket simultaneousl
 
 Carefully read the field description documentation:
 
-- [Supported Output Fields `container.*`](../../reference/rules/supported-fields/#field-class-container)   
-- [Supported Output Fields `k8s.*`](../../reference/rules/supported-fields/#field-class-k8s)
+- Supported Output Fields [`container.*`](/docs/reference/rules/supported-fields/#field-class-container) retrieved from the container runtime socket
+- Supported Output Fields [`k8s.*`](/docs/reference/rules/supported-fields/#field-class-k8s) also retrieved from the container runtime socket
 
 The container info enrichment, while robust, depends on the speed of making API requests against the container runtime socket.
 
-Falco's [metrics](https://github.com/falcosecurity/falco/blob/master/falco.yaml) config (see also [Falco Metrics](../../metrics/falco-metrics/)) provides a range of useful metrics related to software functioning, now also featuring metrics around Falco's internal state:
+Falco's [metrics](https://github.com/falcosecurity/falco/blob/master/falco.yaml) config (see also [Falco Metrics](/docs/metrics/falco-metrics/)) provides a range of useful metrics related to software functioning, now also featuring metrics around Falco's internal state:
 
 - `state_counters_enabled: true`
 
@@ -76,7 +76,7 @@ Let's consider another example: the fields related to the process tree lineage (
 - Furthermore, a history of all `spawned_process` events is not equivalent to the current process tree on the system. Check out the Falco [rules](https://github.com/falcosecurity/rules/blob/main/rules/falco_rules.yaml) macro `container_entrypoint` for one such example and explore this [resource](https://www.win.tue.nl/~aeb/linux/lk/lk-10.html).
 - In summary, Falco aims to closely preserve the true system state, similar to the Linux kernel itself.
 
-Falco's [metrics](https://github.com/falcosecurity/falco/blob/master/falco.yaml) config (see also [Falco Metrics](../../metrics/falco-metrics/)) provides a range of useful metrics related to software functioning, now also featuring metrics around Falco's internal state:
+Falco's [metrics](https://github.com/falcosecurity/falco/blob/master/falco.yaml) config (see also [Falco Metrics](/docs/metrics/falco-metrics/)) provides a range of useful metrics related to software functioning, now also featuring metrics around Falco's internal state:
 
 - `state_counters_enabled: true`
 
