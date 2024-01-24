@@ -169,17 +169,20 @@ file=%fd.name
 ```
 ... and additional specialized fields from the raw args if applicable, such as `newpath=%evt.arg.newpath` for non-file descriptor events like symlinking or renaming. Alternatively, you can explore more recent `fs.path.*` variants to simplify the consistent logging of file or directory paths, even for non-file descriptor events. Previously, tapping into the raw args as described above was required for such events.
 
-When writing a rule for container workloads, you should include the fields we automatically fetch from the container runtime. Falco supports a special placeholder for this purpose:
+When writing a rule for container workloads, you should include a special placeholder field that will resolve to relevant information automatically fetched from the container runtime socket.
 
 ```yaml
 %container.info
 ```
 
-This special placeholder will be automatically replaced with common container-related fields and, when used in conjunction with `-pk` (see the [Output Formatting](/docs/outputs/formatting/) page for more details) it will also add [Basic Kubernetes Fields](/docs/reference/rules/supported-fields/#field-class-k8s). Using `%container.info` in conjunction with `-pk` is equivalent to:
+Read more on the [Output Formatting](/docs/outputs/formatting/) page. For example, when you run Falco with `-pk`, the placeholder will resolve to:
 
 ```yaml
 container_id=%container.id container_image=%container.image.repository container_image_tag=%container.image.tag container_name=%container.name k8s_ns=%k8s.ns.name k8s_pod_name=%k8s.pod.name
 ```
+
+- Supported Output Fields [`container.*`](/docs/reference/rules/supported-fields/#field-class-container) retrieved from the container runtime socket
+- Supported Output Fields [`k8s.*`](/docs/reference/rules/supported-fields/#field-class-k8s) also retrieved from the container runtime socket
 
 All of these fields are incredibly crucial for effective incident response and play a vital role in determining the workload owner.
 
