@@ -6,7 +6,7 @@ weight: 10
 
 ## Action Items (TL;DR)
 
-- Read [Install and Operate](../../install-operate/) Guides and review [falco.yaml](https://github.com/falcosecurity/falco/blob/master/falco.yaml) for necessary preconditions.
+- Read [Install and Operate](/docs/install-operate/) Guides and review [falco.yaml](https://github.com/falcosecurity/falco/blob/master/falco.yaml) for necessary preconditions.
 - Address common startup issues by verifying and correcting config misconceptions.
 - Monitor for potential kernel driver bugs, though less frequent.
 - Be aware of userspace bugs that can also interfere with Falco startup.
@@ -48,10 +48,10 @@ Falco kernel driver issues are the most common source of frustrating errors. Her
 
 ### Restarts
 
-Falco is a C/C++ application for performance reasons, and as such, it is not unheard of for Falco to crash and restart in some rare code paths or edge case conditions. However, if you deploy Falco with resource limits, for example the OOM killer can also kill the process and force a restart. Read more in the [Falco Performance](../../metrics/performance/) Guide.
+Falco is a C/C++ application for performance reasons, and as such, it is not unheard of for Falco to crash and restart in some rare code paths or edge case conditions. However, if you deploy Falco with resource limits, for example the OOM killer can also kill the process and force a restart. Read more in the [Falco Performance](/docs/metrics/performance/) Guide.
 
 ### References and Community Discussions
 
 - [[UMBRELLA] Errors at Falco start-up related to Falco's kernel driver {kmod, ebpf, modern_ebpf}](https://github.com/falcosecurity/falco/issues/2873)
-- [Falco Performance](../../metrics/performance/)
+- [Falco Performance](/docs/metrics/performance/)
 - [Driver Index](https://download.falco.org/driver/site/index.html)

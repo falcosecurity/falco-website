@@ -1,5 +1,5 @@
 ---
-title: Help!
+title: Help
 description: Community driven help guides
 weight: 95
 ---
