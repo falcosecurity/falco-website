@@ -9,7 +9,7 @@ weight: 20
 
 Previous guides introduced the [Output Fields of Falco Rules](/docs/rules/basic-elements/#output) and provided [Guidelines](/docs/rules/style-guide/#output-fields) on how to use them. This section specifically highlights additional global formatting options for your deployment, complementing the information previously provided.
 
-First, note that you can always manually edit each rule to output more or fewer fields by simply removing or adding fields directly to the `output` within the rules' YAML file.
+First, note that you can always manually edit any rule to output more or fewer fields by simply editing `output` section for a given rule within the rules' YAML file.
 
 
 ```yaml
@@ -23,11 +23,13 @@ output: %proc.sname %user.name
 output: %proc.sname %user.name %proc.is_exe_upper_layer
 ```
 
-However, if you want to add the same output field to every rule, doing so manually is tedious. You might seek a shortcut to generically add specific output fields to every rule. The following explanation details how to achieve this.
+However, adding the same output field to multiple rules manually can be tedious. Thankfully Falco has a shortcut to make this eaier.
 
-Falco inherently supports event decoration with associated [Container](https://falco.org/docs/reference/rules/supported-fields/#field-class-container) and [Kubernetes Fields](https://falco.org/docs/reference/rules/supported-fields/#field-class-k8s). To accomplish this, you'll need a special placeholder field in your rules' output fields, denoted as `%container.info`, and you'll need to run Falco with either the `-pk` or `-pc` command-line option. If your rule does not include `%container.info` no container or Kubernetes fields will be added.
+Falco inherently supports event decoration for associated [Container](https://falco.org/docs/reference/rules/supported-fields/#field-class-container) and [Kubernetes](https://falco.org/docs/reference/rules/supported-fields/#field-class-k8s) metadata using a special placeholder field  (`%container.info`) in a rule's output section.
 
-Do you have an even more customized use case? We have you covered! We also provide a `-p` flag where you can define custom additional output fields to be included in each rule.
+To take advantage of event decoration, you need to run Falco with either the `-pk` or `-pc` command-line option.
+
+If you have an even more customized use case, Falco also provides a `-p` flag where you can define additional custom output fields to be included in each rule.
 
 ## Example Rule
 
@@ -46,13 +48,13 @@ Do you have an even more customized use case? We have you covered! We also provi
 
 *Scenario 1*
 
-The rule outputs include `%container.info`, no command-line flags:
+The rule outputs include `%container.info`, but Falco is started without any command line flags:
 
 ```bash 
 sudo /usr/bin/falco  -c /etc/falco/falco.yaml -r falco_rules_test.yaml
 ```
 
-Nevertheless, we continue to output `%container.id` and `%container.name`:
+In this case Falco will output `%container.id` and `%container.name` but no other container metadata will be displayed:
 
 ```bash
 03:00:45.104332605: Critical Executing binary not part of base image (proc_sname=bash user=root process=sleep proc_exepath=/tmp/sleep parent=bash command=sleep 10000 terminal=34816 container_id=0fdb3cd5b5fc container_name=optimistic_newton)
@@ -60,13 +62,13 @@ Nevertheless, we continue to output `%container.id` and `%container.name`:
 
 *Scenario 2*
 
-The rule outputs include `%container.info`, and to enable this functionality, you run Falco with the `-pc` flag:
+The rule outputs include `%container.info`, and Falco is started with the `-pc` flag:
 
 ```bash 
 sudo /usr/bin/falco  -c /etc/falco/falco.yaml -r falco_rules_test.yaml -pc
 ```
 
-Output includes the default container fields:
+The output includes the default container fields:
 
 ```bash
 03:02:52.019002207: Critical Executing binary not part of base image (proc_sname=bash user=root process=sleep proc_exepath=/tmp/sleep parent=bash command=sleep 10000 terminal=34816 container_id=0fdb3cd5b5fc container_image=ubuntu container_image_tag=latest container_name=optimistic_newton)
@@ -74,13 +76,13 @@ Output includes the default container fields:
 
 *Scenario 3*
 
-The rule outputs include `%container.info`, and to enable this functionality, you run Falco with the `-pk` flag:
+The rule outputs include `%container.info`, and Falco is started with the `-pk` flag:
 
 ```bash 
 sudo /usr/bin/falco  -c /etc/falco/falco.yaml -r falco_rules_test.yaml -pk
 ```
 
-Output includes the default container plus Kubernetes fields:
+Output includes the default container fields and the default Kubernetes fields:
 
 ```bash
 03:03:23.573329751: Critical Executing binary not part of base image (proc_sname=bash user=root process=sleep proc_exepath=/tmp/sleep parent=bash command=sleep 10000 terminal=34816 container_id=0fdb3cd5b5fc container_image=ubuntu container_image_tag=latest container_name=optimistic_newton k8s_ns=my_ns k8s_pod_name=my_pod_name)
@@ -88,7 +90,7 @@ Output includes the default container plus Kubernetes fields:
 
 *Scenario 4*
 
-The rule outputs include `%container.info`, and you run Falco with the `-p` flag with providing custom output fields:
+The rule outputs include `%container.info`, and you run Falco with the `-p` flag while providing custom output fields:
 
 ```bash 
 sudo /usr/bin/falco  -c /etc/falco/falco.yaml -r falco_rules_test.yaml -p "k8s_pod_uid=%k8s.pod.uid proc_pexepath=%proc.pexepath"

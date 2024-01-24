@@ -65,10 +65,10 @@ evt.type!=execve
 ```
 
 - To maintain performance, avoid mixing unrelated event types in one rule. Typically, only variants should be mixed together, for example: `evt.type in (open, openat, openat2)`.
-- The best practice and requirement for upstream rules are to only define positive `evt.type` expressions. Using `evt.type!=open`, for example, would imply each of the [Supported Syscalls](https://falcosecurity.github.io/libs/report/), resulting in a significant performance penalty. For more information, read the [Adaptive Syscalls Selection in Falco](/blog/adaptive-syscalls-selection/) blog post.
+- The best practice and requirement for upstream rules are to only define positive `evt.type` expressions. Using `evt.type!=open`, for example, would monitor each of the [Supported Syscalls](https://falcosecurity.github.io/libs/report/), resulting in a significant performance penalty. For more information, read the [Adaptive Syscalls Selection in Falco](/blog/adaptive-syscalls-selection/) blog post.
 
 
-- After the `evt.type` filter, place your mainly positive filters to efficiently eliminate the most events step by step. An exception to this rule is the `container` macro, which can quickly eliminate many events. Therefore, the guiding principle of "divide and conquer" commonly used in database query recommendations, also applies to Falco's filter statements.
+- After the `evt.type` filter, place your positive expression filters to efficiently eliminate the most events step by step. An exception to this rule is the `container` macro, which can quickly eliminate many events. Therefore, the guiding principle of "divide and conquer" commonly used in database query recommendations, also applies to Falco's filter statements.
 
 ```yaml
 - macro: open_write
@@ -148,7 +148,7 @@ For each rule include the critical fields listed below related to process and us
 evt_type=%evt.type user=%user.name user_uid=%user.uid user_loginuid=%user.loginuid process=%proc.name proc_exepath=%proc.exepath parent=%proc.pname command=%proc.cmdline terminal=%proc.tty
 ```
 
-For rules involving only `spawned_process`, please also include `%evt.arg.flags` in the output fields. If a rule involves multiple syscalls beyond `spawned_process`, do not include `%evt.arg.flags`. Our agreement specifies excluding output fields that may be empty or `<NA>` in certain cases.
+For rules involving only `spawned_process`, please also include `%evt.arg.flags` in the output fields. If a rule involves multiple syscalls beyond `spawned_process`, do not include `%evt.arg.flags`.
 
 ```yaml
 exe_flags=%evt.arg.flags
