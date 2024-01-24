@@ -81,7 +81,7 @@ evt.type!=execve
 
 - rule: Detect release_agent File Container Escapes
  ...
-  condition: >
+  condition:
     open_write and container and fd.name endswith release_agent and (user.uid=0 or thread.cap_effective contains CAP_DAC_OVERRIDE) and thread.cap_effective contains CAP_SYS_ADMIN
  ...
 ```
@@ -98,7 +98,7 @@ evt.type!=execve
 
 - rule: Drop and execute new binary in container
  ...
-  condition: >
+  condition:
     spawned_process
     and container
     and proc.is_exe_upper_layer=true 
@@ -190,12 +190,7 @@ We kindly ask you to add fields related to IDs later in your customization proce
 Falco also supports outputting the output as a resolved string. Therefore, use a sentence style, first concisely re-iterating the rule's purpose, and then including the output field in parentheses after the `=` character, with its meaning explained before the `=` character, adhering to the snake_case variable naming convention.
 
 ```yaml
-output: >
-    Read monitored file via directory traversal (file=%fd.name fileraw=%fd.nameraw 
-    gparent=%proc.aname[2] ggparent=%proc.aname[3] gggparent=%proc.aname[4] user=%user.name 
-    user_uid=%user.uid user_loginuid=%user.loginuid process=%proc.name proc_exepath=%proc.exepath 
-    parent=%proc.pname command=%proc.cmdline terminal=%proc.tty flags=%evt.arg.flags 
-    %container.info)
+output: "Read monitored file via directory traversal (file=%fd.name fileraw=%fd.nameraw gparent=%proc.aname[2] ggparent=%proc.aname[3] gggparent=%proc.aname[4] user=%user.name user_uid=%user.uid user_loginuid=%user.loginuid process=%proc.name proc_exepath=%proc.exepath parent=%proc.pname command=%proc.cmdline terminal=%proc.tty %container.info)"
 ```
 
 ### Priority
