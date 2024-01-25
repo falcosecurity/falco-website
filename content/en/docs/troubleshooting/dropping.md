@@ -1,5 +1,5 @@
 ---
-title: Help, Falco Is Dropping Syscalls Events!
+title: Falco Is Dropping Syscalls Events
 description: Follow this guide to determine if there is a possibility of addressing the issue on busy servers where Falco may be dropping events or if the server load is simply too high to resolve the issue
 weight: 20
 ---
