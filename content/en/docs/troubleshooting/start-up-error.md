@@ -1,5 +1,5 @@
 ---
-title: Help, Falco Is Not Starting Up!
+title: Falco Is Not Starting Up
 description: Follow this guide to identify whether an issue or misconfiguration is causing Falco to crash or preventing it from starting up
 weight: 10
 ---

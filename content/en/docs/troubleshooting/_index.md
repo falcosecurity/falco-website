@@ -1,6 +1,6 @@
 ---
-title: Help
-description: Community driven help guides
+title: Troubleshooting
+description: Community driven troubleshooting guides
 weight: 95
 ---
 

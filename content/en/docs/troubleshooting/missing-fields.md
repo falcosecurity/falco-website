@@ -1,5 +1,5 @@
 ---
-title: Help, Missing Fields in Falco Logs!
+title: Missing Fields in Falco Logs
 description: Follow this guide to identify issues or misconfigurations that may be causing missing fields in Falco rules outputs
 weight: 30
 ---
