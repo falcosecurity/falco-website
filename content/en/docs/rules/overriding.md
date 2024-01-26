@@ -2,7 +2,7 @@
 title: Overriding Rules
 description: Overriding Falco rules
 linktitle: Overriding Rules
-alias: 
+aliases: 
 - /docs/rules/appending
 weight: 50
 ---
