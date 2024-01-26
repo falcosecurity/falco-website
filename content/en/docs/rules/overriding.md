@@ -26,7 +26,7 @@ To facilitate modifying existing lists, macros and rules Falco provides an `over
 `replace` allows you to replace the value of an list, macro or macro key
 
 {{% alert color="warning" %}}
-`append` and `replace` cannot be used together. Trying to apply both `append` and `replace` to a key will result in an error. 
+`append` and `replace` cannot be used together. Trying to apply both will result in an error. 
 {{% /alert %}}
 
 The keys that can be overridden vary by rules component and action being taken:
