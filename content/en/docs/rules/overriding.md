@@ -7,7 +7,10 @@ weight: 50
 ## Overview
 There may be cases where you need to adjust the behavior of the Falco-supplied {{< glossary_tooltip text="list" term_id="lists" >}}, {{< glossary_tooltip text="macro" term_id="macros" >}}, and  {{< glossary_tooltip text="rule" term_id="rules" >}}.
 
-To enable this Falco allows you to define multiple rules files. The additional rules files can be used to add new lists, macros and rules or to override (modify) existing ones.
+You can override (modify) rules in falco two different ways: 
+
+1) Define multiple rules files. The additional rules files can be used to add new lists, macros and rules or to override existing ones.
+2) You can override lists, macros, and rules in the same file so long as the override happens after the initial definition. 
 
 {{% alert color="warning" %}}
 Note that when overriding existing lists, macro, or rule the order of the rule configuration files matters. For example if you append to an existing default rule, you must ensure your custom rules file (e.g. `/etc/falco/rules.d/custom-rules.yaml`) is loaded **after** the default rules file (`/etc/falco/falco_rules.yaml`).
@@ -27,10 +30,10 @@ To facilitate modifying existing lists, macros and rules Falco provides an `over
 
 The keys that can be overridden vary by rules component and action being taken:
 
-* Lists (`append` or `replace`): `{"items"}`
-* Macros (`append` or `replace`): `{"condition"}`
+* Lists (`append` or `replace`): `items`
+* Macros (`append` or `replace`): `condition`
 * Rules (`append`): `condition`, `output`, `desc`, `tags`, `exceptions`
-* Rules (`replace`):  `{"condition", "output", "desc", "priority", "tags", "exceptions", "enabled", "warn_evttypes", "skip-if-unknown-filter"}`
+* Rules (`replace`):  `condition`, `output` `desc`, `priority`, `tags`, `exceptions`, `enabled`, `warn_evttypes`, `skip-if-unknown-filter`
 
 ## Examples of using the `override` section
 
@@ -118,6 +121,7 @@ The rule `program_accesses_file` would trigger when `ls`/`cat` either used `open
 ### Append and replace items in a rule
 
 ##### `/etc/falco/falco_rules.yaml`
+
 ```yaml
 - rule: program_accesses_file
   desc: track whenever a set of programs opens a file
@@ -139,6 +143,50 @@ The rule `program_accesses_file` would trigger when `ls`/`cat` either used `open
 The rule `program_accesses_file` would trigger when `ls`/`cat` either used `open` on a file, but not if the user was root.
 
 The new output message would be `A file (user=%user.name command=%proc.cmdline file=%fd.name) was opened by a monitored program`
+
+### Enabling a disabled rule
+
+Using `enabled: true` is deprecated, and should be avoided. Falco 0.37.0 and later will display a warning If `enabled: true` is used. 
+
+##### `/etc/falco/falco_rules.yaml`
+
+```yaml
+- rule: test_rule
+  desc: test rule description
+  condition: evt.type = close
+  output: user=%user.name command=%proc.cmdline file=%fd.name
+  priority: INFO
+  enabled: false
+```
+
+##### `/etc/falco/falco_rules.local.yaml`
+
+```yaml
+- rule: test_rule
+  enabled: true
+```
+
+Use the new `override` section to enable the rule instead. 
+
+##### `/etc/falco/falco_rules.yaml`
+
+```yaml
+- rule: test_rule
+  desc: test rule description
+  condition: evt.type = close
+  output: user=%user.name command=%proc.cmdline file=%fd.name
+  priority: INFO
+  enabled: false
+```
+
+##### `/etc/falco/falco_rules.local.yaml`
+
+```yaml
+- rule: test_rule
+  enabled: true
+  override:
+    enabled: replace
+```
 
 ## Appending to existing rules using `append:true` (deprecated)
 
