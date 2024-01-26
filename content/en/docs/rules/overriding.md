@@ -29,7 +29,7 @@ The keys that can be overridden vary by rules component and action being taken:
 
 * Lists (`append` or `replace`): `{"items"}`
 * Macros (`append` or `replace`): `{"condition"}`
-* Rules (`append`): `{"condition", "output", "desc", "tags", "exceptions"}`
+* Rules (`append`): `condition`, `output`, `desc`, `tags`, `exceptions`
 * Rules (`replace`):  `{"condition", "output", "desc", "priority", "tags", "exceptions", "enabled", "warn_evttypes", "skip-if-unknown-filter"}`
 
 ## Examples of using the `ovverride` section
