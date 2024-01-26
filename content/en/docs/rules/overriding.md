@@ -32,7 +32,7 @@ The keys that can be overridden vary by rules component and action being taken:
 * Rules (`append`): `condition`, `output`, `desc`, `tags`, `exceptions`
 * Rules (`replace`):  `{"condition", "output", "desc", "priority", "tags", "exceptions", "enabled", "warn_evttypes", "skip-if-unknown-filter"}`
 
-## Examples of using the `ovverride` section
+## Examples of using the `override` section
 
 The following examples illustrate how you can use the override section to modify existing lists, macros, and rules. 
 
