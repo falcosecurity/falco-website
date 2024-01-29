@@ -3,111 +3,105 @@ Falco - Cloud Native Runtime Security
 Usage:
   falco [OPTION...]
 
-  -h, --help                    Print this page
+  -h, --help                    Print this help list and exit.
   -c <path>                     Configuration file. If not specified uses /etc/falco/falco.yaml.
-  -A                            Monitor all events supported by Falco defined in rules and configs. Please use the -i option to list the 
-                                events ignored by default without -A. This option affects live captures only. Setting -A can impact 
-                                performance.
+  -A                            Monitor all events supported by Falco and defined in rules and configs. Some events are ignored by default 
+                                when -A is not specified (the -i option lists these events ignored). Using -A can impact performance. This 
+                                option has no effect when reproducing events from a capture file.
   -b, --print-base64            Print data buffers in base64. This is useful for encoding binary data that needs to be used over media 
                                 designed to consume this format.
-      --cri <path>              Path to CRI socket for container metadata. Use the specified socket to fetch data from a CRI-compatible 
-                                runtime. If not specified, uses the libs default. This option can be passed multiple times to specify 
-                                socket to be tried until a successful one is found.
-  -d, --daemon                  Run as a daemon.
-      --disable-cri-async       Disable asynchronous CRI metadata fetching. This is useful to let the input event wait for the container 
+      --cri <path>              Path to CRI socket for container metadata. Use the specified <path> to fetch data from a CRI-compatible 
+                                runtime. If not specified, built-in defaults for commonly known paths are used. This option can be passed 
+                                multiple times to specify a list of sockets to be tried until a successful one is found.
+      --disable-cri-async       Turn off asynchronous CRI metadata fetching. This is useful to let the input event wait for the container 
                                 metadata fetch to finish before moving forward. Async fetching, in some environments leads to empty fields 
                                 for container metadata when the fetch is not fast enough to be completed asynchronously. This can have a 
                                 performance penalty on your environment depending on the number of containers and the frequency at which 
                                 they are created/started/stopped.
       --disable-source <event_source>
-                                Disable a specific event source. By default, all loaded sources get enabled. Available sources are 
-                                'syscall' and all sources defined by loaded plugins supporting the event sourcing capability. This option 
-                                can be passed multiple times. This has no offect when reading events from a trace file. Can not disable all 
-                                event sources. Can not be mixed with --enable-source.
-      --dry-run                 Run Falco without proceesing events. Can be useful for checking that the configuration and rules do not 
-                                have any errors.
-  -D <substring>                Disable any rules with names having the substring <substring>. This option can be passed multiple times. 
-                                Can not be mixed with -t.
-  -e <events_file>              Read the events from a trace file <events_file> in .scap format instead of tapping into live.
+                                Turn off a specific <event_source>. By default, all loaded sources get enabled. Available sources are 
+                                'syscall' plus all sources defined by loaded plugins supporting the event sourcing capability. This option 
+                                can be passed multiple times, but turning off all event sources simultaneously is not permitted. This 
+                                option can not be mixed with --enable-source. This option has no effect when reproducing events from a 
+                                capture file.
+      --dry-run                 Run Falco without processing events. It can help check that the configuration and rules do not have any 
+                                errors.
+  -D <substring>                Turn off any rules with names having the substring <substring>. This option can be passed multiple times. 
+                                It cannot be mixed with -t.
+  -e <events_file>              DEPRECATED. Reproduce the events by reading from the given <capture_file> instead of opening a live 
+                                session. Only capture files in .scap format are supported.
       --enable-source <event_source>
-                                Enable a specific event source. If used, all loaded sources get disabled by default and only the ones 
-                                passed with this option get enabled. Available sources are 'syscall' and all sources defined by loaded 
-                                plugins supporting the event sourcing capability. This option can be passed multiple times. This has no 
-                                offect when reading events from a trace file. Can not be mixed with --disable-source.
+                                Enable a specific <event_source>. By default, all loaded sources get enabled. Available sources are 
+                                'syscall' plus all sources defined by loaded plugins supporting the event sourcing capability. This option 
+                                can be passed multiple times. When using this option, only the event sources specified by it will be 
+                                enabled. This option can not be mixed with --disable-source. This option has no effect when reproducing 
+                                events from a capture file.
   -g, --gvisor-config <gvisor_config>
-                                Parse events from gVisor using the specified configuration file. A falco-compatible configuration file can 
-                                be generated with --gvisor-generate-config and can be used for both runsc and Falco.
+                                DEPRECATED. Collect 'syscall' events from gVisor using the specified <gvisor_config> file. A 
+                                Falco-compatible configuration file can be generated with --gvisor-generate-config and utilized for both 
+                                runsc and Falco.
       --gvisor-generate-config [=<socket_path>(=/run/falco/gvisor.sock)]
-                                Generate a configuration file that can be used for gVisor.
+                                Generate a configuration file that can be used for gVisor and exit. See --gvisor-config for more details.
       --gvisor-root <gvisor_root>
-                                gVisor root directory for storage of container state. Equivalent to runsc --root flag.
-      --modern-bpf              Use BPF modern probe to capture system events.
-  -i                            Print all high volume syscalls that are ignored by default for performance reasons (i.e. without the -A 
-                                flag) and exit.
-  -k, --k8s-api <url>           Enable Kubernetes support by connecting to the API server specified as argument. E.g. 
-                                "http://admin:password@127.0.0.1:8080". The API server can also be specified via the environment variable 
-                                FALCO_K8S_API.
-  -K, --k8s-api-cert (<bt_file> | <cert_file>:<key_file[#password]>[:<ca_cert_file>])
-                                Use the provided files names to authenticate user and (optionally) verify the K8S API server identity. Each 
-                                entry must specify full (absolute, or relative to the current directory) path to the respective file. 
-                                Private key password is optional (needed only if key is password protected). CA certificate is optional. 
-                                For all files, only PEM file format is supported. Specifying CA certificate only is obsoleted - when single 
-                                entry is provided for this option, it will be interpreted as the name of a file containing bearer token. 
-                                Note that the format of this command-line option prohibits use of files whose names contain ':' or '#' 
-                                characters in the file name.
-      --k8s-node <node_name>    The node name will be used as a filter when requesting metadata of pods to the API server. Usually, this 
-                                should be set to the current node on which Falco is running. If empty, no filter is set, which may have a 
-                                performance penalty on large clusters.
+                                DEPRECATED. Set gVisor root directory for storage of container state when used in conjunction with 
+                                --gvisor-config. The <gvisor_root> to be passed is the one usually passed to runsc --root flag.
+      --modern-bpf              DEPRECATED. Use the BPF modern probe driver to instrument the kernel and observe 'syscall' events.
+  -i                            Print those events that are ignored by default for performance reasons and exit. See -A for more details.
   -L                            Show the name and description of all rules and exit. If json_output is set to true, it prints details about 
-                                all rules, macros and lists in JSON format
-  -l <rule>                     Show the name and description of the rule with name <rule> and exit. If json_output is set to true, it 
-                                prints details about the rule in JSON format
-      --list [=<source>(=)]     List all defined fields. If <source> is provided, only list those fields for the source <source>. Current 
-                                values for <source> are "syscall" or any source from a configured plugin with event sourcing capability.
-      --list-syscall-events     List all defined system call events.
+                                all rules, macros, and lists in JSON format.
+  -l <rule>                     Show the name and description of the rule specified <rule> and exit. If json_output is set to true, it 
+                                prints details about the rule in JSON format.
+      --list [=<source>(=)]     List all defined fields and exit. If <source> is provided, only list those fields for the source <source>. 
+                                Current values for <source> are "syscall" or any source from a configured plugin with event sourcing 
+                                capability.
+      --list-events             List all defined syscall events, metaevents, tracepoint events and exit.
       --list-plugins            Print info on all loaded plugins and exit.
-  -M <num_seconds>              Stop collecting after <num_seconds> reached. (default: 0)
-      --markdown                When used with --list/--list-syscall-events, print the content in Markdown format
-  -N                            When used with --list, only print field names.
-      --nodriver                Capture for system events without drivers. If a loaded plugin has event sourcing capability and can produce 
-                                system events, it will be used to for event collection.
-  -o, --option <opt>=<val>      Set the value of option <opt> to <val>. Overrides values in configuration file. <opt> can be identified 
-                                using its location in configuration file using dot notation. Elements which are entries of lists can be 
-                                accessed via square brackets [].
+  -M <num_seconds>              Stop Falco execution after <num_seconds> are passed. (default: 0)
+      --markdown                Print output in Markdown format when used in conjunction with --list or --list-events options. It has no 
+                                effect when used with other options.
+  -N                            Only print field names when used in conjunction with the --list option. It has no effect when used with 
+                                other options.
+      --nodriver                DEPRECATED. Do not use a driver to instrument the kernel. If a loaded plugin has event-sourcing capability 
+                                and can produce system events, it will be used for event collection. Otherwise, no event will be collected.
+  -o, --option <opt>=<val>      Set the value of option <opt> to <val>. Overrides values in the configuration file. <opt> can be identified 
+                                using its location in the configuration file using dot notation. Elements of list entries can be accessed 
+                                via square brackets [].
                                     E.g. base.id = val
                                          base.subvalue.subvalue2 = val
                                          base.list[1]=val
       --plugin-info <plugin_name>
-                                Print info for a single plugin and exit.
-                                This includes all descriptivo info like name and author, along with the
+                                Print info for the plugin specified by <plugin_name> and exit.
+                                This includes all descriptive information like name and author, along with the
                                 schema format for the init configuration and a list of suggested open parameters.
-                                <plugin_name> can be the name of the plugin or its configured library_path.
-  -p, --print <output_format>   Add additional information to each falco notification's output.
-                                With -pc or -pcontainer will use a container-friendly format.
-                                With -pk or -pkubernetes will use a kubernetes-friendly format.
-                                Additionally, specifying -pc/-pk will change the interpretation of %container.info in rule output fields.
-  -P, --pidfile <pid_file>      When run as a daemon, write pid to specified file (default: /var/run/falco.pid)
-  -r <rules_file>               Rules file/directory (defaults to value set in configuration file, or /etc/falco_rules.yaml). This option 
-                                can be passed multiple times to read from multiple files/directories.
-  -s <stats_file>               If specified, append statistics related to Falco's reading/processing of events to this file (only useful 
-                                in live mode).
-      --stats-interval <msec>   When using -s <stats_file>, write statistics every <msec> ms. This uses signals, and has a minimum 
-                                threshold of 100 ms. Defaults to 5000 (5 seconds).
-  -S, --snaplen <len>           Capture the first <len> bytes of each I/O buffer. By default, the first 80 bytes are captured. Use this 
-                                option with caution, it can have a strong performance impact. (default: 0)
-      --support                 Print support information including version, rules files used, etc. and exit.
-  -T <tag>                      Disable any rules with a tag=<tag>. This option can be passed multiple times. Can not be mized with -t
-  -t <tag>                      Only run those rules with a tag=<tag>. This option can be passed multiple times. Can not be mixed with 
-                                -T/-D.
-  -U, --unbuffered              Turn off output buffering to configured outputs. This causes every single line emitted by falco to be 
-                                flushed which generates higher CPU usage but is useful when piping those outputs into another process or 
-                                into a script.
-  -u, --userspace               Parse events from userspace. To be used in conjunction with the ptrace(2) based driver (pdig)
-  -V, --validate <rules_file>   Read the contents of the specified rules(s) file and exit. This option can be passed multiple times to 
-                                validate multiple files.
-  -v                            Verbose output.
-      --version                 Print version number.
-      --page-size               Print the system page size (may help you to choose the right syscall ring-buffer size).
+                                <plugin_name> can be the plugin's name or its configured 'library_path'.
+  -p, --print <output_format>   Print (or replace) additional information in the rule's output.
+                                Use -pc or -pcontainer to append container details.
+                                Use -pk or -pkubernetes to add both container and Kubernetes details.
+                                If using gVisor, choose -pcg or -pkg variants (or -pcontainer-gvisor and -pkubernetes-gvisor, respectively).
+                                If a rule's output contains %container.info, it will be replaced with the corresponding details. Otherwise, 
+                                these details will be directly appended to the rule's output.
+                                Alternatively, use -p <output_format> for a custom format. In this case, the given <output_format> will be 
+                                appended to the rule's output without any replacement.
+  -P, --pidfile <pid_file>      Write PID to specified <pid_file> path. By default, no PID file is created. (default: "")
+  -r <rules_file>               Rules file or directory to be loaded. This option can be passed multiple times. Falco defaults to the 
+                                values in the configuration file when this option is not specified.
+  -S, --snaplen <len>           Collect only the first <len> bytes of each I/O buffer for 'syscall' events. By default, the first 80 bytes 
+                                are collected by the driver and sent to the user space for processing. Use this option with caution since 
+                                it can have a strong performance impact. (default: 0)
+      --support                 Print support information, including version, rules files used, loaded configuration, etc., and exit. The 
+                                output is in JSON format.
+  -T <tag>                      Turn off any rules with a tag=<tag>. This option can be passed multiple times. This option can not be mixed 
+                                with -t.
+  -t <tag>                      Only enable those rules with a tag=<tag>. This option can be passed multiple times. This option can not be 
+                                mixed with -T/-D.
+  -U, --unbuffered              Turn off output buffering for configured outputs. This causes every single line emitted by Falco to be 
+                                flushed, which generates higher CPU usage but is useful when piping those outputs into another process or a 
+                                script.
+  -V, --validate <rules_file>   Read the contents of the specified <rules_file> file(s), validate the loaded rules, and exit. This option 
+                                can be passed multiple times to validate multiple files.
+  -v                            Enable verbose output.
+      --version                 Print version information and exit.
+      --page-size               Print the system page size and exit. This utility may help choose the right syscall ring buffer size.
 ```
 
 {{< yaml_table_inline  
