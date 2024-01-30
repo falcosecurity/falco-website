@@ -221,7 +221,7 @@ This is a list of breaking changes introduced in Falco 0.37.0
 
 * [Remove -K/-k options from Falco in favor of the new k8s plugin](https://github.com/falcosecurity/falco/pull/2914)
 
-* [Dropped plugins shipped with Falco](https://github.com/falcosecurity/falco/pull/2997) since plugins will now be managed by `falcoctl`
+* [Dropped plugins shipped with Falco](https://github.com/falcosecurity/falco/pull/2997) since plugins will now be managed by `falcoctl`. If you want to use a plugin like `k8saudit` be sure to install it at init time with `falcoctl`.
 
 * A new feature in Falco 0.37.0 [allows environment variables to be expanded even if they are part of a string](https://github.com/falcosecurity/falco/pull/2918). This new functionality introduces a minor breaking change.
 
