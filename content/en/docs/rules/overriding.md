@@ -9,7 +9,7 @@ weight: 50
 ## Overview
 There may be cases where you need to adjust the behavior of the Falco-supplied {{< glossary_tooltip text="list" term_id="lists" >}}, {{< glossary_tooltip text="macro" term_id="macros" >}}, and  {{< glossary_tooltip text="rule" term_id="rules" >}}.
 
-You can override (modify) rules in falco two different ways: 
+You can override (modify) rules in Falco two different ways: 
 
 1) Define multiple rules files. The additional rules files can be used to add new lists, macros and rules or to override existing ones.
 2) You can override lists, macros, and rules in the same file so long as the override happens after the initial definition. 
@@ -127,7 +127,7 @@ The rule `program_accesses_file` would trigger when `ls`/`cat` either used `open
 ```yaml
 - rule: program_accesses_file
   desc: track whenever a set of programs opens a file
-  condition: proc.name in (cat, ls) and evt.type=open
+  condition: evt.type=open and proc.name in (cat, ls) 
   output: a tracked program opened a file (user=%user.name command=%proc.cmdline file=%fd.name)
   priority: INFO
 ```
@@ -148,7 +148,7 @@ The new output message would be `A file (user=%user.name command=%proc.cmdline f
 
 ### Enabling a disabled rule
 
-Using `enabled: true` is deprecated, and should be avoided. Falco 0.37.0 and later will display a warning If `enabled: true` is used. 
+Using `enabled: true` is deprecated, and should be avoided. Falco 0.37.0 and later will display a warning if `enabled: true` is used. 
 
 ##### `/etc/falco/falco_rules.yaml`
 
@@ -161,7 +161,7 @@ Using `enabled: true` is deprecated, and should be avoided. Falco 0.37.0 and lat
   enabled: false
 ```
 
-##### `/etc/falco/falco_rules.local.yaml` (wrong usage example)
+##### `/etc/falco/falco_rules.local.yaml` (incorrect usage example)
 
 ```yaml
 - rule: test_rule
