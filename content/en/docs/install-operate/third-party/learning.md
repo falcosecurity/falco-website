@@ -48,13 +48,13 @@ In order to install Falco with the `kernel module` or the `bpf probe`:
         ```shell
         helm install falco --set tty=true falcosecurity/falco
         ```
-    2. With bpf probe:
+    2. With `ebpf` probe:
         ```shell
         helm install falco --set driver.kind=ebpf --set tty=true falcosecurity/falco
         ```
-    3. With modern-bpf probe(recommended):
+    3. With `modern_ebpf` probe (recommended):
         ```shell
-        helm install falco --set driver.kind=modern-bpf --set tty=true falcosecurity/falco
+        helm install falco --set driver.kind=modern_ebpf --set tty=true falcosecurity/falco
         ```
 
     The output is similar to:
@@ -252,7 +252,7 @@ Here we run Falco in `minikube` cluster with multiple sources: `syscall` and `k8
     # Default value: kernel module.
     driver:
       enabled: true
-      kind: modern-bpf
+      kind: modern_ebpf
 
     # Enable the collectors used to enrich the events with metadata.
     # Check the values.yaml file for fine-grained options.
