@@ -118,6 +118,10 @@ However, there are a few shortcuts that can be used when defining an exception:
 
 #### Values are Optional
 
+{{% pageinfo color="warning" %}}
+The `append` attribute is deprecated and it will be removed in Falco `1.0.0`. Use the [`override` attribute](/docs/rules/overriding/#overview) instead.
+{{% /pageinfo %}}
+
 A rule may define fields and comps, but not define values. This allows a later rule with "append: true" to add values to an exception (more on that below). The exception "cmdline_writer" above has this format:
 
 ```
@@ -155,6 +159,10 @@ If comps is not provided, a default value is filled in. When fields is a list, c
 When fields is a single field, comps is set to the single field "in".
 
 ### Appending Exception Values
+
+{{% pageinfo color="warning" %}}
+The `append` attribute is deprecated and it will be removed in Falco `1.0.0`. Use the [`override` attribute](/docs/rules/overriding/#overview) instead.
+{{% /pageinfo %}}
 
 Exception values will most commonly be defined in rules with append: true. Here's an example:
 

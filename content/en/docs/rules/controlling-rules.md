@@ -41,6 +41,20 @@ These parameters can also be specified as Helm chart value (`extraArgs`) if you 
 
 ### Via Custom Rule Definition
 
+{{% pageinfo color="warning" %}}
+The `enabled` attribute used as an override is deprecated and it will be removed in Falco `1.0.0`. Use the [`override.enabled` attribute](/docs/rules/overriding/#enabling-a-disabled-rule) instead.
+Please note that the `enabled` key is only deprecated when used as an override! So a rule like this is perfectly legit:
+```yaml
+- rule: legit_rule
+  desc: legit rule description
+  condition: evt.type=open
+  output: user=%user.name command=%proc.cmdline file=%fd.name
+  priority: INFO
+  enabled: false
+```
+{{% /pageinfo %}}
+
+
 Last but not the least, you can just disable a rule that is enabled by default using the `enabled: false` rule property.
 This is especially useful for rules which do not provide a `user_*` macro in the default condition.
 
