@@ -158,19 +158,19 @@ In this example, the original rule is in `falco_rules.yaml` and the override is 
 
 ```yaml
 - rule: program_accesses_file
-desc: track whenever a set of programs opens a file
-condition: proc.name in (cat, ls) and evt.type=open
-output: a tracked program opened a file (user=%user.name command=%proc.cmdline file=%fd.name)
-priority: INFO
+  desc: track whenever a set of programs opens a file
+  condition: proc.name in (cat, ls) and evt.type=open
+  output: a tracked program opened a file (user=%user.name command=%proc.cmdline file=%fd.name)
+  priority: INFO
 ```
 
 **`/etc/falco/falco_rules.local.yaml`**
 
 ```yaml
 - rule: program_accesses_file
-condition: and not user.name=root
-output: A file (user=%user.name command=%proc.cmdline file=%fd.name) was opened by a monitored program
-override: 
+  condition: and not user.name=root
+  output: A file (user=%user.name command=%proc.cmdline file=%fd.name) was opened by a monitored program
+  override: 
     condition: append
     output: replace
 ```
