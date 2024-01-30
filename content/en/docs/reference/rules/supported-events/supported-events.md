@@ -44,7 +44,7 @@ Yes | `<` | `sendmsg` | ERRNO **res**, BYTEBUF **data**
 No | `>` | `sendmmsg` | 
 No | `<` | `sendmmsg` | 
 Yes | `>` | `recvmsg` | FD **fd**
-Yes | `<` | `recvmsg` | ERRNO **res**, UINT32 **size**, BYTEBUF **data**, SOCKTUPLE **tuple**
+Yes | `<` | `recvmsg` | ERRNO **res**, UINT32 **size**, BYTEBUF **data**, SOCKTUPLE **tuple**, BYTEBUF **msgcontrol**
 No | `>` | `recvmmsg` | 
 No | `<` | `recvmmsg` | 
 Yes | `>` | `creat` | FSPATH **name**, UINT32 **mode**
@@ -112,9 +112,9 @@ Yes | `<` | `inotify_init` | FD **res**
 Yes | `>` | `getrlimit` | ENUMFLAGS8 **resource**: *RLIMIT_UNKNOWN*, *RLIMIT_RTTIME*, *RLIMIT_RTPRIO*, *RLIMIT_NICE*, *RLIMIT_MSGQUEUE*, *RLIMIT_SIGPENDING*, *RLIMIT_LOCKS*, *RLIMIT_AS*, *RLIMIT_MEMLOCK*, *RLIMIT_NOFILE*, *RLIMIT_NPROC*, *RLIMIT_RSS*, *RLIMIT_CORE*, *RLIMIT_STACK*, *RLIMIT_DATA*, *RLIMIT_FSIZE*, *RLIMIT_CPU*
 Yes | `<` | `getrlimit` | ERRNO **res**, INT64 **cur**, INT64 **max**
 Yes | `>` | `setrlimit` | ENUMFLAGS8 **resource**: *RLIMIT_UNKNOWN*, *RLIMIT_RTTIME*, *RLIMIT_RTPRIO*, *RLIMIT_NICE*, *RLIMIT_MSGQUEUE*, *RLIMIT_SIGPENDING*, *RLIMIT_LOCKS*, *RLIMIT_AS*, *RLIMIT_MEMLOCK*, *RLIMIT_NOFILE*, *RLIMIT_NPROC*, *RLIMIT_RSS*, *RLIMIT_CORE*, *RLIMIT_STACK*, *RLIMIT_DATA*, *RLIMIT_FSIZE*, *RLIMIT_CPU*
-Yes | `<` | `setrlimit` | ERRNO **res**, INT64 **cur**, INT64 **max**
+Yes | `<` | `setrlimit` | ERRNO **res**, INT64 **cur**, INT64 **max**, ENUMFLAGS8 **resource**: *RLIMIT_UNKNOWN*, *RLIMIT_RTTIME*, *RLIMIT_RTPRIO*, *RLIMIT_NICE*, *RLIMIT_MSGQUEUE*, *RLIMIT_SIGPENDING*, *RLIMIT_LOCKS*, *RLIMIT_AS*, *RLIMIT_MEMLOCK*, *RLIMIT_NOFILE*, *RLIMIT_NPROC*, *RLIMIT_RSS*, *RLIMIT_CORE*, *RLIMIT_STACK*, *RLIMIT_DATA*, *RLIMIT_FSIZE*, *RLIMIT_CPU*
 Yes | `>` | `prlimit` | PID **pid**, ENUMFLAGS8 **resource**: *RLIMIT_UNKNOWN*, *RLIMIT_RTTIME*, *RLIMIT_RTPRIO*, *RLIMIT_NICE*, *RLIMIT_MSGQUEUE*, *RLIMIT_SIGPENDING*, *RLIMIT_LOCKS*, *RLIMIT_AS*, *RLIMIT_MEMLOCK*, *RLIMIT_NOFILE*, *RLIMIT_NPROC*, *RLIMIT_RSS*, *RLIMIT_CORE*, *RLIMIT_STACK*, *RLIMIT_DATA*, *RLIMIT_FSIZE*, *RLIMIT_CPU*
-Yes | `<` | `prlimit` | ERRNO **res**, INT64 **newcur**, INT64 **newmax**, INT64 **oldcur**, INT64 **oldmax**
+Yes | `<` | `prlimit` | ERRNO **res**, INT64 **newcur**, INT64 **newmax**, INT64 **oldcur**, INT64 **oldmax**, INT64 **pid**, ENUMFLAGS8 **resource**: *RLIMIT_UNKNOWN*, *RLIMIT_RTTIME*, *RLIMIT_RTPRIO*, *RLIMIT_NICE*, *RLIMIT_MSGQUEUE*, *RLIMIT_SIGPENDING*, *RLIMIT_LOCKS*, *RLIMIT_AS*, *RLIMIT_MEMLOCK*, *RLIMIT_NOFILE*, *RLIMIT_NPROC*, *RLIMIT_RSS*, *RLIMIT_CORE*, *RLIMIT_STACK*, *RLIMIT_DATA*, *RLIMIT_FSIZE*, *RLIMIT_CPU*
 Yes | `>` | `fcntl` | FD **fd**, ENUMFLAGS8 **cmd**: *F_GETPIPE_SZ*, *F_SETPIPE_SZ*, *F_NOTIFY*, *F_DUPFD_CLOEXEC*, *F_CANCELLK*, *F_GETLEASE*, *F_SETLEASE*, *F_GETOWN_EX*, *F_SETOWN_EX*, *F_SETLKW64*, *F_SETLK64*, *F_GETLK64*, *F_GETSIG*, *F_SETSIG*, *F_GETOWN*, *F_SETOWN*, *F_SETLKW*, *F_SETLK*, *F_GETLK*, *F_SETFL*, *F_GETFL*, *F_SETFD*, *F_GETFD*, *F_DUPFD*, *F_OFD_GETLK*, *F_OFD_SETLK*, *F_OFD_SETLKW*, *UNKNOWN*
 Yes | `<` | `fcntl` | FD **res**, FD **fd**, ENUMFLAGS8 **cmd**: *F_GETPIPE_SZ*, *F_SETPIPE_SZ*, *F_NOTIFY*, *F_DUPFD_CLOEXEC*, *F_CANCELLK*, *F_GETLEASE*, *F_SETLEASE*, *F_GETOWN_EX*, *F_SETOWN_EX*, *F_SETLKW64*, *F_SETLK64*, *F_GETLK64*, *F_GETSIG*, *F_SETSIG*, *F_GETOWN*, *F_SETOWN*, *F_SETLKW*, *F_SETLK*, *F_GETLK*, *F_SETFL*, *F_GETFL*, *F_SETFD*, *F_GETFD*, *F_DUPFD*, *F_OFD_GETLK*, *F_OFD_SETLK*, *F_OFD_SETLKW*, *UNKNOWN*
 Yes | `>` | `brk` | UINT64 **addr**
@@ -205,7 +205,7 @@ Yes | `>` | `execve` | FSPATH **filename**
 Yes | `<` | `execve` | ERRNO **res**, CHARBUF **exe**, BYTEBUF **args**, PID **tid**, PID **pid**, PID **ptid**, CHARBUF **cwd**, UINT64 **fdlimit**, UINT64 **pgft_maj**, UINT64 **pgft_min**, UINT32 **vm_size**, UINT32 **vm_rss**, UINT32 **vm_swap**, CHARBUF **comm**, BYTEBUF **cgroups**, BYTEBUF **env**, UINT32 **tty**, PID **pgid**, UID **loginuid**, FLAGS32 **flags**: *EXE_WRITABLE*, *EXE_UPPER_LAYER*, *EXE_FROM_MEMFD*, UINT64 **cap_inheritable**, UINT64 **cap_permitted**, UINT64 **cap_effective**, UINT64 **exe_ino**, ABSTIME **exe_ino_ctime**, ABSTIME **exe_ino_mtime**, UID **uid**, FSPATH **trusted_exepath**
 Yes | `>` | `setpgid` | PID **pid**, PID **pgid**
 Yes | `<` | `setpgid` | PID **res**
-Yes | `>` | `seccomp` | UINT64 **op**
+Yes | `>` | `seccomp` | UINT64 **op**, UINT64 **flags**
 Yes | `<` | `seccomp` | ERRNO **res**
 Yes | `>` | `unlink` | 
 Yes | `<` | `unlink` | ERRNO **res**, FSPATH **path**
@@ -264,7 +264,7 @@ Yes | `<` | `dup3` | FD **res**, FD **oldfd**, FD **newfd**, FLAGS32 **flags**: 
 Yes | `>` | `dup` | FD **fd**
 Yes | `<` | `dup` | FD **res**, FD **oldfd**
 Yes | `>` | `bpf` | INT64 **cmd**
-Yes | `<` | `bpf` | FD **fd**
+Yes | `<` | `bpf` | FD **fd**, INT32 **cmd**
 Yes | `>` | `mlock2` | 
 Yes | `<` | `mlock2` | ERRNO **res**, UINT64 **addr**, UINT64 **len**, UINT32 **flags**
 Yes | `>` | `fsconfig` | 
@@ -311,484 +311,532 @@ Yes | `>` | `mknod` |
 Yes | `<` | `mknod` | ERRNO **res**, FSPATH **path**, MODE **mode**, UINT32 **dev**
 Yes | `>` | `mknodat` | 
 Yes | `<` | `mknodat` | ERRNO **res**, FD **dirfd**, FSRELPATH **path**, MODE **mode**, UINT32 **dev**
-Yes | `>` | `sigreturn` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sigreturn` | SYSCALLID **ID**
-Yes | `>` | `s390_runtime_instr` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `s390_runtime_instr` | SYSCALLID **ID**
-Yes | `>` | `s390_sthyi` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `s390_sthyi` | SYSCALLID **ID**
-Yes | `>` | `readdir` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `readdir` | SYSCALLID **ID**
-Yes | `>` | `sync_file_range` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sync_file_range` | SYSCALLID **ID**
-Yes | `>` | `faccessat2` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `faccessat2` | SYSCALLID **ID**
-Yes | `>` | `sched_getattr` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sched_getattr` | SYSCALLID **ID**
-Yes | `>` | `rseq` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `rseq` | SYSCALLID **ID**
-Yes | `>` | `nfsservctl` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `nfsservctl` | SYSCALLID **ID**
-Yes | `>` | `sigsuspend` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sigsuspend` | SYSCALLID **ID**
-Yes | `>` | `getpmsg` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `getpmsg` | SYSCALLID **ID**
-Yes | `>` | `set_mempolicy_home_node` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `set_mempolicy_home_node` | SYSCALLID **ID**
-Yes | `>` | `io_pgetevents` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `io_pgetevents` | SYSCALLID **ID**
-Yes | `>` | `statx` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `statx` | SYSCALLID **ID**
-Yes | `>` | `epoll_ctl_old` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `epoll_ctl_old` | SYSCALLID **ID**
-Yes | `>` | `mbind` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `mbind` | SYSCALLID **ID**
-Yes | `>` | `move_pages` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `move_pages` | SYSCALLID **ID**
-Yes | `>` | `migrate_pages` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `migrate_pages` | SYSCALLID **ID**
-Yes | `>` | `landlock_add_rule` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `landlock_add_rule` | SYSCALLID **ID**
-Yes | `>` | `landlock_restrict_self` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `landlock_restrict_self` | SYSCALLID **ID**
-Yes | `>` | `pkey_alloc` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `pkey_alloc` | SYSCALLID **ID**
-Yes | `>` | `close_range` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `close_range` | SYSCALLID **ID**
-Yes | `>` | `kexec_file_load` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `kexec_file_load` | SYSCALLID **ID**
-Yes | `>` | `memfd_secret` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `memfd_secret` | SYSCALLID **ID**
-Yes | `>` | `fadvise64` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `fadvise64` | SYSCALLID **ID**
-Yes | `>` | `getrandom` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `getrandom` | SYSCALLID **ID**
-Yes | `>` | `sigaltstack` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sigaltstack` | SYSCALLID **ID**
-Yes | `>` | `process_vm_writev` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `process_vm_writev` | SYSCALLID **ID**
-Yes | `>` | `fallocate` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `fallocate` | SYSCALLID **ID**
-Yes | `>` | `waitpid` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `waitpid` | SYSCALLID **ID**
-Yes | `>` | `nice` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `nice` | SYSCALLID **ID**
-Yes | `>` | `olduname` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `olduname` | SYSCALLID **ID**
-Yes | `>` | `sgetmask` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sgetmask` | SYSCALLID **ID**
-Yes | `>` | `_newselect` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `_newselect` | SYSCALLID **ID**
-Yes | `>` | `socketcall` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `socketcall` | SYSCALLID **ID**
-Yes | `>` | `sigprocmask` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sigprocmask` | SYSCALLID **ID**
-Yes | `>` | `fstatat64` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `fstatat64` | SYSCALLID **ID**
-Yes | `>` | `process_vm_readv` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `process_vm_readv` | SYSCALLID **ID**
-Yes | `>` | `fstatfs64` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `fstatfs64` | SYSCALLID **ID**
-Yes | `>` | `statfs64` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `statfs64` | SYSCALLID **ID**
-Yes | `>` | `msgctl` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `msgctl` | SYSCALLID **ID**
-Yes | `>` | `msgget` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `msgget` | SYSCALLID **ID**
-Yes | `>` | `process_mrelease` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `process_mrelease` | SYSCALLID **ID**
-Yes | `>` | `msgrcv` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `msgrcv` | SYSCALLID **ID**
-Yes | `>` | `perf_event_open` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `perf_event_open` | SYSCALLID **ID**
-Yes | `>` | `getcpu` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `getcpu` | SYSCALLID **ID**
-Yes | `>` | `create_module` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `create_module` | SYSCALLID **ID**
-Yes | `>` | `preadv2` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `preadv2` | SYSCALLID **ID**
-Yes | `>` | `vmsplice` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `vmsplice` | SYSCALLID **ID**
-Yes | `>` | `rt_sigtimedwait` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `rt_sigtimedwait` | SYSCALLID **ID**
-Yes | `>` | `mq_open` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `mq_open` | SYSCALLID **ID**
-Yes | `>` | `modify_ldt` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `modify_ldt` | SYSCALLID **ID**
-Yes | `>` | `timerfd_settime` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `timerfd_settime` | SYSCALLID **ID**
-Yes | `>` | `getitimer` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `getitimer` | SYSCALLID **ID**
-Yes | `>` | `semtimedop` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `semtimedop` | SYSCALLID **ID**
-Yes | `>` | `rt_sigreturn` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `rt_sigreturn` | SYSCALLID **ID**
-Yes | `>` | `rt_sigpending` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `rt_sigpending` | SYSCALLID **ID**
-Yes | `>` | `sched_get_priority_min` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sched_get_priority_min` | SYSCALLID **ID**
-Yes | `>` | `sched_getscheduler` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sched_getscheduler` | SYSCALLID **ID**
-Yes | `>` | `kcmp` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `kcmp` | SYSCALLID **ID**
-Yes | `>` | `open_tree` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `open_tree` | SYSCALLID **ID**
-Yes | `>` | `setpriority` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `setpriority` | SYSCALLID **ID**
-Yes | `>` | `sched_setscheduler` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sched_setscheduler` | SYSCALLID **ID**
-Yes | `>` | `sched_getparam` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sched_getparam` | SYSCALLID **ID**
-Yes | `>` | `fdatasync` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `fdatasync` | SYSCALLID **ID**
-Yes | `>` | `pkey_mprotect` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `pkey_mprotect` | SYSCALLID **ID**
-Yes | `>` | `clock_nanosleep` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `clock_nanosleep` | SYSCALLID **ID**
-Yes | `>` | `getsid` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `getsid` | SYSCALLID **ID**
-Yes | `>` | `signal` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `signal` | SYSCALLID **ID**
-Yes | `>` | `sched_yield` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sched_yield` | SYSCALLID **ID**
-Yes | `>` | `get_robust_list` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `get_robust_list` | SYSCALLID **ID**
-Yes | `>` | `set_tid_address` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `set_tid_address` | SYSCALLID **ID**
-Yes | `>` | `getpgid` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `getpgid` | SYSCALLID **ID**
-Yes | `>` | `wait4` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `wait4` | SYSCALLID **ID**
-Yes | `>` | `rt_sigaction` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `rt_sigaction` | SYSCALLID **ID**
-Yes | `>` | `mq_timedreceive` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `mq_timedreceive` | SYSCALLID **ID**
-Yes | `>` | `rt_tgsigqueueinfo` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `rt_tgsigqueueinfo` | SYSCALLID **ID**
-Yes | `>` | `rt_sigprocmask` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `rt_sigprocmask` | SYSCALLID **ID**
-Yes | `>` | `_sysctl` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `_sysctl` | SYSCALLID **ID**
+Yes | `>` | `vm86` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `vm86` | SYSCALLID **ID**
+Yes | `>` | `sys_debug_setcontext` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sys_debug_setcontext` | SYSCALLID **ID**
+Yes | `>` | `capget` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `capget` | SYSCALLID **ID**
+Yes | `>` | `newfstatat` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `newfstatat` | SYSCALLID **ID**
+Yes | `>` | `inotify_rm_watch` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `inotify_rm_watch` | SYSCALLID **ID**
+Yes | `>` | `clock_getres` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `clock_getres` | SYSCALLID **ID**
+Yes | `>` | `kexec_load` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `kexec_load` | SYSCALLID **ID**
+Yes | `>` | `mq_notify` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `mq_notify` | SYSCALLID **ID**
+Yes | `>` | `utimes` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `utimes` | SYSCALLID **ID**
+Yes | `>` | `set_robust_list` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `set_robust_list` | SYSCALLID **ID**
+Yes | `>` | `shmget` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `shmget` | SYSCALLID **ID**
+Yes | `>` | `fspick` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `fspick` | SYSCALLID **ID**
+Yes | `>` | `timer_delete` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `timer_delete` | SYSCALLID **ID**
+Yes | `>` | `sethostname` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sethostname` | SYSCALLID **ID**
+Yes | `>` | `exit_group` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `exit_group` | SYSCALLID **ID**
+Yes | `>` | `fsmount` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `fsmount` | SYSCALLID **ID**
+Yes | `>` | `clock_gettime` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `clock_gettime` | SYSCALLID **ID**
+Yes | `>` | `timerfd_gettime` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `timerfd_gettime` | SYSCALLID **ID**
+Yes | `>` | `timer_getoverrun` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `timer_getoverrun` | SYSCALLID **ID**
+Yes | `>` | `s390_pci_mmio_write` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `s390_pci_mmio_write` | SYSCALLID **ID**
+Yes | `>` | `io_setup` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `io_setup` | SYSCALLID **ID**
+Yes | `>` | `inotify_add_watch` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `inotify_add_watch` | SYSCALLID **ID**
+Yes | `>` | `pidfd_send_signal` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `pidfd_send_signal` | SYSCALLID **ID**
+Yes | `>` | `epoll_ctl` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `epoll_ctl` | SYSCALLID **ID**
+Yes | `>` | `get_thread_area` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `get_thread_area` | SYSCALLID **ID**
+Yes | `>` | `subpage_prot` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `subpage_prot` | SYSCALLID **ID**
+Yes | `>` | `faccessat` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `faccessat` | SYSCALLID **ID**
+Yes | `>` | `set_thread_area` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `set_thread_area` | SYSCALLID **ID**
+Yes | `>` | `switch_endian` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `switch_endian` | SYSCALLID **ID**
+Yes | `>` | `setitimer` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `setitimer` | SYSCALLID **ID**
+Yes | `>` | `io_submit` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `io_submit` | SYSCALLID **ID**
+Yes | `>` | `sched_setaffinity` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sched_setaffinity` | SYSCALLID **ID**
+Yes | `>` | `request_key` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `request_key` | SYSCALLID **ID**
+Yes | `>` | `fanotify_init` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `fanotify_init` | SYSCALLID **ID**
+Yes | `>` | `fsopen` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `fsopen` | SYSCALLID **ID**
+Yes | `>` | `sched_setattr` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sched_setattr` | SYSCALLID **ID**
+Yes | `>` | `sched_getaffinity` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sched_getaffinity` | SYSCALLID **ID**
+Yes | `>` | `rt_sigqueueinfo` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `rt_sigqueueinfo` | SYSCALLID **ID**
+Yes | `>` | `utimensat` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `utimensat` | SYSCALLID **ID**
+Yes | `>` | `fremovexattr` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `fremovexattr` | SYSCALLID **ID**
+Yes | `>` | `delete_module` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `delete_module` | SYSCALLID **ID**
+Yes | `>` | `llistxattr` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `llistxattr` | SYSCALLID **ID**
+Yes | `>` | `waitid` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `waitid` | SYSCALLID **ID**
+Yes | `>` | `arch_prctl` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `arch_prctl` | SYSCALLID **ID**
+Yes | `>` | `sigaction` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sigaction` | SYSCALLID **ID**
+Yes | `>` | `mq_timedsend` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `mq_timedsend` | SYSCALLID **ID**
+Yes | `>` | `setxattr` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `setxattr` | SYSCALLID **ID**
+Yes | `>` | `shmdt` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `shmdt` | SYSCALLID **ID**
+Yes | `>` | `sigpending` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sigpending` | SYSCALLID **ID**
+Yes | `>` | `fgetxattr` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `fgetxattr` | SYSCALLID **ID**
+Yes | `>` | `lgetxattr` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `lgetxattr` | SYSCALLID **ID**
+Yes | `>` | `fsync` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `fsync` | SYSCALLID **ID**
+Yes | `>` | `spu_create` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `spu_create` | SYSCALLID **ID**
+Yes | `>` | `fsetxattr` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `fsetxattr` | SYSCALLID **ID**
+Yes | `>` | `lsetxattr` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `lsetxattr` | SYSCALLID **ID**
+Yes | `>` | `idle` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `idle` | SYSCALLID **ID**
+Yes | `>` | `shmat` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `shmat` | SYSCALLID **ID**
+Yes | `>` | `adjtimex` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `adjtimex` | SYSCALLID **ID**
+Yes | `>` | `query_module` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `query_module` | SYSCALLID **ID**
+Yes | `>` | `timer_create` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `timer_create` | SYSCALLID **ID**
+Yes | `>` | `gettid` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `gettid` | SYSCALLID **ID**
+Yes | `>` | `membarrier` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `membarrier` | SYSCALLID **ID**
+Yes | `>` | `add_key` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `add_key` | SYSCALLID **ID**
+Yes | `>` | `swapoff` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `swapoff` | SYSCALLID **ID**
+Yes | `>` | `madvise` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `madvise` | SYSCALLID **ID**
+Yes | `>` | `s390_pci_mmio_read` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `s390_pci_mmio_read` | SYSCALLID **ID**
+Yes | `>` | `setfsgid` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `setfsgid` | SYSCALLID **ID**
+Yes | `>` | `setfsuid` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `setfsuid` | SYSCALLID **ID**
+Yes | `>` | `setregid` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `setregid` | SYSCALLID **ID**
+Yes | `>` | `oldfstat` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `oldfstat` | SYSCALLID **ID**
+Yes | `>` | `setreuid` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `setreuid` | SYSCALLID **ID**
+Yes | `>` | `getpgrp` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `getpgrp` | SYSCALLID **ID**
+Yes | `>` | `personality` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `personality` | SYSCALLID **ID**
+Yes | `>` | `getxattr` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `getxattr` | SYSCALLID **ID**
+Yes | `>` | `move_mount` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `move_mount` | SYSCALLID **ID**
+Yes | `>` | `get_mempolicy` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `get_mempolicy` | SYSCALLID **ID**
+Yes | `>` | `getpriority` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `getpriority` | SYSCALLID **ID**
+Yes | `>` | `readlinkat` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `readlinkat` | SYSCALLID **ID**
+Yes | `>` | `mount_setattr` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `mount_setattr` | SYSCALLID **ID**
+Yes | `>` | `clock_settime` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `clock_settime` | SYSCALLID **ID**
+Yes | `>` | `umask` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `umask` | SYSCALLID **ID**
+Yes | `>` | `lookup_dcookie` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `lookup_dcookie` | SYSCALLID **ID**
+Yes | `>` | `quotactl_fd` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `quotactl_fd` | SYSCALLID **ID**
+Yes | `>` | `timer_settime` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `timer_settime` | SYSCALLID **ID**
+Yes | `>` | `truncate` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `truncate` | SYSCALLID **ID**
+Yes | `>` | `mremap` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `mremap` | SYSCALLID **ID**
+Yes | `>` | `rtas` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `rtas` | SYSCALLID **ID**
+Yes | `>` | `syslog` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `syslog` | SYSCALLID **ID**
+Yes | `>` | `fstatfs` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `fstatfs` | SYSCALLID **ID**
+Yes | `>` | `ioperm` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `ioperm` | SYSCALLID **ID**
+Yes | `>` | `riscv_flush_icache` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `riscv_flush_icache` | SYSCALLID **ID**
+Yes | `>` | `keyctl` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `keyctl` | SYSCALLID **ID**
+Yes | `>` | `uselib` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `uselib` | SYSCALLID **ID**
+Yes | `>` | `reboot` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `reboot` | SYSCALLID **ID**
+Yes | `>` | `futimesat` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `futimesat` | SYSCALLID **ID**
+Yes | `>` | `timer_gettime` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `timer_gettime` | SYSCALLID **ID**
+Yes | `>` | `flistxattr` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `flistxattr` | SYSCALLID **ID**
+Yes | `>` | `setgroups` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `setgroups` | SYSCALLID **ID**
+Yes | `>` | `sched_rr_get_interval` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sched_rr_get_interval` | SYSCALLID **ID**
+Yes | `>` | `gettimeofday` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `gettimeofday` | SYSCALLID **ID**
+Yes | `>` | `readlink` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `readlink` | SYSCALLID **ID**
+Yes | `>` | `syncfs` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `syncfs` | SYSCALLID **ID**
+Yes | `>` | `listxattr` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `listxattr` | SYSCALLID **ID**
+Yes | `>` | `set_mempolicy` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `set_mempolicy` | SYSCALLID **ID**
+Yes | `>` | `s390_guarded_storage` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `s390_guarded_storage` | SYSCALLID **ID**
+Yes | `>` | `settimeofday` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `settimeofday` | SYSCALLID **ID**
+Yes | `>` | `mq_unlink` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `mq_unlink` | SYSCALLID **ID**
+Yes | `>` | `swapon` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `swapon` | SYSCALLID **ID**
+Yes | `>` | `pselect6` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `pselect6` | SYSCALLID **ID**
+Yes | `>` | `io_cancel` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `io_cancel` | SYSCALLID **ID**
+Yes | `>` | `ioprio_get` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `ioprio_get` | SYSCALLID **ID**
+Yes | `>` | `uname` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `uname` | SYSCALLID **ID**
+Yes | `>` | `shmctl` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `shmctl` | SYSCALLID **ID**
+Yes | `>` | `time` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `time` | SYSCALLID **ID**
+Yes | `>` | `pkey_free` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `pkey_free` | SYSCALLID **ID**
+Yes | `>` | `readahead` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `readahead` | SYSCALLID **ID**
+Yes | `>` | `statfs` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `statfs` | SYSCALLID **ID**
+Yes | `>` | `fanotify_mark` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `fanotify_mark` | SYSCALLID **ID**
+Yes | `>` | `oldolduname` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `oldolduname` | SYSCALLID **ID**
+Yes | `>` | `sched_get_priority_max` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sched_get_priority_max` | SYSCALLID **ID**
+Yes | `>` | `ioprio_set` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `ioprio_set` | SYSCALLID **ID**
+Yes | `>` | `times` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `times` | SYSCALLID **ID**
+Yes | `>` | `remap_file_pages` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `remap_file_pages` | SYSCALLID **ID**
+Yes | `>` | `lremovexattr` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `lremovexattr` | SYSCALLID **ID**
+Yes | `>` | `landlock_create_ruleset` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `landlock_create_ruleset` | SYSCALLID **ID**
+Yes | `>` | `timerfd` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `timerfd` | SYSCALLID **ID**
+Yes | `>` | `pause` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `pause` | SYSCALLID **ID**
+Yes | `>` | `stime` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `stime` | SYSCALLID **ID**
+Yes | `>` | `sched_setparam` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sched_setparam` | SYSCALLID **ID**
+Yes | `>` | `name_to_handle_at` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `name_to_handle_at` | SYSCALLID **ID**
+Yes | `>` | `utime` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `utime` | SYSCALLID **ID**
+Yes | `>` | `getpid` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `getpid` | SYSCALLID **ID**
+Yes | `>` | `sync` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sync` | SYSCALLID **ID**
+Yes | `>` | `clock_adjtime` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `clock_adjtime` | SYSCALLID **ID**
+Yes | `>` | `restart_syscall` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `restart_syscall` | SYSCALLID **ID**
+Yes | `>` | `io_getevents` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `io_getevents` | SYSCALLID **ID**
+Yes | `>` | `sysfs` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sysfs` | SYSCALLID **ID**
+Yes | `>` | `get_kernel_syms` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `get_kernel_syms` | SYSCALLID **ID**
+Yes | `>` | `epoll_pwait` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `epoll_pwait` | SYSCALLID **ID**
+Yes | `>` | `futex_wait` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `futex_wait` | SYSCALLID **ID**
+Yes | `>` | `acct` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `acct` | SYSCALLID **ID**
+Yes | `>` | `setdomainname` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `setdomainname` | SYSCALLID **ID**
+Yes | `>` | `sysinfo` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sysinfo` | SYSCALLID **ID**
+Yes | `>` | `msgsnd` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `msgsnd` | SYSCALLID **ID**
+Yes | `>` | `mincore` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `mincore` | SYSCALLID **ID**
+Yes | `>` | `cachestat` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `cachestat` | SYSCALLID **ID**
+Yes | `>` | `pivot_root` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `pivot_root` | SYSCALLID **ID**
+Yes | `>` | `exit` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `exit` | SYSCALLID **ID**
+Yes | `>` | `getppid` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `getppid` | SYSCALLID **ID**
+Yes | `>` | `io_destroy` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `io_destroy` | SYSCALLID **ID**
+Yes | `>` | `ustat` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `ustat` | SYSCALLID **ID**
 Yes | `>` | `epoll_wait_old` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `epoll_wait_old` | SYSCALLID **ID**
 Yes | `>` | `vhangup` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `vhangup` | SYSCALLID **ID**
-Yes | `>` | `io_destroy` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `io_destroy` | SYSCALLID **ID**
-Yes | `>` | `getppid` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `getppid` | SYSCALLID **ID**
-Yes | `>` | `exit` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `exit` | SYSCALLID **ID**
-Yes | `>` | `pivot_root` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `pivot_root` | SYSCALLID **ID**
-Yes | `>` | `cachestat` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `cachestat` | SYSCALLID **ID**
-Yes | `>` | `mincore` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `mincore` | SYSCALLID **ID**
-Yes | `>` | `msgsnd` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `msgsnd` | SYSCALLID **ID**
-Yes | `>` | `sysinfo` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sysinfo` | SYSCALLID **ID**
-Yes | `>` | `acct` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `acct` | SYSCALLID **ID**
-Yes | `>` | `epoll_pwait` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `epoll_pwait` | SYSCALLID **ID**
-Yes | `>` | `sysfs` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sysfs` | SYSCALLID **ID**
-Yes | `>` | `restart_syscall` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `restart_syscall` | SYSCALLID **ID**
-Yes | `>` | `clock_adjtime` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `clock_adjtime` | SYSCALLID **ID**
-Yes | `>` | `sync` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sync` | SYSCALLID **ID**
-Yes | `>` | `getpid` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `getpid` | SYSCALLID **ID**
-Yes | `>` | `utime` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `utime` | SYSCALLID **ID**
-Yes | `>` | `name_to_handle_at` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `name_to_handle_at` | SYSCALLID **ID**
-Yes | `>` | `sched_setparam` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sched_setparam` | SYSCALLID **ID**
-Yes | `>` | `stime` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `stime` | SYSCALLID **ID**
-Yes | `>` | `pause` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `pause` | SYSCALLID **ID**
-Yes | `>` | `timerfd` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `timerfd` | SYSCALLID **ID**
-Yes | `>` | `msync` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `msync` | SYSCALLID **ID**
-Yes | `>` | `rt_sigsuspend` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `rt_sigsuspend` | SYSCALLID **ID**
-Yes | `>` | `landlock_create_ruleset` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `landlock_create_ruleset` | SYSCALLID **ID**
-Yes | `>` | `lremovexattr` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `lremovexattr` | SYSCALLID **ID**
-Yes | `>` | `remap_file_pages` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `remap_file_pages` | SYSCALLID **ID**
-Yes | `>` | `times` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `times` | SYSCALLID **ID**
-Yes | `>` | `sched_get_priority_max` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sched_get_priority_max` | SYSCALLID **ID**
-Yes | `>` | `fanotify_mark` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `fanotify_mark` | SYSCALLID **ID**
-Yes | `>` | `statfs` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `statfs` | SYSCALLID **ID**
-Yes | `>` | `readahead` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `readahead` | SYSCALLID **ID**
-Yes | `>` | `pkey_free` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `pkey_free` | SYSCALLID **ID**
-Yes | `>` | `time` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `time` | SYSCALLID **ID**
-Yes | `>` | `uname` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `uname` | SYSCALLID **ID**
-Yes | `>` | `process_madvise` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `process_madvise` | SYSCALLID **ID**
-Yes | `>` | `ioprio_get` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `ioprio_get` | SYSCALLID **ID**
-Yes | `>` | `pselect6` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `pselect6` | SYSCALLID **ID**
-Yes | `>` | `swapon` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `swapon` | SYSCALLID **ID**
-Yes | `>` | `settimeofday` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `settimeofday` | SYSCALLID **ID**
-Yes | `>` | `iopl` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `iopl` | SYSCALLID **ID**
-Yes | `>` | `set_mempolicy` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `set_mempolicy` | SYSCALLID **ID**
-Yes | `>` | `ftruncate` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `ftruncate` | SYSCALLID **ID**
-Yes | `>` | `syncfs` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `syncfs` | SYSCALLID **ID**
-Yes | `>` | `readlink` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `readlink` | SYSCALLID **ID**
-Yes | `>` | `gettimeofday` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `gettimeofday` | SYSCALLID **ID**
-Yes | `>` | `s390_guarded_storage` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `s390_guarded_storage` | SYSCALLID **ID**
-Yes | `>` | `sched_rr_get_interval` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sched_rr_get_interval` | SYSCALLID **ID**
-Yes | `>` | `setgroups` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `setgroups` | SYSCALLID **ID**
-Yes | `>` | `timer_gettime` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `timer_gettime` | SYSCALLID **ID**
-Yes | `>` | `ioprio_set` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `ioprio_set` | SYSCALLID **ID**
-Yes | `>` | `futimesat` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `futimesat` | SYSCALLID **ID**
-Yes | `>` | `reboot` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `reboot` | SYSCALLID **ID**
-Yes | `>` | `get_kernel_syms` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `get_kernel_syms` | SYSCALLID **ID**
-Yes | `>` | `uselib` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `uselib` | SYSCALLID **ID**
-Yes | `>` | `ioperm` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `ioperm` | SYSCALLID **ID**
-Yes | `>` | `syslog` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `syslog` | SYSCALLID **ID**
-Yes | `>` | `mremap` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `mremap` | SYSCALLID **ID**
-Yes | `>` | `truncate` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `truncate` | SYSCALLID **ID**
-Yes | `>` | `ustat` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `ustat` | SYSCALLID **ID**
-Yes | `>` | `timer_settime` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `timer_settime` | SYSCALLID **ID**
-Yes | `>` | `quotactl_fd` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `quotactl_fd` | SYSCALLID **ID**
-Yes | `>` | `umask` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `umask` | SYSCALLID **ID**
-Yes | `>` | `clock_settime` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `clock_settime` | SYSCALLID **ID**
-Yes | `>` | `mount_setattr` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `mount_setattr` | SYSCALLID **ID**
-Yes | `>` | `getpriority` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `getpriority` | SYSCALLID **ID**
-Yes | `>` | `get_mempolicy` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `get_mempolicy` | SYSCALLID **ID**
-Yes | `>` | `move_mount` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `move_mount` | SYSCALLID **ID**
+Yes | `>` | `_sysctl` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `_sysctl` | SYSCALLID **ID**
 Yes | `>` | `alarm` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `alarm` | SYSCALLID **ID**
-Yes | `>` | `getxattr` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `getxattr` | SYSCALLID **ID**
-Yes | `>` | `personality` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `personality` | SYSCALLID **ID**
-Yes | `>` | `getpgrp` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `getpgrp` | SYSCALLID **ID**
-Yes | `>` | `fstatfs` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `fstatfs` | SYSCALLID **ID**
-Yes | `>` | `mq_getsetattr` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `mq_getsetattr` | SYSCALLID **ID**
-Yes | `>` | `setreuid` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `setreuid` | SYSCALLID **ID**
-Yes | `>` | `setregid` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `setregid` | SYSCALLID **ID**
-Yes | `>` | `setfsuid` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `setfsuid` | SYSCALLID **ID**
-Yes | `>` | `setfsgid` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `setfsgid` | SYSCALLID **ID**
-Yes | `>` | `s390_pci_mmio_read` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `s390_pci_mmio_read` | SYSCALLID **ID**
-Yes | `>` | `ssetmask` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `ssetmask` | SYSCALLID **ID**
-Yes | `>` | `madvise` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `madvise` | SYSCALLID **ID**
-Yes | `>` | `swapoff` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `swapoff` | SYSCALLID **ID**
-Yes | `>` | `add_key` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `add_key` | SYSCALLID **ID**
-Yes | `>` | `membarrier` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `membarrier` | SYSCALLID **ID**
-Yes | `>` | `gettid` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `gettid` | SYSCALLID **ID**
-Yes | `>` | `query_module` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `query_module` | SYSCALLID **ID**
-Yes | `>` | `shmat` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `shmat` | SYSCALLID **ID**
-Yes | `>` | `lsetxattr` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `lsetxattr` | SYSCALLID **ID**
-Yes | `>` | `lookup_dcookie` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `lookup_dcookie` | SYSCALLID **ID**
-Yes | `>` | `fsetxattr` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `fsetxattr` | SYSCALLID **ID**
-Yes | `>` | `ipc` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `ipc` | SYSCALLID **ID**
-Yes | `>` | `fsync` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `fsync` | SYSCALLID **ID**
-Yes | `>` | `lgetxattr` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `lgetxattr` | SYSCALLID **ID**
-Yes | `>` | `futex_waitv` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `futex_waitv` | SYSCALLID **ID**
-Yes | `>` | `fgetxattr` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `fgetxattr` | SYSCALLID **ID**
-Yes | `>` | `sigpending` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sigpending` | SYSCALLID **ID**
-Yes | `>` | `shmdt` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `shmdt` | SYSCALLID **ID**
-Yes | `>` | `listxattr` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `listxattr` | SYSCALLID **ID**
-Yes | `>` | `setxattr` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `setxattr` | SYSCALLID **ID**
-Yes | `>` | `mq_timedsend` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `mq_timedsend` | SYSCALLID **ID**
-Yes | `>` | `sigaction` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sigaction` | SYSCALLID **ID**
-Yes | `>` | `arch_prctl` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `arch_prctl` | SYSCALLID **ID**
-Yes | `>` | `waitid` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `waitid` | SYSCALLID **ID**
-Yes | `>` | `llistxattr` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `llistxattr` | SYSCALLID **ID**
-Yes | `>` | `flistxattr` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `flistxattr` | SYSCALLID **ID**
-Yes | `>` | `timer_create` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `timer_create` | SYSCALLID **ID**
-Yes | `>` | `removexattr` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `removexattr` | SYSCALLID **ID**
-Yes | `>` | `delete_module` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `delete_module` | SYSCALLID **ID**
-Yes | `>` | `fremovexattr` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `fremovexattr` | SYSCALLID **ID**
-Yes | `>` | `utimensat` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `utimensat` | SYSCALLID **ID**
-Yes | `>` | `rt_sigqueueinfo` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `rt_sigqueueinfo` | SYSCALLID **ID**
-Yes | `>` | `sched_getaffinity` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sched_getaffinity` | SYSCALLID **ID**
-Yes | `>` | `sched_setattr` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sched_setattr` | SYSCALLID **ID**
-Yes | `>` | `epoll_pwait2` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `epoll_pwait2` | SYSCALLID **ID**
-Yes | `>` | `fsopen` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `fsopen` | SYSCALLID **ID**
-Yes | `>` | `fanotify_init` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `fanotify_init` | SYSCALLID **ID**
-Yes | `>` | `request_key` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `request_key` | SYSCALLID **ID**
-Yes | `>` | `sched_setaffinity` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sched_setaffinity` | SYSCALLID **ID**
-Yes | `>` | `io_submit` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `io_submit` | SYSCALLID **ID**
-Yes | `>` | `set_thread_area` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `set_thread_area` | SYSCALLID **ID**
-Yes | `>` | `get_thread_area` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `get_thread_area` | SYSCALLID **ID**
-Yes | `>` | `epoll_ctl` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `epoll_ctl` | SYSCALLID **ID**
-Yes | `>` | `pidfd_send_signal` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `pidfd_send_signal` | SYSCALLID **ID**
-Yes | `>` | `inotify_add_watch` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `inotify_add_watch` | SYSCALLID **ID**
-Yes | `>` | `setdomainname` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `setdomainname` | SYSCALLID **ID**
-Yes | `>` | `io_setup` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `io_setup` | SYSCALLID **ID**
-Yes | `>` | `s390_pci_mmio_write` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `s390_pci_mmio_write` | SYSCALLID **ID**
-Yes | `>` | `io_getevents` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `io_getevents` | SYSCALLID **ID**
-Yes | `>` | `io_cancel` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `io_cancel` | SYSCALLID **ID**
-Yes | `>` | `timer_getoverrun` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `timer_getoverrun` | SYSCALLID **ID**
-Yes | `>` | `timerfd_gettime` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `timerfd_gettime` | SYSCALLID **ID**
-Yes | `>` | `setitimer` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `setitimer` | SYSCALLID **ID**
-Yes | `>` | `clock_gettime` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `clock_gettime` | SYSCALLID **ID**
-Yes | `>` | `fsmount` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `fsmount` | SYSCALLID **ID**
-Yes | `>` | `exit_group` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `exit_group` | SYSCALLID **ID**
+Yes | `>` | `rt_sigprocmask` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `rt_sigprocmask` | SYSCALLID **ID**
+Yes | `>` | `rt_tgsigqueueinfo` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `rt_tgsigqueueinfo` | SYSCALLID **ID**
+Yes | `>` | `rt_sigaction` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `rt_sigaction` | SYSCALLID **ID**
+Yes | `>` | `fchmodat2` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `fchmodat2` | SYSCALLID **ID**
+Yes | `>` | `wait4` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `wait4` | SYSCALLID **ID**
+Yes | `>` | `getpgid` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `getpgid` | SYSCALLID **ID**
+Yes | `>` | `get_robust_list` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `get_robust_list` | SYSCALLID **ID**
+Yes | `>` | `sched_yield` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sched_yield` | SYSCALLID **ID**
+Yes | `>` | `signal` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `signal` | SYSCALLID **ID**
+Yes | `>` | `clock_nanosleep` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `clock_nanosleep` | SYSCALLID **ID**
+Yes | `>` | `pkey_mprotect` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `pkey_mprotect` | SYSCALLID **ID**
+Yes | `>` | `fdatasync` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `fdatasync` | SYSCALLID **ID**
 Yes | `>` | `getrusage` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `getrusage` | SYSCALLID **ID**
-Yes | `>` | `sethostname` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `sethostname` | SYSCALLID **ID**
-Yes | `>` | `timer_delete` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `timer_delete` | SYSCALLID **ID**
-Yes | `>` | `idle` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `idle` | SYSCALLID **ID**
-Yes | `>` | `shmget` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `shmget` | SYSCALLID **ID**
-Yes | `>` | `readlinkat` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `readlinkat` | SYSCALLID **ID**
-Yes | `>` | `shmctl` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `shmctl` | SYSCALLID **ID**
-Yes | `>` | `set_robust_list` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `set_robust_list` | SYSCALLID **ID**
-Yes | `>` | `utimes` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `utimes` | SYSCALLID **ID**
-Yes | `>` | `adjtimex` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `adjtimex` | SYSCALLID **ID**
-Yes | `>` | `mq_unlink` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `mq_unlink` | SYSCALLID **ID**
-Yes | `>` | `pwritev2` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `pwritev2` | SYSCALLID **ID**
-Yes | `>` | `mq_notify` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `mq_notify` | SYSCALLID **ID**
-Yes | `>` | `kexec_load` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `kexec_load` | SYSCALLID **ID**
-Yes | `>` | `clock_getres` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `clock_getres` | SYSCALLID **ID**
-Yes | `>` | `keyctl` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `keyctl` | SYSCALLID **ID**
+Yes | `>` | `futex_wake` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `futex_wake` | SYSCALLID **ID**
+Yes | `>` | `sched_getparam` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sched_getparam` | SYSCALLID **ID**
+Yes | `>` | `sched_setscheduler` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sched_setscheduler` | SYSCALLID **ID**
+Yes | `>` | `setpriority` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `setpriority` | SYSCALLID **ID**
+Yes | `>` | `open_tree` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `open_tree` | SYSCALLID **ID**
+Yes | `>` | `kcmp` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `kcmp` | SYSCALLID **ID**
+Yes | `>` | `sched_getscheduler` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sched_getscheduler` | SYSCALLID **ID**
+Yes | `>` | `sched_get_priority_min` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sched_get_priority_min` | SYSCALLID **ID**
+Yes | `>` | `rt_sigsuspend` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `rt_sigsuspend` | SYSCALLID **ID**
+Yes | `>` | `rt_sigpending` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `rt_sigpending` | SYSCALLID **ID**
+Yes | `>` | `pciconfig_iobase` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `pciconfig_iobase` | SYSCALLID **ID**
+Yes | `>` | `rt_sigreturn` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `rt_sigreturn` | SYSCALLID **ID**
+Yes | `>` | `semtimedop` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `semtimedop` | SYSCALLID **ID**
+Yes | `>` | `getitimer` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `getitimer` | SYSCALLID **ID**
+Yes | `>` | `timerfd_settime` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `timerfd_settime` | SYSCALLID **ID**
+Yes | `>` | `sync_file_range2` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sync_file_range2` | SYSCALLID **ID**
+Yes | `>` | `ipc` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `ipc` | SYSCALLID **ID**
+Yes | `>` | `mq_open` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `mq_open` | SYSCALLID **ID**
+Yes | `>` | `rt_sigtimedwait` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `rt_sigtimedwait` | SYSCALLID **ID**
+Yes | `>` | `process_madvise` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `process_madvise` | SYSCALLID **ID**
+Yes | `>` | `vmsplice` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `vmsplice` | SYSCALLID **ID**
+Yes | `>` | `preadv2` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `preadv2` | SYSCALLID **ID**
+Yes | `>` | `create_module` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `create_module` | SYSCALLID **ID**
+Yes | `>` | `getcpu` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `getcpu` | SYSCALLID **ID**
+Yes | `>` | `epoll_pwait2` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `epoll_pwait2` | SYSCALLID **ID**
+Yes | `>` | `perf_event_open` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `perf_event_open` | SYSCALLID **ID**
+Yes | `>` | `msgrcv` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `msgrcv` | SYSCALLID **ID**
+Yes | `>` | `process_mrelease` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `process_mrelease` | SYSCALLID **ID**
 Yes | `>` | `bdflush` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `bdflush` | SYSCALLID **ID**
+Yes | `>` | `msgctl` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `msgctl` | SYSCALLID **ID**
+Yes | `>` | `statfs64` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `statfs64` | SYSCALLID **ID**
+Yes | `>` | `fstatfs64` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `fstatfs64` | SYSCALLID **ID**
+Yes | `>` | `process_vm_readv` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `process_vm_readv` | SYSCALLID **ID**
+Yes | `>` | `fstatat64` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `fstatat64` | SYSCALLID **ID**
+Yes | `>` | `sigprocmask` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sigprocmask` | SYSCALLID **ID**
+Yes | `>` | `socketcall` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `socketcall` | SYSCALLID **ID**
+Yes | `>` | `set_tid_address` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `set_tid_address` | SYSCALLID **ID**
+Yes | `>` | `_newselect` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `_newselect` | SYSCALLID **ID**
+Yes | `>` | `map_shadow_stack` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `map_shadow_stack` | SYSCALLID **ID**
+Yes | `>` | `sgetmask` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sgetmask` | SYSCALLID **ID**
+Yes | `>` | `olduname` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `olduname` | SYSCALLID **ID**
+Yes | `>` | `mq_getsetattr` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `mq_getsetattr` | SYSCALLID **ID**
+Yes | `>` | `nice` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `nice` | SYSCALLID **ID**
 Yes | `>` | `tee` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `tee` | SYSCALLID **ID**
+Yes | `>` | `waitpid` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `waitpid` | SYSCALLID **ID**
+Yes | `>` | `fallocate` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `fallocate` | SYSCALLID **ID**
 Yes | `>` | `getgroups` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `getgroups` | SYSCALLID **ID**
-Yes | `>` | `inotify_rm_watch` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `inotify_rm_watch` | SYSCALLID **ID**
-Yes | `>` | `fspick` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `fspick` | SYSCALLID **ID**
-Yes | `>` | `newfstatat` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `newfstatat` | SYSCALLID **ID**
-Yes | `>` | `capget` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `capget` | SYSCALLID **ID**
-Yes | `>` | `faccessat` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `faccessat` | SYSCALLID **ID**
+Yes | `>` | `removexattr` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `removexattr` | SYSCALLID **ID**
+Yes | `>` | `process_vm_writev` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `process_vm_writev` | SYSCALLID **ID**
+Yes | `>` | `sigaltstack` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sigaltstack` | SYSCALLID **ID**
+Yes | `>` | `getrandom` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `getrandom` | SYSCALLID **ID**
+Yes | `>` | `fadvise64` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `fadvise64` | SYSCALLID **ID**
+Yes | `>` | `memfd_secret` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `memfd_secret` | SYSCALLID **ID**
+Yes | `>` | `kexec_file_load` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `kexec_file_load` | SYSCALLID **ID**
+Yes | `>` | `close_range` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `close_range` | SYSCALLID **ID**
+Yes | `>` | `pkey_alloc` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `pkey_alloc` | SYSCALLID **ID**
+Yes | `>` | `msgget` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `msgget` | SYSCALLID **ID**
+Yes | `>` | `landlock_restrict_self` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `landlock_restrict_self` | SYSCALLID **ID**
+Yes | `>` | `mq_timedreceive` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `mq_timedreceive` | SYSCALLID **ID**
+Yes | `>` | `landlock_add_rule` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `landlock_add_rule` | SYSCALLID **ID**
+Yes | `>` | `msync` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `msync` | SYSCALLID **ID**
+Yes | `>` | `modify_ldt` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `modify_ldt` | SYSCALLID **ID**
+Yes | `>` | `migrate_pages` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `migrate_pages` | SYSCALLID **ID**
+Yes | `>` | `futex_waitv` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `futex_waitv` | SYSCALLID **ID**
+Yes | `>` | `move_pages` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `move_pages` | SYSCALLID **ID**
+Yes | `>` | `mbind` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `mbind` | SYSCALLID **ID**
+Yes | `>` | `epoll_ctl_old` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `epoll_ctl_old` | SYSCALLID **ID**
+Yes | `>` | `statx` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `statx` | SYSCALLID **ID**
+Yes | `>` | `io_pgetevents` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `io_pgetevents` | SYSCALLID **ID**
+Yes | `>` | `set_mempolicy_home_node` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `set_mempolicy_home_node` | SYSCALLID **ID**
+Yes | `>` | `getpmsg` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `getpmsg` | SYSCALLID **ID**
+Yes | `>` | `sigsuspend` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sigsuspend` | SYSCALLID **ID**
+Yes | `>` | `nfsservctl` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `nfsservctl` | SYSCALLID **ID**
+Yes | `>` | `rseq` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `rseq` | SYSCALLID **ID**
+Yes | `>` | `pciconfig_read` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `pciconfig_read` | SYSCALLID **ID**
+Yes | `>` | `sched_getattr` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sched_getattr` | SYSCALLID **ID**
+Yes | `>` | `faccessat2` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `faccessat2` | SYSCALLID **ID**
+Yes | `>` | `sync_file_range` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sync_file_range` | SYSCALLID **ID**
+Yes | `>` | `readdir` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `readdir` | SYSCALLID **ID**
+Yes | `>` | `s390_sthyi` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `s390_sthyi` | SYSCALLID **ID**
+Yes | `>` | `s390_runtime_instr` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `s390_runtime_instr` | SYSCALLID **ID**
+Yes | `>` | `sigreturn` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `sigreturn` | SYSCALLID **ID**
+Yes | `>` | `ftruncate` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `ftruncate` | SYSCALLID **ID**
+Yes | `>` | `riscv_hwprobe` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `riscv_hwprobe` | SYSCALLID **ID**
+Yes | `>` | `pwritev2` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `pwritev2` | SYSCALLID **ID**
+Yes | `>` | `futex_requeue` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `futex_requeue` | SYSCALLID **ID**
+Yes | `>` | `oldstat` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `oldstat` | SYSCALLID **ID**
+Yes | `>` | `multiplexer` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `multiplexer` | SYSCALLID **ID**
+Yes | `>` | `oldlstat` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `oldlstat` | SYSCALLID **ID**
+Yes | `>` | `ssetmask` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `ssetmask` | SYSCALLID **ID**
+Yes | `>` | `spu_run` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `spu_run` | SYSCALLID **ID**
+Yes | `>` | `iopl` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `iopl` | SYSCALLID **ID**
+Yes | `>` | `getsid` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `getsid` | SYSCALLID **ID**
+Yes | `>` | `swapcontext` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `swapcontext` | SYSCALLID **ID**
+Yes | `>` | `pciconfig_write` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `pciconfig_write` | SYSCALLID **ID**
 
 
 ## Tracepoint events
