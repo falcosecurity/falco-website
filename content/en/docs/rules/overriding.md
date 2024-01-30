@@ -181,7 +181,7 @@ Use the new `override` section to enable the rule instead.
   enabled: false
 ```
 
-##### `/etc/falco/falco_rules.local.yaml`
+##### `/etc/falco/falco_rules.local.yaml` (correct usage example)
 
 ```yaml
 - rule: test_rule
