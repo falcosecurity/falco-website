@@ -161,7 +161,7 @@ Using `enabled: true` is deprecated, and should be avoided. Falco 0.37.0 and lat
   enabled: false
 ```
 
-##### `/etc/falco/falco_rules.local.yaml`
+##### `/etc/falco/falco_rules.local.yaml` (wrong usage example)
 
 ```yaml
 - rule: test_rule
