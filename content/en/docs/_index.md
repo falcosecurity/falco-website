@@ -71,8 +71,8 @@ Falco is composed of several main components:
  - Driver - is a software that adheres to the Falco driver specification and sends a stream of kernel events. Currently, Falco supports the following drivers:
 
     - (Default) Kernel module
-    - Classic BPF probe built
-    - Modern BPF (CO-RE paradigm and more)
+    - Modern eBPF probe (CO-RE paradigm and more)
+    - Legacy eBPF probe built
 
     For more information, see [Falco Drivers](event-sources/drivers).
 

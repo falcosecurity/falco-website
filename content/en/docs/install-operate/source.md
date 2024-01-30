@@ -376,7 +376,7 @@ Once Falco is built, the three interesting things that you will find in your `bu
 
 - `userspace/falco/falco`: the actual Falco binary
 - `driver/src/falco.ko`: the Falco kernel driver
-- `driver/bpf/falco.o`: if you built Falco with [BPF support](#enable-bpf-support)
+- `driver/bpf/falco.o`: if you built Falco with [eBPF support](#enable-ebpf-support)
 
 If you'd like to build a debug version, run cmake as `cmake -DCMAKE_BUILD_TYPE=Debug ..` instead, see the [CMake Options](#cmake-options) section for further customizations.
 
@@ -441,7 +441,7 @@ When not explicitly specifying it the build system will compute the `FALCO_VERSI
 
 In case the current git revision has a git tag, the Falco version will be equal to it (without the leading "v" character). Otherwise the Falco version will be in the form `0.<commit hash>[.dirty]`.
 
-#### Enable BPF support
+#### Enable eBPF support
 
 ```
 -DBUILD_BPF=True

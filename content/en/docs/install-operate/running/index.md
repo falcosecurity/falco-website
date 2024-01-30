@@ -265,7 +265,7 @@ Other configurable options:
 
 #### Privileged
 
-The modern BPF is shipped into Falco so the `falco-no-driver` image is enough. This allows you to run Falco without dependencies, just the following command:
+The modern eBPF is bundled into Falco therefore the `falco-no-driver` image is enough. This allows you to run Falco without dependencies, just the following command:
 
 ```bash
 docker run --rm -i -t \
