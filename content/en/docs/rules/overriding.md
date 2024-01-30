@@ -104,7 +104,7 @@ The rule `my_programs_opened_file` would trigger whenever any of `vi`, `vim`, or
 
 - rule: program_accesses_file
   desc: track whenever a set of programs opens a file
-  condition: proc.name in (cat, ls) and (access_file)
+  condition: (access_file) and proc.name in (cat, ls)
   output: a tracked program opened a file (user=%user.name command=%proc.cmdline file=%fd.name)
   priority: INFO
 ```
