@@ -3,7 +3,7 @@
 # banner on every page indicating that this is an archived version of the docs.
 # Set this flag to "true" if you want to display the banner.
 
-archived_version: false
+archived_version: true
 
 # The version number for the version of the docs represented in this doc set.
 # Used in the "version-banner" partial to display a version number for the
@@ -21,9 +21,9 @@ rulesversion: 2.0.0
 versions:
   - fullversion: v0.36.2
     version: v0.36
-    githubbranch: master
-    docsbranch: master
-    url: https://falco.org/
+    githubbranch: 0.36.2
+    docsbranch: v0.36
+    url: https://v0-36.falco.org/
 
   - fullversion: v0.35.1
     version: v0.35
