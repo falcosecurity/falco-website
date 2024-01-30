@@ -193,7 +193,7 @@ Use the new `override` section to enable the rule instead.
 ## Appending to existing rules using `append:true` (deprecated)
 
 {{% alert color="warning" %}}
-This method has been depreciated and will be removed in Falco 1.0.0 
+This method has been deprecated and will be removed in Falco 1.0.0 
 {{% /alert %}}
 
 If you use multiple Falco {{< glossary_tooltip text="rules files" term_id="rules-file" >}}, you might want to append new items to an existing lists, macros or rules. To do that, define an item with the same name as an existing item and add an `append: true` attribute to the YAML object. 
