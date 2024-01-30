@@ -100,17 +100,17 @@ $ sudo apt-get install apt-transport-https
     sudo apt-get update -y
     ```
     
-4. Install some required dependencies that are needed to build the kernel module and the BPF probe
+4. Install some required dependencies that are needed to build the kernel module and the eBPF probe
 
     ```bash
     sudo apt install -y dkms make linux-headers-$(uname -r)
-    # If you use falcoctl driver loader to build the BPF probe locally you need also clang toolchain
+    # If you use falcoctl driver loader to build the eBPF probe locally you need also clang toolchain
     sudo apt install -y clang llvm
     # You can install also the dialog package if you want it
     sudo apt install -y dialog
     ```
 
-    > _Note_: You don't need to install these deps if you want to the modern BPF probe
+    > _Note_: You don't need to install these deps if you want to the modern eBPF probe
 
 5. Install the Falco package
 
@@ -198,20 +198,20 @@ We have already seen [the installation steps](/docs/install-operate/installation
     yum update -y
     ```
 
-4. Install some required dependencies that are needed to build the kernel module and the BPF probe
+4. Install some required dependencies that are needed to build the kernel module and the eBPF probe
 
     ```bash
     # If necessary install it using: `yum install epel-release` (or `amazon-linux-extras install epel` in case of amzn2), then `yum install make dkms`.
     yum install -y dkms make
     # If the package was not found by the below command, you might need to run `yum distro-sync` in order to fix it. Rebooting the system may be required.
     yum install -y kernel-devel-$(uname -r)
-    # If you use falcoctl driver loader to build the BPF probe locally you need also clang toolchain
+    # If you use falcoctl driver loader to build the eBPF probe locally you need also clang toolchain
     yum install -y clang llvm
     # You can install also the dialog package if you want it
     yum install -y dialog
     ```
 
-    > _Note_: You don't need to install these deps if you want to use the modern BPF probe
+    > _Note_: You don't need to install these deps if you want to use the modern eBPF probe
 
 5. Install the Falco package
 
@@ -257,19 +257,19 @@ We have already seen [the installation steps](/docs/install-operate/installation
     zypper -n update
     ```
 
-4. Install some required dependencies that are needed to build the kernel module and the BPF probe
+4. Install some required dependencies that are needed to build the kernel module and the eBPF probe
 
     ```bash
     zypper -n install dkms make
     # If the package was not found by the below command, you might need to run `zypper -n dist-upgrade` in order to fix it. Rebooting the system may be required.
     zypper -n install kernel-default-devel-$(uname -r | sed s/\-default//g)
-    # If you use falcoctl driver loader to build the BPF probe locally you need also clang toolchain
+    # If you use falcoctl driver loader to build the eBPF probe locally you need also clang toolchain
     zypper -n install clang llvm
     # You can install also the dialog package if you want it
     zypper -n install dialog
     ```
 
-    > _Note_: You don't need to install these deps if you want to use the modern BPF probe
+    > _Note_: You don't need to install these deps if you want to use the modern eBPF probe
 
 5. Install Falco:
 
@@ -300,16 +300,16 @@ In these steps, we are targeting a Debian-like system on `x86_64` architecture. 
     cp -R falco-{{< latest >}}-x86_64/* /
     ```
 
-3. Install some required dependencies that are needed to build the kernel module and the BPF probe. If you want to use other sources like the modern BPF probe or plugins you can skip this step.
+3. Install some required dependencies that are needed to build the kernel module and the eBPF probe. If you want to use other sources like the modern eBPF probe or plugins you can skip this step.
 
     ```bash
     apt update -y
     apt install -y dkms make linux-headers-$(uname -r)
-    # If you use falcoctl driver loader to build the BPF probe locally you need also clang toolchain
+    # If you use falcoctl driver loader to build the eBPF probe locally you need also clang toolchain
     apt install -y clang llvm
     ```
 
-4. Use `falcoctl driver` tool to configure Falco and install the kernel module or the BPF probe. If you want to use other sources like the modern BPF probe or plugins you can skip this step.
+4. Use `falcoctl driver` tool to configure Falco and install the kernel module or the eBPF probe. If you want to use other sources like the modern eBPF probe or plugins you can skip this step.
    {{% pageinfo color="info" %}}
 
    To install the driver, write and execution permissions on the `/tmp` directory are required, since `falcoctl` will try to create and execute a script from there.
