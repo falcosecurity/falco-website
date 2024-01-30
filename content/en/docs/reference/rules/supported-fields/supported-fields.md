@@ -81,29 +81,30 @@ Additional information about the process and thread executing the syscall event.
 
 Name | Type | Description
 :----|:-----|:-----------
-`proc.exe` | CHARBUF | The first command line argument argv[0] (truncated after 4096 bytes) which is usually the executable name but it could be also a custom string, it depends on what the user specifies. This field is collected from the syscalls args or, as a fallback, extracted from /proc/<pid>/cmdline.
+`proc.exe` | CHARBUF | The first command line argument argv[0] (truncated after 4096 bytes) which is usually the executable name but it could be also a custom string, it depends on what the user specifies. This field is collected from the syscalls args or, as a fallback, extracted from /proc/PID/cmdline.
 `proc.pexe` | CHARBUF | The proc.exe (first command line argument argv[0]) of the parent process.
 `proc.aexe` | CHARBUF | The proc.exe (first command line argument argv[0]) for a specific process ancestor. You can access different levels of ancestors by using indices. For example, proc.aexe[1] retrieves the proc.exe of the parent process, proc.aexe[2] retrieves the proc.exe of the grandparent process, and so on. The current process's proc.exe line can be obtained using proc.aexe[0]. When used without any arguments, proc.aexe is applicable only in filters and matches any of the process ancestors. For instance, you can use `proc.aexe endswith java` to match any process ancestor whose proc.exe ends with the term `java`.
-`proc.exepath` | CHARBUF | The full executable path of the process (it could be truncated after 1024 bytes if read from '/proc'). This field is collected directly from the kernel or, as a fallback, extracted resolving the path of /proc/<pid>/exe, so symlinks are resolved. If you are using eBPF drivers this path could be truncated due to verifier complexity limits. (legacy eBPF kernel version < 5.2) truncated after 24 path components. (legacy eBPF kernel version >= 5.2) truncated after 48 path components. (modern eBPF kernel) truncated after 96 path components.
+`proc.exepath` | CHARBUF | The full executable path of the process (it could be truncated after 1024 bytes if read from '/proc'). This field is collected directly from the kernel or, as a fallback, extracted resolving the path of /proc/PID/exe, so symlinks are resolved. If you are using eBPF drivers this path could be truncated due to verifier complexity limits. (legacy eBPF kernel version < 5.2) truncated after 24 path components. (legacy eBPF kernel version >= 5.2) truncated after 48 path components. (modern eBPF kernel) truncated after 96 path components.
 `proc.pexepath` | CHARBUF | The proc.exepath (full executable path) of the parent process.
 `proc.aexepath` | CHARBUF | The proc.exepath (full executable path) for a specific process ancestor. You can access different levels of ancestors by using indices. For example, proc.aexepath[1] retrieves the proc.exepath of the parent process, proc.aexepath[2] retrieves the proc.exepath of the grandparent process, and so on. The current process's proc.exepath line can be obtained using proc.aexepath[0]. When used without any arguments, proc.aexepath is applicable only in filters and matches any of the process ancestors. For instance, you can use `proc.aexepath endswith java` to match any process ancestor whose path ends with the term `java`.
-`proc.name` | CHARBUF | The process name (truncated after 16 characters) generating the event (task->comm). This field is collected from the syscalls args or, as a fallback, extracted from /proc/<pid>/status. The name of the process and the name of the executable file on disk (if applicable) can be different if a process is given a custom name which is often the case for example for java applications.
+`proc.name` | CHARBUF | The process name (truncated after 16 characters) generating the event (task->comm). Truncation is determined by kernel settings and not by Falco. This field is collected from the syscalls args or, as a fallback, extracted from /proc/PID/status. The name of the process and the name of the executable file on disk (if applicable) can be different if a process is given a custom name which is often the case for example for java applications.
 `proc.pname` | CHARBUF | The proc.name truncated after 16 characters) of the process generating the event.
 `proc.aname` | CHARBUF | The proc.name (truncated after 16 characters) for a specific process ancestor. You can access different levels of ancestors by using indices. For example, proc.aname[1] retrieves the proc.name of the parent process, proc.aname[2] retrieves the proc.name of the grandparent process, and so on. The current process's proc.name line can be obtained using proc.aname[0]. When used without any arguments, proc.aname is applicable only in filters and matches any of the process ancestors. For instance, you can use `proc.aname=bash` to match any process ancestor whose name is `bash`.
-`proc.args` | CHARBUF | The arguments passed on the command line when starting the process generating the event excluding argv[0] (truncated after 4096 bytes). This field is collected from the syscalls args or, as a fallback, extracted from /proc/<pid>/cmdline.
+`proc.args` | CHARBUF | The arguments passed on the command line when starting the process generating the event excluding argv[0] (truncated after 4096 bytes). This field is collected from the syscalls args or, as a fallback, extracted from /proc/PID/cmdline.
 `proc.cmdline` | CHARBUF | The concatenation of `proc.name + proc.args` (truncated after 4096 bytes) when starting the process generating the event.
 `proc.pcmdline` | CHARBUF | The proc.cmdline (full command line (proc.name + proc.args)) of the parent of the process generating the event.
-`proc.acmdline` | CHARBUF | The full command line (proc.name + proc.args) for a specific process ancestor. You can access different levels of ancestors by using indices. For example, proc.acmdline[1] retrieves the full command line of the parent process, proc.acmdline[2] retrieves the proc.cmdline of the grandparent process, and so on. The current process's full command line can be obtained using proc.acmdline[0].  When used without any arguments, proc.acmdline is applicable only in filters and matches any of the process ancestors. For instance, you can use `proc.acmdline contains base64` to match any process ancestor whose command line contains the term base64.
+`proc.acmdline` | CHARBUF | The full command line (proc.name + proc.args) for a specific process ancestor. You can access different levels of ancestors by using indices. For example, proc.acmdline[1] retrieves the full command line of the parent process, proc.acmdline[2] retrieves the proc.cmdline of the grandparent process, and so on. The current process's full command line can be obtained using proc.acmdline[0]. When used without any arguments, proc.acmdline is applicable only in filters and matches any of the process ancestors. For instance, you can use `proc.acmdline contains base64` to match any process ancestor whose command line contains the term base64.
 `proc.cmdnargs` | UINT64 | The number of command line args (proc.args).
-`proc.cmdlenargs` | UINT64 | The total count of characters / length of the comamnd line args (proc.args) combined excluding whitespaces between args.
+`proc.cmdlenargs` | UINT64 | The total count of characters / length of the command line args (proc.args) combined excluding whitespaces between args.
 `proc.exeline` | CHARBUF | The full command line, with exe as first argument (proc.exe + proc.args) when starting the process generating the event.
-`proc.env` | CHARBUF | The environment variables of the process generating the event.
+`proc.env` | CHARBUF | The environment variables of the process generating the event as concatenated string 'ENV_NAME=value ENV_NAME1=value1'. Can also be used to extract the value of a known env variable, e.g. proc.env[ENV_NAME].
+`proc.aenv` | CHARBUF | [EXPERIMENTAL] This field can be used in three flavors: (1) as a filter checking all parents, e.g. 'proc.aenv contains xyz', which is similar to the familiar 'proc.aname contains xyz' approach, (2) checking the `proc.env` of a specified level of the parent, e.g. 'proc.aenv[2]', which is similar to the familiar 'proc.aname[2]' approach, or (3) checking the first matched value of a known ENV_NAME in the parent lineage, such as 'proc.aenv[ENV_NAME]' (across a max of 20 ancestor levels). This field may be deprecated or undergo breaking changes in future releases. Please use it with caution.
 `proc.cwd` | CHARBUF | The current working directory of the event.
 `proc.loginshellid` | INT64 | The pid of the oldest shell among the ancestors of the current process, if there is one. This field can be used to separate different user sessions, and is useful in conjunction with chisels like spy_user.
 `proc.tty` | UINT32 | The controlling terminal of the process. 0 for processes without a terminal.
 `proc.pid` | INT64 | The id of the process generating the event.
 `proc.ppid` | INT64 | The pid of the parent of the process generating the event.
-`proc.apid` | INT64 | The pid for a specific process ancestor. You can access different levels of ancestors by using indices. For example, proc.apid[1] retrieves the pid of the parent process, proc.apid[2] retrieves the pid of the grandparent process, and so on. The current process's pid can be obtained using proc.apid[0].  When used without any arguments, proc.acmdline is applicable only in filters and matches any of the process ancestors. For instance, you can use `proc.apid=1337` to match any process ancestor whose pid is equal to 1337.
+`proc.apid` | INT64 | The pid for a specific process ancestor. You can access different levels of ancestors by using indices. For example, proc.apid[1] retrieves the pid of the parent process, proc.apid[2] retrieves the pid of the grandparent process, and so on. The current process's pid can be obtained using proc.apid[0]. When used without any arguments, proc.apid is applicable only in filters and matches any of the process ancestors. For instance, you can use `proc.apid=1337` to match any process ancestor whose pid is equal to 1337.
 `proc.vpid` | INT64 | The id of the process generating the event as seen from its current PID namespace.
 `proc.pvpid` | INT64 | The id of the parent process generating the event as seen from its current PID namespace.
 `proc.sid` | INT64 | The session id of the process generating the event.
@@ -189,29 +190,30 @@ Container information. If the event is not happening inside a container, both id
 
 Name | Type | Description
 :----|:-----|:-----------
-`container.id` | CHARBUF | The truncated container id (first 12 characters).
-`container.name` | CHARBUF | The container name.
-`container.image` | CHARBUF | The container image name (e.g. falcosecurity/falco:latest for docker).
-`container.image.id` | CHARBUF | The container image id (e.g. 6f7e2741b66b).
-`container.type` | CHARBUF | The container type, eg: docker or rkt
-`container.privileged` | BOOL | 'true' for containers running as privileged, false otherwise
-`container.mounts` | CHARBUF | A space-separated list of mount information. Each item in the list has the format <source>:<dest>:<mode>:<rdrw>:<propagation>
-`container.mount` | CHARBUF | Information about a single mount, specified by number (e.g. container.mount[0]) or mount source (container.mount[/usr/local]). The pathname can be a glob (container.mount[/usr/local/*]), in which case the first matching mount will be returned. The information has the format <source>:<dest>:<mode>:<rdrw>:<propagation>. If there is no mount with the specified index or matching the provided source, returns the string "none" instead of a NULL value.
-`container.mount.source` | CHARBUF | The mount source, specified by number (e.g. container.mount.source[0]) or mount destination (container.mount.source[/host/lib/modules]). The pathname can be a glob.
-`container.mount.dest` | CHARBUF | The mount destination, specified by number (e.g. container.mount.dest[0]) or mount source (container.mount.dest[/lib/modules]). The pathname can be a glob.
-`container.mount.mode` | CHARBUF | The mount mode, specified by number (e.g. container.mount.mode[0]) or mount source (container.mount.mode[/usr/local]). The pathname can be a glob.
-`container.mount.rdwr` | CHARBUF | The mount rdwr value, specified by number (e.g. container.mount.rdwr[0]) or mount source (container.mount.rdwr[/usr/local]). The pathname can be a glob.
-`container.mount.propagation` | CHARBUF | The mount propagation value, specified by number (e.g. container.mount.propagation[0]) or mount source (container.mount.propagation[/usr/local]). The pathname can be a glob.
-`container.image.repository` | CHARBUF | The container image repository (e.g. falcosecurity/falco).
-`container.image.tag` | CHARBUF | The container image tag (e.g. stable, latest).
-`container.image.digest` | CHARBUF | The container image registry digest (e.g. sha256:d977378f890d445c15e51795296e4e5062f109ce6da83e0a355fc4ad8699d27).
-`container.healthcheck` | CHARBUF | The container's health check. Will be the null value ("N/A") if no healthcheck configured, "NONE" if configured but explicitly not created, and the healthcheck command line otherwise
-`container.liveness_probe` | CHARBUF | The container's liveness probe. Will be the null value ("N/A") if no liveness probe configured, the liveness probe command line otherwise
-`container.readiness_probe` | CHARBUF | The container's readiness probe. Will be the null value ("N/A") if no readiness probe configured, the readiness probe command line otherwise
-`container.start_ts` | UINT64 | Container start as epoch timestamp in nanoseconds based on proc.pidns_init_start_ts.
+`container.id` | CHARBUF | The truncated container ID (first 12 characters), e.g. 3ad7b26ded6d is extracted from the Linux cgroups by Falco within the kernel. Consequently, this field is reliably available and serves as the lookup key for Falco's synchronous or asynchronous requests against the container runtime socket to retrieve all other 'container.*' information. One important aspect to be aware of is that if the process occurs on the host, meaning not in the container PID namespace, this field is set to a string called 'host'. In Kubernetes, pod sandbox container processes can exist where `container.id` matches `k8s.pod.sandbox_id`, lacking other 'container.*' details.
+`container.full_id` | CHARBUF | The full container ID, e.g. 3ad7b26ded6d8e7b23da7d48fe889434573036c27ae5a74837233de441c3601e. In contrast to `container.id`, we enrich this field as part of the container engine enrichment. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.name` | CHARBUF | The container name. In instances of userspace container engine lookup delays, this field may not be available yet. One important aspect to be aware of is that if the process occurs on the host, meaning not in the container PID namespace, this field is set to a string called 'host'.
+`container.image` | CHARBUF | The container image name (e.g. falcosecurity/falco:latest for docker). In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.image.id` | CHARBUF | The container image id (e.g. 6f7e2741b66b). In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.type` | CHARBUF | The container type, e.g. docker, cri-o, containerd etc.
+`container.privileged` | BOOL | 'true' for containers running as privileged, 'false' otherwise. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.mounts` | CHARBUF | A space-separated list of mount information. Each item in the list has the format <source>:<dest>:<mode>:<rdrw>:<propagation>. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.mount` | CHARBUF | Information about a single mount, specified by number (e.g. container.mount[0]) or mount source (container.mount[/usr/local]). The pathname can be a glob (container.mount[/usr/local/*]), in which case the first matching mount will be returned. The information has the format <source>:<dest>:<mode>:<rdrw>:<propagation>. If there is no mount with the specified index or matching the provided source, returns the string "none" instead of a NULL value. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.mount.source` | CHARBUF | The mount source, specified by number (e.g. container.mount.source[0]) or mount destination (container.mount.source[/host/lib/modules]). The pathname can be a glob. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.mount.dest` | CHARBUF | The mount destination, specified by number (e.g. container.mount.dest[0]) or mount source (container.mount.dest[/lib/modules]). The pathname can be a glob. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.mount.mode` | CHARBUF | The mount mode, specified by number (e.g. container.mount.mode[0]) or mount source (container.mount.mode[/usr/local]). The pathname can be a glob. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.mount.rdwr` | CHARBUF | The mount rdwr value, specified by number (e.g. container.mount.rdwr[0]) or mount source (container.mount.rdwr[/usr/local]). The pathname can be a glob. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.mount.propagation` | CHARBUF | The mount propagation value, specified by number (e.g. container.mount.propagation[0]) or mount source (container.mount.propagation[/usr/local]). The pathname can be a glob. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.image.repository` | CHARBUF | The container image repository (e.g. falcosecurity/falco). In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.image.tag` | CHARBUF | The container image tag (e.g. stable, latest). In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.image.digest` | CHARBUF | The container image registry digest (e.g. sha256:d977378f890d445c15e51795296e4e5062f109ce6da83e0a355fc4ad8699d27). In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.healthcheck` | CHARBUF | The container's health check. Will be the null value ("N/A") if no healthcheck configured, "NONE" if configured but explicitly not created, and the healthcheck command line otherwise. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.liveness_probe` | CHARBUF | The container's liveness probe. Will be the null value ("N/A") if no liveness probe configured, the liveness probe command line otherwise. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.readiness_probe` | CHARBUF | The container's readiness probe. Will be the null value ("N/A") if no readiness probe configured, the readiness probe command line otherwise. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.start_ts` | UINT64 | Container start as epoch timestamp in nanoseconds based on proc.pidns_init_start_ts and extracted in the kernel and not from the container runtime socket / container engine.
 `container.duration` | RELTIME | Number of nanoseconds since container.start_ts.
-`container.ip` | CHARBUF | The container's / pod's primary ip address as retrieved from the container engine. Only ipv4 addresses are tracked. Consider container.cni.json (CRI use case) for logging ip addresses for each network interface.
-`container.cni.json` | CHARBUF | The container's / pod's CNI result field from the respective pod status info. It contains ip addresses for each network interface exposed as unparsed escaped JSON string. Supported for CRI container engine (containerd, cri-o runtimes), optimized for containerd (some non-critical JSON keys removed). Useful for tracking ips (ipv4 and ipv6, dual-stack support) for each network interface (multi-interface support).
+`container.ip` | CHARBUF | The container's / pod's primary ip address as retrieved from the container engine. Only ipv4 addresses are tracked. Consider container.cni.json (CRI use case) for logging ip addresses for each network interface. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.cni.json` | CHARBUF | The container's / pod's CNI result field from the respective pod status info. It contains ip addresses for each network interface exposed as unparsed escaped JSON string. Supported for CRI container engine (containerd, cri-o runtimes), optimized for containerd (some non-critical JSON keys removed). Useful for tracking ips (ipv4 and ipv6, dual-stack support) for each network interface (multi-interface support). In instances of userspace container engine lookup delays, this field may not be available yet.
 
 ### Field Class: fd
 
@@ -313,87 +315,13 @@ Kubernetes related context. When configured to fetch from the API server, all fi
 
 Name | Type | Description
 :----|:-----|:-----------
-`k8s.pod.name` | CHARBUF | Kubernetes pod name.
-`k8s.pod.id` | CHARBUF | Kubernetes pod id.
-`k8s.pod.label` | CHARBUF | Kubernetes pod label. E.g. 'k8s.pod.label.foo'.
-`k8s.pod.labels` | CHARBUF | Kubernetes pod comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'.
-`k8s.pod.ip` | CHARBUF | Kubernetes pod ip, same as container.ip field as each container in a pod shares the network stack of the sandbox / pod. Only ipv4 addresses are tracked. Consider k8s.pod.cni.json for logging ip addresses for each network interface.
-`k8s.pod.cni.json` | CHARBUF | Kubernetes pod CNI result field from the respective pod status info, same as container.cni.json field. It contains ip addresses for each network interface exposed as unparsed escaped JSON string. Supported for CRI container engine (containerd, cri-o runtimes), optimized for containerd (some non-critical JSON keys removed). Useful for tracking ips (ipv4 and ipv6, dual-stack support) for each network interface (multi-interface support).
-`k8s.rc.name` | CHARBUF | Kubernetes replication controller name.
-`k8s.rc.id` | CHARBUF | Kubernetes replication controller id.
-`k8s.rc.label` | CHARBUF | Kubernetes replication controller label. E.g. 'k8s.rc.label.foo'.
-`k8s.rc.labels` | CHARBUF | Kubernetes replication controller comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'.
-`k8s.svc.name` | CHARBUF | Kubernetes service name (can return more than one value, concatenated).
-`k8s.svc.id` | CHARBUF | Kubernetes service id (can return more than one value, concatenated).
-`k8s.svc.label` | CHARBUF | Kubernetes service label. E.g. 'k8s.svc.label.foo' (can return more than one value, concatenated).
-`k8s.svc.labels` | CHARBUF | Kubernetes service comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'.
-`k8s.ns.name` | CHARBUF | Kubernetes namespace name.
-`k8s.ns.id` | CHARBUF | Kubernetes namespace id.
-`k8s.ns.label` | CHARBUF | Kubernetes namespace label. E.g. 'k8s.ns.label.foo'.
-`k8s.ns.labels` | CHARBUF | Kubernetes namespace comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'.
-`k8s.rs.name` | CHARBUF | Kubernetes replica set name.
-`k8s.rs.id` | CHARBUF | Kubernetes replica set id.
-`k8s.rs.label` | CHARBUF | Kubernetes replica set label. E.g. 'k8s.rs.label.foo'.
-`k8s.rs.labels` | CHARBUF | Kubernetes replica set comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'.
-`k8s.deployment.name` | CHARBUF | Kubernetes deployment name.
-`k8s.deployment.id` | CHARBUF | Kubernetes deployment id.
-`k8s.deployment.label` | CHARBUF | Kubernetes deployment label. E.g. 'k8s.rs.label.foo'.
-`k8s.deployment.labels` | CHARBUF | Kubernetes deployment comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'.
-
-
-### Field Class: span
-
-Fields used if information about distributed tracing is available.
-
-
-Name | Type | Description
-:----|:-----|:-----------
-`span.id` | INT64 | ID of the span. This is a unique identifier that is used to match the enter and exit tracer events for this span. It can also be used to match different spans belonging to a trace.
-`span.time` | CHARBUF | time of the span's enter tracer as a human readable string that includes the nanosecond part.
-`span.ntags` | UINT32 | number of tags that this span has.
-`span.nargs` | UINT32 | number of arguments that this span has.
-`span.tags` | CHARBUF | dot-separated list of all of the span's tags.
-`span.tag` | CHARBUF | one of the span's tags, specified by 0-based offset, e.g. 'span.tag[1]'. You can use a negative offset to pick elements from the end of the tag list. For example, 'span.tag[-1]' returns the last tag.
-`span.args` | CHARBUF | comma-separated list of the span's arguments.
-`span.arg` | CHARBUF | one of the span arguments, specified by name or by 0-based offset. E.g. 'span.arg.xxx' or 'span.arg[1]'. You can use a negative offset to pick elements from the end of the tag list. For example, 'span.arg[-1]' returns the last argument.
-`span.enterargs` | CHARBUF | comma-separated list of the span's enter tracer event arguments. For enter tracers, this is the same as evt.args. For exit tracers, this is the evt.args of the corresponding enter tracer.
-`span.enterarg` | CHARBUF | one of the span's enter arguments, specified by name or by 0-based offset. For enter tracer events, this is the same as evt.arg. For exit tracer events, this is the evt.arg of the corresponding enter event.
-`span.duration` | RELTIME | delta between this span's exit tracer event and the enter tracer event.
-`span.duration.human` | CHARBUF | delta between this span's exit tracer event and the enter event, as a human readable string (e.g. 10.3ms).
-
-### Field Class: evtin
-
-Fields used if information about distributed tracing is available.
-
-
-Name | Type | Description
-:----|:-----|:-----------
-`evtin.span.id` | INT64 | accepts all the events that are between the enter and exit tracers of the spans with the given ID and are generated by the same thread that generated the tracers.
-`evtin.span.ntags` | UINT32 | accepts all the events that are between the enter and exit tracers of the spans with the given number of tags and are generated by the same thread that generated the tracers.
-`evtin.span.nargs` | UINT32 | accepts all the events that are between the enter and exit tracers of the spans with the given number of arguments and are generated by the same thread that generated the tracers.
-`evtin.span.tags` | CHARBUF | accepts all the events that are between the enter and exit tracers of the spans with the given tags and are generated by the same thread that generated the tracers.
-`evtin.span.tag` | CHARBUF | accepts all the events that are between the enter and exit tracers of the spans with the given tag and are generated by the same thread that generated the tracers. See the description of span.tag for information about the syntax accepted by this field.
-`evtin.span.args` | CHARBUF | accepts all the events that are between the enter and exit tracers of the spans with the given arguments and are generated by the same thread that generated the tracers.
-`evtin.span.arg` | CHARBUF | accepts all the events that are between the enter and exit tracers of the spans with the given argument and are generated by the same thread that generated the tracers. See the description of span.arg for information about the syntax accepted by this field.
-`evtin.span.p.id` | INT64 | same as evtin.span.id, but also accepts events generated by other threads in the same process that produced the span.
-`evtin.span.p.ntags` | UINT32 | same as evtin.span.ntags, but also accepts events generated by other threads in the same process that produced the span.
-`evtin.span.p.nargs` | UINT32 | same as evtin.span.nargs, but also accepts events generated by other threads in the same process that produced the span.
-`evtin.span.p.tags` | CHARBUF | same as evtin.span.tags, but also accepts events generated by other threads in the same process that produced the span.
-`evtin.span.p.tag` | CHARBUF | same as evtin.span.tag, but also accepts events generated by other threads in the same process that produced the span.
-`evtin.span.p.args` | CHARBUF | same as evtin.span.args, but also accepts events generated by other threads in the same process that produced the span.
-`evtin.span.p.arg` | CHARBUF | same as evtin.span.arg, but also accepts events generated by other threads in the same process that produced the span.
-`evtin.span.s.id` | INT64 | same as evtin.span.id, but also accepts events generated by the script that produced the span, i.e. by the processes whose parent PID is the same as the one of the process generating the span.
-`evtin.span.s.ntags` | UINT32 | same as evtin.span.id, but also accepts events generated by the script that produced the span, i.e. by the processes whose parent PID is the same as the one of the process generating the span.
-`evtin.span.s.nargs` | UINT32 | same as evtin.span.id, but also accepts events generated by the script that produced the span, i.e. by the processes whose parent PID is the same as the one of the process generating the span.
-`evtin.span.s.tags` | CHARBUF | same as evtin.span.id, but also accepts events generated by the script that produced the span, i.e. by the processes whose parent PID is the same as the one of the process generating the span.
-`evtin.span.s.tag` | CHARBUF | same as evtin.span.id, but also accepts events generated by the script that produced the span, i.e. by the processes whose parent PID is the same as the one of the process generating the span.
-`evtin.span.s.args` | CHARBUF | same as evtin.span.id, but also accepts events generated by the script that produced the span, i.e. by the processes whose parent PID is the same as the one of the process generating the span.
-`evtin.span.s.arg` | CHARBUF | same as evtin.span.id, but also accepts events generated by the script that produced the span, i.e. by the processes whose parent PID is the same as the one of the process generating the span.
-`evtin.span.m.id` | INT64 | same as evtin.span.id, but accepts all the events generated on the machine during the span, including other threads and other processes.
-`evtin.span.m.ntags` | UINT32 | same as evtin.span.id, but accepts all the events generated on the machine during the span, including other threads and other processes.
-`evtin.span.m.nargs` | UINT32 | same as evtin.span.id, but accepts all the events generated on the machine during the span, including other threads and other processes.
-`evtin.span.m.tags` | CHARBUF | same as evtin.span.id, but accepts all the events generated on the machine during the span, including other threads and other processes.
-`evtin.span.m.tag` | CHARBUF | same as evtin.span.id, but accepts all the events generated on the machine during the span, including other threads and other processes.
-`evtin.span.m.args` | CHARBUF | same as evtin.span.id, but accepts all the events generated on the machine during the span, including other threads and other processes.
-`evtin.span.m.arg` | CHARBUF | same as evtin.span.id, but accepts all the events generated on the machine during the span, including other threads and other processes.
-
+`k8s.ns.name` | CHARBUF | The Kubernetes namespace name. This field is extracted from the container runtime socket simultaneously as we look up the 'container.*' fields. In cases of lookup delays, it may not be available yet.
+`k8s.pod.name` | CHARBUF | The Kubernetes pod name. This field is extracted from the container runtime socket simultaneously as we look up the 'container.*' fields. In cases of lookup delays, it may not be available yet.
+`k8s.pod.id` | CHARBUF | [LEGACY] The Kubernetes pod UID, e.g. 3e41dc6b-08a8-44db-bc2a-3724b18ab19a. This legacy field points to `k8s.pod.uid`; however, the pod ID typically refers to the pod sandbox ID. We recommend using the semantically more accurate `k8s.pod.uid` field. This field is extracted from the container runtime socket simultaneously as we look up the 'container.*' fields. In cases of lookup delays, it may not be available yet.
+`k8s.pod.uid` | CHARBUF | The Kubernetes pod UID, e.g. 3e41dc6b-08a8-44db-bc2a-3724b18ab19a. Note that the pod UID is a unique identifier assigned upon pod creation within Kubernetes, allowing the Kubernetes control plane to manage and track pods reliably. As such, it is fundamentally a different concept compared to the pod sandbox ID. This field is extracted from the container runtime socket simultaneously as we look up the 'container.*' fields. In cases of lookup delays, it may not be available yet.
+`k8s.pod.sandbox_id` | CHARBUF | The truncated Kubernetes pod sandbox ID (first 12 characters), e.g 63060edc2d3a. The sandbox ID is specific to the container runtime environment. It is the equivalent of the container ID for the pod / sandbox and extracted from the Linux cgroups. As such, it differs from the pod UID. This field is extracted from the container runtime socket simultaneously as we look up the 'container.*' fields. In cases of lookup delays, it may not be available yet. In Kubernetes, pod sandbox container processes can exist where `container.id` matches `k8s.pod.sandbox_id`, lacking other 'container.*' details.
+`k8s.pod.full_sandbox_id` | CHARBUF | The full Kubernetes pod / sandbox ID, e.g 63060edc2d3aa803ab559f2393776b151f99fc5b05035b21db66b3b62246ad6a. This field is extracted from the container runtime socket simultaneously as we look up the 'container.*' fields. In cases of lookup delays, it may not be available yet.
+`k8s.pod.label` | CHARBUF | The Kubernetes pod label. The label can be accessed either with the familiar brackets notation, e.g. 'k8s.pod.label[foo]' or by appending a dot followed by the name, e.g. 'k8s.pod.label.foo'. The label name itself can include the original special characters such as '.', '-', '_' or '/' characters. For instance, 'k8s.pod.label[app.kubernetes.io/name]', 'k8s.pod.label.app.kubernetes.io/name' or 'k8s.pod.label[custom-label_one]' are all valid. This field is extracted from the container runtime socket simultaneously as we look up the 'container.*' fields. In cases of lookup delays, it may not be available yet.
+`k8s.pod.labels` | CHARBUF | The Kubernetes pod comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'. This field is extracted from the container runtime socket simultaneously as we look up the 'container.*' fields. In cases of lookup delays, it may not be available yet.
+`k8s.pod.ip` | CHARBUF | The Kubernetes pod ip, same as container.ip field as each container in a pod shares the network stack of the sandbox / pod. Only ipv4 addresses are tracked. Consider k8s.pod.cni.json for logging ip addresses for each network interface. This field is extracted from the container runtime socket simultaneously as we look up the 'container.*' fields. In cases of lookup delays, it may not be available yet.
+`k8s.pod.cni.json` | CHARBUF | The Kubernetes pod CNI result field from the respective pod status info, same as container.cni.json field. It contains ip addresses for each network interface exposed as unparsed escaped JSON string. Supported for CRI container engine (containerd, cri-o runtimes), optimized for containerd (some non-critical JSON keys removed). Useful for tracking ips (ipv4 and ipv6, dual-stack support) for each network interface (multi-interface support). This field is extracted from the container runtime socket simultaneously as we look up the 'container.*' fields. In cases of lookup delays, it may not be available yet.
