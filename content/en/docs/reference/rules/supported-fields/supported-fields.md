@@ -310,7 +310,7 @@ Name | Type | Description
 
 ### Field Class: k8s
 
-Kubernetes related context. When configured to fetch from the API server, all fields are available. Otherwise, only the `k8s.pod.*` and `k8s.ns.name` fields are populated with data gathered from the container runtime.
+Kubernetes context about pods and namespace name. These fields are populated with data gathered from the container runtime.
 
 
 Name | Type | Description
