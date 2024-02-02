@@ -15,34 +15,31 @@ doing all this, chances that you are willing to contribute are high! Please read
 {{< tabs name="Dependencies" >}}
 {{% tab name="CentOS / RHEL " %}}
 
-CentOS 7 / RHEL 7
+CentOS 8 Stream / RHEL 8
 
 ```bash
-yum install gcc gcc-c++ git make autoconf automake pkg-config patch libtool glibc-static libstdc++-static elfutils-libelf-devel
+dnf install git gcc gcc-c++ git make cmake elfutils-libelf-devel perl-IPC-Cmd
 ```
 
-You will also need `cmake` version `3.5.1` or higher which is not included in CentOS 7. You can follow the [official guide](https://cmake.org/install/) or look at how that is done in the [Falco builder Dockerfile](https://github.com/falcosecurity/falco/blob/master/docker/builder/modern-falco-builder.Dockerfile).
-
-CentOS 8 / RHEL 8
-
-```bash
-dnf install gcc gcc-c++ git make cmake autoconf automake pkg-config patch libtool elfutils-libelf-devel diffutils which
-```
 {{< /tab >}}}
 
 {{% tab name="Debian/ Ubuntu" %}}
+
 ```bash
-apt install git cmake build-essential pkg-config autoconf libtool libelf-dev -y
+apt update && apt install git cmake build-essential libelf-dev
 ```
+
 {{< /tab >}}}
 
 {{% tab name="Arch Linux" %}}
+
 ```bash
 pacman -S git cmake make gcc wget
 pacman -S zlib jq yaml-cpp openssl curl c-ares protobuf grpc libyaml
 ```
 
 You'll also need kernel headers for building and making binaries properly.
+
 ```bash
 pacman -S linux-headers
 ```
@@ -56,14 +53,17 @@ Since Alpine ships with `musl` instead of `glibc`, to build on Alpine, we need t
 If that option is used along with the `-DUSE_BUNDLED_DEPS=On` option, then the final build will be 100% statically-linked and portable across different Linux distributions.
 
 ```bash
-apk add g++ gcc cmake cmake make git bash perl linux-headers autoconf automake m4 libtool elfutils-dev libelf-static patch binutils
+apk add g++ gcc cmake make git bash perl linux-headers autoconf automake m4 libtool elfutils-dev libelf-static binutils bpftool clang
 ```
+
 {{< /tab >}}}
 
 {{% tab name="openSUSE" %}}
+
 ```bash
-zypper -n install gcc gcc-c++ git-core cmake libjq-devel yaml-cpp-devel libopenssl-devel libcurl-devel c-ares-devel protobuf-devel grpc-devel patch which automake autoconf libtool libelf-devel libyaml-devel
+zypper -n install git gcc12 gcc12-c++ cmake make libelf-devel gawk
 ```
+
 {{< /tab >}}}
 {{< /tabs >}}
 
@@ -81,7 +81,7 @@ cmake -DUSE_BUNDLED_DEPS=ON ..
 make falco
 ```
 
-More details [here](#build-directly-on-host).
+More details [here](#build-falco).
 
 {{< /tab >}}}
 
@@ -104,7 +104,7 @@ cmake ..
 make falco
 ```
 
-More details [here](#build-directly-on-host).
+More details [here](#build-falco).
 
 {{< /tab >}}}
 
@@ -119,11 +119,11 @@ cmake ..
 make falco
 ```
 
-More details [here](#build-directly-on-host).
-
+More details [here](#build-falco).
 
 {{< /tab >}}}
 {{% tab name="Alpine" %}}
+
 ```bash
 git clone https://github.com/falcosecurity/falco.git
 cd falco
@@ -132,24 +132,26 @@ cd build
 cmake -DUSE_BUNDLED_DEPS=On -DMUSL_OPTIMIZED_BUILD=On ..
 make falco
 ```
+
 {{< /tab >}}}
 
 {{% tab name="openSUSE" %}}
+
+First, make sure that `gcc` and `g++` are version 9 or above. If you have multiple versions installed you can [set the preferred one](#specify-c-and-cxx-compilers).
+
 ```bash
 git clone https://github.com/falcosecurity/falco.git
 cd falco
 mkdir -p build
 cd build
-cmake ..
+cmake -DUSE_BUNDLED_DEPS=ON ..
 make falco
 ```
 
-More details [here](#build-directly-on-host).
+More details [here](#build-falco).
 
 {{< /tab >}}}
 {{< /tabs >}}
-
-
 
 3. Build kernel module driver
 
@@ -163,7 +165,7 @@ yum -y install kernel-devel-$(uname -r)
 make driver
 ```
 
-More details [here](#build-directly-on-host).
+More details [here](#build-falco).
 
 {{< /tab >}}}
 
@@ -180,6 +182,7 @@ In the build directory:
 ```bash
 make driver
 ```
+
 {{< /tab >}}}
 
 {{% tab name="Arch Linux" %}}
@@ -191,8 +194,7 @@ pacman -S --needed linux-headers
 make driver
 ```
 
-More details [here](#build-directly-on-host).
-
+More details [here](#build-falco).
 
 {{< /tab >}}}
 {{% tab name="Alpine" %}}
@@ -206,6 +208,7 @@ In the build directory:
 zypper -n install kernel-default-devel
 make driver
 ```
+
 {{< /tab >}}}
 {{< /tabs >}}
 
@@ -237,6 +240,7 @@ apt install llvm clang
 cmake -DBUILD_BPF=ON ..
 make bpf
 ```
+
 {{< /tab >}}}
 
 {{% tab name="Arch Linux" %}}
@@ -250,7 +254,6 @@ pacman -S llvm clang
 cmake -DBUILD_BPF=ON ..
 make bpf
 ```
-
 
 {{< /tab >}}}
 {{% tab name="Alpine" %}}
@@ -267,6 +270,7 @@ zypper -n install clang llvm
 cmake -DBUILD_BPF=ON ..
 make bpf
 ```
+
 {{< /tab >}}}
 {{< /tabs >}}
 
@@ -278,34 +282,7 @@ You can notice this observing that the option `USE_BUNDLED_DEPS` is `OFF` by def
 
 Changing such option to `ON` causes Falco build to bundle all the dependencies statically.
 
-For the sake of completeness this is the complete list of Falco dependencies:
-
-- b64
-- cares
-- curl
-- grpc
-- jq
-- libyaml
-- lpeg
-- luajit
-- lyaml
-- njson
-- openssl
-- protobuf
-- tbb
-- yamlcpp
-- zlib
-- libscap
-- libsinsp
-
 ## Build Falco
-
-There are two supported ways to build Falco
-
-- [Build directly on host](#build-directly-on-host)
-- [Build using a container](#build-using-falco-builder-container)
-
-### Build directly on host
 
 To build Falco, you will need to create a `build` directory.
 It's common to have the `build` directory in the Falco working copy itself, however it can be
@@ -317,7 +294,6 @@ There are **three main steps to compile** Falco.
 2. Use cmake in the build directory to create the build files for Falco. `..` was used because the source directory
 is a parent of the current directory, you can also use the absolute path for the Falco source code instead
 3. Build using make
-
 
 #### Build all
 
@@ -406,7 +382,6 @@ Here'are some examples, always assuming your `build` folder is inside the Falco 
 
 Read more about Falco dependencies [here](#dependencies).
 
-
 #### Treat warnings as errors
 
 ```
@@ -453,36 +428,6 @@ When enabling this you will be able to make the `bpf` target after:
 make bpf
 ```
 
-### Build using falco-builder container
-
-An alternative way to build Falco is to run the [falco-builder](https://hub.docker.com/r/falcosecurity/falco-builder) container.
-It contains the reference toolchain that can be used to build packages and all the dependencies are already satisfied.
-
-The image depends on the following parameters:
-
-* `BUILD_TYPE`: debug or release (case-insensitive, defaults to release)
-* `BUILD_DRIVER`: whether or not to build the kernel module when
-building. This should usually be OFF, as the kernel module would be
-built for the files in the centos image, not the host.
-* `BUILD_BPF`: Like `BUILD_DRIVER` but for the ebpf program.
-* `BUILD_WARNINGS_AS_ERRORS`: consider all build warnings fatal
-* `MAKE_JOBS`: passed to the -j argument of make
-
-A typical way to run this builder is the following. Assuming you have
-checked out Falco and Sysdig to directories below /home/user/src, and
-want to use a build directory of /home/user/build/falco, you would run
-the following:
-
-```bash
-docker run --user $(id -u):$(id -g) -v /etc/passwd:/etc/passwd:ro -it -v /home/user/src:/source -v /home/user/build/falco:/build falcosecurity/falco-builder cmake
-docker run --user $(id -u):$(id -g) -v /etc/passwd:/etc/passwd:ro -it -v /home/user/src:/source -v /home/user/build/falco:/build falcosecurity/falco-builder package
-```
-
-It's also possible to explicitly provide the `FALCO_VERSION` environment variable to use it as the version for any built package.
-
-Otherwise the docker image will use the default `FALCO_VERSION`.
-
-
 ## Load latest falco kernel module
 
 If you have a binary version of Falco installed, an older Falco kernel module may already be loaded. To ensure you are using the latest version, you should unload any existing Falco kernel module and load the locally built version.
@@ -508,54 +453,3 @@ sudo ./userspace/falco/falco -c ../falco.yaml -r ../rules/falco_rules.yaml
 ```
 
 By default, falco logs events to standard error.
-
-
-### Run regression tests
-
-#### Test directly on host
-
-To run regression tests, after building Falco, in the Falco root directory, you need to run the `test/run_regression_tests.sh` script.
-
-##### Dependencies
-
-You will need the following dependencies for the regression testing framework to work.
-
-- Python 3
-- [Avocado Framework](https://github.com/avocado-framework/avocado), version 69
-- [Avocado Yaml to Mux plugin](https://avocado-framework.readthedocs.io/en/69.0/optional_plugins/varianter_yaml_to_mux.html)
-- [JQ](https://github.com/stedolan/jq)
-- The `unzip` and `xargs` commands
-- [Docker CE](https://docs.docker.com/install)
-
-You will also need to obtain some test fixtures from the internet for the regression test suites to work.
-
-For the python dependencies, how to setup the virtualenv, how to obtain test fixtures, read more [here](https://github.com/falcosecurity/falco/blob/fefd23f2f1316dcffd74239168f2e19bda78e428/test/README.md).
-
-##### Run the tests
-
-Change `$PWD/build` with the directory you built Falco in, if different.
-
-```bash
-./test/run_regression_tests.sh -d $PWD/build
-```
-
-#### Test using falco-tester container
-
-If you'd like to run the regression test suite against your build, you can use the [falco-tester](https://hub.docker.com/r/falcosecurity/falco-tester) container. Like the builder image, it contains the necessary environment to run the regression tests, but relies on a source directory and build directory that are mounted into the image. It's a different image than `falco-builder` as it doesn't need a compiler and needs a different base image to include the test runner framework [avocado](http://avocado-framework.github.io/).
-
-It does build a new container image `falcosecurity/falco:test` (which source is into `docker/local` directory into Falco GitHub repository) to test the process of buillding and running a container with the Falco packages built during the build step.
-
-The image depends on the following parameters:
-
-* `FALCO_VERSION`: The version of the Falco package to include in the test container image. It must match the version of the built packages.
-
-A typical way to run this builder is the following. Assuming you have
-checked out Falco and Sysdig to directories below `/home/user/src`, and
-want to use a build directory of `/home/user/build/falco`, you would run
-the following:
-
-```bash
-docker run --user $(id -u):$(id -g) -v $HOME:$HOME:ro -v /boot:/boot:ro -v /var/run/docker.sock:/var/run/docker.sock -v /etc/passwd:/etc/passwd:ro -e FALCO_VERSION=${FALCO_VERSION} -v /home/user/src:/source -v /home/user/build/falco:/build falcosecurity/falco-tester
-```
-
-Mounting `$HOME` allows the test execution framework to run. You may need to replace `$(id -g)` with the right gid of the group that is allowed to access the docker socket (often the `docker` group).
