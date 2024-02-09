@@ -14,7 +14,7 @@ tags: ["security-concept"]
 
 
 {{% pageinfo color="warning" %}}
-Falco Talon is under active development and still in the alpha stage, some breaking changes may happen at any time and the docs might not be up to date.
+Falco Talon is currently under active development and remains in the alpha stage; therefore, breaking changes may occur at any time, and the documentation may not always be up to date.
 {{% /pageinfo %}}
 
 
