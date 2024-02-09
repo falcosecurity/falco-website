@@ -1,13 +1,17 @@
 ---
 title: Automate Kubernetes Network Security with Falco Talon
 description: Block Suspicious Network Traffic with Talon and NetworkPolicies
-date: 2023-02-09
+date: 2024-02-09
 author: Nigel Douglas
 slug: falco-network-security
 images:
   - /blog/atomic-red-falco/images/falco-network-featured.png
 tags: ["security-concept"]
 ---
+
+* Falco Talon Repository: https://github.com/Falco-Talon/falco-talon
+* Falco Talon Documentation: https://docs.falco-talon.org/
+<em>Falco Talon is under active development and still in the alpha stage, some breaking changes may happen at any time and the docs might not be up to date.</em>
 
 
 Setting up robust network security in Kubernetes is a challenge that demands both precision and adaptability. NetworkPolicy offers the potential for highly specific network configurations, enabling or blocking traffic based on a comprehensive set of criteria. However, the dynamic nature of network topologies and the complexities of managing policy implementations present ongoing challenges. The need for constant policy updates, especially in response to changing threat landscapes, introduces risks such as the potential for misconfiguration and the unintended dropping of packets.
