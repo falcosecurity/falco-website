@@ -115,6 +115,7 @@ You can find more about its usage [here](/docs/getting-started/installation#inst
         -e HOST_ROOT=/ \
         --cap-add SYS_PTRACE --pid=host $(ls /dev/falco* | xargs -I {} echo --device {}) \
         -v /var/run/docker.sock:/var/run/docker.sock \
+        -v /etc:/host/etc:ro \
         falcosecurity/falco-no-driver:latest
     ```
 
@@ -245,6 +246,7 @@ docker run --rm -i -t \
     -v /var/run/docker.sock:/host/var/run/docker.sock \
     -v /dev:/host/dev \
     -v /proc:/host/proc:ro \
+    -v /etc:/host/etc:ro \
     falcosecurity/falco-no-driver:latest
 ```
 
