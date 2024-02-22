@@ -15,8 +15,8 @@
         {{ partial "toast.html" }}
       </main>
       {{ partial "footer.html" . }}
-      <img referrerpolicy="no-referrer-when-downgrade" src="{{ .Site.Params.tacking_pixels.main_url }}" />
     </div>
+    <img referrerpolicy="no-referrer-when-downgrade" src="{{ .Site.Params.tacking_pixels.main_url }}" />
     {{ partialCached "scripts.html" . }}
   </body>
 </html>
