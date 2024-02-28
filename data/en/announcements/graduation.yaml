@@ -1,0 +1,8 @@
+index: 3
+startDate: '2024-02-28T00:00:00.000Z'
+endDate: '2024-04-01T00:00:00.000Z'
+content: |
+    <img src="/icons/cncf-icon-color.svg" style="height: 40px" />
+    <img src="/icons/falco-icon-color.svg" style="height: 40px; margin-right: 10px; margin-left: 5px" />
+    <span><a href="https://falco.org/blog/falco-graduation">Falco is now a CNCF Graduated Project!</a><br />Thank you everyone for helping Falco soar! ❤️</span>
+hideCloseButton: true

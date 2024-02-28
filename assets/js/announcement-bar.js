@@ -37,19 +37,47 @@
   const [announcementBar] = document.getElementsByClassName(CLASS_NAME);
   const [navbar] = document.getElementsByClassName("td-navbar");
 
+  let prevScroll = 0;
+  const scrollOffset = 50;
+  const scrollHandler = () => {
+    if (prevScroll < window.scrollY) {
+      // scrolling down
+      if (window.scrollY > scrollOffset) {
+        navbar.classList.remove("td-navbar_transparent");
+      }
+    } else {
+      // scrolling up
+      if (window.scrollY < scrollOffset) {
+        navbar.classList.add("td-navbar_transparent");
+      }
+    }
+    prevScroll = window.scrollY;
+  };
+
   if (announcementBar) {
     const store = updateStore();
     const inDateRange = isInDateRange();
 
+    const show = () => {
+      navbar.classList.add("td-navbar_transparent");
+      window.addEventListener("scroll", scrollHandler, false);
+    };
+
+    const hide = () => {
+      localStorage.setItem(STORE, JSON.stringify({ ...store, show: false }));
+      announcementBar.classList.add(`${CLASS_NAME}--hide`);
+      navbar.classList.remove("td-navbar_transparent");
+      window.removeEventListener("scroll", scrollHandler, false);
+    };
+
     if (store.show && inDateRange) {
-      announcementBar.classList.add("d-flex");
-      navbar.classList.add("td-navbar--announcement-show");
+      show();
+    } else {
+      hide();
     }
 
     return (announcementBarHide = () => {
-      localStorage.setItem(STORE, JSON.stringify({ ...store, show: false }));
-      announcementBar.classList.add(`${CLASS_NAME}--hide`);
-      navbar.classList.add("td-navbar--announcement-hide");
+      hide();
     });
   }
 })();
