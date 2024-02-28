@@ -62,7 +62,7 @@ In all of the examples below, it's assumed one is running Falco via `falco -r /e
 
 ```yaml
 - list: my_programs
-  items: cp
+  items: [cp]
   override:
     items: append
 ```
@@ -88,7 +88,7 @@ The rule `my_programs_opened_file` would trigger whenever any of `ls`, `cat`, `p
 
 ```yaml
 - list: my_programs
-  items: vi, vim, nano 
+  items: [vi, vim, nano] 
   override:
     items: replace
 ```
