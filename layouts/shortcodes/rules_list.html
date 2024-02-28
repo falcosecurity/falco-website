@@ -6,8 +6,13 @@
 {{- $maturities := (dict "deprecated" $deprecatedURL "incubating" $incubatingURL "sandbox" $sandboxURL "stable" $stableURL) }}
 
 <style>
+    html {
+        scroll-padding-top: 70px;
+    }
+
     .collapsible {
-        padding: 10px;
+        padding-top: 10px;
+        padding-left: 10px;
         width: 100%;
         border: none;
         text-align: left;
@@ -28,7 +33,7 @@
         border: 1px solid #ddd;
         margin-bottom: 12px;
     }
-    
+
     .rule {
         background-color: #fff;
         padding-top: 10px;
@@ -120,7 +125,7 @@
         {{- $content := $dataYAML.Content | replaceRE `#.*\n` "" | transform.Unmarshal }}
         {{- range $content }}
             {{ if .rule }}
-                <button type="button" class="collapsible">
+                <button type="button" class="collapsible" id={{ replace .rule " " "_" }}>
                     {{ .rule }}
                     {{ if eq .enabled false }}
                     <span class="status disabled chip small">disabled</span>
@@ -131,37 +136,41 @@
                     <span class="maturity {{ $maturity }} chip small">{{ $maturity }}</span>
                 </button>
                 <div class="rule">
-                    <div id="descriptionDiv">
+                    <div class="descriptionDiv">
                         <span class="field">Description:</span></br>
-                        <pre><code id="condition" style="white-space: pre-wrap;">{{ .desc }}</code></pre>
+                        <pre><code class="condition" style="white-space: pre-wrap;">{{ .desc }}</code></pre>
                     </div>
-                    <div id="conditionDiv">
+                    <div class="conditionDiv">
                         <span class="field">Condition:</span><br>
-                        <pre><code id="condition" style="white-space: pre-wrap;">{{ .condition }}</code></pre>
+                        <pre><code class="condition" style="white-space: pre-wrap;">{{ .condition }}</code></pre>
                     </div>
-                    <div id="outputDiv">
+                    <div class="outputDiv">
                         <span class="field">Output:</span><br>
-                        <pre class="code"><code id="output" style="white-space: pre-wrap;">{{ .output }}</code></pre>
+                        <pre class="code"><code class="output" style="white-space: pre-wrap;">{{ .output }}</code></pre>
                     </div>
-                    <div id="maturityDiv">
+                    <div class="maturityDiv">
                         <span class="field">Maturity: </span><span class="maturity {{ $maturity }} chip"> {{ $maturity }}</span>
                     </div>
-                    <div id="priorityDiv">
+                    <div class="priorityDiv">
                         <span class="field">Priority: </span><span class="priority {{ lower .priority }} chip"> {{ .priority }}</span>
                     </div>
-                    <div id="tagsDiv">
+                    <div class="tagsDiv">
                         <span class="field">Tags:</span>
                         {{ range .tags }}
                         <span class="chip"> {{ .  }}</span>
                         {{ end }}
                     </div>
-                    <div id="statusDiv">
+                    <div class="statusDiv">
                         <span class="field">Status: </span>
                         {{ if eq .enabled false }}
                             <span class="status disabled chip">disabled</span>
                         {{ else }}
                             <span class="status enabled chip">enabled</span>
                         {{ end }}
+                    </div>
+                    <div>
+                        <span class="field">Link: </span>
+                        <span><a href=#{{ replace .rule " " "_" }} /><i class="fa fa-link" style="padding-bottom: 15px;"></i></a></span>
                     </div>
                 </div>
             {{ end }}
@@ -174,6 +183,15 @@
     var i;
     
     for (i = 0; i < coll.length; i++) {
+        var id = coll[i].id;
+        var anchor = getAnchor();
+        if (anchor == id) {
+            var el = document.getElementById(id);
+            el.classList.toggle("active");
+            el.style.backgroundColor = "#00aec7";
+            var content = el.nextElementSibling;
+            content.style.display = "block";
+        }
         coll[i].addEventListener("click", function() {
             this.classList.toggle("active");
             var content = this.nextElementSibling;
@@ -185,6 +203,10 @@
                 this.style.backgroundColor = "#00aec7";
             }
         });
+    }
+
+    function getAnchor() {
+        return (document.URL.split('#').length > 1) ? document.URL.split('#')[1] : null;
     }
 
     function search() {
@@ -205,4 +227,16 @@
             }
         }
     }
+
+    function stringToHash(string) {
+        let hash = 0;
+        if (string.length == 0) return hash;
+        for (i = 0; i < string.length; i++) {
+            char = string.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash;
+        }
+        return hash;
+    }
+
     </script>
