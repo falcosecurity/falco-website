@@ -2,46 +2,39 @@
 // Announcement bar
 //
 
-$announcement-height: 2rem;
+$navbar-height: 4rem;
+$banner-height:4rem;
 
-@mixin animate($from, $to, $name) {
-  @keyframes #{$name} {
-    from {
-      top: $from;
-    }
-    to {
-      top: $to;
-    }
-  }
+.announcement-wrapper {
+  position:relative;
+  height:fit-content;
+  padding-top: $navbar-height;
+  background-color:$body-bg
 }
 
 .announcement-bar {
-  $height: 1.5rem;
-
-  z-index: 9999;
+  position:sticky;
+  min-height: $banner-height;
+  z-index: 1;
   width: 100%;
-  background-color: $black;
-  color: $primary;
-
-  @include media-breakpoint-up(md) {
-    position: fixed;
-    top: -$announcement_height;
-    height: $announcement_height;
-    @include animate(-$announcement_height, 0, announcement-show);
-    animation: announcement-show 0.5s forwards 1s;
-  }
+  color: $dark;
+  top: $navbar-height;
+  box-shadow: 0px 4px 20px rgba($black, 0.1);
+  display:flex;
+  padding: 24px 16px;
+  gap:16px;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
 
   &--hide {
-    @include animate(0, -$announcement_height, announcement-hide);
-    animation: announcement-hide 0.5s forwards;
+    top: 0;
+    display:none
   }
 
   &__button-close {
-    position: absolute;
-    top: 0.5rem;
-    right: 1rem;
     line-height: 1rem;
-
+    align-self: flex-start;
     i {
       rotate: 45deg;
     }
@@ -50,25 +43,16 @@ $announcement-height: 2rem;
 
 
 .td-navbar {
-  min-height: 4rem;
+  min-height: $navbar-height;
   margin: 0;
   z-index: 32;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  transition: background-color 0.5s;
 
-  @include media-breakpoint-up(md) {
-    position: fixed;
-    top: 0;
-    width: 100%;
-
-    &--announcement {
-      &-show {
-        @include animate(0, $announcement_height, shift);
-        animation: shift 0.5s forwards 1s;
-      }
-
-      &-hide {
-        @include animate($announcement_height, 0, unshift);
-        animation: unshift 0.5s forwards;
-      }
-    }
+  &_transparent {
+    background: transparent;
+    box-shadow: none;
   }
 }
