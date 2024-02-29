@@ -5,7 +5,7 @@ author:  The Falco Authors
 slug: falco-graduation
 tags: ["Falco"]
 images:
-  - images/falco-graduation-featured.png
+  - /blog/falco-graduation/images/falco-graduation-featured.png
 ---
 
 Today, the Falco project hit a big milestone: [becoming a CNCF Graduated Project](https://www.cncf.io/announcements/2024/02/29/cloud-native-computing-foundation-announces-falco-graduation/)! Falco's graduation indicates the project's maturity and dependability, but most importantly, it is the culmination of a fantastic amount of work.
