@@ -28,7 +28,7 @@ aliases:
 
   Falco makes it easy to consume Linux kernel syscalls, and enrich those events with information from Kubernetes and the rest of the cloud native stack. Falco has a rich set of out of the box security rules specifically built for Kubernetes, Linux and the cloud.
 
-  Originally developed as open source by Sysdig, Falco was contributed to the Cloud Native Computing Foundation (CNCF) in 2018 and moved to the incubating level in 2020. Since its inception, Falco has been downloaded more than 50 million times, with more than 480% growth in the last two years.
+  Originally developed as open source by Sysdig, Falco was contributed to the Cloud Native Computing Foundation (CNCF) in 2018, moved to the incubating level in 2020 and to the graduated level in 2024. Since its inception, Falco has been downloaded more than 100 million times, with more than 480% growth in the last two years.
 {{< /two_column_block_img >}}
 {{< /blocks/content >}}
 

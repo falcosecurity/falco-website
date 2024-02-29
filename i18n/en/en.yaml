@@ -17,7 +17,7 @@ main_copyright_notice:
 privacy_policy:
   other: <a class="text-white" href="https://www.linuxfoundation.org/privacy">Privacy Policy</a> and <a class="text-white" href="https://www.linuxfoundation.org/terms">Terms of Use</a>.
 cncf_status_statement:
-  other: We are a <a href="https://cncf.io/">CNCF</a> incubated Project
+  other: We are a <a href="https://cncf.io/">CNCF</a> graduated Project
 version_banner_title:
   other: "You are viewing documentation for Falco version:"
 version_banner_warning:
@@ -29,7 +29,7 @@ cloud-native-runtime-security:
 home_falco_description:
   other: |
     <b>Falco</b>, the cloud-native runtime security project, is the de facto <b>Kubernetes threat detection engine</b><br /><br />
-    <small>Falco is the first runtime security project to join CNCF as an incubation-level project.
+    <small>Falco is a CNCF graduated runtime security project, the first of its kind to join CNCF at incubation level.
         Falco acts as a security camera detecting unexpected behavior, intrusions, and data theft 
         in real time.</small>
 home_featured_videos:
@@ -41,7 +41,7 @@ home_falco_intro_main:
 home_falco_intro_plugins:
   other: Extends threat detection across cloud environments with Falco Plugins.
 home_falco_intro_cncf:
-  other: Falco is the first runtime security project to join CNCF as an incubation-level project.
+  other: Falco is a CNCF graduated runtime security project.
 home_falco_intro_camera:
   other: Falco acts as a security camera detecting unexpected behavior, intrusions, and data theft in real time.
 home_falco_community:
@@ -73,7 +73,7 @@ home_falco_what_is_falco:
 home_stories_from_our_users:
   other: Stories From Our Users
 home_falco_cncf:
-  other: We are a CNCF incubated project
+  other: We are a CNCF graduated project
 
 general_previous_page:
   other: Previous page
