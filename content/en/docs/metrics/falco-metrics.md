@@ -5,6 +5,22 @@ linktitle: Falco Metrics
 weight: 10
 ---
 
+{{% pageinfo color=info %}}
+Several metric output field names will be changed for Falco 0.38.0 (anticipated end of May 2024).
+
+To ensure long-term consistency and validity, we have renamed the following metric output fields. The unit suffix depends on whether you use `convert_memory_to_mb: true` or not:
+
+- `falco.hostname` -> `evt.hostname` to be consistent with the newer `evt.hostname` filter field
+- `cpu_usage_perc_total_host` -> `host_cpu_usage_perc`
+- `memory_used_host` -> `host_memory_used_kb` (or `host_memory_used_mb`)
+- `procs_running_hos`t -> `host_procs_running`
+- `open_fds_host` -> `host_open_fds`
+- `memory_rss` -> `memory_rss_kb` (or `memory_rss_mb`)
+- `memory_pss` -> `memory_pss_kb` (or `memory_pss_mb`)
+- `memory_vsz` -> `memory_vsz_kb` (or `memory_vsz_mb`)
+- `container_memory_used` -> `container_memory_used_bytes` (or `container_memory_used_mb`)
+{{% /pageinfo %}}
+
 To explore this functionality, refer to the [falco.yaml](https://github.com/falcosecurity/falco/blob/master/falco.yaml) config file and read the advanced Falco logging, alerting, and metrics sections, specifically focusing on software functioning (e.g. `metrics`). We do not duplicate the explanations of the metrics config here; instead, we only list the possible field values.
 
 {{% pageinfo color=info %}}
