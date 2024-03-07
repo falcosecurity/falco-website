@@ -1,7 +1,7 @@
 ---
 title: Preventing attacker persistence with Falco on AWS
 description: Use Falco to detect when malicious code may have been added to a Lambda function. 
-date: 2023-03-07
+date: 2024-03-07
 author: Mike Coleman
 slug: aws-detection
 images:
