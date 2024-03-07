@@ -16,6 +16,12 @@
    coauthorImgUrl: /img/case-studies/trendyol/emin_aktas.png
    coauthorName: Emin Aktas
    coauthorPosition: Platform Engineer at Trendyol
+ - text: Incepto Medical uses Falco to provide a secure on-demand medical imaging service to healthcare facilities. Their platform enables partners to run custom applications (workloads) in a multi-tenant environment while protecting sensitive customer data thanks to Falco.
+   logoUrl: /img/case-studies/incepto-medical/incepto-medical.png
+   linkUrl: /about/case-studies/incepto-medical
+   authorImgUrl: /img/case-studies/incepto-medical/alexandre_lemaresquier.png
+   authorName: Alexandre Lemaresquier
+   authorPosition: Head of SecDevOps at Incepto Medical
  - text: Share your story
    logoUrl: /img/icons/question-lg.svg
    shareStory: true
