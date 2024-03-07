@@ -17,7 +17,6 @@ slug: incepto-medical
 
 {{< blocks/content wrap="col" >}}
 
-## Company Information
 
 [Incepto Medical](https://incepto-medical.com/en) provides on-demand medical imaging analysis to healthcare facilities. This analysis is based on AI technology manufactured or distributed by Incepto for mammography, X-ray, emergency, CT, MR and PET scanners. Incepto’s partners can also use shared clusters to host their own medical devices and AI models.
 

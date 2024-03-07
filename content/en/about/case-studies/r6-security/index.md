@@ -17,7 +17,6 @@ slug: r6-security
 
 {{< blocks/content wrap="col" >}}
 
-## Company Information
 
 [R6 Security](https://r6security.com) was founded in 2020 to address the unique challenges of securing modern computing environments. Realizing that traditional security offerings based on static signatures were insufficient in today’s cloud native world, R6 Security created Phoenix to offer a more proactive approach to address the ever-changing security challenges around Kubernetes and containers.
 
