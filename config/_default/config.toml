@@ -243,6 +243,14 @@ id = "UA-00000000-0"
     [menu.main.params]
         description = "The people who build Falco"
 [[menu.main]]
+    identifier = "roadmap"
+    name = "Roadmap"
+    url = "/docs/roadmap/"
+    parent = "community"
+    weight = 17
+    [menu.main.params]
+        description = "The Project direction"
+[[menu.main]]
     identifier = "falco-brand"
     name = "Falco brand "
     url = "/community/falco-brand/"
