@@ -208,13 +208,14 @@ Alternatively, you can use the eBPF probe driver:
 docker pull falcosecurity/falco:latest
 docker run --rm -i -t \
     --privileged \
+    -e FALCO_DRIVER_LOADER_OPTIONS="ebpf" \
     -v /var/run/docker.sock:/host/var/run/docker.sock \
     -v /proc:/host/proc:ro \
     -v /boot:/host/boot:ro \
     -v /lib/modules:/host/lib/modules:ro \
     -v /usr:/host/usr:ro \
     -v /etc:/host/etc:ro \
-    falcosecurity/falco:latest -o engine.kind=ebpf
+    falcosecurity/falco:latest falco -o engine.kind=ebpf
 
 # Please remember to add '-v /sys/kernel/debug:/sys/kernel/debug:ro \' to the above docker command
 # if you are running a kernel version < 4.14
