@@ -87,20 +87,12 @@ More details [here](#build-falco).
 
 {{% tab name="Debian/ Ubuntu" %}}
 
-You can skip this on Ubuntu 18.04.
-
-```bash
-apt install libssl-dev libc-ares-dev libprotobuf-dev protobuf-compiler libjq-dev libgrpc++-dev protobuf-compiler-grpc libcurl4-openssl-dev libyaml-cpp-dev
-```
-
-If you are on Ubuntu 18.04, instead of `cmake ..` do `cmake -DUSE_BUNDLED_DEPS=ON ..`.
-
 ```bash
 git clone https://github.com/falcosecurity/falco.git
 cd falco
 mkdir -p build
 cd build
-cmake ..
+cmake -DUSE_BUNDLED_DEPS=On ..
 make falco
 ```
 
