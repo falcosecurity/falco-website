@@ -148,6 +148,7 @@ Helm is the simplest way to deploy Falco and Falcosidekick. In this section, you
     ```plain
     kubectl create namespace falco
     ```
+### Option A - Slack Notification and FalcoSidekick
 
 * Use Helm to install Falco and Falcosidekick. Notice we are specifying the eBPF probe and the information to forward any alerts with a priority higher than *Notice* to our Slack server. Be sure to change the last parameter from *changeme* to your name. 
 
@@ -166,6 +167,18 @@ Be sure to change the last parameter from *changeme* to your name.
 
 {{% /pageinfo %}}
 
+### Option B - Teams Notification and FalcoSidekick UI
+
+* Use Helm to install Falco and Falcosidekick. Notice we are specifying the eBPF probe and the information to forward any alerts with a priority higher than *Notice* to your [Teams incomming webhook](https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook?tabs=dotnet). 
+
+    ```plain
+    helm install falco -n falco --set driver.kind=ebpf --set tty=true falcosecurity/falco \
+    --set falcosidekick.enabled=true --set falcosidekick.webui.enabled=true --set falcosidekick.webui.redis.storageEnabled=false \
+    --set falcosidekick.config.teams.webhookurl="https://xxxxx.webhook.office.com/webhookb2/xxxxxxxxx/IncomingWebhook/xxxxxxxxxx" \
+    --set falcosidekick.config.teams.minimumpriority=notice \
+    --set falcosidekick.config.teams.activityimage="https://raw.githubusercontent.com/falcosecurity/falcosidekick/master/imgs/falcosidekick_color.png"
+    ```
+
 * Wait for the Falco and Falcosidekick pods to come online.
 
     ```plain
@@ -175,11 +188,15 @@ Be sure to change the last parameter from *changeme* to your name.
 You should ultimately see 3 entries similar to those below:
 
 ```plain
-NAME                                   READY   STATUS    RESTARTS   AGE
-falco-falcosidekick-59c5d6cc45-l2qjz   1/1     Running   0          3m7s
-falco-falcosidekick-59c5d6cc45-kpcws   1/1     Running   0          3m7s
-falco-vdsc8                            2/2     Running   0          3m7s
+NAME                                    READY   STATUS    RESTARTS        AGE
+falco-falcosidekick-689f55b785-flqrw    1/1     Running   0               3m16s
+falco-falcosidekick-689f55b785-fssmc    1/1     Running   0               3m16s
+falco-falcosidekick-ui-6568c775-227dn   1/1     Running   3 (2m24s ago)   3m16s
+falco-falcosidekick-ui-6568c775-tqprv   1/1     Running   3 (2m23s ago)   3m16s
+falco-falcosidekick-ui-redis-0          1/1     Running   0               3m16s
+falco-jk7c2                             2/2     Running   0               3m16s
 ```
+
 
 * Press ctrl-c to return to the terminal prompt. 
 
@@ -254,11 +271,17 @@ You should see output similar to this:
 
 Notice that there is a bunch of interesting information in the output, including the pod name, container id, time of the notification, and much more.
 
+### Option A - Slack
+
 * Since we used Falcosidekick to send the information to Slack, you can also view it there. Visit our `#falco-notifications` channel on the [public slack channel](https://join.slack.com/t/sysdig-workshops/shared_invite/zt-1rd6raamc-UldAmUJe5FgnB5NhsAPeMQ) and look for the alert with your name.
 
 ![Slack output](/docs/getting-started/images/slack-output.png)
 
+### Option B - Teams
 
+* Since we used Falcosidekick to send the information to Teams, you can also view it there.
+
+![Teams output](/docs/getting-started/images/teams-output.png)
 
 
 ## Cleanup
