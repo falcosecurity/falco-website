@@ -43,11 +43,6 @@ Falco also provide Macros that should be overridden. Refer [here](/docs/referenc
 
 {{< markdown_inline contentPath = "/docs/reference/rules/default-macros/remove.md" >}}
 
-```yaml
-- macro: remove
-  condition: evt.type in (rmdir, unlink, unlinkat)
-```
-
 ### File System Object Modified
 
 {{< markdown_inline contentPath = "/docs/reference/rules/default-macros/modify.md" >}}
