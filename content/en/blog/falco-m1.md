@@ -278,7 +278,7 @@ Then, we need to add the `falcosecurity` helm repository and install the `falcos
 ```shell
 $ helm repo add falcosecurity https://falcosecurity.github.io/charts
 $ helm repo update
-$ helm install falco falcosecurity/falco --namespace falco --create-namespace --set driver.kind=ebpf
+$ helm install falco falcosecurity/falco --namespace falco --create-namespace --set driver.kind=modern-bpf
 ```
 
 This will trigger the deployment of Falco on your Kubernetes cluster. The `falco-driver-loader` init container will perform all the steps required to build the eBPF probe (hint: the kernel headers are already included in the VM) as you can see with the following snippet:
