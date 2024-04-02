@@ -123,41 +123,10 @@
   description: |
     Since version 0.28.1, Falco allows configuring the maximum number of consecutive timeouts without an event before sending an alert.
 
-- name: syscall_buf_size_preset
-  type: |
-    Integer between 1 and 10. Every value corresponds to a dimension in bytes:
-    ```
-    (*), 1 MB, 2 MB, 4 MB, 8 MB, 16 MB,
-     ^    ^     ^     ^     ^     ^    
-     |    |     |     |     |     |    
-     0    1     2     3     4     5    
-
-    32 MB, 64 MB, 128 MB, 256 MB, 512 MB
-     ^      ^       ^       ^       ^
-     |      |       |       |       |
-     6      7       8       9       10
-    ```
-  description: |
-    Since version 0.33.0, Falco allows configuring the dimension of the syscall ring-buffers, which are the shared spaces between Falco the drivers where kernel events are pushed. Depending on the system in which Falco is deployed, this can effect performance and drop percentace.
-
 - name: output_timeout
   type: Integer
   description: |
     Since version 0.27.0, Falco allows specifying the duration in milliseconds to wait before considering all the configured outputs blocked. Default is 2000ms.
-
-- name: outputs
-  type: |
-    List containing the following sub-keys:
-
-    * `rate`: <notifications/second>
-    * `max_burst`: <number_of_messages>
-  description: |
-    A throttling mechanism implemented as a token bucket limits the rate of Falco notifications. One rate limiter is assigned to each one of the loaded event sources, so that alerts coming from one can't influence the throttling mechanism of the others. This throttling is controlled by the `rate` and `max_burst` options.
-
-    * `rate`: the number of tokens (i.e. right to send a notification) gained per second. When 0, the throttling mechanism is disabled. Defaults to 0.
-    * `max_burst`: the maximum number of tokens outstanding. Defaults to 1000.
-
-    Since Falco 0.33.0, this is optional and disabled by default with a rate of 0. For example, by setting rate to 1 Falco could send up to 1000 notifications after an initial quiet period, and then up to 1 notification per second afterward. It would gain the full burst back after 1000 seconds of no activity.
 
 - name: syslog_output
   type: |
@@ -270,13 +239,3 @@
     * `enabled: [true|false]`
   description: |
     If `enabled` is set to `true`, Falco will start collecting outputs for the gRPC server. It's important to consume them with an output client. Example of output client [here](https://github.com/falcosecurity/client-go/tree/master/examples/output).
-
-- name: metadata_download
-  type: |
-    List containing the following sub-keys:
-
-    * `max_mb`: number (Default: 100)
-    * `chunk_wait_us`: number (Default: 1000)
-    * `watch_freq_sec`: number (Default: 1)
-  description: |
-    Since Falco 0.30.0, this allows configuring the how the container orchestrator metadata is downloaded.
