@@ -37,31 +37,24 @@ In order to install Falco with the `kernel module` or the `bpf probe`:
 
 3. Add the Falco Helm repository and update the local Helm repository cache:
 
-    ```shell
+   ```shell
     helm repo add falcosecurity https://falcosecurity.github.io/charts
     helm repo update
     ```
 
 4. Install Falco using Helm:
-    1. With kernel module:
-
-        ```shell
-        helm install falco --set tty=true falcosecurity/falco
-        ```
-    2. With `ebpf` probe:
-        ```shell
-        helm install falco --set driver.kind=ebpf --set tty=true falcosecurity/falco
-        ```
-    3. With `modern_ebpf` probe (recommended):
-        ```shell
-        helm install falco --set driver.kind=modern_ebpf --set tty=true falcosecurity/falco
-        ```
+    ```shell
+    helm install falco \
+         --set driver.kind=modern_ebpf \
+         --set tty=true \
+         falcosecurity/falco
+    ```
 
     The output is similar to:
 
     ```bash
     NAME: falco
-    LAST DEPLOYED: Mon Oct 24 16:55:51 2022
+    LAST DEPLOYED: Wed Apr 17 08:19:53 2024
     NAMESPACE: default
     STATUS: deployed
     REVISION: 1
@@ -75,11 +68,11 @@ In order to install Falco with the `kernel module` or the `bpf probe`:
     No further action should be required.
 
 
-    Tip: 
-    You can easily forward Falco events to Slack, Kafka, AWS Lambda and more with falcosidekick. 
+    Tip:
+    You can easily forward Falco events to Slack, Kafka, AWS Lambda and more with falcosidekick.
     Full list of outputs: https://github.com/falcosecurity/charts/tree/master/charts/falcosidekick.
-    You can enable its deployment with `--set falcosidekick.enabled=true` or in your values.yaml. 
-    See: https://github.com/falcosecurity/charts/blob/master/falcosidekick/values.yaml for configuration values.
+    You can enable its deployment with `--set falcosidekick.enabled=true` or in your values.yaml.
+    See: https://github.com/falcosecurity/charts/blob/master/charts/falcosidekick/values.yaml for configuration values.
     ```
 
 5. Check the logs to ensure that Falco is running:
@@ -91,23 +84,26 @@ In order to install Falco with the `kernel module` or the `bpf probe`:
     The output is similar to:
 
     ```bash
-    * Looking for a falco module locally (kernel 5.10.57)
-    * Filename 'falco_minikube_5.10.57_1_1.26.1.ko' is composed of:
-     - driver name: falco
-     - target identifier: minikube
-     - kernel release: 5.10.57
-     - kernel version: 1_1.26.1
-    * Trying to download a prebuilt falco module from https://download.falco.org/driver/3.0.1%2Bdriver/x86_64/falco_minikube_5.10.57_1_1.26.1.ko
-    * Download succeeded
-    * Success: falco module found and inserted
-    Mon Oct 24 14:57:06 2022: Falco version: 0.33.0 (x86_64)
-    Mon Oct 24 14:57:06 2022: Falco initialized with configuration file: /etc/falco/falco.yaml
-    Mon Oct 24 14:57:06 2022: Loading rules from file /etc/falco/falco_rules.yaml
-    Mon Oct 24 14:57:06 2022: Loading rules from file /etc/falco/falco_rules.local.yaml
-    Mon Oct 24 14:57:07 2022: The chosen syscall buffer dimension is: 8388608 bytes (8 MBs)
-    Mon Oct 24 14:57:07 2022: Starting health webserver with threadiness 4, listening on port 8765
-    Mon Oct 24 14:57:07 2022: Enabled event sources: syscall
-    Mon Oct 24 14:57:07 2022: Opening capture with Kernel module
+    {"level":"INFO","msg":"Resolving dependencies ...","timestamp":"2024-04-17 06:19:49"}
+    {"level":"INFO","msg":"Installing artifacts","refs":["ghcr.io/falcosecurity/rules/falco-rules:3"],"timestamp":"2024-04-17 06:19:51"}
+    {"level":"INFO","msg":"Preparing to pull artifact","ref":"ghcr.io/falcosecurity/rules/falco-rules:3","timestamp":"2024-04-17 06:19:51"}
+    {"level":"INFO","msg":"Pulling layer 1e72f9c4d8fe","timestamp":"2024-04-17 06:19:52"}
+    {"level":"INFO","msg":"Pulling layer 2e91799fee49","timestamp":"2024-04-17 06:19:52"}
+    {"level":"INFO","msg":"Pulling layer d4c03e000273","timestamp":"2024-04-17 06:19:52"}
+    {"digest":"ghcr.io/falcosecurity/rules/falco-rules@sha256:d4c03e000273a0168ee3d9b3dfb2174e667b93c9bfedf399b298ed70f37d623b","level":"INFO","msg":"Verifying signature for artifact","timestamp":"2024-04-17 06:19:52"}
+    {"level":"INFO","msg":"Signature successfully verified!","timestamp":"2024-04-17 06:19:53"}
+    {"file":"falco_rules.yaml.tar.gz","level":"INFO","msg":"Extracting and installing artifact","timestamp":"2024-04-17 06:19:53","type":"rulesfile"}
+    {"digest":"sha256:d4c03e000273a0168ee3d9b3dfb2174e667b93c9bfedf399b298ed70f37d623b","directory":"/rulesfiles","level":"INFO","msg":"Artifact successfully installed","name":"ghcr.io/falcosecurity/rules/falco-rules:3","timestamp":"2024-04-17 06:19:53","type":"rulesfile"}
+    Wed Apr 17 06:19:54 2024: Falco initialized with configuration file: /etc/falco/falco.yaml
+    Wed Apr 17 06:19:54 2024: System info: Linux version 5.10.57 (jenkins@ubuntu-iso) (x86_64-minikube-linux-gnu-gcc.br_real (Buildroot 2021.02.12-1-gb75713b-dirty) 9.4.0, GNU ld (GNU Binutils) 2.35.2) #1 SMP Tue Nov 7 06:51:54 UTC 2023
+    Wed Apr 17 06:19:54 2024: Loading rules from file /etc/falco/falco_rules.yaml
+    Wed Apr 17 06:19:54 2024: Hostname value has been overridden via environment variable to: minikube
+    Wed Apr 17 06:19:54 2024: The chosen syscall buffer dimension is: 8388608 bytes (8 MBs)
+    Wed Apr 17 06:19:54 2024: Starting health webserver with threadiness 4, listening on 0.0.0.0:8765
+    Wed Apr 17 06:19:54 2024: Loaded event sources: syscall
+    Wed Apr 17 06:19:54 2024: Enabled event sources: syscall
+    Wed Apr 17 06:19:54 2024: Opening 'syscall' source with modern BPF probe.
+    Wed Apr 17 06:19:54 2024: One ring buffer every '2' CPUs.
     ```
 
 #### Falco with multiple sources 
@@ -244,104 +240,26 @@ Here we run Falco in `minikube` cluster with multiple sources: `syscall` and `k8
      We need at least 4 CPUs for the VM to deploy Falco with multiple sources!
     {{% /pageinfo %}}
 
-4. Before installing Falco, let us configure it to use the `syscall` and `k8saudit` sources:
-
-    ```yaml
-    cat << EOF > ~/values-falco-syscall-k8saudit.yaml
-    # Enable the driver, and choose between the kernel module or the ebpf probe.
-    # Default value: kernel module.
-    driver:
-      enabled: true
-      kind: modern_ebpf
-
-    # Enable the collectors used to enrich the events with metadata.
-    # Check the values.yaml file for fine-grained options.
-    collectors:
-      enabled: true
-
-    # We set the controller to daemonset since we have the syscalls source enabled.
-    # It will ensure that every node on our cluster will be monitored by Falco.
-    # Please note that the api-server will use the "k8saudit-webhook" service to send
-    # audit logs to the falco instances. That means that when we have multiple instances of Falco
-    # we can not predict to which instance the audit logs will be sent. When testing please check all
-    # the Falco instance to make sure that at least one of them have received the audit logs.
-    controller:
-      kind: daemonset
-
-    falcoctl:
-      artifact:
-        install:
-          # -- Enable the init container. We do not recommend installing plugins for security reasons since they are executable objects.
-          # We install only "rulesfiles".
-          enabled: true
-        follow:
-          # -- Enable the sidecar container. We do not support it yet for plugins. It is used only for rules feed such as k8saudit-rules rules.
-          enabled: true
-      config:
-        artifact:
-          install:
-            # -- Do not resolve the depenencies for artifacts. By default is true, but for our use case we disable it.
-            resolveDeps: false
-            # -- List of artifacts to be installed by the falcoctl init container.
-            # We do not recommend installing (or following) plugins for security reasons since they are executable objects.
-            refs: [falco-rules:0, k8saudit-rules:0.5]
-          follow:
-            # -- List of artifacts to be followed by the falcoctl sidecar container.
-            # We do not recommend installing (or following) plugins for security reasons since they are executable objects.
-            refs: [falco-rules:0, k8saudit-rules:0.5]
-
-    services:
-      - name: k8saudit-webhook
-        type: NodePort
-        ports:
-          - port: 9765 # See plugin open_params
-            nodePort: 30007
-            protocol: TCP
-
-    falco:
-      rules_file:
-        - /etc/falco/falco_rules.yaml
-        - /etc/falco/k8s_audit_rules.yaml
-        - /etc/falco/rules.d
-      plugins:
-        - name: k8saudit
-          library_path: libk8saudit.so
-          init_config:
-            ""
-            # maxEventBytes: 1048576
-            # sslCertificate: /etc/falco/falco.pem
-          open_params: "http://:9765/k8s-audit"
-        - name: json
-          library_path: libjson.so
-          init_config: ""
-      load_plugins: [k8saudit, json]
-
-    tty: true
-    EOF
-    ```
-
-    {{% pageinfo color="warning" %}}
-     If you need to change the port numbers then make sure to change them also in the `webhook` configuration file in step 2.
-    {{% /pageinfo %}}
-
-5. Add the Falco Helm repository and update the local Helm repository cache:
+4. Add the Falco Helm repository and update the local Helm repository cache:
 
     ```shell
     helm repo add falcosecurity https://falcosecurity.github.io/charts
     helm repo update
     ```
 
-6. Assuming the configuration showed in the previous step lives in the current directory `values-falco-syscall-k8saudit.yaml`, then run the following command to deploy Falco in the `minikube` cluster:
+5. Install Falco using the pre-set values file:
     ```bash
     helm install falco \
-        --values=values-falco-syscall-k8saudit.yaml \
+        --set driver.kind=modern_ebpf \
+        --set tty=true \
+        --values=https://raw.githubusercontent.com/falcosecurity/charts/master/charts/falco/values-syscall-k8saudit.yaml \
         falcosecurity/falco
     ```
-7. Check that the Falco pod is up and running:
+6. Check that the Falco pod is up and running:
    ```bash
    kubectl get pods -l app.kubernetes.io/name=falco
    ```
-8. Execute the following command and keep the terminal open:
+7. Execute the following command and keep the terminal open:
    ```bash
    kubectl logs -l app.kubernetes.io/name=falco -f
    ```
@@ -352,7 +270,8 @@ Here we run Falco in `minikube` cluster with multiple sources: `syscall` and `k8
    ```
    It means that Falco is running with the configured sources.
 
-9. Trigger some rules to check that Falco works as expected. Open a new terminal and make sure that your `kubeconfig` points to the minikube cluster. Then run:
+8. Trigger some rules to check that Falco works as expected. Open a new terminal and make sure that your `kubeconfig` 
+points to the minikube cluster. Then run:
     1. Trigger a `k8saudit` rule:
         ```bash
         kubectl create cm  myconfigmap --from-literal=username=admin --from-literal=password=123456
