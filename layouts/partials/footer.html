@@ -19,6 +19,11 @@
     </div>
     <div class="row">
       <div class="col-12 col-sm-8 text-center text-sm-left text-white">
+        <small>Falco was created by <a href="{{ .Site.Params.Sysdig }}">Sysdig</a></small>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-sm-8 text-center text-sm-left text-white">
         {{ with .Site.Params.copyright }}
           <small>&copy; {{ now.Year}} {{ .}} | {{ T "documentation_copyright_notice" | safeHTML }} </small>
         {{ end }}
