@@ -9,21 +9,57 @@ weight: 80
 
 Even though Falco provides a quite powerful default ruleset, you sometimes need to disable some of these default {{< glossary_tooltip text="rules" term_id="rules" >}} since they do not work properly in your environment. Luckily Falco offers you multiple possibilities to do so.
 
-### Via existing Macros {#macros}
+### Via Falco Configuration or Parameters
 
-Most of the default rules offer some kind of `user_*` {{< glossary_tooltip text="macros" term_id="macros" >}} which are already part of the rule conditions. These `user_*` macros are usually set to `(never_true)` or `(always_true)` which basically enables or disables the regarding rule. Now if you want to disable a default rule (e.g. `Read sensitive file trusted after startup`), you just have to override the rule's `user_*` macro (`user_known_read_sensitive_files_activities` in this case) inside your custom Falco configuration.
+Since Falco 0.38.0, you can control which rules are loaded by adding relevant entries to the `rules` section of the `falco.yaml` configuration file or by passing appropriate command line parameters. In the `rules` section you can add any number of `enable` or `disable` entries:
 
-Example for your custom Falco configuration (note the `(always_true)` condition):
 ```yaml
-- macro: user_known_read_sensitive_files_activities
-  condition: (always_true)
+- enable:
+    rule: <wildcard pattern>
 ```
 
-Please note again that the order of the specified configuration file matters! The last defined macro with the same name wins.
+```yaml
+- disable:
+    rule: <wildcard pattern>
+```
 
-### Via Falco Parameters
+```yaml
+- enable:
+    tag: <tag>
+```
 
-Falco offers the following parameters to limit which default rules should be enabled/used and which not:
+```yaml
+- disable:
+    tag: <tag>
+```
+
+All the entries are treated as commands and evaluated in order, thus controlling the `enabled` status of the loaded rules. For instance, in order to only enable the rules called `Netcat Remote Code Execution in Container` and `Delete or rename shell history` you can supply the following configuration:
+
+```yaml
+rules:
+  - disable:
+      rule: "*"
+  - enable:
+      rule: Netcat Remote Code Execution in Container
+  - enable:
+      rule: Delete or rename shell history
+```
+
+The above instructs Falco to first disable all rules (regardless of their `enabled` status in the files or any override), then enable the Netcat rule and finally enable the deletion rule.
+
+Alternatively, this configuration can be supplied on the Falco command line by using the `-o` option.
+
+```sh
+falco -o "rules[].enable.tag=network" -o "rules[].enable.rule=Directory traversal monitored file" -o "rules[].enable.rule=k8s_*" -o "rules[].disable.rule=k8s_noisy_rule"
+```
+
+In the above example, all the rules tagged `network` are enabled, the `Directory traversal monitored file` will also be enabled alongside any rule matching the pattern `k8s_*`, and then the rule `k8s_noisy_rule` will be disabled; all of this happens regardless of any `enabled` status specified in the rules files. If both yaml configuration and `-o` options are specified, the CLI options are applied last.
+
+These parameters can also be specified as Helm chart value (`extraArgs`) if you are deploying Falco via the official Helm chart.
+
+{{% pageinfo color="warning" %}}
+It is also possible to enable or disable specific rules and tags via the `-D`, `-T` and `-t` command line options, but those are deprecated and will be removed in Falco `0.39.0`:
+
 ```
 -D <substring>      Disable any rules with names having the substring <substring>. 
                     Can be specified multiple times.
@@ -37,7 +73,19 @@ Falco offers the following parameters to limit which default rules should be ena
                     Can not be specified with -T/-D.
 ```
 
-These parameters can also be specified as Helm chart value (`extraArgs`) if you are deploying Falco via the official Helm chart.
+{{% /pageinfo %}}
+
+### Via existing Macros {#macros}
+
+Most of the default rules offer some kind of `user_*` {{< glossary_tooltip text="macros" term_id="macros" >}} which are already part of the rule conditions. These `user_*` macros are usually set to `(never_true)` or `(always_true)` which basically enables or disables the regarding rule. Now if you want to disable a default rule (e.g. `Read sensitive file trusted after startup`), you just have to override the rule's `user_*` macro (`user_known_read_sensitive_files_activities` in this case) inside your custom Falco configuration.
+
+Example for your custom Falco configuration (note the `(always_true)` condition):
+```yaml
+- macro: user_known_read_sensitive_files_activities
+  condition: (always_true)
+```
+
+Please note again that the order of the specified configuration file matters! The last defined macro with the same name wins.
 
 ### Via Custom Rule Definition
 
