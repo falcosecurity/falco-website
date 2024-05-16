@@ -21,7 +21,7 @@ To ensure long-term consistency and validity, we have renamed the following metr
 - `container_memory_used` -> `container_memory_used_bytes` (or `container_memory_used_mb`)
 {{% /pageinfo %}}
 
-To explore this functionality, refer to the [falco.yaml](https://github.com/falcosecurity/falco/blob/master/falco.yaml) config file and read the advanced Falco logging, alerting, and metrics sections, specifically focusing on software functioning (e.g. `metrics`). We do not duplicate the explanations of the metrics config here; instead, we only list the possible field values.
+To explore this functionality, refer to the [falco.yaml][1] config file and read the advanced Falco logging, alerting, and metrics sections, specifically focusing on software functioning (e.g. `metrics`). We do not duplicate the explanations of the metrics config here; instead, we only list the possible field values.
 
 {{% pageinfo color=info %}}
 Direct syscalls counters to pinpoint high-volume culprits are planned for Falco, as well as a Prometheus exporter. Stay tuned!
@@ -444,3 +444,40 @@ Here is a snippet with respect to the kernel tracepoints for an `aarch64` machin
 ```
   
 </details>
+
+## Monitoring
+
+Since version 0.38.0, you can use Falco's web server to monitor its state. A new `/metrics` endpoint has been added which provides metrics information that can be collected by [Prometheus][2].
+
+In order to activate this endpoint, three configuration elements must be set in the [falco.yaml][1]:
+
+- Metrics must be enabled
+
+```yaml
+metrics:
+  enabled: true
+```
+
+- The web server must be enabled
+- The Prometheus metrics endpoint must be enabled
+
+```yaml
+webserver:
+  enabled: true
+  prometheus_metrics_enabled: true
+```
+
+This endpoint will allow observation of the internal state of Falco providing the same data as configured for the metrics outputs. It will be served on the same port as the health endpoint.
+
+{{% pageinfo color=info %}}
+Following the Prometheus recommendations, there might be some slight differences with regard to the other outputs. Typically calculated fields will not be returned as Prometheus provides the facilities to compute them as part of their queries.
+
+The Prometheus text format documentation can be found [here][3].
+
+The OpenMetrics specification can be found [here][4].
+{{% /pageinfo %}}
+
+[1]: https://github.com/falcosecurity/falco/blob/master/falco.yaml
+[2]: https://prometheus.io
+[3]: https://prometheus.io/docs/instrumenting/exposition_formats/
+[4]: https://github.com/OpenObservability/OpenMetrics/blob/main/specification/OpenMetrics.md
