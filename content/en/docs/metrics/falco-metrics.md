@@ -445,7 +445,7 @@ Here is a snippet with respect to the kernel tracepoints for an `aarch64` machin
   
 </details>
 
-## Monitoring
+## Prometheus Support
 
 Since version 0.38.0, you can also use Falco's web server to expose Falco's metrics. A new `/metrics` endpoint has been added which provides metrics information that can be collected by [Prometheus][2].
 
