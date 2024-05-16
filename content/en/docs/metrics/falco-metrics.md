@@ -447,7 +447,7 @@ Here is a snippet with respect to the kernel tracepoints for an `aarch64` machin
 
 ## Monitoring
 
-Since version 0.38.0, you can use Falco's web server to monitor its state. A new `/metrics` endpoint has been added which provides metrics information that can be collected by [Prometheus][2].
+Since version 0.38.0, you can also use Falco's web server to expose Falco's metrics. A new `/metrics` endpoint has been added which provides metrics information that can be collected by [Prometheus][2].
 
 In order to activate this endpoint, three configuration elements must be set in the [falco.yaml][1]:
 
