@@ -50,10 +50,40 @@ The [`proc` field class](/docs/rules/supported-fields/#field-class-process) give
 The documentation gives you an example of how to catch executions of `bash` within containers:
 
 ```
-if evt.type = execve and evt.dir = < and container.id != host and proc.name = bash
+evt.type = execve and evt.dir = < and container.id != host and proc.name = bash
 ```
 
 Note that you don't even have to look at the `execve` args. That is because once `execve` has returned the process context recorded by Falco is updated, meaning that the `proc.` fields will already refer to all information, including the command line, executable, arguments, related to the new process that was just spawned.
+
+## Transform operators
+
+Since Falco 0.38.0 you can perform basic transformation on fields in your rule condition. For instance, if you wish to check for a case insensitive process name you can write
+
+```
+tolower(proc.name) = bash
+```
+
+The following transform operators are supported:
+
+Operator | Description
+:--------|:-----------
+`tolower(<field>)` | Converts the input field to lower case
+`toupper(<field>)` | Converts the input field to upper case
+`b64(<field>)` | Decodes the input field from [Base64](https://en.wikipedia.org/wiki/Base64)
+
+## Field evaluation operator
+
+Since Falco 0.38.0 you can also compare field values with other field values by using the `val()` operator on the right hand side of the expression. For instance, in order to write a condition that checks for processes that have the same name as their parent you can write
+
+```
+proc.name = val(proc.pname)
+```
+
+Alternatively, using transformes on both sides of the comparison operator is also supported:
+
+```
+tolower(proc.name) = tolower(proc.pname)
+```
 
 ## Operators
 

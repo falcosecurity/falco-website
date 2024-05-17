@@ -93,6 +93,24 @@ Disallowed SSH Connection
 
 Note that it's not necessary that all fields are set in the specific event. As you can see in the example above if the connection happens outside a container the field `%container.image.repository` would not be set and `<NA>` is displayed instead.
 
+Outputs can also use the [transform operators](/docs/rules/conditions/#transform-operators) that are used in conditions. For example:
+
+```
+Disallowed SSH Connection 
+  (command=%proc.cmdline connection=%fd.name 
+   user=%toupper(user.name) user_loginuid=%user.loginuid container_id=%toupper(container.id)
+   image=%container.image.repository)
+```
+
+could output:
+
+```
+Disallowed SSH Connection 
+  (command=sshd connection=127.0.0.1:34705->10.0.0.120:22 
+   user=ROOT user_loginuid=-1 container_id=HOST 
+   image=<NA>)
+```
+
 To learn more about how Falco processes the output and related settings, see the [output formatting](/docs/outputs/formatting/) page.
 
 ### Priority
