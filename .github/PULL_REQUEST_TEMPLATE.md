@@ -20,8 +20,6 @@
 
 > /kind content
 
-> /kind translation
-
 > /kind event
 
 **Any specific area of the project related to this PR?**
