@@ -40,6 +40,8 @@ When using Falco for syscall monitoring, the Falco binary relies on having Falco
 
 Falco also relies on both a [configuration](https://github.com/falcosecurity/falco/blob/master/falco.yaml) file and at least one Falco [rules](https://github.com/falcosecurity/rules) file. The default versions of these files come with the packages and the [Install](/docs/install-operate/installation/) covers additional tips and tricks for utilizing `falcoctl` in managing rules.
 
+Since Falco 0.38.0, a new config key, `config_files`, allows the user to load additional configuration files to override main config entries; it allows user to keep local customization between Falco upgrades. Its default value points to a new folder, `/etc/falco/config.d/` that gets installed by Falco and will be processed to look for local configuration files.
+
 ---
 
 ### Download container images {#images}

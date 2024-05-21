@@ -22,6 +22,8 @@ There are 2 main ways to install the Falco binary on your host:
 
 These packages include the default [configuration](https://github.com/falcosecurity/falco/blob/master/falco.yaml) and Falco [rules](https://github.com/falcosecurity/rules) files.
 
+Since Falco 0.38.0, a new config key, `config_files`, allows the user to load additional configuration files to override main config entries; it allows user to keep local customization between Falco upgrades. Its default value points to a new folder, `/etc/falco/config.d/` that gets installed by Falco and will be processed to look for local configuration files.
+
 The installation of the kernel driver varies depending on the type of driver and your setup. The sections below outline the available options, building upon the information provided in the previous [Download](/docs/install-operate/download/) guide.
 
 
@@ -55,15 +57,26 @@ On January 18th, 2023 the GPG key used to sign Falco packages has been rotated. 
 ### Installation details
 
 Before looking at the installation on different distros, let's focus on what we should expect when we install the package.
-The Falco package will look into your system for the `dialog` binary, if the binary is there, the package will prompt a simple configuration dialog, otherwise, it will install the unit files without starting any `systemd` service.
+The Falco package will look into your system for the `dialog` binary, if the binary is there, the package will prompt a simple configuration dialog.
+If it is not present, since Falco 0.38.0 its packages will leverage a falcoctl driver-loader feature to autodetect the best driver to be used by the system.
+The algorithm will try to use the `modern_ebpf` driver wherever it is supported, falling back at other drivers where needed features are not available.
+The same autoselection can be triggered by selecting `Automatic selection` in the `dialog` prompt.
 
-> _Note_:  If you don't have the `dialog` binary installed on your system a manual configuration is always required to start Falco services.
+Even if you have the `dialog` binary installed, you can disable the interactive prompt by using the `FALCO_FRONTEND` env variable, you should simply set its value to `noninteractive` when installing the package. In that case, the automatic selection logic will be the default behavior.  
+Also, if you wish to skip the interactive prompt but still be able to set a custom driver, you can use `FALCO_DRIVER_CHOICE` env variable, setting it to `kmod`, `ebpf` or `modern_ebpf`. Else, the automatic selection logic will take place.
+Finally, you can also enable the `falcoctl` automatic ruleset by setting `FALCOCTL_ENABLED` to a non empty string.  
 
-Even if you have the `dialog` binary installed, you can disable the interactive prompt by using the `FALCO_FRONTEND` env variable, you should simply set its value to `noninteractive` when installing the package.  
-Also, if you wish to skip the interactive prompt but still be able to set a custom driver, you can use `FALCO_DRIVER_CHOICE` env variable, setting it to `kmod`, `ebpf` or `modern_ebpf`.  
-At the same time, you can also enable the `falcoctl` automatic ruleset by setting `FALCOCTL_ENABLED` to a non empty string.  
-The latter environment variables are also useful when you don't want to install `dialog` binary at all.
+Eg: to install Falco without any dialog and without any driver configured:
+```bash
+FALCO_DRIVER_CHOICE=none apt-get install -y falco
+```
 
+Eg: to install Falco with kmod driver configured:
+```bash
+FALCO_DRIVER_CHOICE=kmod apt-get install -y falco
+```
+
+Eg: to install Falco without any dialog leveraging automatic selection:
 ```bash
 FALCO_FRONTEND=noninteractive apt-get install -y falco
 ```
@@ -118,17 +131,18 @@ $ sudo apt-get install apt-transport-https
     sudo apt-get install -y falco
     ```
 
+
 #### Installation with dialog
 
 If you have the `dialog` binary installed on your system, you will be prompted with this:
 
-![](/docs/getting-started/images/systemd_dialog_1.png)
+![](/docs/getting-started/images/dialog-1.png)
 
-From here you can choose one of our 3 drivers `Kmod`, `eBPF`, `Modern eBPF` or a [`Manual configuration`](/docs/install-operate/installation#installation-without-dialog-manual-configuration).
+From here you can choose one of our 3 drivers `Kmod`, `eBPF`, `Modern eBPF`, a [`Manual configuration`](/docs/install-operate/installation#installation-without-dialog-manual-configuration) or the `Automatic selection` to trigger the automatic logic to select the best driver for you.
 
 Here we select the `Kmod` case as an example. After the first dialog, you should see a second one:
 
-![](/docs/getting-started/images/systemd_dialog_2.png)
+![](/docs/getting-started/images/dialog-2.png)
 
 
 ##### Rule update
