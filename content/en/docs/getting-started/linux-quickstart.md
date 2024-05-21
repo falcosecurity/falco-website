@@ -90,7 +90,7 @@ sudo apt-get update -y
 
 ### Install the Linux headers and dialog
 
-* Install the Linux kernel headers, *dkms*, and *make* which are required to compile the Falco driver and *dialog* which is used by the Falco installer.
+* Install the Linux kernel headers, *dkms*, and *make* which are required to eventually compile the Falco driver and *dialog* which is used by the Falco installer.
 
 ```bash
 sudo apt-get install -y dkms make linux-headers-$(uname -r) dialog
@@ -104,9 +104,9 @@ sudo apt-get install -y dkms make linux-headers-$(uname -r) dialog
 sudo apt-get install -y falco
 ```
 
-* When prompted, choose the **Kmod** option. This will compile the Falco module for your specific kernel version.
+* When prompted, choose the **Automatic selection** option. This will ensure the best driver will be selected for you.
 
-    ![Dialog window - Choose the Kmod driver](/docs/getting-started/images/dialog-1.png)
+    ![Dialog window - Choose the auto driver](/docs/getting-started/images/dialog-1.png)
 
 * When prompted, choose **Yes**. Although we won't use the functionality in this exercise, this option allows Falco to update its rules automatically.
 

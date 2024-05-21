@@ -30,6 +30,11 @@ Let's imagine we want to start the `falco-bpf.service`.
     ```bash
     systemctl stop falco-bpf.service
     ```
+    
+### Automatic driver selection
+
+Please note that since Falco 0.38.0, its packages will leverage a falcoctl driver-loader feature to autodetect the best driver to be used by the system.
+The algorithm will try to use the `modern_ebpf` driver wherever it is supported, falling back at other drivers where needed features are not available.
 
 ### Custom run
 
@@ -37,7 +42,7 @@ You may have noticed a Falco unit called `falco-custom.service`. You should use 
 
 ## Falco binary
 
-Here you can find some examples of how to run Falco after having [installed](/docs/getting-started/installation/#falco-binary) it using the binary package
+Since Falco 0.38.0, the default configured driver is `modern_ebpf`; if you are willing to change it, here you can find some examples of how to run Falco after having [installed](/docs/getting-started/installation/#falco-binary) it using the binary package
 
 
 ```bash
@@ -45,8 +50,8 @@ Here you can find some examples of how to run Falco after having [installed](/do
 falco
 # Force eBPF probe
 falco -o engine.kind=ebpf
-# Force modern eBPF probe
-falco -o engine.kind=modern_ebpf
+# Force kernel module
+falco -o engine.kind=kmod
 # For more info see all available options
 falco --help
 ```
@@ -68,9 +73,11 @@ To learn how to run Falco from a container in a Kubernetes setting, checkout the
 
 {{% pageinfo color="primary" %}}
 
-Even using container images, Falco needs kernel headers installed on the host as prerequisite to correctly build the driver (the [kernel module](/docs/event-sources/drivers/#kernel-module) or the [eBPF probe](/docs/event-sources/drivers/#ebpf-probe)) on the fly. This step is not needed when a prebuilt driver is already available.
+Since Falco 0.38.0, its docker images will automatically select the best possible driver for your node; wherever it is supported, the algorithm will try to use the `modern_ebpf` driver, falling back at other drivers in case it is not.
+Luckily enough, you won't even need to install kernel headers, since falcoctl driver-loader is now also capable of trying to automatically fetch required kernel headers for distros supported by [driverkit](https://github.com/falcosecurity/driverkit) as prerequisite to correctly build the driver (the [kernel module](/docs/event-sources/drivers/#kernel-module) or the [eBPF probe](/docs/event-sources/drivers/#ebpf-probe)) on the fly.
 
-You can find instructions on how to install the kernel headers for your system under the [Install section](/docs/getting-started/installation).
+
+If you need to install kernel headers on the host because falcoctl driver-loader is failing to fetch them automatically, please follow instructions under the [Install section](/docs/getting-started/installation). This step is not needed when a prebuilt driver is already available.
 
 {{% /pageinfo %}}
 
@@ -104,7 +111,7 @@ Once the kernel module has been installed directly on the host system, it can be
         falcosecurity/falco-driver-loader:latest
     ```
 
-The `falcosecurity/falco-driver-loader` image just wraps the `falcoctl driver` tool.
+The `falcosecurity/falco-driver-loader` image just wraps the `falcoctl driver-loader` tool.
 You can find more about its usage [here](/docs/getting-started/installation#install-driver)
 
 2. Run Falco in a container using Docker with the [principle of least privilege](https://en.wikipedia.org/wiki/Principle_of_least_privilege):
