@@ -46,46 +46,4 @@ You can access your local website on http://localhost:1313
 
 ## Translations
 
-### Chinese
-
-There is currently scaffolding in place for a Chinese translation of the site.
-
-To translate docs into Chinese, create Chinese-language Markdown files in the `content/zh/docs` directory.
-
-To translate other parts of the site:
-
-1. See the `languages.zh` block in the site's [`config.toml`](./config.toml) configuration file and translate those items from the current English.
-1. See [`i18n/zh.yaml`](./i18n/zh.yaml) for a handful of language snippets that need to be translated from the current English. Translate the `other` block of each term.
-
-### Japanese
-
-There is currently scaffolding in place for a Japanese translation of the site.
-
-To translate docs into Japanese, create Japanese-language Markdown files in the `content/ja/docs` directory.
-
-To translate other parts of the site:
-
-1. See the `languages.ja` block in the site's [`config.toml`](./config.toml) configuration file and translate those items from the current English.
-1. See [`i18n/ja.yaml`](./i18n/ja.yaml) for a handful of language snippets that need to be translated from the current English. Translate the `other` block of each term.
-
-### Korean
-
-There is currently scaffolding in place for a Korean translation of the site.
-
-To translate docs into Korean, create Korean Markdown file(s) in the `content/ko/docs` directory.
-
-To translate other parts of the site:
-
-1. See the `languages.ko` block in the site's [`config.toml`](./config.toml) configuration file and translate those items from the current English.
-1. See [`i18n/ko.yaml`](./i18n/ko.yaml) for a handful of language snippets that need to be translated from the current English. Translate the `other` block of each term.
-
-### Malayalam
-
-There is currently scaffolding in place for a Malayalam translation of the site.
-
-To translate docs into Malayalam, create Malayalam Markdown file(s) in the `content/ml/docs` directory.
-
-To translate other parts of the site:
-
-1. See the `languages.ml` block in the site's [`config.toml`](./config.toml) configuration file and translate those items from the current English.
-1. See [`i18n/ml.yaml`](./i18n/ml.yaml) for a handful of language snippets that need to be translated from the current English. Translate the `other` block of each term.
+It has been decided by the community to drop out all translations. It requires too much work to maintain them, and most of them were outdated. We want to thank a lot all the community members who contributed over years, you did an amazing job.
