@@ -90,7 +90,7 @@ sudo apt-get update -y
 
 ### Install the Linux headers and dialog
 
-* Install the Linux kernel headers, *dkms*, and *make* which are required to eventually compile the Falco driver and *dialog* which is used by the Falco installer.
+* Install the Linux kernel headers, *dkms*, and *make* which are required to possibly compile the Falco driver and *dialog* which is used by the Falco installer.
 
 ```bash
 sudo apt-get install -y dkms make linux-headers-$(uname -r) dialog
