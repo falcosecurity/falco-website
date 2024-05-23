@@ -456,6 +456,7 @@ In order to activate this endpoint, three configuration elements must be set in 
 ```yaml
 metrics:
   enabled: true
+  ...
 ```
 
 - The web server must be enabled
