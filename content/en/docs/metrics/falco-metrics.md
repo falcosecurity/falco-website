@@ -451,7 +451,7 @@ Since version 0.38.0, you can also use Falco's web server to expose Falco's metr
 
 In order to activate this endpoint, three configuration elements must be set in the [falco.yaml][1]:
 
-- Metrics must be enabled
+- Metrics must be enabled, along with the specific metrics sub-categories you wish to consume (see above).
 
 ```yaml
 metrics:
