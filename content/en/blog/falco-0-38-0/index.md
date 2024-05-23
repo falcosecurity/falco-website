@@ -10,7 +10,7 @@ Dear Falco Community, today we are happy to announce the release of Falco 0.38.0
 
 This release brings an easier to use mechanism to install and configure your drivers, new rule language features, better support for Falco metrics and many more improvements.
 
-During this release cycle, we merged more than 100 PRs on Falco and more than 180 PRs for libs and drivers, version 0.17.0 and version 7.1.1 respectively. Thank you to our maintainers and contributors, as this would not happen without your support and dedication!
+During this release cycle, we merged more than 100 PRs on Falco and more than 180 PRs for libs and drivers, version 0.17.0 and version 7.2.0 respectively. Thank you to our maintainers and contributors, as this would not happen without your support and dedication!
 
 To learn all about these changes, read on!
 
@@ -31,13 +31,13 @@ This release also comes with [breaking changes](#breaking-changes) that you shou
 
 The 0.38.0 release contains a number of feature and UX improvements, here are list of some of the key new capabilities.
 
-### Automatic driver selection ✨
+### Driver loader magic ✨
 
-If we could pick the most common issue that we've heard from adopters and we experienced first hand is the fact that sometimes we all struggle with installing and upgrading Falco drivers. The Falco team has been tirelessly working for years to improve the installation experience and Linux kernel compatibility with massive changes such as the introduction of the new CO-RE eBPF probe and most recently the complete rewrite of our driver loading component. With this new version of `falcoctl`, integrated with Falco 0.38.0, our loading tool will automatically detect your system and pick the most compatible driver without any intervention; on recent kernel versions this is likely the modern eBPF probe. Of course, the tool also allows to select the preferred driver if the automatic choice is not optimal for your use case. Read more in the [installation](/docs/install-operate/installation/) documentation page.
+If we could pick the most common issue that we've heard from adopters and we experienced first hand is the fact that sometimes we all struggle with installing and upgrading Falco drivers. The Falco team has been tirelessly working for years to improve the installation experience and Linux kernel compatibility with massive changes such as the introduction of the new CO-RE eBPF probe and most recently the complete rewrite of our driver loading component, integrated in falcoctl. With this new version of `falcoctl`, integrated in Falco 0.38.0, our loading tool will automatically detect your system and pick the most compatible driver without any intervention; on recent kernel versions this is likely the modern eBPF probe. As you probably know, the modern probe does not require any extra driver download or compilation, making it load almost instantly. Of course, the tool also allows to select the preferred driver if the automatic choice is not optimal for your use case. On top of that, our driver loader tool can now automatically download kernel headers for many distributions supported by [driverkit](https://github.com/falcosecurity/driverkit) so in many cases you will be able to install even the kernel module without having to install kernel headers first. Read more about how to configure this functionality in the [installation](/docs/install-operate/installation/) documentation page.
 
 ### Organize your Falco configuration files 🗃️
 
-Our `falco.yaml` configuration file gains more options, fine tuning configuration flags and feature selection for every release; in fact, they are so many that some people would like to better organize them in separate configuration files which can also be kept across Falco upgrades. Starting from this release you can add list of files or directory to the `config_files` configuration entry, which comes populated with the `/etc/falco/config.d/` directory by default. Read more in the [configuration options](/docs/reference/daemon/config-options/) section of the documentation.
+Our `falco.yaml` configuration file gains more options, fine tuning configuration flags and feature selection for every release; in fact, they are so many that some people would like to better organize them in separate configuration files which can also be kept across Falco upgrades. Starting from this release you can add list of files or directory to the `config_files` configuration entry, which comes populated with the `/etc/falco/config.d/` directory by default. Any additional file is read in order and can override settings in `falco.yaml`. Read more in the [configuration options](/docs/reference/daemon/config-options/) section of the documentation.
 
 ### Choose which rules to load at runtime 📝
 
@@ -69,7 +69,7 @@ In addition you can also apply simple transform operators to both sides of the c
 
 ### Prometheus Metrics support 🔥
 
-If you have been following Falco development, you probably know we are constantly improving support for metrics that tell you how the Falco engine is doing. We now have introduced [Prometheus support](/docs/metrics/falco-metrics/#prometheus-support) so you can better integrate Falco with your existing performance monitoring infrastructure.
+If you have been following Falco development, you probably know we are constantly improving support for metrics that tell you how the Falco engine is doing. We now have introduced [Prometheus support](/docs/metrics/falco-metrics/#prometheus-support) so you can better integrate Falco with your existing performance monitoring infrastructure, and paves the way for the community to create an official Grafana dashboard that can be integrated in our charts.
 
 ### Plugin API improvements ⚙️
 
