@@ -471,7 +471,7 @@ webserver:
 This endpoint will allow observation of the internal state of Falco providing the same data as configured for the metrics outputs. It will be served on the same port as the health endpoint.
 
 {{% pageinfo color=info %}}
-Following the Prometheus recommendations, there might be some slight differences with regard to the other outputs. Typically calculated fields will not be returned as Prometheus provides the facilities to compute them as part of their queries.
+Following the Prometheus recommendations, there might be some slight differences with regard to the other outputs. Typically calculated fields will not be returned as Prometheus provides the facilities to compute them as part of their queries. Expand the example outputs dropdowns above (for both JSON and Prometheus formats) to explore all supported metrics fields, including their naming conventions and units.
 
 The Prometheus text format documentation can be found [here][3].
 
