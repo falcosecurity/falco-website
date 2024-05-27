@@ -91,6 +91,34 @@ The images can be used in two ways as follows:
 
 This is how the Falco userspace process can be ran in a container.
 
+#### Modern eBPF
+
+The following capabilities should be enough to run Falco with the Modern eBPF probe:
+
+- `CAP_SYS_PTRACE`
+- `CAP_SYS_RESOURCE`
+- `CAP_BPF`
+- `CAP_PERFMON`
+
+Here we have the docker command to run with the modern probe.
+
+```bash
+docker run --rm -i -t \
+           --cap-drop all \
+           --cap-add sys_admin \
+           --cap-add sys_resource \
+           --cap-add sys_ptrace \
+           -v /var/run/docker.sock:/host/var/run/docker.sock \
+           -v /proc:/host/proc:ro \
+           -v /etc:/host/etc:ro \
+           falcosecurity/falco-no-driver:latest
+```
+
+> __Note__: in the command we use `CAP_SYS_ADMIN` because [docker doesn't support](https://github.com/moby/moby/pull/41563) `CAP_BPF` and `CAP_PERFMON` yet
+
+
+#### Kernel module
+
 Once the kernel module has been installed directly on the host system, it can be used from within a container.
 
 1. Install the kernel module:
@@ -144,6 +172,8 @@ Note that `ls /dev/falco* | xargs -I {} echo --device {}` outputs a `--device /d
 
 {{% /pageinfo %}}
 
+#### eBPF
+
 To run Falco in least privileged mode with the eBPF driver, we list all the required capabilities:
 
 - on kernels <5.8, Falco requires `CAP_SYS_ADMIN`, `CAP_SYS_RESOURCE` and `CAP_SYS_PTRACE`
@@ -193,6 +223,21 @@ Again, you will need to add `--security-opt apparmor:unconfined` to the last com
 
 To run Falco in a container using Docker with full privileges use the following commands.
 
+#### Modern eBPF
+
+The modern eBPF is bundled into Falco therefore the `falco-no-driver` image is enough. This allows you to run Falco without dependencies, just the following command:
+
+```bash
+docker run --rm -i -t \
+           --privileged \
+           -v /var/run/docker.sock:/host/var/run/docker.sock \
+           -v /proc:/host/proc:ro \
+           -v /etc:/host/etc:ro \
+           falcosecurity/falco-no-driver:latest
+```
+
+#### Kernel module
+
 If you want to use Falco with the Kernel module driver:
 
 ```shell
@@ -208,6 +253,8 @@ docker run --rm -i -t \
     -v /etc:/host/etc:ro \
     falcosecurity/falco:latest falco -o engine.kind=kmod
 ```
+
+#### eBPF
 
 Alternatively, you can use the eBPF probe driver:
 
@@ -227,6 +274,8 @@ docker run --rm -i -t \
 # Please remember to add '-v /sys/kernel/debug:/sys/kernel/debug:ro \' to the above docker command
 # if you are running a kernel version < 4.14
 ```
+
+_________________
 
 It is also possible to use `falco-no-driver` and `falco-driver-loader` images in fully privileged mode.
 This may be desirable in environments which do not allow the full Falco image due to space, resource, security or policy constraints.
@@ -270,46 +319,6 @@ Other configurable options:
 
 - `FALCOCTL_DRIVER_REPOS` - See the [Installing the driver](https://falco.org/docs/getting-started/installation/#install-driver) section.
 - `SKIP_DRIVER_LOADER` - Set this environment variable to avoid running `falcoctl driver` tool when the `falcosecurity/falco` image starts. Useful when the driver has been already installed on the host by other means.
-
-### Modern eBPF
-
-#### Privileged
-
-The modern eBPF is bundled into Falco therefore the `falco-no-driver` image is enough. This allows you to run Falco without dependencies, just the following command:
-
-```bash
-docker run --rm -i -t \
-           --privileged \
-           -v /var/run/docker.sock:/host/var/run/docker.sock \
-           -v /proc:/host/proc:ro \
-           -v /etc:/host/etc:ro \
-           falcosecurity/falco-no-driver:latest falco
-```
-
-#### Least privileged
-
-The following capabilities should be enough to run Falco with the Modern eBPF probe:
-
-- `CAP_SYS_PTRACE`
-- `CAP_SYS_RESOURCE`
-- `CAP_BPF`
-- `CAP_PERFMON`
-
-Here we have the docker command to run with the modern probe.
-
-```bash
-docker run --rm -i -t \
-           --cap-drop all \
-           --cap-add sys_admin \
-           --cap-add sys_resource \
-           --cap-add sys_ptrace \
-           -v /var/run/docker.sock:/host/var/run/docker.sock \
-           -v /proc:/host/proc:ro \
-           -v /etc:/host/etc:ro \
-           falcosecurity/falco-no-driver:latest falco
-```
-
-> __Note__: in the command we use `CAP_SYS_ADMIN` because [docker doesn't support](https://github.com/moby/moby/pull/41563) `CAP_BPF` and `CAP_PERFMON` yet
 
 ## Rules validation
 
