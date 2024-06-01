@@ -80,12 +80,12 @@ falcosecurity_falco_kernel_release_info{raw_name="kernel_release",kernel_release
 # HELP falcosecurity_evt_hostname_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_evt_hostname_info gauge
 falcosecurity_evt_hostname_info{raw_name="hostname",hostname="test"} 1
-# HELP falcosecurity_falco_falco.sha256_rules_file.falco_rules_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco.sha256_rules_file.falco_rules_info gauge
-falcosecurity_falco_falco.sha256_rules_file.falco_rules_info{raw_name="falco.sha256_rules_file.falco_rules",falco.sha256_rules_file.falco_rules="f176455ad6a1f39cf32065af14d33042e092b30489d255cbb1eff0dc03e67c5d"} 1
-# HELP falcosecurity_falco_falco.sha256_config_file.falco_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco.sha256_config_file.falco_info gauge
-falcosecurity_falco_falco.sha256_config_file.falco_info{raw_name="falco.sha256_config_file.falco",falco.sha256_config_file.falco="c78b5de8e841917eb2c7a8257f37995e1c9594cffb71ea1e7aefa932172cac3d"} 1
+# HELP falcosecurity_falco_falco_sha256_rules_file_falco_rules_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_falco_sha256_rules_file_falco_rules_info gauge
+falcosecurity_falco_falco_sha256_rules_file_falco_rules_info{raw_name="falco_sha256_rules_file_falco_rules",falco_sha256_rules_file_falco_rules="f176455ad6a1f39cf32065af14d33042e092b30489d255cbb1eff0dc03e67c5d"} 1
+# HELP falcosecurity_falco_falco_sha256_config_file_falco_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_falco_sha256_config_file_falco_info gauge
+falcosecurity_falco_falco_sha256_config_file_falco_info{raw_name="falco_sha256_config_file_falco",falco_sha256_config_file_falco="c78b5de8e841917eb2c7a8257f37995e1c9594cffb71ea1e7aefa932172cac3d"} 1
 # HELP falcosecurity_falco_evt_source_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_evt_source_info gauge
 falcosecurity_falco_evt_source_info{raw_name="evt_source",evt_source="syscall"} 1
@@ -163,12 +163,12 @@ falcosecurity_falco_kernel_release_info{raw_name="kernel_release",kernel_release
 # HELP falcosecurity_evt_hostname_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_evt_hostname_info gauge
 falcosecurity_evt_hostname_info{raw_name="hostname",hostname="test"} 1
-# HELP falcosecurity_falco_falco.sha256_rules_file.falco_rules_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco.sha256_rules_file.falco_rules_info gauge
-falcosecurity_falco_falco.sha256_rules_file.falco_rules_info{raw_name="falco.sha256_rules_file.falco_rules",falco.sha256_rules_file.falco_rules="f176455ad6a1f39cf32065af14d33042e092b30489d255cbb1eff0dc03e67c5d"} 1
-# HELP falcosecurity_falco_falco.sha256_config_file.falco_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco.sha256_config_file.falco_info gauge
-falcosecurity_falco_falco.sha256_config_file.falco_info{raw_name="falco.sha256_config_file.falco",falco.sha256_config_file.falco="c78b5de8e841917eb2c7a8257f37995e1c9594cffb71ea1e7aefa932172cac3d"} 1
+# HELP falcosecurity_falco_falco_sha256_rules_file_falco_rules_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_falco_sha256_rules_file_falco_rules_info gauge
+falcosecurity_falco_falco_sha256_rules_file_falco_rules_info{raw_name="falco_sha256_rules_file_falco_rules",falco_sha256_rules_file_falco_rules="f176455ad6a1f39cf32065af14d33042e092b30489d255cbb1eff0dc03e67c5d"} 1
+# HELP falcosecurity_falco_falco_sha256_config_file_falco_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_falco_sha256_config_file_falco_info gauge
+falcosecurity_falco_falco_sha256_config_file_falco_info{raw_name="falco_sha256_config_file_falco",falco_sha256_config_file_falco="c78b5de8e841917eb2c7a8257f37995e1c9594cffb71ea1e7aefa932172cac3d"} 1
 # HELP falcosecurity_falco_evt_source_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_evt_source_info gauge
 falcosecurity_falco_evt_source_info{raw_name="evt_source",evt_source="syscall"} 1
@@ -259,12 +259,12 @@ falcosecurity_falco_kernel_release_info{raw_name="kernel_release",kernel_release
 # HELP falcosecurity_evt_hostname_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_evt_hostname_info gauge
 falcosecurity_evt_hostname_info{raw_name="hostname",hostname="test"} 1
-# HELP falcosecurity_falco_falco.sha256_rules_file.falco_rules_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco.sha256_rules_file.falco_rules_info gauge
-falcosecurity_falco_falco.sha256_rules_file.falco_rules_info{raw_name="falco.sha256_rules_file.falco_rules",falco.sha256_rules_file.falco_rules="f176455ad6a1f39cf32065af14d33042e092b30489d255cbb1eff0dc03e67c5d"} 1
-# HELP falcosecurity_falco_falco.sha256_config_file.falco_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco.sha256_config_file.falco_info gauge
-falcosecurity_falco_falco.sha256_config_file.falco_info{raw_name="falco.sha256_config_file.falco",falco.sha256_config_file.falco="c78b5de8e841917eb2c7a8257f37995e1c9594cffb71ea1e7aefa932172cac3d"} 1
+# HELP falcosecurity_falco_falco_sha256_rules_file_falco_rules_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_falco_sha256_rules_file_falco_rules_info gauge
+falcosecurity_falco_falco_sha256_rules_file_falco_rules_info{raw_name="falco_sha256_rules_file_falco_rules",falco_sha256_rules_file_falco_rules="f176455ad6a1f39cf32065af14d33042e092b30489d255cbb1eff0dc03e67c5d"} 1
+# HELP falcosecurity_falco_falco_sha256_config_file_falco_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_falco_sha256_config_file_falco_info gauge
+falcosecurity_falco_falco_sha256_config_file_falco_info{raw_name="falco_sha256_config_file_falco",falco_sha256_config_file_falco="c78b5de8e841917eb2c7a8257f37995e1c9594cffb71ea1e7aefa932172cac3d"} 1
 # HELP falcosecurity_falco_evt_source_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_evt_source_info gauge
 falcosecurity_falco_evt_source_info{raw_name="evt_source",evt_source="syscall"} 1
@@ -388,12 +388,12 @@ falcosecurity_falco_kernel_release_info{raw_name="kernel_release",kernel_release
 # HELP falcosecurity_evt_hostname_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_evt_hostname_info gauge
 falcosecurity_evt_hostname_info{raw_name="hostname",hostname="test"} 1
-# HELP falcosecurity_falco_falco.sha256_rules_file.falco_rules_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco.sha256_rules_file.falco_rules_info gauge
-falcosecurity_falco_falco.sha256_rules_file.falco_rules_info{raw_name="falco.sha256_rules_file.falco_rules",falco.sha256_rules_file.falco_rules="f176455ad6a1f39cf32065af14d33042e092b30489d255cbb1eff0dc03e67c5d"} 1
-# HELP falcosecurity_falco_falco.sha256_config_file.falco_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco.sha256_config_file.falco_info gauge
-falcosecurity_falco_falco.sha256_config_file.falco_info{raw_name="falco.sha256_config_file.falco",falco.sha256_config_file.falco="c78b5de8e841917eb2c7a8257f37995e1c9594cffb71ea1e7aefa932172cac3d"} 1
+# HELP falcosecurity_falco_falco_sha256_rules_file_falco_rules_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_falco_sha256_rules_file_falco_rules_info gauge
+falcosecurity_falco_falco_sha256_rules_file_falco_rules_info{raw_name="falco_sha256_rules_file_falco_rules",falco_sha256_rules_file_falco_rules="f176455ad6a1f39cf32065af14d33042e092b30489d255cbb1eff0dc03e67c5d"} 1
+# HELP falcosecurity_falco_falco_sha256_config_file_falco_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_falco_sha256_config_file_falco_info gauge
+falcosecurity_falco_falco_sha256_config_file_falco_info{raw_name="falco_sha256_config_file_falco",falco_sha256_config_file_falco="c78b5de8e841917eb2c7a8257f37995e1c9594cffb71ea1e7aefa932172cac3d"} 1
 # HELP falcosecurity_falco_evt_source_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_evt_source_info gauge
 falcosecurity_falco_evt_source_info{raw_name="evt_source",evt_source="syscall"} 1
@@ -551,12 +551,12 @@ falcosecurity_falco_kernel_release_info{raw_name="kernel_release",kernel_release
 # HELP falcosecurity_evt_hostname_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_evt_hostname_info gauge
 falcosecurity_evt_hostname_info{raw_name="hostname",hostname="test"} 1
-# HELP falcosecurity_falco_falco.sha256_rules_file.falco_rules_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco.sha256_rules_file.falco_rules_info gauge
-falcosecurity_falco_falco.sha256_rules_file.falco_rules_info{raw_name="falco.sha256_rules_file.falco_rules",falco.sha256_rules_file.falco_rules="f176455ad6a1f39cf32065af14d33042e092b30489d255cbb1eff0dc03e67c5d"} 1
-# HELP falcosecurity_falco_falco.sha256_config_file.falco_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco.sha256_config_file.falco_info gauge
-falcosecurity_falco_falco.sha256_config_file.falco_info{raw_name="falco.sha256_config_file.falco",falco.sha256_config_file.falco="c78b5de8e841917eb2c7a8257f37995e1c9594cffb71ea1e7aefa932172cac3d"} 1
+# HELP falcosecurity_falco_falco_sha256_rules_file_falco_rules_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_falco_sha256_rules_file_falco_rules_info gauge
+falcosecurity_falco_falco_sha256_rules_file_falco_rules_info{raw_name="falco_sha256_rules_file_falco_rules",falco_sha256_rules_file_falco_rules="f176455ad6a1f39cf32065af14d33042e092b30489d255cbb1eff0dc03e67c5d"} 1
+# HELP falcosecurity_falco_falco_sha256_config_file_falco_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_falco_sha256_config_file_falco_info gauge
+falcosecurity_falco_falco_sha256_config_file_falco_info{raw_name="falco_sha256_config_file_falco",falco_sha256_config_file_falco="c78b5de8e841917eb2c7a8257f37995e1c9594cffb71ea1e7aefa932172cac3d"} 1
 # HELP falcosecurity_falco_evt_source_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_evt_source_info gauge
 falcosecurity_falco_evt_source_info{raw_name="evt_source",evt_source="syscall"} 1
@@ -754,12 +754,12 @@ falcosecurity_falco_kernel_release_info{raw_name="kernel_release",kernel_release
 # HELP falcosecurity_evt_hostname_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_evt_hostname_info gauge
 falcosecurity_evt_hostname_info{raw_name="hostname",hostname="test"} 1
-# HELP falcosecurity_falco_falco.sha256_rules_file.falco_rules_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco.sha256_rules_file.falco_rules_info gauge
-falcosecurity_falco_falco.sha256_rules_file.falco_rules_info{raw_name="falco.sha256_rules_file.falco_rules",falco.sha256_rules_file.falco_rules="f176455ad6a1f39cf32065af14d33042e092b30489d255cbb1eff0dc03e67c5d"} 1
-# HELP falcosecurity_falco_falco.sha256_config_file.falco_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco.sha256_config_file.falco_info gauge
-falcosecurity_falco_falco.sha256_config_file.falco_info{raw_name="falco.sha256_config_file.falco",falco.sha256_config_file.falco="c78b5de8e841917eb2c7a8257f37995e1c9594cffb71ea1e7aefa932172cac3d"} 1
+# HELP falcosecurity_falco_falco_sha256_rules_file_falco_rules_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_falco_sha256_rules_file_falco_rules_info gauge
+falcosecurity_falco_falco_sha256_rules_file_falco_rules_info{raw_name="falco_sha256_rules_file_falco_rules",falco_sha256_rules_file_falco_rules="f176455ad6a1f39cf32065af14d33042e092b30489d255cbb1eff0dc03e67c5d"} 1
+# HELP falcosecurity_falco_falco_sha256_config_file_falco_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_falco_sha256_config_file_falco_info gauge
+falcosecurity_falco_falco_sha256_config_file_falco_info{raw_name="falco_sha256_config_file_falco",falco_sha256_config_file_falco="c78b5de8e841917eb2c7a8257f37995e1c9594cffb71ea1e7aefa932172cac3d"} 1
 # HELP falcosecurity_falco_evt_source_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_evt_source_info gauge
 falcosecurity_falco_evt_source_info{raw_name="evt_source",evt_source="syscall"} 1
@@ -972,12 +972,12 @@ falcosecurity_falco_kernel_release_info{raw_name="kernel_release",kernel_release
 # HELP falcosecurity_evt_hostname_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_evt_hostname_info gauge
 falcosecurity_evt_hostname_info{raw_name="hostname",hostname="test"} 1
-# HELP falcosecurity_falco_falco.sha256_rules_file.falco_rules_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco.sha256_rules_file.falco_rules_info gauge
-falcosecurity_falco_falco.sha256_rules_file.falco_rules_info{raw_name="falco.sha256_rules_file.falco_rules",falco.sha256_rules_file.falco_rules="f176455ad6a1f39cf32065af14d33042e092b30489d255cbb1eff0dc03e67c5d"} 1
-# HELP falcosecurity_falco_falco.sha256_config_file.falco_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco.sha256_config_file.falco_info gauge
-falcosecurity_falco_falco.sha256_config_file.falco_info{raw_name="falco.sha256_config_file.falco",falco.sha256_config_file.falco="c78b5de8e841917eb2c7a8257f37995e1c9594cffb71ea1e7aefa932172cac3d"} 1
+# HELP falcosecurity_falco_falco_sha256_rules_file_falco_rules_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_falco_sha256_rules_file_falco_rules_info gauge
+falcosecurity_falco_falco_sha256_rules_file_falco_rules_info{raw_name="falco_sha256_rules_file_falco_rules",falco_sha256_rules_file_falco_rules="f176455ad6a1f39cf32065af14d33042e092b30489d255cbb1eff0dc03e67c5d"} 1
+# HELP falcosecurity_falco_falco_sha256_config_file_falco_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_falco_sha256_config_file_falco_info gauge
+falcosecurity_falco_falco_sha256_config_file_falco_info{raw_name="falco_sha256_config_file_falco",falco_sha256_config_file_falco="c78b5de8e841917eb2c7a8257f37995e1c9594cffb71ea1e7aefa932172cac3d"} 1
 # HELP falcosecurity_falco_evt_source_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_evt_source_info gauge
 falcosecurity_falco_evt_source_info{raw_name="evt_source",evt_source="syscall"} 1
