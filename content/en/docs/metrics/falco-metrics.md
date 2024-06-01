@@ -1238,18 +1238,38 @@ webserver:
 
 This endpoint will allow observation of the internal state of Falco providing the same data as configured for the metrics outputs. It will be served on the same port as the health endpoint.
 
-{{% pageinfo color=info %}}
-Following the Prometheus recommendations, there might be some slight differences with regard to the other outputs. Typically calculated fields will not be returned as Prometheus provides the facilities to compute them as part of their queries. Expand the example outputs dropdowns above (for both JSON and Prometheus formats) to explore all supported metrics fields, including their naming conventions and units.
+### Limitations and Additional Information
+
+Expand the example outputs dropdowns above (for both JSON and Prometheus formats) to explore all supported metrics fields, including their naming conventions and units.
 
 The Prometheus text format documentation can be found [here][3].
 
 The OpenMetrics specification can be found [here][4].
+{{% pageinfo color=info %}}
+The `num_evts` wrapper / base field is currently not available for Prometheus metrics; otherwise, there is 1:1 support across all output channels. 
+
+However, following the Prometheus recommendations, there might be some slight differences with regard to some metrics fields. Typically calculated fields will not be returned as Prometheus provides the facilities to compute them as part of their queries (e.g. event or drop rates can be calculated in Prometheus).
 {{% /pageinfo %}}
 
 [1]: https://github.com/falcosecurity/falco/blob/master/falco.yaml
 [2]: https://prometheus.io
 [3]: https://prometheus.io/docs/instrumenting/exposition_formats/
 [4]: https://github.com/OpenObservability/OpenMetrics/blob/main/specification/OpenMetrics.md
+
+## Plugin Metrics
+
+The ability to add custom plugin metrics is currently under development (targeting Falco 0.39.0). However, plugin metrics can also include regular metrics when running Falco with either just a plugin source or both the primary syscalls event source and a plugin. This section will inform you about a few current limitations:
+
+- When running Falco with a plugin only on macOS or Windows, there is currently no metrics support.
+- Most of the available metrics are only relevant for the primary syscalls event source (e.g., `state_counters_enabled`, `kernel_event_counters_enabled`, and `libbpf_stats_enabled`), not for a plugin with a non-syscalls event source.
+- When running Falco with a plugin only on Linux (without using the syscalls event source), it currently doesn't work well due to some issues in Falco's capture initialization phase. We are working on resolving remaining issues by Falco 0.39.0 (see this [issue](https://github.com/falcosecurity/falco/issues/3194#issuecomment-2111009270)). Therefore, the following fields are not available when running Falco with a plugin only on Linux:
+  - `falcosecurity_falco_kernel_release_info`
+  - `falcosecurity_evt_hostname_info`
+  - `falcosecurity_falco_start_timestamp_nanoseconds`
+  - `falcosecurity_falco_host_boot_timestamp_nanoseconds`
+  - `falcosecurity_falco_host_num_cpus_total`
+  - `falcosecurity_falco_duration_seconds_total`
+  - `falcosecurity_falco_cpu_usage_ratio` (broken given we don't initialize some of the above info)
 
 ## Breaking Changes
 
@@ -1268,3 +1288,5 @@ To ensure long-term consistency and validity, we have renamed the following metr
 - `memory_vsz` -> `memory_vsz_kb` (or `memory_vsz_mb`)
 - `container_memory_used` -> `container_memory_used_bytes` (or `container_memory_used_mb`)
 {{% /pageinfo %}}
+
+Near-term improvements are tracked in the following [issue](https://github.com/falcosecurity/falco/issues/3194#issuecomment-2111009270).
