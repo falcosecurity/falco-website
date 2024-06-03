@@ -1256,20 +1256,9 @@ However, following the Prometheus recommendations, there might be some slight di
 [3]: https://prometheus.io/docs/instrumenting/exposition_formats/
 [4]: https://github.com/OpenObservability/OpenMetrics/blob/main/specification/OpenMetrics.md
 
-## Plugin Metrics
+## Plugins Metrics
 
-The ability to add custom plugin metrics is currently under development (targeting Falco 0.39.0). However, plugin metrics can also include regular metrics when running Falco with either just a plugin source or both the primary syscalls event source and a plugin. This section will inform you about a few current limitations:
-
-- When running Falco with a plugin only on macOS or Windows, there is currently no metrics support.
-- Most of the available metrics are only relevant for the primary syscalls event source (e.g., `state_counters_enabled`, `kernel_event_counters_enabled`, and `libbpf_stats_enabled`), not for a plugin with a non-syscalls event source.
-- When running Falco with a plugin only on Linux (without using the syscalls event source), it currently doesn't work well due to some issues in Falco's capture initialization phase. We are working on resolving remaining issues by Falco 0.39.0 (see this [issue](https://github.com/falcosecurity/falco/issues/3194#issuecomment-2111009270)). Therefore, the following fields are not available when running Falco with a plugin only on Linux:
-  - `falcosecurity_falco_kernel_release_info`
-  - `falcosecurity_evt_hostname_info`
-  - `falcosecurity_falco_start_timestamp_nanoseconds`
-  - `falcosecurity_falco_host_boot_timestamp_nanoseconds`
-  - `falcosecurity_falco_host_num_cpus_total`
-  - `falcosecurity_falco_duration_seconds_total`
-  - `falcosecurity_falco_cpu_usage_ratio` (broken given we don't initialize some of the above info)
+As of Falco 0.38.0, it is not possible to use the metrics feature when running plugins without the syscalls source. Near-term improvements in this regard are tracked in the following [issue](https://github.com/falcosecurity/falco/issues/3194#issuecomment-2111009270).
 
 ## Breaking Changes
 
@@ -1288,5 +1277,3 @@ To ensure long-term consistency and validity, we have renamed the following metr
 - `memory_vsz` -> `memory_vsz_kb` (or `memory_vsz_mb`)
 - `container_memory_used` -> `container_memory_used_bytes` (or `container_memory_used_mb`)
 {{% /pageinfo %}}
-
-Near-term improvements are tracked in the following [issue](https://github.com/falcosecurity/falco/issues/3194#issuecomment-2111009270).
