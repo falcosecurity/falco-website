@@ -16,7 +16,7 @@ At a high level, the API functions are grouped as follows:
 * Functions that are commons to all plugins
 * Functions that implement one specific capability
 
-The C header files [plugin_api.h](https://github.com/falcosecurity/libs/blob/0.11.0/userspace/plugin/plugin_api.h) and [plugin_types.h](https://github.com/falcosecurity/libs/blob/0.11.0/userspace/plugin/plugin_types.h) numerate all the API functions and associated structs/types as they are used by the plugins framework. The whole plugin API and the loader used in Falco are implemented in C in a standaline module located inside [falcosecurity/libs/userspace/plugin](https://github.com/falcosecurity/libs/tree/master/userspace/plugin), and can be imported and reused in other projects using the falcosecurity plugin system (e.g. we have a [plugin loader written in Go](https://github.com/falcosecurity/plugin-sdk-go/tree/main/pkg/loader) developed on top of the C one).
+The C header files [plugin_api.h](https://github.com/falcosecurity/libs/blob/0.17.2/userspace/plugin/plugin_types.h) numerate all the API functions and associated structs/types as they are used by the plugins framework. The whole plugin API and the loader used in Falco are implemented in C in a standalone module located inside [falcosecurity/libs/userspace/plugin](https://github.com/falcosecurity/libs/tree/master/userspace/plugin), and can be imported and reused in other projects using the falcosecurity plugin system (e.g. we have a [plugin loader written in Go](https://github.com/falcosecurity/plugin-sdk-go/tree/main/pkg/loader) developed on top of the C one).
 
 Remember, however, that from the perspective of the plugin, each function name has a prefix `plugin_` e.g. `plugin_get_required_api_version`, `plugin_get_name`, etc.
 
@@ -24,7 +24,7 @@ Since [Falco v0.33.0](/blog/falco-0-33-0), some function symbols of **the plugin
 
 ### Plugin API Versioning
 
-**The current version of the plugin API is `3.0.0`**.
+**The current version of the plugin API is `3.6.0`**.
 
 The plugin API is a formal contract between the framework and the plugins, and it is versioned using [semantic versioning](https://semver.org/). The framework exposes the plugin API version it supports, and each plugin expresses a required plugin API version. If the version required by a plugin does not pass the semantic check with the one supported by the framework, then the plugin cannot be loaded. See the section about [`plugin_get_required_api_version`](#get-required-api-version) for more details.
 
@@ -45,7 +45,7 @@ All functions from the plugin API define functionalities that the plugin offers 
 
 The plugin API also supports an occasional inversion of control in which plugins can actively invoke functions exposed by the framework that owns it. For those cases, the execution flow generally proceeds as follows. First, the framework invokes a function exported by the plugin according its supported version of the plugin API. As one of the function arguments the framework passes to the plugin a vtable struct allocated and owned by the framework itself, containing one or more function pointers referring to code functions of the framework that the plugin is allowed to invoke. Permissions about retaining such function pointers inside the plugin's state after the execution of the plugin API symbol may vary depending on the API symbol itself and its related capabilities. Alongside the function pointers, the framework also provides the plugin with a `ss_plugin_owner_t*` opaque handle, which the plugin must pass to the framework's functions. The opaque handle represents an instance of the plugin's *owner*, which is an abstract component that the framework allocates for managing the plugin's requests. If the framework passes one of the function pointers defined in the vtable structs as `NULL`, then the plugin must assume that the related piece of functionality is not supported by the framework in that context. Plugins must always check whether the function pointers passed by the framework are `NULL` or not.
 
-An example of functionality provided in the form of inversion of control is the access to [state tables](#get-required-api-version). The C++ example below shows how a plugin can interact with its owner during the execution of its `init` function. In this case, the plugin iterates over the list of state tables registered in the framework and catches errors arising during the invocations of the owner's callbacks:
+An example of functionality provided in the form of inversion of control is the access to [state tables](#state-tables-api). The C++ example below shows how a plugin can interact with its owner during the execution of its `init` function. In this case, the plugin iterates over the list of state tables registered in the framework and catches errors arising during the invocations of the owner's callbacks:
 
 ```CPP
 extern "C" ss_plugin_t* plugin_init(const ss_plugin_init_input* in, ss_plugin_rc* rc)
@@ -78,6 +78,49 @@ extern "C" ss_plugin_t* plugin_init(const ss_plugin_init_input* in, ss_plugin_rc
     return ret;
 }
 ```
+
+### Logging
+
+Another functionality that makes use of inversion of control is **logging**.
+
+The framework provides a log function during the plugin initialization, which the plugin can use to invoke the framework-provided logger at any time during the plugin life-cycle.
+
+The following C++ example shows how a plugin can retain the owner's handle and the log function to invert control and invoke the framework logger:
+
+```CPP
+struct my_plugin
+{
+    ss_plugin_owner_t* owner;
+    ss_plugin_log_fn_t log;
+};
+
+extern "C" ss_plugin_t* plugin_init(const ss_plugin_init_input* in, ss_plugin_rc* rc)
+{
+    *rc = SS_PLUGIN_SUCCESS;
+    my_plugin *ret = new my_plugin();
+
+    ret->log = in->log_fn;
+    ret->owner = in->owner;
+
+    ret->log(ret->owner, NULL, "initializing plugin...", SS_PLUGIN_LOG_SEV_INFO);
+    
+    return ret;
+}
+
+extern "C" void plugin_destroy(ss_plugin_t* s)
+{
+    my_plugin *ps = (my_plugin *) s;
+    ps->log(ps->owner, NULL, "destroying plugin...", SS_PLUGIN_LOG_SEV_INFO);
+
+    delete ((my_plugin *) s);
+}
+```
+The signature of the log function is: 
+
+```
+void log(ss_plugin_owner_t* owner, const char* component, const char* msg, ss_plugin_log_severity sev);
+```
+where `owner` is the handle of the owner, `component` is a string representing the plugin's component name that is invoking the logger (falls back to the plugin name when `NULL`), `msg` is the log message and `sev` is the log [severity](https://github.com/falcosecurity/libs/blob/0.17.2/userspace/plugin/plugin_types.h#L285-L296) as defined in API.
 
 ## Common Plugin API
 
