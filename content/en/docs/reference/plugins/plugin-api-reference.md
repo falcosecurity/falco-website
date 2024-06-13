@@ -204,6 +204,46 @@ Currently, the plugin framework only supports the [JSON Schema format](https://j
 
 Writing the dummy enum value `SS_PLUGIN_SCHEMA_NONE` inside `schema_type` is equivalent to avoiding implementing the `get_init_schema` function itself, which ends up with the framework treating the init configuration as an opaque string with no additional checks.
 
+### set_config
+
+```
+ss_plugin_rc plugin_set_config(ss_plugin_t* s, const ss_plugin_set_config_input* i)  [Required: no]
+```
+
+Sets a new plugin configuration when provided by the framework.
+The new configuration is provided by `config` as a string in `ss_plugin_set_config_input* i`.
+
+This function should return:
+
+* `SS_PLUGIN_SUCCESS` (0) if the config is accepted
+* `SS_PLUGIN_FAILURE` (1) if the config is rejected
+
+If rejected, the plugin should provide context in the string returned by `get_last_error()` before returing.
+
+### get_metrics
+
+```
+ss_plugin_metric* plugin_get_metrics(ss_plugin_t* s, uint32_t* num_metrics)  [Required: no]
+```
+
+This function returns the pointer to the first element of an array containing plugin-provided custom metrics.
+
+Each element of the array is a `ss_plugin_metric` which is [defined](https://github.com/falcosecurity/libs/blob/0.17.2/userspace/plugin/plugin_types.h#L331-L345) in the plugin API as follows:
+
+```CPP
+typedef struct ss_plugin_metric
+{
+    const char* name; //Opaque string representing the metric name
+	ss_plugin_metric_type type; // Metric type
+	ss_plugin_metric_value value; // Metric numeric value
+	ss_plugin_metric_value_type value_type; // Metric value data type
+} ss_plugin_metric;
+```
+
+Each metric defines its own name, value, type (monotonic or non-monotonic) and value type (data type of its numeric value).
+
+The argument `num_metrics` is a return argument and must be set to the lenght of the array before returning. It can be set to `0` if no metrics are provided.
+
 ## Event Sourcing Capability API
 
 ### get_id
@@ -216,7 +256,7 @@ This should return the [event ID](/docs/plugins#plugin-event-ids) allocated to y
 
 This function is required if `get_event_source` is defined and returns a non-empty string, otherwise it is considered optional. Returning zero is equivalent to not implementing the function. If the plugin has a non-zero ID and a non-empty event source, then its `next_batch` function is allowed to only return events of plugin type (code 322) with its own plugin ID and event source.
 
-### get_event_source()
+### get_event_source
 
 ```
 const char* plugin_get_event_source()   [Required: varies]
