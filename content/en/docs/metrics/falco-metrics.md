@@ -21,6 +21,7 @@ metrics:
   state_counters_enabled: true
   kernel_event_counters_enabled: true
   libbpf_stats_enabled: true
+  plugins_metrics_enabled: true
   convert_memory_to_mb: true
   include_empty_values: true
 ```
@@ -1258,7 +1259,21 @@ However, following the Prometheus recommendations, there might be some slight di
 
 ## Plugins Metrics
 
-As of Falco 0.38.0, it is not possible to use the metrics feature when running plugins without the syscalls source. Near-term improvements in this regard are tracked in the following [issue](https://github.com/falcosecurity/falco/issues/3194#issuecomment-2111009270).
+Since version 0.38.1, Falco allows plugins to provide their own set of [custom metrics](/docs/reference/plugins/plugin-api-reference/#get-metrics).
+
+In order to enable plugins metrics, the following configuration elements must be set in the [falco.yaml][1]:
+
+```yaml
+metrics:
+  enabled: true
+  ...
+  plugins_metrics_enabled: true
+  ...
+```
+
+Please note that this doesn't provide default metrics about the plugin itself, and it will show metrics only if the plugin is providing them.
+
+Currently, none of the officially maintained plugins provides any metric, but this will change in the future. 
 
 ## Breaking Changes
 
