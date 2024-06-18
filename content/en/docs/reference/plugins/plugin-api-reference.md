@@ -701,11 +701,11 @@ In the plugin framework, **state tables** are simple key-value mappings represen
 
 A state table is a key-value map that can be used for storing pieces of state within the plugin framework. State tables are an abstract concept, and the plugin API does not enforce any specific implementation. Instead, the API specifies interface boundaries in the form of C virtual tables of methods representing the behavior of state tables. This allows the plugin API to remain flexible, abstract, and multi-language by nature. The model by which state tables work is defined by the notions of ownership, registration, and discovery.
 
-Every state table must have an owner, which is responsible of managing the table's memory and of implementing all the functions of the state tables API. Owners can either plugins or any of the other actors that are part of the Falcosecurity libraries. For example, libsinsp is the ower of the `threads` table, which is a key-value store where the key is a thread ID of a Linux machine and the value is a set of information describing a Linux thread. Plugins can access the `threads` table of libsinsp for retrieving thread information given a thread ID, reading and writing the info fields, extending the info with additional metadata, and do much more. However, plugins are never responsible of managing the memory and the implementation of the `threads` table, as it is owned by libsinsp only. Instead, plugins can do the same by defining their own stateful components and implementing the required interface functions to register them as "state tables". Stateful components must be registered in the framework in order to be considered "state tables". Libsinsp, which is owns the plugins loaded at runtime, also holds a "table registry" that is the source of thruth for all the state tables known at runtime. Once a state table is registered in the table registry, it is discoverable by all the actors and plugins running in the context of the same Falcosecurity libs instance.
+Every state table must have an owner, which is responsible of managing the table's memory and of implementing all the functions of the state tables API. Owners can either be plugins or any of the other actors that are part of the Falcosecurity libraries. For example, libsinsp is the ower of the `threads` table, which is a key-value store where the key is a thread ID of a Linux machine and the value is a set of information describing a Linux thread. Plugins can access the `threads` table of libsinsp for retrieving thread information given a thread ID, reading and writing the info fields, extending the info with additional metadata, and do much more. However, plugins are never responsible of managing the memory and the implementation of the `threads` table, as it is owned by libsinsp only. Instead, plugins can do the same by defining their own stateful components and implementing the required interface functions to register them as "state tables". Stateful components must be registered in the framework in order to be considered "state tables". Libsinsp, which owns the plugins loaded at runtime, also holds a "table registry" that is the source of thruth for all the state tables known at runtime. Once a state table is registered in the table registry, it is discoverable by all the actors and plugins running in the context of the same Falcosecurity libs instance.
 
 The way plugins can interact with state tables is through discovery and the usage of accessors. At initialization time (in the `init` function), plugins are provided interface functions that allow them to list all the state tables available at runtime and obtaining "accessors" for later usage. An *accessor* is an opaque pointers obtained at initialization time and that can be used later (e.g. when parsing an event or when extracting a field) for accessing a given table or the fields of its entries. Considering the example of the `threads` table, in its `init` function a given plugin could obtain an accessor to the table and to some of the fields of each thread info (such as the `pid` or the `comm`) and store them in its plugin state. Later, when extracting a field, the same plugin would be available to query the `threads` table for a given thread ID (perhaps obtained by reading the event payload of a syscall) by using the table accessor, and then reading the `pid` of the obtained thread by using the field accessor.
 
-Inherently, the plugin API also enable plugins to define their own state tables and register them in the table registry. Once that's done, the registered state table will be visible to all other plugins just like the `threads` table, without knowing nor caring about which actor is owning it. The state table owned by the plugin will be discoverable through the table registry by the plugin iself too. However, plugins owning a given table are not forced to go through the state tables interface in order to operate on it (conversely, this could also be the less efficient choice). Plugins can implement their own state as they prefer, whereas the purpose of the state tables interface is solely to make that state available to other actors in the framework. Coherently, stable owners can also decide "how much" of a table they want the other components to have visibility of. For example, libsinsp can access more info and functionalities on the `threads` table than what it makes available through the state table interface, which is also natural considering that its implementation is hidden and can be arbitrary.
+Inherently, the plugin API also enable plugins to define their own state tables and register them in the table registry. Once that's done, the registered state table will be visible to all other plugins just like the `threads` table, without knowing nor caring about which actor is owning it. The state table owned by the plugin will be discoverable through the table registry by the plugin iself too. However, plugins owning a given table are not forced to go through the state tables interface in order to operate on it (conversely, this could also be the less efficient choice). Plugins can implement their own state as they prefer, whereas the purpose of the state tables interface is solely to make that state available to other actors in the framework. Coherently, table owners can also decide "how much" of a table they want the other components to have visibility of. For example, libsinsp can access more info and functionalities on the `threads` table than what it makes available through the state table interface, which is also natural considering that its implementation is hidden and can be arbitrary.
 
 The set of state tables made available by a given plugin or Falcosecurity libs actor, and the set of fields and operations available for each of those table, **take part of the semantic versioned UX contract of that plugin or actor**. For example, removing a given table or table field from libsinsp can be considered a breaking change that must reflected by the version number of the Falcosecurity libs. The same applies for the version of each plugin and the state tables declared by them.
 
@@ -714,6 +714,15 @@ The set of state tables made available by a given plugin or Falcosecurity libs a
 State tables are dynamic structures. Each table is defined by a given key type, which can be any of the types supported by the `ss_plugin_state_type` enumeration. Then, the each key-value mappings contained in the table are referred to as *table entries*. Each entry has a specific set of information fields, which is shared across all the entries of the same table. Each field is named and has a specific type. The set of fields for the entries of a given table is defined dynamically at runtime and can be extended by different actors. For example, libsinsp populates the `threads` table with a given set of information fields for each table's entry (representing a given thread info), and plugins can read and write the value of those fields by obtaining accessors for those. However, plugins also have the opportunity of defining new fields inside the `threads` table, with a new unique name and a specific type, and libsinsp will be responsible of hosting that new piece of information for each thread and make it available to all actors in the framework. The same can happen for tables defined by any plugin.
 
 Given that state tables can get modified by different actors at runtime, there has to be a deterministic disambiguation about consistency of table edits and visibility of those changes. The plugin API implements this by guaranteeting a deterministic and non-changing total ordering of all the actors in the system. Considering a given ordering, an actor will have visibility only over the changes applied by actors coming before it in the given ordering. In the Falcosecurity libs and the plugin framework, the guaranteed order is the one by which plugins are loaded at runtime. The first actor in the order is always libsinsp itself, which means that all plugins will always see all the table modifications authored by libsinsp at a given point in time. Then, plugins are ordered by following their loading order at runtime. This means that if Plugin B is loaded in Falco after Plugin A, then Plugin B will see all the table changes performed by Plugin A at runtime, but not the countrary (however, they'll both have visibility over the changes performed by libsinsp). As such [the plugins loading order in Falco](/docs/plugins/usage/#loading-plugins-in-falco) can be functionally relevant.
+
+### Subtables and complex data types
+
+The plugin framework supports a special table field type which is the `table` type. 
+Table entries can use this field to store the handle to another table, which means each entry can have its own subtables.
+
+For example, the `threads` table has a field named `file_descriptors`. This field allows accessing the file descriptor table of every thread, making it possible to access useful information about a specific open file descriptor like file `name`, `pid`, and much more.
+
+This also unlocks the ability for tables to store/access arrays, maps or even more complex data types. The plugin can "wrap" the complex type in a table by implementing the interface functions for that type, allowing the complex data types to be stored as a subtable.
 
 ### Obtaining Accessors
 
@@ -772,6 +781,52 @@ typedef struct
 	// registeted in the plugin's owner.
 	ss_plugin_table_fields_vtable fields;
 } ss_plugin_init_tables_input;
+```
+
+### Obtaining subtables accessors
+
+Obtaining table accessors is a bit different for subtables. 
+
+Table accessors can be only obtained at initialization time, however tables may be empty at this time, which means subtables may be not existing yet.
+The solution to this problem is to create a table entry just to get its subtables.
+
+Please note that this newly created entry is temporary and it should be used only at initialization time to obtain subtable accessors.
+
+The following example shows how to obtain accessors for the file descriptor subtable:
+
+
+```CPP
+struct plugin_state
+{
+    ss_plugin_table_t* thread_table;
+    ss_plugin_table_field_t* table_field_fdtable;
+    ss_plugin_table_field_t* table_field_fdtable_name;
+};
+
+static ss_plugin_t* plugin_init(const ss_plugin_init_input* in, ss_plugin_rc* rc)
+{
+    plugin_state *ret = new plugin_state();
+
+    // get the accessor to the threads table
+    ret->thread_table = in->tables->get_table(in->owner, "threads", ss_plugin_state_type::SS_PLUGIN_ST_INT64);
+
+    // get an accessor to the subtable field
+    ret->table_field_fdtable = in->tables->fields.get_table_field(ret->thread_table, "file_descriptors", ss_plugin_state_type::SS_PLUGIN_ST_TABLE);
+
+    // create a new table entry
+    auto entry = in->tables->writer_ext->create_table_entry(ret->thread_table);
+
+    // read the subtable hanlde ftom the new entry
+    ss_plugin_state_data data;
+    in->tables->reader_ext->read_entry_field(ret->thread_table, entry, ret->table_field_fdtable, &data);
+    auto fdtable = data.table;
+
+    //obtain the accessor to one of the subtable fields
+    ret->table_field_fdtable_name = in->tables->fields_ext->get_table_field(fdtable, "name", ss_plugin_state_type::SS_PLUGIN_ST_STRING);
+
+    //destroy the temporary entry
+    in->tables->writer_ext->destroy_table_entry(ret->thread_table, entry);
+}
 ```
 
 ### Accessing Tables
