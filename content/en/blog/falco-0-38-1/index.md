@@ -13,7 +13,7 @@ Today we announce the release of **Falco 0.38.1** 🦅!
 Falco's 0.38.1 is a patch release aimed at addressing a few important bugs. It includes the following fixes:
 
 * **A Falco crash while running with plugins and metrics enabled has been solved** (https://github.com/falcosecurity/falco/issues/3229)
-* Falco `-p` output format option can be passed to plugin events while `-pc` and `-pk` can only be used for syscall sources (https://github.com/falcosecurity/falco/pull/3239)
+* Falco `-p` output format option can now be passed to plugin events while `-pc` and `-pk` can only be used for syscall sources. Fixes an issue that could result in Falco exiting with `LOAD_ERR_COMPILE_OUTPUT` on startup with k8s clusters that had `-pk` and audit enabled (https://github.com/falcosecurity/falco/pull/3239)
 * Fixed an issue that could prevent the integer compare operators `<`, `<=`, `>`, `>=` in rules from working properly (https://github.com/falcosecurity/falco/issues/3245)
 * Ignore NSS user and group entries while loading users and groups (https://github.com/falcosecurity/libs/pull/1909)
 * Issues related to the new metric-related plugins API (https://github.com/falcosecurity/libs/pull/1885). Plugin API was also bumped to 3.6.0.
