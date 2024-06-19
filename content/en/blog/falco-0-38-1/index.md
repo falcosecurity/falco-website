@@ -14,7 +14,7 @@ Falco's 0.38.1 is a patch release aimed at addressing a few important bugs. It i
 
 * **A Falco crash while running with plugins and metrics enabled has been solved** (https://github.com/falcosecurity/falco/issues/3229)
 * Falco `-p` output format option can be passed to plugin events while `-pc` and `-pk` can only be used for syscall sources (https://github.com/falcosecurity/falco/pull/3239)
-* Fixed signed compare operator in libs (https://github.com/falcosecurity/falco/issues/3245)
+* Fixed an issue that could prevent the integer compare operators `<`, `<=`, `>`, `>=` in rules from working properly (https://github.com/falcosecurity/falco/issues/3245)
 * Ignore NSS user and group entries while loading users and groups (https://github.com/falcosecurity/libs/pull/1909)
 * Issues related to the new metric-related plugins API (https://github.com/falcosecurity/libs/pull/1885). Plugin API was also bumped to 3.6.0.
 * Plugin metrics are now enabled in Falco (https://github.com/falcosecurity/falco/pull/3228). Note that plugin must make use of the new metrics-related API to expose metrics.
