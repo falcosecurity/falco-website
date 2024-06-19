@@ -10,7 +10,7 @@ Today we announce the release of **Falco 0.38.1** 🦅!
 
 ## Fixes
 
-Falco's 0.38.1 is a patch release aimed at addressing a few important bugs. It includes the following:
+Falco's 0.38.1 is a patch release aimed at addressing a few important bugs. It includes the following fixes:
 
 * **A Falco crash while running with plugins and metrics enabled has been solved** (https://github.com/falcosecurity/falco/issues/3229)
 * Falco `-p` output format option can be passed to plugin events while `-pc` and `-pk` can only be used for syscall sources (https://github.com/falcosecurity/falco/pull/3239)
