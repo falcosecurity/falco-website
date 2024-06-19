@@ -1275,6 +1275,8 @@ Please note that this doesn't provide default metrics about the plugin itself, a
 
 Currently, none of the officially maintained plugins provides any metric, but this will change in the future. 
 
+Lastly, please note that as of Falco 0.38.1, it is not possible to fully use the remaining metrics feature when running plugins without the syscalls source. This is due to some regressions that prevent us from serving a small subset of metrics in this scenario. Near-term improvements in this regard are tracked in the following issue. Please also keep in mind that many of the metrics categories are specific to the syscalls source, such as `libbpf_stats_enabled`, `kernel_event_counters_enabled`, or `state_counters_enabled`.
+
 ## Breaking Changes
 
 {{% pageinfo color=info %}}

@@ -233,10 +233,10 @@ Each element of the array is a `ss_plugin_metric` which is [defined](https://git
 ```CPP
 typedef struct ss_plugin_metric
 {
-    const char* name; //Opaque string representing the metric name
-	ss_plugin_metric_type type; // Metric type
-	ss_plugin_metric_value value; // Metric numeric value
-	ss_plugin_metric_value_type value_type; // Metric value data type
+    const char* name; //Opaque string representing the metric name.
+	ss_plugin_metric_type type; // Metric type, indicates whether the metric value is monotonic or non-monotonic.
+	ss_plugin_metric_value value; // Metric numeric value.
+	ss_plugin_metric_value_type value_type; // Metric value data type, e.g. `uint64_t`.
 } ss_plugin_metric;
 ```
 
@@ -787,7 +787,7 @@ typedef struct
 
 Obtaining table accessors is a bit different for subtables. 
 
-Table accessors can be only obtained at initialization time, however tables may be empty at this time, which means subtables may be not existing yet.
+Table accessors can be only obtained at initialization time, however tables may be empty at this time, which means subtables may not yet exist.
 The solution to this problem is to create a table entry just to get its subtables.
 
 Please note that this newly created entry is temporary and it should be used only at initialization time to obtain subtable accessors.
@@ -893,6 +893,37 @@ typedef struct
 	// Returns SS_PLUGIN_SUCCESS if successful, and SS_PLUGIN_FAILURE otherwise.
 	ss_plugin_rc (*write_entry_field)(ss_plugin_table_t* t, ss_plugin_table_entry_t* e, const ss_plugin_table_field_t* f, const ss_plugin_state_data* in);
 } ss_plugin_table_writer_vtable;
+```
+
+### Accessing subtables
+
+Subtables handles can be obtained just like any other field, by reading the `table` type field of an entry.
+
+After obtaining subtables handles and [fields accessors](#obtaining-subtables-accessors), accessing subtables is the same as accessing regular tables.
+
+The following example shows how to access fields from the `file_descriptors` subtable from one of the entries of the `threads` table:
+
+```CPP
+ss_plugin_rc plugin_parse_event(ss_plugin_t *s, const ss_plugin_event_input *ev, const ss_plugin_event_parse_input* in)
+{
+    plugin_state *ps = (plugin_state *) s;
+    ss_plugin_state_data tmp;
+
+    // get an entry from the thread table
+    tmp.s64 = ev->evt->tid;
+    ss_plugin_table_entry_t* thread_entry = in->table_reader_ext->get_table_entry(ps->thread_table, &tmp);
+
+    // read the file_descriptors field from the entry
+    in->table_reader_ext->read_entry_field(ps->thread_table, thread_entry, ps->table_field_fdtable, &tmp);
+    ss_plugin_table_t* fdtable = tmp.table;
+
+    // get an entry from the file descriptors table of the previously read thread
+    tmp.s64 = 0;
+    ss_plugin_table_entry_t* fd_entry = in->table_reader_ext->get_table_entry(fdtable, &tmp);
+
+    // read a field from the entry in the file desciptors table
+    in->table_reader_ext->read_entry_field(fdtable, fd_entry, ps->table_field_fdtable_name, &tmp);
+}
 ```
 
 ### Registering State Tables
