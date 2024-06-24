@@ -4,7 +4,7 @@ description: Learn More About Falco
 slug: falco-additional
 aliases:
 - ../../falco-additional
-weight: 30
+weight: 40
 ---
 
 ## Learn more about Falco
