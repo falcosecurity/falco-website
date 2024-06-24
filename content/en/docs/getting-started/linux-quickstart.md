@@ -4,7 +4,7 @@ description: Learn how to install Falco on Linux
 slug: falco-linux-quickstart
 aliases:
 - ../../try-falco-on-ubuntu
-weight: 20
+weight: 30
 ---
 
 In this scenario, you will learn how to install Falco on an Ubuntu host, trigger a Falco rule by generating a suspicious event, and then examine the output.
