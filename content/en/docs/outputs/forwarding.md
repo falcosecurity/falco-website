@@ -130,7 +130,7 @@ The available outputs in Falcosidekick are:
 
 *Other*
 
-- [**Policy Report**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/policy-reporter.md)
+- [**Policy Report**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/policy_report.md)
 
 ### Installation in Kubernetes with Helm
 
