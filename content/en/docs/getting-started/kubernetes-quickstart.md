@@ -152,7 +152,7 @@ Helm is the simplest way to deploy Falco and Falcosidekick. In this section, you
 * Use Helm to install Falco and Falcosidekick. Notice we are specifying the eBPF probe and the information to forward any alerts with a priority higher than *Notice* to our Slack server. Be sure to change the last parameter from *changeme* to your name. 
 
     ```plain
-    helm install falco -n falco --set driver.kind=ebpf --set tty=true falcosecurity/falco \
+    helm install falco -n falco --set driver.kind=modern_ebpf --set tty=true falcosecurity/falco \
     --set falcosidekick.enabled=true \
     --set falcosidekick.config.slack.webhookurl=$(base64 --decode <<< "aHR0cHM6Ly9ob29rcy5zbGFjay5jb20vc2VydmljZXMvVDA0QUhTRktMTTgvQjA1SzA3NkgyNlMvV2ZHRGQ5MFFDcENwNnFzNmFKNkV0dEg4") \
     --set falcosidekick.config.slack.minimumpriority=notice \
