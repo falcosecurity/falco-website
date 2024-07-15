@@ -8,24 +8,24 @@ aliases:
 weight: 20
 ---
 
-First, make sure you have access to a test Kubernetes cluster running with Linux nodes, either x86_64 or ARM64. Note that using Docker Desktop on Windows or MacOS will not work for this purpose. Also, you will need to have [kubectl](https://kubernetes.io/docs/tasks/tools/) and [helm](https://helm.sh/docs/intro/install/) installed and configured as well.
+First, ensure you can access a test Kubernetes cluster running with Linux nodes, either x86_64 or ARM64. Note that using Docker Desktop on Windows or macOS will not work for this purpose. Also, you will need to have [kubectl](https://kubernetes.io/docs/tasks/tools/) and [helm](https://helm.sh/docs/intro/install/) installed and configured.
 
-## Install Falco
+## Deploy Falco
 
-First, install the helm repository
+First, install the helm repository:
 
 ```sh
 helm repo add falcosecurity https://falcosecurity.github.io/charts
 helm repo update
 ```
 
-Then install Falco
+Then install Falco:
 
 ```sh
 helm install --replace falco --namespace falco --create-namespace --set tty=true falcosecurity/falco
 ```
 
-And check that the Falco pods are running
+And check that the Falco pods are running:
 
 ```sh
 kubectl get pods -n falco
@@ -98,13 +98,13 @@ Falco pod(s) might need a few seconds to restart. Wait until they are ready:
 kubectl wait pods --for=condition=Ready --all -n falco
 ```
 
-Now let's trigger our new rule
+Then trigger our new rule:
 
 ```sh
 kubectl exec -it $(kubectl get pods --selector=app=nginx -o name) -- touch /etc/test_file_for_falco_rule
 ```
 
-And look at the logs
+And look at the logs:
 
 ```sh
 kubectl logs -l app.kubernetes.io/name=falco -n falco -c falco | grep Warning
@@ -116,7 +116,7 @@ You should see a log entry like the one below:
 13:14:27.811647863: Warning File below /etc opened for writing (file=/etc/test_file_for_falco_rule pcmdline=containerd-shim -namespace k8s.io -id d5438fedb274ac82963d99987313dae8da512236ace2f70472a772d95090b607 -address /run/containerd/containerd.sock gparent=systemd ggparent=<NA> gggparent=<NA> evt_type=openat user=root user_uid=0 user_loginuid=-1 process=touch proc_exepath=/usr/bin/touch parent=containerd-shim command=touch /etc/test_file_for_falco_rule terminal=34816 container_id=bf74f1749e23 container_image=docker.io/library/nginx container_image_tag=latest container_name=nginx k8s_ns=default k8s_pod_name=nginx-7854ff8877-h97p4)
 ```
 
-## Install Falcosidekick
+## Deploy Falcosidekick
 
 XXX Missing
 

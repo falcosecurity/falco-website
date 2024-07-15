@@ -9,7 +9,7 @@ weight: 10
 
 ## Install Falco
 
-First, make sure you have a Linux machine with a recent version of Docker installed. Note that the following won't work on Windows or MacOS running Docker Desktop.
+First, ensure you have a Linux machine with a recent version of Docker installed. Note that the following will not work on Windows or macOS running Docker Desktop.
 
 Run the following command:
 
@@ -21,7 +21,7 @@ sudo docker run --rm -i -t --name falco --privileged  \
     falcosecurity/falco:{{< latest >}}
 ```
 
-Falco is now enabled and is monitoring your system for events. Falco comes with a [pre-installed set of rules](https://github.com/falcosecurity/rules/blob/main/rules/falco_rules.yaml) that alert you upon suspicious behavior.
+Falco is now monitoring your system using the [pre-installed set of rules](https://github.com/falcosecurity/rules/blob/main/rules/falco_rules.yaml) that alert you upon suspicious behavior.
 
 ## Trigger a rule
 
@@ -31,7 +31,7 @@ Open another terminal on the same machine and run:
 sudo cat /etc/shadow
 ```
 
-Now go back to Falco and you'll see a message:
+Now go back to Falco, and you'll see a message like:
 
 ```
 2024-06-21T08:54:23.812791015+0000: Warning Sensitive file opened for reading by non-trusted program (file=/etc/shadow gparent=sudo ggparent=bash gggparent=tmux: evt_type=openat user=root user_uid=0 user_loginuid=1000 process=cat proc_exepath=/usr/bin/cat parent=sudo command=cat /etc/shadow terminal=34826 container_id=host container_name=host)
@@ -56,7 +56,7 @@ Stop the Falco container with `Ctrl-C`, copy the following text in a file and ca
   tags: [filesystem, mitre_persistence]
 ```
 
-Now start Falco again, this time mounting the new rule file:
+Then start Falco again, this time mounting the new rule file:
 
 ```sh
 sudo docker run --name falco --rm -i -t --privileged \
@@ -67,7 +67,7 @@ sudo docker run --name falco --rm -i -t --privileged \
     falcosecurity/falco:{{< latest >}}
 ```
 
-Now open another terminal and let's write a file in `/etc`:
+Finally, open another terminal and write a file in `/etc`:
 
 ```sh
 sudo touch /etc/test_file_falco_rule
