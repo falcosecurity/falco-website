@@ -9,9 +9,10 @@ weight: 30
 
 In this scenario, you will learn how to install Falco on an Ubuntu host, trigger a Falco rule by generating a suspicious event, and then examine the output.
 
-This activity aims to give you a quick example of how Falco works. After you complete it, you should be able to move on to [trying falco on  kubernetes](/docs/getting-started/falco-kubernetes-quickstart/) or spend some time reading some [additional resources](/docs/getting-started/falco-additional).
+This activity aims to give you a quick example of how Falco works. After you complete it, you should be able to move on to [trying falco on kubernetes](/docs/getting-started/falco-kubernetes-quickstart/) or spend some time reading some [additional resources](/docs/getting-started/falco-additional).
 
 ## Prerequisites
+
 This lab is based on installing Falco using the kernel module on Ubuntu.
 
 The scenario has been tested using VirtualBox and Lima (for MacBooks running Apple Silicon).
@@ -19,6 +20,7 @@ The scenario has been tested using VirtualBox and Lima (for MacBooks running App
 While this tutorial may work with Ubuntu running on a cloud provider or another virtualization platform, it has not been tested.
 
 ### VirtualBox setup
+
 The following steps will set up a VirtualBox virtual machine running Ubuntu 20.04.
 
 * Install VirtualBox and Vagrant according to the instructions appropriate for your local system.
@@ -37,6 +39,7 @@ vagrant ssh
 ```
 
 ### Lima setup for Apple silicon (M1/M2)
+
 This section explains how to create an Ubuntu 22.04 VM on Apple computers running M1 silicon (as opposed to Intel).
 
 If you are unsure what processor your Apple machine is running, you can find out by clicking the Apple icon in the upper left and choosing "About this Mac". The first item listed, Chip, tells you what silicon you're running on.
@@ -215,8 +218,3 @@ gggparent=systemd container_id=host image=<NA>)
 {{% pageinfo color=info %}}
 Be sure you are in same subdirectory as the Vagrantfile
 {{% /pageinfo %}}
-
----
-## Congratulations, you finished this scenario!
-
-Check out other items in our Getting Started section, including installing Falco on Kubernetes or learning more about Falco's architecture and features in the additional resources section.
