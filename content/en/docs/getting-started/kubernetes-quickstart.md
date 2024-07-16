@@ -89,7 +89,7 @@ customRules:
 And load it into Falco:
 
 ```sh
-helm upgrade --namespace falco falco falcosecurity/falco --set tty=true -f ~/tmp/falco_custom_rules_cm.yaml
+helm upgrade --namespace falco falco falcosecurity/falco --set tty=true -f falco_custom_rules_cm.yaml
 ```
 
 Falco pod(s) might need a few seconds to restart. Wait until they are ready:
@@ -116,9 +116,65 @@ You should see a log entry like the one below:
 13:14:27.811647863: Warning File below /etc opened for writing (file=/etc/test_file_for_falco_rule pcmdline=containerd-shim -namespace k8s.io -id d5438fedb274ac82963d99987313dae8da512236ace2f70472a772d95090b607 -address /run/containerd/containerd.sock gparent=systemd ggparent=<NA> gggparent=<NA> evt_type=openat user=root user_uid=0 user_loginuid=-1 process=touch proc_exepath=/usr/bin/touch parent=containerd-shim command=touch /etc/test_file_for_falco_rule terminal=34816 container_id=bf74f1749e23 container_image=docker.io/library/nginx container_image_tag=latest container_name=nginx k8s_ns=default k8s_pod_name=nginx-7854ff8877-h97p4)
 ```
 
-## Deploy Falcosidekick
+## Deploy Falcosidekick and Falcosidekick UI
 
-XXX Missing
+In the previous step we displayed the rule output by examining the Falco log for the pod in the cluster that is running on the node. Now we will see how we can forward these alerts to a custom location or display them in a clean GUI. There are many ways to accomplish this but one is by using [Falcosidekick](https://github.com/falcosecurity/falcosidekick) which can easily be deployed with the same Helm chart.
+
+Install Falcosidekick and Falcosidekick-UI in your test cluster:
+
+```sh
+helm upgrade --namespace falco falco falcosecurity/falco -f falco_custom_rules_cm.yaml --set falcosidekick.enabled=true --set falcosidekick.webui.enabled=true
+```
+
+Now check that it is running and its service is set up:
+
+```sh
+kubectl -n falco get svc
+```
+
+You should see something like this:
+
+```
+NAME                     TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+falco-falcosidekick      ClusterIP   10.43.212.119   <none>        2801/TCP   61s
+falco-falcosidekick-ui   ClusterIP   10.43.35.87     <none>        2802/TCP   60s
+```
+
+### Display events in the Falcosidekick UI
+
+Forward the UI port, which is 2802:
+```sh
+kubectl -n falco port-forward svc/falco-falcosidekick-ui 2802
+```
+
+And point your browser to http://localhost:2802 . The default username and password are `admin` / `admin`.
+
+Now click on "Events" on top of the page and trigger an event again:
+
+```sh
+kubectl exec -it $(kubectl get pods --selector=app=nginx -o name) -- cat /etc/shadow
+```
+
+You should see an event appearing in the Falcosidekick UI
+
+![Falcosidekick Event](../images/falcosidekick-event.png)
+
+The Falcosidekick UI can be used to quickly display events but most likely on a production system you will want to forward events to a centralized location. Falcosidekick supports more than 60 integrations. You can find an example below but you can refer to [the forwarding documentation](/docs/outputs/forwarding/) to learn more.
+
+### Forward events to a Slack webhook
+
+Deploy Falco again, this time disabling the web UI and enabling Slack forwarding. Of course, you can enable both if you wish.
+
+```sh
+helm upgrade --namespace falco falco falcosecurity/falco \
+  --set falcosidekick.enabled=true \
+  --set falcosidekick.config.slack.webhookurl=YOUR_WEBHOOK_URL_HERE \
+  --set falcosidekick.config.slack.minimumpriority=notice
+```
+
+If Slack is configured correctly, when an event is triggered you should receive a message like the following:
+
+![Slack output](../images/slack-output.png)
 
 ## Cleanup
 
