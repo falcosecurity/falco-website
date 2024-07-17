@@ -453,17 +453,19 @@ The **latest trusted public GPG key** used for packages signing can be downloade
 
 All official container images for Falco, starting from version 0.35.0, are signed with [cosign](https://github.com/sigstore/cosign). To verify the signature you can run the following command:
 
-```
-FALCO_VERSION=x.y.z # the version you want to verify
-cosign verify docker.io/falcosecurity/falco:$FALCO_VERSION --certificate-oidc-issuer=https://token.actions.githubusercontent.com --certificate-identity-regexp=https://github.com/falcosecurity/falco/ --certificate-github-workflow-ref=refs/tags/$FALCO_VERSION
+```sh
+cosign verify docker.io/falcosecurity/falco:{{< latest >}} \
+  --certificate-oidc-issuer=https://token.actions.githubusercontent.com \
+  --certificate-identity-regexp=https://github.com/falcosecurity/falco/ \
+  --certificate-github-workflow-ref=refs/tags/{{< latest >}}
 ```
 
 Replace `docker.io/falcosecurity/falco` with any official Falco image (`falco`, `falco-no-driver`, `falco-driver-loader`) from any official container registry to verify other images.
 
 If you have your own container registry and wish to retain the signature while copying Falco images you can simply use the cosign copy command:
 
-```
-cosign copy docker.io/falcosecurity/falco:0.35.0 your-registry/falco:0.35.0
+```sh
+cosign copy docker.io/falcosecurity/falco:{{< latest >}} your-registry/falco:{{< latest >}}
 ```
 
 And you'll be able to easily verify that the image in your registry was not tampered with!
