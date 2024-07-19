@@ -53,7 +53,7 @@ Here is a summary of  pull requests (PRs) I have submitted:
 - [PR #4: Feat: Support for pidfd_getfd syscall](https://github.com/falcosecurity/libs/pull/1145)
     - Description: Same as above, this PR adds support to the `pidfd_getfd` syscall
 
-# Conclutions 
+# Conclusions 
 
 In conclusion, my early contributions to the project before the GSoC period commenced provided me with a head start, enabling me to make a more significant impact right from the start. The guidance and support from Jason, combined with my pre-GSoC involvement, allowed me to seamlessly transition into the official GSoC period and continue building upon my previous contributions.
 
