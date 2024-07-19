@@ -63,6 +63,6 @@ During the final steps of compilation, the c++ exceutable will be converted to a
 
 The above image contains the `help` funtion of a `CLI` interface. This is a simple `std::cout<<` statement that logs the entire string into the console.  
 
-# Conclutions
+# Conclusions
 
 Overall, This week was super productive and  informative for me. For the next week, I'm looking into adding `parsers` for the syscalls that I added previous week. Also we'll be supporting `wasm` build for Falco's main repository, which looks very exciting!   
