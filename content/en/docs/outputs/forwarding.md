@@ -72,6 +72,8 @@ The available outputs in Falcosidekick are:
 - [**Syslog**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/syslog.md)
 - [**Zincsearch**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs//zincsearch.md)
 - [**OpenObserve**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/openobserve.md)
+- [**SumoLogic**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/sumologic.md)
+- [**Quickwit**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/quickwit.md)
 
 *Object Storage*
 
@@ -127,6 +129,13 @@ The available outputs in Falcosidekick are:
 *Workflow*
 
 - [**n8n**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/n8n.md)
+
+*Traces*
+
+- [**OTEL Traces**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/otlp_traces.md)
+
+*Response engine*
+- [**Falco Talon**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/talon.md)
 
 *Other*
 
