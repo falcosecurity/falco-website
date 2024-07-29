@@ -6,21 +6,6 @@ aliases:
 weight: 30
 ---
 
-## CoreOS
-
-The recommended way to run Falco on CoreOS is inside of its own Docker container using the install commands in the [Docker section](/docs/getting-started/running#docker). This method allows full visibility into all containers on the host OS.
-
-This method is automatically updated, includes some nice features such as automatic setup and bash completion, and is a generic approach that can be used on other distributions outside CoreOS as well.
-
-However, some users may prefer to run Falco in the CoreOS toolbox. While not the recommended method, this can be achieved by installing Falco inside the toolbox using the normal installation method, and then manually running the `falcoctl driver` tool:
-
-```shell
-toolbox --bind=/dev --bind=/var/run/docker.sock
-curl -s https://falco.org/script/install | bash
-falcoctl driver install
-```
-
-
 ## GKE
 
 Google Kubernetes Engine (GKE) uses Container-Optimized OS (COS) as the default operating system for its worker node pools. COS is a security-enhanced operating system that limits access to certain parts of the underlying OS. Because of this security constraint, Falco cannot insert its kernel module to process events for system calls. However, COS provides the ability to leverage eBPF (extended Berkeley Packet Filter) to supply the stream of system calls to the Falco engine.
