@@ -7,28 +7,6 @@ aliases:
 weight: 10
 ---
 
-## Scripted install {#scripted}
-
-To install Falco on Linux, you can download a shell script that takes care of the necessary steps:
-
-```shell
-curl -o install_falco -s https://falco.org/script/install
-```
-
-Then verify the [SHA256](https://en.wikipedia.org/wiki/SHA-2) checksum of the script using the `sha256sum` tool (or something analogous):
-
-```shell
-sha256sum install_falco
-```
-
-It should be `{{< sha256sum >}}`.
-
-Then run the script either as root or with sudo:
-
-```shell
-sudo bash install_falco
-```
-
 ## Helm
 
 You can install Falco in Kubernetes using Helm. The Falco community supports a helm chart and documentation on how to use it can [be found here](https://github.com/falcosecurity/charts/tree/master/charts/falco).
