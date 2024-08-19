@@ -1,7 +1,7 @@
 ---
 name: Detecting a Cryptomining Malware attack with Falco and Prometheus
 type: course 
-link: https://learn.sysdig.com/path/falco/detecting-a-crytomining-malware-attack-with-falco-and-prometheus
+link: https://play.instruqt.com/sysdig/invite/qgym9z4uzqug
 description: Learn how to detect Cryptominers with Falco and Prometheus
 thumbnail: detecting-cryptomining.svg
 duration: 2 hr 00 min
