@@ -1,7 +1,7 @@
 # How to add announcement
 Please follow these steps to add announcement 
 1. Fork [Falco](https://github.com/falcosecurity/falco-website) repository
-2. Add new announcemnt to [data/en/announcements](https://github.com/falcosecurity/falco-website/tree/master/data/en/announcements) in a following format:
+2. Add new announcemnt to [data/en/announcements](https://github.com/falcosecurity/falco-website/tree/main/data/en/announcements) in a following format:
 ```
 index: 2
 startDate: '2023-04-01T00:00:00-0700'

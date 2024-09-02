@@ -23,8 +23,8 @@ For example, when left as a comment on an issue or PR, the command `/kind transl
 
 The files and directories associated with the Falco localization are:
 
-* The [i18n](https://github.com/falcosecurity/falco-website/tree/master/i18n) directory: It contains the translated homepage of the Falco website. Each locale will have a file corresponding to the homepage. You should create one corresponding to your language.
-* The [content](https://github.com/falcosecurity/falco-website/tree/master/content) directory:  The translated content for blog, documentation, community, and videos resides in the [content](https://github.com/falcosecurity/falco-website/tree/master/content) directory.
+* The [i18n](https://github.com/falcosecurity/falco-website/tree/main/i18n) directory: It contains the translated homepage of the Falco website. Each locale will have a file corresponding to the homepage. You should create one corresponding to your language.
+* The [content](https://github.com/falcosecurity/falco-website/tree/main/content) directory:  The translated content for blog, documentation, community, and videos resides in the [content](https://github.com/falcosecurity/falco-website/tree/main/content) directory.
 * The [configuration file](https://github.com/falcosecurity/falco-website/blob/master/config.toml): It is located in the root directory. The TOML file contains the configuration of the static website generator, hugo. It contains settings for the languages, formatting, caches, and so on. Make sure that you create a language sub-section corresponding to your language.
 * OWNERS file: There is an [OWNERS](https://github.com/falcosecurity/falco-website/blob/master/OWNERS) file for the Falco website, listing the reviewers and approvers of the project. Similarly, create an OWNERS file for your language project. See the [OWNERS](https://github.com/falcosecurity/falco-website/blob/master/content/ml/OWNERS) file for Malayalam for reference.
 
@@ -44,7 +44,7 @@ This section helps you start an i18n effort for Falco from scratch.
 
     Replace `language-<lang code>` with your language of choice and locale code.
 
-3. Create the `<lang code>.yaml` file in the [i18n](https://github.com/falcosecurity/falco-website/tree/master/i18n) directory.
+3. Create the `<lang code>.yaml` file in the [i18n](https://github.com/falcosecurity/falco-website/tree/main/i18n) directory.
     In this file, you mainly include the translated content of the home page.
 
 
@@ -66,7 +66,7 @@ This section helps you start an i18n effort for Falco from scratch.
 
     ```
 
-5. Create a directory, named  `<lang code>`, corresponding to your language in the [content](https://github.com/falcosecurity/falco-website/tree/master/content) directory.
+5. Create a directory, named  `<lang code>`, corresponding to your language in the [content](https://github.com/falcosecurity/falco-website/tree/main/content) directory.
 
    For example,  `content/ml` is the directory corresponding to the language, Malayalam.  
 
@@ -90,7 +90,7 @@ This section helps you start an i18n effort for Falco from scratch.
 
 11. Translate the content in the Getting Started directory to your language.
 
-    For example, see the [English](https://github.com/falcosecurity/falco-website/tree/master/content/en/docs/getting-started) version of the Getting Started directory.
+    For example, see the [English](https://github.com/falcosecurity/falco-website/tree/main/content/en/docs/getting-started) version of the Getting Started directory.
 
 12. Ensure that you sign your commit with `git commit -s -m "message”`.
 
