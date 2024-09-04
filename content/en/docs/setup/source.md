@@ -26,7 +26,7 @@ dnf install git gcc gcc-c++ git make cmake elfutils-libelf-devel perl-IPC-Cmd
 {{% tab name="Debian/ Ubuntu" %}}
 
 ```bash
-apt update && apt install git cmake build-essential libelf-dev
+apt update && apt install git cmake clang build-essential linux-tools-common linux-tools-generic libelf-dev
 ```
 
 {{< /tab >}}}
@@ -35,7 +35,7 @@ apt update && apt install git cmake build-essential libelf-dev
 
 ```bash
 pacman -S git cmake make gcc wget
-pacman -S zlib jq yaml-cpp openssl curl c-ares protobuf grpc libyaml
+pacman -S zlib jq yaml-cpp openssl curl c-ares protobuf grpc libyaml bpf
 ```
 
 You'll also need kernel headers for building and making binaries properly.
