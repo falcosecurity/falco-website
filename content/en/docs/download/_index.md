@@ -2,7 +2,7 @@
 title: Download
 description: Officially supported Falco artifacts
 aliases:
-- ../download
+- ../install-operate/download
 - ../getting-started/download
 weight: 20
 ---
