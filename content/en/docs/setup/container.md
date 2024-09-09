@@ -2,13 +2,15 @@
 title: Deploy as a container
 description: Learn how to run and manage Falco as a container
 slug: container
+aliases:
+- ../install-operate/running
+- ../getting-started/running
 weight: 20
 ---
 
+{{% pageinfo color="primary" %}}
 Falco consumes streams of events and evaluates them against a set of security rules to detect abnormal behavior. By default, Falco is preconfigured to consume events from the Linux Kernel. This scenario requires Falco to be privileged, and depending on the kernel version installed on the node, a [driver](/docs/event-sources/kernel/) will be installed on the node. Since orchestration systems like Kubernetes are out of scope for this section, it's up to the user to manage the container lifecycle and the deployment across the nodes.
 
-
-{{% pageinfo color="primary" %}}
 Please refer to the TBD section for other installation scenarios, such as consuming cloud events or other data sources using plugins.
 {{% /pageinfo %}}
 
@@ -24,64 +26,11 @@ By default, Falco is preconfigured to consume events from the Linux Kernel. For 
 
 Different instructions apply to each method depending on the driver used. Note that the **modern eBPF does not need a driver installation**.
 
-
-### Driver installation {#driver-installation}
-
-This section provides instructions for installing the driver on the host system using the `falcosecurity/falco-driver-loader` image. This approach is helpful if you prefer to install the driver on the host first and then run Falco in a container later.
-
-Driver installation on the host is only required for the [eBPF probe](/docs/event-sources/drivers/#ebpf-probe) and [kernel module](/docs/event-sources/drivers/#kernel-module) drivers when these drivers are installed in separate stages.
-
-You can **skip this section** if you plan to use:
-- The [modern eBPF](/docs/event-sources/drivers/#modern-ebpf-probe) driver; or
-- The fully privileged method with the `falcosecurity/falco` image.
-
-{{% pageinfo color="primary" %}}
-When using the eBPF probe or kernel module drivers, the driver loader attempts to either download a prebuilt driver or build it on the fly as a fallback.
-
-Starting with Falco 0.38, the driver loader has improved functionality to automatically retrieve the required kernel headers for distributions supported by [driverkit](https://github.com/falcosecurity/driverkit). This enhancement ensures that the necessary kernel headers are available to dynamically build the appropriate driver—whether it is the [kernel module](/docs/event-sources/drivers/#kernel-module) or the [eBPF probe](/docs/event-sources/drivers/#ebpf-probe).
-
-However, if the driver loader cannot automatically fetch the required kernel headers, you may need to install them manually on the host as a prerequisite. For detailed instructions on manual installation, refer to the [Installation section](/docs/getting-started/installation).
-{{% /pageinfo %}}
-
-#### eBPF probe {#driver-installation-ebpf-probe}
-
-To install the eBPF probe driver on the host system, you can use the following command:
-
-```shell
-docker pull falcosecurity/falco-driver-loader:latest
-docker run --rm -i -t \
-    --privileged \
-    -v /root/.falco:/root/.falco \
-    -v /proc:/host/proc:ro \
-    -v /boot:/host/boot:ro \
-    -v /lib/modules:/host/lib/modules:ro \
-    -v /usr:/host/usr:ro \
-    -v /etc:/host/etc:ro \
-    falcosecurity/falco-driver-loader:latest ebpf
-```
-
-#### Kernel module {#driver-installation-kernel-module}
-
-To install the the kernel module driver on the host system, you can use the following command:
-
-```shell
-docker pull falcosecurity/falco-driver-loader:latest
-docker run --rm -i -t \
-    --privileged \
-    -v /root/.falco:/root/.falco \
-    -v /proc:/host/proc:ro \
-    -v /boot:/host/boot:ro \
-    -v /lib/modules:/host/lib/modules \
-    -v /usr:/host/usr:ro \
-    -v /etc:/host/etc:ro \
-    falcosecurity/falco-driver-loader:latest kmod
-```
-
-### Fully privileged {#fully-privileged}
+### Fully privileged {#docker-privileged}
 
 To run Falco in a container using Docker with full privileges use the following commands.
 
-#### Modern eBPF {#fully-privileged-modern-ebpf}
+#### Modern eBPF {#docker-privileged-modern-ebpf}
 
 The modern eBPF is bundled into Falco. Therefore, the `falco-no-driver` image is enough to run Falco. This allows you to run Falco without dependencies, just the following command:
 
@@ -95,7 +44,7 @@ docker run --rm -i -t \
            falcosecurity/falco-no-driver:latest
 ```
 
-#### eBPF probe {#fully-privileged-ebpf}
+#### eBPF probe {#docker-privileged-ebpf}
 
 To use Falco with the eBPF probe driver:
 
@@ -123,7 +72,7 @@ Alternativelly, you can install the driver on the host system first, then run Fa
 {{% /pageinfo %}}
 
 
-#### Kernel module {#fully-privileged-kernel-module}
+#### Kernel module {#docker-privileged-kernel-module}
 
 To use Falco with the Kernel module driver:
 
@@ -147,11 +96,11 @@ Alternativelly, you can install the driver on the host system first, then run Fa
 2. Replace `falcosecurity/falco:latest` with `falcosecurity/falco-no-driver:latest` in the above command.
 {{% /pageinfo %}}
 
-### Least privileged (recommended) {#least-privileged}
+### Least privileged (recommended) {#docker-least-privileged}
 
 To run Falco in a container using Docker with the [principle of least privilege](https://en.wikipedia.org/wiki/Principle_of_least_privilege), you can use the following commands depending on the driver you want to use.
 
-#### Modern eBPF {#least-privileged-modern-ebpf}
+#### Modern eBPF {#docker-least-privileged-modern-ebpf}
 
 ```bash
 docker run --rm -i -t \
@@ -178,7 +127,7 @@ However, in the command we use `CAP_SYS_ADMIN` because [docker doesn't support](
 
 {{% /pageinfo %}}
 
-#### eBPF probe {#least-privileged-ebpf-probe}
+#### eBPF probe {#docker-least-privileged-ebpf-probe}
 
 In the case of the eBPF probe driver, Falco needs the probe to be prepared and stored on the host system first. This first step requires full privileges and stores the probe under `/root/.falco`, while the Falco container can be run with the least privileges.
 
@@ -225,7 +174,7 @@ To run Falco in the least privileged with the eBPF probe, the following capabili
 
 {{% /pageinfo %}}
 
-#### Kernel module {#least-privileged-kernel-module}
+#### Kernel module {#docker-least-privileged-kernel-module}
 
 In the case of the kernel module driver, Falco needs the driver to be installed on the host system first. This first step requires full privileges, while the Falco container can be run with the least privileges.
 
@@ -262,6 +211,78 @@ docker info | grep -i apparmor
 
 {{% /pageinfo %}}
 
+## Driver installation {#driver-installation}
+
+This section provides instructions for installing the driver on the host system using the `falcosecurity/falco-driver-loader` image. This approach is helpful if you prefer to install the driver on the host first and then run Falco in a container later.
+
+Driver installation on the host is only required for the [eBPF probe](/docs/event-sources/drivers/#ebpf-probe) and [kernel module](/docs/event-sources/drivers/#kernel-module) drivers when these drivers are installed in separate stages.
+
+You can **skip this section** if you plan to use:
+- The [modern eBPF](/docs/event-sources/drivers/#modern-ebpf-probe) driver; or
+- The fully privileged method with the `falcosecurity/falco` image.
+
+{{% pageinfo color="primary" %}}
+When using the eBPF probe or kernel module drivers, the driver loader attempts to either download a prebuilt driver or build it on the fly as a fallback.
+
+Starting with Falco 0.38, the driver loader has improved functionality to automatically retrieve the required kernel headers for distributions supported by [driverkit](https://github.com/falcosecurity/driverkit). This enhancement ensures that the necessary kernel headers are available to dynamically build the appropriate driver—whether it is the [kernel module](/docs/event-sources/drivers/#kernel-module) or the [eBPF probe](/docs/event-sources/drivers/#ebpf-probe).
+
+However, if the driver loader cannot automatically fetch the required kernel headers, you may need to install them manually on the host as a prerequisite. For detailed instructions on manual installation, refer to the [Installation section](/docs/getting-started/installation).
+{{% /pageinfo %}}
+
+### Kernel module {#driver-installation-kernel-module}
+
+To install the the kernel module driver on the host system, you can use the following command:
+
+```shell
+docker pull falcosecurity/falco-driver-loader:latest
+docker run --rm -i -t \
+    --privileged \
+    -v /root/.falco:/root/.falco \
+    -v /proc:/host/proc:ro \
+    -v /boot:/host/boot:ro \
+    -v /lib/modules:/host/lib/modules \
+    -v /usr:/host/usr:ro \
+    -v /etc:/host/etc:ro \
+    falcosecurity/falco-driver-loader:latest kmod
+```
+
+### eBPF probe {#driver-installation-ebpf-probe}
+
+To install the eBPF probe driver on the host system, you can use the following command:
+
+```shell
+docker pull falcosecurity/falco-driver-loader:latest
+docker run --rm -i -t \
+    --privileged \
+    -v /root/.falco:/root/.falco \
+    -v /proc:/host/proc:ro \
+    -v /boot:/host/boot:ro \
+    -v /lib/modules:/host/lib/modules:ro \
+    -v /usr:/host/usr:ro \
+    -v /etc:/host/etc:ro \
+    falcosecurity/falco-driver-loader:latest ebpf
+```
+
+## Verify image signing
+
+All official container images for Falco, starting from version 0.35.0, are signed with [cosign](https://github.com/sigstore/cosign). To verify the signature you can run the following command:
+
+```sh
+cosign verify docker.io/falcosecurity/falco:{{< latest >}} \
+  --certificate-oidc-issuer=https://token.actions.githubusercontent.com \
+  --certificate-identity-regexp=https://github.com/falcosecurity/falco/ \
+  --certificate-github-workflow-ref=refs/tags/{{< latest >}}
+```
+
+Replace `docker.io/falcosecurity/falco` with any official Falco image (`falco`, `falco-no-driver`, `falco-driver-loader`) from any official container registry to verify other images.
+
+If you have your own container registry and wish to retain the signature while copying Falco images you can simply use the cosign copy command:
+
+```sh
+cosign copy docker.io/falcosecurity/falco:{{< latest >}} your-registry/falco:{{< latest >}}
+```
+
+And you'll be able to easily verify that the image in your registry was not tampered with!
 
 ## Configuration
 
