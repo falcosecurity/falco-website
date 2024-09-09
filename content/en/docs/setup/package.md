@@ -1,19 +1,12 @@
 ---
-title: Install
-description: Setting up Falco on a Linux system
+title: Install with a package
+description: Learn how setting up Falco via packages on a Linux system
 aliases:
 - ../installation
 - ../getting-started/installation
+- ../install-operate/installation
 weight: 30
 ---
-
-{{% pageinfo color="primary" %}}
-Falco can be used for Kubernetes runtime security.
-The most secure way to run Falco is to install Falco directly on the host system so that Falco is isolated from Kubernetes in the case of compromise.
-Then the Falco alerts can be consumed through read-only agents running in Kubernetes.
-
-You can also run Falco directly in Kubernetes as a Daemonset using Helm, see the [third-party integrations](/docs/install-operate/third-party)
-{{% /pageinfo %}}
 
 There are 2 main ways to install the Falco binary on your host:
 
