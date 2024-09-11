@@ -2,7 +2,7 @@
 title: Contribute
 linktitle: Contribute
 description: Find out how to contribute to the Falco Project
-weight: 110
+weight: 80
 notoc: true
 ---
 

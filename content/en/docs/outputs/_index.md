@@ -4,7 +4,7 @@ description: Work with Falco Outputs and send Falco Alerts in your desired platf
 linktitle: Falco Outputs
 aliases:
 - alerts
-weight: 40
+weight: 32
 ---
 
 Falco can send alerts to one or more output channels:

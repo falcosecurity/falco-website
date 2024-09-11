@@ -2,9 +2,10 @@
 title: Download
 description: Officially supported Falco artifacts
 aliases:
+- ../download
 - ../install-operate/download
 - ../getting-started/download
-weight: 20
+weight: 99
 ---
 
 Falco and its ecosystem components are available as downloadable files and OCI (Open Container Initiative) artifacts. This page provides the official URLs for accessing these artifacts.

@@ -1,10 +1,11 @@
 ---
 title: Build Falco from source
-description: Build Falco or its libraries yourself from the source code
+description: Build Falco or its libraries from the source code
 aliases:
 - ../source
 - ../getting-started/source
-weight: 50
+- ../install-operate/source
+weight: 10
 ---
 
 Welcome to the guide on how to build Falco yourself! You are very brave! Since you are already
