@@ -11,7 +11,7 @@ weight: 30
 There are two main methods to install Falco on your host using the [released Falco packages](/docs/download):
 
 1. **RPM or DEB package (include Systemd setup):** This method is detailed on this page.
-2. **Tarball archive:** For instructions, refer to the [Install on a host (tarball)](/docs/setup/tarbal) page.
+2. **Tarball archive:** For instructions, refer to the [Install on a host (tarball)](/docs/setup/tarball) page.
 
 
 ## Install

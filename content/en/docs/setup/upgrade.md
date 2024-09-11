@@ -103,9 +103,6 @@ If you installed Falco by following the [provided instructions](/docs/install-op
 zypper update falco
 ```
 
-## Falco binary
-
-For the Falco binary we don't provide specific update paths, you just have to remove files installed by the old `tar.gz` and download the new version of Falco as described [here](/docs/install-operate/installation/#falco-binary)
 
 ## Special Note on Kernel Drivers and Kernel Upgrades
 
