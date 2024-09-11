@@ -1,26 +1,13 @@
 ---
-title: Install from a Tarball (.tar.gz)
-description: Learn how installing Falco from a .tar.gz archive on your host
-weight: 30
+title: Install on a host (tarball)
+description: Learn how to set up Falco using the .tar.gz archive on your host
+weight: 40
 ---
 
-There are 2 main ways to install the Falco binary on your host:
+There are two main methods to install Falco on your host using the [released Falco packages](/docs/download):
 
-1. Falco packages (`.deb`, `.rpm`)
-2. Falco binary (`.tar.gz`)
-
-These packages include the default [configuration](https://github.com/falcosecurity/falco/blob/master/falco.yaml) and Falco [rules](https://github.com/falcosecurity/rules) files.
-
-Since Falco 0.38.0, a new config key, `config_files`, allows the user to load additional configuration files to override main config entries; it allows user to keep local customization between Falco upgrades. Its default value points to a new folder, `/etc/falco/config.d/` that gets installed by Falco and will be processed to look for local configuration files.
-
-The installation of the kernel driver varies depending on the type of driver and your setup. The sections below outline the available options, building upon the information provided in the previous [Download](/docs/install-operate/download/) guide.
-
-
-{{% pageinfo color="warning" %}}
-
-On January 18th, 2023 the GPG key used to sign Falco packages has been rotated. Check out [the related blog post](/blog/falco-packages-gpg-key-rotated/) and make sure you're using the most up-to-date key available at [falco.org/repo/falcosecurity-packages.asc](https://falco.org/repo/falcosecurity-packages.asc), and that you read the [section below about package signing](/docs/install-operate/installation#package-signing).
-
-{{% /pageinfo %}}
+1. **RPM or DEB package (include Systemd setup):** This method is detailed on this page.
+2. **Tarball archive:** For instructions, refer to the [Install on a host (tarball)](/docs/setup/tarbal) page.
 
 ## Install
 

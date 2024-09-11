@@ -1,6 +1,6 @@
 ---
-title: Install with a Package (DEB, RPM)
-description: Learn how setting up Falco via packages on your host
+title: Install on a host (DEB, RPM)
+description: Learn how to set up Falco using a .deb or a .rpm package on your host
 aliases:
 - ../installation
 - ../getting-started/installation
@@ -8,16 +8,10 @@ aliases:
 weight: 30
 ---
 
+There are two main methods to install Falco on your host using the [released Falco packages](/docs/download):
 
-{{% pageinfo color="warning" %}}
-There are two main methods to install Falco on your host:
-
-1. **Install using an RPM or DEB package (with Systemd setup):** This method is detailed on this page.
-2. **Install from a Tarball (`.tar.gz`):** For instructions, refer to the [Install from a Tarball (.tar.gz)](/docs/setup/binary) page.
-
-Both installation methods include the default [configuration](https://github.com/falcosecurity/falco/blob/master/falco.yaml) and stable Falco [rules](https://github.com/falcosecurity/rules) files.
-
-{{% /pageinfo %}}
+1. **RPM or DEB package (include Systemd setup):** This method is detailed on this page.
+2. **Tarball archive:** For instructions, refer to the [Install on a host (tarball)](/docs/setup/tarbal) page.
 
 
 ## Install
