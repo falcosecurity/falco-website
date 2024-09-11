@@ -14,7 +14,7 @@ There are two main methods to install Falco on your host using the [released Fal
 2. **Tarball archive:** For instructions, refer to the [Install on a host (tarball)](/docs/setup/tarball) page.
 
 
-## Install
+## Install {#install}
 
 
 This installation method is for Linux distribution with a package manager that supports DEB (Debian, Ubuntu) or RPM (CentOS, RHEL, Fedora, Amazon Linux) packages. 
@@ -25,7 +25,7 @@ In interactive installations, the Falco installation package uses the `dialog` b
 
 In non-interative installations (eg. `dialog` is not available, or if the user disable it by setting the `FALCO_FRONTEND=noninteractive` when installing Falco using the package manager), the automatic driver selection is enabled by default and for other options, the user needs to manually configure the Systemd services.
 
-### Environment variables
+### Environment variables {#environment-variables}
 
 The following environment variables can be used to customize the installation process:
 
@@ -54,7 +54,7 @@ Examples:
 
 
 
-### Debian-like systems (Debian, Ubuntu)
+### Install with `apt` (Debian/Ubuntu) {#install-with-apt}
 
 The following steps are for Debian and Debian-based distribution, such as Ubuntu, which use the `apt` package manager.
 
@@ -109,7 +109,7 @@ sudo apt-get install apt-transport-https
     ```
 
 
-### CentOS/RHEL/Fedora/Amazon Linux {#centos-rhel}
+### Install with `yum` (CentOS/RHEL/Fedora/Amazon Linux) {#install-with-yum}
 
 1. Trust the `falcosecurity` GPG key
 
@@ -168,7 +168,7 @@ sudo apt-get install apt-transport-https
  >         4. Load the Falco driver
  >         $ insmod /var/lib/dkms/falco/4.0.0+driver/$(uname -r)/x86_64/module/falco.ko.xz     
 
-### openSUSE {#suse}
+### Install with `zypper` (openSUSE) {#install-with-zypper}
 
 1. Trust the `falcosecurity` GPG key
 
@@ -229,7 +229,7 @@ After the first dialog, you should see a second one:
 ![](/docs/getting-started/images/dialog-2.png)
 
 
-#### Manual system setup {#manual-system-setup}
+#### Manual system setup {#manual-systemd-setup}
 
 You may need to complete the setup configuration, if you are in one of the following cases:
 - you disabled the interactive installation (eg. using the `FALCO_FRONTEND=noninteractive` env variable)
@@ -337,13 +337,114 @@ falco-kmod.service                                loaded active running   Falco:
 In this mode, the Falcoctl service is masked by default so if you want to enable it in a second step you need to type `systemctl unmask falcoctl-artifact-follow.service`.
 
 
-## Configuration
+## Configuration {#configuration}
 
 Since Falco 0.38.0, a new config key, `config_files`, allows the user to load additional configuration files to override main config entries; it allows user to keep local customization between Falco upgrades. Its default value points to a new folder, `/etc/falco/config.d/` that gets installed by Falco and will be processed to look for local configuration files.
 
-## Upgrade
+## Upgrade {#upgrade}
+
+### Upgrade with `apt` (Debian/Ubuntu) {#upgrade-with-apt}
+
+{{% pageinfo color="warning" %}}
+
+If you configured the `apt` repository by having followed the instructions for Falco 0.27.0 or older, you may need to update the repository URL, otherwise, **fell free to ignore this message**
+
+```shell
+sed -i 's,https://dl.bintray.com/falcosecurity/deb,https://download.falco.org/packages/deb,' /etc/apt/sources.list.d/falcosecurity.list
+apt-get clean
+apt-get -y update
+```
+
+Check in the `apt-get update` log that `https://download.falco.org/packages/deb` is present.
+
+{{% /pageinfo %}}
+
+If you installed Falco by following the [provided instructions](/docs/install-operate/installation/#installation-details):
+
+```shell
+apt-get --only-upgrade install falco
+```
+
+### Upgrade with `yum` (CentOS/RHEL/Fedora/Amazon Linux) {#upgrade-with-yum}
+
+{{% pageinfo color="warning" %}}
+If you configured the `yum` repository by having followed the instructions for Falco 0.27.0 or older, you may need to update the repository URL, otherwise, **fell free to ignore this message**
+
+```shell
+sed -i 's,https://dl.bintray.com/falcosecurity/rpm,https://download.falco.org/packages/rpm,' /etc/yum.repos.d/falcosecurity.repo
+yum clean all
+```
+
+Then check that the `falcosecurity-rpm` repository is pointing to `https://download.falco.org/packages/rpm/`:
+
+```shell
+yum repolist -v falcosecurity-rpm
+```
+
+{{% /pageinfo %}}
+
+If you installed Falco by following the [provided instructions](/docs/install-operate/installation/#centos-rhel):
+
+1. Check for updates:
+
+    ```shell
+    yum check-update
+    ```
+
+2. If a newer Falco version is available:
+
+    ```shell
+    yum update falco
+    ```
+
+### Upgrade with `zypper` (openSUSE) {#upgrade-with-zypper}
+
+{{% pageinfo color="warning" %}}
+If you configured the `zypper` repository by having followed the instructions for Falco 0.27.0 or older, you may need to update the repository URL, otherwise, **fell free to ignore this message**
+
+```shell
+sed -i 's,https://dl.bintray.com/falcosecurity/rpm,https://download.falco.org/packages/rpm,' /etc/zypp/repos.d/falcosecurity.repo
+zypper refresh
+```
+
+Then check that the `falcosecurity-rpm` repository is pointing to `https://download.falco.org/packages/rpm/`:
+
+```shell
+zypper lr falcosecurity-rpm
+```
+
+{{% /pageinfo %}}
+
+If you installed Falco by following the [provided instructions](/docs/install-operate/installation/#suse):
+
+```shell
+zypper update falco
+```
+
+## Kernel Upgrades {#kernel-upgrades}
+
+When performing kernel upgrades on your host, a reboot is required. When using a Kernel Module or a eBPF probe, the Falco driver loader (ie. `falcoctl driver`) should be able to automatically find a pre-built driver (or build it on the fly) corresponding to the updated kernel release (`uname -r`), making it easy to handle kernel upgrades. The Falco Project features a kernel crawler and automated CI, ensuring you can always obtain the necessary pre-built driver artifact, even for the latest kernel releases we support.
+
 
 ## Uninstall
+
+### Uninstall with `apt` (Debian/Ubuntu) {#install-with-apt}
+
+```shell
+apt-get --purge autoremove falco
+```
+
+### Uninstall with `yum` (CentOS/RHEL/Fedora/Amazon Linux) {#install-with-yum}
+
+```shell
+yum autoremove falco
+```
+
+### Uninstall with `zypper` (openSUSE) {#install-with-zypper}
+
+```shell
+zypper remove falco
+```
 
 ## Package signing {#package-signing}
 
