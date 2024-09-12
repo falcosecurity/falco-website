@@ -15,9 +15,11 @@ Falco consumes streams of events and evaluates them against a set of security ru
 For other installation scenarios, such as consuming cloud events or other data sources using plugins, please refer to the TBD section.
 {{% /pageinfo %}}
 
-The recommended way to deploy Falco on a Kubernetes cluster is to use the Helm chart. The official charts repository is hosted at [https://falcosecurity.github.io/charts](https://falcosecurity.github.io/charts). Before deploying Falco on Kubernetes, ensure you can access the targetted cluster running with Linux nodes, either x86_64 or ARM64. Also, you will need to have [kubectl](https://kubernetes.io/docs/tasks/tools/) and [helm](https://helm.sh/docs/intro/install/) installed and configured.
+The recommended way to deploy Falco on a Kubernetes cluster is to use the provided Helm chart. The official Falco charts repository is hosted at [https://falcosecurity.github.io/charts](https://falcosecurity.github.io/charts). 
 
-Alternativelly, Falco can be installed in Kubernetes without Helm by providing manifest files and deploying them to your cluster. For details, see the [example here](https://github.com/falcosecurity/deploy-kubernetes/tree/main/kubernetes/falco/templates).
+If needed, you can consult the [Installing Helm](https://helm.sh/docs/intro/install/) guide for information about how to download and install Helm. Before deploying Falco on Kubernetes, ensure you can access the targetted cluster running with Linux nodes, either x86_64 or ARM64. Also, you will need to have [kubectl](https://kubernetes.io/docs/tasks/tools/) and [helm](https://helm.sh/docs/intro/install/) installed and configured.
+
+_Alternativelly, Falco can be installed in Kubernetes without Helm by providing manifest files and deploying them to your cluster. For details, see the [example here](https://github.com/falcosecurity/deploy-kubernetes/tree/main/kubernetes/falco/templates)._
 
 ## Install
 

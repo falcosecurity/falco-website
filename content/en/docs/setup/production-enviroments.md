@@ -1,12 +1,12 @@
 ---
-title: Production Environment
+title: Production Environments
 description: Integrations built on the Falco core in a production environment
 aliases:
 - ../../getting-started/third-party/production
-weight: 30
+weight: 90
 ---
 
-## GKE
+## GKE {#gke}
 
 Google Kubernetes Engine (GKE) uses Container-Optimized OS (COS) as the default operating system for its worker node pools. COS is a security-enhanced operating system that limits access to certain parts of the underlying OS. Because of this security constraint, Falco cannot insert its kernel module to process events for system calls. However, COS provides the ability to leverage eBPF (extended Berkeley Packet Filter) to supply the stream of system calls to the Falco engine.
 
@@ -29,13 +29,13 @@ To execute the script above successfully, you will need `clang` and `llvm` insta
 If you are installing Falco from packages, you can start and enable `falco-bpf.service` systemd unit,
 that takes care of forcing the eBPF driver for you.  
 
-If you are [installing Falco with Helm](/docs/getting-started/third-party/install-tools/#helm), you will need to set the `driver.kind` option to `ebpf`:
+If you are [installing Falco with Helm](/docs/setup/kubernetes/), you will need to set the `driver.kind` option to `ebpf`:
 
 ```
 helm install falco falcosecurity/falco --set driver.kind=ebpf
 ```
 
-### K3s
+## K3s {#k3s}
 
 [K3s](https://k3s.io/) is a lightweight, CNCF certified Kubernetes distribution. It has embedded components like etcd (datastore), CoreDNS, traefik ingress controller and etc. to simplify Kubernetes installation or upgrade.
 
