@@ -12,7 +12,7 @@ weight: 10
 {{% pageinfo color="primary" %}}
 Falco consumes streams of events and evaluates them against a set of security rules to detect abnormal behavior. By default, Falco is preconfigured to consume events from the Linux Kernel. This default installation scenario will add Falco to all nodes in your cluster using a [DeamonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) and comes with a [pre-installed set of rules](https://github.com/falcosecurity/rules/blob/main/rules/falco_rules.yaml). This scenario requires Falco to be privileged, and depending on the kernel version installed on the node, a [driver](/docs/event-sources/kernel/) will be installed on the node.
 
-For other installation scenarios, such as consuming cloud events or other data sources using plugins, please refer to the TBD section.
+For other installation scenarios, such as consuming cloud events or other data sources using plugins, please refer to the [Plugins](docs/plugins/) section.
 {{% /pageinfo %}}
 
 The recommended way to deploy Falco on a Kubernetes cluster is to use the provided Helm chart. The official Falco charts repository is hosted at [https://falcosecurity.github.io/charts](https://falcosecurity.github.io/charts). 
