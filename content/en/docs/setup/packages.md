@@ -16,7 +16,6 @@ There are two main methods to install Falco on your host using the [released Fal
 
 ## Install {#install}
 
-
 This installation method is for Linux distribution with a package manager that supports DEB (Debian, Ubuntu) or RPM (CentOS, RHEL, Fedora, Amazon Linux) packages. 
 
 In interactive installations, the Falco installation package uses the `dialog` binary for configuration prompts. The dialog allows the user to complete the Systemd setup which include:
@@ -216,7 +215,7 @@ sudo apt-get install apt-transport-https
 
 ## Systemd setup
 
-#### Setup with dialog {#systemd-setup-with-dialog}
+### Setup with dialog {#systemd-setup-with-dialog}
 
 By default, if you have the `dialog` binary installed on your system, you will be prompted with this:
 
@@ -229,7 +228,7 @@ After the first dialog, you should see a second one:
 ![](/docs/getting-started/images/dialog-2.png)
 
 
-#### Manual system setup {#manual-systemd-setup}
+### Manual system setup {#manual-systemd-setup}
 
 You may need to complete the setup configuration, if you are in one of the following cases:
 - you disabled the interactive installation (eg. using the `FALCO_FRONTEND=noninteractive` env variable)
@@ -306,9 +305,34 @@ As a side note, if you preferred not to use the `falcoctl` tool to automatically
 $ sudo systemctl mask falcoctl-artifact-follow.service
 Created symlink /etc/systemd/system/falcoctl-artifact-follow.service → /dev/null.
 ```
+### Configuring services {#systemd-configuring-services}
 
+If you installed the Falco packages using the `dialog` option, all your services should already be up and running. However, if you chose the `Manual configuration` option or used the `FALCO_FRONTEND=noninteractive` environment variable, you need to configure the services manually.
 
-#### About the Falcoctl service (automatic rules update) {#falcoctl-service}
+If you need to switch from one service to another, ensure that the current service is properly stopped before starting the new one. This can be done by using the appropriate service management commands for your system (e.g., `systemctl stop <service_name>` and `systemctl start <new_service_name>`).
+
+For example, if you want to use the service for the eBPF probe driver:
+
+1. Type `systemctl list-units | grep falco` to check that no unit is running. Stop the current services, if any.
+
+2. Now you have to decide whether you want the Falcoctl service running together with the Falco one. If yes you don't have to do anything, else you will need to mask the Falcoctl service with `systemctl mask falcoctl-artifact-follow.service`. As pointed out [in this section](/docs/getting-started/installation/#rule-update) the Falcoctl service is strictly related to the Falco one so if you don't mask it, it will be started together with the Falco service.
+
+3. Type `falcoctl driver config --type ebpf` to configure Falco to use eBPF driver, then `falcoctl driver install` to download/compile the eBPF probe.
+
+4. Now running `systemctl start falco-bpf.service` and typing `systemctl list-units | grep falco` you should see something like that (supposing you didn't mask the Falcoctl service):
+
+    ```text
+    falco-bpf.service                                 loaded active running   Falco: Container Native Runtime Security with ebpf
+    falcoctl-artifact-follow.service                  loaded active running   Falcoctl Artifact Follow: automatic artifacts update service
+    ```
+
+5. If you want to stop both services in one shot
+
+    ```bash
+    systemctl stop falco-bpf.service
+    ```
+
+### Falcoctl service (automatic rules update) {#falcoctl-service}
 
 If this service is enabled (as default), typing `systemctl list-units | grep falco` you should see something similar to this:
 
@@ -336,10 +360,26 @@ falco-kmod.service                                loaded active running   Falco:
 
 In this mode, the Falcoctl service is masked by default so if you want to enable it in a second step you need to type `systemctl unmask falcoctl-artifact-follow.service`.
 
+### Custom service {#systemd-custom-service}
+
+You may have noticed a Falco unit called `falco-custom.service`. You should use it when you want to run Falco with a custom configuration like a plugin or Gvisor. Please note that in this case you have to modify this template according to how you want to run Falco, the unit should not be used as is!
+
 
 ## Configuration {#configuration}
 
+The Falco configuration file is located at `/etc/falco/falco.yaml`. You can edit it to customize Falco's behavior.
+
 Since Falco 0.38.0, a new config key, `config_files`, allows the user to load additional configuration files to override main config entries; it allows user to keep local customization between Falco upgrades. Its default value points to a new folder, `/etc/falco/config.d/` that gets installed by Falco and will be processed to look for local configuration files.
+
+### Hot Reload
+
+By default, with the `watch_config_files` configuration option enabled, Falco automatically monitors changes to configuration and rule files. When these files are modified, Falco will automatically reload the updated configuration without requiring a restart. 
+
+If this option is disabled, you can manually restart the Falco systemd service to apply the changes:
+
+```shell
+systemctl restart falco
+```
 
 ## Upgrade {#upgrade}
 
@@ -421,7 +461,7 @@ If you installed Falco by following the [provided instructions](/docs/install-op
 zypper update falco
 ```
 
-## Kernel Upgrades {#kernel-upgrades}
+### Kernel Upgrades {#kernel-upgrades}
 
 When performing kernel upgrades on your host, a reboot is required. When using a Kernel Module or a eBPF probe, the Falco driver loader (ie. `falcoctl driver`) should be able to automatically find a pre-built driver (or build it on the fly) corresponding to the updated kernel release (`uname -r`), making it easy to handle kernel upgrades. The Falco Project features a kernel crawler and automated CI, ensuring you can always obtain the necessary pre-built driver artifact, even for the latest kernel releases we support.
 
@@ -465,7 +505,7 @@ The **latest trusted public GPG key** used for packages signing can be downloade
 
 This section aims to offer further guidance when something doesn't go as expected in the installation of Falco.
 
-### Driver issues
+### Unable to find a prebuilt driver {#unable-to-find-prebuilt-driver}
 
 * `ERROR failed: unable to find a prebuilt driver`
 
@@ -489,4 +529,12 @@ There are a limited set of Linux distributions whose kernels are supported by th
 
 {{% /pageinfo %}}
 
+### Enable the BPF JIT Compiler {#enable-bpf-jit-compiler}
+
+If you are using the eBPF probe, in order to ensure that performance is not degraded, make sure that:
+
+* Your kernel has `CONFIG_BPF_JIT` enabled
+* `net.core.bpf_jit_enable` is set to 1 (enable the BPF JIT Compiler)
+
+This can be verified via `sysctl -n net.core.bpf_jit_enable`.
 
