@@ -79,6 +79,29 @@ Finally you can follow the same instructions for [enabling Systemd manually](/do
 
 ## Configuration
 
+The Falco configuration file is located at `/etc/falco/falco.yaml`. You can edit it to customize Falco's behavior.
+
+Since Falco 0.38.0, a new config key, `config_files`, allows the user to load additional configuration files to override main config entries; it allows user to keep local customization between Falco upgrades. Its default value points to a new folder, `/etc/falco/config.d/` that gets installed by Falco and will be processed to look for local configuration files.
+
+You can also override the default configuration by passing options to the `falco` binary. For example, to force the eBPF probe or the kernel module:
+
+```bash
+# Force eBPF probe
+falco -o engine.kind=ebpf
+# Force kernel module
+falco -o engine.kind=kmod
+```
+
+### Hot Reload
+
+By default, with the `watch_config_files` configuration option enabled, Falco automatically monitors changes to configuration and rule files. When these files are modified, Falco will automatically reload the updated configuration without requiring a restart. 
+
+If this option is disabled, you can manually reload the configuration by sending a `SIGHUP` signal to the Falco process. To do this, use the following command:
+
+```bash
+kill -1 $(cat /var/run/falco.pid)
+```
+
 ## Upgrade
 
 If you are using the kernel module driver, please remove it with root priviliges before upgrading Falco to avoid issues during the upgrade.
