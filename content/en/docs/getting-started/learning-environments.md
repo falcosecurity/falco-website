@@ -1,9 +1,7 @@
 ---
-title: Learning Environment
-description: Integrations built on the Falco core in a learning environment
-aliases:
-- ../../getting-started/third-party/learning
-weight: 20
+title: Learning Environments
+description: Learn how to use Falco in a learning environment
+weight: 90
 ---
 
 ## minikube
