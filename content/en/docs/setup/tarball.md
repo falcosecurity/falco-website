@@ -4,6 +4,12 @@ description: Learn how to set up Falco using the .tar.gz archive on your host
 weight: 40
 ---
 
+{{% pageinfo color="primary" %}}
+Falco consumes streams of events and evaluates them against a set of security rules to detect abnormal behavior. By default, Falco is preconfigured to consume events from the Linux Kernel. This scenario requires Falco to be privileged, and depending on the kernel version installed on the host, a [driver](/docs/event-sources/kernel/) need to be installed.
+
+For other installation scenarios, such as consuming cloud events or other data sources using plugins, please refer to the [Plugins](docs/plugins/) section.
+{{% /pageinfo %}}
+
 There are two main methods to install Falco on your host using the [released Falco packages](/docs/download):
 
 1. **RPM or DEB package (include Systemd setup):** For instructions, refer to the [Install on a host (DEB, RPM)](/docs/setup/packages) page.

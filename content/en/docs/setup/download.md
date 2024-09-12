@@ -14,7 +14,12 @@ For a comprehensive overview of the available artifacts and their versioning, re
 
 ### Packages {#packages}
 
-The tables below provides quick links for Falco packages hosted at [download.falco.org](https://download.falco.org/?prefix=packages/).
+{{% pageinfo color="primary" %}}
+For installation instructions, refer to the [Install on a host (DEB, RPM)](/docs/setup/packages/) or the [Install on a host (tarball)](/docs/setup/tarball/) pages.
+{{% /pageinfo %}}
+
+
+The tables below provides quick links for Falco packages hosted at [download.falco.org](https://download.falco.org/?prefix=packages/). 
 
 | Packages | Download for Linux **x86_64** |
 | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -33,22 +38,8 @@ The tables below provides quick links for Falco packages hosted at [download.fal
 ### Container images {#images}
 
 {{% pageinfo color="primary" %}}
-When using Falco for [Kernel Events](/docs/event-sources/kernel/) (i.e. with the `syscall` data source enabled), the Falco binary relies on having a {{< glossary_tooltip text="driver" term_id="drivers" >}} available on the host system.
-
-Starting from Falco 0.38.0, the default driver is the [modern eBPF driver](/docs/event-sources/kernel/#modern-ebpf-probe), which is included in the Falco binary and built using the [CO-RE "Compile Once - Run Everywhere"](https://en.wikipedia.org/wiki/EBPF#eBPF_CO-RE_(Compile_Once_-_Run_Everywhere)) technology. If your system statisfies the modern eBPF driver requirements, you don't need to use a `*-driver-loader` nor an image with the building toolchain included.
-
-In brief, you can just use the `falcosecurity/falco-no-driver` image if you are either:
- - using the [modern eBPF driver](/docs/event-sources/kernel/#modern-ebpf-probe) (default option) 
- - or if you are using only [plugin data sources](/docs/event-sources/plugins/).
+For deployment instructions, refer to the [Deploy as a container](/docs/setup/containers/) or the [Deploy on Kubernetes](/docs/setup/kubernetes/) pages.
 {{% /pageinfo %}}
-
-
-The preferred installation method is to install the driver using the native artifacts defined above or
-temporarily run the `falcosecurity/falco-driver-loader` image as privileged, then using the `falcosecurity/falco-no-driver`.
-
-For more details, see the [Run within Docker section](/docs/install-operate/running/#docker).
-
-For Kubernetes deployments, see the [Deployment section](/docs/install-operate/deployment/#kubernetes).
 
 The tables below provides quick pull commands for Falco container images hosted at [Docker Hub](https://hub.docker.com/r/falcosecurity).
 
@@ -92,4 +83,20 @@ To download a pre-built driver, navigate to the driver versions' directory that 
 
 #### Falcoctl {#falcoctl}
 
+[falcoctl](https://github.com/falcosecurity/falcoctl) is a command-line tool that helps you manage Falco and its ecosystem components. It is included in Falco distribution and can be used to download and install Falco drivers, rules, plugins, and other artifacts.
+
+You can also manually download `falcoctl` from [GitHub releases](https://github.com/falcosecurity/falcoctl/releases).
+
 #### Helm Charts {#helm-charts}
+
+{{% pageinfo color="primary" %}}
+For deployment instructions using Helm, please refer to the [Deploy on Kubernetes](/docs/setup/kubernetes/) page.
+{{% /pageinfo %}}
+
+The Falco Project provides varius Helm charts and documentation for Falco and its ecosystem tools.
+
+For detailed information about these charts, refer to the [Falco Helm Charts repository](https://github.com/falcosecurity/charts?tab=readme-ov-file#falco-helm-charts).
+ 
+For information about how to download and install Helm, see the official Helm installation guide.
+
+<a class="btn btn-primary" href="https://helm.sh/docs/intro/install/" role="button" aria-label="View Installing Helm Guide">View Installing Helm Guide</a>
