@@ -19,6 +19,7 @@ You can follow the official [Get Started!](https://minikube.sigs.k8s.io/docs/sta
 **Note**: Ensure that you have [installed kubectl](/docs/getting-started/third-party/install-tools/#kubectl).
 
 #### Falco with syscall source
+
 In order to install Falco with the `kernel module` or the `bpf probe`:
 
 1. Create the cluster with Minikube using a VM driver, in this case, Virtualbox:
@@ -41,6 +42,7 @@ In order to install Falco with the `kernel module` or the `bpf probe`:
     ```
 
 4. Install Falco using Helm:
+
     ```shell
     helm install falco \
          --set driver.kind=modern_ebpf \
@@ -62,9 +64,7 @@ In order to install Falco with the `kernel module` or the `bpf probe`:
     seconds, they are going to start monitoring your containers looking for
     security issues.
 
-
     No further action should be required.
-
 
     Tip:
     You can easily forward Falco events to Slack, Kafka, AWS Lambda and more with falcosidekick.
@@ -104,16 +104,20 @@ In order to install Falco with the `kernel module` or the `bpf probe`:
     Wed Apr 17 06:19:54 2024: One ring buffer every '2' CPUs.
     ```
 
-#### Falco with multiple sources 
-Here we run Falco in `minikube` cluster with multiple sources: `syscall` and `k8s_audit`. The next steps show how to start a `minikube` cluster with the [audit logs](https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/) enabled and deploy Falco with the `kernel module` and the `k8saudit plugin`:
+#### Falco with multiple sources
+
+Here we run Falco in a `minikube` cluster with multiple sources: `syscall` and `k8s_audit`. The next steps show how to start a `minikube` cluster with the [audit logs](https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/) enabled and deploy Falco with the `kernel module` and the `k8saudit plugin`:
 
 1. First, we need to create a new folder under the configuration folder of `minikube`:
+
     ```bash
     mkdir -p ~/.minikube/files/etc/ssl/certs
     ```
-    We are assuming that the `minikube` configuration folder lives in your home folder otherwise, adjust the command according to your environment.
+
+    We are assuming that the `minikube` configuration folder lives in your home folder; otherwise, adjust the command according to your environment.
 
 2. Let's create the needed configuration files to enable the `audit logs`. We are going to create a new file under `~/.minikube/files/etc/ssl/certs` named `audit-policy.yaml` and copy the required config into it. Copy the following snippet into your terminal shell:
+
     ```yaml
     cat << EOF > ~/.minikube/files/etc/ssl/certs/audit-policy.yaml
     apiVersion: audit.k8s.io/v1 # This is required.
@@ -224,6 +228,7 @@ Here we run Falco in `minikube` cluster with multiple sources: `syscall` and `k8
     ```
 
 3. Once the configuration files are in place we are ready to start the `minikube` cluster:
+
     ```bash
     minikube start \
         --extra-config=apiserver.audit-policy-file=/etc/ssl/certs/audit-policy.yaml \
@@ -234,6 +239,7 @@ Here we run Falco in `minikube` cluster with multiple sources: `syscall` and `k8
         --cpus=4 \
         --driver=virtualbox
     ```
+
     {{% pageinfo color="warning" %}}
      We need at least 4 CPUs for the VM to deploy Falco with multiple sources!
     {{% /pageinfo %}}
@@ -246,6 +252,7 @@ Here we run Falco in `minikube` cluster with multiple sources: `syscall` and `k8
     ```
 
 5. Install Falco using the pre-set values file:
+
     ```bash
     helm install falco \
         --set driver.kind=modern_ebpf \
@@ -253,50 +260,60 @@ Here we run Falco in `minikube` cluster with multiple sources: `syscall` and `k8
         --values=https://raw.githubusercontent.com/falcosecurity/charts/master/charts/falco/values-syscall-k8saudit.yaml \
         falcosecurity/falco
     ```
+
 6. Check that the Falco pod is up and running:
+
    ```bash
    kubectl get pods -l app.kubernetes.io/name=falco
    ```
+
 7. Execute the following command and keep the terminal open:
+
    ```bash
    kubectl logs -l app.kubernetes.io/name=falco -f
    ```
+
    The command will follow the log stream of the Falco pod by printing the logs as soon as Falco emits them. And make sure that the following lines are present:
+
    ```bash
    Mon Oct 24 15:24:06 2022: Opening capture with plugin 'k8saudit'
    Mon Oct 24 15:24:06 2022: Opening 'syscall' source with modern BPF probe
    ```
+
    It means that Falco is running with the configured sources.
 
 8. Trigger some rules to check that Falco works as expected. Open a new terminal and make sure that your `kubeconfig` 
 points to the minikube cluster. Then run:
+
     1. Trigger a `k8saudit` rule:
+
         ```bash
         kubectl create cm  myconfigmap --from-literal=username=admin --from-literal=password=123456
         ```
+
         In the terminal that we opened in step 8 we should see a log line like this:
+
         ```bash
         15:30:07.927586000: Warning K8s configmap with private credential (user=minikube-user verb=create resource=configmaps configmap=myconfigmap config={"password":"123456","username":"admin"})
         ```
+
     2. Trigger a Falco rule:
+
         ```bash
         kubectl exec $(kubectl get pods -l app.kubernetes.io/name=falco -o name) -- touch /bin/test-bin
         ```
+
         Check that a log similar to this one has been printed:
+
         ```bash
         15:32:04.318689836: Error File below a known binary directory opened for writing (user=<NA> user_loginuid=-1 command=touch /bin/test-bin pid=20954 file=/bin/test-bin parent=<NA> pcmdline=<NA> gparent=<NA> container_id=38e44b926166 image=falcosecurity/falco-no-driver) k8s.ns=default k8s.pod=falco-bggd7 container=38e44b926166
         ```
 
-
 ## kind
 
-[`kind`](https://kind.sigs.k8s.io/docs/) lets you run Kubernetes on
-your local computer. This tool requires that you have
-[Docker](https://docs.docker.com/get-docker/) installed and configured. 
-Currently not working directly on Mac with Linuxkit, but these directions work on Linux guest OS running `kind`.
+[`kind`](https://kind.sigs.k8s.io/docs/) lets you run Kubernetes on your local computer. This tool requires that you have [Docker](https://docs.docker.com/get-docker/) installed and configured. Currently not working directly on Mac with Linuxkit, but these directions work on Linux guest OS running `kind`.
 
-The kind [Quick Start](https://kind.sigs.k8s.io/docs/user/quick-start/) page
-shows you what you need to do to get up and running with kind.
+The kind [Quick Start](https://kind.sigs.k8s.io/docs/user/quick-start/) page shows you what you need to do to get up and running with kind.
 
 <a class="btn btn-primary" href="https://kind.sigs.k8s.io/docs/user/quick-start/" role="button" aria-label="View kind Quick Start Guide">View kind Quick Start Guide</a>
 
@@ -326,17 +343,16 @@ To run Falco on a `kind` cluster is as follows:
     kind create cluster --config=./kind-config.yaml
     ```
 
-4. [Install](/docs/getting-started/installation) Falco on a node in the kind cluster. To install Falco as a daemonset on a Kubernetes cluster use Helm. For more information about the configuration of Falco charts, see https://github.com/falcosecurity/charts/tree/master/charts/falco.
+4. [Deploy Falco with Helm](/docs/getting-started/falco-kubernetes-quickstart/#deploy-falco).
 
 ## MicroK8s
 
-MicroK8s is the smallest, fastest multi-node Kubernetes. Single-package fully conformant lightweight Kubernetes that works on Linux, Windows and Mac. Perfect for: Developer workstations, IoT, Edge, CI/CD.
+MicroK8s is the smallest, fastest multi-node Kubernetes. Single-package fully conformant lightweight Kubernetes that works on Linux, Windows, and Mac. Perfect for: Developer workstations, IoT, Edge, CI/CD.
 
-You can follow the official
-[Getting Started](https://microk8s.io/docs) guide to install.
+You can follow the official [Getting Started](https://microk8s.io/docs) guide to install.
 
-<a class="btn btn-primary" href="https://microk8s.io/docs" role="button" aria-label="View MicroK8s Getting Started Guide">View MicroK8s Getting Started Guide</a>
+<a class="btn btn-primary" href="
 
-To run Falco on MicroK8s:
+https://microk8s.io/docs" role="button" aria-label="View MicroK8s Getting Started Guide">View MicroK8s Getting Started Guide</a>
 
-1. [Install](/docs/getting-started/installation) Falco on a node in the MicroK8s cluster. To install Falco as a daemonset on a Kubernetes cluster use Helm. For more information about the configuration of Falco charts, see https://github.com/falcosecurity/charts/tree/master/charts/falco.
+Once the MicroK8s cluster is up and running, you can [deploy Falco with Helm](/docs/getting-started/falco-kubernetes-quickstart/#deploy-falco).
