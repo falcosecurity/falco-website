@@ -28,6 +28,8 @@ metrics:
   resource_utilization_enabled: true
   state_counters_enabled: true
   kernel_event_counters_enabled: true
+  # Enabling `kernel_event_counters_per_cpu_enabled` automatically enables `kernel_event_counters_enabled`
+  kernel_event_counters_per_cpu_enabled: false
   libbpf_stats_enabled: true
   plugins_metrics_enabled: true
   convert_memory_to_mb: true
@@ -51,26 +53,27 @@ Here is a brief glossary of the currently supported metrics for both the `json` 
   "output_fields": {
     "evt.hostname": "test",
     "evt.source": "syscall",
-    "evt.time": 1716133484148617968,
-    "falco.duration_sec": 26,
-    "falco.evts_rate_sec": 1946.2, # Taken between 2 metrics snapshots
-    "falco.host_boot_ts": 1715113297000000000,
+    "evt.time": 1726240940545718604,
+    "falco.duration_sec": 84,
+    "falco.evts_rate_sec": 5598.8,
+    "falco.host_boot_ts": 1726122734000000000,
+    "falco.host_ifinfo_json": "{\"ipv4\":{\"docker0\":\"172.17.0.1\",\"wlp0s20f3\":\"192.168.4.50\"},\"ipv6\":{\"wlp0s20f3\":\"fe80:0:0:0:9ac2:aaa4:22b3:f753\"}}",
     "falco.host_num_cpus": 20,
-    "falco.kernel_release": "6.7.9-200.fc39.x86_64",
-    "falco.num_evts": 138649,
-    "falco.num_evts_prev": 136762,
+    "falco.kernel_release": "6.8.11-200.fc39.x86_64",
+    "falco.num_evts": 537963,
+    "falco.num_evts_prev": 531854,
     "falco.outputs_queue_num_drops": 0,
-    "falco.sha256_config_file.falco": "c78b5de8e841917eb2c7a8257f37995e1c9594cffb71ea1e7aefa932172cac3d",
-    "falco.sha256_rules_file.falco_rules": "f176455ad6a1f39cf32065af14d33042e092b30489d255cbb1eff0dc03e67c5d",
-    "falco.start_ts": 1716133458145889366,
-    "falco.version": "0.38.0",
+    "falco.sha256_config_file.falco": "5c9689ea597fc708cddbd26fc8204dd8fbeda689865cbe2a03c9b41bb64fd0cc",
+    "falco.sha256_rules_file.falco_rules": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
+    "falco.start_ts": 1726240856432519187,
+    "falco.version": "0.39.0",
     "scap.engine_name": "bpf",
     "scap.n_drops_perc": 0.0
   },
   "priority": "Informational",
   "rule": "Falco internal: metrics snapshot",
   "source": "internal",
-  "time": "2024-05-19T15:44:44.148617968Z"
+  "time": "2024-09-13T15:22:20.545718604Z"
 }
 ```
   
@@ -79,46 +82,43 @@ Prometheus
 ```yaml
 # HELP falcosecurity_scap_engine_name_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_engine_name_info gauge
-falcosecurity_scap_engine_name_info{raw_name="engine_name",engine_name="bpf"} 1
+falcosecurity_scap_engine_name_info{engine_name="bpf"} 1
 # HELP falcosecurity_falco_version_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_version_info gauge
-falcosecurity_falco_version_info{raw_name="version",version="0.38.0"} 1
+falcosecurity_falco_version_info{version="0.39.0"} 1
 # HELP falcosecurity_falco_kernel_release_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_kernel_release_info gauge
-falcosecurity_falco_kernel_release_info{raw_name="kernel_release",kernel_release="6.7.9-200.fc39.x86_64"} 1
+falcosecurity_falco_kernel_release_info{kernel_release="6.8.11-200.fc39.x86_64"} 1
 # HELP falcosecurity_evt_hostname_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_evt_hostname_info gauge
-falcosecurity_evt_hostname_info{raw_name="hostname",hostname="test"} 1
-# HELP falcosecurity_falco_falco_sha256_rules_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_rules_files_info gauge
-falcosecurity_falco_falco_sha256_rules_files_info{raw_name="falco_sha256_rules_files",file_name="falco_rules",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
-# HELP falcosecurity_falco_falco_sha256_rules_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_rules_files_info gauge
-falcosecurity_falco_falco_sha256_rules_files_info{raw_name="falco_sha256_rules_files",file_name="falco-sandbox_rules",sha256="90a168fcbd3e5106f2e9cea34b33d1caa64c9d2c648f8b243bef64f36f3099ea"} 1
-# HELP falcosecurity_falco_falco_sha256_rules_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_rules_files_info gauge
-falcosecurity_falco_falco_sha256_rules_files_info{raw_name="falco_sha256_rules_files",file_name="falco-incubating_rules",sha256="ff12f8bb19b85c5b61fc28cc46ee5b1d47e6512fe932fc0486f98b3546db681e"} 1
-# HELP falcosecurity_falco_falco_sha256_config_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_config_files_info gauge
-falcosecurity_falco_falco_sha256_config_files_info{raw_name="falco_sha256_config_files",file_name="falco",sha256="4638f808f51021448d866309f393317aa61bc2b4ce42fa40237c3494ecd84bff"} 1
+falcosecurity_evt_hostname_info{hostname="test"} 1
+# HELP falcosecurity_falco_sha256_rules_files_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_sha256_rules_files_info gauge
+falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
+# HELP falcosecurity_falco_sha256_config_files_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_sha256_config_files_info gauge
+falcosecurity_falco_sha256_config_files_info{file_name="falco",sha256="5c9689ea597fc708cddbd26fc8204dd8fbeda689865cbe2a03c9b41bb64fd0cc"} 1
+# HELP falcosecurity_falco_host_ifinfo_json_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_host_ifinfo_json_info gauge
+falcosecurity_falco_host_ifinfo_json_info{host_ifinfo_json="{"ipv4":{"docker0":"172.17.0.1","wlp0s20f3":"192.168.4.50"},"ipv6":{"wlp0s20f3":"fe80:0:0:0:9ac2:aaa4:22b3:f753"}}"} 1
 # HELP falcosecurity_falco_evt_source_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_evt_source_info gauge
-falcosecurity_falco_evt_source_info{raw_name="evt_source",evt_source="syscall"} 1
+falcosecurity_falco_evt_source_info{evt_source="syscall"} 1
 # HELP falcosecurity_falco_start_timestamp_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_start_timestamp_nanoseconds gauge
-falcosecurity_falco_start_timestamp_nanoseconds{raw_name="start_ts"} 1716133458145889366
+falcosecurity_falco_start_timestamp_nanoseconds 1726240856432519187
 # HELP falcosecurity_falco_host_boot_timestamp_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_host_boot_timestamp_nanoseconds gauge
-falcosecurity_falco_host_boot_timestamp_nanoseconds{raw_name="host_boot_ts"} 1715113297000000000
+falcosecurity_falco_host_boot_timestamp_nanoseconds 1726122734000000000
 # HELP falcosecurity_falco_host_num_cpus_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_host_num_cpus_total gauge
-falcosecurity_falco_host_num_cpus_total{raw_name="host_num_cpus"} 20
+falcosecurity_falco_host_num_cpus_total 20
 # HELP falcosecurity_falco_outputs_queue_num_drops_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_outputs_queue_num_drops_total counter
-falcosecurity_falco_outputs_queue_num_drops_total{raw_name="outputs_queue_num_drops"} 0
+falcosecurity_falco_outputs_queue_num_drops_total 0
 # HELP falcosecurity_falco_duration_seconds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_duration_seconds_total counter
-falcosecurity_falco_duration_seconds_total{raw_name="duration_sec"} 14
+falcosecurity_falco_duration_seconds_total 21
 ```
 
 </details>
@@ -138,28 +138,53 @@ falcosecurity_falco_duration_seconds_total{raw_name="duration_sec"} 14
   "output_fields": {
     "evt.hostname": "test",
     "evt.source": "syscall",
-    "evt.time": 1716133976523893076,
-    "falco.duration_sec": 26,
-    "falco.evts_rate_sec": 19304.4, # Taken between 2 metrics snapshots
-    "falco.host_boot_ts": 1715113297000000000,
+    "evt.time": 1726241129530149989,
+    "falco.duration_sec": 105,
+    "falco.evts_rate_sec": 1136.0,
+    "falco.host_boot_ts": 1726122734000000000,
+    "falco.host_ifinfo_json": "{\"ipv4\":{\"docker0\":\"172.17.0.1\",\"wlp0s20f3\":\"192.168.4.50\"},\"ipv6\":{\"wlp0s20f3\":\"fe80:0:0:0:9ac2:aaa4:22b3:f753\"}}",
     "falco.host_num_cpus": 20,
-    "falco.kernel_release": "6.7.9-200.fc39.x86_64",
-    "falco.num_evts": 211543,
-    "falco.num_evts_prev": 192239,
+    "falco.kernel_release": "6.8.11-200.fc39.x86_64",
+    "falco.num_evts": 239707,
+    "falco.num_evts_prev": 238571,
     "falco.outputs_queue_num_drops": 0,
-    "falco.rules.matches_total": 2,
-    "falco.rules.Test_rule": 2,
-    "falco.sha256_config_file.falco": "c78b5de8e841917eb2c7a8257f37995e1c9594cffb71ea1e7aefa932172cac3d",
-    "falco.sha256_rules_file.falco_rules": "f176455ad6a1f39cf32065af14d33042e092b30489d255cbb1eff0dc03e67c5d",
-    "falco.start_ts": 1716133950520541198,
-    "falco.version": "0.38.0",
+    "falco.rules.Clear_Log_Activities": 0,
+    "falco.rules.Contact_K8S_API_Server_From_Container": 0,
+    "falco.rules.Create_Hardlink_Over_Sensitive_Files": 0,
+    "falco.rules.Create_Symlink_Over_Sensitive_Files": 0,
+    "falco.rules.Debugfs_Launched_in_Privileged_Container": 0,
+    "falco.rules.Detect_release_agent_File_Container_Escapes": 0,
+    "falco.rules.Directory_traversal_monitored_file_read": 0,
+    "falco.rules.Disallowed_SSH_Connection_Non_Standard_Port": 0,
+    "falco.rules.Drop_and_execute_new_binary_in_container": 0,
+    "falco.rules.Execution_from_dev_shm": 0,
+    "falco.rules.Fileless_execution_via_memfd_create": 0,
+    "falco.rules.Find_AWS_Credentials": 0,
+    "falco.rules.Linux_Kernel_Module_Injection_Detected": 0,
+    "falco.rules.Netcat_Remote_Code_Execution_in_Container": 0,
+    "falco.rules.PTRACE_anti_debug_attempt": 0,
+    "falco.rules.PTRACE_attached_to_process": 0,
+    "falco.rules.Packet_socket_created_in_container": 0,
+    "falco.rules.Read_sensitive_file_trusted_after_startup": 0,
+    "falco.rules.Read_sensitive_file_untrusted": 11,
+    "falco.rules.Redirect_STDOUT_STDIN_to_Network_Connection_in_Container": 0,
+    "falco.rules.Remove_Bulk_Data_from_Disk": 0,
+    "falco.rules.Run_shell_untrusted": 0,
+    "falco.rules.Search_Private_Keys_or_Passwords": 0,
+    "falco.rules.System_user_interactive": 0,
+    "falco.rules.Terminal_shell_in_container": 0,
+    "falco.rules.matches_total": 11,
+    "falco.sha256_config_file.falco": "7e1151264c1c809027adb5995eb127156734fdc19bca47a97a04fe47ce388e03",
+    "falco.sha256_rules_file.falco_rules": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
+    "falco.start_ts": 1726241024448034870,
+    "falco.version": "0.39.0",
     "scap.engine_name": "bpf",
     "scap.n_drops_perc": 0.0
   },
   "priority": "Informational",
   "rule": "Falco internal: metrics snapshot",
   "source": "internal",
-  "time": "2024-05-19T15:52:56.523893076Z"
+  "time": "2024-09-13T15:25:29.530149989Z"
 }
 ```
 
@@ -168,52 +193,46 @@ Prometheus
 ```yaml
 # HELP falcosecurity_scap_engine_name_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_engine_name_info gauge
-falcosecurity_scap_engine_name_info{raw_name="engine_name",engine_name="bpf"} 1
+falcosecurity_scap_engine_name_info{engine_name="bpf"} 1
 # HELP falcosecurity_falco_version_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_version_info gauge
-falcosecurity_falco_version_info{raw_name="version",version="0.38.0"} 1
+falcosecurity_falco_version_info{version="0.39.0"} 1
 # HELP falcosecurity_falco_kernel_release_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_kernel_release_info gauge
-falcosecurity_falco_kernel_release_info{raw_name="kernel_release",kernel_release="6.7.9-200.fc39.x86_64"} 1
+falcosecurity_falco_kernel_release_info{kernel_release="6.8.11-200.fc39.x86_64"} 1
 # HELP falcosecurity_evt_hostname_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_evt_hostname_info gauge
-falcosecurity_evt_hostname_info{raw_name="hostname",hostname="test"} 1
-# HELP falcosecurity_falco_falco_sha256_rules_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_rules_files_info gauge
-falcosecurity_falco_falco_sha256_rules_files_info{raw_name="falco_sha256_rules_files",file_name="falco_rules",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
-# HELP falcosecurity_falco_falco_sha256_rules_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_rules_files_info gauge
-falcosecurity_falco_falco_sha256_rules_files_info{raw_name="falco_sha256_rules_files",file_name="falco-sandbox_rules",sha256="90a168fcbd3e5106f2e9cea34b33d1caa64c9d2c648f8b243bef64f36f3099ea"} 1
-# HELP falcosecurity_falco_falco_sha256_rules_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_rules_files_info gauge
-falcosecurity_falco_falco_sha256_rules_files_info{raw_name="falco_sha256_rules_files",file_name="falco-incubating_rules",sha256="ff12f8bb19b85c5b61fc28cc46ee5b1d47e6512fe932fc0486f98b3546db681e"} 1
-# HELP falcosecurity_falco_falco_sha256_config_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_config_files_info gauge
-falcosecurity_falco_falco_sha256_config_files_info{raw_name="falco_sha256_config_files",file_name="falco",sha256="4638f808f51021448d866309f393317aa61bc2b4ce42fa40237c3494ecd84bff"} 1
+falcosecurity_evt_hostname_info{hostname="test"} 1
+# HELP falcosecurity_falco_sha256_rules_files_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_sha256_rules_files_info gauge
+falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
+# HELP falcosecurity_falco_sha256_config_files_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_sha256_config_files_info gauge
+falcosecurity_falco_sha256_config_files_info{file_name="falco",sha256="7e1151264c1c809027adb5995eb127156734fdc19bca47a97a04fe47ce388e03"} 1
+# HELP falcosecurity_falco_host_ifinfo_json_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_host_ifinfo_json_info gauge
+falcosecurity_falco_host_ifinfo_json_info{host_ifinfo_json="{"ipv4":{"docker0":"172.17.0.1","wlp0s20f3":"192.168.4.50"},"ipv6":{"wlp0s20f3":"fe80:0:0:0:9ac2:aaa4:22b3:f753"}}"} 1
 # HELP falcosecurity_falco_evt_source_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_evt_source_info gauge
-falcosecurity_falco_evt_source_info{raw_name="evt_source",evt_source="syscall"} 1
+falcosecurity_falco_evt_source_info{evt_source="syscall"} 1
 # HELP falcosecurity_falco_start_timestamp_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_start_timestamp_nanoseconds gauge
-falcosecurity_falco_start_timestamp_nanoseconds{raw_name="start_ts"} 1716133950520541198
+falcosecurity_falco_start_timestamp_nanoseconds 1726241024448034870
 # HELP falcosecurity_falco_host_boot_timestamp_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_host_boot_timestamp_nanoseconds gauge
-falcosecurity_falco_host_boot_timestamp_nanoseconds{raw_name="host_boot_ts"} 1715113297000000000
+falcosecurity_falco_host_boot_timestamp_nanoseconds 1726122734000000000
 # HELP falcosecurity_falco_host_num_cpus_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_host_num_cpus_total gauge
-falcosecurity_falco_host_num_cpus_total{raw_name="host_num_cpus"} 20
+falcosecurity_falco_host_num_cpus_total 20
 # HELP falcosecurity_falco_outputs_queue_num_drops_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_outputs_queue_num_drops_total counter
-falcosecurity_falco_outputs_queue_num_drops_total{raw_name="outputs_queue_num_drops"} 0
+falcosecurity_falco_outputs_queue_num_drops_total 0
 # HELP falcosecurity_falco_duration_seconds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_duration_seconds_total counter
-falcosecurity_falco_duration_seconds_total{raw_name="duration_sec"} 12
-# HELP falcosecurity_falco_rules_counters_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_rules_counters_total counter
-falcosecurity_falco_rules_counters_total{raw_name="rules_counters",priority="4",rule_name="Read sensitive file untrusted",source="syscall",tags="T1555, container, filesystem, host, maturity_stable, mitre_credential_access"} 10
-# HELP falcosecurity_falco_rules_counters_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_rules_counters_total counter
-falcosecurity_falco_rules_counters_total{raw_name="rules_counters",priority="5",rule_name="Unexpected UDP Traffic",source="syscall",tags="TA0011, container, host, maturity_incubating, mitre_exfiltration, network"} 1
+falcosecurity_falco_duration_seconds_total 81
+# HELP falcosecurity_falco_rules_matches_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_rules_matches_total counter
+falcosecurity_falco_rules_matches_total{priority="4",rule_name="Read sensitive file untrusted",source="syscall",tags="T1555, container, filesystem, host, maturity_stable, mitre_credential_access"} 11
 ```
   
 </details>
@@ -233,35 +252,36 @@ falcosecurity_falco_rules_counters_total{raw_name="rules_counters",priority="5",
   "output_fields": {
     "evt.hostname": "test",
     "evt.source": "syscall",
-    "evt.time": 1716133670287243881,
+    "evt.time": 1726241283922074152,
     "falco.container_memory_used_mb": 0.0, # Memory usage of the Falco process, only relevant for Kubernetes daemonset deployments, similar to container_memory_working_set_bytes
-    "falco.cpu_usage_perc": 4.3, # CPU usage (percentage of one CPU) of the Falco process, equivalent to `ps` output
-    "falco.duration_sec": 33,
-    "falco.evts_rate_sec": 9629.4, # Taken between 2 metrics snapshots
-    "falco.host_boot_ts": 1715113297000000000,
-    "falco.host_cpu_usage_perc": 8.6, # Overall CPU usage of all running processes on the underlying host (percentage of all CPUs)
-    "falco.host_memory_used_mb": 6538.4, # Overall memory usage of all running processes on the underlying host, unit indicated via the suffix
+    "falco.cpu_usage_perc": 2.8, # CPU usage (percentage of one CPU) of the Falco process, equivalent to `ps` output
+    "falco.duration_sec": 66,
+    "falco.evts_rate_sec": 1978.1, # Taken between 2 metrics snapshots
+    "falco.host_boot_ts": 1726122734000000000,
+    "falco.host_cpu_usage_perc": 10.1, # Overall CPU usage of all running processes on the underlying host (percentage of all CPUs)
+    "falco.host_ifinfo_json": "{\"ipv4\":{\"docker0\":\"172.17.0.1\",\"wlp0s20f3\":\"192.168.4.50\"},\"ipv6\":{\"wlp0s20f3\":\"fe80:0:0:0:9ac2:aaa4:22b3:f753\"}}",
+    "falco.host_memory_used_mb": 6140.0, # Overall memory usage of all running processes on the underlying host, unit indicated via the suffix
     "falco.host_num_cpus": 20,
-    "falco.host_open_fds": 18712,
-    "falco.host_procs_running": 1, # `procs_running` value obtained from ${HOST_ROOT}/proc/stat of the underlying host, showing a lower number than currently alive procs
-    "falco.kernel_release": "6.7.9-200.fc39.x86_64",
-    "falco.memory_pss_mb": 45.5, # Memory usage of the Falco process, unit indicated via the suffix
-    "falco.memory_rss_mb": 48.3, # Memory usage of the Falco process, unit indicated via the suffix
-    "falco.memory_vsz_mb": 1312.2, # Memory usage of the Falco process, unit indicated via the suffix
-    "falco.num_evts": 182124,
-    "falco.num_evts_prev": 172786,
+    "falco.host_open_fds": 18832,
+    "falco.host_procs_running": 2, # `procs_running` value obtained from ${HOST_ROOT}/proc/stat of the underlying host, showing a lower number than currently alive procs
+    "falco.kernel_release": "6.8.11-200.fc39.x86_64",
+    "falco.memory_pss_mb": 44.1, # Memory usage of the Falco process, unit indicated via the suffix
+    "falco.memory_rss_mb": 48.0, # Memory usage of the Falco process, unit indicated via the suffix
+    "falco.memory_vsz_mb": 1187.1, # Memory usage of the Falco process, unit indicated via the suffix
+    "falco.num_evts": 110342,
+    "falco.num_evts_prev": 108424,
     "falco.outputs_queue_num_drops": 0,
-    "falco.sha256_config_file.falco": "c78b5de8e841917eb2c7a8257f37995e1c9594cffb71ea1e7aefa932172cac3d",
-    "falco.sha256_rules_file.falco_rules": "f176455ad6a1f39cf32065af14d33042e092b30489d255cbb1eff0dc03e67c5d",
-    "falco.start_ts": 1716133637282607692,
-    "falco.version": "0.38.0",
+    "falco.sha256_config_file.falco": "787e7cca8afd80c1f1a309a50c7f0c0339bac9db3a2a525567689a53aa249aef",
+    "falco.sha256_rules_file.falco_rules": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
+    "falco.start_ts": 1726241217901083392,
+    "falco.version": "0.39.0",
     "scap.engine_name": "bpf",
     "scap.n_drops_perc": 0.0
   },
   "priority": "Informational",
   "rule": "Falco internal: metrics snapshot",
   "source": "internal",
-  "time": "2024-05-19T15:47:50.287243881Z"
+  "time": "2024-09-13T15:28:03.922074152Z"
 }
 ```
 
@@ -270,73 +290,70 @@ Prometheus
 ```yaml
 # HELP falcosecurity_scap_engine_name_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_engine_name_info gauge
-falcosecurity_scap_engine_name_info{raw_name="engine_name",engine_name="bpf"} 1
+falcosecurity_scap_engine_name_info{engine_name="bpf"} 1
 # HELP falcosecurity_falco_version_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_version_info gauge
-falcosecurity_falco_version_info{raw_name="version",version="0.38.0"} 1
+falcosecurity_falco_version_info{version="0.39.0"} 1
 # HELP falcosecurity_falco_kernel_release_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_kernel_release_info gauge
-falcosecurity_falco_kernel_release_info{raw_name="kernel_release",kernel_release="6.7.9-200.fc39.x86_64"} 1
+falcosecurity_falco_kernel_release_info{kernel_release="6.8.11-200.fc39.x86_64"} 1
 # HELP falcosecurity_evt_hostname_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_evt_hostname_info gauge
-falcosecurity_evt_hostname_info{raw_name="hostname",hostname="test"} 1
-# HELP falcosecurity_falco_falco_sha256_rules_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_rules_files_info gauge
-falcosecurity_falco_falco_sha256_rules_files_info{raw_name="falco_sha256_rules_files",file_name="falco_rules",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
-# HELP falcosecurity_falco_falco_sha256_rules_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_rules_files_info gauge
-falcosecurity_falco_falco_sha256_rules_files_info{raw_name="falco_sha256_rules_files",file_name="falco-sandbox_rules",sha256="90a168fcbd3e5106f2e9cea34b33d1caa64c9d2c648f8b243bef64f36f3099ea"} 1
-# HELP falcosecurity_falco_falco_sha256_rules_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_rules_files_info gauge
-falcosecurity_falco_falco_sha256_rules_files_info{raw_name="falco_sha256_rules_files",file_name="falco-incubating_rules",sha256="ff12f8bb19b85c5b61fc28cc46ee5b1d47e6512fe932fc0486f98b3546db681e"} 1
-# HELP falcosecurity_falco_falco_sha256_config_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_config_files_info gauge
-falcosecurity_falco_falco_sha256_config_files_info{raw_name="falco_sha256_config_files",file_name="falco",sha256="4638f808f51021448d866309f393317aa61bc2b4ce42fa40237c3494ecd84bff"} 1
+falcosecurity_evt_hostname_info{hostname="test"} 1
+# HELP falcosecurity_falco_sha256_rules_files_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_sha256_rules_files_info gauge
+falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
+# HELP falcosecurity_falco_sha256_config_files_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_sha256_config_files_info gauge
+falcosecurity_falco_sha256_config_files_info{file_name="falco",sha256="787e7cca8afd80c1f1a309a50c7f0c0339bac9db3a2a525567689a53aa249aef"} 1
+# HELP falcosecurity_falco_host_ifinfo_json_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_host_ifinfo_json_info gauge
+falcosecurity_falco_host_ifinfo_json_info{host_ifinfo_json="{"ipv4":{"docker0":"172.17.0.1","wlp0s20f3":"192.168.4.50"},"ipv6":{"wlp0s20f3":"fe80:0:0:0:9ac2:aaa4:22b3:f753"}}"} 1
 # HELP falcosecurity_falco_evt_source_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_evt_source_info gauge
-falcosecurity_falco_evt_source_info{raw_name="evt_source",evt_source="syscall"} 1
+falcosecurity_falco_evt_source_info{evt_source="syscall"} 1
 # HELP falcosecurity_falco_start_timestamp_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_start_timestamp_nanoseconds gauge
-falcosecurity_falco_start_timestamp_nanoseconds{raw_name="start_ts"} 1716133637282607692
+falcosecurity_falco_start_timestamp_nanoseconds 1726241217901083392
 # HELP falcosecurity_falco_host_boot_timestamp_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_host_boot_timestamp_nanoseconds gauge
-falcosecurity_falco_host_boot_timestamp_nanoseconds{raw_name="host_boot_ts"} 1715113297000000000
+falcosecurity_falco_host_boot_timestamp_nanoseconds 1726122734000000000
 # HELP falcosecurity_falco_host_num_cpus_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_host_num_cpus_total gauge
-falcosecurity_falco_host_num_cpus_total{raw_name="host_num_cpus"} 20
+falcosecurity_falco_host_num_cpus_total 20
 # HELP falcosecurity_falco_outputs_queue_num_drops_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_outputs_queue_num_drops_total counter
-falcosecurity_falco_outputs_queue_num_drops_total{raw_name="outputs_queue_num_drops"} 0
+falcosecurity_falco_outputs_queue_num_drops_total 0
 # HELP falcosecurity_falco_duration_seconds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_duration_seconds_total counter
-falcosecurity_falco_duration_seconds_total{raw_name="duration_sec"} 28
+falcosecurity_falco_duration_seconds_total 64
 # HELP falcosecurity_falco_cpu_usage_ratio https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_cpu_usage_ratio gauge
-falcosecurity_falco_cpu_usage_ratio{raw_name="cpu_usage_ratio"} 0.044000
+falcosecurity_falco_cpu_usage_ratio 0.027000
 # HELP falcosecurity_falco_memory_rss_bytes https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_memory_rss_bytes gauge
-falcosecurity_falco_memory_rss_bytes{raw_name="memory_rss_bytes"} 47185920.000000
+falcosecurity_falco_memory_rss_bytes 49807360.000000
 # HELP falcosecurity_falco_memory_vsz_bytes https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_memory_vsz_bytes gauge
-falcosecurity_falco_memory_vsz_bytes{raw_name="memory_vsz_bytes"} 1375928320.000000
+falcosecurity_falco_memory_vsz_bytes 1244815360.000000
 # HELP falcosecurity_falco_memory_pss_bytes https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_memory_pss_bytes gauge
-falcosecurity_falco_memory_pss_bytes{raw_name="memory_pss_bytes"} 44344320.000000
+falcosecurity_falco_memory_pss_bytes 45848576.000000
 # HELP falcosecurity_falco_container_memory_used_bytes https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_container_memory_used_bytes gauge
-falcosecurity_falco_container_memory_used_bytes{raw_name="container_memory_used_bytes"} 0.000000
+falcosecurity_falco_container_memory_used_bytes 0.000000
 # HELP falcosecurity_falco_host_cpu_usage_ratio https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_host_cpu_usage_ratio gauge
-falcosecurity_falco_host_cpu_usage_ratio{raw_name="host_cpu_usage_ratio"} 0.086000
+falcosecurity_falco_host_cpu_usage_ratio 0.101000
 # HELP falcosecurity_falco_host_memory_used_bytes https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_host_memory_used_bytes gauge
-falcosecurity_falco_host_memory_used_bytes{raw_name="host_memory_used_bytes"} 6891933696.000000
+falcosecurity_falco_host_memory_used_bytes 6435979264.000000
 # HELP falcosecurity_falco_host_procs_running_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_host_procs_running_total gauge
-falcosecurity_falco_host_procs_running_total{raw_name="host_procs_running"} 1
+falcosecurity_falco_host_procs_running_total 2
 # HELP falcosecurity_falco_host_open_fds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_host_open_fds_total gauge
-falcosecurity_falco_host_open_fds_total{raw_name="host_open_fds"} 18672
+falcosecurity_falco_host_open_fds_total 18792
 ```
 
 </details>
@@ -358,45 +375,46 @@ Most counters are monotonic/all-time counts, with some exceptions indicated belo
   "output_fields": {
     "evt.hostname": "test",
     "evt.source": "syscall",
-    "evt.time": 1716133744577486948,
-    "falco.duration_sec": 18,
-    "falco.evts_rate_sec": 3519.8, # Taken between 2 metrics snapshots
-    "falco.host_boot_ts": 1715113297000000000,
+    "evt.time": 1726241506935093148,
+    "falco.duration_sec": 33,
+    "falco.evts_rate_sec": 1908.5, # Taken between 2 metrics snapshots
+    "falco.host_boot_ts": 1726122734000000000,
+    "falco.host_ifinfo_json": "{\"ipv4\":{\"docker0\":\"172.17.0.1\",\"wlp0s20f3\":\"192.168.4.50\"},\"ipv6\":{\"wlp0s20f3\":\"fe80:0:0:0:9ac2:aaa4:22b3:f753\"}}",
     "falco.host_num_cpus": 20,
-    "falco.kernel_release": "6.7.9-200.fc39.x86_64",
-    "falco.n_added_fds": 20042,
-    "falco.n_added_threads": 1569, # Internally, Falco is granular and talks about `threads`, not processes
-    "falco.n_cached_fd_lookups": 49470,
-    "falco.n_cached_thread_lookups": 59404,
+    "falco.kernel_release": "6.8.11-200.fc39.x86_64",
+    "falco.n_added_fds": 32774,
+    "falco.n_added_threads": 1810, # Internally, Falco is granular and talks about `threads`, not processes
+    "falco.n_cached_fd_lookups": 31741,
+    "falco.n_cached_thread_lookups": 45804,
     "falco.n_containers": 0, # Number of containers stored by Falco at a given time (current snapshot, not monotonic)
     "falco.n_drops_full_threadtable": 0, # Drops due to a full process cache table, internally called threadtable
-    "falco.n_failed_fd_lookups": 4785,
-    "falco.n_failed_thread_lookups": 3465,
-    "falco.n_fds": 102689, # Number of fds stored in threadtable (current snapshot, not monotonic)
+    "falco.n_failed_fd_lookups": 4065,
+    "falco.n_failed_thread_lookups": 3426,
+    "falco.n_fds": 110992, # Number of fds stored in threadtable (current snapshot, not monotonic)
     "falco.n_missing_container_images": 0, # Number of containers stored by Falco without a container image at a given time (current snapshot, not monotonic)
-    "falco.n_noncached_fd_lookups": 17115,
-    "falco.n_noncached_thread_lookups": 31190,
-    "falco.n_removed_fds": 3223,
-    "falco.n_removed_threads": 57,
-    "falco.n_retrieve_evts_drops": 693,
-    "falco.n_retrieved_evts": 9252,
+    "falco.n_noncached_fd_lookups": 14955,
+    "falco.n_noncached_thread_lookups": 30606,
+    "falco.n_removed_fds": 5859,
+    "falco.n_removed_threads": 149,
+    "falco.n_retrieve_evts_drops": 1270,
+    "falco.n_retrieved_evts": 8921,
     "falco.n_store_evts_drops": 0,
-    "falco.n_stored_evts": 10005,
-    "falco.n_threads": 1512, # Number of threads stored in threadtable (current snapshot, not monotonic)
-    "falco.num_evts": 72539,
-    "falco.num_evts_prev": 69019,
+    "falco.n_stored_evts": 9187,
+    "falco.n_threads": 1661, # Number of threads stored in threadtable (current snapshot, not monotonic)
+    "falco.num_evts": 51151,
+    "falco.num_evts_prev": 49243,
     "falco.outputs_queue_num_drops": 0,
-    "falco.sha256_config_file.falco": "c78b5de8e841917eb2c7a8257f37995e1c9594cffb71ea1e7aefa932172cac3d",
-    "falco.sha256_rules_file.falco_rules": "f176455ad6a1f39cf32065af14d33042e092b30489d255cbb1eff0dc03e67c5d",
-    "falco.start_ts": 1716133726573387703,
-    "falco.version": "0.38.0",
+    "falco.sha256_config_file.falco": "33d96e7e998516ec0e1823f7e78a28fa6263c87aad53c3eb485df404b2b8ed4b",
+    "falco.sha256_rules_file.falco_rules": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
+    "falco.start_ts": 1726241473913453797,
+    "falco.version": "0.39.0",
     "scap.engine_name": "bpf",
     "scap.n_drops_perc": 0.0
   },
   "priority": "Informational",
   "rule": "Falco internal: metrics snapshot",
   "source": "internal",
-  "time": "2024-05-19T15:49:04.577486948Z"
+  "time": "2024-09-13T15:31:46.935093148Z"
 }
 ```
 
@@ -405,103 +423,100 @@ Prometheus
 ```yaml
 # HELP falcosecurity_scap_engine_name_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_engine_name_info gauge
-falcosecurity_scap_engine_name_info{raw_name="engine_name",engine_name="bpf"} 1
+falcosecurity_scap_engine_name_info{engine_name="bpf"} 1
 # HELP falcosecurity_falco_version_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_version_info gauge
-falcosecurity_falco_version_info{raw_name="version",version="0.38.0"} 1
+falcosecurity_falco_version_info{version="0.39.0"} 1
 # HELP falcosecurity_falco_kernel_release_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_kernel_release_info gauge
-falcosecurity_falco_kernel_release_info{raw_name="kernel_release",kernel_release="6.7.9-200.fc39.x86_64"} 1
+falcosecurity_falco_kernel_release_info{kernel_release="6.8.11-200.fc39.x86_64"} 1
 # HELP falcosecurity_evt_hostname_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_evt_hostname_info gauge
-falcosecurity_evt_hostname_info{raw_name="hostname",hostname="test"} 1
-# HELP falcosecurity_falco_falco_sha256_rules_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_rules_files_info gauge
-falcosecurity_falco_falco_sha256_rules_files_info{raw_name="falco_sha256_rules_files",file_name="falco_rules",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
-# HELP falcosecurity_falco_falco_sha256_rules_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_rules_files_info gauge
-falcosecurity_falco_falco_sha256_rules_files_info{raw_name="falco_sha256_rules_files",file_name="falco-sandbox_rules",sha256="90a168fcbd3e5106f2e9cea34b33d1caa64c9d2c648f8b243bef64f36f3099ea"} 1
-# HELP falcosecurity_falco_falco_sha256_rules_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_rules_files_info gauge
-falcosecurity_falco_falco_sha256_rules_files_info{raw_name="falco_sha256_rules_files",file_name="falco-incubating_rules",sha256="ff12f8bb19b85c5b61fc28cc46ee5b1d47e6512fe932fc0486f98b3546db681e"} 1
-# HELP falcosecurity_falco_falco_sha256_config_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_config_files_info gauge
-falcosecurity_falco_falco_sha256_config_files_info{raw_name="falco_sha256_config_files",file_name="falco",sha256="4638f808f51021448d866309f393317aa61bc2b4ce42fa40237c3494ecd84bff"} 1
+falcosecurity_evt_hostname_info{hostname="test"} 1
+# HELP falcosecurity_falco_sha256_rules_files_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_sha256_rules_files_info gauge
+falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
+# HELP falcosecurity_falco_sha256_config_files_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_sha256_config_files_info gauge
+falcosecurity_falco_sha256_config_files_info{file_name="falco",sha256="33d96e7e998516ec0e1823f7e78a28fa6263c87aad53c3eb485df404b2b8ed4b"} 1
+# HELP falcosecurity_falco_host_ifinfo_json_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_host_ifinfo_json_info gauge
+falcosecurity_falco_host_ifinfo_json_info{host_ifinfo_json="{"ipv4":{"docker0":"172.17.0.1","wlp0s20f3":"192.168.4.50"},"ipv6":{"wlp0s20f3":"fe80:0:0:0:9ac2:aaa4:22b3:f753"}}"} 1
 # HELP falcosecurity_falco_evt_source_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_evt_source_info gauge
-falcosecurity_falco_evt_source_info{raw_name="evt_source",evt_source="syscall"} 1
+falcosecurity_falco_evt_source_info{evt_source="syscall"} 1
 # HELP falcosecurity_falco_start_timestamp_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_start_timestamp_nanoseconds gauge
-falcosecurity_falco_start_timestamp_nanoseconds{raw_name="start_ts"} 1716133726573387703
+falcosecurity_falco_start_timestamp_nanoseconds 1726241473913453797
 # HELP falcosecurity_falco_host_boot_timestamp_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_host_boot_timestamp_nanoseconds gauge
-falcosecurity_falco_host_boot_timestamp_nanoseconds{raw_name="host_boot_ts"} 1715113297000000000
+falcosecurity_falco_host_boot_timestamp_nanoseconds 1726122734000000000
 # HELP falcosecurity_falco_host_num_cpus_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_host_num_cpus_total gauge
-falcosecurity_falco_host_num_cpus_total{raw_name="host_num_cpus"} 20
+falcosecurity_falco_host_num_cpus_total 20
 # HELP falcosecurity_falco_outputs_queue_num_drops_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_outputs_queue_num_drops_total counter
-falcosecurity_falco_outputs_queue_num_drops_total{raw_name="outputs_queue_num_drops"} 0
+falcosecurity_falco_outputs_queue_num_drops_total 0
 # HELP falcosecurity_falco_duration_seconds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_duration_seconds_total counter
-falcosecurity_falco_duration_seconds_total{raw_name="duration_sec"} 10
+falcosecurity_falco_duration_seconds_total 31
 # HELP falcosecurity_scap_n_threads_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_threads_total gauge
-falcosecurity_scap_n_threads_total{raw_name="n_threads"} 1508
+falcosecurity_scap_n_threads_total 1661
 # HELP falcosecurity_scap_n_fds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_fds_total gauge
-falcosecurity_scap_n_fds_total{raw_name="n_fds"} 103115
+falcosecurity_scap_n_fds_total 111182
 # HELP falcosecurity_scap_n_noncached_fd_lookups_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_noncached_fd_lookups_total counter
-falcosecurity_scap_n_noncached_fd_lookups_total{raw_name="n_noncached_fd_lookups"} 6701
+falcosecurity_scap_n_noncached_fd_lookups_total 13161
 # HELP falcosecurity_scap_n_cached_fd_lookups_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_cached_fd_lookups_total counter
-falcosecurity_scap_n_cached_fd_lookups_total{raw_name="n_cached_fd_lookups"} 16538
+falcosecurity_scap_n_cached_fd_lookups_total 28627
 # HELP falcosecurity_scap_n_failed_fd_lookups_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_failed_fd_lookups_total counter
-falcosecurity_scap_n_failed_fd_lookups_total{raw_name="n_failed_fd_lookups"} 597
+falcosecurity_scap_n_failed_fd_lookups_total 3945
 # HELP falcosecurity_scap_n_added_fds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_added_fds_total counter
-falcosecurity_scap_n_added_fds_total{raw_name="n_added_fds"} 13167
+falcosecurity_scap_n_added_fds_total 30647
 # HELP falcosecurity_scap_n_removed_fds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_removed_fds_total counter
-falcosecurity_scap_n_removed_fds_total{raw_name="n_removed_fds"} 1724
+falcosecurity_scap_n_removed_fds_total 5143
 # HELP falcosecurity_scap_n_stored_evts_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_stored_evts_total counter
-falcosecurity_scap_n_stored_evts_total{raw_name="n_stored_evts"} 3960
+falcosecurity_scap_n_stored_evts_total 8272
 # HELP falcosecurity_scap_n_store_evts_drops_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_store_evts_drops_total counter
-falcosecurity_scap_n_store_evts_drops_total{raw_name="n_store_evts_drops"} 0
+falcosecurity_scap_n_store_evts_drops_total 0
 # HELP falcosecurity_scap_n_retrieved_evts_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_retrieved_evts_total counter
-falcosecurity_scap_n_retrieved_evts_total{raw_name="n_retrieved_evts"} 3790
+falcosecurity_scap_n_retrieved_evts_total 8039
 # HELP falcosecurity_scap_n_retrieve_evts_drops_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_retrieve_evts_drops_total counter
-falcosecurity_scap_n_retrieve_evts_drops_total{raw_name="n_retrieve_evts_drops"} 380
+falcosecurity_scap_n_retrieve_evts_drops_total 1148
 # HELP falcosecurity_scap_n_noncached_thread_lookups_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_noncached_thread_lookups_total counter
-falcosecurity_scap_n_noncached_thread_lookups_total{raw_name="n_noncached_thread_lookups"} 18234
+falcosecurity_scap_n_noncached_thread_lookups_total 29001
 # HELP falcosecurity_scap_n_cached_thread_lookups_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_cached_thread_lookups_total counter
-falcosecurity_scap_n_cached_thread_lookups_total{raw_name="n_cached_thread_lookups"} 19459
+falcosecurity_scap_n_cached_thread_lookups_total 41070
 # HELP falcosecurity_scap_n_failed_thread_lookups_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_failed_thread_lookups_total counter
-falcosecurity_scap_n_failed_thread_lookups_total{raw_name="n_failed_thread_lookups"} 3432
+falcosecurity_scap_n_failed_thread_lookups_total 3401
 # HELP falcosecurity_scap_n_added_threads_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_added_threads_total counter
-falcosecurity_scap_n_added_threads_total{raw_name="n_added_threads"} 1536
+falcosecurity_scap_n_added_threads_total 1785
 # HELP falcosecurity_scap_n_removed_threads_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_removed_threads_total counter
-falcosecurity_scap_n_removed_threads_total{raw_name="n_removed_threads"} 28
+falcosecurity_scap_n_removed_threads_total 124
 # HELP falcosecurity_scap_n_drops_full_threadtable_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_drops_full_threadtable_total counter
-falcosecurity_scap_n_drops_full_threadtable_total{raw_name="n_drops_full_threadtable"} 0
+falcosecurity_scap_n_drops_full_threadtable_total 0
 # HELP falcosecurity_scap_n_missing_container_images_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_missing_container_images_total gauge
-falcosecurity_scap_n_missing_container_images_total{raw_name="n_missing_container_images"} 0
+falcosecurity_scap_n_missing_container_images_total 0
 # HELP falcosecurity_scap_n_containers_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_containers_total gauge
-falcosecurity_scap_n_containers_total{raw_name="n_containers"} 0
+falcosecurity_scap_n_containers_total 0
 ```
   
 </details>
@@ -521,22 +536,23 @@ falcosecurity_scap_n_containers_total{raw_name="n_containers"} 0
   "output_fields": {
     "evt.hostname": "test",
     "evt.source": "syscall",
-    "evt.time": 1716133814152518524,
-    "falco.duration_sec": 22,
-    "falco.evts_rate_sec": 2827.6, # Taken between 2 metrics snapshots
-    "falco.host_boot_ts": 1715113297000000000,
+    "evt.time": 1726241717793389378,
+    "falco.duration_sec": 29,
+    "falco.evts_rate_sec": 1997.4, # Taken between 2 metrics snapshots
+    "falco.host_boot_ts": 1726122734000000000,
+    "falco.host_ifinfo_json": "{\"ipv4\":{\"docker0\":\"172.17.0.1\",\"wlp0s20f3\":\"192.168.4.50\"},\"ipv6\":{\"wlp0s20f3\":\"fe80:0:0:0:9ac2:aaa4:22b3:f753\"}}",
     "falco.host_num_cpus": 20,
-    "falco.kernel_release": "6.7.9-200.fc39.x86_64",
-    "falco.num_evts": 74076,
-    "falco.num_evts_prev": 71248,
+    "falco.kernel_release": "6.8.11-200.fc39.x86_64",
+    "falco.num_evts": 96160,
+    "falco.num_evts_prev": 94344,
     "falco.outputs_queue_num_drops": 0,
-    "falco.sha256_config_file.falco": "c78b5de8e841917eb2c7a8257f37995e1c9594cffb71ea1e7aefa932172cac3d",
-    "falco.sha256_rules_file.falco_rules": "f176455ad6a1f39cf32065af14d33042e092b30489d255cbb1eff0dc03e67c5d",
-    "falco.start_ts": 1716133792148691117,
-    "falco.version": "0.38.0",
+    "falco.sha256_config_file.falco": "137aaefd14be68ef12e12220b8a92a6a4ad50c327b489090a9b643972e1df0ba",
+    "falco.sha256_rules_file.falco_rules": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
+    "falco.start_ts": 1726241688741960283,
+    "falco.version": "0.39.0",
     "scap.engine_name": "bpf",
     "scap.evts_drop_rate_sec": 0.0, # Taken between 2 metrics snapshots
-    "scap.evts_rate_sec": 4058.4, # Taken between 2 metrics snapshots
+    "scap.evts_rate_sec": 1195.6, # Taken between 2 metrics snapshots
     "scap.n_drops": 0, # Monotonic counter all-time kernel side drops
      # Below coarse-grained (non-comprehensive) categories for more granular insights into kernel-side drops
     "scap.n_drops_buffer_clone_fork_enter": 0,
@@ -559,13 +575,13 @@ falcosecurity_scap_n_containers_total{raw_name="n_containers"} 0
     "scap.n_drops_perc": 0.0, # Taken between 2 metrics snapshots
     "scap.n_drops_prev": 0,
     "scap.n_drops_scratch_map": 0,
-    "scap.n_evts": 76739,
-    "scap.n_evts_prev": 72680
+    "scap.n_evts": 106361,
+    "scap.n_evts_prev": 105274
   },
   "priority": "Informational",
   "rule": "Falco internal: metrics snapshot",
   "source": "internal",
-  "time": "2024-05-19T15:50:14.152518524Z"
+  "time": "2024-09-13T15:35:17.793389378Z"
 }
 ```
 
@@ -574,106 +590,426 @@ Prometheus
 ```yaml
 # HELP falcosecurity_scap_engine_name_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_engine_name_info gauge
-falcosecurity_scap_engine_name_info{raw_name="engine_name",engine_name="bpf"} 1
+falcosecurity_scap_engine_name_info{engine_name="bpf"} 1
 # HELP falcosecurity_falco_version_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_version_info gauge
-falcosecurity_falco_version_info{raw_name="version",version="0.38.0"} 1
+falcosecurity_falco_version_info{version="0.39.0"} 1
 # HELP falcosecurity_falco_kernel_release_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_kernel_release_info gauge
-falcosecurity_falco_kernel_release_info{raw_name="kernel_release",kernel_release="6.7.9-200.fc39.x86_64"} 1
+falcosecurity_falco_kernel_release_info{kernel_release="6.8.11-200.fc39.x86_64"} 1
 # HELP falcosecurity_evt_hostname_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_evt_hostname_info gauge
-falcosecurity_evt_hostname_info{raw_name="hostname",hostname="test"} 1
-# HELP falcosecurity_falco_falco_sha256_rules_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_rules_files_info gauge
-falcosecurity_falco_falco_sha256_rules_files_info{raw_name="falco_sha256_rules_files",file_name="falco_rules",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
-# HELP falcosecurity_falco_falco_sha256_rules_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_rules_files_info gauge
-falcosecurity_falco_falco_sha256_rules_files_info{raw_name="falco_sha256_rules_files",file_name="falco-sandbox_rules",sha256="90a168fcbd3e5106f2e9cea34b33d1caa64c9d2c648f8b243bef64f36f3099ea"} 1
-# HELP falcosecurity_falco_falco_sha256_rules_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_rules_files_info gauge
-falcosecurity_falco_falco_sha256_rules_files_info{raw_name="falco_sha256_rules_files",file_name="falco-incubating_rules",sha256="ff12f8bb19b85c5b61fc28cc46ee5b1d47e6512fe932fc0486f98b3546db681e"} 1
-# HELP falcosecurity_falco_falco_sha256_config_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_config_files_info gauge
-falcosecurity_falco_falco_sha256_config_files_info{raw_name="falco_sha256_config_files",file_name="falco",sha256="4638f808f51021448d866309f393317aa61bc2b4ce42fa40237c3494ecd84bff"} 1
+falcosecurity_evt_hostname_info{hostname="test"} 1
+# HELP falcosecurity_falco_sha256_rules_files_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_sha256_rules_files_info gauge
+falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
+# HELP falcosecurity_falco_sha256_config_files_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_sha256_config_files_info gauge
+falcosecurity_falco_sha256_config_files_info{file_name="falco",sha256="137aaefd14be68ef12e12220b8a92a6a4ad50c327b489090a9b643972e1df0ba"} 1
+# HELP falcosecurity_falco_host_ifinfo_json_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_host_ifinfo_json_info gauge
+falcosecurity_falco_host_ifinfo_json_info{host_ifinfo_json="{"ipv4":{"docker0":"172.17.0.1","wlp0s20f3":"192.168.4.50"},"ipv6":{"wlp0s20f3":"fe80:0:0:0:9ac2:aaa4:22b3:f753"}}"} 1
 # HELP falcosecurity_falco_evt_source_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_evt_source_info gauge
-falcosecurity_falco_evt_source_info{raw_name="evt_source",evt_source="syscall"} 1
+falcosecurity_falco_evt_source_info{evt_source="syscall"} 1
 # HELP falcosecurity_falco_start_timestamp_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_start_timestamp_nanoseconds gauge
-falcosecurity_falco_start_timestamp_nanoseconds{raw_name="start_ts"} 1716133792148691117
+falcosecurity_falco_start_timestamp_nanoseconds 1726241688741960283
 # HELP falcosecurity_falco_host_boot_timestamp_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_host_boot_timestamp_nanoseconds gauge
-falcosecurity_falco_host_boot_timestamp_nanoseconds{raw_name="host_boot_ts"} 1715113297000000000
+falcosecurity_falco_host_boot_timestamp_nanoseconds 1726122734000000000
 # HELP falcosecurity_falco_host_num_cpus_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_host_num_cpus_total gauge
-falcosecurity_falco_host_num_cpus_total{raw_name="host_num_cpus"} 20
+falcosecurity_falco_host_num_cpus_total 20
 # HELP falcosecurity_falco_outputs_queue_num_drops_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_outputs_queue_num_drops_total counter
-falcosecurity_falco_outputs_queue_num_drops_total{raw_name="outputs_queue_num_drops"} 0
+falcosecurity_falco_outputs_queue_num_drops_total 0
 # HELP falcosecurity_falco_duration_seconds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_duration_seconds_total counter
-falcosecurity_falco_duration_seconds_total{raw_name="duration_sec"} 13
-# HELP falcosecurity_falco_n_evts_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_evts_total counter
-falcosecurity_falco_n_evts_total{raw_name="n_evts"} 31452
-# HELP falcosecurity_falco_n_drops_buffer_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_total counter
-falcosecurity_falco_n_drops_buffer_total{raw_name="n_drops_buffer_total"} 0
-# HELP falcosecurity_falco_n_drops_buffer_clone_fork_enter_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_clone_fork_enter_total counter
-falcosecurity_falco_n_drops_buffer_clone_fork_enter_total{raw_name="n_drops_buffer_clone_fork_enter"} 0
-# HELP falcosecurity_falco_n_drops_buffer_clone_fork_exit_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_clone_fork_exit_total counter
-falcosecurity_falco_n_drops_buffer_clone_fork_exit_total{raw_name="n_drops_buffer_clone_fork_exit"} 0
-# HELP falcosecurity_falco_n_drops_buffer_execve_enter_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_execve_enter_total counter
-falcosecurity_falco_n_drops_buffer_execve_enter_total{raw_name="n_drops_buffer_execve_enter"} 0
-# HELP falcosecurity_falco_n_drops_buffer_execve_exit_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_execve_exit_total counter
-falcosecurity_falco_n_drops_buffer_execve_exit_total{raw_name="n_drops_buffer_execve_exit"} 0
-# HELP falcosecurity_falco_n_drops_buffer_connect_enter_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_connect_enter_total counter
-falcosecurity_falco_n_drops_buffer_connect_enter_total{raw_name="n_drops_buffer_connect_enter"} 0
-# HELP falcosecurity_falco_n_drops_buffer_connect_exit_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_connect_exit_total counter
-falcosecurity_falco_n_drops_buffer_connect_exit_total{raw_name="n_drops_buffer_connect_exit"} 0
-# HELP falcosecurity_falco_n_drops_buffer_open_enter_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_open_enter_total counter
-falcosecurity_falco_n_drops_buffer_open_enter_total{raw_name="n_drops_buffer_open_enter"} 0
-# HELP falcosecurity_falco_n_drops_buffer_open_exit_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_open_exit_total counter
-falcosecurity_falco_n_drops_buffer_open_exit_total{raw_name="n_drops_buffer_open_exit"} 0
-# HELP falcosecurity_falco_n_drops_buffer_dir_file_enter_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_dir_file_enter_total counter
-falcosecurity_falco_n_drops_buffer_dir_file_enter_total{raw_name="n_drops_buffer_dir_file_enter"} 0
-# HELP falcosecurity_falco_n_drops_buffer_dir_file_exit_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_dir_file_exit_total counter
-falcosecurity_falco_n_drops_buffer_dir_file_exit_total{raw_name="n_drops_buffer_dir_file_exit"} 0
-# HELP falcosecurity_falco_n_drops_buffer_other_interest_enter_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_other_interest_enter_total counter
-falcosecurity_falco_n_drops_buffer_other_interest_enter_total{raw_name="n_drops_buffer_other_interest_enter"} 0
-# HELP falcosecurity_falco_n_drops_buffer_other_interest_exit_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_other_interest_exit_total counter
-falcosecurity_falco_n_drops_buffer_other_interest_exit_total{raw_name="n_drops_buffer_other_interest_exit"} 0
-# HELP falcosecurity_falco_n_drops_buffer_close_exit_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_close_exit_total counter
-falcosecurity_falco_n_drops_buffer_close_exit_total{raw_name="n_drops_buffer_close_exit"} 0
-# HELP falcosecurity_falco_n_drops_buffer_proc_exit_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_proc_exit_total counter
-falcosecurity_falco_n_drops_buffer_proc_exit_total{raw_name="n_drops_buffer_proc_exit"} 0
-# HELP falcosecurity_falco_n_drops_scratch_map_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_scratch_map_total counter
-falcosecurity_falco_n_drops_scratch_map_total{raw_name="n_drops_scratch_map"} 0
-# HELP falcosecurity_falco_n_drops_page_faults_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_page_faults_total counter
-falcosecurity_falco_n_drops_page_faults_total{raw_name="n_drops_page_faults"} 0
-# HELP falcosecurity_falco_n_drops_bug_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_bug_total counter
-falcosecurity_falco_n_drops_bug_total{raw_name="n_drops_bug"} 0
-# HELP falcosecurity_falco_n_drops_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_total counter
-falcosecurity_falco_n_drops_total{raw_name="n_drops"} 0
+falcosecurity_falco_duration_seconds_total 21
+# HELP falcosecurity_scap_n_evts_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_total counter
+falcosecurity_scap_n_evts_total 91439
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="clone_fork"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="clone_fork"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="execve"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="execve"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="connect"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="connect"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="open"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="open"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="dir_file"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="dir_file"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="other_interest"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="other_interest"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="close"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="proc"} 0
+# HELP falcosecurity_scap_n_drops_scratch_map_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_scratch_map_total counter
+falcosecurity_scap_n_drops_scratch_map_total 0
+# HELP falcosecurity_scap_n_drops_page_faults_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_page_faults_total counter
+falcosecurity_scap_n_drops_page_faults_total 0
+# HELP falcosecurity_scap_n_drops_bug_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_bug_total counter
+falcosecurity_scap_n_drops_bug_total 0
+# HELP falcosecurity_scap_n_drops_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_total counter
+falcosecurity_scap_n_drops_total 0
+```
+
+</details>
+
+<details>
+  <summary> Show Base / Wrapper Fields + Kernel-Side Event Drop + Event Counters Fields + Per CPU Counters
+  
+  `kernel_event_counters_per_cpu_enabled: true`
+  </summary>
+
+`json`
+
+```yaml
+{
+  "hostname": "test",
+  "output": "Falco metrics snapshot",
+  "output_fields": {
+    "evt.hostname": "test",
+    "evt.source": "syscall",
+    "evt.time": 1726242132379598376,
+    "falco.duration_sec": 26,
+    "falco.evts_rate_sec": 3112.9,
+    "falco.host_boot_ts": 1726122734000000000,
+    "falco.host_ifinfo_json": "{\"ipv4\":{\"docker0\":\"172.17.0.1\",\"wlp0s20f3\":\"192.168.4.50\"},\"ipv6\":{\"wlp0s20f3\":\"fe80:0:0:0:9ac2:aaa4:22b3:f753\"}}",
+    "falco.host_num_cpus": 20,
+    "falco.kernel_release": "6.8.11-200.fc39.x86_64",
+    "falco.num_evts": 52223,
+    "falco.num_evts_prev": 49110,
+    "falco.outputs_queue_num_drops": 0,
+    "falco.sha256_config_file.falco": "9aede0613a3a55a98934d9ef9688659a3b83edcee759d26c7a13a4b5f3315e9d",
+    "falco.sha256_rules_file.falco_rules": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
+    "falco.start_ts": 1726242106357560485,
+    "falco.version": "0.39.0",
+    "scap.engine_name": "bpf",
+    "scap.evts_drop_rate_sec": 0.0,
+    "scap.evts_rate_sec": 3886.9,
+    "scap.n_drops": 0,
+    "scap.n_drops_buffer_clone_fork_enter": 0,
+    "scap.n_drops_buffer_clone_fork_exit": 0,
+    "scap.n_drops_buffer_close_exit": 0,
+    "scap.n_drops_buffer_connect_enter": 0,
+    "scap.n_drops_buffer_connect_exit": 0,
+    "scap.n_drops_buffer_dir_file_enter": 0,
+    "scap.n_drops_buffer_dir_file_exit": 0,
+    "scap.n_drops_buffer_execve_enter": 0,
+    "scap.n_drops_buffer_execve_exit": 0,
+    "scap.n_drops_buffer_open_enter": 0,
+    "scap.n_drops_buffer_open_exit": 0,
+    "scap.n_drops_buffer_other_interest_enter": 0,
+    "scap.n_drops_buffer_other_interest_exit": 0,
+    "scap.n_drops_buffer_proc_exit": 0,
+    "scap.n_drops_buffer_total": 0,
+    "scap.n_drops_bug": 0,
+    "scap.n_drops_cpu_0": 0,
+    "scap.n_drops_cpu_1": 0,
+    "scap.n_drops_cpu_10": 0,
+    "scap.n_drops_cpu_11": 0,
+    "scap.n_drops_cpu_12": 0,
+    "scap.n_drops_cpu_13": 0,
+    "scap.n_drops_cpu_14": 0,
+    "scap.n_drops_cpu_15": 0,
+    "scap.n_drops_cpu_16": 0,
+    "scap.n_drops_cpu_17": 0,
+    "scap.n_drops_cpu_18": 0,
+    "scap.n_drops_cpu_19": 0,
+    "scap.n_drops_cpu_2": 0,
+    "scap.n_drops_cpu_3": 0,
+    "scap.n_drops_cpu_4": 0,
+    "scap.n_drops_cpu_5": 0,
+    "scap.n_drops_cpu_6": 0,
+    "scap.n_drops_cpu_7": 0,
+    "scap.n_drops_cpu_8": 0,
+    "scap.n_drops_cpu_9": 0,
+    "scap.n_drops_page_faults": 0,
+    "scap.n_drops_perc": 0.0,
+    "scap.n_drops_prev": 0,
+    "scap.n_drops_scratch_map": 0,
+    "scap.n_evts": 54755,
+    "scap.n_evts_cpu_0": 4883,
+    "scap.n_evts_cpu_1": 274,
+    "scap.n_evts_cpu_10": 4256,
+    "scap.n_evts_cpu_11": 2,
+    "scap.n_evts_cpu_12": 2331,
+    "scap.n_evts_cpu_13": 1281,
+    "scap.n_evts_cpu_14": 1745,
+    "scap.n_evts_cpu_15": 1581,
+    "scap.n_evts_cpu_16": 770,
+    "scap.n_evts_cpu_17": 638,
+    "scap.n_evts_cpu_18": 711,
+    "scap.n_evts_cpu_19": 721,
+    "scap.n_evts_cpu_2": 3359,
+    "scap.n_evts_cpu_3": 126,
+    "scap.n_evts_cpu_4": 11921,
+    "scap.n_evts_cpu_5": 190,
+    "scap.n_evts_cpu_6": 10653,
+    "scap.n_evts_cpu_7": 132,
+    "scap.n_evts_cpu_8": 6757,
+    "scap.n_evts_cpu_9": 2424,
+    "scap.n_evts_prev": 50868
+  },
+  "priority": "Informational",
+  "rule": "Falco internal: metrics snapshot",
+  "source": "internal",
+  "time": "2024-09-13T15:42:12.379598376Z"
+}
+```
+
+Prometheus
+
+```yaml
+# HELP falcosecurity_scap_engine_name_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_engine_name_info gauge
+falcosecurity_scap_engine_name_info{engine_name="bpf"} 1
+# HELP falcosecurity_falco_version_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_version_info gauge
+falcosecurity_falco_version_info{version="0.39.0"} 1
+# HELP falcosecurity_falco_kernel_release_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_kernel_release_info gauge
+falcosecurity_falco_kernel_release_info{kernel_release="6.8.11-200.fc39.x86_64"} 1
+# HELP falcosecurity_evt_hostname_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_evt_hostname_info gauge
+falcosecurity_evt_hostname_info{hostname="test"} 1
+# HELP falcosecurity_falco_sha256_rules_files_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_sha256_rules_files_info gauge
+falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
+# HELP falcosecurity_falco_sha256_config_files_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_sha256_config_files_info gauge
+falcosecurity_falco_sha256_config_files_info{file_name="falco",sha256="9aede0613a3a55a98934d9ef9688659a3b83edcee759d26c7a13a4b5f3315e9d"} 1
+# HELP falcosecurity_falco_host_ifinfo_json_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_host_ifinfo_json_info gauge
+falcosecurity_falco_host_ifinfo_json_info{host_ifinfo_json="{"ipv4":{"docker0":"172.17.0.1","wlp0s20f3":"192.168.4.50"},"ipv6":{"wlp0s20f3":"fe80:0:0:0:9ac2:aaa4:22b3:f753"}}"} 1
+# HELP falcosecurity_falco_evt_source_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_evt_source_info gauge
+falcosecurity_falco_evt_source_info{evt_source="syscall"} 1
+# HELP falcosecurity_falco_start_timestamp_nanoseconds https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_start_timestamp_nanoseconds gauge
+falcosecurity_falco_start_timestamp_nanoseconds 1726242106357560485
+# HELP falcosecurity_falco_host_boot_timestamp_nanoseconds https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_host_boot_timestamp_nanoseconds gauge
+falcosecurity_falco_host_boot_timestamp_nanoseconds 1726122734000000000
+# HELP falcosecurity_falco_host_num_cpus_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_host_num_cpus_total gauge
+falcosecurity_falco_host_num_cpus_total 20
+# HELP falcosecurity_falco_outputs_queue_num_drops_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_outputs_queue_num_drops_total counter
+falcosecurity_falco_outputs_queue_num_drops_total 0
+# HELP falcosecurity_falco_duration_seconds_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_duration_seconds_total counter
+falcosecurity_falco_duration_seconds_total 20
+# HELP falcosecurity_scap_n_evts_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_total counter
+falcosecurity_scap_n_evts_total 41937
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="clone_fork"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="clone_fork"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="execve"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="execve"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="connect"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="connect"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="open"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="open"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="dir_file"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="dir_file"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="other_interest"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="other_interest"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="close"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="proc"} 0
+# HELP falcosecurity_scap_n_drops_scratch_map_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_scratch_map_total counter
+falcosecurity_scap_n_drops_scratch_map_total 0
+# HELP falcosecurity_scap_n_drops_page_faults_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_page_faults_total counter
+falcosecurity_scap_n_drops_page_faults_total 0
+# HELP falcosecurity_scap_n_drops_bug_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_bug_total counter
+falcosecurity_scap_n_drops_bug_total 0
+# HELP falcosecurity_scap_n_drops_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_total counter
+falcosecurity_scap_n_drops_total 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="0"} 3745
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="0"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="1"} 40
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="1"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="2"} 2764
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="2"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="3"} 93
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="3"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="4"} 8723
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="4"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="5"} 170
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="5"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="6"} 8730
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="6"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="7"} 114
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="7"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="8"} 5732
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="8"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="9"} 1562
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="9"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="10"} 3222
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="10"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="11"} 0
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="11"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="12"} 1504
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="12"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="13"} 1121
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="13"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="14"} 932
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="14"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="15"} 1181
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="15"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="16"} 615
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="16"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="17"} 524
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="17"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="18"} 488
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="18"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="19"} 677
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="19"} 0
 ```
 
 </details>
@@ -686,7 +1022,7 @@ falcosecurity_falco_n_drops_total{raw_name="n_drops"} 0
 
 Applies only for `ebpf` and `modern_ebpf`, requires `sysctl kernel.bpf_stats_enabled=1` kernel setting as precondition. Compare to `bpftool prog show` capabilities.
 
-Here is a snippet with respect to the kernel tracepoints for an `x86_64` machine:
+Here is a snippet with respect to the kernel tracepoints for an `x86_64` machine using the traditional eBPF driver `engine.kind=ebpf`:
 
 `json`
 
@@ -697,21 +1033,22 @@ Here is a snippet with respect to the kernel tracepoints for an `x86_64` machine
   "output_fields": {
     "evt.hostname": "test",
     "evt.source": "syscall",
-    "evt.time": 1716133900848339430,
-    "falco.duration_sec": 32,
-    "falco.evts_rate_sec": 4941.6, # Taken between 2 metrics snapshots
-    "falco.host_boot_ts": 1715113297000000000,
+    "evt.time": 1726242272613790976,
+    "falco.duration_sec": 25,
+    "falco.evts_rate_sec": 1733.2,
+    "falco.host_boot_ts": 1726122734000000000,
+    "falco.host_ifinfo_json": "{\"ipv4\":{\"docker0\":\"172.17.0.1\",\"wlp0s20f3\":\"192.168.4.50\"},\"ipv6\":{\"wlp0s20f3\":\"fe80:0:0:0:9ac2:aaa4:22b3:f753\"}}",
     "falco.host_num_cpus": 20,
-    "falco.kernel_release": "6.7.9-200.fc39.x86_64",
-    "falco.num_evts": 120023,
-    "falco.num_evts_prev": 115083,
+    "falco.kernel_release": "6.8.11-200.fc39.x86_64",
+    "falco.num_evts": 146294,
+    "falco.num_evts_prev": 144561,
     "falco.outputs_queue_num_drops": 0,
-    "falco.sha256_config_file.falco": "c78b5de8e841917eb2c7a8257f37995e1c9594cffb71ea1e7aefa932172cac3d",
-    "falco.sha256_rules_file.falco_rules": "f176455ad6a1f39cf32065af14d33042e092b30489d255cbb1eff0dc03e67c5d",
-    "falco.start_ts": 1716133868845122937,
-    "falco.version": "0.38.0",
+    "falco.sha256_config_file.falco": "2964ca63bcfe76bfcca5a07cb282a367f559188f1dc224c43aad1886607fdaf5",
+    "falco.sha256_rules_file.falco_rules": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
+    "falco.start_ts": 1726242247592463600,
+    "falco.version": "0.39.0",
     "scap.engine_name": "bpf",
-    "scap.n_drops_perc": 0.0, # Taken between 2 metrics snapshots
+    "scap.n_drops_perc": 0.0,
     # libbpf stats -> all-time kernel tracepoints invocations stats for an `x86_64` machine
     # Note: no equivalent stats for kmod driver available
     "scap.page_fault_kern.avg_time_ns": 0, # Disabled by default
@@ -720,26 +1057,80 @@ Here is a snippet with respect to the kernel tracepoints for an `x86_64` machine
     "scap.page_fault_user.avg_time_ns": 0, # Disabled by default
     "scap.page_fault_user.run_cnt": 0,
     "scap.page_fault_user.run_time_ns": 0,
-    "scap.sched_process_e.avg_time_ns": 4599, # scheduler process exit tracepoint, used to purge procs from process cache
-    "scap.sched_process_e.run_cnt": 99,
-    "scap.sched_process_e.run_time_ns": 455377,
+    "scap.sched_process_e.avg_time_ns": 4398, # scheduler process exit tracepoint, used to purge procs from process cache
+    "scap.sched_process_e.run_cnt": 92,
+    "scap.sched_process_e.run_time_ns": 404679,
     "scap.sched_switch.avg_time_ns": 0, # Disabled by default
     "scap.sched_switch.run_cnt": 0,
     "scap.sched_switch.run_time_ns": 0,
     "scap.signal_deliver.avg_time_ns": 0, # Disabled by default
     "scap.signal_deliver.run_cnt": 0,
     "scap.signal_deliver.run_time_ns": 0,
-    "scap.sys_enter.avg_time_ns": 458, # syscall enter (raw) tracepoint
-    "scap.sys_enter.run_cnt": 342334,
-    "scap.sys_enter.run_time_ns": 157102813,
-    "scap.sys_exit.avg_time_ns": 539, # syscall exit (raw) tracepoint
-    "scap.sys_exit.run_cnt": 342340,
-    "scap.sys_exit.run_time_ns": 184588268
+    "scap.sys_enter.avg_time_ns": 599, # syscall enter (raw) tracepoint
+    "scap.sys_enter.run_cnt": 317515,
+    "scap.sys_enter.run_time_ns": 190404592,
+    "scap.sys_exit.avg_time_ns": 675, # syscall exit (raw) tracepoint
+    "scap.sys_exit.run_cnt": 317517,
+    "scap.sys_exit.run_time_ns": 214464597
   },
   "priority": "Informational",
   "rule": "Falco internal: metrics snapshot",
   "source": "internal",
-  "time": "2024-05-19T15:51:40.848339430Z"
+  "time": "2024-09-13T15:44:32.613790976Z"
+}
+```
+
+Here is a snippet with respect to the kernel tracepoints for an `x86_64` machine using the modern eBPF driver `engine.kind=modern_ebpf`:
+
+```yaml
+{
+  "hostname": "test",
+  "output": "Falco metrics snapshot",
+  "output_fields": {
+    "evt.hostname": "test",
+    "evt.source": "syscall",
+    "evt.time": 1726243288443730726,
+    "falco.duration_sec": 21,
+    "falco.evts_rate_sec": 1433.8,
+    "falco.host_boot_ts": 1726122734000000000,
+    "falco.host_ifinfo_json": "{\"ipv4\":{\"docker0\":\"172.17.0.1\",\"wlp0s20f3\":\"192.168.4.50\"},\"ipv6\":{\"wlp0s20f3\":\"fe80:0:0:0:9ac2:aaa4:22b3:f753\"}}",
+    "falco.host_num_cpus": 20,
+    "falco.kernel_release": "6.8.11-200.fc39.x86_64",
+    "falco.num_evts": 28096,
+    "falco.num_evts_prev": 26946,
+    "falco.outputs_queue_num_drops": 0,
+    "falco.sha256_config_file.falco": "6eea2f7e7ef3f014dea18a23dc9f80b3e6b20b8ebbea1ec0d221e4165f474742",
+    "falco.sha256_rules_file.falco_rules": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
+    "falco.start_ts": 1726243267421382631,
+    "falco.version": "0.39.0",
+    "scap.engine_name": "modern_bpf",
+    "scap.n_drops_perc": 0.0,
+    "scap.pf_kernel.avg_time_ns": 0,
+    "scap.pf_kernel.run_cnt": 0,
+    "scap.pf_kernel.run_time_ns": 0,
+    "scap.pf_user.avg_time_ns": 0,
+    "scap.pf_user.run_cnt": 0,
+    "scap.pf_user.run_time_ns": 0,
+    "scap.sched_proc_exit.avg_time_ns": 3339,
+    "scap.sched_proc_exit.run_cnt": 75,
+    "scap.sched_proc_exit.run_time_ns": 250481,
+    "scap.sched_switch.avg_time_ns": 0,
+    "scap.sched_switch.run_cnt": 0,
+    "scap.sched_switch.run_time_ns": 0,
+    "scap.signal_deliver.avg_time_ns": 0,
+    "scap.signal_deliver.run_cnt": 0,
+    "scap.signal_deliver.run_time_ns": 0,
+    "scap.sys_enter.avg_time_ns": 509,
+    "scap.sys_enter.run_cnt": 68875,
+    "scap.sys_enter.run_time_ns": 35063552,
+    "scap.sys_exit.avg_time_ns": 677,
+    "scap.sys_exit.run_cnt": 68875,
+    "scap.sys_exit.run_time_ns": 46648146
+  },
+  "priority": "Informational",
+  "rule": "Falco internal: metrics snapshot",
+  "source": "internal",
+  "time": "2024-09-13T16:01:28.443730726Z"
 }
 ```
 
@@ -783,109 +1174,106 @@ Prometheus
 ```yaml
 # HELP falcosecurity_scap_engine_name_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_engine_name_info gauge
-falcosecurity_scap_engine_name_info{raw_name="engine_name",engine_name="bpf"} 1
+falcosecurity_scap_engine_name_info{engine_name="bpf"} 1
 # HELP falcosecurity_falco_version_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_version_info gauge
-falcosecurity_falco_version_info{raw_name="version",version="0.38.0"} 1
+falcosecurity_falco_version_info{version="0.39.0"} 1
 # HELP falcosecurity_falco_kernel_release_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_kernel_release_info gauge
-falcosecurity_falco_kernel_release_info{raw_name="kernel_release",kernel_release="6.7.9-200.fc39.x86_64"} 1
+falcosecurity_falco_kernel_release_info{kernel_release="6.8.11-200.fc39.x86_64"} 1
 # HELP falcosecurity_evt_hostname_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_evt_hostname_info gauge
-falcosecurity_evt_hostname_info{raw_name="hostname",hostname="test"} 1
-# HELP falcosecurity_falco_falco_sha256_rules_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_rules_files_info gauge
-falcosecurity_falco_falco_sha256_rules_files_info{raw_name="falco_sha256_rules_files",file_name="falco_rules",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
-# HELP falcosecurity_falco_falco_sha256_rules_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_rules_files_info gauge
-falcosecurity_falco_falco_sha256_rules_files_info{raw_name="falco_sha256_rules_files",file_name="falco-sandbox_rules",sha256="90a168fcbd3e5106f2e9cea34b33d1caa64c9d2c648f8b243bef64f36f3099ea"} 1
-# HELP falcosecurity_falco_falco_sha256_rules_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_rules_files_info gauge
-falcosecurity_falco_falco_sha256_rules_files_info{raw_name="falco_sha256_rules_files",file_name="falco-incubating_rules",sha256="ff12f8bb19b85c5b61fc28cc46ee5b1d47e6512fe932fc0486f98b3546db681e"} 1
-# HELP falcosecurity_falco_falco_sha256_config_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_config_files_info gauge
-falcosecurity_falco_falco_sha256_config_files_info{raw_name="falco_sha256_config_files",file_name="falco",sha256="4638f808f51021448d866309f393317aa61bc2b4ce42fa40237c3494ecd84bff"} 1
+falcosecurity_evt_hostname_info{hostname="test"} 1
+# HELP falcosecurity_falco_sha256_rules_files_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_sha256_rules_files_info gauge
+falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
+# HELP falcosecurity_falco_sha256_config_files_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_sha256_config_files_info gauge
+falcosecurity_falco_sha256_config_files_info{file_name="falco",sha256="2964ca63bcfe76bfcca5a07cb282a367f559188f1dc224c43aad1886607fdaf5"} 1
+# HELP falcosecurity_falco_host_ifinfo_json_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_host_ifinfo_json_info gauge
+falcosecurity_falco_host_ifinfo_json_info{host_ifinfo_json="{"ipv4":{"docker0":"172.17.0.1","wlp0s20f3":"192.168.4.50"},"ipv6":{"wlp0s20f3":"fe80:0:0:0:9ac2:aaa4:22b3:f753"}}"} 1
 # HELP falcosecurity_falco_evt_source_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_evt_source_info gauge
-falcosecurity_falco_evt_source_info{raw_name="evt_source",evt_source="syscall"} 1
+falcosecurity_falco_evt_source_info{evt_source="syscall"} 1
 # HELP falcosecurity_falco_start_timestamp_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_start_timestamp_nanoseconds gauge
-falcosecurity_falco_start_timestamp_nanoseconds{raw_name="start_ts"} 1716133868845122937
+falcosecurity_falco_start_timestamp_nanoseconds 1726242247592463600
 # HELP falcosecurity_falco_host_boot_timestamp_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_host_boot_timestamp_nanoseconds gauge
-falcosecurity_falco_host_boot_timestamp_nanoseconds{raw_name="host_boot_ts"} 1715113297000000000
+falcosecurity_falco_host_boot_timestamp_nanoseconds 1726122734000000000
 # HELP falcosecurity_falco_host_num_cpus_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_host_num_cpus_total gauge
-falcosecurity_falco_host_num_cpus_total{raw_name="host_num_cpus"} 20
+falcosecurity_falco_host_num_cpus_total 20
 # HELP falcosecurity_falco_outputs_queue_num_drops_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_outputs_queue_num_drops_total counter
-falcosecurity_falco_outputs_queue_num_drops_total{raw_name="outputs_queue_num_drops"} 0
+falcosecurity_falco_outputs_queue_num_drops_total 0
 # HELP falcosecurity_falco_duration_seconds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_duration_seconds_total counter
-falcosecurity_falco_duration_seconds_total{raw_name="duration_sec"} 14
+falcosecurity_falco_duration_seconds_total 24
 # HELP falcosecurity_scap_sys_enter_run_cnt_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sys_enter_run_cnt_total counter
-falcosecurity_scap_sys_enter_run_cnt_total{raw_name="sys_enter.run_cnt"} 125775
+falcosecurity_scap_sys_enter_run_cnt_total 315892
 # HELP falcosecurity_scap_sys_enter_run_time_nanoseconds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sys_enter_run_time_nanoseconds_total counter
-falcosecurity_scap_sys_enter_run_time_nanoseconds_total{raw_name="sys_enter.run_time_ns"} 63247460
+falcosecurity_scap_sys_enter_run_time_nanoseconds_total 189922714
 # HELP falcosecurity_scap_sys_enter_avg_time_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sys_enter_avg_time_nanoseconds gauge
-falcosecurity_scap_sys_enter_avg_time_nanoseconds{raw_name="sys_enter.avg_time_ns"} 502
+falcosecurity_scap_sys_enter_avg_time_nanoseconds 601
 # HELP falcosecurity_scap_sys_exit_run_cnt_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sys_exit_run_cnt_total counter
-falcosecurity_scap_sys_exit_run_cnt_total{raw_name="sys_exit.run_cnt"} 125776
+falcosecurity_scap_sys_exit_run_cnt_total 315892
 # HELP falcosecurity_scap_sys_exit_run_time_nanoseconds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sys_exit_run_time_nanoseconds_total counter
-falcosecurity_scap_sys_exit_run_time_nanoseconds_total{raw_name="sys_exit.run_time_ns"} 73464633
+falcosecurity_scap_sys_exit_run_time_nanoseconds_total 213757143
 # HELP falcosecurity_scap_sys_exit_avg_time_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sys_exit_avg_time_nanoseconds gauge
-falcosecurity_scap_sys_exit_avg_time_nanoseconds{raw_name="sys_exit.avg_time_ns"} 584
+falcosecurity_scap_sys_exit_avg_time_nanoseconds 676
 # HELP falcosecurity_scap_sched_process_e_run_cnt_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sched_process_e_run_cnt_total counter
-falcosecurity_scap_sched_process_e_run_cnt_total{raw_name="sched_process_e.run_cnt"} 37
+falcosecurity_scap_sched_process_e_run_cnt_total 86
 # HELP falcosecurity_scap_sched_process_e_run_time_nanoseconds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sched_process_e_run_time_nanoseconds_total counter
-falcosecurity_scap_sched_process_e_run_time_nanoseconds_total{raw_name="sched_process_e.run_time_ns"} 160909
+falcosecurity_scap_sched_process_e_run_time_nanoseconds_total 373677
 # HELP falcosecurity_scap_sched_process_e_avg_time_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sched_process_e_avg_time_nanoseconds gauge
-falcosecurity_scap_sched_process_e_avg_time_nanoseconds{raw_name="sched_process_e.avg_time_ns"} 4348
+falcosecurity_scap_sched_process_e_avg_time_nanoseconds 4345
 # HELP falcosecurity_scap_sched_switch_run_cnt_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sched_switch_run_cnt_total counter
-falcosecurity_scap_sched_switch_run_cnt_total{raw_name="sched_switch.run_cnt"} 0
+falcosecurity_scap_sched_switch_run_cnt_total 0
 # HELP falcosecurity_scap_sched_switch_run_time_nanoseconds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sched_switch_run_time_nanoseconds_total counter
-falcosecurity_scap_sched_switch_run_time_nanoseconds_total{raw_name="sched_switch.run_time_ns"} 0
+falcosecurity_scap_sched_switch_run_time_nanoseconds_total 0
 # HELP falcosecurity_scap_sched_switch_avg_time_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sched_switch_avg_time_nanoseconds gauge
-falcosecurity_scap_sched_switch_avg_time_nanoseconds{raw_name="sched_switch.avg_time_ns"} 0
+falcosecurity_scap_sched_switch_avg_time_nanoseconds 0
 # HELP falcosecurity_scap_page_fault_user_run_cnt_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_page_fault_user_run_cnt_total counter
-falcosecurity_scap_page_fault_user_run_cnt_total{raw_name="page_fault_user.run_cnt"} 0
+falcosecurity_scap_page_fault_user_run_cnt_total 0
 # HELP falcosecurity_scap_page_fault_user_run_time_nanoseconds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_page_fault_user_run_time_nanoseconds_total counter
-falcosecurity_scap_page_fault_user_run_time_nanoseconds_total{raw_name="page_fault_user.run_time_ns"} 0
+falcosecurity_scap_page_fault_user_run_time_nanoseconds_total 0
 # HELP falcosecurity_scap_page_fault_user_avg_time_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_page_fault_user_avg_time_nanoseconds gauge
-falcosecurity_scap_page_fault_user_avg_time_nanoseconds{raw_name="page_fault_user.avg_time_ns"} 0
+falcosecurity_scap_page_fault_user_avg_time_nanoseconds 0
 # HELP falcosecurity_scap_page_fault_kern_run_cnt_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_page_fault_kern_run_cnt_total counter
-falcosecurity_scap_page_fault_kern_run_cnt_total{raw_name="page_fault_kern.run_cnt"} 0
+falcosecurity_scap_page_fault_kern_run_cnt_total 0
 # HELP falcosecurity_scap_page_fault_kern_run_time_nanoseconds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_page_fault_kern_run_time_nanoseconds_total counter
-falcosecurity_scap_page_fault_kern_run_time_nanoseconds_total{raw_name="page_fault_kern.run_time_ns"} 0
+falcosecurity_scap_page_fault_kern_run_time_nanoseconds_total 0
 # HELP falcosecurity_scap_page_fault_kern_avg_time_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_page_fault_kern_avg_time_nanoseconds gauge
-falcosecurity_scap_page_fault_kern_avg_time_nanoseconds{raw_name="page_fault_kern.avg_time_ns"} 0
+falcosecurity_scap_page_fault_kern_avg_time_nanoseconds 0
 # HELP falcosecurity_scap_signal_deliver_run_cnt_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_signal_deliver_run_cnt_total counter
-falcosecurity_scap_signal_deliver_run_cnt_total{raw_name="signal_deliver.run_cnt"} 0
+falcosecurity_scap_signal_deliver_run_cnt_total 0
 # HELP falcosecurity_scap_signal_deliver_run_time_nanoseconds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_signal_deliver_run_time_nanoseconds_total counter
-falcosecurity_scap_signal_deliver_run_time_nanoseconds_total{raw_name="signal_deliver.run_time_ns"} 0
+falcosecurity_scap_signal_deliver_run_time_nanoseconds_total 0
 # HELP falcosecurity_scap_signal_deliver_avg_time_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_signal_deliver_avg_time_nanoseconds gauge
-falcosecurity_scap_signal_deliver_avg_time_nanoseconds{raw_name="signal_deliver.avg_time_ns"} 0
+falcosecurity_scap_signal_deliver_avg_time_nanoseconds 0
 ```
 
 </details>
@@ -899,59 +1287,83 @@ We’re listing all the fields here. For additional details on specific metrics,
 `json`
 
 ```yaml
-
 {
   "hostname": "test",
   "output": "Falco metrics snapshot",
   "output_fields": {
     "evt.hostname": "test",
     "evt.source": "syscall",
-    "evt.time": 1716134075886389623,
+    "evt.time": 1726242616416408809,
     "falco.container_memory_used_mb": 0.0,
-    "falco.cpu_usage_perc": 6.6,
-    "falco.duration_sec": 16,
-    "falco.evts_rate_sec": 9968.6,
-    "falco.host_boot_ts": 1715113297000000000,
-    "falco.host_cpu_usage_perc": 8.6,
-    "falco.host_memory_used_mb": 6608.4,
+    "falco.cpu_usage_perc": 5.0,
+    "falco.duration_sec": 87,
+    "falco.evts_rate_sec": 2139.2,
+    "falco.host_boot_ts": 1726122734000000000,
+    "falco.host_cpu_usage_perc": 9.3,
+    "falco.host_ifinfo_json": "{\"ipv4\":{\"docker0\":\"172.17.0.1\",\"wlp0s20f3\":\"192.168.4.50\"},\"ipv6\":{\"wlp0s20f3\":\"fe80:0:0:0:9ac2:aaa4:22b3:f753\"}}",
+    "falco.host_memory_used_mb": 6263.9,
     "falco.host_num_cpus": 20,
-    "falco.host_open_fds": 18712,
-    "falco.host_procs_running": 3,
-    "falco.kernel_release": "6.7.9-200.fc39.x86_64",
-    "falco.memory_pss_mb": 41.6,
-    "falco.memory_rss_mb": 44.5,
-    "falco.memory_vsz_mb": 1312.2,
-    "falco.n_added_fds": 17878,
-    "falco.n_added_threads": 1565,
-    "falco.n_cached_fd_lookups": 109636,
-    "falco.n_cached_thread_lookups": 107636,
+    "falco.host_open_fds": 18872,
+    "falco.host_procs_running": 1,
+    "falco.kernel_release": "6.8.11-200.fc39.x86_64",
+    "falco.memory_pss_mb": 83.1,
+    "falco.memory_rss_mb": 86.3,
+    "falco.memory_vsz_mb": 1187.1,
+    "falco.n_added_fds": 82355,
+    "falco.n_added_threads": 2129,
+    "falco.n_cached_fd_lookups": 520331,
+    "falco.n_cached_thread_lookups": 571389,
     "falco.n_containers": 0,
     "falco.n_drops_full_threadtable": 0,
-    "falco.n_failed_fd_lookups": 10381,
-    "falco.n_failed_thread_lookups": 3459,
-    "falco.n_fds": 104702,
+    "falco.n_failed_fd_lookups": 34543,
+    "falco.n_failed_thread_lookups": 3839,
+    "falco.n_fds": 115933,
     "falco.n_missing_container_images": 0,
-    "falco.n_noncached_fd_lookups": 24420,
-    "falco.n_noncached_thread_lookups": 55211,
-    "falco.n_removed_fds": 2935,
-    "falco.n_removed_threads": 42,
-    "falco.n_retrieve_evts_drops": 609,
-    "falco.n_retrieved_evts": 11938,
+    "falco.n_noncached_fd_lookups": 139740,
+    "falco.n_noncached_thread_lookups": 207304,
+    "falco.n_removed_fds": 20072,
+    "falco.n_removed_threads": 437,
+    "falco.n_retrieve_evts_drops": 4981,
+    "falco.n_retrieved_evts": 51936,
     "falco.n_store_evts_drops": 0,
-    "falco.n_stored_evts": 13602,
-    "falco.n_threads": 1523,
-    "falco.num_evts": 144600,
-    "falco.num_evts_prev": 134632,
+    "falco.n_stored_evts": 53887,
+    "falco.n_threads": 1692,
+    "falco.num_evts": 681165,
+    "falco.num_evts_prev": 679285,
     "falco.outputs_queue_num_drops": 0,
+    "falco.rules.Clear_Log_Activities": 0,
+    "falco.rules.Contact_K8S_API_Server_From_Container": 0,
+    "falco.rules.Create_Hardlink_Over_Sensitive_Files": 0,
+    "falco.rules.Create_Symlink_Over_Sensitive_Files": 0,
+    "falco.rules.Debugfs_Launched_in_Privileged_Container": 0,
+    "falco.rules.Detect_release_agent_File_Container_Escapes": 0,
+    "falco.rules.Directory_traversal_monitored_file_read": 0,
+    "falco.rules.Disallowed_SSH_Connection_Non_Standard_Port": 0,
+    "falco.rules.Drop_and_execute_new_binary_in_container": 0,
+    "falco.rules.Execution_from_dev_shm": 0,
+    "falco.rules.Fileless_execution_via_memfd_create": 0,
+    "falco.rules.Find_AWS_Credentials": 0,
+    "falco.rules.Linux_Kernel_Module_Injection_Detected": 0,
+    "falco.rules.Netcat_Remote_Code_Execution_in_Container": 0,
+    "falco.rules.PTRACE_anti_debug_attempt": 0,
+    "falco.rules.PTRACE_attached_to_process": 0,
+    "falco.rules.Packet_socket_created_in_container": 0,
+    "falco.rules.Read_sensitive_file_trusted_after_startup": 0,
+    "falco.rules.Read_sensitive_file_untrusted": 0,
+    "falco.rules.Redirect_STDOUT_STDIN_to_Network_Connection_in_Container": 0,
+    "falco.rules.Remove_Bulk_Data_from_Disk": 0,
+    "falco.rules.Run_shell_untrusted": 0,
+    "falco.rules.Search_Private_Keys_or_Passwords": 0,
+    "falco.rules.System_user_interactive": 0,
+    "falco.rules.Terminal_shell_in_container": 0,
     "falco.rules.matches_total": 0,
-    "falco.rules.Test_rule": 0,
-    "falco.sha256_config_file.falco": "c78b5de8e841917eb2c7a8257f37995e1c9594cffb71ea1e7aefa932172cac3d",
-    "falco.sha256_rules_file.falco_rules": "f176455ad6a1f39cf32065af14d33042e092b30489d255cbb1eff0dc03e67c5d",
-    "falco.start_ts": 1716134059882838651,
-    "falco.version": "0.38.0",
+    "falco.sha256_config_file.falco": "dda540600846785baaa2d2c8fc631528fff49fb10a3b75c4cdca668b28ae693d",
+    "falco.sha256_rules_file.falco_rules": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
+    "falco.start_ts": 1726242529394244000,
+    "falco.version": "0.39.0",
     "scap.engine_name": "bpf",
     "scap.evts_drop_rate_sec": 0.0,
-    "scap.evts_rate_sec": 10954.6,
+    "scap.evts_rate_sec": 2209.7,
     "scap.n_drops": 0,
     "scap.n_drops_buffer_clone_fork_enter": 0,
     "scap.n_drops_buffer_clone_fork_exit": 0,
@@ -969,38 +1381,78 @@ We’re listing all the fields here. For additional details on specific metrics,
     "scap.n_drops_buffer_proc_exit": 0,
     "scap.n_drops_buffer_total": 0,
     "scap.n_drops_bug": 0,
+    "scap.n_drops_cpu_0": 0,
+    "scap.n_drops_cpu_1": 0,
+    "scap.n_drops_cpu_10": 0,
+    "scap.n_drops_cpu_11": 0,
+    "scap.n_drops_cpu_12": 0,
+    "scap.n_drops_cpu_13": 0,
+    "scap.n_drops_cpu_14": 0,
+    "scap.n_drops_cpu_15": 0,
+    "scap.n_drops_cpu_16": 0,
+    "scap.n_drops_cpu_17": 0,
+    "scap.n_drops_cpu_18": 0,
+    "scap.n_drops_cpu_19": 0,
+    "scap.n_drops_cpu_2": 0,
+    "scap.n_drops_cpu_3": 0,
+    "scap.n_drops_cpu_4": 0,
+    "scap.n_drops_cpu_5": 0,
+    "scap.n_drops_cpu_6": 0,
+    "scap.n_drops_cpu_7": 0,
+    "scap.n_drops_cpu_8": 0,
+    "scap.n_drops_cpu_9": 0,
     "scap.n_drops_page_faults": 0,
     "scap.n_drops_perc": 0.0,
     "scap.n_drops_prev": 0,
     "scap.n_drops_scratch_map": 0,
-    "scap.n_evts": 148858,
-    "scap.n_evts_prev": 137904,
+    "scap.n_evts": 725241,
+    "scap.n_evts_cpu_0": 49154,
+    "scap.n_evts_cpu_1": 7493,
+    "scap.n_evts_cpu_10": 74419,
+    "scap.n_evts_cpu_11": 2578,
+    "scap.n_evts_cpu_12": 57337,
+    "scap.n_evts_cpu_13": 51082,
+    "scap.n_evts_cpu_14": 42528,
+    "scap.n_evts_cpu_15": 29702,
+    "scap.n_evts_cpu_16": 18458,
+    "scap.n_evts_cpu_17": 17784,
+    "scap.n_evts_cpu_18": 15214,
+    "scap.n_evts_cpu_19": 14313,
+    "scap.n_evts_cpu_2": 52958,
+    "scap.n_evts_cpu_3": 1672,
+    "scap.n_evts_cpu_4": 83891,
+    "scap.n_evts_cpu_5": 3687,
+    "scap.n_evts_cpu_6": 102885,
+    "scap.n_evts_cpu_7": 5276,
+    "scap.n_evts_cpu_8": 81200,
+    "scap.n_evts_cpu_9": 13610,
+    "scap.n_evts_prev": 723299,
     "scap.page_fault_kern.avg_time_ns": 0,
     "scap.page_fault_kern.run_cnt": 0,
     "scap.page_fault_kern.run_time_ns": 0,
     "scap.page_fault_user.avg_time_ns": 0,
     "scap.page_fault_user.run_cnt": 0,
     "scap.page_fault_user.run_time_ns": 0,
-    "scap.sched_process_e.avg_time_ns": 4248,
-    "scap.sched_process_e.run_cnt": 43,
-    "scap.sched_process_e.run_time_ns": 182687,
+    "scap.sched_process_e.avg_time_ns": 2882,
+    "scap.sched_process_e.run_cnt": 526,
+    "scap.sched_process_e.run_time_ns": 1516279,
     "scap.sched_switch.avg_time_ns": 0,
     "scap.sched_switch.run_cnt": 0,
     "scap.sched_switch.run_time_ns": 0,
     "scap.signal_deliver.avg_time_ns": 0,
     "scap.signal_deliver.run_cnt": 0,
     "scap.signal_deliver.run_time_ns": 0,
-    "scap.sys_enter.avg_time_ns": 536,
-    "scap.sys_enter.run_cnt": 351193,
-    "scap.sys_enter.run_time_ns": 188365869,
-    "scap.sys_exit.avg_time_ns": 602,
-    "scap.sys_exit.run_cnt": 351122,
-    "scap.sys_exit.run_time_ns": 211709898
+    "scap.sys_enter.avg_time_ns": 523,
+    "scap.sys_enter.run_cnt": 1445654,
+    "scap.sys_enter.run_time_ns": 757373628,
+    "scap.sys_exit.avg_time_ns": 567,
+    "scap.sys_exit.run_cnt": 1445722,
+    "scap.sys_exit.run_time_ns": 820508642
   },
   "priority": "Informational",
   "rule": "Falco internal: metrics snapshot",
   "source": "internal",
-  "time": "2024-05-19T15:54:35.886389623Z"
+  "time": "2024-09-13T15:50:16.416408809Z"
 }
 ```
 
@@ -1009,265 +1461,374 @@ Prometheus
 ```yaml
 # HELP falcosecurity_scap_engine_name_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_engine_name_info gauge
-falcosecurity_scap_engine_name_info{raw_name="engine_name",engine_name="bpf"} 1
+falcosecurity_scap_engine_name_info{engine_name="bpf"} 1
 # HELP falcosecurity_falco_version_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_version_info gauge
-falcosecurity_falco_version_info{raw_name="version",version="0.38.0"} 1
+falcosecurity_falco_version_info{version="0.39.0"} 1
 # HELP falcosecurity_falco_kernel_release_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_kernel_release_info gauge
-falcosecurity_falco_kernel_release_info{raw_name="kernel_release",kernel_release="6.7.9-200.fc39.x86_64"} 1
+falcosecurity_falco_kernel_release_info{kernel_release="6.8.11-200.fc39.x86_64"} 1
 # HELP falcosecurity_evt_hostname_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_evt_hostname_info gauge
-falcosecurity_evt_hostname_info{raw_name="hostname",hostname="test"} 1
-# HELP falcosecurity_falco_falco_sha256_rules_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_rules_files_info gauge
-falcosecurity_falco_falco_sha256_rules_files_info{raw_name="falco_sha256_rules_files",file_name="falco_rules",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
-# HELP falcosecurity_falco_falco_sha256_rules_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_rules_files_info gauge
-falcosecurity_falco_falco_sha256_rules_files_info{raw_name="falco_sha256_rules_files",file_name="falco-sandbox_rules",sha256="90a168fcbd3e5106f2e9cea34b33d1caa64c9d2c648f8b243bef64f36f3099ea"} 1
-# HELP falcosecurity_falco_falco_sha256_rules_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_rules_files_info gauge
-falcosecurity_falco_falco_sha256_rules_files_info{raw_name="falco_sha256_rules_files",file_name="falco-incubating_rules",sha256="ff12f8bb19b85c5b61fc28cc46ee5b1d47e6512fe932fc0486f98b3546db681e"} 1
-# HELP falcosecurity_falco_falco_sha256_config_files_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_falco_sha256_config_files_info gauge
-falcosecurity_falco_falco_sha256_config_files_info{raw_name="falco_sha256_config_files",file_name="falco",sha256="4638f808f51021448d866309f393317aa61bc2b4ce42fa40237c3494ecd84bff"} 1
+falcosecurity_evt_hostname_info{hostname="test"} 1
+# HELP falcosecurity_falco_sha256_rules_files_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_sha256_rules_files_info gauge
+falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
+# HELP falcosecurity_falco_sha256_config_files_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_sha256_config_files_info gauge
+falcosecurity_falco_sha256_config_files_info{file_name="falco",sha256="dda540600846785baaa2d2c8fc631528fff49fb10a3b75c4cdca668b28ae693d"} 1
+# HELP falcosecurity_falco_host_ifinfo_json_info https://falco.org/docs/metrics/
+# TYPE falcosecurity_falco_host_ifinfo_json_info gauge
+falcosecurity_falco_host_ifinfo_json_info{host_ifinfo_json="{"ipv4":{"docker0":"172.17.0.1","wlp0s20f3":"192.168.4.50"},"ipv6":{"wlp0s20f3":"fe80:0:0:0:9ac2:aaa4:22b3:f753"}}"} 1
 # HELP falcosecurity_falco_evt_source_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_evt_source_info gauge
-falcosecurity_falco_evt_source_info{raw_name="evt_source",evt_source="syscall"} 1
+falcosecurity_falco_evt_source_info{evt_source="syscall"} 1
 # HELP falcosecurity_falco_start_timestamp_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_start_timestamp_nanoseconds gauge
-falcosecurity_falco_start_timestamp_nanoseconds{raw_name="start_ts"} 1716134059882838651
+falcosecurity_falco_start_timestamp_nanoseconds 1726242529394244000
 # HELP falcosecurity_falco_host_boot_timestamp_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_host_boot_timestamp_nanoseconds gauge
-falcosecurity_falco_host_boot_timestamp_nanoseconds{raw_name="host_boot_ts"} 1715113297000000000
+falcosecurity_falco_host_boot_timestamp_nanoseconds 1726122734000000000
 # HELP falcosecurity_falco_host_num_cpus_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_host_num_cpus_total gauge
-falcosecurity_falco_host_num_cpus_total{raw_name="host_num_cpus"} 20
+falcosecurity_falco_host_num_cpus_total 20
 # HELP falcosecurity_falco_outputs_queue_num_drops_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_outputs_queue_num_drops_total counter
-falcosecurity_falco_outputs_queue_num_drops_total{raw_name="outputs_queue_num_drops"} 0
+falcosecurity_falco_outputs_queue_num_drops_total 0
 # HELP falcosecurity_falco_duration_seconds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_duration_seconds_total counter
-falcosecurity_falco_duration_seconds_total{raw_name="duration_sec"} 13
-# HELP falcosecurity_falco_rules_counters_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_rules_counters_total counter
-falcosecurity_falco_rules_counters_total{raw_name="rules_counters",priority="4",rule_name="Read sensitive file untrusted",source="syscall",tags="T1555, container, filesystem, host, maturity_stable, mitre_credential_access"} 10
-# HELP falcosecurity_falco_rules_counters_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_rules_counters_total counter
-falcosecurity_falco_rules_counters_total{raw_name="rules_counters",priority="5",rule_name="Unexpected UDP Traffic",source="syscall",tags="TA0011, container, host, maturity_incubating, mitre_exfiltration, network"} 1# HELP falcosecurity_falco_n_evts_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_evts_total counter
-falcosecurity_falco_n_evts_total{raw_name="n_evts"} 115266
-# HELP falcosecurity_falco_n_drops_buffer_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_total counter
-falcosecurity_falco_n_drops_buffer_total{raw_name="n_drops_buffer_total"} 0
-# HELP falcosecurity_falco_n_drops_buffer_clone_fork_enter_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_clone_fork_enter_total counter
-falcosecurity_falco_n_drops_buffer_clone_fork_enter_total{raw_name="n_drops_buffer_clone_fork_enter"} 0
-# HELP falcosecurity_falco_n_drops_buffer_clone_fork_exit_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_clone_fork_exit_total counter
-falcosecurity_falco_n_drops_buffer_clone_fork_exit_total{raw_name="n_drops_buffer_clone_fork_exit"} 0
-# HELP falcosecurity_falco_n_drops_buffer_execve_enter_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_execve_enter_total counter
-falcosecurity_falco_n_drops_buffer_execve_enter_total{raw_name="n_drops_buffer_execve_enter"} 0
-# HELP falcosecurity_falco_n_drops_buffer_execve_exit_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_execve_exit_total counter
-falcosecurity_falco_n_drops_buffer_execve_exit_total{raw_name="n_drops_buffer_execve_exit"} 0
-# HELP falcosecurity_falco_n_drops_buffer_connect_enter_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_connect_enter_total counter
-falcosecurity_falco_n_drops_buffer_connect_enter_total{raw_name="n_drops_buffer_connect_enter"} 0
-# HELP falcosecurity_falco_n_drops_buffer_connect_exit_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_connect_exit_total counter
-falcosecurity_falco_n_drops_buffer_connect_exit_total{raw_name="n_drops_buffer_connect_exit"} 0
-# HELP falcosecurity_falco_n_drops_buffer_open_enter_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_open_enter_total counter
-falcosecurity_falco_n_drops_buffer_open_enter_total{raw_name="n_drops_buffer_open_enter"} 0
-# HELP falcosecurity_falco_n_drops_buffer_open_exit_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_open_exit_total counter
-falcosecurity_falco_n_drops_buffer_open_exit_total{raw_name="n_drops_buffer_open_exit"} 0
-# HELP falcosecurity_falco_n_drops_buffer_dir_file_enter_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_dir_file_enter_total counter
-falcosecurity_falco_n_drops_buffer_dir_file_enter_total{raw_name="n_drops_buffer_dir_file_enter"} 0
-# HELP falcosecurity_falco_n_drops_buffer_dir_file_exit_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_dir_file_exit_total counter
-falcosecurity_falco_n_drops_buffer_dir_file_exit_total{raw_name="n_drops_buffer_dir_file_exit"} 0
-# HELP falcosecurity_falco_n_drops_buffer_other_interest_enter_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_other_interest_enter_total counter
-falcosecurity_falco_n_drops_buffer_other_interest_enter_total{raw_name="n_drops_buffer_other_interest_enter"} 0
-# HELP falcosecurity_falco_n_drops_buffer_other_interest_exit_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_other_interest_exit_total counter
-falcosecurity_falco_n_drops_buffer_other_interest_exit_total{raw_name="n_drops_buffer_other_interest_exit"} 0
-# HELP falcosecurity_falco_n_drops_buffer_close_exit_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_close_exit_total counter
-falcosecurity_falco_n_drops_buffer_close_exit_total{raw_name="n_drops_buffer_close_exit"} 0
-# HELP falcosecurity_falco_n_drops_buffer_proc_exit_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_buffer_proc_exit_total counter
-falcosecurity_falco_n_drops_buffer_proc_exit_total{raw_name="n_drops_buffer_proc_exit"} 0
-# HELP falcosecurity_falco_n_drops_scratch_map_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_scratch_map_total counter
-falcosecurity_falco_n_drops_scratch_map_total{raw_name="n_drops_scratch_map"} 0
-# HELP falcosecurity_falco_n_drops_page_faults_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_page_faults_total counter
-falcosecurity_falco_n_drops_page_faults_total{raw_name="n_drops_page_faults"} 0
-# HELP falcosecurity_falco_n_drops_bug_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_bug_total counter
-falcosecurity_falco_n_drops_bug_total{raw_name="n_drops_bug"} 0
-# HELP falcosecurity_falco_n_drops_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_n_drops_total counter
-falcosecurity_falco_n_drops_total{raw_name="n_drops"} 0
+falcosecurity_falco_duration_seconds_total 85
+# HELP falcosecurity_scap_n_evts_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_total counter
+falcosecurity_scap_n_evts_total 720910
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="clone_fork"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="clone_fork"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="execve"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="execve"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="connect"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="connect"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="open"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="open"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="dir_file"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="dir_file"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="other_interest"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="other_interest"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="close"} 0
+# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_buffer_total counter
+falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="proc"} 0
+# HELP falcosecurity_scap_n_drops_scratch_map_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_scratch_map_total counter
+falcosecurity_scap_n_drops_scratch_map_total 0
+# HELP falcosecurity_scap_n_drops_page_faults_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_page_faults_total counter
+falcosecurity_scap_n_drops_page_faults_total 0
+# HELP falcosecurity_scap_n_drops_bug_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_bug_total counter
+falcosecurity_scap_n_drops_bug_total 0
+# HELP falcosecurity_scap_n_drops_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_total counter
+falcosecurity_scap_n_drops_total 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="0"} 48959
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="0"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="1"} 7493
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="1"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="2"} 52810
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="2"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="3"} 1672
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="3"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="4"} 83684
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="4"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="5"} 3681
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="5"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="6"} 101532
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="6"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="7"} 5268
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="7"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="8"} 80346
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="8"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="9"} 13610
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="9"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="10"} 74096
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="10"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="11"} 2578
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="11"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="12"} 57161
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="12"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="13"} 50917
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="13"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="14"} 42276
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="14"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="15"} 29562
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="15"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="16"} 18272
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="16"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="17"} 17694
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="17"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="18"} 15064
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="18"} 0
+# HELP falcosecurity_scap_n_evts_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_evts_cpu_total counter
+falcosecurity_scap_n_evts_cpu_total{cpu="19"} 14235
+# HELP falcosecurity_scap_n_drops_cpu_total https://falco.org/docs/metrics/
+# TYPE falcosecurity_scap_n_drops_cpu_total counter
+falcosecurity_scap_n_drops_cpu_total{cpu="19"} 0
 # HELP falcosecurity_scap_sys_enter_run_cnt_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sys_enter_run_cnt_total counter
-falcosecurity_scap_sys_enter_run_cnt_total{raw_name="sys_enter.run_cnt"} 268297
+falcosecurity_scap_sys_enter_run_cnt_total 1434428
 # HELP falcosecurity_scap_sys_enter_run_time_nanoseconds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sys_enter_run_time_nanoseconds_total counter
-falcosecurity_scap_sys_enter_run_time_nanoseconds_total{raw_name="sys_enter.run_time_ns"} 143901562
+falcosecurity_scap_sys_enter_run_time_nanoseconds_total 751290983
 # HELP falcosecurity_scap_sys_enter_avg_time_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sys_enter_avg_time_nanoseconds gauge
-falcosecurity_scap_sys_enter_avg_time_nanoseconds{raw_name="sys_enter.avg_time_ns"} 536
+falcosecurity_scap_sys_enter_avg_time_nanoseconds 523
 # HELP falcosecurity_scap_sys_exit_run_cnt_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sys_exit_run_cnt_total counter
-falcosecurity_scap_sys_exit_run_cnt_total{raw_name="sys_exit.run_cnt"} 268227
+falcosecurity_scap_sys_exit_run_cnt_total 1434496
 # HELP falcosecurity_scap_sys_exit_run_time_nanoseconds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sys_exit_run_time_nanoseconds_total counter
-falcosecurity_scap_sys_exit_run_time_nanoseconds_total{raw_name="sys_exit.run_time_ns"} 160399772
+falcosecurity_scap_sys_exit_run_time_nanoseconds_total 813158553
 # HELP falcosecurity_scap_sys_exit_avg_time_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sys_exit_avg_time_nanoseconds gauge
-falcosecurity_scap_sys_exit_avg_time_nanoseconds{raw_name="sys_exit.avg_time_ns"} 598
+falcosecurity_scap_sys_exit_avg_time_nanoseconds 566
 # HELP falcosecurity_scap_sched_process_e_run_cnt_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sched_process_e_run_cnt_total counter
-falcosecurity_scap_sched_process_e_run_cnt_total{raw_name="sched_process_e.run_cnt"} 35
+falcosecurity_scap_sched_process_e_run_cnt_total 503
 # HELP falcosecurity_scap_sched_process_e_run_time_nanoseconds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sched_process_e_run_time_nanoseconds_total counter
-falcosecurity_scap_sched_process_e_run_time_nanoseconds_total{raw_name="sched_process_e.run_time_ns"} 148463
+falcosecurity_scap_sched_process_e_run_time_nanoseconds_total 1469881
 # HELP falcosecurity_scap_sched_process_e_avg_time_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sched_process_e_avg_time_nanoseconds gauge
-falcosecurity_scap_sched_process_e_avg_time_nanoseconds{raw_name="sched_process_e.avg_time_ns"} 4241
+falcosecurity_scap_sched_process_e_avg_time_nanoseconds 2922
 # HELP falcosecurity_scap_sched_switch_run_cnt_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sched_switch_run_cnt_total counter
-falcosecurity_scap_sched_switch_run_cnt_total{raw_name="sched_switch.run_cnt"} 0
+falcosecurity_scap_sched_switch_run_cnt_total 0
 # HELP falcosecurity_scap_sched_switch_run_time_nanoseconds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sched_switch_run_time_nanoseconds_total counter
-falcosecurity_scap_sched_switch_run_time_nanoseconds_total{raw_name="sched_switch.run_time_ns"} 0
+falcosecurity_scap_sched_switch_run_time_nanoseconds_total 0
 # HELP falcosecurity_scap_sched_switch_avg_time_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_sched_switch_avg_time_nanoseconds gauge
-falcosecurity_scap_sched_switch_avg_time_nanoseconds{raw_name="sched_switch.avg_time_ns"} 0
+falcosecurity_scap_sched_switch_avg_time_nanoseconds 0
 # HELP falcosecurity_scap_page_fault_user_run_cnt_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_page_fault_user_run_cnt_total counter
-falcosecurity_scap_page_fault_user_run_cnt_total{raw_name="page_fault_user.run_cnt"} 0
+falcosecurity_scap_page_fault_user_run_cnt_total 0
 # HELP falcosecurity_scap_page_fault_user_run_time_nanoseconds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_page_fault_user_run_time_nanoseconds_total counter
-falcosecurity_scap_page_fault_user_run_time_nanoseconds_total{raw_name="page_fault_user.run_time_ns"} 0
+falcosecurity_scap_page_fault_user_run_time_nanoseconds_total 0
 # HELP falcosecurity_scap_page_fault_user_avg_time_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_page_fault_user_avg_time_nanoseconds gauge
-falcosecurity_scap_page_fault_user_avg_time_nanoseconds{raw_name="page_fault_user.avg_time_ns"} 0
+falcosecurity_scap_page_fault_user_avg_time_nanoseconds 0
 # HELP falcosecurity_scap_page_fault_kern_run_cnt_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_page_fault_kern_run_cnt_total counter
-falcosecurity_scap_page_fault_kern_run_cnt_total{raw_name="page_fault_kern.run_cnt"} 0
+falcosecurity_scap_page_fault_kern_run_cnt_total 0
 # HELP falcosecurity_scap_page_fault_kern_run_time_nanoseconds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_page_fault_kern_run_time_nanoseconds_total counter
-falcosecurity_scap_page_fault_kern_run_time_nanoseconds_total{raw_name="page_fault_kern.run_time_ns"} 0
+falcosecurity_scap_page_fault_kern_run_time_nanoseconds_total 0
 # HELP falcosecurity_scap_page_fault_kern_avg_time_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_page_fault_kern_avg_time_nanoseconds gauge
-falcosecurity_scap_page_fault_kern_avg_time_nanoseconds{raw_name="page_fault_kern.avg_time_ns"} 0
+falcosecurity_scap_page_fault_kern_avg_time_nanoseconds 0
 # HELP falcosecurity_scap_signal_deliver_run_cnt_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_signal_deliver_run_cnt_total counter
-falcosecurity_scap_signal_deliver_run_cnt_total{raw_name="signal_deliver.run_cnt"} 0
+falcosecurity_scap_signal_deliver_run_cnt_total 0
 # HELP falcosecurity_scap_signal_deliver_run_time_nanoseconds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_signal_deliver_run_time_nanoseconds_total counter
-falcosecurity_scap_signal_deliver_run_time_nanoseconds_total{raw_name="signal_deliver.run_time_ns"} 0
+falcosecurity_scap_signal_deliver_run_time_nanoseconds_total 0
 # HELP falcosecurity_scap_signal_deliver_avg_time_nanoseconds https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_signal_deliver_avg_time_nanoseconds gauge
-falcosecurity_scap_signal_deliver_avg_time_nanoseconds{raw_name="signal_deliver.avg_time_ns"} 0
+falcosecurity_scap_signal_deliver_avg_time_nanoseconds 0
 # HELP falcosecurity_falco_cpu_usage_ratio https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_cpu_usage_ratio gauge
-falcosecurity_falco_cpu_usage_ratio{raw_name="cpu_usage_ratio"} 0.072000
+falcosecurity_falco_cpu_usage_ratio 0.050000
 # HELP falcosecurity_falco_memory_rss_bytes https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_memory_rss_bytes gauge
-falcosecurity_falco_memory_rss_bytes{raw_name="memory_rss_bytes"} 44236800.000000
+falcosecurity_falco_memory_rss_bytes 89948160.000000
 # HELP falcosecurity_falco_memory_vsz_bytes https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_memory_vsz_bytes gauge
-falcosecurity_falco_memory_vsz_bytes{raw_name="memory_vsz_bytes"} 1308819456.000000
+falcosecurity_falco_memory_vsz_bytes 1244749824.000000
 # HELP falcosecurity_falco_memory_pss_bytes https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_memory_pss_bytes gauge
-falcosecurity_falco_memory_pss_bytes{raw_name="memory_pss_bytes"} 41051136.000000
+falcosecurity_falco_memory_pss_bytes 86641664.000000
 # HELP falcosecurity_falco_container_memory_used_bytes https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_container_memory_used_bytes gauge
-falcosecurity_falco_container_memory_used_bytes{raw_name="container_memory_used_bytes"} 0.000000
+falcosecurity_falco_container_memory_used_bytes 0.000000
 # HELP falcosecurity_falco_host_cpu_usage_ratio https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_host_cpu_usage_ratio gauge
-falcosecurity_falco_host_cpu_usage_ratio{raw_name="host_cpu_usage_ratio"} 0.086000
+falcosecurity_falco_host_cpu_usage_ratio 0.093000
 # HELP falcosecurity_falco_host_memory_used_bytes https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_host_memory_used_bytes gauge
-falcosecurity_falco_host_memory_used_bytes{raw_name="host_memory_used_bytes"} 6925217792.000000
+falcosecurity_falco_host_memory_used_bytes 6578089984.000000
 # HELP falcosecurity_falco_host_procs_running_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_host_procs_running_total gauge
-falcosecurity_falco_host_procs_running_total{raw_name="host_procs_running"} 3
+falcosecurity_falco_host_procs_running_total 2
 # HELP falcosecurity_falco_host_open_fds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_host_open_fds_total gauge
-falcosecurity_falco_host_open_fds_total{raw_name="host_open_fds"} 18712
+falcosecurity_falco_host_open_fds_total 18912
 # HELP falcosecurity_scap_n_threads_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_threads_total gauge
-falcosecurity_scap_n_threads_total{raw_name="n_threads"} 1523
+falcosecurity_scap_n_threads_total 1693
 # HELP falcosecurity_scap_n_fds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_fds_total gauge
-falcosecurity_scap_n_fds_total{raw_name="n_fds"} 104533
+falcosecurity_scap_n_fds_total 115969
 # HELP falcosecurity_scap_n_noncached_fd_lookups_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_noncached_fd_lookups_total counter
-falcosecurity_scap_n_noncached_fd_lookups_total{raw_name="n_noncached_fd_lookups"} 18286
+falcosecurity_scap_n_noncached_fd_lookups_total 138325
 # HELP falcosecurity_scap_n_cached_fd_lookups_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_cached_fd_lookups_total counter
-falcosecurity_scap_n_cached_fd_lookups_total{raw_name="n_cached_fd_lookups"} 86296
+falcosecurity_scap_n_cached_fd_lookups_total 517660
 # HELP falcosecurity_scap_n_failed_fd_lookups_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_failed_fd_lookups_total counter
-falcosecurity_scap_n_failed_fd_lookups_total{raw_name="n_failed_fd_lookups"} 7364
+falcosecurity_scap_n_failed_fd_lookups_total 34507
 # HELP falcosecurity_scap_n_added_fds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_added_fds_total counter
-falcosecurity_scap_n_added_fds_total{raw_name="n_added_fds"} 15859
+falcosecurity_scap_n_added_fds_total 80866
 # HELP falcosecurity_scap_n_removed_fds_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_removed_fds_total counter
-falcosecurity_scap_n_removed_fds_total{raw_name="n_removed_fds"} 2320
+falcosecurity_scap_n_removed_fds_total 19530
 # HELP falcosecurity_scap_n_stored_evts_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_stored_evts_total counter
-falcosecurity_scap_n_stored_evts_total{raw_name="n_stored_evts"} 10196
+falcosecurity_scap_n_stored_evts_total 53178
 # HELP falcosecurity_scap_n_store_evts_drops_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_store_evts_drops_total counter
-falcosecurity_scap_n_store_evts_drops_total{raw_name="n_store_evts_drops"} 0
+falcosecurity_scap_n_store_evts_drops_total 0
 # HELP falcosecurity_scap_n_retrieved_evts_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_retrieved_evts_total counter
-falcosecurity_scap_n_retrieved_evts_total{raw_name="n_retrieved_evts"} 8989
+falcosecurity_scap_n_retrieved_evts_total 51250
 # HELP falcosecurity_scap_n_retrieve_evts_drops_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_retrieve_evts_drops_total counter
-falcosecurity_scap_n_retrieve_evts_drops_total{raw_name="n_retrieve_evts_drops"} 501
+falcosecurity_scap_n_retrieve_evts_drops_total 4933
 # HELP falcosecurity_scap_n_noncached_thread_lookups_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_noncached_thread_lookups_total counter
-falcosecurity_scap_n_noncached_thread_lookups_total{raw_name="n_noncached_thread_lookups"} 44586
+falcosecurity_scap_n_noncached_thread_lookups_total 206305
 # HELP falcosecurity_scap_n_cached_thread_lookups_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_cached_thread_lookups_total counter
-falcosecurity_scap_n_cached_thread_lookups_total{raw_name="n_cached_thread_lookups"} 84566
+falcosecurity_scap_n_cached_thread_lookups_total 567495
 # HELP falcosecurity_scap_n_failed_thread_lookups_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_failed_thread_lookups_total counter
-falcosecurity_scap_n_failed_thread_lookups_total{raw_name="n_failed_thread_lookups"} 3444
+falcosecurity_scap_n_failed_thread_lookups_total 3817
 # HELP falcosecurity_scap_n_added_threads_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_added_threads_total counter
-falcosecurity_scap_n_added_threads_total{raw_name="n_added_threads"} 1558
+falcosecurity_scap_n_added_threads_total 2107
 # HELP falcosecurity_scap_n_removed_threads_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_removed_threads_total counter
-falcosecurity_scap_n_removed_threads_total{raw_name="n_removed_threads"} 35
+falcosecurity_scap_n_removed_threads_total 414
 # HELP falcosecurity_scap_n_drops_full_threadtable_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_drops_full_threadtable_total counter
-falcosecurity_scap_n_drops_full_threadtable_total{raw_name="n_drops_full_threadtable"} 0
+falcosecurity_scap_n_drops_full_threadtable_total 0
 # HELP falcosecurity_scap_n_missing_container_images_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_missing_container_images_total gauge
-falcosecurity_scap_n_missing_container_images_total{raw_name="n_missing_container_images"} 0
+falcosecurity_scap_n_missing_container_images_total 0
 # HELP falcosecurity_scap_n_containers_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_containers_total gauge
-falcosecurity_scap_n_containers_total{raw_name="n_containers"} 0
+falcosecurity_scap_n_containers_total 0
 ```
   
 </details>
 
 ## Prometheus Support
 
-Since version 0.38.0, you can also use Falco's web server to expose Falco's metrics. A new `/metrics` endpoint has been added which provides metrics information that can be collected by [Prometheus][2].
+Since version 0.39.0, you can also use Falco's web server to expose Falco's metrics. A new `/metrics` endpoint has been added which provides metrics information that can be collected by [Prometheus][2].
 
 In order to activate this endpoint, three configuration elements must be set in the [falco.yaml][1]:
 
@@ -1338,7 +1899,7 @@ Lastly, please note that as of Falco 0.38.1, it is not possible to fully use the
 ## Breaking Changes
 
 {{% pageinfo color=info %}}
-Several metric output field names have changed in Falco 0.38.0 compared to previous releases when using the `output_rule` or `output_file` metrics options.
+Several metric output field names have changed in Falco 0.39.0 compared to previous releases when using the `output_rule` or `output_file` metrics options.
 
 To ensure long-term consistency and validity, we have renamed the following metric output fields. The unit suffix depends on whether you use `convert_memory_to_mb: true` or not:
 
