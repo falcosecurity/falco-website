@@ -5,14 +5,14 @@ weight: 40
 ---
 
 {{% pageinfo color="primary" %}}
-Falco consumes streams of events and evaluates them against a set of security rules to detect abnormal behavior. By default, Falco is preconfigured to consume events from the Linux Kernel. This scenario requires Falco to be privileged, and depending on the kernel version installed on the host, a [driver](/docs/event-sources/kernel/) need to be installed.
+Falco consumes streams of events and evaluates them against a set of security {{< glossary_tooltip text="rules" term_id="rules" >}} to detect abnormal behavior. By default, Falco is preconfigured to consume events from the Linux Kernel. This scenario requires Falco to be privileged, and depending on the kernel version installed on the host, a {{< glossary_tooltip text="driver" term_id="drivers" >}} needs to be installed.
 
 For other installation scenarios, such as consuming cloud events or other data sources using plugins, please refer to the [Plugins](docs/plugins/) section.
 {{% /pageinfo %}}
 
 There are two main methods to install Falco on your host using the [released Falco packages](/docs/download):
 
-1. **RPM or DEB package (include Systemd setup):** For instructions, refer to the [Install on a host (DEB, RPM)](/docs/setup/packages) page.
+1. **RPM or DEB package (includes Systemd setup):** For instructions, refer to the [Install on a host (DEB, RPM)](/docs/setup/packages) page.
 2. **Tarball archive:** This method is detailed on this page.
 
 ## Install
@@ -21,34 +21,35 @@ In these steps, we are targeting a Debian-like system on `x86_64` architecture. 
 
 1. Download the latest binary:
 
-    ```bash
+    ```shell
     curl -L -O https://download.falco.org/packages/bin/x86_64/falco-{{< latest >}}-x86_64.tar.gz
     ```
 
 2. Install Falco:
 
-    ```bash
+    ```shell
     tar -xvf falco-{{< latest >}}-x86_64.tar.gz
     cp -R falco-{{< latest >}}-x86_64/* /
     ```
 
-3. Install some required dependencies that are needed to build the kernel module and the eBPF probe. If you want to use other sources like the modern eBPF probe or plugins you can skip this step.
+3. Install some required dependencies that are needed to build the kernel module and the eBPF probe. If you want to use other sources like the modern eBPF probe or plugins, you can skip this step.
 
-    ```bash
+    ```shell
     apt update -y
     apt install -y dkms make linux-headers-$(uname -r)
     # If you use falcoctl driver loader to build the eBPF probe locally you need also clang toolchain
     apt install -y clang llvm
     ```
 
-4. Use `falcoctl driver` tool to configure Falco and install the kernel module or the eBPF probe. If you want to use other sources like the modern eBPF probe or plugins you can skip this step.
+4. Use the `falcoctl driver` tool to configure Falco and install the kernel module or the eBPF probe. If you want to use other sources like the modern eBPF probe or plugins, you can skip this step.
+
    {{% pageinfo color="info" %}}
 
-   To install the driver, write and execution permissions on the `/tmp` directory are required, since `falcoctl` will try to create and execute a script from there.
+   To install the driver, write and execute permissions on the `/tmp` directory are required, since `falcoctl` will try to create and execute a script from there.
     
    {{% /pageinfo %}}
 
-   ```bash
+   ```shell
    # If you want to use the kernel module, configure Falco for it
    falcoctl driver config --type kmod
    # If you want to use the eBPF probe, configure Falco for it
@@ -57,15 +58,15 @@ In these steps, we are targeting a Debian-like system on `x86_64` architecture. 
    falcoctl driver install
    ```
 
-   By default, the `falcoctl driver install` command tries to download a prebuilt driver from [the official Falco download s3 bucket](https://download.falco.org/?prefix=driver/). If a driver is found then it is inserted into `${HOME}/.falco/`. Otherwise, the script tries to compile the driver locally, for this reason, you need the dependencies at step [3].
+   By default, the `falcoctl driver install` command tries to download a prebuilt driver from [the official Falco download s3 bucket](https://download.falco.org/?prefix=driver/). If a driver is found, it is inserted into `${HOME}/.falco/`. Otherwise, the script tries to compile the driver locally; for this reason, you need the dependencies in step [3].
 
-   You can use the env variable `FALCOCTL_DRIVER_REPOS` to override the default repository URL for prebuilt drivers. The URL must not have the trailing slash, i.e. `https://myhost.mydomain.com` or if the server has a subdirectories structure `https://myhost.mydomain.com/drivers`. The drivers must be hosted with the following structure:
+   You can use the environment variable `FALCOCTL_DRIVER_REPOS` to override the default repository URL for prebuilt drivers. The URL must not have a trailing slash, i.e., `https://myhost.mydomain.com` or, if the server has a subdirectory structure, `https://myhost.mydomain.com/drivers`. The drivers must be hosted with the following structure:
 
-   ```bash
+   ```shell
    /${driver_version}/${arch}/falco_${target}_${kernelrelease}_${kernelversion}.[ko|o]
    ```
 
-   where `ko` and `o` stand for Kernel module and `eBPF` probe respectively. This is an example:
+   where `ko` and `o` stand for Kernel module and `eBPF` probe, respectively. This is an example:
 
    ```text
    /7.0.0+driver/x86_64/falco_amazonlinux2022_5.10.75-82.359.amzn2022.x86_64_1.ko
@@ -73,25 +74,24 @@ In these steps, we are targeting a Debian-like system on `x86_64` architecture. 
     
 > If you wish to print some debug info, you can use:
 
-   ```bash
+   ```shell
    # If you want to use the kernel module, configure Falco for it
    falcoctl driver printenv
    ```
 
 ## Manual Systemd setup
 
-The Falco `.tar.gz` archive doesn't include the Systemd setup. If you want to enable Falco to start automatically at boot time, you can still download `systemd` files from the [Falco repo](https://github.com/falcosecurity/falco/tree/master/scripts/systemd) and place them in the `/lib/systemd/system` directory.
-Finally you can follow the same instructions for [enabling Systemd manually](/docs/setup/packages#enable-falco-on-systemd-manually) under the _Install on a host (DEB, RPM)_ section.
+The Falco `.tar.gz` archive doesn't include the Systemd setup. If you want to enable Falco to start automatically at boot time, you can still download `systemd` files from the [Falco repo](https://github.com/falcosecurity/falco/tree/master/scripts/systemd) and place them in the `/lib/systemd/system` directory. Finally, you can follow the same instructions for [enabling Systemd manually](/docs/setup/packages#enable-falco-on-systemd-manually) under the _Install on a host (DEB, RPM)_ section.
 
 ## Configuration
 
 The Falco configuration file is located at `/etc/falco/falco.yaml`. You can edit it to customize Falco's behavior.
 
-Since Falco 0.38.0, a new config key, `config_files`, allows the user to load additional configuration files to override main config entries; it allows user to keep local customization between Falco upgrades. Its default value points to a new folder, `/etc/falco/config.d/` that gets installed by Falco and will be processed to look for local configuration files.
+Since Falco 0.38.0, a new config key, `config_files`, allows the user to load additional configuration files to override main config entries; it allows users to keep local customization between Falco upgrades. Its default value points to a new folder, `/etc/falco/config.d/`, that gets installed by Falco and will be processed to look for local configuration files.
 
 You can also override the default configuration by passing options to the `falco` binary. For example, to force the eBPF probe or the kernel module:
 
-```bash
+```shell
 # Force eBPF probe
 falco -o engine.kind=ebpf
 # Force kernel module
@@ -104,29 +104,28 @@ By default, with the `watch_config_files` configuration option enabled, Falco au
 
 If this option is disabled, you can manually reload the configuration by sending a `SIGHUP` signal to the Falco process. To do this, use the following command:
 
-```bash
+```shell
 kill -1 $(cat /var/run/falco.pid)
 ```
 
 ## Upgrade
 
-If you are using the kernel module driver, please remove it with root priviliges before upgrading Falco to avoid issues during the upgrade.
+If you are using the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module" >}} driver, please remove it with root privileges before upgrading Falco to avoid issues during the upgrade.
 
-```bash
+```shell
 rmmod falco
 ```
 
-When utilizing the legacy eBPF driver, although not strictly required, you can remove the corresponding previus object files:
+When utilizing the {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} driver, although not strictly required, you can remove the corresponding previous object files:
 
-```bash
+```shell
 rm /root/.falco/*.o
 ```
 
-With modern eBPF, there is no requirement when updating Falco, as the driver is bundled within the Falco binary.
+With {{< glossary_tooltip text="Modern eBPF" term_id="modern-ebpf-probe" >}}, there is no requirement when updating Falco, as the driver is bundled within the Falco binary.
 
-Once the driver is removed, ensure `falco` daemon is not running, theb you can follow the same steps as the [Install](#install) section.
+Once the driver is removed, ensure the `falco` daemon is not running, then you can follow the same steps as the [Install](#install) section.
 
 ## Uninstall
 
-For the Falco binary we don't provide specific update paths, you just have to remove files installed by the old `tar.gz`.
-
+For the Falco binary, we don't provide specific update paths; you just have to remove files installed by the old `tar.gz`.

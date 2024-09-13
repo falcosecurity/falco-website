@@ -1,9 +1,7 @@
 ---
 title: Setup
-description: Falco installation and configuration
+description: Learn how to install and configure Falco
 aliases:
 - ../install-operate
 weight: 20
 ---
-
-Learn how to install and configure Falco. 

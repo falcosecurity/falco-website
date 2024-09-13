@@ -9,28 +9,27 @@ weight: 30
 ---
 
 {{% pageinfo color="primary" %}}
-Falco consumes streams of events and evaluates them against a set of security rules to detect abnormal behavior. By default, Falco is preconfigured to consume events from the Linux Kernel. This scenario requires Falco to be privileged, and depending on the kernel version installed on the host, a [driver](/docs/event-sources/kernel/) need to be installed.
+Falco consumes streams of events and evaluates them against a set of security {{< glossary_tooltip text="rules" term_id="rules" >}} to detect abnormal behavior. By default, Falco is preconfigured to consume events from the Linux Kernel. This scenario requires Falco to be privileged, and depending on the kernel version installed on the host, a {{< glossary_tooltip text="driver" term_id="drivers" >}} needs to be installed.
 
 For other installation scenarios, such as consuming cloud events or other data sources using plugins, please refer to the [Plugins](docs/plugins/) section.
 {{% /pageinfo %}}
 
 There are two main methods to install Falco on your host using the [released Falco packages](/docs/download):
 
-1. **RPM or DEB package (include Systemd setup):** This method is detailed on this page.
+1. **RPM or DEB package (includes Systemd setup):** This method is detailed on this page.
 2. **Tarball archive:** For instructions, refer to the [Install on a host (tarball)](/docs/setup/tarball) page.
-
 
 ## Install {#install}
 
-This installation method is for Linux distribution with a package manager that supports DEB (Debian, Ubuntu) or RPM (CentOS, RHEL, Fedora, Amazon Linux) packages. 
+This installation method is for Linux distributions with a package manager that supports DEB (Debian, Ubuntu) or RPM (CentOS, RHEL, Fedora, Amazon Linux) packages.
 
-In interactive installations, the Falco installation package uses the `dialog` binary for configuration prompts. The dialog allows the user to complete the Systemd setup which include:
+In interactive installations, the Falco installation package uses the `dialog` binary for configuration prompts. The dialog allows the user to complete the Systemd setup which includes:
 - The driver selection (kmod, ebpf, modern_ebpf) or automatic selection
 - The Falcoctl service setup
 
-In non-interative installations (eg. `dialog` is not available, or if the user disable it by setting the `FALCO_FRONTEND=noninteractive` when installing Falco using the package manager), the automatic driver selection is enabled by default and for other options, the user needs to manually configure the Systemd services.
+In non-interactive installations (e.g., `dialog` is not available, or if the user disables it by setting `FALCO_FRONTEND=noninteractive` when installing Falco using the package manager), the automatic driver selection is enabled by default and for other options, the user needs to manually configure the [Systemd](https://systemd.io/) services.
 
-### Environment variables {#environment-variables}
+### Env variables {#env-variables}
 
 The following environment variables can be used to customize the installation process:
 
@@ -38,41 +37,39 @@ The following environment variables can be used to customize the installation pr
 - `FALCO_DRIVER_CHOICE`: Set to `kmod`, `ebpf`, or `modern_ebpf` to choose a driver. If selected, the dialog will be skipped too. The default (empty) is automatic selection.
 - `FALCOCTL_ENABLED`: Set to any value to enable the `falcoctl` ruleset. The default is disabled.
 
-These enviroment variables can be used in conjunction with the package manager (as described in the following sections) to customize the installation process as needed.
+These environment variables can be used in conjunction with the package manager (as described in the following sections) to customize the installation process as needed.
 
 Examples:
 
 - No dialog, no driver:
-  ```bash
+  ```shell
   FALCO_DRIVER_CHOICE=none apt-get install -y falco
   ```
 
 - Install with `kmod` driver:
-  ```bash
+  ```shell
   FALCO_DRIVER_CHOICE=kmod apt-get install -y falco
   ```
 
 - No dialog, automatic selection:
-  ```bash
+  ```shell
   FALCO_FRONTEND=noninteractive apt-get install -y falco
   ```
 
+### `apt` (Debian/Ubuntu) {#install-with-apt}
 
-
-### Install with `apt` (Debian/Ubuntu) {#install-with-apt}
-
-The following steps are for Debian and Debian-based distribution, such as Ubuntu, which use the `apt` package manager.
+The following steps are for Debian and Debian-based distributions, such as Ubuntu, which use the `apt` package manager.
 
 1. Trust the `falcosecurity` GPG key
 
-    ```bash
+    ```shell
     curl -fsSL https://falco.org/repo/falcosecurity-packages.asc | \
     sudo gpg --dearmor -o /usr/share/keyrings/falco-archive-keyring.gpg
     ```
 
 2. Configure the apt repository
 
-    ```bash
+    ```shell
     echo "deb [signed-by=/usr/share/keyrings/falco-archive-keyring.gpg] https://download.falco.org/packages/deb stable main" | \
     sudo tee -a /etc/apt/sources.list.d/falcosecurity.list
     ```
@@ -81,9 +78,9 @@ The following steps are for Debian and Debian-based distribution, such as Ubuntu
 
 In older releases of Debian (Debian 9 and older ones), you might need to additionally install the package `apt-transport-https` to allow access to the Falco repository using the `https` protocol.
 
-The following command with install that package in your system:
+The following command will install that package on your system:
 
-```bash
+```shell
 sudo apt-get install apt-transport-https
 ```
 
@@ -91,13 +88,13 @@ sudo apt-get install apt-transport-https
     
 3. Update the package list
 
-    ```bash
+    ```shell
     sudo apt-get update -y
     ```
     
-4. Install some required dependencies that are needed to build the kernel module and the eBPF probe
+4. Install some required dependencies that are needed to build the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}} and the {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}}
 
-    ```bash
+    ```shell
     sudo apt install -y dkms make linux-headers-$(uname -r)
     # If you use falcoctl driver loader to build the eBPF probe locally you need also clang toolchain
     sudo apt install -y clang llvm
@@ -105,38 +102,37 @@ sudo apt-get install apt-transport-https
     sudo apt install -y dialog
     ```
 
-    > _Note_: You don't need to install these deps if you want to the modern eBPF probe
+    > _Note_: You don't need to install these dependencies if you want to use the {{< glossary_tooltip text="Modern eBPF" term_id="modern-ebpf-probe" >}}.
 
 5. Install the Falco package
 
-    ```bash
+    ```shell
     sudo apt-get install -y falco
     ```
 
-
-### Install with `yum` (CentOS/RHEL/Fedora/Amazon Linux) {#install-with-yum}
+### `yum` (CentOS/RHEL/Fedora/Amazon Linux) {#install-with-yum}
 
 1. Trust the `falcosecurity` GPG key
 
-    ```bash
+    ```shell
     rpm --import https://falco.org/repo/falcosecurity-packages.asc
     ```
 
-2. Configure the yum repository
+2. Configure the `yum` repository
 
-    ```bash
+    ```shell
     curl -s -o /etc/yum.repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
     ```
 
 3. Update the package list
 
-    ```bash
+    ```shell
     yum update -y
     ```
 
-4. Install some required dependencies that are needed to build the kernel module and the eBPF probe
+4. Install some required dependencies that are needed to build the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}} and the {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}}
 
-    ```bash
+    ```shell
     # If necessary install it using: `yum install epel-release` (or `amazon-linux-extras install epel` in case of amzn2), then `yum install make dkms`.
     yum install -y dkms make
     # If the package was not found by the below command, you might need to run `yum distro-sync` in order to fix it. Rebooting the system may be required.
@@ -147,55 +143,55 @@ sudo apt-get install apt-transport-https
     yum install -y dialog
     ```
 
-    > _Note_: You don't need to install these deps if you want to use the modern eBPF probe
+    > _Note_: You don't need to install these dependencies if you want to use the {{< glossary_tooltip text="Modern eBPF" term_id="modern-ebpf-probe" >}}.
 
 5. Install the Falco package
 
-    ```bash
+    ```shell
     yum install -y falco
     ```
+    
+ 
+ {{% pageinfo color="primary" %}}
+ You might need to validate the driver signature if your system has UEFI SecureBoot enabled. Follow these steps to do so:
 
-6. Uninstall Falco:
+1. Import the DKMS Machine Owner Key
+    
+        ```shell
+        sudo mokutil --import /var/lib/dkms/mok.pub
+        ```
+ 2. Restart the system and wait for the MOK key enrollment prompt
+ 3. Choose the option:  `Enroll MOK`
+ 4. Load the Falco driver
+        
+            ```shell
+            sudo insmod /var/lib/dkms/falco/<driver-version>/$(uname -r)/x86_64/module/falco.ko.xz
+            ```
+{{% /pageinfo %}}
 
-    ```bash
-    yum erase -y falco
-    ```
- > You might need to validate the driver signature if your system has UEFI SecureBoot enabled.\
-> Follow these steps to do so:
->
- >         1. Import the DKMS Machine Owner Key
- >         $ sudo mokutil --import /var/lib/dkms/mok.pub
- >
- >         2. Restart the system and wait for the MOK key enrollment prompt
- >
- >         3. Choose the option:  Enroll MOK
- >
- >         4. Load the Falco driver
- >         $ insmod /var/lib/dkms/falco/4.0.0+driver/$(uname -r)/x86_64/module/falco.ko.xz     
-
-### Install with `zypper` (openSUSE) {#install-with-zypper}
+### `zypper` (openSUSE) {#install-with-zypper}
 
 1. Trust the `falcosecurity` GPG key
 
-    ```bash
+    ```shell
     rpm --import https://falco.org/repo/falcosecurity-packages.asc
     ```
 
 2. Configure the zypper repository
 
-    ```bash
+    ```shell
     curl -s -o /etc/zypp/repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
     ```
 
 3. Update the package list
 
-    ```bash
+    ```shell
     zypper -n update
     ```
 
-4. Install some required dependencies that are needed to build the kernel module and the eBPF probe
+4. Install some required dependencies that are needed to build the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}} and the {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}}
 
-    ```bash
+    ```shell
     zypper -n install dkms make
     # If the package was not found by the below command, you might need to run `zypper -n dist-upgrade` in order to fix it. Rebooting the system may be required.
     zypper -n install kernel-default-devel-$(uname -r | sed s/\-default//g)
@@ -205,7 +201,7 @@ sudo apt-get install apt-transport-https
     zypper -n install dialog
     ```
 
-    > _Note_: You don't need to install these deps if you want to use the modern eBPF probe
+    > _Note_: You don't need to install these dependencies if you want to use the {{< glossary_tooltip text="Modern eBPF" term_id="modern-ebpf-probe" >}}.
 
 5. Install Falco:
 
@@ -227,22 +223,20 @@ By default, if you have the `dialog` binary installed on your system, you will b
 
 ![](/docs/getting-started/images/dialog-1.png)
 
-From here you can choose one of our 3 drivers `Kmod`, `eBPF`, `Modern eBPF`, a [`Manual configuration`](#manual-system-setup) or the `Automatic selection` (reccomended) to trigger the automatic logic to select the best driver for you. When you choose a driver from the dialog, the `systemd` service is always enabled by default so it will start at every system reboot. If you want to disable this behavior type `systemctl disable falco-kmod.service` (if you are using the kernel module like in this example).
+From here you can choose one of our 3 drivers `Kmod`, `eBPF`, `Modern eBPF`, a [`Manual configuration`](#manual-system-setup) or the `Automatic selection` (recommended) to trigger the automatic logic to select the best driver for you. When you choose a driver from the dialog, the `systemd` service is always enabled by default so it will start at every system reboot. If you want to disable this behavior type `systemctl disable falco-kmod.service` (if you are using the kernel module like in this example).
 
 After the first dialog, you should see a second one:
 
 ![](/docs/getting-started/images/dialog-2.png)
 
-
 ### Manual system setup {#manual-systemd-setup}
 
-You may need to complete the setup configuration, if you are in one of the following cases:
-- you disabled the interactive installation (eg. using the `FALCO_FRONTEND=noninteractive` env variable)
+You may need to complete the setup configuration if you are in one of the following cases:
+- you disabled the interactive installation (e.g., using the `FALCO_FRONTEND=noninteractive` env variable)
 - you don't have the `dialog` binary installed on your system
 - you chose the `Manual configuration` from the dialog
 
-
-Verify the avialable services:
+Verify the available services:
 
 ```plain
 $ sudo systemctl list-unit-files "falco*"
@@ -317,13 +311,13 @@ If you installed the Falco packages using the `dialog` option, all your services
 
 If you need to switch from one service to another, ensure that the current service is properly stopped before starting the new one. This can be done by using the appropriate service management commands for your system (e.g., `systemctl stop <service_name>` and `systemctl start <new_service_name>`).
 
-For example, if you want to use the service for the eBPF probe driver:
+For example, if you want to use the service for the {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}}:
 
 1. Type `systemctl list-units | grep falco` to check that no unit is running. Stop the current services, if any.
 
-2. Now you have to decide whether you want the Falcoctl service running together with the Falco one. If yes you don't have to do anything, else you will need to mask the Falcoctl service with `systemctl mask falcoctl-artifact-follow.service`. As pointed out [in this section](/docs/getting-started/installation/#rule-update) the Falcoctl service is strictly related to the Falco one so if you don't mask it, it will be started together with the Falco service.
+2. Now you have to decide whether you want the Falcoctl service running together with the Falco one. If yes you don't have to do anything, else you will need to mask the Falcoctl service with `systemctl mask falcoctl-artifact-follow.service`. The Falcoctl service is strictly related to the Falco one so if you don't mask it, it will be started together with the Falco service.
 
-3. Type `falcoctl driver config --type ebpf` to configure Falco to use eBPF driver, then `falcoctl driver install` to download/compile the eBPF probe.
+3. Type `falcoctl driver config --type ebpf` to configure Falco to use {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}}, then `falcoctl driver install` to download/compile the eBPF probe.
 
 4. Now running `systemctl start falco-bpf.service` and typing `systemctl list-units | grep falco` you should see something like that (supposing you didn't mask the Falcoctl service):
 
@@ -334,7 +328,7 @@ For example, if you want to use the service for the eBPF probe driver:
 
 5. If you want to stop both services in one shot
 
-    ```bash
+    ```shell
     systemctl stop falco-bpf.service
     ```
 
@@ -370,12 +364,11 @@ In this mode, the Falcoctl service is masked by default so if you want to enable
 
 You may have noticed a Falco unit called `falco-custom.service`. You should use it when you want to run Falco with a custom configuration like a plugin or Gvisor. Please note that in this case you have to modify this template according to how you want to run Falco, the unit should not be used as is!
 
-
 ## Configuration {#configuration}
 
 The Falco configuration file is located at `/etc/falco/falco.yaml`. You can edit it to customize Falco's behavior.
 
-Since Falco 0.38.0, a new config key, `config_files`, allows the user to load additional configuration files to override main config entries; it allows user to keep local customization between Falco upgrades. Its default value points to a new folder, `/etc/falco/config.d/` that gets installed by Falco and will be processed to look for local configuration files.
+Since Falco 0.38.0, a new config key, `config_files`, allows the user to load additional configuration files to override main config entries. This allows user to keep local customization between Falco upgrades. Its default value points to a new folder, `/etc/falco/config.d/` that gets installed by Falco and will be processed to look for local configuration files.
 
 ### Hot Reload
 
@@ -389,11 +382,11 @@ systemctl restart falco
 
 ## Upgrade {#upgrade}
 
-### Upgrade with `apt` (Debian/Ubuntu) {#upgrade-with-apt}
+### `apt` (Debian/Ubuntu) {#upgrade-with-apt}
 
 {{% pageinfo color="warning" %}}
 
-If you configured the `apt` repository by having followed the instructions for Falco 0.27.0 or older, you may need to update the repository URL, otherwise, **fell free to ignore this message**
+If you configured the `apt` repository by having followed the instructions for Falco 0.27.0 or older, you may need to update the repository URL, otherwise, **feel free to ignore this message**
 
 ```shell
 sed -i 's,https://dl.bintray.com/falcosecurity/deb,https://download.falco.org/packages/deb,' /etc/apt/sources.list.d/falcosecurity.list
@@ -405,16 +398,16 @@ Check in the `apt-get update` log that `https://download.falco.org/packages/deb`
 
 {{% /pageinfo %}}
 
-If you installed Falco by following the [provided instructions](/docs/install-operate/installation/#installation-details):
+If you installed Falco by following the [provided instructions](#install):
 
 ```shell
 apt-get --only-upgrade install falco
 ```
 
-### Upgrade with `yum` (CentOS/RHEL/Fedora/Amazon Linux) {#upgrade-with-yum}
+### `yum` (CentOS/RHEL/Fedora/Amazon Linux) {#upgrade-with-yum}
 
 {{% pageinfo color="warning" %}}
-If you configured the `yum` repository by having followed the instructions for Falco 0.27.0 or older, you may need to update the repository URL, otherwise, **fell free to ignore this message**
+If you configured the `yum` repository by having followed the instructions for Falco 0.27.0 or older, you may need to update the repository URL, otherwise, **feel free to ignore this message**
 
 ```shell
 sed -i 's,https://dl.bintray.com/falcosecurity/rpm,https://download.falco.org/packages/rpm,' /etc/yum.repos.d/falcosecurity.repo
@@ -443,10 +436,10 @@ If you installed Falco by following the [provided instructions](/docs/install-op
     yum update falco
     ```
 
-### Upgrade with `zypper` (openSUSE) {#upgrade-with-zypper}
+### `zypper` (openSUSE) {#upgrade-with-zypper}
 
 {{% pageinfo color="warning" %}}
-If you configured the `zypper` repository by having followed the instructions for Falco 0.27.0 or older, you may need to update the repository URL, otherwise, **fell free to ignore this message**
+If you configured the `zypper` repository by having followed the instructions for Falco 0.27.0 or older, you may need to update the repository URL, otherwise, **feel free to ignore this message**
 
 ```shell
 sed -i 's,https://dl.bintray.com/falcosecurity/rpm,https://download.falco.org/packages/rpm,' /etc/zypp/repos.d/falcosecurity.repo
@@ -469,24 +462,23 @@ zypper update falco
 
 ### Kernel Upgrades {#kernel-upgrades}
 
-When performing kernel upgrades on your host, a reboot is required. When using a Kernel Module or a eBPF probe, the Falco driver loader (ie. `falcoctl driver`) should be able to automatically find a pre-built driver (or build it on the fly) corresponding to the updated kernel release (`uname -r`), making it easy to handle kernel upgrades. The Falco Project features a kernel crawler and automated CI, ensuring you can always obtain the necessary pre-built driver artifact, even for the latest kernel releases we support.
-
+When performing kernel upgrades on your host, a reboot is required. When using a {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} or a {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}} driver, the Falco driver loader (i.e., `falcoctl driver`) should be able to automatically find a pre-built driver (or build it on the fly) corresponding to the updated kernel release (`uname -r`), making it easy to handle kernel upgrades. The Falco Project features a kernel crawler and automated CI, ensuring you can always obtain the necessary pre-built driver artifact, even for the latest kernel releases we support.
 
 ## Uninstall
 
-### Uninstall with `apt` (Debian/Ubuntu) {#install-with-apt}
+### `apt` (Debian/Ubuntu) {#install-with-apt}
 
 ```shell
 apt-get --purge autoremove falco
 ```
 
-### Uninstall with `yum` (CentOS/RHEL/Fedora/Amazon Linux) {#install-with-yum}
+### `yum` (CentOS/RHEL/Fedora/Amazon Linux) {#install-with-yum}
 
 ```shell
 yum autoremove falco
 ```
 
-### Uninstall with `zypper` (openSUSE) {#install-with-zypper}
+### `zypper` (openSUSE) {#install-with-zypper}
 
 ```shell
 zypper remove falco
@@ -543,4 +535,3 @@ If you are using the eBPF probe, in order to ensure that performance is not degr
 * `net.core.bpf_jit_enable` is set to 1 (enable the BPF JIT Compiler)
 
 This can be verified via `sysctl -n net.core.bpf_jit_enable`.
-
