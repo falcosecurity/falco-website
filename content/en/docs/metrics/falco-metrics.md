@@ -1863,12 +1863,7 @@ The `num_evts` wrapper / base field is currently not available for Prometheus me
 
 However, following the Prometheus recommendations, there might be some slight differences with regard to some metrics fields. Typically calculated fields will not be returned as Prometheus provides the facilities to compute them as part of their queries (e.g. event or drop rates can be calculated in Prometheus).
 
-Lastly, starting with Falco 0.38.2, the following Prometheus metric names have changed. Metrics are now distinguished by the `file_name` or `rule_name` labels, in line with Prometheus best practices and supporting groupBy queries:
-
-- `falcosecurity_falco_falco_sha256_rules_files_info`
-- `falcosecurity_falco_falco_sha256_config_files_info`
-- `falcosecurity_falco_rules_counters_total`
-
+Starting with Falco 0.39.0, several sub-metrics now use [labels](https://prometheus.io/docs/practices/naming/#labels) to align with Prometheus best practices and support groupBy queries.
 {{% /pageinfo %}}
 
 [1]: https://github.com/falcosecurity/falco/blob/master/falco.yaml
@@ -1894,22 +1889,10 @@ Please note that this doesn't provide default metrics about the plugin itself, a
 
 Currently, none of the officially maintained plugins provides any metric, but this will change in the future. 
 
-Lastly, please note that as of Falco 0.38.1, it is not possible to fully use the remaining metrics feature when running plugins without the syscalls source. This is due to some regressions that prevent us from serving a small subset of metrics in this scenario. Near-term improvements in this regard are tracked in the following [issue](https://github.com/falcosecurity/falco/issues/3194). Please also keep in mind that many of the metrics categories are specific to the syscalls source, such as `libbpf_stats_enabled`, `kernel_event_counters_enabled`, or `state_counters_enabled`.
+Please keep in mind that many of the metrics categories are specific to the syscalls source, such as `libbpf_stats_enabled`, `kernel_event_counters_enabled`, `kernel_event_counters_per_cpu_enabled`, or `state_counters_enabled`.
 
 ## Breaking Changes
 
 {{% pageinfo color=info %}}
-Several metric output field names have changed in Falco 0.39.0 compared to previous releases when using the `output_rule` or `output_file` metrics options.
-
-To ensure long-term consistency and validity, we have renamed the following metric output fields. The unit suffix depends on whether you use `convert_memory_to_mb: true` or not:
-
-- `falco.hostname` -> `evt.hostname` to be consistent with the newer `evt.hostname` filter field
-- `cpu_usage_perc_total_host` -> `host_cpu_usage_perc`
-- `memory_used_host` -> `host_memory_used_kb` (or `host_memory_used_mb`)
-- `procs_running_host` -> `host_procs_running`
-- `open_fds_host` -> `host_open_fds`
-- `memory_rss` -> `memory_rss_kb` (or `memory_rss_mb`)
-- `memory_pss` -> `memory_pss_kb` (or `memory_pss_mb`)
-- `memory_vsz` -> `memory_vsz_kb` (or `memory_vsz_mb`)
-- `container_memory_used` -> `container_memory_used_bytes` (or `container_memory_used_mb`)
+Several metric output field names have changed in Falco 0.39.0 compared to earlier versions. This is a global breaking change, so please refer to the updated documentation for the current metric names, especially for Prometheus metrics.
 {{% /pageinfo %}}
