@@ -9,27 +9,62 @@ weight: 20
 
 Previous guides introduced the [Output Fields of Falco Rules](/docs/rules/basic-elements/#output) and provided [Guidelines](/docs/rules/style-guide/#output-fields) on how to use them. This section specifically highlights additional global formatting options for your deployment, complementing the information previously provided.
 
-First, note that you can always manually edit any rule to output more or fewer fields by simply editing `output` section for a given rule within the rules' YAML file.
+Adding the same output field to multiple rules by editing the rule files manually can be tedious. Thankfully, Falco offers several ways to make it easier:
 
+* Using the `append_output` configuration option in `falco.yaml` to add output text or fields to a subset of loaded rules
+* Adding an override to a specific rule to replace its output
+* Using the `-p` CLI switches
+
+## Appending extra output and fields with `append_output`
+
+Since Falco 0.39.0, the `append_output` option can be specified in the `falco.yaml` configuration file and it can be used to add extra output to rules specified by source, tag, name or to all rules unconditionally. The `append_output` section is a list of append entries which are applied in order.
+
+Example:
 
 ```yaml
-# Original rule output
-output: Executing binary not part of base image (proc_sname=%proc.sname user=%user.name process=%proc.name proc_exepath=%proc.exepath parent=%proc.pname command=%proc.cmdline terminal=%proc.tty %container.info)
-
-# Remove output fields
-output: %proc.sname %user.name
-
-# Add more output fields again
-output: %proc.sname %user.name %proc.is_exe_upper_layer
+append_output:
+  - match:
+      source: syscall
+    extra_output: "on CPU %evt.cpu"
+    extra_fields:
+      - home_directory: "${HOME}"
+      - evt.hostname
 ```
 
-However, adding the same output field to multiple rules manually can be tedious. Thankfully Falco has a shortcut to make this eaier.
+In the example above, every rule with the `syscall` source will get `"on CPU %evt.cpu"` output appended at the end of the regular line and also gain additional fields only visible in the JSON output under the `output_fields` key which will not appear in the regular output. Environment variables are supported.
 
-Falco inherently supports event decoration for associated [Container](https://falco.org/docs/reference/rules/supported-fields/#field-class-container) and [Kubernetes](https://falco.org/docs/reference/rules/supported-fields/#field-class-k8s) metadata using a special placeholder field  (`%container.info`) in a rule's output section.
+The `match` section can be used to specify optional conditions:
+
+* `source`: with `syscall` or plugin names
+* `rule`: with a complete rule name
+* `tags`: a list of tags that need to be all present in a rule in order to match
+
+If multiple conditions are specified all need to be present in order to match. If none are specified or `match` is not present output is appended to all rules.
+
+This option can also be specified on the command line via `-o` such as:
+
+```sh
+falco ... -o 'append_output[]={"match": {"source": "syscall"}, "extra_fields": ["evt.hostname"], "extra_output": "on CPU %evt.cpu"}'
+```
+
+## Adding an override to a specific rule
+
+Note that the `append_output` option allows to add output to a rule but not to remove or replace it. In order to do so you need to add another rule file, loaded in order after others, which contains [a replace override](/docs/rules/overriding/#append-and-replace-items-in-a-rule) for the output field, like in the example below:
+
+```yaml
+- rule: Read sensitive file trusted after startup
+  output: A file (user=%user.name command=%proc.cmdline file=%fd.name) was read after startup
+  override: 
+    output: replace
+```
+
+## Using the `-p` CLI switches
+
+Falco supports event decoration for associated [Container](https://falco.org/docs/reference/rules/supported-fields/#field-class-container) and [Kubernetes](https://falco.org/docs/reference/rules/supported-fields/#field-class-k8s) metadata using a special placeholder field  (`%container.info`) in a rule's output section.
 
 To take advantage of event decoration, you need to run Falco with either the `-pk` or `-pc` command-line option.
 
-If you have an even more customized use case, Falco also provides a `-p` flag where you can define additional custom output fields to be included in each rule.
+Falco also provides a `-p` flag that lets you define additional custom output fields to be included in each rule. Please note that `-p something` is effectively the same as `-o 'append_output[]={"extra_output": "something"}'` and will be evaluated last.
 
 ## Example Rule
 
