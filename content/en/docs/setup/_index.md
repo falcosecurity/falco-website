@@ -2,6 +2,6 @@
 title: Setup
 description: Learn how to install and configure Falco
 aliases:
-- ../install-operate
+- install-operate
 weight: 20
 ---
