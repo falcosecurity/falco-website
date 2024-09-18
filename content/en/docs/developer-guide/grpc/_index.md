@@ -3,7 +3,7 @@ title: gRPC API
 linktitle: gRPC API
 description: Enable and configure the gRPC capabilities of Falco
 aliases:
-- ../../grpc
+- ../grpc
 weight: 70
 ---
 
