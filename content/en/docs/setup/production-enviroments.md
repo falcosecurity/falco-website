@@ -2,7 +2,7 @@
 title: Production Environments
 description: Environment-specific considerations for deploying Falco in production
 aliases:
-- ../../getting-started/third-party/production
+- ../getting-started/third-party/production
 weight: 90
 ---
 
