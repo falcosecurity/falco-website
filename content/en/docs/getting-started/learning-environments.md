@@ -18,7 +18,7 @@ You can follow the official [Get Started!](https://minikube.sigs.k8s.io/docs/sta
 
 **Note**: Ensure that you have [installed kubectl](/docs/getting-started/third-party/install-tools/#kubectl).
 
-#### Falco with syscall source
+### Falco with syscall source only
 
 In order to install Falco with the `kernel module` or the `bpf probe`:
 
@@ -104,7 +104,7 @@ In order to install Falco with the `kernel module` or the `bpf probe`:
     Wed Apr 17 06:19:54 2024: One ring buffer every '2' CPUs.
     ```
 
-#### Falco with multiple sources
+### Falco with multiple sources
 
 Here we run Falco in a `minikube` cluster with multiple sources: `syscall` and `k8s_audit`. The next steps show how to start a `minikube` cluster with the [audit logs](https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/) enabled and deploy Falco with the `kernel module` and the `k8saudit plugin`:
 
