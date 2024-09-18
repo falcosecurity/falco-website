@@ -13,7 +13,7 @@ This activity aims to give you a quick example of how Falco works. After you com
 
 ## Prerequisites
 
-This lab is based on installing Falco using the kernel module on Ubuntu.
+This lab is based on installing Falco on a virtual machine.
 
 The scenario has been tested using VirtualBox and Lima (for MacBooks running Apple Silicon).
 
@@ -21,14 +21,14 @@ While this tutorial may work with Ubuntu running on a cloud provider or another 
 
 ### VirtualBox setup
 
-The following steps will set up a VirtualBox virtual machine running Ubuntu 20.04.
+The following steps will set up a VirtualBox virtual machine running Ubuntu 24.04.
 
 * Install VirtualBox and Vagrant according to the instructions appropriate for your local system.
 
-* Issue the following commands from the command line to create an Ubuntu 20.04 virtual machine.
+* Issue the following commands from the command line to create an Ubuntu 24.04 virtual machine.
 
 ```bash
-vagrant init bento/ubuntu-20.04
+vagrant init bento/ubuntu-24.04
 vagrant up
 ```
 
@@ -40,7 +40,7 @@ vagrant ssh
 
 ### Lima setup for Apple silicon (M1/M2)
 
-This section explains how to create an Ubuntu 22.04 VM on Apple computers running M1 silicon (as opposed to Intel).
+This section explains how to create an Ubuntu 24.04 VM on Apple computers running M1 silicon (as opposed to Intel).
 
 If you are unsure what processor your Apple machine is running, you can find out by clicking the Apple icon in the upper left and choosing "About this Mac". The first item listed, Chip, tells you what silicon you're running on.
 
@@ -52,7 +52,7 @@ If you are unsure what processor your Apple machine is running, you can find out
 brew install lima
 ```
 
-* Create an Ubuntu 20.04 VM with Lima.
+* Create an Ubuntu 24.04 VM with Lima.
 
 ```bash
 limactl start --name=falco-quickstart template://ubuntu-lts
@@ -66,7 +66,7 @@ limactl shell falco-quickstart
 
 ## Install Falco
 
-Regardless of which setup you used above, this section will show you how to install Falco on a host system. You'll begin by updating the package repository. Next, you'll install the Linux headers and the dialog package. Then you'll install Falco and ensure it's up and running.
+Regardless of which setup you used above, this section will show you how to install Falco on a host system. You'll begin by updating the package repository. Next, you'll install the dialog package. Then you'll install Falco and ensure it's up and running.
 
 ### Set up the package repository
 
@@ -91,12 +91,12 @@ EOF'
 sudo apt-get update -y
 ```
 
-### Install the Linux headers and dialog
+### Install dialog
 
-* Install the Linux kernel headers, *dkms*, and *make* which are required to possibly compile the Falco driver and *dialog* which is used by the Falco installer.
+* Install *dialog*, which is used by the Falco installer.
 
 ```bash
-sudo apt-get install -y dkms make linux-headers-$(uname -r) dialog
+sudo apt-get install -y dialog
 ```
 
 ### Install Falco
@@ -107,9 +107,9 @@ sudo apt-get install -y dkms make linux-headers-$(uname -r) dialog
 sudo apt-get install -y falco
 ```
 
-* When prompted, choose the **Automatic selection** option. This will ensure the best driver will be selected for you.
+* When prompted, choose the **Modern eBPF** option. This will enable the usage of the modern eBPF-based driver.
 
-    ![Dialog window - Choose the auto driver](/docs/getting-started/images/dialog-1.png)
+    ![Dialog window - Choose the modern eBPF driver](/docs/getting-started/images/dialog-1.png)
 
 * When prompted, choose **Yes**. Although we won't use the functionality in this exercise, this option allows Falco to update its rules automatically.
 
@@ -122,31 +122,33 @@ Wait for the Falco installation to complete - this should only take a few minute
 * Make sure the Falco service is running.
 
 ```bash
-sudo systemctl status falco
+sudo systemctl status falco-modern-bpf.service
 ```
 
 The output should be similar to the following:
 
 ```plain
-● falco-kmod.service - Falco: Container Native Runtime Security
-     Loaded: loaded (/lib/systemd/system/falco-kmod.service; enabled; vendor preset: enabled)
-     Active: active (running) since Wed 2023-01-25 10:44:04 UTC; 12s ago
+● falco-modern-bpf.service - Falco: Container Native Runtime Security with modern ebpf
+     Loaded: loaded (/usr/lib/systemd/system/falco-modern-bpf.service; enabled; preset: enabled)
+     Active: active (running) since Wed 2024-09-18 08:40:04 UTC; 11min ago
        Docs: https://falco.org/docs/
-   Main PID: 26488 (falco)
-      Tasks: 9 (limit: 2339)
-     Memory: 13.1M
-     CGroup: /system.slice/falco-kmod.service
-             └─26488 /usr/bin/falco --pidfile=/var/run/falco.pid
+   Main PID: 4751 (falco)
+      Tasks: 7 (limit: 2275)
+     Memory: 24.7M (peak: 37.1M)
+        CPU: 3.913s
+     CGroup: /system.slice/falco-modern-bpf.service
+             └─4751 /usr/bin/falco -o engine.kind=modern_ebpf
 
-Jan 25 10:44:04 ubuntu systemd[1]: Started Falco: Container Native Runtime Security with kmod.
-Jan 25 10:44:04 ubuntu falco[26488]: Falco version: 0.34.1 (x86_64)
-Jan 25 10:44:04 ubuntu falco[26488]: Falco initialized with configuration file: /etc/falco/falco.yaml
-Jan 25 10:44:04 ubuntu falco[26488]: Loading rules from file /etc/falco/falco_rules.yaml
-Jan 25 10:44:04 ubuntu falco[26488]: Loading rules from file /etc/falco/falco_rules.local.yaml
-Jan 25 10:44:04 ubuntu falco[26488]: The chosen syscall buffer dimension is: 8388608 bytes (8 MBs)
-Jan 25 10:44:04 ubuntu falco[26488]: Starting health webserver with threadiness 2, listening on port 8765
-Jan 25 10:44:04 ubuntu falco[26488]: Enabled event sources: syscall
-Jan 25 10:44:04 ubuntu falco[26488]: Opening capture with Kernel module
+Sep 18 08:40:12 vagrant falco[4751]:    /etc/falco/falco.yaml
+Sep 18 08:40:12 vagrant falco[4751]: System info: Linux version 6.8.0-31-generic (buildd@lcy02-amd64-080) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.2.0-23ubuntu4) 13.2.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #31-Ubuntu SMP PREEMPT_DYNAMIC Sat Apr 20 00:40:06 UTC 2024
+Sep 18 08:40:12 vagrant falco[4751]: Loading rules from file /etc/falco/falco_rules.yaml
+Sep 18 08:40:12 vagrant falco[4751]: Loading rules from file /etc/falco/falco_rules.local.yaml
+Sep 18 08:40:12 vagrant falco[4751]: The chosen syscall buffer dimension is: 8388608 bytes (8 MBs)
+Sep 18 08:40:12 vagrant falco[4751]: Starting health webserver with threadiness 2, listening on 0.0.0.0:8765
+Sep 18 08:40:12 vagrant falco[4751]: Loaded event sources: syscall
+Sep 18 08:40:12 vagrant falco[4751]: Enabled event sources: syscall
+Sep 18 08:40:12 vagrant falco[4751]: Opening 'syscall' source with modern BPF probe.
+Sep 18 08:40:12 vagrant falco[4751]: One ring buffer every '2' CPUs.
 ```
 
 ## See Falco in action
@@ -173,12 +175,14 @@ You should see output similar to the following:
 
 ```plain
 ...
-Jan 25 10:52:54 ubuntu falco: 10:52:54.144872253: Warning Sensitive file opened for 
-reading by non-trusted program (user=root user_loginuid=-1 program=cat command=cat 
-/etc/shadow pid=27550 file=/etc/shadow parent=bash gparent=kc-terminal ggparent=bash 
-gggparent=systemd container_id=host image=<NA>)
+Sep 18 12:50:52 vagrant falco[4751]: 11:48:24.195279773: Warning Sensitive file opened for
+reading by non-trusted program (file=/etc/shadow gparent=sudo ggparent=bash gggparent=sshd
+evt_type=openat user=root user_uid=0 user_loginuid=1000 process=cat proc_exepath=/usr/bin/cat
+parent=sudo command=cat /etc/shadow terminal=34818 container_id=host container_name=host)
 ...
 ```
+
+
 
 ***Using /var/log/syslog***
 
@@ -192,10 +196,10 @@ You should see output similar to the following:
 
 ```plain
 ...
-Jan 25 10:52:54 ubuntu falco: 10:52:54.144872253: Warning Sensitive file opened for 
-reading by non-trusted program (user=root user_loginuid=-1 program=cat command=cat 
-/etc/shadow pid=27550 file=/etc/shadow parent=bash gparent=kc-terminal ggparent=bash 
-gggparent=systemd container_id=host image=<NA>)
+2024-09-18T12:50:52.164570+00:00 vagrant falco: 11:48:24.195279773: Warning Sensitive file opened for
+reading by non-trusted program (file=/etc/shadow gparent=sudo ggparent=bash gggparent=sshd
+evt_type=openat user=root user_uid=0 user_loginuid=1000 process=cat proc_exepath=/usr/bin/cat
+parent=sudo command=cat /etc/shadow terminal=34818 container_id=host container_name=host)
 ```
 
 ## Cleanup
