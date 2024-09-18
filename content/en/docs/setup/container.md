@@ -43,6 +43,31 @@ docker run --rm -it \
            falcosecurity/falco-no-driver:latest
 ```
 
+#### Kernel Module {#docker-privileged-kernel-module}
+
+To use Falco with the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module" >}} driver, run:
+
+```shell
+docker pull falcosecurity/falco:latest
+docker run --rm -it \
+    --privileged \
+    -v /var/run/docker.sock:/host/var/run/docker.sock \
+    -v /dev:/host/dev \
+    -v /proc:/host/proc:ro \
+    -v /boot:/host/boot:ro \
+    -v /lib/modules:/host/lib/modules:ro \
+    -v /usr:/host/usr:ro \
+    -v /etc:/host/etc:ro \
+    falcosecurity/falco:latest falco -o engine.kind=kmod
+```
+
+{{% pageinfo color="primary" %}}
+Alternatively, you can install the driver on the host system first, then run Falco in a separate container. In such cases:
+
+1. Install the driver on the host system using the `falcosecurity/falco-driver-loader` image, as described in the [Driver Installation](#kernel-module-driver-installation-kernel-module) section.
+2. Replace `falcosecurity/falco:latest` with `falcosecurity/falco-no-driver:latest` in the above command.
+{{% /pageinfo %}}
+
 #### eBPF Probe {#docker-privileged-ebpf}
 
 To use Falco with the {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} driver, run:
@@ -67,31 +92,6 @@ docker run --rm -it \
 Alternatively, you can install the driver on the host system first, then run Falco in a separate container. In such cases:
 
 1. Install the driver on the host system using the `falcosecurity/falco-driver-loader` image, as described in the [Driver Installation](#driver-installation-ebpf-probe) section.
-2. Replace `falcosecurity/falco:latest` with `falcosecurity/falco-no-driver:latest` in the above command.
-{{% /pageinfo %}}
-
-#### Kernel Module {#docker-privileged-kernel-module}
-
-To use Falco with the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module" >}} driver, run:
-
-```shell
-docker pull falcosecurity/falco:latest
-docker run --rm -it \
-    --privileged \
-    -v /var/run/docker.sock:/host/var/run/docker.sock \
-    -v /dev:/host/dev \
-    -v /proc:/host/proc:ro \
-    -v /boot:/host/boot:ro \
-    -v /lib/modules:/host/lib/modules:ro \
-    -v /usr:/host/usr:ro \
-    -v /etc:/host/etc:ro \
-    falcosecurity/falco:latest falco -o engine.kind=kmod
-```
-
-{{% pageinfo color="primary" %}}
-Alternatively, you can install the driver on the host system first, then run Falco in a separate container. In such cases:
-
-1. Install the driver on the host system using the `falcosecurity/falco-driver-loader` image, as described in the [Driver Installation](#kernel-module-driver-installation-kernel-module) section.
 2. Replace `falcosecurity/falco:latest` with `falcosecurity/falco-no-driver:latest` in the above command.
 {{% /pageinfo %}}
 
@@ -124,6 +124,41 @@ The minimum set of capabilities to run Falco with the {{< glossary_tooltip text=
 
 However, in the command above, we use `CAP_SYS_ADMIN` because [Docker does not yet support](https://github.com/moby/moby/pull/41563) `CAP_BPF` and `CAP_PERFMON`.
 
+{{% /pageinfo %}}
+
+#### Kernel Module {#docker-least-privileged-kernel-module}
+
+For the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}} driver, Falco requires the driver to be installed on the host system first. This step requires full privileges, while the Falco container can then run with the least privileges.
+
+1. Install the driver on the host system using the `falcosecurity/falco
+
+-driver-loader` image, as described in the [Driver Installation](#kernel-module-driver-installation-kernel-module) section.
+
+2. Run Falco using the `falcosecurity/falco-no-driver` image with the least privileges:
+
+    ```shell
+    docker pull falcosecurity/falco-no-driver:latest
+    docker run --rm -it \
+        -e HOST_ROOT=/ \
+        --cap-add SYS_PTRACE --pid=host $(ls /dev/falco* | xargs -I {} echo --device {}) \
+        -v /var/run/docker.sock:/var/run/docker.sock \
+        -v /etc:/host/etc:ro \
+        falcosecurity/falco-no-driver:latest falco -o engine.kind=kmod
+    ```
+
+{{% pageinfo color="primary" %}}
+
+Note that `ls /dev/falco* | xargs -I {} echo --device {}` outputs a `--device /dev/falcoX` option per CPU (i.e., just the devices created by the Falco's kernel module). Also, `-e HOST_ROOT=/` is necessary since with `--device` there is no way to remap devices to `/host/dev/`.
+{{% /pageinfo %}}
+
+{{% pageinfo color="warning" %}}
+If you are running Falco on a system with the AppArmor LSM enabled (e.g., Ubuntu), you must also pass `--security-opt apparmor:unconfined` to the `docker run` command above.
+
+You can verify if you have AppArmor enabled using the command below:
+
+```shell
+docker info | grep -i apparmor
+```
 {{% /pageinfo %}}
 
 #### eBPF Probe {#docker-least-privileged-ebpf-probe}
@@ -172,46 +207,11 @@ To run Falco with the least privileges using the eBPF probe, the following capab
 
 {{% /pageinfo %}}
 
-#### Kernel Module {#docker-least-privileged-kernel-module}
-
-For the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}} driver, Falco requires the driver to be installed on the host system first. This step requires full privileges, while the Falco container can then run with the least privileges.
-
-1. Install the driver on the host system using the `falcosecurity/falco
-
--driver-loader` image, as described in the [Driver Installation](#kernel-module-driver-installation-kernel-module) section.
-
-2. Run Falco using the `falcosecurity/falco-no-driver` image with the least privileges:
-
-    ```shell
-    docker pull falcosecurity/falco-no-driver:latest
-    docker run --rm -it \
-        -e HOST_ROOT=/ \
-        --cap-add SYS_PTRACE --pid=host $(ls /dev/falco* | xargs -I {} echo --device {}) \
-        -v /var/run/docker.sock:/var/run/docker.sock \
-        -v /etc:/host/etc:ro \
-        falcosecurity/falco-no-driver:latest falco -o engine.kind=kmod
-    ```
-
-{{% pageinfo color="primary" %}}
-
-Note that `ls /dev/falco* | xargs -I {} echo --device {}` outputs a `--device /dev/falcoX` option per CPU (i.e., just the devices created by the Falco's kernel module). Also, `-e HOST_ROOT=/` is necessary since with `--device` there is no way to remap devices to `/host/dev/`.
-{{% /pageinfo %}}
-
-{{% pageinfo color="warning" %}}
-If you are running Falco on a system with the AppArmor LSM enabled (e.g., Ubuntu), you must also pass `--security-opt apparmor:unconfined` to the `docker run` command above.
-
-You can verify if you have AppArmor enabled using the command below:
-
-```shell
-docker info | grep -i apparmor
-```
-{{% /pageinfo %}}
-
 ## Driver Installation {#driver-installation}
 
 This section provides instructions for installing the driver on the host system using the `falcosecurity/falco-driver-loader` image. This approach is helpful if you prefer to install the driver on the host first and then run Falco in a container later.
 
-Driver installation on the host is only required for the {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} and {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}} drivers when these drivers are installed in separate stages.
+Driver installation on the host is only required for the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}} and {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} drivers when these drivers are installed in separate stages.
 
 You can **skip this section** if you plan to use:
 - The {{< glossary_tooltip text="Modern eBPF" term_id="modern-ebpf-probe" >}} driver; or
