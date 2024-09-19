@@ -351,8 +351,4 @@ MicroK8s is the smallest, fastest multi-node Kubernetes. Single-package fully co
 
 You can follow the official [Getting Started](https://microk8s.io/docs) guide to install.
 
-<a class="btn btn-primary" href="
-
-https://microk8s.io/docs" role="button" aria-label="View MicroK8s Getting Started Guide">View MicroK8s Getting Started Guide</a>
-
 Once the MicroK8s cluster is up and running, you can [deploy Falco with Helm](/docs/getting-started/falco-kubernetes-quickstart/#deploy-falco).
