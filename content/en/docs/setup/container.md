@@ -131,9 +131,7 @@ However, in the command above, we use `CAP_SYS_ADMIN` because [Docker does not y
 
 For the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}} driver, Falco requires the driver to be installed on the host system first. This step requires full privileges, while the Falco container can then run with the least privileges.
 
-1. Install the driver on the host system using the `falcosecurity/falco
-
--driver-loader` image, as described in the [Driver Installation](#driver-installation-kernel-module) section.
+1. Install the driver on the host system using the `falcosecurity/falco-driver-loader` image, as described in the [Driver Installation](#driver-installation-kernel-module) section.
 
 2. Run Falco using the `falcosecurity/falco-no-driver` image with the least privileges:
 
