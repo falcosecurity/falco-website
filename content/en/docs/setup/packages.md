@@ -94,6 +94,8 @@ sudo apt-get install apt-transport-https
     
 4. Install some required dependencies that are needed to build the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}} and the {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}}
 
+   > _Note_: You don't need to install these dependencies if you want to use the {{< glossary_tooltip text="Modern eBPF" term_id="modern-ebpf-probe" >}}.
+
     ```shell
     sudo apt install -y dkms make linux-headers-$(uname -r)
     # If you use falcoctl driver loader to build the eBPF probe locally you need also clang toolchain
@@ -101,8 +103,6 @@ sudo apt-get install apt-transport-https
     # You can install also the dialog package if you want it
     sudo apt install -y dialog
     ```
-
-    > _Note_: You don't need to install these dependencies if you want to use the {{< glossary_tooltip text="Modern eBPF" term_id="modern-ebpf-probe" >}}.
 
 5. Install the Falco package
 
@@ -132,6 +132,8 @@ sudo apt-get install apt-transport-https
 
 4. Install some required dependencies that are needed to build the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}} and the {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}}
 
+   > _Note_: You don't need to install these dependencies if you want to use the {{< glossary_tooltip text="Modern eBPF" term_id="modern-ebpf-probe" >}}.
+
     ```shell
     # If necessary install it using: `yum install epel-release` (or `amazon-linux-extras install epel` in case of amzn2), then `yum install make dkms`.
     yum install -y dkms make
@@ -142,8 +144,6 @@ sudo apt-get install apt-transport-https
     # You can install also the dialog package if you want it
     yum install -y dialog
     ```
-
-    > _Note_: You don't need to install these dependencies if you want to use the {{< glossary_tooltip text="Modern eBPF" term_id="modern-ebpf-probe" >}}.
 
 5. Install the Falco package
 
@@ -191,6 +191,8 @@ sudo apt-get install apt-transport-https
 
 4. Install some required dependencies that are needed to build the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}} and the {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}}
 
+    > _Note_: You don't need to install these dependencies if you want to use the {{< glossary_tooltip text="Modern eBPF" term_id="modern-ebpf-probe" >}}.
+
     ```shell
     zypper -n install dkms make
     # If the package was not found by the below command, you might need to run `zypper -n dist-upgrade` in order to fix it. Rebooting the system may be required.
@@ -200,8 +202,6 @@ sudo apt-get install apt-transport-https
     # You can install also the dialog package if you want it
     zypper -n install dialog
     ```
-
-    > _Note_: You don't need to install these dependencies if you want to use the {{< glossary_tooltip text="Modern eBPF" term_id="modern-ebpf-probe" >}}.
 
 5. Install Falco:
 
