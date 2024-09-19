@@ -51,6 +51,7 @@ To use Falco with the {{< glossary_tooltip text="Kernel Module" term_id="kernel-
 docker pull falcosecurity/falco:latest
 docker run --rm -it \
     --privileged \
+    -e FALCO_DRIVER_LOADER_OPTIONS="kmod" \
     -v /var/run/docker.sock:/host/var/run/docker.sock \
     -v /dev:/host/dev \
     -v /proc:/host/proc:ro \
@@ -58,7 +59,7 @@ docker run --rm -it \
     -v /lib/modules:/host/lib/modules:ro \
     -v /usr:/host/usr:ro \
     -v /etc:/host/etc:ro \
-    falcosecurity/falco:latest falco -o engine.kind=kmod
+    falcosecurity/falco:latest falco
 ```
 
 {{% pageinfo color="primary" %}}
@@ -83,7 +84,7 @@ docker run --rm -it \
     -v /lib/modules:/host/lib/modules:ro \
     -v /usr:/host/usr:ro \
     -v /etc:/host/etc:ro \
-    falcosecurity/falco:latest falco -o engine.kind=ebpf
+    falcosecurity/falco:latest falco
 
 # If running a kernel version < 4.14, add '-v /sys/kernel/debug:/sys/kernel/debug:ro \' to the above docker command.
 ```
