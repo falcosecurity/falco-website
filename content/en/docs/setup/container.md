@@ -64,7 +64,7 @@ docker run --rm -it \
 {{% pageinfo color="primary" %}}
 Alternatively, you can install the driver on the host system first, then run Falco in a separate container. In such cases:
 
-1. Install the driver on the host system using the `falcosecurity/falco-driver-loader` image, as described in the [Driver Installation](#kernel-module-driver-installation-kernel-module) section.
+1. Install the driver on the host system using the `falcosecurity/falco-driver-loader` image, as described in the [Driver Installation](#driver-installation-kernel-module) section.
 2. Replace `falcosecurity/falco:latest` with `falcosecurity/falco-no-driver:latest` in the above command.
 {{% /pageinfo %}}
 
@@ -132,7 +132,7 @@ For the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver"
 
 1. Install the driver on the host system using the `falcosecurity/falco
 
--driver-loader` image, as described in the [Driver Installation](#kernel-module-driver-installation-kernel-module) section.
+-driver-loader` image, as described in the [Driver Installation](#driver-installation-kernel-module) section.
 
 2. Run Falco using the `falcosecurity/falco-no-driver` image with the least privileges:
 
