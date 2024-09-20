@@ -229,7 +229,7 @@ By default, if you have the `dialog` binary installed on your system, you will b
 
 ![](/docs/getting-started/images/dialog-1.png)
 
-From here you can choose one of our 3 drivers `Kmod`, `eBPF`, `Modern eBPF`, a [`Manual configuration`](#manual-system-setup) or the `Automatic selection` (recommended) to trigger the automatic logic to select the best driver for you. When you choose a driver from the dialog, the `systemd` service is always enabled by default so it will start at every system reboot. If you want to disable this behavior type `systemctl disable falco-kmod.service` (if you are using the kernel module like in this example).
+From here you can choose one of our 3 drivers `Kmod`, `eBPF`, `Modern eBPF`, a [`Manual configuration`](#manual-configuration) or the `Automatic selection` (recommended) to trigger the automatic logic to select the best driver for you. When you choose a driver from the dialog, the `systemd` service is always enabled by default so it will start at every system reboot. If you want to disable this behavior type `systemctl disable falco-kmod.service` (if you are using the kernel module like in this example).
 
 After the first dialog, you should see a second one:
 
@@ -238,14 +238,11 @@ After the first dialog, you should see a second one:
 If you choose `Yes`, `falcoctl` will periodically check for ruleset updates and, if a new update is available, will pull
 and install it.
 
-### Manual system setup {#manual-systemd-setup}
+### Manual configuration {#manual-configuration}
 
-You may need to complete the setup configuration if you are in one of the following cases:
-- you disabled the interactive installation (e.g., using the `FALCO_FRONTEND=noninteractive` env variable)
-- you don't have the `dialog` binary installed on your system
-- you chose the `Manual configuration` from the dialog
+If you chose `Manual configuration` from the dialog, you need to complete the setup configuration.
 
-Verify the available services:
+First, let's verify the available services:
 
 ```plain
 $ sudo systemctl list-unit-files "falco*"
@@ -316,7 +313,7 @@ Created symlink /etc/systemd/system/falcoctl-artifact-follow.service → /dev/nu
 ```
 ### Configuring services {#systemd-configuring-services}
 
-If you installed the Falco packages using the `dialog` option, all your services should already be up and running. However, if you chose the `Manual configuration` option or used the `FALCO_FRONTEND=noninteractive` environment variable, you need to configure the services manually.
+If you installed the Falco packages using the `dialog` option, all your services should already be up and running. However, if you chose the `Manual configuration` option, you need to configure the services manually.
 
 If you need to switch from one service to another, ensure that the current service is properly stopped before starting the new one. This can be done by using the appropriate service management commands for your system (e.g., `systemctl stop <service_name>` and `systemctl start <new_service_name>`).
 
