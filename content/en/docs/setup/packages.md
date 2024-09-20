@@ -308,7 +308,7 @@ Be aware that enabling the `falco-kmod.service` also creates a new alias/service
 
 {{% /pageinfo %}}
 
-As a side note, if you preferred not to use the `falcoctl` tool to automatically update your rules, you can mask it as follows. Otherwise, as explained [here](/docs/install-operate/installation/#rule-update), Falco will enable it too.
+As a side note, if you prefer not to use the `falcoctl` tool to automatically update your rules, you can mask it as follows. Otherwise, as explained [here](/docs/install-operate/installation/#rule-update), Falco will enable it too.
 
 ```
 $ sudo systemctl mask falcoctl-artifact-follow.service
