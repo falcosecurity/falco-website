@@ -121,6 +121,7 @@ Name | Type | Description
 `proc.ppid.ts` | RELTIME | Start of parent process as epoch timestamp in nanoseconds.
 `proc.is_exe_writable` | BOOL | 'true' if this process' executable file is writable by the same user that spawned the process.
 `proc.is_exe_upper_layer` | BOOL | 'true' if this process' executable file is in upper layer in overlayfs. This field value can only be trusted if the underlying kernel version is greater or equal than 3.18.0, since overlayfs was introduced at that time.
+`proc.is_exe_lower_layer` | BOOL | 'true' if this process' executable file is in lower layer in overlayfs. This field value can only be trusted if the underlying kernel version is greater or equal than 3.18.0, since overlayfs was introduced at that time.
 `proc.is_exe_from_memfd` | BOOL | 'true' if the executable file of the current process is an anonymous file created using memfd_create() and is being executed by referencing its file descriptor (fd). This type of file exists only in memory and not on disk. Relevant to detect malicious in-memory code injection. Requires kernel version greater or equal to 3.17.0.
 `proc.is_sid_leader` | BOOL | 'true' if this process is the leader of the process session, proc.sid == proc.vpid. For host processes vpid reflects pid.
 `proc.is_vpgid_leader` | BOOL | 'true' if this process is the leader of the virtual process group, proc.vpgid == proc.vpid. For host processes vpgid and vpid reflect pgid and pid. Can help to distinguish if the process was 'directly' executed for instance in a tty (similar to bash history logging, `is_vpgid_leader` would be 'true') or executed as descendent process in the same process group which for example is the case when subprocesses are spawned from a script (`is_vpgid_leader` would be 'false').
@@ -158,6 +159,12 @@ Name | Type | Description
 `thread.cpu.system` | DOUBLE | The system CPU consumed by the thread in the last second.
 `thread.vmsize` | UINT64 | For the process main thread, this is the total virtual memory for the process (as kb). For the other threads, this field is zero.
 `thread.vmrss` | UINT64 | For the process main thread, this is the resident non-swapped memory for the process (as kb). For the other threads, this field is zero.
+`proc.stdin.type` | CHARBUF | The type of file descriptor 0, corresponding to stdin, of the process generating the event.
+`proc.stdout.type` | CHARBUF | The type of file descriptor 1, corresponding to stdout, of the process generating the event.
+`proc.stderr.type` | CHARBUF | The type of file descriptor 2, corresponding to stderr, of the process generating the event.
+`proc.stdin.name` | CHARBUF | The name of the file descriptor 0, corresponding to stdin, of the process generating the event.
+`proc.stdout.name` | CHARBUF | The name of the file descriptor 1, corresponding to stdout, of the process generating the event.
+`proc.stderr.name` | CHARBUF | The name of the file descriptor 2, corresponding to stderr, of the process generating the event.
 
 ### Field Class: user
 
@@ -266,6 +273,8 @@ Name | Type | Description
 `fd.ino` | INT64 | inode number of the referenced file
 `fd.nameraw` | CHARBUF | FD full name raw. Just like fd.name, but only used if fd is a file path. File path is kept raw with limited sanitization and without deriving the absolute path.
 `fd.types` | CHARBUF | List of FD types in used. Can be passed an fd number e.g. fd.types[0] to get the type of stdout as a single item list.
+`fd.is_upper_layer` | BOOL | 'true' if the fd is of a file in the upper layer of an overlayfs.
+`fd.is_lower_layer` | BOOL | 'true' if the fd is of a file  in the lower layer of an overlayfs.
 
 ### Field Class: fs.path
 
