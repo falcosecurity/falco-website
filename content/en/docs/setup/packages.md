@@ -235,6 +235,9 @@ After the first dialog, you should see a second one:
 
 ![](/docs/getting-started/images/dialog-2.png)
 
+If you choose `Yes`, `falcoctl` will periodically check for ruleset updates and, if a new update is available, will pull
+and install it.
+
 ### Manual system setup {#manual-systemd-setup}
 
 You may need to complete the setup configuration if you are in one of the following cases:
