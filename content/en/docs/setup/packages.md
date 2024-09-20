@@ -34,27 +34,33 @@ In non-interactive installations (e.g., `dialog` is not available, or if the use
 The following environment variables can be used to customize the installation process:
 
 - `FALCO_FRONTEND`: Set to `noninteractive` to disable the dialog prompts. The default is `dialog`.
-- `FALCO_DRIVER_CHOICE`: Set to `kmod`, `ebpf`, or `modern_ebpf` to choose a driver. If selected, the dialog will be skipped too. The default (empty) is automatic selection.
-- `FALCOCTL_ENABLED`: Set to any value to enable the `falcoctl` ruleset. The default is disabled.
+- `FALCO_DRIVER_CHOICE`: Set to `kmod`, `ebpf`, or `modern_ebpf` to choose a driver; set to `none` to disable service installation. If one of the previous option is selected, the dialog will be skipped too. The default (empty) is automatic selection.
+- `FALCOCTL_ENABLED`: Set to `no` to disable the automatic rules update provided by `falcoctl`. The default (empty) or any value other than `no` will keep the option enabled.
 
 These environment variables can be used in conjunction with the package manager (as described in the following sections) to customize the installation process as needed.
 
 Examples:
 
-- No dialog, no driver:
+- No dialog, no driver, no automatic rules update:
   ```shell
   FALCO_DRIVER_CHOICE=none apt-get install -y falco
   ```
 
-- Install with `kmod` driver:
+- Install with `kmod` driver and automatic rules update:
   ```shell
   FALCO_DRIVER_CHOICE=kmod apt-get install -y falco
   ```
 
-- No dialog, automatic selection:
+- No dialog, automatic selection and automatic rules update:
   ```shell
   FALCO_FRONTEND=noninteractive apt-get install -y falco
   ```
+
+- No dialog, automatic selection and no automatic rules update:
+  ```shell
+  FALCO_FRONTEND=noninteractive FALCOCTL_ENABLED=no apt-get install -y falco
+  ```
+
 
 ### `apt` (Debian/Ubuntu) {#install-with-apt}
 
