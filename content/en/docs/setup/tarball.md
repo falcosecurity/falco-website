@@ -105,7 +105,7 @@ By default, with the `watch_config_files` configuration option enabled, Falco au
 If this option is disabled, you can manually reload the configuration by sending a `SIGHUP` signal to the Falco process. To do this, use the following command:
 
 ```shell
-kill -1 $(cat /var/run/falco.pid)
+kill -1 $(pidof falco)
 ```
 
 ## Upgrade
