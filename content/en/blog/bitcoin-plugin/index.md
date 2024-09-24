@@ -150,7 +150,7 @@ tty: true
 kubernetes: false
 
 falco:
-  rules_file:
+  rules_files:
 	- /etc/falco/bitcoin_rules.yaml
   plugins:
   - name: bitcoin

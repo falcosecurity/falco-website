@@ -1,14 +1,14 @@
-- name: rules_file
+- name: rules_files
   type: List
   description: |
     The location of the rules file(s). This can contain one or more paths to separate rules files. The following examples are equivalent:
 
     ```yaml
-    rules_file:
+    rules_files:
     - path1
     - path2
 
-    rules_file: [path1, path2]
+    rules_files: [path1, path2]
     ```
 
     You can also specify multiple rules files on the command line via one or more `-r` options.

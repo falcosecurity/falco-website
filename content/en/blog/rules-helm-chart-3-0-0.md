@@ -44,7 +44,7 @@ If you only want to use the rules that you add via configmap, discarding all aut
 
 ```
 helm install falco -f ./custom_rules.yaml \
-    --set "falco.rules_file={/etc/falco/falco_rules.local.yaml,/etc/falco/rules.d}" \
+    --set "falco.rules_files={/etc/falco/falco_rules.local.yaml,/etc/falco/rules.d}" \
     --set falcoctl.artifact.install.enabled=false \
     --set falcoctl.artifact.follow.enabled=false
 ```

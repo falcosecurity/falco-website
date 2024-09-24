@@ -156,7 +156,7 @@ We'll use [Helm](https://helm.sh) to deploy `Falco`.
           name: http
 
   falco:
-    rules_file:
+    rules_files:
       - /etc/falco/falco_rules.yaml
       - /etc/falco/falco-incubating_rules.yaml
       - /etc/falco/k8s_audit_rules.yaml
@@ -246,7 +246,7 @@ The `k8saudit` plugin requires to create a `Service` listen the incoming events 
 
 ```yaml
   falco:
-    rules_file:
+    rules_files:
       - /etc/falco/falco_rules.yaml
       - /etc/falco/falco-incubating_rules.yaml
       - /etc/falco/k8s_audit_rules.yaml

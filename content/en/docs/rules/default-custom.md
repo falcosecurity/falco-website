@@ -9,10 +9,10 @@ Falco comes with a default rules file that is loaded if no specific configuratio
 
 ## The configuration file
 
-The default configuration file, [`/etc/falco/falco.yaml`](https://github.com/falcosecurity/falco/blob/master/falco.yaml) makes Falco load rules from the `/etc/falco/falco_rules.yaml` file followed by any custom rules located in the `/etc/falco/rules.d` directory. This configuration is governed by the `rules_file` key:
+The default configuration file, [`/etc/falco/falco.yaml`](https://github.com/falcosecurity/falco/blob/master/falco.yaml) makes Falco load rules from the `/etc/falco/falco_rules.yaml` file followed by any custom rules located in the `/etc/falco/rules.d` directory. This configuration is governed by the `rules_files` key:
 
 ```
-rules_file:
+rules_files:
   - /etc/falco/falco_rules.yaml
   - /etc/falco/falco_rules.local.yaml
   - /etc/falco/rules.d
@@ -75,7 +75,7 @@ If you only want to use the rules that you add via configmap, discarding all aut
 
 ```
 helm install falco -f ./custom_rules.yaml \
-    --set "falco.rules_file={/etc/falco/falco_rules.local.yaml,/etc/falco/rules.d}" \
+    --set "falco.rules_files={/etc/falco/falco_rules.local.yaml,/etc/falco/rules.d}" \
     --set falcoctl.artifact.install.enabled=false \
     --set falcoctl.artifact.follow.enabled=false
 ```

@@ -233,7 +233,7 @@ Some rules are more specific signatures, while others focus on behavior-based de
 
 ### Rules Loading
 
-Refer to the up-to-date description in the [falco.yaml](https://github.com/falcosecurity/falco/blob/master/falco.yaml) file for `rules_file` to understand in which order rules are loaded. Keep in mind that Falco by default applies rules per event type on a "first match wins" basis. Starting from Falco Release 0.36.0, you have the option to modify the configuration to `rule_matching: all`. This change ensures that rules sharing the same event type cannot override each other, preventing inconsistent logging. Be aware, though, that this modification may lead to increased CPU usage.
+Refer to the up-to-date description in the [falco.yaml](https://github.com/falcosecurity/falco/blob/master/falco.yaml) file for `rules_files` to understand in which order rules are loaded. Keep in mind that Falco by default applies rules per event type on a "first match wins" basis. Starting from Falco Release 0.36.0, you have the option to modify the configuration to `rule_matching: all`. This change ensures that rules sharing the same event type cannot override each other, preventing inconsistent logging. Be aware, though, that this modification may lead to increased CPU usage.
 
 ### Contributing Your Falco Rules
 

@@ -10,10 +10,10 @@ To write a custom rule for Falco from scratch, it is essential to understand the
 
 When adding a new rule to Falco, the first step is determining its placement. For instance, when loading syscall rules, Falco groups them per system call (`evt.type`) for faster matching and processes them later in sequential order, ensuring that two rules are not triggered simultaneously for the same `evt.type` field value. Consequently, more general rules should be positioned at the end of the rule set, while more specific rules should be placed at the beginning. This arrangement prevents general rules from capturing events that more specific rules should handle.
 
-It's worth noting that Falco loads a set of predefined rules by default, followed by any custom rules located in the `/etc/falco/rules.d` directory. This configuration is specified in the [`/etc/falco/falco.yaml`](https://github.com/falcosecurity/falco/blob/master/falco.yaml) file, under the `rules_file:` key, as follows:
+It's worth noting that Falco loads a set of predefined rules by default, followed by any custom rules located in the `/etc/falco/rules.d` directory. This configuration is specified in the [`/etc/falco/falco.yaml`](https://github.com/falcosecurity/falco/blob/master/falco.yaml) file, under the `rules_files` key, as follows:
 
 ```
-rules_file:
+rules_files:
   - /etc/falco/falco_rules.yaml
   - /etc/falco/falco_rules.local.yaml
   - /etc/falco/rules.d
