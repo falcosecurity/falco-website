@@ -214,9 +214,9 @@ In cases like this, be sure to scope the logical operators of the original condi
 
 ## Appending to existing rules using `append` key (deprecated)
 
-{{% alert color="warning" %}}
-The `append` key has been deprecated and will be removed in Falco 1.0.0. Use the [`override` section](/docs/rules/overriding/#overview) instead.  
-{{% /alert %}}
+{{% pageinfo color=warning %}}
+The `append` key has been deprecated and will be removed in Falco 1.0.0. Use the [`override` section](/docs/rules/overriding/#overview) instead.
+{{% /pageinfo %}}
 
 If you use multiple Falco {{< glossary_tooltip text="rules files" term_id="rules-file" >}}, you might want to append new items to an existing lists, macros or rules. To do that, define an item with the same name as an existing item and add an `append: true` attribute to the YAML object. 
 
@@ -231,9 +231,9 @@ This can be configured with multiple `-r` parameters in the right order, directl
 
 ## Redefining existing rules using `append` key (deprecated)
 
-{{% alert color="warning" %}}
+{{% pageinfo color=warning %}}
 The `append` key has been deprecated and will be removed in Falco 1.0.0. Use the [`override` section](/docs/rules/overriding/#overview) instead.
-{{% /alert %}}
+{{% /pageinfo %}}
 
 If `append` is set to `false` (default value), the whole object will be redefined. This can be used to empty a list, [apply user-specific settings to a macro](/docs/reference/rules/macros-override/) or even change a rule completely.
 
@@ -243,9 +243,9 @@ The only exceptions to this are the `enabled` field, that when defined as a sing
 
 ## Examples of appending using `append` key (deprecated)
 
-{{% alert color="warning" %}}
+{{% pageinfo color=warning %}}
 The `append` key has been deprecated and will be removed in Falco 1.0.0. Use the [`override` section](/docs/rules/overriding/#overview) instead.
-{{% /alert %}}
+{{% /pageinfo %}}
 
 In all the examples below, it's assumed one is running Falco via `falco -r /etc/falco/falco_rules.yaml -r /etc/falco/falco_rules.local.yaml`, or has the default entries for `rules_files` in falco.yaml, which has `/etc/falco/falco.yaml` first and `/etc/falco/falco_rules.local.yaml` second.
 
