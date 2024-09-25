@@ -190,6 +190,28 @@ Use the new `override` section to enable the rule instead.
     enabled: replace
 ```
 
+## Precedence of logical operators when appending
+
+Remember that when appending rules and macros, the content of the referring rule or macro is simply added to the condition of the referred one.
+This can result in unintended results if the original rule/macro has potentially ambiguous logical operators.
+
+Here's an example:
+
+```yaml
+- rule: my_rule
+  desc: ...
+  condition: evt.type=open and proc.name=apache
+  output: ...
+
+- rule: my_rule
+  append: true
+  condition: or proc.name=nginx
+```
+
+Should `proc.name=nginx` be interpreted as relative to the `and proc.name=apache`, that is to allow either apache/nginx to open files, or relative to the `evt.type=open`, that is to allow apache to open files or to allow nginx to do anything?
+
+In cases like this, be sure to scope the logical operators of the original condition with parentheses when possible, or avoid appending conditions when not possible.
+
 ## Appending to existing rules using `append` key (deprecated)
 
 {{% alert color="warning" %}}
@@ -306,26 +328,3 @@ The rule `program_accesses_file` would trigger when `ls`/`cat` either used `open
 It is also possible to append exceptions to rules.\
 [Here](/docs/rules/exceptions/#appending-exception-values) you can find further information.
 {{% /alert %}}
-
-## Precedence of logical operators when appending
-
-Remember that when appending rules and macros, the content of the referring rule or macro is simply added to the condition of the referred one. 
-This can result in unintended results if the original rule/macro has potentially ambiguous logical operators. 
-
-Here's an example:
-
-```yaml
-- rule: my_rule
-  desc: ...
-  condition: evt.type=open and proc.name=apache
-  output: ...
-
-- rule: my_rule
-  append: true
-  condition: or proc.name=nginx
-```
-
-Should `proc.name=nginx` be interpreted as relative to the `and proc.name=apache`, that is to allow either apache/nginx to open files, or relative to the `evt.type=open`, that is to allow apache to open files or to allow nginx to do anything?
-
-In cases like this, be sure to scope the logical operators of the original condition with parentheses when possible, or avoid appending conditions when not possible.
-
