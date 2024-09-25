@@ -9,7 +9,7 @@ Falco comes with a default rules file that is loaded if no specific configuratio
 
 ## The configuration file
 
-The default configuration file, [`/etc/falco/falco.yaml`](https://github.com/falcosecurity/falco/blob/master/falco.yaml) makes Falco load rules from the `/etc/falco/falco_rules.yaml` file followed by any custom rules located in the `/etc/falco/rules.d` directory. This configuration is governed by the `rules_files` key:
+The default configuration file, [`/etc/falco/falco.yaml`](https://github.com/falcosecurity/falco/blob/master/falco.yaml) makes Falco load rules from the `/etc/falco/falco_rules.yaml` file, followed by any custom rules located in the `/etc/falco/falco_rules.local.yaml` file, followed by any custom rules located in the `/etc/falco/rules.d` directory. This configuration is governed by the `rules_files` key:
 
 ```
 rules_files:
@@ -22,7 +22,8 @@ Changing these configuration entries will affect the location and loading order 
 
 > You can find the details of the available default rules in this [page](/docs/reference/rules/default-rules/) or in the Falco rules auto-generated [**documentation**](https://falcosecurity.github.io/rules/).
 
-If you are running Falco directly from the command line, you can use the `-r` switch to add as many rules files as needed. e.g.:
+If you are running Falco directly from the command line, you can use the `-r` switch to load as many rules files as needed. Is it possible to provide `-r` with the path of a single file or directory (in this latter case, all the rules files in the directory will be loaded). The switch can be specified multiple times; if is specified at least once, the `rules_files` key in the configuration file is ignored.
+e.g.:
 
 ```
 # falco -r /path/to/my/rules1.yaml -r /path/to/my/rules2.yaml
@@ -34,7 +35,7 @@ The [falcoctl](https://github.com/falcosecurity/falcoctl) tool provides function
 
 ```
 # falcoctl index add falcosecurity https://github.io/falcosecurity/index.yaml
-# falcoctl artifact install falco-rules:1.0.0
+# falcoctl artifact install falco-rules:3.2.0
 ```
 
 Falcoctl is available as a standalone tool, included in Falco packages and container images, automatically installed as a systemd unit or deployed as an init container via the Helm chart.
@@ -61,21 +62,23 @@ helm install falco \
 
 ### Add custom rules with a configmap
 
-You can always add the `customRules` value to add your own custom rules in a configmap. For instance, if we create a file as [described in the documentation](https://github.com/falcosecurity/charts/tree/master/charts/falco#loading-custom-rules) and then add it to our one of the above command lines with:
+You can always add the `customRules` value to add your own custom rules in a configmap. For instance, if we create a file as [described in the documentation](https://github.com/falcosecurity/charts/tree/master/charts/falco#loading-custom-rules), and then add it to our one of the above command lines with
 
 ```
 -f custom_rules.yaml
 ```
 
-It will be loaded and configured in our Falco instance.
+it will be loaded and configured in our Falco instance.
+
+> Notice: the new rule files described in `customRules` will be placed in the `/etc/falco/rules.d` directory, and will be loaded following the order specified in the configuration file: in the default configuration, this means that will be loaded after `/etc/falco/falco.yaml` and `/etc/falco/falco_rules.local.yaml` rules files.
 
 ## Only use rules supplied via configmap
 
-If you only want to use the rules that you add via configmap, discarding all automated updates and default rules shipping in the image you have to remove the `falco_rules.yaml` entry from the Falco configuration. Assuming you have your custom rules in `custom_rules.yaml`:
+If you only want to use the rules that you add via configmap, discarding all automated updates and default rules shipped in the image, you have to remove the `falco_rules.yaml` and `falco_rules.local.yaml` entries from the Falco configuration. Assuming you have your custom rules in `custom_rules.yaml`:
 
 ```
 helm install falco -f ./custom_rules.yaml \
-    --set "falco.rules_files={/etc/falco/falco_rules.local.yaml,/etc/falco/rules.d}" \
+    --set "falco.rules_files={/etc/falco/rules.d}" \
     --set falcoctl.artifact.install.enabled=false \
     --set falcoctl.artifact.follow.enabled=false
 ```
