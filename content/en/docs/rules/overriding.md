@@ -24,7 +24,7 @@ To facilitate modifying existing lists, macros and rules Falco provides an `over
 
 `append` allows you to add additional values to a list, macro, or rule key
 
-`replace` allows you to replace the value of an list, macro or macro key
+`replace` allows you to replace the value of a list, macro or macro key
 
 {{% alert color="warning" %}}
 `append` and `replace` cannot be used together. Trying to apply both will result in an error. 
@@ -41,7 +41,7 @@ The keys that can be overridden vary by rules component and action being taken:
 
 The following examples illustrate how you can use the override section to modify existing lists, macros, and rules. 
 
-In all of the examples below, it's assumed one is running Falco via `falco -r /etc/falco/falco_rules.yaml -r /etc/falco/falco_rules.local.yaml`, or has the default entries for `rules_files` in falco.yaml, which has `/etc/falco/falco.yaml` first and `/etc/falco/falco_rules.local.yaml` second.
+In all the examples below, it's assumed one is running Falco via `falco -r /etc/falco/falco_rules.yaml -r /etc/falco/falco_rules.local.yaml`, or has the default entries for `rules_files` in falco.yaml, which has `/etc/falco/falco.yaml` first and `/etc/falco/falco_rules.local.yaml` second.
 
 ### Append an item to a list
 
@@ -217,7 +217,7 @@ The only exceptions to this are the `enabled` field, that when defined as a sing
 
 ## Examples of Appending to Rules
 
-In all of the examples below, it's assumed one is running Falco via `falco -r /etc/falco/falco_rules.yaml -r /etc/falco/falco_rules.local.yaml`, or has the default entries for `rules_files` in falco.yaml, which has `/etc/falco/falco.yaml` first and `/etc/falco/falco_rules.local.yaml` second.
+In all the examples below, it's assumed one is running Falco via `falco -r /etc/falco/falco_rules.yaml -r /etc/falco/falco_rules.local.yaml`, or has the default entries for `rules_files` in falco.yaml, which has `/etc/falco/falco.yaml` first and `/etc/falco/falco_rules.local.yaml` second.
 
 ### Appending to Lists
 
