@@ -190,10 +190,10 @@ Use the new `override` section to enable the rule instead.
     enabled: replace
 ```
 
-## Appending to existing rules using `append:true` (deprecated)
+## Appending to existing rules using `append` key (deprecated)
 
 {{% alert color="warning" %}}
-This method has been deprecated and will be removed in Falco 1.0.0 
+The `append` key has been deprecated and will be removed in Falco 1.0.0. Use the [`override` section](/docs/rules/overriding/#overview) instead.  
 {{% /alert %}}
 
 If you use multiple Falco {{< glossary_tooltip text="rules files" term_id="rules-file" >}}, you might want to append new items to an existing lists, macros or rules. To do that, define an item with the same name as an existing item and add an `append: true` attribute to the YAML object. 
@@ -207,15 +207,23 @@ Note that when appending to lists, rules or macros, the order of the rule config
 
 This can be configured with multiple `-r` parameters in the right order, directly inside the Falco configuration file (`falco.yaml`) via `rules_files` or if you use the official Helm chart, via the `falco.rules_files` value.
 
-## Redefining Rules
+## Redefining existing rules using `append` key (deprecated)
 
-On the contrary, if `append` is set to `false` (default value), the whole object will be redefined. This can be used to empty a list, [apply user-specific settings to a macro](/docs/reference/rules/macros-override/) or even change a rule completely.
+{{% alert color="warning" %}}
+The `append` key has been deprecated and will be removed in Falco 1.0.0. Use the [`override` section](/docs/rules/overriding/#overview) instead.
+{{% /alert %}}
+
+If `append` is set to `false` (default value), the whole object will be redefined. This can be used to empty a list, [apply user-specific settings to a macro](/docs/reference/rules/macros-override/) or even change a rule completely.
 
 Take into account that when redefining a rule, it will entirely replace the previous rule, so if the new object defines fewer fields than required, Falco could return an error. 
 
 The only exceptions to this are the `enabled` field, that when defined as a single accompanying field, it simply enables or disables a previously-defined rule. And obviously, the `append` field, that when set to `true` for either macros or rules, it just appends the condition/exceptions field.
 
-## Examples of Appending to Rules
+## Examples of appending using `append` key (deprecated)
+
+{{% alert color="warning" %}}
+The `append` key has been deprecated and will be removed in Falco 1.0.0. Use the [`override` section](/docs/rules/overriding/#overview) instead.
+{{% /alert %}}
 
 In all the examples below, it's assumed one is running Falco via `falco -r /etc/falco/falco_rules.yaml -r /etc/falco/falco_rules.local.yaml`, or has the default entries for `rules_files` in falco.yaml, which has `/etc/falco/falco.yaml` first and `/etc/falco/falco_rules.local.yaml` second.
 
