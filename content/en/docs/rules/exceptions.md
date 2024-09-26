@@ -118,10 +118,6 @@ However, there are a few shortcuts that can be used when defining an exception:
 
 #### Values are Optional
 
-{{% pageinfo color="warning" %}}
-The `append` attribute is deprecated and it will be removed in Falco `1.0.0`. Use the [`override` attribute](/docs/rules/overriding/#overview) instead.
-{{% /pageinfo %}}
-
 A rule may define `fields` and `comps`, but not define `values`. This allows a later rule override to add values to an exception (more on that below). The exception `cmdline_writer` above has this format:
 
 ```
@@ -160,10 +156,6 @@ When `fields` is a single field, `comps` is set to a single `in` operator.
 
 ### Appending Exception Values
 
-{{% pageinfo color="warning" %}}
-The `append` attribute is deprecated and it will be removed in Falco `1.0.0`. Use the [`override` attribute](/docs/rules/overriding/#overview) instead.
-{{% /pageinfo %}}
-
 Exception values will most commonly be defined in rules overrides. Here's an example:
 
 ```yaml
@@ -185,7 +177,8 @@ Exception values will most commonly be defined in rules overrides. Here's an exa
     - [rpm, [/bin/cp, /bin/pwd]]
   - name: filenames
     values: [python, go]
-  append: true
+  override:
+    exceptions: append
 ```
 
 In this case, the values are appended to any values for the base rule, and then the `fields`/`comps`/`values` are added to the rule's condition.
@@ -196,6 +189,44 @@ Putting it all together, the effective rule condition for this rule is:
 ... and not ((proc.name=my-custom-yum and fd.directory=/usr/bin) or                             # proc_writer
              (proc.name=my-custom-apt and fd.directory=/usr/local/bin) or
 	     (proc.name=apk and fd.directory=/usr/lib/alpine) or
+	     (proc.name=npm and fd.directory=/usr/node/bin) or
+	     (container.image.repository=docker.io/alpine and fd.name=/usr/libexec/alpine) or   # container_writer
+	     (proc.name=apt and fd.name in (apt_files)) or                                      # proc_filenames
+	     (proc.name=rpm and fd.name in (/bin/cp, /bin/pwd)) or
+	     (fd.filename in (python, go))                                                      # filenames
+```
+
+### Replacing Exception Values
+
+It's possible to replace the entire list(s) of values tuples for specific exception(s) by following the [rules overriding syntax](/docs/reference/rules/overriding/) and specifying `exceptions: replace`. Here's an example:
+
+```yaml
+- list: apt_files
+  items: [/bin/ls, /bin/rm]
+
+- rule: Write below binary dir
+  exceptions:
+  - name: proc_writer
+    values:
+    - [apk, /usr/lib/alpine]
+    - [npm, /usr/node/bin]
+  - name: container_writer
+    values:
+    - [docker.io/alpine, /usr/libexec/alpine]
+  - name: proc_filenames
+    values:
+    - [apt, [apt_files]]
+    - [rpm, [/bin/cp, /bin/pwd]]
+  - name: filenames
+    values: [python, go]
+  override:
+    exceptions: replace
+```
+
+Here, the values lists for the `proc_writer`, `container_writer`, `proc_filenames` and `filenames` exceptions will be replaced (or initialized) with the corresponding values lists,  Putting it all together, the effective rule condition for this rule will be:
+
+```
+... and not ((proc.name=apk and fd.directory=/usr/lib/alpine) or                                # proc_writer
 	     (proc.name=npm and fd.directory=/usr/node/bin) or
 	     (container.image.repository=docker.io/alpine and fd.name=/usr/libexec/alpine) or   # container_writer
 	     (proc.name=apt and fd.name in (apt_files)) or                                      # proc_filenames
