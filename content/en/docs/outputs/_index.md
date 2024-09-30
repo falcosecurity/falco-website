@@ -13,7 +13,7 @@ Falco can send alerts to one or more output channels:
 * A file
 * Syslog
 * A spawned program
-* A HTTP/HTTPS endpoint
+* An HTTP/HTTPS endpoint
 * A client via the gRPC API
 
 The channels are configured via the Falco configuration file `falco.yaml`. See the [Falco Configuration](/docs/reference/daemon/config-options/) page for more details.
