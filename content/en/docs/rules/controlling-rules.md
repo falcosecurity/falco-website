@@ -57,24 +57,6 @@ In the above example, all the rules tagged `network` are enabled, the `Directory
 
 These parameters can also be specified as Helm chart value (`extraArgs`) if you are deploying Falco via the official Helm chart.
 
-{{% pageinfo color="warning" %}}
-It is also possible to enable or disable specific rules and tags via the `-D`, `-T` and `-t` command line options, but those are deprecated and will be removed in Falco `0.39.0`:
-
-```
--D <substring>      Disable any rules with names having the substring <substring>. 
-                    Can be specified multiple times.
-
--T <tag>            Disable any rules with a tag=<tag>.
-                    Can be specified multiple times.
-                    Can not be specified with -t.
-
--t <tag>            Only run those rules with a tag=<tag>. 
-                    Can be specified multiple times.
-                    Can not be specified with -T/-D.
-```
-
-{{% /pageinfo %}}
-
 ### Via existing Macros {#macros}
 
 Most of the default rules offer some kind of `user_*` {{< glossary_tooltip text="macros" term_id="macros" >}} which are already part of the rule conditions. These `user_*` macros are usually set to `(never_true)` or `(always_true)` which basically enables or disables the regarding rule. Now if you want to disable a default rule (e.g. `Read sensitive file trusted after startup`), you just have to override the rule's `user_*` macro (`user_known_read_sensitive_files_activities` in this case) inside your custom Falco configuration.
