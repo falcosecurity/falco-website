@@ -124,7 +124,25 @@ You can find more information on breaking changes in the [tracking issue](https:
 
 ### Deprecations
 
-In Falco 0.40.0 we will remove the `--cri` and `--disable-cri-async` options.
+In Falco `0.39.0`, the `--cri` and `--disable-cri-async` options were deprecated, and they will be completely removed in Falco `0.40.0`. Moving forward, configuring container runtimes should be done through the falco.yaml file. Below is an example of the new configuration format:
+```yaml
+container_engines:
+  docker:
+    enabled: true
+  cri:
+    enabled: true
+    sockets: ["/run/containerd/containerd.sock", "/run/crio/crio.sock", "/run/k3s/containerd/containerd.sock"]
+    disable_async: false
+  podman:
+    enabled: true
+  lxc:
+    enabled: true
+  libvirt_lxc:
+    enabled: true
+  bpm:
+    enabled: true
+```
+
 
 ## Try it out
 
