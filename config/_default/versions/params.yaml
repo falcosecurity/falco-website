@@ -29,7 +29,7 @@ versions:
     version: v0.38
     githubbranch: 0.38.2
     docsbranch: v0.38
-    url: https://v0.38.falco.org/
+    url: https://v0-38.falco.org/
 
   - fullversion: v0.37.1
     version: v0.37
