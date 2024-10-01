@@ -41,11 +41,17 @@ The `match` section can be used to specify optional conditions:
 
 If multiple conditions are specified all need to be present in order to match. If none are specified or `match` is not present output is appended to all rules.
 
+<!--
+
+This -o variant is not available in Falco 0.39.0 due to a cxxopts config issue
+
 This option can also be specified on the command line via `-o` such as:
 
 ```sh
 falco ... -o 'append_output[]={"match": {"source": "syscall"}, "extra_fields": ["evt.hostname"], "extra_output": "on CPU %evt.cpu"}'
 ```
+
+-->
 
 ## Adding an override to a specific rule
 
