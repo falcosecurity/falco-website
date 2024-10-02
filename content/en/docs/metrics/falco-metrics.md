@@ -57,14 +57,16 @@ Here is a brief glossary of the currently supported metrics for both the `json` 
     "falco.duration_sec": 84,
     "falco.evts_rate_sec": 5598.8,
     "falco.host_boot_ts": 1726122734000000000,
-    "falco.host_ifinfo_json": "{\"ipv4\":{\"docker0\":\"172.17.0.1\",\"wlp0s20f3\":\"192.168.4.50\"},\"ipv6\":{\"wlp0s20f3\":\"fe80:0:0:0:9ac2:aaa4:22b3:f753\"}}",
+    "falco.host_netinfo.interfaces.docker0.protocols.ipv4.addresses": "172.17.0.1",
+    "falco.host_netinfo.interfaces.wlp0s20f3.protocols.ipv4.addresses": "192.168.4.57",
+    "falco.host_netinfo.interfaces.wlp0s20f3.protocols.ipv6.addresses": "fd7e:da33:f3a2:1:8eac:d1c:4721:58f1,fd3c:bd4b:d641:1b4c:495f:af96:a80c:b0f9,fe80:0:0:0:9ac2:aaa4:22b3:f753",
     "falco.host_num_cpus": 20,
     "falco.kernel_release": "6.8.11-200.fc39.x86_64",
     "falco.num_evts": 537963,
     "falco.num_evts_prev": 531854,
     "falco.outputs_queue_num_drops": 0,
-    "falco.sha256_config_file.falco": "5c9689ea597fc708cddbd26fc8204dd8fbeda689865cbe2a03c9b41bb64fd0cc",
-    "falco.sha256_rules_file.falco_rules": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
+    "falco.sha256_config_file.falco_yaml": "5c9689ea597fc708cddbd26fc8204dd8fbeda689865cbe2a03c9b41bb64fd0cc",
+    "falco.sha256_rules_file.falco_rules_yaml": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
     "falco.start_ts": 1726240856432519187,
     "falco.version": "0.39.0",
     "scap.engine_name": "bpf",
@@ -94,13 +96,10 @@ falcosecurity_falco_kernel_release_info{kernel_release="6.8.11-200.fc39.x86_64"}
 falcosecurity_evt_hostname_info{hostname="test"} 1
 # HELP falcosecurity_falco_sha256_rules_files_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_sha256_rules_files_info gauge
-falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
+falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules.yaml",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
 # HELP falcosecurity_falco_sha256_config_files_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_sha256_config_files_info gauge
-falcosecurity_falco_sha256_config_files_info{file_name="falco",sha256="5c9689ea597fc708cddbd26fc8204dd8fbeda689865cbe2a03c9b41bb64fd0cc"} 1
-# HELP falcosecurity_falco_host_ifinfo_json_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_host_ifinfo_json_info gauge
-falcosecurity_falco_host_ifinfo_json_info{host_ifinfo_json="{"ipv4":{"docker0":"172.17.0.1","wlp0s20f3":"192.168.4.50"},"ipv6":{"wlp0s20f3":"fe80:0:0:0:9ac2:aaa4:22b3:f753"}}"} 1
+falcosecurity_falco_sha256_config_files_info{file_name="falco.yaml",sha256="5c9689ea597fc708cddbd26fc8204dd8fbeda689865cbe2a03c9b41bb64fd0cc"} 1
 # HELP falcosecurity_falco_evt_source_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_evt_source_info gauge
 falcosecurity_falco_evt_source_info{evt_source="syscall"} 1
@@ -142,7 +141,9 @@ falcosecurity_falco_duration_seconds_total 21
     "falco.duration_sec": 105,
     "falco.evts_rate_sec": 1136.0,
     "falco.host_boot_ts": 1726122734000000000,
-    "falco.host_ifinfo_json": "{\"ipv4\":{\"docker0\":\"172.17.0.1\",\"wlp0s20f3\":\"192.168.4.50\"},\"ipv6\":{\"wlp0s20f3\":\"fe80:0:0:0:9ac2:aaa4:22b3:f753\"}}",
+    "falco.host_netinfo.interfaces.docker0.protocols.ipv4.addresses": "172.17.0.1",
+    "falco.host_netinfo.interfaces.wlp0s20f3.protocols.ipv4.addresses": "192.168.4.57",
+    "falco.host_netinfo.interfaces.wlp0s20f3.protocols.ipv6.addresses": "fd7e:da33:f3a2:1:8eac:d1c:4721:58f1,fd3c:bd4b:d641:1b4c:495f:af96:a80c:b0f9,fe80:0:0:0:9ac2:aaa4:22b3:f753",
     "falco.host_num_cpus": 20,
     "falco.kernel_release": "6.8.11-200.fc39.x86_64",
     "falco.num_evts": 239707,
@@ -174,8 +175,8 @@ falcosecurity_falco_duration_seconds_total 21
     "falco.rules.System_user_interactive": 0,
     "falco.rules.Terminal_shell_in_container": 0,
     "falco.rules.matches_total": 11,
-    "falco.sha256_config_file.falco": "7e1151264c1c809027adb5995eb127156734fdc19bca47a97a04fe47ce388e03",
-    "falco.sha256_rules_file.falco_rules": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
+    "falco.sha256_config_file.falco_yaml": "7e1151264c1c809027adb5995eb127156734fdc19bca47a97a04fe47ce388e03",
+    "falco.sha256_rules_file.falco_rules_yaml": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
     "falco.start_ts": 1726241024448034870,
     "falco.version": "0.39.0",
     "scap.engine_name": "bpf",
@@ -205,13 +206,10 @@ falcosecurity_falco_kernel_release_info{kernel_release="6.8.11-200.fc39.x86_64"}
 falcosecurity_evt_hostname_info{hostname="test"} 1
 # HELP falcosecurity_falco_sha256_rules_files_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_sha256_rules_files_info gauge
-falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
+falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules.yaml",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
 # HELP falcosecurity_falco_sha256_config_files_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_sha256_config_files_info gauge
-falcosecurity_falco_sha256_config_files_info{file_name="falco",sha256="7e1151264c1c809027adb5995eb127156734fdc19bca47a97a04fe47ce388e03"} 1
-# HELP falcosecurity_falco_host_ifinfo_json_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_host_ifinfo_json_info gauge
-falcosecurity_falco_host_ifinfo_json_info{host_ifinfo_json="{"ipv4":{"docker0":"172.17.0.1","wlp0s20f3":"192.168.4.50"},"ipv6":{"wlp0s20f3":"fe80:0:0:0:9ac2:aaa4:22b3:f753"}}"} 1
+falcosecurity_falco_sha256_config_files_info{file_name="falco.yaml",sha256="7e1151264c1c809027adb5995eb127156734fdc19bca47a97a04fe47ce388e03"} 1
 # HELP falcosecurity_falco_evt_source_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_evt_source_info gauge
 falcosecurity_falco_evt_source_info{evt_source="syscall"} 1
@@ -259,7 +257,9 @@ falcosecurity_falco_rules_matches_total{priority="4",rule_name="Read sensitive f
     "falco.evts_rate_sec": 1978.1, # Taken between 2 metrics snapshots
     "falco.host_boot_ts": 1726122734000000000,
     "falco.host_cpu_usage_perc": 10.1, # Overall CPU usage of all running processes on the underlying host (percentage of all CPUs)
-    "falco.host_ifinfo_json": "{\"ipv4\":{\"docker0\":\"172.17.0.1\",\"wlp0s20f3\":\"192.168.4.50\"},\"ipv6\":{\"wlp0s20f3\":\"fe80:0:0:0:9ac2:aaa4:22b3:f753\"}}",
+    "falco.host_netinfo.interfaces.docker0.protocols.ipv4.addresses": "172.17.0.1",
+    "falco.host_netinfo.interfaces.wlp0s20f3.protocols.ipv4.addresses": "192.168.4.57",
+    "falco.host_netinfo.interfaces.wlp0s20f3.protocols.ipv6.addresses": "fd7e:da33:f3a2:1:8eac:d1c:4721:58f1,fd3c:bd4b:d641:1b4c:495f:af96:a80c:b0f9,fe80:0:0:0:9ac2:aaa4:22b3:f753",
     "falco.host_memory_used_mb": 6140.0, # Overall memory usage of all running processes on the underlying host, unit indicated via the suffix
     "falco.host_num_cpus": 20,
     "falco.host_open_fds": 18832,
@@ -271,8 +271,8 @@ falcosecurity_falco_rules_matches_total{priority="4",rule_name="Read sensitive f
     "falco.num_evts": 110342,
     "falco.num_evts_prev": 108424,
     "falco.outputs_queue_num_drops": 0,
-    "falco.sha256_config_file.falco": "787e7cca8afd80c1f1a309a50c7f0c0339bac9db3a2a525567689a53aa249aef",
-    "falco.sha256_rules_file.falco_rules": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
+    "falco.sha256_config_file.falco_yaml": "787e7cca8afd80c1f1a309a50c7f0c0339bac9db3a2a525567689a53aa249aef",
+    "falco.sha256_rules_file.falco_rules_yaml": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
     "falco.start_ts": 1726241217901083392,
     "falco.version": "0.39.0",
     "scap.engine_name": "bpf",
@@ -302,13 +302,10 @@ falcosecurity_falco_kernel_release_info{kernel_release="6.8.11-200.fc39.x86_64"}
 falcosecurity_evt_hostname_info{hostname="test"} 1
 # HELP falcosecurity_falco_sha256_rules_files_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_sha256_rules_files_info gauge
-falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
+falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules.yaml",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
 # HELP falcosecurity_falco_sha256_config_files_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_sha256_config_files_info gauge
-falcosecurity_falco_sha256_config_files_info{file_name="falco",sha256="787e7cca8afd80c1f1a309a50c7f0c0339bac9db3a2a525567689a53aa249aef"} 1
-# HELP falcosecurity_falco_host_ifinfo_json_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_host_ifinfo_json_info gauge
-falcosecurity_falco_host_ifinfo_json_info{host_ifinfo_json="{"ipv4":{"docker0":"172.17.0.1","wlp0s20f3":"192.168.4.50"},"ipv6":{"wlp0s20f3":"fe80:0:0:0:9ac2:aaa4:22b3:f753"}}"} 1
+falcosecurity_falco_sha256_config_files_info{file_name="falco.yaml",sha256="787e7cca8afd80c1f1a309a50c7f0c0339bac9db3a2a525567689a53aa249aef"} 1
 # HELP falcosecurity_falco_evt_source_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_evt_source_info gauge
 falcosecurity_falco_evt_source_info{evt_source="syscall"} 1
@@ -379,7 +376,9 @@ Most counters are monotonic/all-time counts, with some exceptions indicated belo
     "falco.duration_sec": 33,
     "falco.evts_rate_sec": 1908.5, # Taken between 2 metrics snapshots
     "falco.host_boot_ts": 1726122734000000000,
-    "falco.host_ifinfo_json": "{\"ipv4\":{\"docker0\":\"172.17.0.1\",\"wlp0s20f3\":\"192.168.4.50\"},\"ipv6\":{\"wlp0s20f3\":\"fe80:0:0:0:9ac2:aaa4:22b3:f753\"}}",
+    "falco.host_netinfo.interfaces.docker0.protocols.ipv4.addresses": "172.17.0.1",
+    "falco.host_netinfo.interfaces.wlp0s20f3.protocols.ipv4.addresses": "192.168.4.57",
+    "falco.host_netinfo.interfaces.wlp0s20f3.protocols.ipv6.addresses": "fd7e:da33:f3a2:1:8eac:d1c:4721:58f1,fd3c:bd4b:d641:1b4c:495f:af96:a80c:b0f9,fe80:0:0:0:9ac2:aaa4:22b3:f753",
     "falco.host_num_cpus": 20,
     "falco.kernel_release": "6.8.11-200.fc39.x86_64",
     "falco.n_added_fds": 32774,
@@ -404,8 +403,8 @@ Most counters are monotonic/all-time counts, with some exceptions indicated belo
     "falco.num_evts": 51151,
     "falco.num_evts_prev": 49243,
     "falco.outputs_queue_num_drops": 0,
-    "falco.sha256_config_file.falco": "33d96e7e998516ec0e1823f7e78a28fa6263c87aad53c3eb485df404b2b8ed4b",
-    "falco.sha256_rules_file.falco_rules": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
+    "falco.sha256_config_file.falco_yaml": "33d96e7e998516ec0e1823f7e78a28fa6263c87aad53c3eb485df404b2b8ed4b",
+    "falco.sha256_rules_file.falco_rules_yaml": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
     "falco.start_ts": 1726241473913453797,
     "falco.version": "0.39.0",
     "scap.engine_name": "bpf",
@@ -435,13 +434,10 @@ falcosecurity_falco_kernel_release_info{kernel_release="6.8.11-200.fc39.x86_64"}
 falcosecurity_evt_hostname_info{hostname="test"} 1
 # HELP falcosecurity_falco_sha256_rules_files_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_sha256_rules_files_info gauge
-falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
+falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules.yaml",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
 # HELP falcosecurity_falco_sha256_config_files_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_sha256_config_files_info gauge
-falcosecurity_falco_sha256_config_files_info{file_name="falco",sha256="33d96e7e998516ec0e1823f7e78a28fa6263c87aad53c3eb485df404b2b8ed4b"} 1
-# HELP falcosecurity_falco_host_ifinfo_json_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_host_ifinfo_json_info gauge
-falcosecurity_falco_host_ifinfo_json_info{host_ifinfo_json="{"ipv4":{"docker0":"172.17.0.1","wlp0s20f3":"192.168.4.50"},"ipv6":{"wlp0s20f3":"fe80:0:0:0:9ac2:aaa4:22b3:f753"}}"} 1
+falcosecurity_falco_sha256_config_files_info{file_name="falco.yaml",sha256="33d96e7e998516ec0e1823f7e78a28fa6263c87aad53c3eb485df404b2b8ed4b"} 1
 # HELP falcosecurity_falco_evt_source_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_evt_source_info gauge
 falcosecurity_falco_evt_source_info{evt_source="syscall"} 1
@@ -540,14 +536,16 @@ falcosecurity_scap_n_containers_total 0
     "falco.duration_sec": 29,
     "falco.evts_rate_sec": 1997.4, # Taken between 2 metrics snapshots
     "falco.host_boot_ts": 1726122734000000000,
-    "falco.host_ifinfo_json": "{\"ipv4\":{\"docker0\":\"172.17.0.1\",\"wlp0s20f3\":\"192.168.4.50\"},\"ipv6\":{\"wlp0s20f3\":\"fe80:0:0:0:9ac2:aaa4:22b3:f753\"}}",
+    "falco.host_netinfo.interfaces.docker0.protocols.ipv4.addresses": "172.17.0.1",
+    "falco.host_netinfo.interfaces.wlp0s20f3.protocols.ipv4.addresses": "192.168.4.57",
+    "falco.host_netinfo.interfaces.wlp0s20f3.protocols.ipv6.addresses": "fd7e:da33:f3a2:1:8eac:d1c:4721:58f1,fd3c:bd4b:d641:1b4c:495f:af96:a80c:b0f9,fe80:0:0:0:9ac2:aaa4:22b3:f753",
     "falco.host_num_cpus": 20,
     "falco.kernel_release": "6.8.11-200.fc39.x86_64",
     "falco.num_evts": 96160,
     "falco.num_evts_prev": 94344,
     "falco.outputs_queue_num_drops": 0,
-    "falco.sha256_config_file.falco": "137aaefd14be68ef12e12220b8a92a6a4ad50c327b489090a9b643972e1df0ba",
-    "falco.sha256_rules_file.falco_rules": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
+    "falco.sha256_config_file.falco_yaml": "137aaefd14be68ef12e12220b8a92a6a4ad50c327b489090a9b643972e1df0ba",
+    "falco.sha256_rules_file.falco_rules_yaml": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
     "falco.start_ts": 1726241688741960283,
     "falco.version": "0.39.0",
     "scap.engine_name": "bpf",
@@ -602,13 +600,10 @@ falcosecurity_falco_kernel_release_info{kernel_release="6.8.11-200.fc39.x86_64"}
 falcosecurity_evt_hostname_info{hostname="test"} 1
 # HELP falcosecurity_falco_sha256_rules_files_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_sha256_rules_files_info gauge
-falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
+falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules.yaml",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
 # HELP falcosecurity_falco_sha256_config_files_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_sha256_config_files_info gauge
-falcosecurity_falco_sha256_config_files_info{file_name="falco",sha256="137aaefd14be68ef12e12220b8a92a6a4ad50c327b489090a9b643972e1df0ba"} 1
-# HELP falcosecurity_falco_host_ifinfo_json_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_host_ifinfo_json_info gauge
-falcosecurity_falco_host_ifinfo_json_info{host_ifinfo_json="{"ipv4":{"docker0":"172.17.0.1","wlp0s20f3":"192.168.4.50"},"ipv6":{"wlp0s20f3":"fe80:0:0:0:9ac2:aaa4:22b3:f753"}}"} 1
+falcosecurity_falco_sha256_config_files_info{file_name="falco.yaml",sha256="137aaefd14be68ef12e12220b8a92a6a4ad50c327b489090a9b643972e1df0ba"} 1
 # HELP falcosecurity_falco_evt_source_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_evt_source_info gauge
 falcosecurity_falco_evt_source_info{evt_source="syscall"} 1
@@ -707,14 +702,16 @@ falcosecurity_scap_n_drops_total 0
     "falco.duration_sec": 26,
     "falco.evts_rate_sec": 3112.9,
     "falco.host_boot_ts": 1726122734000000000,
-    "falco.host_ifinfo_json": "{\"ipv4\":{\"docker0\":\"172.17.0.1\",\"wlp0s20f3\":\"192.168.4.50\"},\"ipv6\":{\"wlp0s20f3\":\"fe80:0:0:0:9ac2:aaa4:22b3:f753\"}}",
+    "falco.host_netinfo.interfaces.docker0.protocols.ipv4.addresses": "172.17.0.1",
+    "falco.host_netinfo.interfaces.wlp0s20f3.protocols.ipv4.addresses": "192.168.4.57",
+    "falco.host_netinfo.interfaces.wlp0s20f3.protocols.ipv6.addresses": "fd7e:da33:f3a2:1:8eac:d1c:4721:58f1,fd3c:bd4b:d641:1b4c:495f:af96:a80c:b0f9,fe80:0:0:0:9ac2:aaa4:22b3:f753",
     "falco.host_num_cpus": 20,
     "falco.kernel_release": "6.8.11-200.fc39.x86_64",
     "falco.num_evts": 52223,
     "falco.num_evts_prev": 49110,
     "falco.outputs_queue_num_drops": 0,
-    "falco.sha256_config_file.falco": "9aede0613a3a55a98934d9ef9688659a3b83edcee759d26c7a13a4b5f3315e9d",
-    "falco.sha256_rules_file.falco_rules": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
+    "falco.sha256_config_file.falco_yaml": "9aede0613a3a55a98934d9ef9688659a3b83edcee759d26c7a13a4b5f3315e9d",
+    "falco.sha256_rules_file.falco_rules_yaml": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
     "falco.start_ts": 1726242106357560485,
     "falco.version": "0.39.0",
     "scap.engine_name": "bpf",
@@ -808,13 +805,10 @@ falcosecurity_falco_kernel_release_info{kernel_release="6.8.11-200.fc39.x86_64"}
 falcosecurity_evt_hostname_info{hostname="test"} 1
 # HELP falcosecurity_falco_sha256_rules_files_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_sha256_rules_files_info gauge
-falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
+falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules.yaml",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
 # HELP falcosecurity_falco_sha256_config_files_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_sha256_config_files_info gauge
-falcosecurity_falco_sha256_config_files_info{file_name="falco",sha256="9aede0613a3a55a98934d9ef9688659a3b83edcee759d26c7a13a4b5f3315e9d"} 1
-# HELP falcosecurity_falco_host_ifinfo_json_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_host_ifinfo_json_info gauge
-falcosecurity_falco_host_ifinfo_json_info{host_ifinfo_json="{"ipv4":{"docker0":"172.17.0.1","wlp0s20f3":"192.168.4.50"},"ipv6":{"wlp0s20f3":"fe80:0:0:0:9ac2:aaa4:22b3:f753"}}"} 1
+falcosecurity_falco_sha256_config_files_info{file_name="falco.yaml",sha256="9aede0613a3a55a98934d9ef9688659a3b83edcee759d26c7a13a4b5f3315e9d"} 1
 # HELP falcosecurity_falco_evt_source_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_evt_source_info gauge
 falcosecurity_falco_evt_source_info{evt_source="syscall"} 1
@@ -1037,14 +1031,16 @@ Here is a snippet with respect to the kernel tracepoints for an `x86_64` machine
     "falco.duration_sec": 25,
     "falco.evts_rate_sec": 1733.2,
     "falco.host_boot_ts": 1726122734000000000,
-    "falco.host_ifinfo_json": "{\"ipv4\":{\"docker0\":\"172.17.0.1\",\"wlp0s20f3\":\"192.168.4.50\"},\"ipv6\":{\"wlp0s20f3\":\"fe80:0:0:0:9ac2:aaa4:22b3:f753\"}}",
+    "falco.host_netinfo.interfaces.docker0.protocols.ipv4.addresses": "172.17.0.1",
+    "falco.host_netinfo.interfaces.wlp0s20f3.protocols.ipv4.addresses": "192.168.4.57",
+    "falco.host_netinfo.interfaces.wlp0s20f3.protocols.ipv6.addresses": "fd7e:da33:f3a2:1:8eac:d1c:4721:58f1,fd3c:bd4b:d641:1b4c:495f:af96:a80c:b0f9,fe80:0:0:0:9ac2:aaa4:22b3:f753",
     "falco.host_num_cpus": 20,
     "falco.kernel_release": "6.8.11-200.fc39.x86_64",
     "falco.num_evts": 146294,
     "falco.num_evts_prev": 144561,
     "falco.outputs_queue_num_drops": 0,
-    "falco.sha256_config_file.falco": "2964ca63bcfe76bfcca5a07cb282a367f559188f1dc224c43aad1886607fdaf5",
-    "falco.sha256_rules_file.falco_rules": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
+    "falco.sha256_config_file.falco_yaml": "2964ca63bcfe76bfcca5a07cb282a367f559188f1dc224c43aad1886607fdaf5",
+    "falco.sha256_rules_file.falco_rules_yaml": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
     "falco.start_ts": 1726242247592463600,
     "falco.version": "0.39.0",
     "scap.engine_name": "bpf",
@@ -1093,14 +1089,16 @@ Here is a snippet with respect to the kernel tracepoints for an `x86_64` machine
     "falco.duration_sec": 21,
     "falco.evts_rate_sec": 1433.8,
     "falco.host_boot_ts": 1726122734000000000,
-    "falco.host_ifinfo_json": "{\"ipv4\":{\"docker0\":\"172.17.0.1\",\"wlp0s20f3\":\"192.168.4.50\"},\"ipv6\":{\"wlp0s20f3\":\"fe80:0:0:0:9ac2:aaa4:22b3:f753\"}}",
+    "falco.host_netinfo.interfaces.docker0.protocols.ipv4.addresses": "172.17.0.1",
+    "falco.host_netinfo.interfaces.wlp0s20f3.protocols.ipv4.addresses": "192.168.4.57",
+    "falco.host_netinfo.interfaces.wlp0s20f3.protocols.ipv6.addresses": "fd7e:da33:f3a2:1:8eac:d1c:4721:58f1,fd3c:bd4b:d641:1b4c:495f:af96:a80c:b0f9,fe80:0:0:0:9ac2:aaa4:22b3:f753",
     "falco.host_num_cpus": 20,
     "falco.kernel_release": "6.8.11-200.fc39.x86_64",
     "falco.num_evts": 28096,
     "falco.num_evts_prev": 26946,
     "falco.outputs_queue_num_drops": 0,
-    "falco.sha256_config_file.falco": "6eea2f7e7ef3f014dea18a23dc9f80b3e6b20b8ebbea1ec0d221e4165f474742",
-    "falco.sha256_rules_file.falco_rules": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
+    "falco.sha256_config_file.falco_yaml": "6eea2f7e7ef3f014dea18a23dc9f80b3e6b20b8ebbea1ec0d221e4165f474742",
+    "falco.sha256_rules_file.falco_rules_yaml": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
     "falco.start_ts": 1726243267421382631,
     "falco.version": "0.39.0",
     "scap.engine_name": "modern_bpf",
@@ -1186,13 +1184,10 @@ falcosecurity_falco_kernel_release_info{kernel_release="6.8.11-200.fc39.x86_64"}
 falcosecurity_evt_hostname_info{hostname="test"} 1
 # HELP falcosecurity_falco_sha256_rules_files_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_sha256_rules_files_info gauge
-falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
+falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules.yaml",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
 # HELP falcosecurity_falco_sha256_config_files_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_sha256_config_files_info gauge
-falcosecurity_falco_sha256_config_files_info{file_name="falco",sha256="2964ca63bcfe76bfcca5a07cb282a367f559188f1dc224c43aad1886607fdaf5"} 1
-# HELP falcosecurity_falco_host_ifinfo_json_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_host_ifinfo_json_info gauge
-falcosecurity_falco_host_ifinfo_json_info{host_ifinfo_json="{"ipv4":{"docker0":"172.17.0.1","wlp0s20f3":"192.168.4.50"},"ipv6":{"wlp0s20f3":"fe80:0:0:0:9ac2:aaa4:22b3:f753"}}"} 1
+falcosecurity_falco_sha256_config_files_info{file_name="falco.yaml",sha256="2964ca63bcfe76bfcca5a07cb282a367f559188f1dc224c43aad1886607fdaf5"} 1
 # HELP falcosecurity_falco_evt_source_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_evt_source_info gauge
 falcosecurity_falco_evt_source_info{evt_source="syscall"} 1
@@ -1300,7 +1295,9 @@ We’re listing all the fields here. For additional details on specific metrics,
     "falco.evts_rate_sec": 2139.2,
     "falco.host_boot_ts": 1726122734000000000,
     "falco.host_cpu_usage_perc": 9.3,
-    "falco.host_ifinfo_json": "{\"ipv4\":{\"docker0\":\"172.17.0.1\",\"wlp0s20f3\":\"192.168.4.50\"},\"ipv6\":{\"wlp0s20f3\":\"fe80:0:0:0:9ac2:aaa4:22b3:f753\"}}",
+    "falco.host_netinfo.interfaces.docker0.protocols.ipv4.addresses": "172.17.0.1",
+    "falco.host_netinfo.interfaces.wlp0s20f3.protocols.ipv4.addresses": "192.168.4.57",
+    "falco.host_netinfo.interfaces.wlp0s20f3.protocols.ipv6.addresses": "fd7e:da33:f3a2:1:8eac:d1c:4721:58f1,fd3c:bd4b:d641:1b4c:495f:af96:a80c:b0f9,fe80:0:0:0:9ac2:aaa4:22b3:f753",
     "falco.host_memory_used_mb": 6263.9,
     "falco.host_num_cpus": 20,
     "falco.host_open_fds": 18872,
@@ -1357,8 +1354,8 @@ We’re listing all the fields here. For additional details on specific metrics,
     "falco.rules.System_user_interactive": 0,
     "falco.rules.Terminal_shell_in_container": 0,
     "falco.rules.matches_total": 0,
-    "falco.sha256_config_file.falco": "dda540600846785baaa2d2c8fc631528fff49fb10a3b75c4cdca668b28ae693d",
-    "falco.sha256_rules_file.falco_rules": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
+    "falco.sha256_config_file.falco_yaml": "dda540600846785baaa2d2c8fc631528fff49fb10a3b75c4cdca668b28ae693d",
+    "falco.sha256_rules_file.falco_rules_yaml": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
     "falco.start_ts": 1726242529394244000,
     "falco.version": "0.39.0",
     "scap.engine_name": "bpf",
@@ -1473,13 +1470,10 @@ falcosecurity_falco_kernel_release_info{kernel_release="6.8.11-200.fc39.x86_64"}
 falcosecurity_evt_hostname_info{hostname="test"} 1
 # HELP falcosecurity_falco_sha256_rules_files_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_sha256_rules_files_info gauge
-falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
+falcosecurity_falco_sha256_rules_files_info{file_name="falco_rules.yaml",sha256="58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4"} 1
 # HELP falcosecurity_falco_sha256_config_files_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_sha256_config_files_info gauge
-falcosecurity_falco_sha256_config_files_info{file_name="falco",sha256="dda540600846785baaa2d2c8fc631528fff49fb10a3b75c4cdca668b28ae693d"} 1
-# HELP falcosecurity_falco_host_ifinfo_json_info https://falco.org/docs/metrics/
-# TYPE falcosecurity_falco_host_ifinfo_json_info gauge
-falcosecurity_falco_host_ifinfo_json_info{host_ifinfo_json="{"ipv4":{"docker0":"172.17.0.1","wlp0s20f3":"192.168.4.50"},"ipv6":{"wlp0s20f3":"fe80:0:0:0:9ac2:aaa4:22b3:f753"}}"} 1
+falcosecurity_falco_sha256_config_files_info{file_name="falco.yaml",sha256="dda540600846785baaa2d2c8fc631528fff49fb10a3b75c4cdca668b28ae693d"} 1
 # HELP falcosecurity_falco_evt_source_info https://falco.org/docs/metrics/
 # TYPE falcosecurity_falco_evt_source_info gauge
 falcosecurity_falco_evt_source_info{evt_source="syscall"} 1
@@ -1859,7 +1853,7 @@ The Prometheus text format documentation can be found [here][3].
 
 The OpenMetrics specification can be found [here][4].
 {{% pageinfo color=info %}}
-The `num_evts` wrapper / base field is currently not available for Prometheus metrics; otherwise, there is 1:1 support across all output channels. 
+The `num_evts` and `host_netinfo` wrapper / base field are currently not available for Prometheus metrics; otherwise, there is 1:1 support across all output channels.
 
 However, following the Prometheus recommendations, there might be some slight differences with regard to some metrics fields. Typically calculated fields will not be returned as Prometheus provides the facilities to compute them as part of their queries (e.g. event or drop rates can be calculated in Prometheus).
 
