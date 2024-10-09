@@ -64,6 +64,13 @@ append_output:
 ```
 In this example, any rule with the syscall source will have the string on `CPU %evt.cpu` appended to the end of the default output line. Additionally, extra fields such as `home_directory` and `evt.hostname` will be visible in the JSON output under the `output_fields`key but won’t appear in the regular text output. Notably, environment variables are also supported.
 
+This option is also available on the command line using the `-o flag`. For example:
+
+```bash
+falco ... -o 'append_output[]={"match": {"source": "syscall"}, "extra_fields": ["evt.hostname"], "extra_output": "on CPU %evt.cpu"}'
+```
+The introduction of `append_output` offers Falco users a flexible way to enrich event outputs, providing deeper visibility and customization tailored to their monitoring needs.
+
 ### Dynamic Driver Selection in Falco with Helm: Simplifying Multi-Node Deployments
 Deploying across diverse Kubernetes environments just got easier! When using the official Falco Helm chart and setting `driver.kind=auto`, the driver loader now intelligently handles the heavy lifting for you.
 
