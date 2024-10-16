@@ -20,11 +20,6 @@ alt = "Booz Allen Hamilton"
 url = "https://www.boozallen.com/"
 
 [[adopters.end-users]]
-src = "coveo.png"
-alt = "Coveo"
-url = "https://www.coveo.com/en"
-
-[[adopters.end-users]]
 src = "frameio.png"
 alt = "Frame.io"
 url = "https://frame.io/"
