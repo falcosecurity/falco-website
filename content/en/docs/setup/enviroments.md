@@ -19,7 +19,7 @@ To use Falco on GKE, you need to [deploy](/docs/setup/kubernetes/) using one of 
 If you are using K3s with containerd, you should set the CRI settings because the socket path is different from the default setting configured in Falco.
 
 - If you install Falco on the host machine:
-  - Append the parameter `--cri /run/k3s/containerd/containerd.sock` when starting the Falco binary.
+  - Append the parameter `-o container_engines.cri.sockets[]=/run/k3s/containerd/containerd.sock` when starting the Falco binary.
 - If you install Falco inside K3s with Helm:
   - Append the options below when installing with Helm:
 
