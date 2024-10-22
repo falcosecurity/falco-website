@@ -272,7 +272,7 @@ Name | Type | Description
 `fd.dev.minor` | INT32 | minor device number containing the referenced file
 `fd.ino` | INT64 | inode number of the referenced file
 `fd.nameraw` | CHARBUF | FD full name raw. Just like fd.name, but only used if fd is a file path. File path is kept raw with limited sanitization and without deriving the absolute path.
-`fd.types` | CHARBUF | List of FD types in used. Can be passed an fd number e.g. fd.types[0] to get the type of stdout as a single item list.
+`fd.types` | LIST(CHARBUF) | List of FD types in used. Can be passed an fd number e.g. fd.types[0] to get the type of stdout as a single item list.
 `fd.is_upper_layer` | BOOL | 'true' if the fd is of a file in the upper layer of an overlayfs.
 `fd.is_lower_layer` | BOOL | 'true' if the fd is of a file  in the lower layer of an overlayfs.
 
