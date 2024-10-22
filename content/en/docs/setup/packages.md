@@ -247,7 +247,7 @@ First, let's verify the available services:
 ```plain
 $ sudo systemctl list-unit-files "falco*"
 
-UNIT FILE                        STATE    VENDOR PRESET
+UNIT FILE                        STATE    PRESET 
 falco-bpf.service                disabled enabled
 falco-custom.service             disabled enabled
 falco-kmod-inject.service        static   enabled
@@ -262,16 +262,18 @@ Let's say you want to enable the modern eBPF probe:
 
 ```plain
 $ sudo systemctl enable falco-modern-bpf.service
-Created symlink /etc/systemd/system/multi-user.target.wants/falco-modern-bpf.service → /lib/systemd/system/falco-modern-bpf.service.
+Created symlink /etc/systemd/system/falco.service → /usr/lib/systemd/system/falco-modern-bpf.service.
+Created symlink /etc/systemd/system/multi-user.target.wants/falco-modern-bpf.service → /usr/lib/systemd/system/falco-modern-bpf.service.
 
 $ sudo systemctl list-unit-files "falco*"
 
-UNIT FILE                        STATE    VENDOR PRESET
+UNIT FILE                        STATE    PRESET 
 falco-bpf.service                disabled enabled
 falco-custom.service             disabled enabled
-falco-kmod-inject.service        static   enabled
+falco-kmod-inject.service        static   -      
 falco-kmod.service               disabled enabled
 falco-modern-bpf.service         enabled  enabled
+falco.service                    alias    -      
 falcoctl-artifact-follow.service disabled enabled
 ```
 
@@ -279,29 +281,33 @@ Or you'd like to switch to using the kernel module:
 
 ```plain
 $ sudo systemctl disable falco-modern-bpf.service
-Removed /etc/systemd/system/multi-user.target.wants/falco-modern-bpf.service.
+Removed "/etc/systemd/system/multi-user.target.wants/falco-modern-bpf.service".
+Removed "/etc/systemd/system/falco.service".
 
 $ sudo systemctl enable falco-kmod.service
-Created symlink /etc/systemd/system/falco.service → /lib/systemd/system/falco-kmod.service.
-Created symlink /etc/systemd/system/multi-user.target.wants/falco-kmod.service → /lib/systemd/system/falco-kmod.service.
+Created symlink /etc/systemd/system/falco.service → /usr/lib/systemd/system/falco-kmod.service.
+Created symlink /etc/systemd/system/multi-user.target.wants/falco-kmod.service → /usr/lib/systemd/system/falco-kmod.service.
 
 $ sudo systemctl list-unit-files "falco*"
 
-UNIT FILE                        STATE    VENDOR PRESET
+UNIT FILE                        STATE    PRESET 
 falco-bpf.service                disabled enabled
 falco-custom.service             disabled enabled
-falco-kmod-inject.service        static   enabled
+falco-kmod-inject.service        static   -      
 falco-kmod.service               enabled  enabled
 falco-modern-bpf.service         disabled enabled
-falco.service                    enabled  enabled
+falco.service                    alias    -      
 falcoctl-artifact-follow.service disabled enabled
 
 7 unit files listed.
 ```
 
+As you can see, enabling the `falco-kmod.service`, `falco-modern-bpf.service` or `falco-custom.service` also creates a
+new alias/service called `falco.service` that can be used in place of the aliased ones.
+
+
 {{% pageinfo color=info %}}
 
-Be aware that enabling the `falco-kmod.service` also creates a new alias/service called `falco.service` for compatibility reasons.
 
 {{% /pageinfo %}}
 
@@ -349,7 +355,7 @@ falcoctl-artifact-follow.service                  loaded active running   Falcoc
 ```
 
 * `falco-kmod-inject.service` injects the kernel module and exits. This unit remains after exit to detach the kernel module when the `falco-kmod.service` will be stopped.
-* `falco-kmod.service` instance of Falco running the kernel module. Since the kernel module is the default Falco driver, you can also use the `falco` alias to start/stop it once enabled.
+* `falco-kmod.service` instance of Falco running the kernel module.
 * `falcoctl-artifact-follow.service` instance of Falcoctl that searches for new rulesets. This unit will be stopped when `falco-kmod.service` terminates.
 
 The Falcoctl service is strictly related to the Falco one:
