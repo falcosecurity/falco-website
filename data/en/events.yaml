@@ -61,3 +61,19 @@
         - start: "2024-11-05T17:00:00+0000"
           end: "2024-11-05T18:00:00+0000"
           content: '<a href="https://community.cncf.io/events/details/cncf-cncf-online-programs-presents-cloud-native-live-managing-threat-intelligence-in-falco/" target="_blank">Cloud Native Live: Managing Threat Intelligence in Falco</a><br>Virtual<br>'          
+
+- title: "Falco Graduation Party at KubeCon North America 2024"
+  start: "2024-11-12T18:30:00-0600"
+  end: "2024-11-12T22:00:00-0600"
+  timezone: America/Denver
+  timezoneName: MDT
+  location: Salt Lake City, Utah
+  type: KubeCon North America
+  description: "Sponsored by: Sysdig, Google, and GitLab"
+  url: https://go.sysdig.com/handsonsecurity2024.html
+  schedule:
+    - start: "2024-11-12T18:30:00-0600"
+      time:
+        - start: "2024-11-12T18:30:00-0600"
+          end: "2024-11-12T22:00:00-0600"
+          content: '<a href="https://go.sysdig.com/handsonsecurity2024.html" target="_blank">Falco Graduation Party at KubeCon North America 2024</a><br>Salt Lake City, Utah<br>'
