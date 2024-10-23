@@ -45,3 +45,19 @@
         - start: "2023-12-12T09:00:00-0700"
           end: "2023-12-12T11:00:00-0700"
           content: '<a href="https://www.aicamp.ai/event/eventdetails/W2023121209" target="_blank">Guardians of the Cloud: A Hands on Journey into Cloud-Native Security</a><br>Virtual<br>'
+
+- title: "Cloud Native Live: Managing Threat Intelligence in Falco"
+  start: "2024-11-05T17:00:00+0000"
+  end: "2024-11-05T18:00:00+0000"
+  timezone: GMT
+  timezoneName: GMT
+  location: Virtual
+  type: webinar
+  description: "Cloud Native Live: Managing Threat Intelligence in Falco"
+  url: https://community.cncf.io/events/details/cncf-cncf-online-programs-presents-cloud-native-live-managing-threat-intelligence-in-falco/
+  schedule:
+    - start: "2024-11-05T17:00:00+0000"
+      time:
+        - start: "2024-11-05T17:00:00+0000"
+          end: "2024-11-05T18:00:00+0000"
+          content: '<a href="https://community.cncf.io/events/details/cncf-cncf-online-programs-presents-cloud-native-live-managing-threat-intelligence-in-falco/" target="_blank">Cloud Native Live: Managing Threat Intelligence in Falco</a><br>Virtual<br>'          
