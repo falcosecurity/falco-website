@@ -41,7 +41,7 @@ Since [bintray is sunsetting](https://jfrog.com/blog/into-the-sunset-bintray-jce
 
 We **already moved** the package repositories and **the previous Falco versions** (both development, starting from Falco 0.26.1 onward, and all the stable versions, starting with Falco 0.20.0).
 
-So you can start using the new package repositories just now! Here's a [step-by-step guide to upgrade](https://falco.org/docs/getting-started/upgrade) your Falco repository settings. 📄
+So you can start using the new package repositories just now! Here's a [step-by-step guide to upgrade](https://falco.org/docs/setup/packages/#upgrade) your Falco repository settings. 📄
 
 Do not use the [Falco Bintray repositories](https://dl.bintray.com/falcosecurity) anymore, please. ⚠️
 

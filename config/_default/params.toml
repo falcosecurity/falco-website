@@ -20,11 +20,6 @@ alt = "Booz Allen Hamilton"
 url = "https://www.boozallen.com/"
 
 [[adopters.end-users]]
-src = "coveo.png"
-alt = "Coveo"
-url = "https://www.coveo.com/en"
-
-[[adopters.end-users]]
 src = "frameio.png"
 alt = "Frame.io"
 url = "https://frame.io/"
@@ -206,9 +201,9 @@ courses = [
 [[training.contribution]]
 src = "sysdig.png"
 alt = "Falco 101 course by Sysdig"
-url = "https://learn.sysdig.com/path/falco"
+url = "https://sysdig.com/opensource/falco/"
 courses = [
-            ["Falco 101", "https://learn.sysdig.com/path/falco/falco-101", "All you need to learn to get started with Falco"], 
-            ["Falco Plugins", "https://learn.sysdig.com/path/falco/falco-plugins", "Extending Falco to secure your cloud services"], 
-            ["Detecting a Cryptomining Malware attack with Falco and Prometheus", "https://learn.sysdig.com/path/falco/detecting-a-crytomining-malware-attack-with-falco-and-prometheus", "Learn how to detect Cryptominers with Falco and Prometheus"]
+            ["Falco 101", "https://play.instruqt.com/sysdig/invite/yxodyyqszehc", "All you need to learn to get started with Falco"],
+            ["Falco Plugins", "https://play.instruqt.com/sysdig/invite/8ssx1yay5yi7", "Extending Falco to secure your cloud services"],
+            ["Detecting a Cryptomining Malware attack with Falco and Prometheus", "https://play.instruqt.com/sysdig/invite/qgym9z4uzqug", "Learn how to detect Cryptominers with Falco and Prometheus"]
         ]

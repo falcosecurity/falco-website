@@ -156,7 +156,7 @@ We now have the plugins and rules in our system. The last step is to configure F
 Modify your `/etc/yaml` to make it looks like the following (with the relevant values for `REGION`, `ACCOUNT_ID`, and `CLUSTER_NAME`): 
 
 ```yaml
-rules_file:
+rules_files:
   ...
   - /etc/k8s_audit_rules.yaml
 
@@ -212,7 +212,7 @@ serviceAccount:
     - eks.amazonaws.com/role-arn: {ROLE_ARN}
 
 falco:
-  rules_file:
+  rules_files:
     - /etc/falco/k8s_audit_rules.yaml
     - /etc/falco/rules.d
   plugins:
@@ -274,7 +274,7 @@ With EKS, we can use an OIDC provider and annotations on the service accounts to
 
 ```yaml
 falco:
-  rules_file:
+  rules_files:
     - /etc/falco/k8s_audit_rules.yaml
     - /etc/falco/rules.d
   plugins:

@@ -516,7 +516,7 @@ Before we fully apply those changes, instruct Falco to read this new file. Open 
 
 ```yaml
 ...
-rules_file:
+rules_files:
   - /etc/falco/falco_rules.yaml
   - /etc/falco/falco_rules.local.yaml
   - /etc/falco/custom_falco_rules.yaml <-- Add this line
@@ -817,7 +817,7 @@ To make `falco` use this file, we'd need to tell Falco where to find these new r
 ```yaml
 falco:
   ...
-  rules_file:
+  rules_files:
   - /etc/falco/falco_rules.yaml
   - /etc/falco/falco_rules.local.yaml
   - /etc/falco/custom_falco_rules.yaml   <-- Add this line

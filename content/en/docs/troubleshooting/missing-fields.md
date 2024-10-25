@@ -23,8 +23,8 @@ Furthermore, sometimes Linux may not operate exactly as expected. One concrete e
 Check the basics:
 
 - Is the container runtime socket correctly mounted? For Kubernetes, mount with the `HOST_ROOT` prefix: `/host/run/k3s/containerd/containerd.sock`. See [deploy-kubernetes](https://github.com/falcosecurity/deploy-kubernetes/tree/main/kubernetes) example template.
-- Is a custom path specified for the container runtime socket in Kubernetes? If yes, use the `--cri` command line option when running Falco. The default paths include: `/run/containerd/containerd.sock`, `/run/k3s/containerd/containerd.sock`, `/run/crio/crio.sock`.
-- To expedite lookups, attempt to disable asynchronous CRI API calls by using the `--disable-cri-async` command line option when running Falco.
+- Is a custom path specified for the container runtime socket in Kubernetes? If yes, use the `-o container_engines.cri.sockets[]=<socket_path>` command line option when running Falco. The default paths include: `/run/containerd/containerd.sock`, `/run/k3s/containerd/containerd.sock`, `/run/crio/crio.sock`.
+- To expedite lookups, attempt to disable asynchronous CRI API calls by using the `-o container_engines.cri.disable_async=true` command line option when running Falco.
 - If you run the upstream Falco rules containing the `%container.info` placeholder output field, run Falco with the `-pc` or `-pk` command line option to automatically include and resolve crucial container and Kubernetes-related output fields. For additional details, consult the [Outputs Formatting](/doc/outputs/formatting/) Guide, and consider adding more [Supported Output Fields](/docs/reference/rules/supported-fields/#field-class-container).
 - Falco monitors both host and container processes. If the `container.id` is set to `host`, it indicates that the process is running on the host, and therefore, no container image is associated with it.
 
@@ -60,7 +60,7 @@ Here is an example metrics log snippet highlighting the fields crucial for this 
 
 To complicate matters, some processes in Kubernetes run in the pod sandbox container, which has no container image in the API responses. In such cases, the `container.id` is the same as the `k8s.pod.sandbox_id`. If the container image is consistently missing throughout the lifetime of the container, it's likely a process in a pod sandbox container in the majority of the cases. However, sandbox containers likely constitute less than 1% of the distinct containers in your overall Falco logs. Note that this comparison will be fully supported by Falco 0.38 and is a work in progress. 
 
-Additionally, the improvement of the overall efficiency of the container engine, especially for the `--disable-cri-async` option, is also a work in progress. A more performant implementation is expected to be available by Falco 0.38. This improvement aims to address missing images observed by adopters and resolve most cases, leaving only some edge cases of race conditions where the lookup hasn't happened yet.
+Additionally, the improvement of the overall efficiency of the container engine, especially for the `-o container_engines.cri.disable_async=true` option, is also a work in progress. A more performant implementation is expected to be available by Falco 0.38. This improvement aims to address missing images observed by adopters and resolve most cases, leaving only some edge cases of race conditions where the lookup hasn't happened yet.
 
 ## Missing User Names
 

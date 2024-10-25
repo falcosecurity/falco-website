@@ -50,10 +50,41 @@ The [`proc` field class](/docs/rules/supported-fields/#field-class-process) give
 The documentation gives you an example of how to catch executions of `bash` within containers:
 
 ```
-if evt.type = execve and evt.dir = < and container.id != host and proc.name = bash
+evt.type = execve and evt.dir = < and container.id != host and proc.name = bash
 ```
 
 Note that you don't even have to look at the `execve` args. That is because once `execve` has returned the process context recorded by Falco is updated, meaning that the `proc.` fields will already refer to all information, including the command line, executable, arguments, related to the new process that was just spawned.
+
+## Transform operators
+
+Since Falco 0.38.0 you can perform basic transformation on fields in your rule condition. For instance, if you wish to check for a case insensitive process name you can write
+
+```
+tolower(proc.name) = bash
+```
+
+The following transform operators are supported:
+
+Operator | Description
+:--------|:-----------
+`tolower(<field>)` | Converts the input field to lower case
+`toupper(<field>)` | Converts the input field to upper case
+`b64(<field>)` | Decodes the input field from [Base64](https://en.wikipedia.org/wiki/Base64)
+`basename(<field>)` | Extracts the base name, i.e. the filename without directory, of the input field. Note that the behavior of `basename()` in Falco is slightly different from the Unix `basename` program. For instance, `basename(proc.exepath)` will evaluate to `"cat"` for `/usr/bin/cat` but will evaluate to an empty string (`""`) for `/usr/bin/`.
+
+## Field evaluation operator
+
+Since Falco 0.38.0 you can also compare field values with other field values by using the `val()` operator on the right hand side of the expression. For instance, in order to write a condition that checks for processes that have the same name as their parent you can write
+
+```
+proc.name = val(proc.pname)
+```
+
+Alternatively, using transformes on both sides of the comparison operator is also supported:
+
+```
+tolower(proc.name) = tolower(proc.pname)
+```
 
 ## Operators
 
@@ -71,3 +102,4 @@ Operators | Description
 `pmatch` | Compare a file path against a set of file or directory prefixes. Example: `fd.name pmatch (/tmp/hello)` will evaluate to true against `/tmp/hello`, `/tmp/hello/world` but not `/tmp/hello_world`.
 `exists` | Check if a field is set. Example: `k8s.pod.name exists`.
 `bcontains`, `bstartswith` | These operators work similarly to `contains` and `startswith` and allow performing byte matching against a raw string of bytes, accepting as input a hexadecimal string. Examples: `evt.buffer bcontains CAFEBABE`, `evt.buffer bstartswith 012AB3CC`.
+`regex` | Check if a string field matches a regular expression. Please note that the `regex` operator is considerably slower (up to an order of magnitude) than the above operators that work with strings, which are highly recommended for simple comparisons. The supported regex flavor is from the [Google RE2](https://github.com/google/re2/wiki/Syntax) library. Example: `fd.name regex '[a-z]*/proc/[0-9]+/cmdline'`.

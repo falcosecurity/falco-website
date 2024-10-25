@@ -9,7 +9,7 @@ archived_version: false
 # Used in the "version-banner" partial to display a version number for the
 # current doc set.
 
-version: v0.37.1
+version: v0.39.1
 
 # The version of the default rules set
 # Keep it aligned with the version of Falco for compatibility
@@ -19,11 +19,23 @@ rulesversion: 3.0.0
 # Used in the Releases menu, as well as in the Available Documentation Versions
 
 versions:
-  - fullversion: v0.37.1
-    version: v0.37
+  - fullversion: v0.39.1
+    version: v0.39
     githubbranch: master
     docsbranch: master
     url: https://falco.org/
+
+  - fullversion: v0.38.2
+    version: v0.38
+    githubbranch: 0.38.2
+    docsbranch: v0.38
+    url: https://v0-38.falco.org/
+
+  - fullversion: v0.37.1
+    version: v0.37
+    githubbranch: 0.37.1
+    docsbranch: v0.37
+    url: https://v0-37.falco.org/
 
   - fullversion: v0.36.2
     version: v0.36
