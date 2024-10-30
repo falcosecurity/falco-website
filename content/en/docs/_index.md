@@ -8,11 +8,11 @@ aliases:
 
 ## What is Falco?
 
-Falco is a cloud native runtime security tool for Linux operating systems. It is designed to detect and alert on abnormal behavior and potential security threats in real-time.
+Falco is a cloud native security tool that provides runtime security across hosts, containers, Kubernetes, and cloud environments. It is designed to detect and alert on abnormal behavior and potential security threats in real-time.
 
-At its core, Falco is a kernel monitoring and detection agent that observes events, such as syscalls, based on custom rules. Falco can enhance these events by integrating metadata from the container runtime and Kubernetes. The collected events can be analyzed off-host in SIEM or data lake systems.
+At its core, Falco is a monitoring and detection agent that observes events (such as [Linux kernel events](event-sources/kernel) and other data sources through [plugins](plugins)) and delivers real-time alerts based on custom rules. Falco also enhances these events by integrating contextual metadata from container runtimes and Kubernetes. The generated alert events can be forwarded to other components to take action or be analyzed in SIEM or data lake systems for further investigation.
 
-Falco, originally created by [Sysdig](https://sysdig.com), is now a [Cloud Native Computing Foundation](https://cncf.io) (CNCF) project used in production by various [organisations](https://github.com/falcosecurity/falco/blob/master/ADOPTERS.md).
+Falco, originally created by [Sysdig](https://sysdig.com), is now a graduate [Cloud Native Computing Foundation](https://cncf.io) (CNCF) project used in production by various [organisations](https://github.com/falcosecurity/falco/blob/master/ADOPTERS.md).
 
 
 ## What does Falco do?
@@ -70,9 +70,9 @@ Falco is composed of several main components:
 
  - Driver - is a software that adheres to the Falco driver specification and sends a stream of kernel events. Currently, Falco supports the following drivers:
 
-    - (Default) Kernel module
-    - Modern eBPF probe (CO-RE paradigm and more)
+    - (Default) Modern eBPF probe (CO-RE paradigm and more)
     - Legacy eBPF probe built
+    - Kernel module
 
     For more information, see [Falco Drivers](event-sources/drivers).
 
