@@ -41,7 +41,7 @@ By accessing the kernel's internal data structures and functions, the module can
 ## So why does Falco use eBPF?
 The integration of eBPF brings significant advantages to projects like Falco, empowering them to securely and efficiently monitor and analyze system calls in real-time. You might be wondering why eBPF is necessary when Falco already has real-time detection capabilities through its kprobe (kernel probe) that handles syscall events.
 
-One compelling reason for incorporating eBPF support is to enable Falco to seamlessly operate in modern cloud-native environments, where the traditional kernel probe may encounter limitations or face restrictions imposed by the control plane nodes.
+One compelling reason for incorporating eBPF support is to enable Falco to seamlessly operate in modern cloud native environments, where the traditional kernel probe may encounter limitations or face restrictions imposed by the control plane nodes.
 
 By embracing eBPF, Falco ensures the continuity of its real-time detection capabilities in a secure manner, allowing for the prompt and accurate identification of security incidents, regardless of the underlying environment.
 
@@ -270,7 +270,7 @@ Great, we were able to recover the process name as well as the PID!
 
 In conclusion, this article has provided a comprehensive overview of eBPF (extended Berkeley Packet Filter) and its significance in tracing system calls. We have explored the evolution from BPF to eBPF, discussed why Falco uses this technology, and delved into the process of working with eBPF programs and ring buffers for efficient data communication between the kernel and user-space applications.
 
-As we journeyed through the capabilities of eBPF in this first part, we uncovered its benefits in terms of safety, performance, and observability when compared to traditional kernel modules. eBPF empowers us to securely and efficiently monitor and analyze system calls in real-time, making it a valuable tool in modern cloud-native environments.
+As we journeyed through the capabilities of eBPF in this first part, we uncovered its benefits in terms of safety, performance, and observability when compared to traditional kernel modules. eBPF empowers us to securely and efficiently monitor and analyze system calls in real-time, making it a valuable tool in modern cloud native environments.
 
 In the upcoming second part of this blog series, we will further expand our exploration by delving into the realm of probes and additional advanced topics. We will dive deeper into how eBPF probes can be leveraged for enhanced system tracing, performance analysis, and security monitoring. Stay tuned for more insights and practical guidance on harnessing the power of eBPF.
 

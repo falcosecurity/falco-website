@@ -18,7 +18,7 @@ The inception of NIST 800-171 can be traced back to [Executive Order 13556](http
 
 In the wake of significant breaches in government systems, most notably the [2020 United States federal government data breach](https://en.wikipedia.org/wiki/2020_United_States_federal_government_data_breach) that involved the exploitation of U.S. supply chain firms such as Microsoft, SolarWinds, and VMware to gain unauthorized access to federal systems, has exemplified the importance of strong cybersecurity controls at the federal level.
 
-While delving into the extensive history of the NIST framework is beyond the scope of this article, we will focus on explaining the requirements of NIST 800-171 and explore how the open-source tool Falco can be utilized to detect potential control failures in cloud-native systems.
+While delving into the extensive history of the NIST framework is beyond the scope of this article, we will focus on explaining the requirements of NIST 800-171 and explore how the open source tool Falco can be utilized to detect potential control failures in cloud-native systems.
 
 
 ## Listing the Requirements

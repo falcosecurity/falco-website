@@ -39,7 +39,7 @@ The following are the key reasons that set SysFlow apart:
 
 The SysFlow format is supported by an [edge processing pipeline](https://github.com/sysflow-telemetry/sf-processor) that aggregates event provenance information and supports real-time enrichment of the telemetry stream with attack TTP labels, environment metadata, and Kubernetes log data.
 
-As a benefit of using the Sysflow format, users go from managing individual events generated from different sources to obtaining an enhanced dataset to work with, enabling them to focus on writing and sharing analytics on a scalable, common open-source platform.
+As a benefit of using the Sysflow format, users go from managing individual events generated from different sources to obtaining an enhanced dataset to work with, enabling them to focus on writing and sharing analytics on a scalable, common open source platform.
 
 The framework builds on [Falco libs](https://github.com/falcosecurity/libs) and the [Falco rules language](https://falco.org/docs/rules/) to create the plumbing required for system telemetry as shown in the diagram below.
 

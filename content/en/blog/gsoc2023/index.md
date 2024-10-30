@@ -10,7 +10,7 @@ images:
 
 Hello Folks!, my name is [Rohith](https://github.com/Rohith-Raju), and I am thrilled to share my experiences and reflections on the first week of the Google Summer of Code (GSoC) period. 
 
-This is an exhilarating time for participants like myself as we embark on our coding journey and dive into the world of open-source development.
+This is an exhilarating time for participants like myself as we embark on our coding journey and dive into the world of open source development.
 
 A huge thank you! to all the community members accepting me as one of them ❤️.
 

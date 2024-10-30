@@ -14,7 +14,7 @@ What sets this attack apart from others is its elevated level of sophistication.
 
 **Alignment of Falco and MITRE ATT&CK**
 
-This sophisticated attack underscores the imperative of aligning with MITRE ATT&CK principles for containers and the cloud. By embracing these principles, organizations can gain a better understanding of the intricate security challenges faced by cloud-native systems. The CNCF Falco project, with its extensive collection of preconfigured rules, offers a valuable resource for addressing the insecure behaviors associated with such attacks.
+This sophisticated attack underscores the imperative of aligning with MITRE ATT&CK principles for containers and the cloud. By embracing these principles, organizations can gain a better understanding of the intricate security challenges faced by cloud native systems. The CNCF Falco project, with its extensive collection of preconfigured rules, offers a valuable resource for addressing the insecure behaviors associated with such attacks.
 
 Falco's workload/host-based capabilities were recently added to the Tidal Cyber [Product Registry](https://app.tidalcyber.com/vendors). The community now has a greater ability to operationalize the rules while implementing threat-informed defense using Tidal Cyber's Community Edition, a freely-available platform that makes threat and adversary behavior research easy. A summary of the capabilities can be found [here](https://app.tidalcyber.com/products/b3a86cef-804b-5176-ba70-9570350f4e8f-Falco). A Technique Set summarizing & visualizing the ATT&CK-mapped SCARLETEEL techniques described here was also added to the Community Edition Community Spotlight [here](https://app.tidalcyber.com/share/be828b0d-2c95-4e30-b93b-f15de00a9606):
 

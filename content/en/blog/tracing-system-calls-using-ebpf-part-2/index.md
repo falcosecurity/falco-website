@@ -12,7 +12,7 @@ tags: ["eBPF", "Falco", "Syscalls", "Probes"]
 
 ## Introduction
 
-In [Tracing System Calls Using eBPF Part 1](https://falco.org/blog/tracing-syscalls-using-ebpf-part-1/), we lay the groundwork, introducing you to the fundamentals of `eBPF` and its predecessor, `BPF (Berkeley Packet Filter)`. We delve into the evolution of this technology, its safety, performance, and observability advantages over traditional kernel modules, and its pivotal role in securing modern cloud-native environments. We guide you through the intricate process of working with eBPF programs, from compilation to execution, highlighting its power in tracing system calls.
+In [Tracing System Calls Using eBPF Part 1](https://falco.org/blog/tracing-syscalls-using-ebpf-part-1/), we lay the groundwork, introducing you to the fundamentals of `eBPF` and its predecessor, `BPF (Berkeley Packet Filter)`. We delve into the evolution of this technology, its safety, performance, and observability advantages over traditional kernel modules, and its pivotal role in securing modern cloud native environments. We guide you through the intricate process of working with eBPF programs, from compilation to execution, highlighting its power in tracing system calls.
 
 In the second installment, `Tracing System Calls Using eBPF Part 2`, we elevate our understanding of eBPF's capabilities. We unravel the world of `Uprobes` and `Uretprobes`, demonstrating how these features empower developers to instrument and monitor user-space applications seamlessly. We then venture into `Kprobes` and `Kretprobes`, unlocking the potential to dynamically trace and debug kernel functions, offering insights into system behavior and performance analysis.
 
@@ -83,7 +83,7 @@ Here is a Makefile for compiling the eBPF program and the loader
 
 ## Conclusion
 
-In this two-part exploration of **Tracing System Calls Using eBPF**, we've embarked on a fascinating journey through the inner workings of this powerful technology. `Part 1` laid the foundation by introducing us to the fundamentals of eBPF and its predecessor, BPF, shedding light on their evolution and significance in modern cloud-native environments. We uncovered how eBPF's safety, performance, and observability advantages empower us to trace system calls with unmatched efficiency.
+In this two-part exploration of **Tracing System Calls Using eBPF**, we've embarked on a fascinating journey through the inner workings of this powerful technology. `Part 1` laid the foundation by introducing us to the fundamentals of eBPF and its predecessor, BPF, shedding light on their evolution and significance in modern cloud native environments. We uncovered how eBPF's safety, performance, and observability advantages empower us to trace system calls with unmatched efficiency.
 
 In `Part 2`, we took our understanding to new heights. We delved into the world of `Uprobes` and `Uretprobes`, showcasing how they enable seamless instrumentation and monitoring of user-space applications. We then ventured into `Kprobes` and `Kretprobes`, unlocking the ability to dynamically trace and debug kernel functions. Armed with these advanced techniques, we gained valuable insights into system behavior, performance analysis, and even the detection of potential malicious activity.
 

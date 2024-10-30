@@ -155,7 +155,7 @@ The following checks were performed on each of these signatures:
 [...]
 ```
 
-This is one of the main advantages of relying on widely adopted container artifacts signing technologies of the cloud-native world. Authentication of the artifacts is decoupled from the producer, and consumers can always choose the method they prefer.
+This is one of the main advantages of relying on widely adopted container artifacts signing technologies of the cloud native world. Authentication of the artifacts is decoupled from the producer, and consumers can always choose the method they prefer.
 
 ### Security Analysis
 
