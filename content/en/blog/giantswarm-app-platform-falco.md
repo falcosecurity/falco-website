@@ -14,7 +14,7 @@ In this article, you will learn how Giant Swarm simplifies the maintenance of th
 
 Having CoreOS, Fleet, and Docker as base technologies, [Giant Swarm](https://www.giantswarm.io/about) was founded in 2014. In 2016, it chose Kubernetes to reinvent itself. And just a year later, in 2017, it became part of the founding members of the [Kubernetes Certified Service Providers](https://linuxfoundation.org/press-release/cloud-native-computing-foundation-announces-first-kubernetes-certified-service-providers/). Customers like [Adidas](https://www.giantswarm.io/customers/adidas) or [Vodafone](https://www.giantswarm.io/customers/vodafone) backup a company that, supported by a [fully remote team](https://www.giantswarm.io/blog/surviving-and-thriving-how-to-really-work-emotely), has been able to foresee the trends of technology and working lifestyle.
 
-As a managed Kubernetes company, its services and infrastructure enable enterprises to run resilient distributed systems at scale while removing the burden of Day 2 operations. Giant Swarm takes pride in delivering a fully open-source platform that's carefully curated and opinionated.
+As a managed Kubernetes company, its services and infrastructure enable enterprises to run resilient distributed systems at scale while removing the burden of Day 2 operations. Giant Swarm takes pride in delivering a fully open source platform that's carefully curated and opinionated.
 
 
 #### Security and simplicity
@@ -407,7 +407,7 @@ _“I think Falco's superpower is in the flexibility of the policies. I'm also r
 
 #### Security Pack
 
-Giant Swarm's [Security Pack](https://docs.giantswarm.io/app-platform/apps/security/) is a collection of open-source security tools offered by Giant Swarm, which not only contains Falco but also a plethora of other open-source projects, including *Kyverno* for policy enforcement, *Trivy* for image scanning, and *Cosign* for image signature verification.
+Giant Swarm's [Security Pack](https://docs.giantswarm.io/app-platform/apps/security/) is a collection of open source security tools offered by Giant Swarm, which not only contains Falco but also a plethora of other open source projects, including *Kyverno* for policy enforcement, *Trivy* for image scanning, and *Cosign* for image signature verification.
 
 Security does not apply to a single level and, therefore, Security Pack consists of multiple applications, each one independently installable and configurable, available via their App Platform. _“Falco will be the cornerstone of our node-level security capabilities,”_ affirmed Stone, _“the biggest opportunity for API plug-ins I see is to get feedback from the node level back into the Security Pack so that we can further contextualize events in the ecosystem.”_
 

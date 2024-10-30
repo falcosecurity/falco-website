@@ -19,7 +19,7 @@ slug: community-survey-2023
 
 ---
 
-Diving into the Falco community survey, this report unveils the fascinating world of Falco adoption and usage. As an open-source cloud-native runtime security project, Falco has captured the attention of a diverse audience. This survey reached out to community members across various channels, including Slack, mailing lists, and social media platforms. 
+Diving into the Falco community survey, this report unveils the fascinating world of Falco adoption and usage. As an open source cloud-native runtime security project, Falco has captured the attention of a diverse audience. This survey reached out to community members across various channels, including Slack, mailing lists, and social media platforms. 
 
 Delving into various aspects of Falco adoption, this report uncovers insights on user roles, cloud providers, adoption motivations, deployment strategies, rule sets, challenges, and integrations. It also highlights areas that need improvement, like documentation and support, to enhance the overall experience for newcomers. These valuable insights will help guide the evolution of Falco, making it an even more robust and user-friendly cloud-native runtime security solution.
 
@@ -36,7 +36,7 @@ Of the 24 individuals who participated in the survey, 22 shared their profession
 
 ## Reasons for Adopting Falco
 
-Security threat detection tops the list as the driving force behind Falco adoption, followed closely by auditing and compliance. Sandbox testing and incident response are also cited as compelling reasons to embrace Falco. Notably, one participant isn't using Falco, while a couple of others leverage its libraries and policy language within their unique open-source projects. These findings highlight Falco's versatility in catering to diverse security requirements across numerous domains.
+Security threat detection tops the list as the driving force behind Falco adoption, followed closely by auditing and compliance. Sandbox testing and incident response are also cited as compelling reasons to embrace Falco. Notably, one participant isn't using Falco, while a couple of others leverage its libraries and policy language within their unique open source projects. These findings highlight Falco's versatility in catering to diverse security requirements across numerous domains.
 
 **2. Why are you adopting Falco?**
 
@@ -160,7 +160,7 @@ Other recommendations included a contributing guide and templates, end-to-end tu
 
 ## Community support
 
-The survey measured the quality of community support for Falco on a scale of 1-5, with an average rating of 4.2, indicating that the majority of respondents found it very helpful. This positive feedback reflects the strength of the Falco community's willingness to provide support to new members, highlighting the essential role of community support in the success of open-source projects. A small number of respondents rated Falco's community support as not helpful, with others rating it as somewhat helpful or neutral. Overall, the survey results suggest that the Falco community is a valuable resource for those seeking support and guidance.
+The survey measured the quality of community support for Falco on a scale of 1-5, with an average rating of 4.2, indicating that the majority of respondents found it very helpful. This positive feedback reflects the strength of the Falco community's willingness to provide support to new members, highlighting the essential role of community support in the success of open source projects. A small number of respondents rated Falco's community support as not helpful, with others rating it as somewhat helpful or neutral. Overall, the survey results suggest that the Falco community is a valuable resource for those seeking support and guidance.
 
 **11. On a scale of 1 - 5, how would you rate Falco’s community support?**
 

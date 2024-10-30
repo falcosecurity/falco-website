@@ -16,7 +16,7 @@ The landscape of cybersecurity attacks has witnessed a notable rise in sophistic
 
 The ATT&CK Framework serves as an extensive repository of documented tactics, techniques, and procedures (TTPs) commonly employed by cyber adversaries. By gaining a comprehensive understanding of these TTPs, organizations can enhance their defensive capabilities and fortify their cybersecurity posture.
 
-Falco is a valuable open-source tool that provides runtime security for containers, virtual machines, and standalone Linux hosts. Organizations use Falco to monitor, detect, identify, and respond to suspicious activity. Falco detects suspicious activities and alerts security teams in real-time based on static rules provided in the rules file.
+Falco is a valuable open source tool that provides runtime security for containers, virtual machines, and standalone Linux hosts. Organizations use Falco to monitor, detect, identify, and respond to suspicious activity. Falco detects suspicious activities and alerts security teams in real-time based on static rules provided in the rules file.
 
 Whether you are a security analyst, a DevOps engineer, or an avid container enthusiast, this blog offers invaluable insights on utilizing MITRE ATT&CK-focused Falco rules to bolster your environment against advanced adversarial attacks.
 
@@ -32,7 +32,7 @@ In order to detect malicious activities using static rules, Falco relies heavily
 
 ### Bring in Falco
 
-Falco uses a rule-based system to monitor application and container behavior in real-time. With predefined rules, Falco detects security threats like privilege escalation, file system manipulation, abnormal process execution, and many more. It continuously compares system activities against these rules, and either generates alerts or takes action when a match occurs. Since Falco is open-source, its flexibility allows customization of rules to fit an organization’s specific security requirements. By integrating with container orchestration platforms, Falco collects data from various sources and applies the rules in real-time, enabling proactive threat detection and prevention for cloud-native applications.
+Falco uses a rule-based system to monitor application and container behavior in real-time. With predefined rules, Falco detects security threats like privilege escalation, file system manipulation, abnormal process execution, and many more. It continuously compares system activities against these rules, and either generates alerts or takes action when a match occurs. Since Falco is open source, its flexibility allows customization of rules to fit an organization’s specific security requirements. By integrating with container orchestration platforms, Falco collects data from various sources and applies the rules in real-time, enabling proactive threat detection and prevention for cloud-native applications.
 
 It is important to note that Falco will not identify a type of attack or malware. Rather, its strength lies in efficiently detecting common malicious system behaviors. Falco acts as a notifier, bringing your attention to specific system activities that have occurred. Once alerted, it becomes your responsibility to investigate the activity and take the appropriate steps to mitigate and prevent further malicious activities.
 

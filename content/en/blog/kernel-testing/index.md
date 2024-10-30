@@ -33,7 +33,7 @@ With these objectives in mind, our approach should fulfill the following require
 
 #### Ignite a Firecracker microVM
 
-[Weave Ignite](https://https://github.com/weaveworks/ignite) is used to provision the [firecracker](https://github.com/firecracker-microvm/firecracker) microVMs. Weave Ignite is an open-source tool designed for lightweight and fast virtual machine management. It enables users to effortlessly create and manage virtual machines (VMs) for various purposes, such as development, testing, and experimentation. 
+[Weave Ignite](https://https://github.com/weaveworks/ignite) is used to provision the [firecracker](https://github.com/firecracker-microvm/firecracker) microVMs. Weave Ignite is an open source tool designed for lightweight and fast virtual machine management. It enables users to effortlessly create and manage virtual machines (VMs) for various purposes, such as development, testing, and experimentation. 
 One of the main reasons why we chose to use this tool was its capability to create firecracker microVMs from kernels and rootfs packed as OCI images.
 Currently, we are using a patched version located at [a forked repository](https://github.com/therealbobo/ignite). These patches were essential to enable the booting of kernels that necessitated the use of an initrd (initial ramdisk).
 

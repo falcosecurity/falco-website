@@ -1,30 +1,30 @@
 - title: Cloud Native
   description: Falco detects threats across containers, Kubernetes, hosts and cloud services.
   icon: /icons/cloud-fill.svg
-  features: 
-  -  Uses eBPF to monitor system activity for adverse behavior.
-  -  Integrated with Kubernetes.
-  -  Use plugins to monitor cloud services such as GitHub, Okta, or AWS Cloudtrail.
+  features:
+    - Uses eBPF to monitor system activity for adverse behavior.
+    - Integrated with Kubernetes.
+    - Use plugins to monitor cloud services such as GitHub, Okta, or AWS Cloudtrail.
 - title: Real Time Detection
   description: Falco provides streaming detection of unexpected behavior, configuration changes, and attacks.
   icon: /icons/shield-fill.svg
-  features: 
-  - Runtime detection is a fundamental layer of defense against security blind spots and zero-day bugs in your software supply chain.
-  - Streaming approach enables real-time response while minimizing storage costs and complexity.
-  - Ready out-of-the-box with rules, which you can customize for your environment.
+  features:
+    - Runtime detection is a fundamental layer of defense against security blind spots and zero-day bugs in your software supply chain.
+    - Streaming approach enables real-time response while minimizing storage costs and complexity.
+    - Ready out-of-the-box with rules, which you can customize for your environment.
 - title: Integration with 50+ Systems
   description: "[Forward Falco alerts](/docs/outputs/forwarding/) to any off-host SIEM and data lake system for analysis, storage, or reaction."
   icon: /icons/arrow-right.svg
-  features: 
-  - Falco alerts can easily be forwarded to more than 50+ third parties.
-  - The JSON format for alerts allows for storing, analysis, or triggering reactions easily.
+  features:
+    - Falco alerts can easily be forwarded to more than 50+ third parties.
+    - The JSON format for alerts allows for storing, analysis, or triggering reactions easily.
 - title: Open Source
   description: A multi-vendor and widely adopted solution that you can rely on.
   icon: /icons/pentagon-fill.svg
-  features: 
-  - Created cloud-native in the same community as Kubernetes, Prometheus, and OPA.
-  - Powered by eBPF technology.
-  - Runs on x64 & ARM CPUs.
-  - Deployable in Kubernetes with an official Helm chart.
-  - Run on many platforms like GKE, EKS, AKS, gVisor and others.
-  - Zero cost to start, and easy to audit, extend, and integrate.
+  features:
+    - Created cloud native in the same community as Kubernetes, Prometheus, and OPA.
+    - Powered by eBPF technology.
+    - Runs on x64 & ARM CPUs.
+    - Deployable in Kubernetes with an official Helm chart.
+    - Run on many platforms like GKE, EKS, AKS, gVisor and others.
+    - Zero cost to start, and easy to audit, extend, and integrate.

@@ -22,7 +22,7 @@ For security, there is no tool that can do everything. So, we have different lay
 
 ### Falco
 
-From many different sources I heard about the open-source project <a href="https://falco.org" target="_blank">Falco</a>. Falco describes itself as the *de facto Kubernetes threat detection engine.* It uses system calls, kernel events, and additional sources like Kubernetes Audit Events to monitor the runtime behavior of an entire cluster on different levels like sensitive access on nodes or single containers. It uses YAML files to define its detection rules. So, we don't have to learn any additional configuration language. Falco ships with a large set of predefined rules, provided by and maintained by the open-source community, which covers a large part of our needs. Beyond our requirement furthermore, it brings support for detecting scenarios like insecure use of configmaps for credentials.
+From many different sources I heard about the open source project <a href="https://falco.org" target="_blank">Falco</a>. Falco describes itself as the *de facto Kubernetes threat detection engine.* It uses system calls, kernel events, and additional sources like Kubernetes Audit Events to monitor the runtime behavior of an entire cluster on different levels like sensitive access on nodes or single containers. It uses YAML files to define its detection rules. So, we don't have to learn any additional configuration language. Falco ships with a large set of predefined rules, provided by and maintained by the open source community, which covers a large part of our needs. Beyond our requirement furthermore, it brings support for detecting scenarios like insecure use of configmaps for credentials.
 
 ### Decisions
 
