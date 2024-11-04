@@ -11,7 +11,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-9">
-        <h2>Learn how to use Falco</h2>
+        <h2>Training courses</h2>
         <p>Learn Falco by using these self-paced online resources. For in-person training, check out the <a
           href="/community/events/">Events page</a>.</p>
       </div>
@@ -21,14 +21,13 @@
 
 <section class="row td-box td-box--transparent">
   <div class="container">
-    <h3 class="mb-5">Courses</h3>
     {{- range $provider,$provider_data := $providers }}
       {{ $logo := print "/images/training/providers/" .logo | relURL }}
       <div class="d-flex align-items-center">
-        <h4 class="text-dark mb-0">Courtesy of</h4>
+        <h3 class="text-dark mb-0">Courtesy of</h3>
         <img width="97px" class="ml-3" src="{{ $logo }}" alt="{{ .alt }}">
       </div>
-      <div class="row">
+      <div class="row mb-5">
         {{ $provider_offerings := where $courses "provider.name" $provider }}
           {{ range $offering, $offering_data := sort $provider_offerings "provider.order" }}
           {{ $thumbnail := print "/images/training/offerings/" .thumbnail | relURL }}
