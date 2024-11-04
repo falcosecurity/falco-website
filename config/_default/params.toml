@@ -1,6 +1,6 @@
 # This file contains the list of:
 #   1. Adopters (visible in https://falco.org/)
-#   2. Training providers (visible in https://falco.org/training)
+#   2. Training providers (visible in https://falco.org/enterprise)
 #
 # You can add a new entry specifying the next fields: `src`, `alt` and `url`.
 # More metadata is available for training courses (see below).
