@@ -259,10 +259,10 @@ id = "UA-00000000-0"
     [menu.main.params]
         description = "Brand guidelines"
 [[menu.main]]
-    identifier = "training"
-    name = "Training"
+    identifier = "enterprise"
+    name = "Enterprise"
     weight = 70
-    url = "/training/"
+    url = "/enterprise/"
 
 # Specify a value here if your content directory is not in your repo's root directory
 #github_subdir = "userguide"

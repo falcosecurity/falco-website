@@ -1,5 +1,5 @@
 # How to add new training
-Please follow these steps to add your training to [Falco trainings](https://falco.org/training/):
+Please follow these steps to add your training to [Falco trainings](https://falco.org/enterprise/):
 1. Fork [Falco](https://github.com/falcosecurity/falco-website) repository
 2. Add your training image to
    the [static/images/training/offerings](https://github.com/falcosecurity/falco-website/blob/master/static/images/training/offerings)
