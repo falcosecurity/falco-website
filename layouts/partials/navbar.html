@@ -68,16 +68,6 @@
         <a class="dropdown-item my-2" href="{{ .URL | relLangURL}}">
           <h4 class="font-weight-bold">{{ .Name }}</h4>
         </a>
-        {{ if .HasChildren }}
-          {{ range .Children }}
-            <a class="dropdown-item" href="{{ .URL | relLangURL}}">
-              <div class="font-weight-bold">{{ .Name }}</div>
-              {{ with .Params.description }}
-              <div class="small text-dark text-wrap">{{ safeHTML . }}</div>
-              {{ end }}
-            </a>
-          {{ end }}
-        {{ end }}
       {{ end }}
     </div>
   </div>
