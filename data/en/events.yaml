@@ -93,3 +93,19 @@
         - start: "2024-12-05T08:00:00+0000"
           end: "2024-12-06T08:00:00+0000"
           content: '<a href="https://community.cncf.io/events/details/cncf-cncf-online-programs-presents-cncf-on-demand-webinar-introduction-to-falco-talon/" target="_blank">CNCF On-Demand Webinar: Introduction to Falco Talon</a><br>Virtual<br>'          
+
+- title: "Kraken Discovery Lab"
+  start: "2024-11-26T10:00:00+0000"
+  end: "2024-11-26T11:00:00+0000"
+  timezone: GMT
+  timezoneName: GMT
+  location: Virtual
+  type: hands-on workshop
+  description: "Attendees will learn how to leverage Falco to craft detection rules that extend MITRE ATT&CK coverage"
+  url: https://go.sysdig.com/kraken-discovery-labs-falco
+  schedule:
+    - start: "2024-11-26T10:00:00+0000"
+      time:
+        - start: "2024-11-26T10:00:00+0000"
+          end: "2024-11-26T11:00:00+0000"
+          content: '<a href="https://go.sysdig.com/kraken-discovery-labs-falco" target="_blank">Kraken Discovery Lab: Introduction to Falco Rules Management</a><br>Virtual<br>'   
