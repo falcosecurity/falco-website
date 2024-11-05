@@ -22,6 +22,20 @@
   }
 }
 
+// The outer page container for the default base template.
+.td-default {
+  main {
+      > section:first-of-type {
+          @include media-breakpoint-up(md) {
+              padding-top: 8rem;
+          }
+          @include media-breakpoint-down(md) {
+              padding-top: 5rem;
+          }
+      }
+  }
+}
+
 .text-small {
   font-size: 0.75rem;
 }
