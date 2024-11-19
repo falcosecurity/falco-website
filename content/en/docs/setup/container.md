@@ -166,8 +166,8 @@ For the {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} driver, 
         --cap-add sys_ptrace \
         -v /var/run/docker.sock:/host/var/run/docker.sock \
         -v /root/.falco:/root/.falco \
-        -v /etc:/host/etc \
         -v /proc:/host/proc:ro \
+        -v /etc:/host/etc \
         falcosecurity/falco:latest falco -o engine.kind=ebpf
 
     # If running a kernel version < 4.14, add '-v /sys/kernel/debug:/sys/kernel/debug:ro \' to the above Docker command.
@@ -222,10 +222,10 @@ docker pull falcosecurity/falco-driver-loader:latest
 docker run --rm -it \
     --privileged \
     -v /root/.falco:/root/.falco \
-    -v /proc:/host/proc:ro \
     -v /boot:/host/boot:ro \
     -v /lib/modules:/host/lib/modules \
     -v /usr:/host/usr:ro \
+    -v /proc:/host/proc:ro \
     -v /etc:/host/etc:ro \
     falcosecurity/falco-driver-loader:latest kmod
 ```
@@ -239,10 +239,10 @@ docker pull falcosecurity/falco-driver-loader:latest
 docker run --rm -it \
     --privileged \
     -v /root/.falco:/root/.falco \
-    -v /proc:/host/proc:ro \
     -v /boot:/host/boot:ro \
     -v /lib/modules:/host/lib/modules:ro \
     -v /usr:/host/usr:ro \
+    -v /proc:/host/proc:ro \
     -v /etc:/host/etc:ro \
     falcosecurity/falco-driver-loader:latest ebpf
 ```
