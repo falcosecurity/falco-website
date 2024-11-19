@@ -76,8 +76,8 @@ For the {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} driver, 
     docker run --rm -it \
         --privileged \
         -v /var/run/docker.sock:/host/var/run/docker.sock \
+        -v /root/.falco:/root/.falco \
         -v /proc:/host/proc:ro \
-        -v /boot:/host/boot:ro \
         -v /etc:/host/etc:ro \
         falcosecurity/falco:latest falco -o engine.kind=ebpf
 
