@@ -391,16 +391,15 @@ The easiest way, for now, to deploy `Falco Talon` is to use the Helm chart inclu
 ### with Helm
 
 {{% pageinfo color="info" %}}
-The chart is not available yet on https://artifacthub.io/, it will happen in the next weeks.
+Since version 0.2.0, chart has been moved under the official [`falcosecurity/charts repository`](https://github.com/falcosecurity/charts)
 {{% /pageinfo %}}
 
 The procedure to install the `v0.1.0` of `Falco Talon` is:
 
 ```shell
-git clone https://github.com/falco-talon/falco-talon.git
-git checkout v0.1.0
-cd deployment/helm
-helm upgrade -i falco-talon -n falco --create-namespace . -f values.yaml
+helm repo add falcosecurity https://falcosecurity.github.io/charts
+helm repo update falcosecurity
+helm upgrade --install falco-talon falcosecurity/falco-talon
 ```
 
 ## Shoutout
