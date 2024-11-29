@@ -42,12 +42,14 @@ The tables below provide quick pull commands for Falco container images hosted a
 
 |tag | pull command | description |
 |----|----------|-----------------|
-|[latest](https://hub.docker.com/r/falcosecurity/falco-no-driver/tags)| `docker pull falcosecurity/falco-no-driver:latest` | The most recent version |
-|[*version*](https://hub.docker.com/r/falcosecurity/falco-no-driver/tags)| `docker pull falcosecurity/falco-no-driver:<version>` | A specific version of Falco such as `{{< latest >}}` |
-|[latest](https://hub.docker.com/r/falcosecurity/falco-driver-loader/tags)| `docker pull falcosecurity/falco-driver-loader:latest` | The most recent version of `falco-driver-loader` with the building toolchain |
-|[*version*](https://hub.docker.com/r/falcosecurity/falco-driver-loader/tags)| `docker pull falcosecurity/falco-driver-loader:<version>` | A specific version of `falco-driver-loader` such as `{{< latest >}}` with the building toolchain |
-|[latest](https://hub.docker.com/r/falcosecurity/falco/tags)| `docker pull falcosecurity/falco:latest` | The most recent version with the `falcoctl driver` tool included |
-|[*version*](https://hub.docker.com/r/falcosecurity/falco/tags)| `docker pull falcosecurity/falco:<version>` | A specific version of Falco such as `{{< latest >}}` with `falcoctl driver` tool included |
+|[latest](https://hub.docker.com/r/falcosecurity/falco/tags)| `docker pull falcosecurity/falco:latest` | Distroless image with the latest released of Falco. No tools are included in the image. |
+|[*version*](https://hub.docker.com/r/falcosecurity/falco/tags)| `docker pull falcosecurity/falco:<version>` | Distroless image with a specific version of Falco such as `{{< latest >}}`. No tools are included in the image. |
+|[latest-debian](https://hub.docker.com/r/falcosecurity/falco/tags)| `docker pull falcosecurity/falco:latest-debian` | Debian-based image with the latest released of Falco. Available since Falco 0.40. |
+|[*version*-debian](https://hub.docker.com/r/falcosecurity/falco/tags)| `docker pull falcosecurity/falco:<version>-debian` | Debian-based image with a specific version of Falco such as `{{< latest >}}`. Available since Falco 0.40. |
+|[latest](https://hub.docker.com/r/falcosecurity/falco-driver-loader/tags)| `docker pull falcosecurity/falco-driver-loader:latest` | Debian-based image with the most recent Falco driver loader and the building toolchain. |
+|[*version*](https://hub.docker.com/r/falcosecurity/falco-driver-loader/tags)| `docker pull falcosecurity/falco-driver-loader:<version>` | Debian-based image with specific version of `falco-driver-loader` such as `{{< latest >}}` and the building toolchain. |
+|[latest-buster](https://hub.docker.com/r/falcosecurity/falco-driver-loader/tags)| `docker pull falcosecurity/falco-driver-loader:latest` | Same as `falco-driver-loader:latest` but based on Debian `buster`. Available since Falco 0.40. |
+|[*version*-buster](https://hub.docker.com/r/falcosecurity/falco-driver-loader/tags)| `docker pull falcosecurity/falco-driver-loader:<version>` | Same as `falco-driver-loader:<version>` but based on Debian `buster`. Available since Falco 0.40. |
 
 ### Rules {#rules}
 
