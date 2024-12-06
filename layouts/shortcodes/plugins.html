@@ -1,4 +1,4 @@
-{{- $regitry_url := (.Get 0) -}}
+{{- $regitry_url := printf "%s?v=%d" (.Get 0) now.Unix -}}
 {{- $dataYAML := resources.GetRemote $regitry_url -}}
 {{- $content := $dataYAML.Content | replaceRE `#.*\n` "" | transform.Unmarshal }}
 
@@ -10,7 +10,7 @@
         color: #fff;
         padding: 4px 5px;
         border-radius: 5px;
-    }    
+    }
 </style>
 
 <div class="table">
@@ -27,8 +27,15 @@
         <th scope="col">Licence</th>
     </thead>
     {{- range $content.plugins }}
+        {{ if and (ne .capabilities.sourcing.id 999) (ne .name "plugin-id-zero-value") }}
         <tr>
-            <td> {{ if .capabilities.sourcing.id }} {{ .capabilities.sourcing.id }} {{ end }} </td>
+            <td> 
+                {{ if .capabilities.sourcing.id }}
+                    {{ .capabilities.sourcing.id }} 
+                {{ else  }}
+                    -
+                {{ end }} 
+            </td>
             <td> <b>{{ .name }}</b> </td>
             <td> {{ if eq .capabilities.sourcing.supported true }} sourcing {{ else }} extraction {{ end }} </td>
             <td> {{ if .capabilities.sourcing.source }} <span class="source"> {{ .capabilities.sourcing.source }} {{ end }} </span> </td>
@@ -38,6 +45,7 @@
             <td> {{ if .rules_url }} <a href="{{ .rules_url }}">{{ emojify ":link:" }} {{ end }} </td> 
             <td> {{ .license }} </td>
         </tr>
+        {{ end }}
     {{- end -}}
 </table>
 </div>

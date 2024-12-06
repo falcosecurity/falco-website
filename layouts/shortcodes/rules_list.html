@@ -1,7 +1,7 @@
-{{- $stableURL :=  printf "https://raw.githubusercontent.com/falcosecurity/rules/falco-rules-%s/rules/falco_rules.yaml" .Site.Params.rulesversion -}}
-{{- $sandboxURL :=  printf "https://raw.githubusercontent.com/falcosecurity/rules/falco-rules-%s/rules/falco-sandbox_rules.yaml" .Site.Params.rulesversion -}}
-{{- $incubatingURL :=  printf "https://raw.githubusercontent.com/falcosecurity/rules/falco-rules-%s/rules/falco-incubating_rules.yaml" .Site.Params.rulesversion -}}
-{{- $deprecatedURL :=  printf "https://raw.githubusercontent.com/falcosecurity/rules/falco-rules-%s/rules/falco-deprecated_rules.yaml" .Site.Params.rulesversion -}}
+{{- $stableURL :=  printf "https://raw.githubusercontent.com/falcosecurity/rules/falco-rules-%s/rules/falco_rules.yaml" .Site.Params.rulesStableVersion -}}
+{{- $sandboxURL :=  printf "https://raw.githubusercontent.com/falcosecurity/rules/falco-sandbox-rules-%s/rules/falco-sandbox_rules.yaml" .Site.Params.rulesSandboxVersion -}}
+{{- $incubatingURL :=  printf "https://raw.githubusercontent.com/falcosecurity/rules/falco-incubating-rules-%s/rules/falco-incubating_rules.yaml" .Site.Params.rulesIncubatingVersion -}}
+{{- $deprecatedURL :=  printf "https://raw.githubusercontent.com/falcosecurity/rules/falco-deprecated-rules-%s/rules/falco-deprecated_rules.yaml" .Site.Params.rulesDeprecatedVersion -}}
 
 {{- $maturities := (dict "deprecated" $deprecatedURL "incubating" $incubatingURL "sandbox" $sandboxURL "stable" $stableURL) }}
 
