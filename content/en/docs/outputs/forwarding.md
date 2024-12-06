@@ -39,6 +39,7 @@ The available outputs in Falcosidekick are:
 - [**Rocketchat**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/rocketchat.md)
 - [**Mattermost**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/mattermost.md)
 - [**Teams**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/teams.md)
+- [**Webex**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/webex.md)
 - [**Discord**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/discord.md)
 - [**Google Chat**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/googlechat.md)
 - [**Zoho Cliq**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/cliq.md)
@@ -55,6 +56,7 @@ The available outputs in Falcosidekick are:
 - [**Spyderbat**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/spyderbat.md)
 - [**TimescaleDB**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/timescaledb.md)
 - [**Dynatrace**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/dynatrace.md)
+- [**OTEL Metrics**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/otlp_metrics.md) (for both events and monitoring of `falcosidekick`)
 
 *Alerting*
 
@@ -74,6 +76,7 @@ The available outputs in Falcosidekick are:
 - [**OpenObserve**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/openobserve.md)
 - [**SumoLogic**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/sumologic.md)
 - [**Quickwit**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/quickwit.md)
+- [**Datadog Logs**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/datadog_logs.md)
 
 *Object Storage*
 
@@ -135,6 +138,7 @@ The available outputs in Falcosidekick are:
 - [**OTEL Traces**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/otlp_traces.md)
 
 *Response engine*
+
 - [**Falco Talon**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/talon.md)
 
 *Other*
