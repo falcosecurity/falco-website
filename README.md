@@ -14,7 +14,7 @@ In order to contribute a logo you must meet one of the following adopter types.
 
 Then open a pull request to this repository that contains:
 
- - A `.png` or `.svg` file in [clients](https://github.com/falcosecurity/falco-website/tree/master/static/img/adopters)
+ - A `.png` or `.svg` file in [clients](https://github.com/falcosecurity/falco-website/tree/main/static/img/adopters)
  - A change to [params.toml](https://github.com/falcosecurity/falco-website/blob/master/config/_default/params.toml) that includes your logo alphabetically. Detailed instructions to add new adopters or training providers are included into the specified Hugo config file.
  - Links and references to demonstrate you meet the criteria above.
 
