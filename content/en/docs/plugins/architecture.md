@@ -21,7 +21,7 @@ The libraries will do everything possible to validate the data coming from the p
 
 ### Plugin SDKs
 
-To make it easier to write plugins, there are [Go](https://github.com/falcosecurity/plugin-sdk-go) and [C++](https://github.com/falcosecurity/plugin-sdk-cpp) SDKs that handle the details of memory management and type conversion. These SDKs provide a streamlined way to implement plugins without having to deal with all the details of the lower-level functions that make up the Plugin API.
+To make it easier to write plugins, there are [Go](https://github.com/falcosecurity/plugin-sdk-go), [C++](https://github.com/falcosecurity/plugin-sdk-cpp), and [Rust](https://github.com/falcosecurity/plugin-sdk-rs) SDKs that handle the details of memory management and type conversion. These SDKs provide a streamlined way to implement plugins without having to deal with all the details of the lower-level functions that make up the Plugin API.
 
 These SDKs are optional, but using them is highly recommended.
 
