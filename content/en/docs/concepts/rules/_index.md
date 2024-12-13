@@ -1,8 +1,10 @@
 ---
 title: Falco Rules
-linktitle: Falco Rules
+linktitle: Rules
 description: Write and customize Falco Rules to secure your environment
-weight: 31
+weight: 20
+aliases:
+- ../rules
 ---
 
 A Falco *rules file* is a [YAML](https://www.yaml.org/) file containing mainly three types of elements:

@@ -3,6 +3,8 @@ title: Adoption of Falco Rules in Production
 description: How to adopt Falco rules in real-life production
 linktitle: Adoption of Falco Rules in Production
 weight: 100
+aliases:
+- ../rules/adoption-rules
 ---
 
 
