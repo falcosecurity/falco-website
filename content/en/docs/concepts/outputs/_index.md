@@ -1,7 +1,7 @@
 ---
 title: Falco Outputs
 description: Work with Falco Outputs and send Falco Alerts in your desired platform
-linktitle: Falco Outputs
+linktitle: Outputs
 aliases:
 - ../alerts
 - ../outputs

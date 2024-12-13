@@ -1,7 +1,7 @@
 ---
-title: Forwarding Alerts
+title: Alerts Forwarding
 description: Forward Falco Alerts to third parties with Falcosidekick
-linktitle: Forwarding Alerts
+linktitle: Forwarding
 weight: 30
 aliases:
 - ../../alerts/forwarding
