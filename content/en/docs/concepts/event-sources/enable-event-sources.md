@@ -3,6 +3,8 @@ title: Enabling Event Sources
 description: Control the input of Falco enabling and disabling Event Sources
 linktitle: Enabling Event Sources
 weight: 10
+aliases:
+- ../event-sources/enable-event-sources
 ---
 
 Historically, Falco supported consuming events coming from one event source only. This means that to consume events from more than one event source, users needed to deploy many instances of Falco, each configured with a different source. 
