@@ -1,7 +1,7 @@
 ---
-title: Formatting
-description: Format Falco Alerts for Containers and Kubernetes
-linktitle: Output Formatting
+title: Alters Formatting
+description: Learn how to format and customize Falco Alerts
+linktitle: Formatting
 aliases:
 - ../../alerts/formatting
 - ../../outputs/formatting
