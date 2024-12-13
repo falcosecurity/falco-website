@@ -14,7 +14,6 @@ Adding the same output field to multiple rules by editing the rule files manuall
 
 * Using the `append_output` configuration option in `falco.yaml` to add output text or fields to a subset of loaded rules
 * Adding an override to a specific rule to replace its output
-* Using the `-p` CLI switches
 
 ## Appending extra output and fields with `append_output`
 
@@ -58,14 +57,6 @@ Note that the `append_output` option allows to add output to a rule but not to r
   override: 
     output: replace
 ```
-
-## Using the `-p` CLI switches
-
-Falco supports event decoration for associated [Container](https://falco.org/docs/reference/rules/supported-fields/#field-class-container) and [Kubernetes](https://falco.org/docs/reference/rules/supported-fields/#field-class-k8s) metadata using a special placeholder field  (`%container.info`) in a rule's output section.
-
-To take advantage of event decoration, you need to run Falco with either the `-pk` or `-pc` command-line option.
-
-Falco also provides a `-p` flag that lets you define additional custom output fields to be included in each rule. Please note that `-p something` is effectively the same as `-o 'append_output[]={"extra_output": "something"}'` and will be evaluated last.
 
 ## Example Rule
 
