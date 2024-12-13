@@ -3,6 +3,8 @@ title: Plugin Events
 description: 'Events related to the Plugin system.'
 linktitle: Plugin Events
 weight: 20
+aliases:
+- ../../event-sources/plugins
 ---
 
 Since the introduction of the [Plugin System](/docs/plugins), additional event sources can serve as input for Falco. Those event sources are provided by plugins implementing the [event sourcing capability](/docs/reference/plugins/plugin-api-reference/#event-sourcing-capability-api). 
