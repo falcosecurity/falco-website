@@ -1,9 +1,10 @@
 ---
-title: Output Channels
+title: Channels
 description: Supported output channels for Falco Alerts
 linktitle: Output Channels
 aliases:
-- ../alerts/channels
+- ../../alerts/channels
+- ../../outputs/channels
 weight: 10
 ---
 
