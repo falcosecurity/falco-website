@@ -3,6 +3,8 @@ title: Controlling Rules
 description: Disable default rules or use tags to load Falco Rules selectively
 linktitle: Controlling Rules
 weight: 80
+aliases:
+- ../rules/controlling-rules
 ---
 
 ## Disable Default Rules

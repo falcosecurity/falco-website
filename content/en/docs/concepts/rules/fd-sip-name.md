@@ -3,6 +3,8 @@ title: Resolving Domain Names in Falco Rules
 description: How fd.sip.name and related fields work
 linktitle: Resolving Domain Names
 weight: 100
+aliases:
+- ../rules/fd-sip-name
 ---
 
 ## Introduction

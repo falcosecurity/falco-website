@@ -3,6 +3,8 @@ title: Escaping Special Characters
 description: Escape special characters in your Falco Rules
 linktitle: Escaping Special Characters
 weight: 90
+aliases:
+- ../rules/special-characters
 ---
 
 In some cases, rules may need to contain special characters like `(`, spaces, etc. For example, you may need to look for a `proc.name` of `(systemd)`, including the surrounding parentheses.

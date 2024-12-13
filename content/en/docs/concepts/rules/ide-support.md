@@ -3,6 +3,8 @@ title: IDE Support
 description: IDE Support for Falco Rules Files
 linktitle: IDE Support
 weight: 250
+aliases:
+- ../rules/ide-support
 ---
 
 For some Integrated Development Environment (IDE) Editors, there is support for falco rules files that allow for on-the-fly syntax checking and validation of rules content.

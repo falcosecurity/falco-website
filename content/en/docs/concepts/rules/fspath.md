@@ -3,6 +3,8 @@ title: Accessing File System Paths in Falco Rules
 description: How fs.path.* fields work
 linktitle: Accessing File System Paths
 weight: 100
+aliases:
+- ../rules/fspath
 ---
 
 ## Introduction

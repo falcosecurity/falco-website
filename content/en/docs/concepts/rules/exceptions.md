@@ -3,6 +3,8 @@ title: Rule Exceptions
 description: Add exceptions to Falco Rules to adapt them to your environment
 linktitle: Rule Exceptions
 weight: 70
+aliases:
+- ../rules/exceptions
 ---
 
 ## Introduction

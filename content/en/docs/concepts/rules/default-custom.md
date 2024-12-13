@@ -3,6 +3,8 @@ title: Default and Local Rules Files
 description: Falco provides default rules, but you can add your own
 linktitle: Default and Local Rules
 weight: 20
+aliases:
+- ../rules/default-custom
 ---
 
 Falco comes with a default rules file that is loaded if no specific configuration is provided. However, that can be completely customized in several ways, depending on how Falco is installed. There are several ways to specify the location of your custom rules, download them, and keep them up to date.

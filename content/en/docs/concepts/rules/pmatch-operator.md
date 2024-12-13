@@ -3,6 +3,8 @@ title: Using the pmatch Operator to Match File System Paths
 description: How the pmatch Operator Works
 linktitle: Using pmatch Operator
 weight: 100
+aliases:
+- ../rules/pmatch-operator
 ---
 
 ## Introduction
