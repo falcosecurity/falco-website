@@ -5,7 +5,7 @@ linktitle: Outputs
 aliases:
 - ../alerts
 - ../outputs
-weight: 20
+weight: 30
 ---
 
 Falco can send alerts to one or more output channels:
