@@ -1,8 +1,10 @@
 ---
 title: How to distribute a plugin
-linktitle: How to distribute a plugin
+linktitle: Distribution
 description: How to distribute a plugin
 weight: 20
+aliases:
+- ../plugins/how-to-distribute
 ---
 
 ## Introduction
