@@ -1,8 +1,10 @@
 ---
 title: How to develop a plugin
-linktitle: How to develop a plugin
+linktitle: Development
 description: How to develop a plugin with the Go SDK
 weight: 10
+aliases:
+- ../plugins/how-to-develop
 ---
 
 ## Introduction
