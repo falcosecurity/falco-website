@@ -3,6 +3,8 @@ title: Plugins Architecture Concepts
 linktitle: Architecture
 description: Learn the basic concepts of the Plugin Architecture
 weight: 10
+aliases:
+  - ../plugins/architecture
 ---
 
 ## Overview
