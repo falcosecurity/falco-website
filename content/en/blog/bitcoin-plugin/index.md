@@ -20,7 +20,7 @@ I discovered  the site https://www.blockchain.com/ exposes a public flux, access
 
 I am not going to describe the internal workings of the plugin here, nor how it was developed. If you are interested, you can look at  the code [here](https://github.com/Issif/bitcoin-plugin). 
 
-Alternatively, read our documentation explaining how to create a plugin from A to Z: https://falco.org/docs/plugins/developers-guide/how-to-develop/.
+Alternatively, read our documentation explaining how to create a plugin from A to Z: https://falco.org/docs/concepts/plugins/developers-guide/how-to-develop/.
 
 ## Default rules
 

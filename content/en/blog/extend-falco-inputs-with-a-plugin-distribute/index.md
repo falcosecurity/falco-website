@@ -474,7 +474,7 @@ If you would like to find out more about Falco:
 
 * Get started in [Falco.org](http://falco.org/)
 * [Plugin Documentation](https://falco.org/docs/plugins/)
-* [Plugin Developer Guide](https://falco.org/docs/plugins/developers-guide/)
+* [Plugin Developer Guide](https://falco.org/docs/concepts/plugins/developers-guide/)
 * [Plugin registry](https://github.com/falcosecurity/plugins)
 * Check out the [Falco project in GitHub](https://github.com/falcosecurity/falco)
 * Get involved in the [Falco community](https://falco.org/community/)
