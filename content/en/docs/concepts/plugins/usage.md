@@ -1,8 +1,10 @@
 ---
 title: How Falco Uses Plugins
-linktitle: Plugins Usage
+linktitle: Usage
 description: Plugins for Falco libraries/Falco daemon
 weight: 20
+aliases:
+- ../plugins/usage
 ---
 
 Falco loads plugins based on configuration in [`falco.yaml`](https://github.com/falcosecurity/falco/blob/master/falco.yaml). Currently, if a plugin with event sourcing capability is loaded then the *only* events processed are from that plugin; syscall events are disabled. There are other restrictions on loaded plugins (see below).
@@ -65,4 +67,4 @@ Falco can load multiple rules files, and each file may contain its own `required
 
 ## Plugin Developer's Guide
 
-If you are interested in authoring your own plugin, or modifying an existing plugin to add new functionality, we've written a [developer's guide](/docs/plugins/developers-guide) that documents the full plugin APIs and walks through two existing plugins to show how the API is used.
+If you are interested in authoring your own plugin, or modifying an existing plugin to add new functionality, we've written a [developer's guide](/docs/developer-guide/plugins) that documents the full plugin APIs and walks through two existing plugins to show how the API is used.
