@@ -59,7 +59,7 @@ Before starting, you should take a look at these posts to know more about what P
 
 # Developers Guide
 
-This post has not for purpose to replace the official documentation, it's a step-by-step example to get you to know minimal requirements for having a running plugin. For details, please read the [developers guide](https://falco.org/docs/plugins/developers-guide/).
+This post has not for purpose to replace the official documentation, it's a step-by-step example to get you to know minimal requirements for having a running plugin. For details, please read the [developers guide](https://falco.org/docs/concepts/plugins/developers-guide/).
 
 # The plugin
 
@@ -937,7 +937,7 @@ If you would like to find out more about Falco:
 
 * Get started in [Falco.org](http://falco.org/)
 * [Plugin Documentation](https://falco.org/docs/plugins/)
-* [Plugin Developer Guide](https://falco.org/docs/plugins/developers-guide/)
+* [Plugin Developer Guide](https://falco.org/docs/concepts/plugins/developers-guide/)
 * [Plugin registry](https://github.com/falcosecurity/plugins) 
 * Check out the [Falco project in GitHub](https://github.com/falcosecurity/falco)
 * Get involved in the [Falco community](https://falco.org/community/)
