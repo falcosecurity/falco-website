@@ -1,8 +1,8 @@
 ---
 title: Falco Plugins
-linktitle: Falco Plugins
+linktitle: Plugins
 description: Extend Falco functionality using Plugins for Falco libraries/Falco daemon
-weight: 35
+weight: 40
 ---
 
 The Falco libraries and Falco itself can be extended by using *Plugins*. Plugins are shared libraries that conform to a documented API, hooking into the core functionalities of Falco to allow things such as:
