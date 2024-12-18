@@ -1,23 +1,18 @@
 ---
-Title: "Extend Falco inputs by creating a Plugin: Distribute the plugin"
-Date: 2023-06-26
-Author: Thomas Labarussias
-slug: extend-falco-inputs-with-a-plugin-distribute
+title: How to distribute a plugin
+linktitle: Distribution
+description: How to distribute a plugin
+weight: 20
+aliases:
+- ../plugins/how-to-distribute
 ---
-
-> This post is is part of a series of articles about `How to develop Falco plugins`. It's addressed to anybody who would like to understand how plugins are written and want to contribute.
-> See other articles:
-> * [Extend Falco inputs by creating a Plugin: the basics]({{< ref "/blog/extend-falco-inputs-with-a-plugin-the-basics" >}})
-> * [Extend Falco inputs by creating a Plugin: Register the plugin]({{< ref "/blog/extend-falco-inputs-with-a-plugin-register" >}})
-
-----
 
 ## Introduction
 
-In the previous posts (see [the basics]({{< ref "/blog/extend-falco-inputs-with-a-plugin-the-basics" >}}) and [register]({{< ref "/blog/extend-falco-inputs-with-a-plugin-register" >}})), we covered all the basics to develop a plugin and register it. In this article, we'll focus on the steps to build the OCI artifacts and distribute them on Github Packages.
+In this article, we'll focus on the steps to build the OCI artifacts containing the plugin and its rules and how to distribute them on Github Packages.
 
 {{% pageinfo color="info" %}}
-To get more familiar with the OCI artifacts, you can read our blog posts about [falcoctl]({{< ref "falcoctl-install-manage-rules-plugins" >}}) and [GitOps for rules]({{< ref "gitops-your-falco-rules" >}})
+To get more familiar with the OCI artifacts, you can read our blog posts about [falcoctl](/blog/falcoctl-install-manage-rules-plugins) and [GitOps for rules](/blog/gitops-your-falco-rules)
 {{% /pageinfo %}}
 
 In the next sections we'll describe how to:
@@ -31,7 +26,7 @@ In the next sections we'll describe how to:
 This tutorial is based on a Github repo, with the possibility to run workflows in Github Actions and store OCI artifacts in Github Packages. If you use a different system or even just private repositories, you'll need to adapt the examples to your context.
 
 {{% pageinfo color="warning" %}}
-To make it work, you must have the code organization proposed in [the basics]({{< ref "/blog/extend-falco-inputs-with-a-plugin-the-basics#code-organization" >}}) post.
+To make it work, you must have the code organization proposed in [how to develop a plugin](/docs/concepts/plugins/developers-guide/how-to-develop) page.
 {{% /pageinfo %}}
 
 
@@ -152,7 +147,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: falcosecurity/falcoctl
-          ref: 0.5.0
+          ref: 0.5.0 # adapt to the latest version
           path: tools/falcoctl
       - name: Setup Golang
         uses: actions/setup-go@v4
@@ -191,7 +186,7 @@ jobs:
               --depends-on ${{ env.PLUGIN_NAME }}-rules:${{ github.ref_name }} \
               --name ${{ env.PLUGIN_NAME }} \
               lib${{ env.PLUGIN_NAME }}.so
-    
+
               cd rules/
               $DIR/tools/falcoctl/falcoctl registry push \
               ${{ env.OCI_REGISTRY }}/${{ steps.StringRepoName.outputs.lowercase }}/ruleset/${{ env.PLUGIN_NAME }}:${{ github.ref_name }} \
@@ -208,7 +203,7 @@ jobs:
 
 #### Create the release
 
-`GoReleaser` can automatically generate a Changelog at the same time we publish the new artifacts. This step isn't imperative to generate the OCI artifacts but it's a good practice among Go developers. To achieve that, make sure to have a correct `.goreleaser.yml` file as explained [here]({{< ref "/blog/extend-falco-inputs-with-a-plugin-distribute#goreleaser" >}}).
+`GoReleaser` can automatically generate a Changelog at the same time we publish the new artifacts. This step isn't imperative to generate the OCI artifacts but it's a good practice among Go developers. To achieve that, make sure to have a correct `.goreleaser.yml` file as explained [here](/blog/extend-falco-inputs-with-a-plugin-distribute#goreleaser).
 
 ```yaml
   release:
@@ -259,7 +254,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: falcosecurity/falcoctl
-          ref: 0.5.0
+          ref: 0.5.0 # adapt to the latest version
           path: tools/falcoctl
       - name: Setup Golang
         uses: actions/setup-go@v4
@@ -298,7 +293,7 @@ jobs:
               --depends-on ${{ env.PLUGIN_NAME }}-rules:${{ github.ref_name }} \
               --name ${{ env.PLUGIN_NAME }} \
               lib${{ env.PLUGIN_NAME }}.so
-    
+
               cd rules/
               $DIR/tools/falcoctl/falcoctl registry push \
               ${{ env.OCI_REGISTRY }}/${{ steps.StringRepoName.outputs.lowercase }}/ruleset/${{ env.PLUGIN_NAME }}:${{ github.ref_name }} \
@@ -336,9 +331,9 @@ jobs:
 
 Replace `PLUGIN_NAME` with the name of your plugin.
 
-## index.yaml file
+## The index.yaml file for falcoctl
 
-This file is used by `falcoctl` to know where to download your plugin and rules. Please read this [blog post]({{< ref "blog/falcoctl-install-manage-rules-plugins#index" >}}) to understand better how it works.
+This file is used by `falcoctl` to know where to download your plugin and rules. Please read this [blog post](/blog/falcoctl-install-manage-rules-plugins#index) to understand better how it works.
 
 We'll create our own file to allow like the following:
 
@@ -347,7 +342,7 @@ We'll create our own file to allow like the following:
   type: plugin
   registry: ghcr.io
   repository: {OWNER_NAME}/{REPO_NAME}/plugin/{PLUGIN_NAME}
-  description: {DESCRIPTION} 
+  description: {DESCRIPTION}
   home: https://github.com/{OWNER_NAME}/{PLUGIN_NAME}
   keywords:
     - {PLUGIN_NAME}
@@ -385,7 +380,7 @@ With:
 
 The repository structure should look like the following:
 
-```shell.
+```shell
 ├── .github
 │   └── workflows
 │       └── release.yaml
@@ -421,14 +416,9 @@ git tag 0.1.0 -m "0.1.0" && git push origin 0.1.0
 
 Few seconds after, your workflow should be started and you will have your first published version with associated artifacts.
 
-See the results for the `docker` plugin:
-
-![](images/workflow.png)
-![](images/packages.png)
-
 ## Installation of your plugin and rules
 
-The process is now the same as the one described [here]({{< ref "/blog/falcoctl-install-manage-rules-plugins" >}}), except we'll use your specific `index.yaml` to register a new index:
+The process is now the same as the one described [here](/blog/falcoctl-install-manage-rules-plugins), except we'll use your specific `index.yaml` to register a new index:
 
 ```shell
 sudo falcoctl index add {PLUGIN_NAME} https://{OWNER_NAME}.github.io/{REPO_NAME}/index.yaml
@@ -442,8 +432,8 @@ For the `docker` plugin, for example:
 ❯ sudo falcoctl index add docker  http://issif.github.io/docker-plugin/index.yaml
 
 ❯ sudo falcoctl artifact search docker
-INDEX 	ARTIFACT    	TYPE     	REGISTRY	REPOSITORY                        
-docker	docker      	plugin   	ghcr.io 	issif/docker-plugin/plugin/docker 
+INDEX 	ARTIFACT    	TYPE     	REGISTRY	REPOSITORY                   
+docker	docker      	plugin   	ghcr.io 	issif/docker-plugin/plugin/docker
 docker	docker-rules	rulesfile	ghcr.io 	issif/docker-plugin/ruleset/docker
 
 ❯ sudo falcoctl artifact install docker-rules
@@ -451,32 +441,13 @@ docker	docker-rules	rulesfile	ghcr.io 	issif/docker-plugin/ruleset/docker
  INFO  Resolving dependencies ...
  INFO  Installing the following artifacts: [docker:0.3.3 ghcr.io/issif/docker-plugin/ruleset/docker:latest]
  INFO  Preparing to pull "ghcr.io/issif/docker-plugin/plugin/docker:0.3.3"
- INFO  Pulling 9145239be00e: ############################################# 100% 
- INFO  Pulling 2073e106ba07: ############################################# 100% 
- INFO  Pulling 01ecf22a3821: ############################################# 100% 
- INFO  Artifact successfully installed in "/usr/share/falco/plugins"                                                                                                                                               
+ INFO  Pulling 9145239be00e: ############################################# 100%
+ INFO  Pulling 2073e106ba07: ############################################# 100%
+ INFO  Pulling 01ecf22a3821: ############################################# 100%
+ INFO  Artifact successfully installed in "/usr/share/falco/plugins"                                                                                                                                          
  INFO  Preparing to pull "ghcr.io/issif/docker-plugin/ruleset/docker:latest"
- INFO  Pulling 3482c7ca931f: ############################################# 100% 
- INFO  Pulling 433ad24cb056: ############################################# 100% 
- INFO  Pulling e449b880035d: ############################################# 100% 
+ INFO  Pulling 3482c7ca931f: ############################################# 100%
+ INFO  Pulling 433ad24cb056: ############################################# 100%
+ INFO  Pulling e449b880035d: ############################################# 100%
  INFO  Artifact successfully installed in "/etc/falco"
 ```
-
-## Conclusion
-
-The last step is to promote your hard work to the community and have feedback about it. The whole process can be modified to match your own GitHub environment (private repo and registry), or even another platform with a little more work. 
-
----
-
-You can find us in the [Falco community](https://github.com/falcosecurity/community). Please feel free to reach out to us for any questions, suggestions, or even for a friendly chat!
-
-If you would like to find out more about Falco:
-
-* Get started in [Falco.org](http://falco.org/)
-* [Plugin Documentation](https://falco.org/docs/plugins/)
-* [Plugin Developer Guide](https://falco.org/docs/concepts/plugins/developers-guide/)
-* [Plugin registry](https://github.com/falcosecurity/plugins)
-* Check out the [Falco project in GitHub](https://github.com/falcosecurity/falco)
-* Get involved in the [Falco community](https://falco.org/community/)
-* Meet the maintainers on the [Falco Slack](https://kubernetes.slack.com/messages/falco)
-* Follow [@falco_org on Twitter](https://twitter.com/falco_org)
