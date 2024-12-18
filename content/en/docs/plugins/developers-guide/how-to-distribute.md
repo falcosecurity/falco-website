@@ -205,7 +205,7 @@ jobs:
 
 ```yaml
   release:
-    runs-on: ubuntu-latest[0-9]+\.[0-9]+\.[0-9]+
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
