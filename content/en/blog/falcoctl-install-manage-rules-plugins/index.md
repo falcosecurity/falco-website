@@ -47,7 +47,7 @@ The following steps explain the basic concepts used to install `falcoctl` locall
 For a Linux amd64 system:
 ```shell
 LATEST=$(curl -sI https://github.com/falcosecurity/falcoctl/releases/latest | awk '/location: /{gsub("\r","",$2);split($2,v,"/");print substr(v[8],2)}')
-curl --fail -LS "https://github.com/falcosecurity/falcoctl/releases/download/v${LATEST}/falcoctl_${LATEST}_linux_amd64.tar.gz" | tar -xz
+curl --fail -LS "https://github.com/falcosecurity/falcoctl/releases/download/v${LATEST}/falcoctl_${LATEST}_linux_amd64.tar.gz" | tar -xz falcoctl
 sudo install -o root -g root -m 0755 falcoctl /usr/local/bin/falcoctl
 ```
 
