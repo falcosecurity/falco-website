@@ -145,7 +145,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: falcosecurity/falcoctl
-          ref: 0.5.0 # adapt to the latest version
+          ref: main
           path: tools/falcoctl
       - name: Setup Golang
         uses: actions/setup-go@v4
