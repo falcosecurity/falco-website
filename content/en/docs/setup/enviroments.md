@@ -12,6 +12,10 @@ Google Kubernetes Engine (GKE) uses Container-Optimized OS (COS) as the default 
 
 To use Falco on GKE, you need to [deploy](/docs/setup/kubernetes/) using one of the two available eBPF drivers. The {{< glossary_tooltip text="Modern eBPF" term_id="modern-ebpf-probe" >}} is the default driver for Falco 0.38.0 and later, so no further action is required in this case. If your system does not support the modern eBPF driver, you can use the legacy {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} driver.
 
+## gVisor {#gvisor}
+
+Falco offers native support for **[gVisor](https://gvisor.dev/)**. A specific configuration is necessary to integrate Falco with gVisor seamlessly. For detailed instructions, refer to the [gVisor Event Source](/docs/concepts/event-sources/gvisor/) documentation.
+
 ## K3s {#k3s}
 
 [K3s](https://k3s.io/) is a lightweight, CNCF certified Kubernetes distribution. It has embedded components like etcd (datastore), CoreDNS, traefik ingress controller, etc., to simplify Kubernetes installation or upgrade.
