@@ -491,7 +491,7 @@ This function can be invoked concurrently by multiple threads, each with distinc
 ### get_extract_event_sources
 
 ```
-const char* get_extract_event_sources() [Required: no]
+const char* plugin_get_extract_event_sources() [Required: no]
 ```
 
 This function allows the plugin to restrict the kinds of events where the plugin's `extract_fields` method will be called. Valid event source names are the ones returned by the `get_event_source` function of plugins with event sourcing capabilitiy, or `syscall` for indicating support to non-plugin events. The return value should be a string containing a json array of compatible event sources, with memory owned by the plugin. Here's an example:
@@ -507,7 +507,7 @@ This function is optional. If the plugin does not export this function or if it 
 ### get_extract_event_types
 
 ```
-uint16_t* get_extract_event_types(uint32_t* numtypes)   [Required: no]
+uint16_t* plugin_get_extract_event_types(uint32_t* numtypes)   [Required: no]
 ```
 
 This function allows the plugin to restrict the kinds of events where the plugin's `extract_fields` method will be called. The return value is an array of integers representing the event types that the plugin is capable of processing for field extraction. Events with types that are not present in the returned list will not be received by the plugin. The event types follow the enumeration from the [libscap specific](#libscap-event-block-specification).
@@ -519,7 +519,7 @@ This function is optional. If the plugin does not export this function or if it 
 ### parse_event
 
 ```
-ss_plugin_rc parse_event(ss_plugin_t *s, const ss_plugin_event_input *evt, const ss_plugin_event_parse_input* in)   [Required: yes]
+ss_plugin_rc plugin_parse_event(ss_plugin_t *s, const ss_plugin_event_input *evt, const ss_plugin_event_parse_input* in)   [Required: yes]
 ```
 
 Receives an event from the current capture and parses its content. The plugin is guaranteed to receive an event at most once, after any operation related the event sourcing capability, and before any other operation related to the field extraction capability. The returned rc value should be `SS_PLUGIN_SUCCESS` (0) on success, `SS_PLUGIN_FAILURE` (1) on failure.
@@ -531,7 +531,7 @@ This function can be invoked concurrently by multiple threads, each with distinc
 ### get_parse_event_sources
 
 ```
-const char* get_parse_event_sources()   [Required: no]
+const char* plugin_get_parse_event_sources()   [Required: no]
 ```
 
 This function allows the plugin to restrict the kinds of events where the plugin's `parse_event` method will be called. Valid event source names are the ones returned by the `get_event_source` function of plugins with event sourcing capabilitiy, or `syscall` for indicating support to non-plugin events. The return value should be a string containing a json array of compatible event sources, with memory owned by the plugin.
@@ -541,7 +541,7 @@ This function is optional. If the plugin does not export this function or if it 
 ### get_parse_event_types
 
 ```
-uint16_t* get_parse_event_types(uint32_t* numtypes) [Required: no]
+uint16_t* plugin_get_parse_event_types(uint32_t* numtypes) [Required: no]
 ```
 
 This function allows the plugin to restrict the kinds of events where the plugin's `parse_event` method will be called. The return value is an array of integers representing the event types that the plugin is capable of processing for field extraction. Events with types that are not present in the returned list will not be received by the plugin. The event types follow the enumeration from the [libscap specific](#libscap-event-block-specification).
@@ -553,7 +553,7 @@ This function is optional. If the plugin does not export this function or if it 
 ### get_async_event_sources
 
 ```
-const char* get_async_event_sources()   [Required: no]
+const char* plugin_get_async_event_sources()   [Required: no]
 ```
 
 The return value should be a string containing a json array of compatible event sources, with memory owned by the plugin. The list describes the event sources for which this plugin is capable of injecting async events in the event stream of a capture.
@@ -564,7 +564,7 @@ events produced by a plugin will be injected in the event stream of any source.
 ### get_async_events
 
 ```
-const char* get_async_events()   [Required: yes]
+const char* plugin_get_async_events()   [Required: yes]
 ```
 
 Return a string describing the name list of all asynchronous events that this plugin is capable of pushing into a live event stream. The framework can reject async events produced by a plugin if their name is not on the name list returned by this function. The return value should be a string containing a json array of compatible event sources, with memory owned by the plugin.
@@ -572,7 +572,7 @@ Return a string describing the name list of all asynchronous events that this pl
 ### set_async_event_handler
 
 ```
-ss_plugin_rc set_async_event_handler(ss_plugin_t* s, ss_plugin_owner_t* owner, const ss_plugin_async_event_handler_t handler)    [Required: yes]
+ss_plugin_rc plugin_set_async_event_handler(ss_plugin_t* s, ss_plugin_owner_t* owner, const ss_plugin_async_event_handler_t handler)    [Required: yes]
 ```
 
 Sets a function handler that allows the plugin to send events asynchronously to its owner during a live event capture. The handler is a thread-safe function that can be invoked concurrently by multiple threads. The asynchronous events must be encoded as an async event type (code 402) as for the [libscap specific](#libscap-event-block-specification). The returned rc value should be `SS_PLUGIN_SUCCESS` (0) on success, `SS_PLUGIN_FAILURE` (1) on failure.
