@@ -51,6 +51,9 @@ falco --enable-source=syscall --enable-source=k8s_audit
 
 This example enables only the `syscall` and `k8s_audit` sources. The `syscall` source is built into Falco and always enabled by default. In contrast, the `k8s_audit` source is provided by the `k8saudit` plugin, which must be properly configured in Falco beforehand. Before using this command, ensure that the `k8saudit` plugin has been properly configured in Falco.
 
+{{% pageinfo color=info %}}
+The `k8s_audit` source is also available through different plugins: `k8saudit`, `k8saudit-aks`, `k8saudit-eks`, `k8saudit-gke` and `k8suadit-ovh`, choose the one fitting your environment. They all share the same set of rules.
+{{% /pageinfo %}}
 ### Using `--disable-source`
 
 Disables specific event sources while keeping others active. This is useful if you want to prevent Falco from consuming events from certain sources.
