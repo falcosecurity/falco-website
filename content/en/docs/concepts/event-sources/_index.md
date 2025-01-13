@@ -79,7 +79,7 @@ falco --enable-source=syscall --enable-source=k8s_audit
 
 This enables only the `syscall` and `k8s_audit` sources.
 
-### Using the `syscall` Source Without a Driver
+### Using the `syscall` source without a driver
 
 By default, Falco enables the `syscall` source and relies on a [kernel driver](/docs/concepts/event-sources/kernel/)) to capture events. However, there are times—such as when testing, debugging, or running plugins that generate `syscall` events—when you may want to run Falco without a driver.
 
