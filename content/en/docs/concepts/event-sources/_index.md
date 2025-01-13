@@ -15,7 +15,11 @@ Falco natively supports the `syscall` event source, which is enabled by default,
 
 ### How It Works
 
-Each event source operates in an isolated thread, where events are generated, consumed, and evaluated by Falco’s rule engine. Rules are partitioned by event source, meaning each rule applies to a specific source and is triggered exclusively by events from that source. Falco does not support correlating events from different sources.
+Each event source operates in an isolated thread, where events are generated, consumed, and evaluated by Falco’s rule engine. Rules are partitioned by event source, meaning each rule applies to a specific source and is triggered exclusively by events from that source. 
+
+{{% pageinfo color=warning %}}
+Falco does not support correlating events from different sources.
+{{% /pageinfo %}}
 
 By default, Falco enables event collection from all known sources, including `syscall` and other data sources added through plugins. The behavior can be customized using Falco's configuration.
 
