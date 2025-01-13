@@ -26,12 +26,6 @@ Before enabling or disabling specific event sources, you must configure the Falc
 - **Engine:** For [drivers](/docs/concepts/event-sources/kernel/), [gVisor](/docs/concepts/event-sources/gvisor/) or capture files. 
 - **Plugins:** Ensure plugins are loaded properly by following the [plugin usage guide](https://falco.org/docs/plugins/usage/#loading-plugins-in-falco).
 
-{{% alert title="Capture Files" color="primary" %}}
-
-When processing capture files, Falco can handle events from multiple sources without additional configuration.
-
-{{% /alert %}}
-
 ## Managing Event Sources
 
 Falco provides flexibility in enabling or disabling event sources to suit different use cases. This can be controlled using the `--enable-source` and `--disable-source` CLI options.
