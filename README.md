@@ -2,7 +2,9 @@
 
 [![Falco Core Repository](https://github.com/falcosecurity/evolution/blob/main/repos/badges/falco-core-blue.svg)](https://github.com/falcosecurity/evolution/blob/main/REPOSITORIES.md#core-scope) [![Stable](https://img.shields.io/badge/status-stable-brightgreen?style=for-the-badge)](https://github.com/falcosecurity/evolution/blob/main/REPOSITORIES.md#stable) [![License](https://img.shields.io/github/license/falcosecurity/falco-website?style=for-the-badge)](./LICENSE)
 
-This is the source code for the official Falco website: https://falco.org .
+[![Netlify Status](https://api.netlify.com/api/v1/badges/3ff1ba0c-68c8-4f94-b8fa-6260c6ae1925/deploy-status)](https://app.netlify.com/sites/falcosecurity/deploys)
+
+This is the source code for the official Falco website: **[falco.org](https://falco.org)** 
 
 ## Contributing logos
 
