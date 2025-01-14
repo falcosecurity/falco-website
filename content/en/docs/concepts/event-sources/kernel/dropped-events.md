@@ -4,7 +4,7 @@ description: Let Falco say *basta* when your system reaches its limit
 linktitle: Dropped Syscall Events
 weight: 60
 aliases:
-- ../dropped-events
+- ../../../event-sources/kernel/dropped-events
 ---
 ## Introduction
 

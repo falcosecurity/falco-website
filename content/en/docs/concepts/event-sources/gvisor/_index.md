@@ -3,6 +3,8 @@ title: gVisor
 description: 'gVisor support in Falco'
 linktitle: gVisor
 weight: 80
+aliases:
+- ../../../event-sources/gvisor/
 ---
 
 Falco can work with **[gVisor](https://gvisor.dev/)**.

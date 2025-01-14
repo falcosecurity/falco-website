@@ -4,7 +4,7 @@ description: Keep an eye on your activity within this famous authentication serv
 linktitle: Okta Events
 weight: 50
 aliases:
-- ../../plugins/okta
+- ../../event-sources/plugins/okta
 ---
 
 The Falco [Okta](https://github.com/falcosecurity/plugins/blob/master/plugins/okta/README.md) plugin can read [Okta](https://www.okta.com/) logs and emit events for each Okta log entry.
