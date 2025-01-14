@@ -3,7 +3,7 @@ title: Custom Ruleset
 description: Start writing your first custom Falco rules
 weight: 85
 aliases:
-- ../rules/custom-ruleset
+- ../../rules/custom-ruleset
 ---
 
 To write a custom rule for Falco from scratch, it is essential to understand the conditions that need to be met for Falco to trigger an alert. However, this task is complex as it requires considering the potential false positives and negatives arising from the rule.

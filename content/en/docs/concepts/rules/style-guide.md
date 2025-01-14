@@ -4,7 +4,7 @@ description: Adopt best practices when writing and contributing Falco rules
 linktitle: Style Guide of Falco Rules
 weight: 95
 aliases:
-- ../rules/style-guide
+- ../../rules/style-guide
 ---
 
 {{% alert color="warning" %}}

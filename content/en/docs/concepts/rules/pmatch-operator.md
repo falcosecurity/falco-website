@@ -4,7 +4,7 @@ description: How the pmatch Operator Works
 linktitle: Using pmatch Operator
 weight: 100
 aliases:
-- ../rules/pmatch-operator
+- ../../rules/pmatch-operator
 ---
 
 ## Introduction

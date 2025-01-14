@@ -4,7 +4,7 @@ description: Understand Falco Rules, Lists and Macros
 linktitle: Basics of Falco Rules
 weight: 10
 aliases:
-- ../rules/basic-elements
+- ../../rules/basic-elements
 ---
 ## Rules
 

@@ -4,7 +4,7 @@ description: How fs.path.* fields work
 linktitle: Accessing File System Paths
 weight: 100
 aliases:
-- ../rules/fspath
+- ../../rules/fspath
 ---
 
 ## Introduction
