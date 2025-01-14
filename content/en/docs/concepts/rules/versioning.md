@@ -4,7 +4,7 @@ description: Understand how Falco Rules support explicit versioning
 linktitle: Rules Versioning
 weight: 200
 aliases:
-- ../rules/versioning
+- ../../rules/versioning
 ---
 
 From time to time, we make changes to the {{< glossary_tooltip text="rules file" term_id="rules-file" >}} format that are not backwards-compatible with older versions of Falco. Similarly, {{< glossary_tooltip text="libsinsp" term_id="libsinsp" >}} and {{< glossary_tooltip text="libscap" term_id="libscap" >}} may define new filtercheck fields, operators, etc. We want to denote that a given set of rules depends on the fields/operators from those libraries.

@@ -4,8 +4,8 @@ description: Overriding Falco rules
 linktitle: Overriding Rules
 weight: 50
 aliases:
-- ../rules/appending
-- ../rules/overriding
+- ../../rules/appending
+- ../../rules/overriding
 ---
 ## Overview
 There may be cases where you need to adjust the behavior of the Falco-supplied {{< glossary_tooltip text="list" term_id="lists" >}}, {{< glossary_tooltip text="macro" term_id="macros" >}}, and  {{< glossary_tooltip text="rule" term_id="rules" >}}.
