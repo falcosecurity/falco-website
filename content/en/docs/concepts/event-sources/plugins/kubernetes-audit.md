@@ -5,7 +5,7 @@ linktitle: Kubernetes Audit Events
 weight: 40
 aliases:
 - ../../kubernetes-audit
-- ../../plugins/kubernetes-audit
+- ../../event-sources/plugins/kubernetes-audit
 ---
 
 Falco v0.13.0 adds [Kubernetes Audit Events](https://kubernetes.io/docs/tasks/debug-application-cluster/audit/#audit-backends) to the list of supported event sources. This is in addition to the existing support for system call events. An improved implementation of audit events was introduced in Kubernetes v1.11 and it provides a log of requests and responses to [kube-apiserver](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/). Because almost all the cluster management tasks are performed through the API server, the {{< glossary_tooltip text="audit log" term_id="kubernetes-audit-log" >}} can effectively track the changes made to your cluster.

@@ -5,7 +5,7 @@ description: Test your Falco deployment by generating sample events under contro
 linktitle: Generating sample events
 weight: 70
 aliases:
-- ../sample-events
+- ../../../event-sources/kernel/sample-events
 ---
 
 If you'd like to check if Falco is working properly, we have the {{< glossary_tooltip text="event-generator" term_id="event-generator" >}} tool that can perform an activity for both our {{< glossary_tooltip text="syscalls" term_id="syscalls" >}} and {{< glossary_tooltip text="k8s audit" term_id="kubernetes-audit-log" >}} related rules.

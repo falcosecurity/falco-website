@@ -4,8 +4,8 @@ description: Leverage multiple Event Sources to increase the power of Falco
 linktitle: Event Sources
 weight: 10
 aliases:
-- ../event-sources
-- ../event-sources/enable-event-sources
+- ../../event-sources
+- ../../event-sources/enable-event-sources
 ---
 ## Overview
 

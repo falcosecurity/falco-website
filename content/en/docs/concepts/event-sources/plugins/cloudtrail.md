@@ -4,7 +4,7 @@ description: Detect undesired actions in your AWS environment
 linktitle: CloudTrail Events
 weight: 30
 aliases:
-- ../event-sources/plugins/cloudtrail
+- ../../event-sources/plugins/cloudtrail
 ---
 
 The Falco [cloudtrail](https://github.com/falcosecurity/plugins/tree/master/plugins/cloudtrail#readme) plugin can read [AWS CloudTrail](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html) logs and emit events for each CloudTrail log entry.
