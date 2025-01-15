@@ -7,26 +7,90 @@ aliases:
 - ../../rules/conditions
 ---
 
-A condition is a boolean expression related to a single event that has been {{< glossary_tooltip text="detected" term_id="detection" >}} by Falco. You can use {{< glossary_tooltip text="fields" term_id="fields" >}} related to every supported event, but this document focuses on {{< glossary_tooltip text="syscalls" term_id="syscalls" >}} as they're currently the most common. The language supports boolean operators and parentheses as you'd expect. For example a condition like:
+A Falco rule’s condition defines the filter that determines which events are {{< glossary_tooltip text="detected" term_id="detection" >}} by the rule. This condition is a boolean expression that evaluates to _true_ or _false_ for each event. If it evaluates to _true_, the rule triggers and generates an {{< glossary_tooltip text="alert" term_id="alerts" >}}.
+
+A condition can be viewed as a sequence of comparisons, each joined by [logical operators](#logical-operators). Parentheses can be used to define precedence. Each comparison uses a [comparison operator](#comparison-operators) between a field (on the left side), extracted from the input event, and a static or computed value (on the right side). You can also apply [transformers](#transformers) to the field to modify its extracted values before comparison.
+
+The set of {{< glossary_tooltip text="fields" term_id="fields" >}} available depends on the data source. For simplicity, this page focuses on {{< glossary_tooltip text="syscalls" term_id="syscalls" >}}, as they are among the most common.
+
+For example, the following condition triggers for each execution of `cat` or `grep`:
 
 ```
 evt.type = execve and evt.dir = < and (proc.name = cat or proc.name = grep)
 ```
 
-This will trigger for each execution of `cat` or `grep`. Below you can take a closer look at what is the meaning of those fields such as `evt.dir`, how to discover the types of events available, and which fields are present with which event type.
+## Operators
 
-## Syscall event types, direction and args
+You can use the below operators in Falco rule conditions.
 
-Every syscall event will present the [`evt` field class](/docs/rules/supported-fields/#field-class-evt). Each condition that you write for those events will normally start with a `evt.type` expression or macro; this makes a lot of sense since security rules normally consider one syscall type at a time. For instance, you may want to consider `open` or `openat` to catch suspicious activity when opening files, `execve` to inspect spawned processes, and so forth. You don't have to guess the syscall name, as you can see the complete [list of supported system calls events](/docs/rules/supported-events) and understand which ones you can use.
+### Logical operators
 
-Every syscall has an entry event and an exit event which is shown in the `evt.dir` field, also known as the "direction" of the system call. A value of `>` indicates entry, which fires when the syscall is invoked, while `<` marks exit, meaning that the call has returned. In fact, by looking at the supported system call list you can see that our events have both entries. For example:
+Operators | Description
+:---------|:-----------
+`and` | Logical AND operator to connect two or more comparisons (ie. `evt.type = open and fd.typechar='f'`).
+`or` | Logical OR operator to connect two or more comparisons (ie. `proc.name = bash or proc.name = zsh`).
+`not` | Logical NOT operator to negate a comparison (ie. `not proc.name = bash`).
+
+### Comparison operators
+
+Operators | Description
+:---------|:-----------
+`=`, `!=` | Equality and inequality operators.
+`<=`, `<`, `>=`, `>` | Comparison operators for numeric values.
+`contains`, `icontains` | For strings, these evaluate to true if a string contains another. `icontains` is case-insensitive. For flags, `contains` evaluates to true if the specified flag is set. For example: `proc.cmdline contains "-jar"`, `evt.arg.flags contains O_TRUNC`.
+`startswith`, `endswith` | Checks the prefix or suffix of strings.
+`glob` | Evaluates standard glob patterns. Example: `fd.name glob "/home/*/.ssh/*"`.
+`in` | Evaluates whether the first set is completely contained in the second set. Example: `(b,c,d) in (a,b,c)` is `FALSE` because `d` is not found in `(a,b,c)`.
+`intersects` | Evaluates whether the first set has at least one element in common with the second set. Example: `(b,c,d) intersects (a,b,c)` is `TRUE` because both sets contain `b` and `c`.
+`pmatch` | Compares a file path against a set of file or directory prefixes. Example: `fd.name pmatch (/tmp/hello)` evaluates to true for `/tmp/hello`, `/tmp/hello/world` but not `/tmp/hello_world`.
+`exists` | Checks whether a field is set. Example: `k8s.pod.name exists`.
+`bcontains`, `bstartswith` | Work similarly to `contains` and `startswith` but allow byte matching against a raw string of bytes, taking a hexadecimal string as input. Examples: `evt.buffer bcontains CAFEBABE`, `evt.buffer bstartswith 012AB3CC`.
+`regex` | Checks whether a string field matches a [Google RE2](https://github.com/google/re2/wiki/Syntax)-compatible regular expression. Note that `regex` can be considerably slower than simpler string operations. Example: `fd.name regex '[a-z]*/proc/[0-9]+/cmdline'`.
+
+## Transformers
+
+Falco supports basic transformations on fields within rule conditions. For instance, if you want to check for a case-insensitive process name, you can use:
+
+```
+tolower(proc.name) = bash
+```
+
+The following transform operators are supported:
+
+Transformer | Description
+:--------|:-----------
+`tolower(<field>)` | Converts the input field to lowercase.
+`toupper(<field>)` | Converts the input field to uppercase.
+`b64(<field>)` | Decodes the input field from [Base64](https://en.wikipedia.org/wiki/Base64).
+`basename(<field>)` | Extracts the filename without its directory path from the input field. Unlike the Unix `basename` program, `basename()` in Falco returns `""` if no filename is present. For example, `basename(proc.exepath)` is `"cat"` for `/usr/bin/cat` but `""` for `/usr/bin/`.
+`len(<field>)` | Returns the length of the field: for LIST fields, the number of elements; for CHARBUF fields, the number of characters; and for BYTEBUF fields, the number of bytes.
+
+### Field evaluation (for right-hand side of comparisons)
+
+Falco also lets you compare field values with other field values by using the `val()` special transformer on the right-hand side of a comparison. For instance, to detect processes that have the same name as their parent:
+
+```
+proc.name = val(proc.pname)
+```
+
+Similarly, using transformations on both sides is supported:
+
+```
+tolower(proc.name) = tolower(proc.pname)
+```
+
+## Syscall event types, direction, and args
+
+Every syscall event includes the [`evt` field class](/docs/reference/rules/supported-fields/#field-class-evt). Each condition you write for these events typically begins with an `evt.type` expression or macro. This is practical because security rules often focus on one syscall type at a time. For instance, you might consider `open` or `openat` to detect suspicious activity when files are opened, or `execve` to inspect newly spawned processes. You do not have to guess the syscall name—simply refer to the complete [list of supported system call events](/docs/reference/rules/supported-fields/) for an overview of what you can use.
+
+Each syscall has an entry event and an exit event, tracked by the `evt.dir` field, also referred to as the "direction" of the system call. A value of `>` indicates entry (when the syscall is invoked), while `<` marks exit (when the call has returned). By looking at the supported system call list, you will see that events have both entry and exit forms. For example:
 
 ```
 > setuid(UID uid)
 < setuid(ERRNO res)
 ```
 
-Most of the time the engine informs you about exit events as you want to understand what happened after the event execution is complete. You can see by using the events associated with opening files.
+In many cases, it is most useful to filter on exit events, because you want to know the outcome of the syscall once it has completed. For example, consider the file-opening events:
 
 ```
 > open()
@@ -35,73 +99,24 @@ Most of the time the engine informs you about exit events as you want to underst
 < openat(FD fd, FD dirfd, FSRELPATH name, FLAGS32 flags, UINT32 mode, UINT32 dev)
 ```
 
-As you can see, each event has a list of arguments associated with it that you can access by using `evt.arg.<argname>`. For example, to identify when a process opens a file to overwrite it, you need to check if the list of flags contains `O_TRUNC`. You can use the `evt.arg.flags` field of the `open` and `openat` exit events shown above and the rule will then look like this:
+Each event has a list of arguments that you can access through `evt.arg.<argname>`. For instance, if you want to detect a process opening a file to overwrite it, check if the list of flags contains `O_TRUNC`:
 
 ```
 evt.type in (open, openat) and evt.dir = < and evt.arg.flags contains O_TRUNC
 ```
 
-Note that the arguments do not necessarily match the raw parameters that are used in the Linux kernel, but are parsed by Falco to make it easier to write rules. By using the [`evt` fields](/docs/rules/supported-fields/#field-class-evt) we can inspect many more aspects that are common across events.
+Note that arguments do not necessarily match the raw parameters used in the Linux kernel; Falco may parse them in ways that make rule-writing more straightforward. By using the [`evt` fields](/docs/rules/supported-fields/#field-class-evt), you can inspect many other aspects common across different events.
 
 ## Syscall event context and metadata
 
-While the `evt` fields allow you to write pretty expressive conditions, arguments and common fields are usually not enough to write full security rules. Many times you want to add conditions based on the process context the event happens in, or whether or not something is happening inside a container or even correlate each event with the relevant Kubernetes metadata for the cluster, pods, and more. For this reason, Falco enriches many events with [other field classes](/docs/rules/supported-fields). Not all the classes are available for all the events and the list can grow. The documentation for each clarifies when those are expected to be available, but some are so common that you often rely on them.
+While the `evt` fields allow you to write expressive conditions, arguments and common fields alone are often insufficient for complete security rules. You might also need to consider the process context in which the event occurred, whether or not it happened inside a container, or how it correlates with Kubernetes metadata. To enable this, Falco enriches many events with [additional field classes](/docs/rules/supported-fields). Not all field classes are available for all events, and the list grows over time. Each field class’s documentation clarifies when those fields are expected to be present, but some are so common that rules often rely on them.
 
-The [`proc` field class](/docs/rules/supported-fields/#field-class-process) gives you the context about the process and thread that is generating a specific syscall. This information is usually very important. The most basic piece of information you can get out of it is `proc.name` and `proc.pid`, but you can even traverse the process hierarchy by using `proc.aname[<n>]` and `proc.apid[<n>]`. Likewise, you may be interested in which user performs a specific action via the `user` field class.
+The [`proc` field class](/docs/rules/supported-fields/#field-class-process) gives you context about the process and thread generating a specific syscall. This information is frequently very important. For example, you can use `proc.name` and `proc.pid`, or even traverse the process hierarchy with `proc.aname[<n>]` and `proc.apid[<n>]`. You can also see which user performed the action with the `user` field class.
 
-The documentation gives you an example of how to catch executions of `bash` within containers:
+An example rule that detects whenever `bash` is executed inside a container could look like this:
 
 ```
 evt.type = execve and evt.dir = < and container.id != host and proc.name = bash
 ```
 
-Note that you don't even have to look at the `execve` args. That is because once `execve` has returned the process context recorded by Falco is updated, meaning that the `proc.` fields will already refer to all information, including the command line, executable, arguments, related to the new process that was just spawned.
-
-## Transform operators
-
-Since Falco 0.38.0 you can perform basic transformation on fields in your rule condition. For instance, if you wish to check for a case insensitive process name you can write
-
-```
-tolower(proc.name) = bash
-```
-
-The following transform operators are supported:
-
-Operator | Description
-:--------|:-----------
-`tolower(<field>)` | Converts the input field to lower case
-`toupper(<field>)` | Converts the input field to upper case
-`b64(<field>)` | Decodes the input field from [Base64](https://en.wikipedia.org/wiki/Base64)
-`basename(<field>)` | Extracts the base name, i.e. the filename without directory, of the input field. Note that the behavior of `basename()` in Falco is slightly different from the Unix `basename` program. For instance, `basename(proc.exepath)` will evaluate to `"cat"` for `/usr/bin/cat` but will evaluate to an empty string (`""`) for `/usr/bin/`.
-
-## Field evaluation operator
-
-Since Falco 0.38.0 you can also compare field values with other field values by using the `val()` operator on the right hand side of the expression. For instance, in order to write a condition that checks for processes that have the same name as their parent you can write
-
-```
-proc.name = val(proc.pname)
-```
-
-Alternatively, using transformes on both sides of the comparison operator is also supported:
-
-```
-tolower(proc.name) = tolower(proc.pname)
-```
-
-## Operators
-
-You can use the following operators in conditions:
-
-Operators | Description
-:---------|:-----------
-`=`, `!=` | Equality and inequality operators.
-`<=`, `<`, `>=`, `>` | Comparison operators for numeric values.
-`contains`, `icontains` | For strings will evaluate to true if a string contains another, and `icontains` is the case insensitive version. For flags it will evaluate to true if the flag is set. Examples: `proc.cmdline contains "-jar"`, `evt.arg.flags contains O_TRUNC`.
-`startswith`, `endswith` | Check prefix or suffix of strings.
-`glob` | Evaluate standard glob patterns. Example: `fd.name glob "/home/*/.ssh/*"`.
-`in` | Evaluate if the provided set (could have just one element) is completely contained in another set. Example: `(b,c,d) in (a,b,c)` will evaluate `FALSE` since `d` is not contained in the compared set `(a,b,c)`.
-`intersects` | Evaluate if the provided set (could have just one element) has at least one element in common with another set. Example: `(b,c,d) intersects (a,b,c)` will evaluate `TRUE` since both sets contain `b` and `c`.
-`pmatch` | Compare a file path against a set of file or directory prefixes. Example: `fd.name pmatch (/tmp/hello)` will evaluate to true against `/tmp/hello`, `/tmp/hello/world` but not `/tmp/hello_world`.
-`exists` | Check if a field is set. Example: `k8s.pod.name exists`.
-`bcontains`, `bstartswith` | These operators work similarly to `contains` and `startswith` and allow performing byte matching against a raw string of bytes, accepting as input a hexadecimal string. Examples: `evt.buffer bcontains CAFEBABE`, `evt.buffer bstartswith 012AB3CC`.
-`regex` | Check if a string field matches a regular expression. Please note that the `regex` operator is considerably slower (up to an order of magnitude) than the above operators that work with strings, which are highly recommended for simple comparisons. The supported regex flavor is from the [Google RE2](https://github.com/google/re2/wiki/Syntax) library. Example: `fd.name regex '[a-z]*/proc/[0-9]+/cmdline'`.
+Notice that you do not need to check the `execve` arguments. Once `execve` has returned, Falco updates the process context, so all `proc.` fields refer to the new process that was just spawned, including command line, executable path, arguments, and so on.
