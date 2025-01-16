@@ -69,7 +69,7 @@ append_output:
   - suggested_output: true  # Enable the use of extractor plugins' suggested fields for all matching sources.
 ```
 
-When `suggested_output` is set to `true`, any extractor plugin that provides "suggested" fields will add them to the output in the form `plugin_field_name=$plugin.field`.
+When `suggested_output` is set to `true`, any extractor plugin that provides "suggested" fields will add them to the output in the form `plugin_field_name=$plugin.field_name`.
 
 ### Command-Line Usage
 
