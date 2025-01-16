@@ -46,7 +46,7 @@ Operators | Description
 `intersects` | Evaluates whether the first set has at least one element in common with the second set. Example: `(b,c,d) intersects (a,b,c)` is `TRUE` because both sets contain `b` and `c`.
 `pmatch` | Compares a file path against a set of file or directory prefixes. Example: `fd.name pmatch (/tmp/hello)` evaluates to true for `/tmp/hello`, `/tmp/hello/world` but not `/tmp/hello_world`. More details in the [below section](#pmatch-operator).
 `regex` | Checks whether a string field matches a [Google RE2](https://github.com/google/re2/wiki/Syntax)-compatible regular expression. Note that `regex` can be considerably slower than simpler string operations. Example: `fd.name regex '[a-z]*/proc/[0-9]+/cmdline'`.
-`startswith` | Checks if a string ends with a given prefix. The `bstartswith` variant allows byte matching against a raw string of bytes, taking a hexadecimal string as input. For example: `evt.buffer bstartswith 012AB3CC`.
+`startswith`, `bstartswith` | Checks if a string ends with a given prefix. The `bstartswith` variant allows byte matching against a raw string of bytes, taking a hexadecimal string as input. For example: `evt.buffer bstartswith 012AB3CC`.
 
 #### `pmatch` operator
 
