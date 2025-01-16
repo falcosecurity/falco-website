@@ -5,6 +5,7 @@ linktitle: Condition Syntax
 weight: 40
 aliases:
 - ../../rules/conditions
+- ../../rules/pmatch-operator
 ---
 
 A Falco rule’s condition defines the filter that determines which events are {{< glossary_tooltip text="detected" term_id="detection" >}} by the rule. This condition is a boolean expression that evaluates to _true_ or _false_ for each event. If it evaluates to _true_, the rule triggers and generates an {{< glossary_tooltip text="alert" term_id="alerts" >}}.
@@ -43,9 +44,27 @@ Operators | Description
 `glob` | Evaluates standard glob patterns. Example: `fd.name glob "/home/*/.ssh/*"`.
 `in` | Evaluates whether the first set is completely contained in the second set. Example: `(b,c,d) in (a,b,c)` is `FALSE` because `d` is not found in `(a,b,c)`.
 `intersects` | Evaluates whether the first set has at least one element in common with the second set. Example: `(b,c,d) intersects (a,b,c)` is `TRUE` because both sets contain `b` and `c`.
-`pmatch` | Compares a file path against a set of file or directory prefixes. Example: `fd.name pmatch (/tmp/hello)` evaluates to true for `/tmp/hello`, `/tmp/hello/world` but not `/tmp/hello_world`.
+`pmatch` | Compares a file path against a set of file or directory prefixes. Example: `fd.name pmatch (/tmp/hello)` evaluates to true for `/tmp/hello`, `/tmp/hello/world` but not `/tmp/hello_world`. More details in the [below section](#pmatch-operator).
 `regex` | Checks whether a string field matches a [Google RE2](https://github.com/google/re2/wiki/Syntax)-compatible regular expression. Note that `regex` can be considerably slower than simpler string operations. Example: `fd.name regex '[a-z]*/proc/[0-9]+/cmdline'`.
 `startswith` | Checks if a string ends with a given prefix. The `bstartswith` variant allows byte matching against a raw string of bytes, taking a hexadecimal string as input. For example: `evt.buffer bstartswith 012AB3CC`.
+
+#### `pmatch` operator
+
+`pmatch` checks if any given path prefix matches a filesystem path in Falco fields like `fd.name`, `evt.rawarg.path`, or `fs.path.name`. For example:
+
+```
+fd.name pmatch (/var/run, /var/spool, /etc, /boot)
+```
+
+If `fd.name` is `/var/spool/maillog`, this expression is true; if it is `/opt/data/file.txt`, it is false. Internally, `pmatch` builds a tree-like structure from the right-hand side paths and traverses it with the left-hand side path components, returning true at the first matching leaf.
+
+`pmatch` can also include glob wildcards:
+
+```
+fd.name pmatch (/var/*/*.txt, /etc, /boot)
+```
+
+This still performs a prefix match. Unlike `glob`, which must fully match the path, `pmatch` succeeds if the path starts with one of the specified prefixes. Hence, `fd.name pmatch (/var/*)` matches `/var/run/file.txt`, while `fd.name glob /var/*` does not. Wildcards do not cross directory separators (see [glob.7](https://man7.org/linux/man-pages/man7/glob.7.html)).
 
 ## Transformers
 
