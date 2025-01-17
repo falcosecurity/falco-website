@@ -39,14 +39,14 @@ Operators | Description
 `=`, `!=` | Equality and inequality operators.
 `<=`, `<`, `>=`, `>` | Comparison operators for numeric values.
 `contains`, `bcontains`, `icontains` | Strings are evaluated to be true if a string contains another. For flags, `contains` evaluates to true if the specified flag is set. For example: `proc.cmdline contains "-jar"`, `evt.arg.flags contains O_TRUNC`. The `icontains` variant works similarly but is case-insensitive. The `bcontains` variant allows byte matching against a raw string of bytes, taking a hexadecimal string as input. For example: `evt.buffer bcontains CAFEBABE`
-`endswith` | Checks if a string start with a given suffix.
+`endswith` | Checks if a string ends with a given suffix.
 `exists` | Checks whether a field is set. Example: `k8s.pod.name exists`.
 `glob` | Evaluates standard glob patterns. Example: `fd.name glob "/home/*/.ssh/*"`.
 `in` | Evaluates whether the first set is completely contained in the second set. Example: `(b,c,d) in (a,b,c)` is `FALSE` because `d` is not found in `(a,b,c)`.
 `intersects` | Evaluates whether the first set has at least one element in common with the second set. Example: `(b,c,d) intersects (a,b,c)` is `TRUE` because both sets contain `b` and `c`.
 `pmatch` | Compares a file path against a set of file or directory prefixes. Example: `fd.name pmatch (/tmp/hello)` evaluates to true for `/tmp/hello`, `/tmp/hello/world` but not `/tmp/hello_world`. More details in the [below section](#pmatch-operator).
 `regex` | Checks whether a string field matches a [Google RE2](https://github.com/google/re2/wiki/Syntax)-compatible regular expression. Note that `regex` can be considerably slower than simpler string operations. Example: `fd.name regex '[a-z]*/proc/[0-9]+/cmdline'`.
-`startswith`, `bstartswith` | Checks if a string ends with a given prefix. The `bstartswith` variant allows byte matching against a raw string of bytes, taking a hexadecimal string as input. For example: `evt.buffer bstartswith 012AB3CC`.
+`startswith`, `bstartswith` | Checks if a string starts with a given prefix. The `bstartswith` variant allows byte matching against a raw string of bytes, taking a hexadecimal string as input. For example: `evt.buffer bstartswith 012AB3CC`.
 
 #### `pmatch` operator
 
