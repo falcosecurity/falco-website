@@ -50,7 +50,7 @@ After a demo of Falco at a CNCF Meetup, the [Quickwit](https://quickwit.io/) tea
 
 ### Falco Talon
 
-New born in the Falco ecosystem, trying to complete the last missing piece: the reaction. You can now forward the Falco events to [Falco Talon](https//docs.falco-talon.org), a tailor made no-code response engine for Falco. The project is still in alpha stage, but moves quickly. Stay tuned.
+New born in the Falco ecosystem, trying to complete the last missing piece: the reaction. You can now forward the Falco events to [Falco Talon](https://docs.falco-talon.org), a tailor made no-code response engine for Falco. The project is still in alpha stage, but moves quickly. Stay tuned.
 
 ![](images/falco-talon.png)
 

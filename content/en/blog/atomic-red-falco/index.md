@@ -315,8 +315,6 @@ Hurrah! We detected the boot initialization scripts with the above command. To r
 Invoke-AtomicTest T1037.004 -ShowDetails
 ```
 
-![](images/re-local.png)
-
 We can see from the command that it is using the 'python3' command to run Python scripts. However, the script itself is executed as a base64-encoded string to evade some traditional detection tools.
 
 
