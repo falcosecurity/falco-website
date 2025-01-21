@@ -19,7 +19,7 @@ The Falco Project provides guidance on some of these aspects, and there are ongo
 
 ## Resource Utilization and System Impact
 
-The Falco Project provides native support for measuring resource utilization and statistics, including event drop counters, kernel tracepoint invocation counters, timeouts, and internal state handling. More detailed information is given in the [Falco Metrics](../falco-metrics/) Guide.
+The Falco Project provides native support for measuring resource utilization and statistics, including event drop counters, kernel tracepoint invocation counters, timeouts, and internal state handling. More detailed information is given in the [Falco Metrics](/docs/metrics/) Guide.
 
 ### CPU and Memory Utilization
 
@@ -36,7 +36,7 @@ Top metrics:
 
 Beyond monitoring the tool's utilization, check if your applications perform as before. This evaluation could include overall network, I/O, or general contention metrics.
 
-Read [Falco Metrics](../falco-metrics/) next.
+Read [Falco Metrics](/docs/metrics) next.
 
 ### Server Load and Falco Event Drops
 

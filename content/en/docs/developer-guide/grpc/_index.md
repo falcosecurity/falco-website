@@ -11,7 +11,7 @@ Starting from version [0.18.0](https://github.com/falcosecurity/falco/releases/t
 
 The current APIs are:
 
-- [schema definition](outputs): get or subscribe to Falco output events.
-- [schema definition](version): retrieve the Falco version.
+- [schema definition](/docs/developer-guide/grpc/outputs): get or subscribe to Falco output events.
+- [schema definition](/docs/developer-guide/grpc/version): retrieve the Falco version.
 
 In order to interact with these APIs, the The Falco Project provides a [Golang SDK](/docs/grpc/client-go).

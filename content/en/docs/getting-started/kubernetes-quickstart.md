@@ -157,7 +157,7 @@ kubectl exec -it $(kubectl get pods --selector=app=nginx -o name) -- cat /etc/sh
 
 You should see an event appearing in the Falcosidekick UI
 
-![Falcosidekick Event](../images/falcosidekick-event.png)
+![Falcosidekick Event](/docs/getting-started/images/falcosidekick-event.png)
 
 The Falcosidekick UI can be used to quickly display events but most likely on a production system you will want to forward events to a centralized location. Falcosidekick supports more than 60 integrations. You can find an example below but you can refer to [the forwarding documentation](/docs/outputs/forwarding/) to learn more.
 
@@ -174,7 +174,7 @@ helm upgrade --namespace falco falco falcosecurity/falco \
 
 If Slack is configured correctly, when an event is triggered you should receive a message like the following:
 
-![Slack output](../images/slack-output.png)
+![Slack output](/docs/getting-started/images/slack-output.png)
 
 ## Cleanup
 
