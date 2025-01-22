@@ -23,3 +23,9 @@ command = "make branch-build"
 
 [functions]
 node_bundler = "esbuild"
+
+[[redirects]]
+  from = "https://falcosecurity.dev/*"
+  to = "https://falco.org/:splat"
+  status = 301
+  force = true
