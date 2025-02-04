@@ -75,7 +75,7 @@ In the meantime, use the following script to generate the certificates.
 Run the following commands:
 
 ```bash
-$ openssl genrsa -des3 -out ca.key 4096 -passout pass:1234
+$ openssl genrsa -des3 -passout pass:1234 -out ca.key 4096
 
 $ openssl req -new                  \
               -x509                 \
@@ -91,7 +91,7 @@ $ openssl req -new                  \
 Run the following command:
 
 ```bash
-$ openssl genrsa -des3 -out server.key 4096 -passout pass:1234
+$ openssl genrsa -des3 -passout pass:1234 -out server.key 4096
 
 $ openssl req -new                  \
               -key server.key       \
