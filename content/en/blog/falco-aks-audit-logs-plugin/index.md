@@ -37,27 +37,43 @@ Once you have the stream enabled, you must create or reuse a storage account blo
 
 ## Configuring Falco to use AKS audit logs plugin
 
+First, using (falcoctl)[https://github.com/falcosecurity/falcoctl], download the plugin: 
+```yaml
+sudo falcoctl artifact install k8saudit-aks
+```
+
 In your falco.yaml file, you must add the plugin configuration and later enable the plugin
 ```yaml
+config_files:
+  - /etc/falco/config.d
+
+watch_config_files: true
+
 plugins:
+#  - name: k8saudit
+#    library_path: libk8saudit.so
+#    init_config: ""
+#    open_params: "http://:9765/k8s-audit"
+#  - name: json
+#    library_path: libjson.so
  - name: k8saudit-aks
-   library_path: /usr/share/falco/plugins/libk8saudit-aks.so
-   init_config: ""
-   open_params: '{}'
+   library_path: libk8saudit-aks.so
+   init_config:
+     event_hub_name: ${EVENTHUB_NAME}
+     blob_storage_container_name: ${BLOB_STORAGE_CONTAINER_NAME}
+     event_hub_namespace_connection_string: ${EVENTHUB_NAMESPACE_CONNECTION_STRING}
+     blob_storage_connection_string: ${BLOB_STORAGE_CONNECTION_STRING}
 
-load_plugins:
- - k8saudit-aks
+load_plugins: [k8saudit-aks]
+
+stdout_output:
+  enabled: true
 ```
 
-Before starting Falco, configure the following environment variables:
-```yaml
-export BLOB_STORAGE_CONTAINER_NAME=${blob_storage_container_name}
-export BLOB_STORAGE_CONNECTION_STRING=${blob_storage_connection_string}
-export EVENTHUB_NAMESPACE_CONNECTION_STRING=${event_hub_namespace_connection_string}
-export EVENTHUB_NAME=${event_hub_name}
-```
-
-Once they are exported, initialize Falco and after some seconds you'll logs informing the k8saudit-aks plugin was loaded:
+Once they are exported, run Falco and after some seconds you'll logs informing the k8saudit-aks plugin was loaded:
+```bash
+falco -c /etc/falco/falco.yaml -r /etc/falco/falco_rules.yaml
+``` 
 ```t
 Tue Dec 17 18:02:07 2024: Opening 'k8s_audit' source with plugin 'k8saudit-aks'
 2024/12/17 21:02:07 [k8saudit-aks] opened connection to blob storage
@@ -68,7 +84,7 @@ Tue Dec 17 18:02:07 2024: Opening 'k8s_audit' source with plugin 'k8saudit-aks'
 
 ## Testing out!
 
-Create **falco_aks_audit.yaml** to test events:
+Append rule to **falco_rules.yaml** file:
 ```yaml
 - rule: K8s Audit Event Detected
   desc: A test rule that detects any Kubernetes audit event
@@ -79,18 +95,8 @@ Create **falco_aks_audit.yaml** to test events:
   tags: [testing, k8s_audit]
 ```
 
-Load it and start falco:
-```yaml
-rules_files:
-  - /etc/falco/falco_rules.yaml
-  - /etc/falco/falco_rules.local.yaml
-  - /etc/falco/falco_aks_audit.yaml
-
-priority: debug
-```
-
 ```bash
-$ falco -c /etc/falco/falco.yaml
+$ falco -c /etc/falco/falco.yaml -r /etc/falco/falco_rules.yaml
 ```
 
 Then, you should see initialization message, followed by some events from your AKS cluster. Since we have debug enabled, you should see some events from the aksService:
@@ -122,3 +128,18 @@ Thu Dec 19 11:44:55 2024: One ring buffer every '2' CPUs.
 ```yaml
 10:52:03.348668000: Debug K8s Audit Event Detected: verb=create, user=aksService, groups=(system:masters,system:authenticated), target=<NA>
 ```
+
+## Let's meet!
+
+As always, we meet every week in our [community calls](https://github.com/falcosecurity/community),
+if you want to know the latest and the greatest you should join us there!
+
+If you have any questions
+
+ - Join the #falco channel on the [Kubernetes Slack](https://slack.k8s.io)
+ - [Join the Falco mailing list](https://lists.cncf.io/g/cncf-falco-dev)
+
+
+Enjoy 😎,
+
+_Igor_
