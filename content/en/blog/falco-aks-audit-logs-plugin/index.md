@@ -1,6 +1,6 @@
 ---
 title: Falco plugin for collecting AKS audit logs
-date: 2024-12-17
+date: 2025-03-09
 author: Igor Eulalio
 slug: falco-aks-audit-logs-plugin
 tags: ["Falco","Kubernetes", "Plugin", "Azure", "AKS", "auditlogs"]
@@ -30,14 +30,14 @@ The AKS audit logs plugin extends Falco’s capabilities to Microsoft Azure Kube
 
 In order to use the AKS audit log plugin, you must first configure your AKS cluster to ship the logs where we can fetch them.
 
-The current supported output source is Event hub, so when following the (guide)[https://learn.microsoft.com/en-us/azure/aks/monitor-aks#aks-control-planeresource-logs] to configure your AKS audit logs, you must have Eventhub enabled. You can also optionally send it to other sources:
-!image1
+The current supported output source is Event hub, so when following the [guide](https://learn.microsoft.com/en-us/azure/aks/monitor-aks#aks-control-planeresource-logs) to configure your AKS audit logs, you must have Eventhub enabled. You can also optionally send it to other sources:
+![audit-logs](/blog/falco-aks-audit-logs-plugin/images/falco-aks-audit-logs-plugin1.png)
 
 Once you have the stream enabled, you must create or reuse a storage account blob container so that the plugin can track the last event that was consumed, which is done trough checkpoints.
 
 ## Configuring Falco to use AKS audit logs plugin
 
-First, using (falcoctl)[https://github.com/falcosecurity/falcoctl], download the plugin: 
+First, using [falcoctl](https://github.com/falcosecurity/falcoctl), download the plugin: 
 ```yaml
 sudo falcoctl artifact install k8saudit-aks
 ```
