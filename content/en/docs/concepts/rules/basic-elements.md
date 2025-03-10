@@ -36,7 +36,7 @@ Here's an example of a condition that alerts whenever a bash shell is run inside
 container.id != host and proc.name = bash
 ```
 
-The first clause checks that the event happened in a container (where `container.id` is equal to `"host"` if the event happened on a regular host). The second clause checks that the process name is `bash`. 
+The first clause checks that the event happened in a container (where `container.id` is not equal to `"host"` as the event occurs in a container). The second clause checks that the process name is `bash`. 
 
 {{% alert color="warning" %}}
 Since this condition does not include a clause with a system call it will only check event metadata.\
