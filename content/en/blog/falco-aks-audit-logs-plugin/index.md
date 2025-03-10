@@ -1,6 +1,6 @@
 ---
 title: Falco plugin for collecting AKS audit logs
-date: 2024-12-17
+date: 2025-03-09
 author: Igor Eulalio
 slug: falco-aks-audit-logs-plugin
 tags: ["Falco","Kubernetes", "Plugin", "Azure", "AKS", "auditlogs"]
@@ -8,7 +8,7 @@ tags: ["Falco","Kubernetes", "Plugin", "Azure", "AKS", "auditlogs"]
 
 Troubleshooting Kubernetes events is challenging due to the multitude of data sources involved: container logs, Kubernetes events, cloud logs, and more. Among these sources, Kubernetes audit logs are especially valuable for identifying threats, as every action passing through the Kubernetes API server is recorded there.
 
-We already provide plugins that let you parse and use Falco to detect threats in audit logs from GKE and EKS clusters. With our latest plugin, you’ll now have the same powerful threat detection capabilities for your Azure AKS clusters.
+We already provide plugins that let you parse and use Falco to detect threats in audit logs from GKE and EKS clusters. With our latest plugin, you'll now have the same powerful threat detection capabilities for your Azure AKS clusters.
 
 ## What is Falco?
 
@@ -20,24 +20,24 @@ With Falco running on your GKE clusters you can be notified of a wide variety of
 * Has someone shelled into a running container?
 * Has an executable been added to the container after it was deployed?
 
-These are just a few examples. Falco has over 80 rules that can be used to make you aware of not only external threats but also when clusters aren’t being operated in accordance with industry best practices. 
+These are just a few examples. Falco has over 80 rules that can be used to make you aware of not only external threats but also when clusters aren't being operated in accordance with industry best practices. 
 
 ## What is the AKS audit logs plugin?
 
-The AKS audit logs plugin extends Falco’s capabilities to Microsoft Azure Kubernetes Service (AKS) clusters, providing you with the same security insights and threat detection Falco already offers for GKE and EKS environments. With this plugin, you can seamlessly integrate AKS audit logs into Falco’s event processing pipeline, enabling it to identify anomalies, suspicious activities, and policy violations within your AKS-based workloads.
+The AKS audit logs plugin extends Falco's capabilities to Microsoft Azure Kubernetes Service (AKS) clusters, providing you with the same security insights and threat detection Falco already offers for GKE and EKS environments. With this plugin, you can seamlessly integrate AKS audit logs into Falco's event processing pipeline, enabling it to identify anomalies, suspicious activities, and policy violations within your AKS-based workloads.
 
 ## Using AKS audit logs plugin
 
 In order to use the AKS audit log plugin, you must first configure your AKS cluster to ship the logs where we can fetch them.
 
-The current supported output source is Event hub, so when following the (guide)[https://learn.microsoft.com/en-us/azure/aks/monitor-aks#aks-control-planeresource-logs] to configure your AKS audit logs, you must have Eventhub enabled. You can also optionally send it to other sources:
-!image1
+The current supported output source is Event hub, so when following the [guide](https://learn.microsoft.com/en-us/azure/aks/monitor-aks#aks-control-planeresource-logs) to configure your AKS audit logs, you must have Eventhub enabled. You can also optionally send it to other sources:
+![aks-audit-logs](/blog/falco-aks-audit-logs-plugin/falco-aks-audit-logs-plugin1.png)
 
 Once you have the stream enabled, you must create or reuse a storage account blob container so that the plugin can track the last event that was consumed, which is done trough checkpoints.
 
 ## Configuring Falco to use AKS audit logs plugin
 
-First, using (falcoctl)[https://github.com/falcosecurity/falcoctl], download the plugin: 
+First, using [falcoctl](https://github.com/falcosecurity/falcoctl), download the plugin: 
 ```yaml
 sudo falcoctl artifact install k8saudit-aks
 ```
