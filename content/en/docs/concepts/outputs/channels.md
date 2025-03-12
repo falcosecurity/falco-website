@@ -203,4 +203,4 @@ Here's the same output, pretty-printed:
 
 ## gRPC Output
 
-If you'd like to send alerts to an external program connected via gRPC API (for example, the [falco-exporter](https://github.com/falcosecurity/falco-exporter)), you need to enable both the `grpc` and `grpc_output` options as described under the [gRPC Configuration section](/docs/grpc/#configuration).
+If you'd like to send alerts to an external program connected via gRPC API, you need to enable both the `grpc` and `grpc_output` options as described under the [gRPC Configuration section](/docs/grpc/#configuration).
