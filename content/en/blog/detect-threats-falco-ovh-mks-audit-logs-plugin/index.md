@@ -22,7 +22,7 @@ Falco can receive **Events**, compare them to a set of **Rules** to determine th
 
 ## What is the OVH MKS Audit Logs plugin?
 
-The OVH audit logs plugin (k8saudit-ovh) extends Falco's capabilities to OVHcloud Managed Kubernetes Service (MKS) clusters, providing you with the same security insights and threat detection Falco already offers for GKE, EKS and AKS environments.
+The OVH audit logs plugin ([k8saudit-ovh](https://github.com/falcosecurity/plugins/tree/main/plugins/k8saudit-ovh)) extends Falco's capabilities to OVHcloud Managed Kubernetes Service (MKS) clusters, providing you with the same security insights and threat detection Falco already offers for GKE, EKS and AKS environments.
 
 With this plugin, you can seamlessly integrate MKS Audit Logs into Falco's event processing pipeline, enabling it to identify anomalies, suspicious activities, and policy violations within your MKS-based workloads.
 
