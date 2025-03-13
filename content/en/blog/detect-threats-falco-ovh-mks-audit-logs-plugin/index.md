@@ -174,7 +174,7 @@ Mon Feb 10 09:15:35 2025: Opening 'k8s_audit' source with plugin 'k8saudit-ovh'
 
 In order to test Falco we need to know which rules are installed by default. In our case, as we defined it in the **values.yaml** file, the k8saudit-ovh plugin follow the [k8s_audit_rules.yaml](https://github.com/falcosecurity/plugins/blob/main/plugins/k8saudit/rules/k8s_audit_rules.yaml) file. You can take a look at them in order to know them.
 
-In this blog post we will test one of well-known default k8s audit rules:
+In this blog post we will test one of the well-known default k8s audit rules:
 
 ```yaml
 - rule: Attach/Exec Pod
