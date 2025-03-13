@@ -37,7 +37,7 @@ In order to use the OVH MKS Audit Logs plugin, you must follow several steps:
 * create a data stream into this LDP
 * connect an OVHcloud MKS cluster to the data stream (to send Audit Logs into it)
 
-To be able to access to our Kubernetes clusters Audit Logs, you need to deploy a [LDP](https://www.ovhcloud.com/en/identity-security-operations/logs-data-platform/). LDP is the managed platform for collecting, processing, analyzing and storing your logs of the OVHcloud products. Deploy a LDP (Bare Metal Cloud universe) with the wathever plan you want.
+To be able to access our Kubernetes clusters' Audit Logs, you need to deploy an [LDP](https://www.ovhcloud.com/en/identity-security-operations/logs-data-platform/). LDP is the managed platform for collecting, processing, analyzing, and storing your logs of the OVHcloud products. Deploy an LDP (Bare Metal Cloud universe) with whatever plan you want.
 
 OVHcloud Kubernetes Audit Logs will be stored in a data stream. The OVHcloud Audit Logs Falco plugin receive the audit logs through Websocket so you need to enable **Websocket broadcasting** when you create the data stream on LDP.
 
