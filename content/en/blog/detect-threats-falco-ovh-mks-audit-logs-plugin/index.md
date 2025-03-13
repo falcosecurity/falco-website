@@ -9,8 +9,8 @@ tags: ["Falco","Kubernetes", "Plugin", "OVHcloud", "MKS", "auditlogs"]
 ---
 
 Detecting threats in a Kubernetes cluster can be challenging, we generally don't know where and how to start.
-The good news is that we have an amount of valuable logs that can help us to know what is happened in the cluster. Indeed, each actions, requested or done by a user or an app, in a cluster, are recorded in Audit Logs.
-Kubernetes events are key to understand the behavior of a cluster.
+The good news is that we have an amount of valuable logs that can help us to know what is happened in the cluster. Indeed, each action requested or done by a user or an app, in a cluster, is recorded in Audit Logs.
+Kubernetes events are key to understanding the behavior of a cluster.
 
 We already provide plugins that let you parse Audit Logs and use Falco to detect threats from GKE, EKS and AKS clusters. With our latest plugin, you'll now have the same powerful threat detection capabilities for your OVHcloud MKS clusters 🎉.
 
