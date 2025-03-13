@@ -26,7 +26,7 @@ The OVH audit logs plugin ([k8saudit-ovh](https://github.com/falcosecurity/plugi
 
 With this plugin, you can seamlessly integrate MKS Audit Logs into Falco's event processing pipeline, enabling it to identify anomalies, suspicious activities, and policy violations within your MKS-based workloads.
 
-Concretely, when an user will execute some **kubectl** commands in an OVHcloud MKS cluster, Audit Logs will be generated. Falco is listening from them and depending on the configured rules to follow, it will generate some alerts.
+Concretely, when a user executes some **kubectl** commands in an OVHcloud MKS cluster, Audit Logs will be generated. Falco is listening to them, and depending on the configured rules to follow, it will generate some alerts.
 
 ![Falco Kubernetes API Server Audit Logs](images/falco-apiserver.png)
 
