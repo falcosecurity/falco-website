@@ -9,6 +9,6 @@ aka:
 tags:
 - integration
 ---
-Prometheus Metrics Exporter for {{< glossary_tooltip text="Falco" term_id="falco" >}} output events.
+Old Prometheus Metrics Exporter for {{< glossary_tooltip text="Falco" term_id="falco" >}} output events, now DEPRECATED.
 
 <!--more-->
