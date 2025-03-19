@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting
-description: Community driven troubleshooting guides
+description: Troubleshooting guides
 weight: 60
 ---
 
