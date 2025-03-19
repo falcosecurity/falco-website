@@ -3,8 +3,8 @@ title: Metrics
 description: Leverage continuous metrics for valuable insights into Falco's performance.
 weight: 50
 aliases:
-- ../../metrics
-- ../../metrics/falco-metrics
+- ../metrics
+- ../metrics/falco-metrics
 ---
 
 ## Overview
@@ -14,7 +14,7 @@ Falco’s native metrics framework provides real-time insights into your deploym
 - **Monitor Health:** Verify that Falco is running smoothly in production.
 - **Track Performance:** Observe event rates, resource usage, and more.
 - **Troubleshoot Issues:** Identify potential configuration improvements based on detailed internal metrics.
-- **Detections metrics:** Get insights into rules matching abnormal behavior, potential security threats, and compliance violations.
+- **Detections Metrics:** Get insights into rules matching abnormal behavior, potential security threats, and compliance violations.
 
 {{% pageinfo color="info" %}}
 As a real-world example of the potential these metrics can offer, we invite you to examine the Grafana dashboards of live Falco deployments for our testing infrastructure at [monitoring.prow.falco.org](https://monitoring.prow.falco.org/).

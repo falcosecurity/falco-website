@@ -2,9 +2,9 @@
 title: Performance
 description: Adopt best practices for monitoring performance in production
 linktitle: Performance
-weight: 10
+weight: 1
 aliases:
-- ../../metrics/performance
+- ../metrics/performance
 ---
 
 First and foremost, if something goes seriously wrong during Falco deployment, it's usually noticeable immediately. On a longer time scale, continuous performance monitoring and quality assurance, driven by the right metrics, ensure Falco functions as expected 24/7.
