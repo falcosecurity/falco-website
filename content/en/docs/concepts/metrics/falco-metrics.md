@@ -3,6 +3,8 @@ title: Falco Metrics
 description: Leverage continuous metrics for valuable insights into Falco's performance
 linktitle: Falco Metrics
 weight: 10
+aliases:
+- ../../metrics/falco-metrics
 ---
 
 Falco's optional native metrics framework helps you verify that Falco is running smoothly in production. It lets you check if Falco is working as expected, track the progress and stability of rollouts, and review internal metrics for potential configuration improvements. This way, you can confirm Falco's performance and make adjustments as needed for optimal operation.
