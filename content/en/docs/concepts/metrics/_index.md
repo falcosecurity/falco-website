@@ -1,7 +1,7 @@
 ---
 title: Metrics
 description: Falco Metrics and Performance
-weight: 34
+weight: 50
 aliases:
 - ../../metrics
 ---
