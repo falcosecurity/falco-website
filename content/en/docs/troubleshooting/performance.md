@@ -2,7 +2,7 @@
 title: Performance
 description: Adopt best practices for monitoring performance in production
 linktitle: Performance
-weight: 20
+weight: 10
 aliases:
 - ../../metrics/performance
 ---
