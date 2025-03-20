@@ -22,11 +22,11 @@ Thanks to ad-hoc Falco rules specific to this use case, these GitHub actions can
 
 ## Using Falco Actions
 
-You can use the actions in two modes:
-* `live`: it meant to protect a single job at runtime
-* `analyze`:  it meant to offer a more detailed report
+To have Falco inside your pipeline, you need to add these two actions:
+* `falcosecurity/falco-actions/start`
+* `falcosecurity/falco-actions/stop`
 
-To use with the `live` mode, you need to have a workflow similar to this:
+Below you can see an example:
 
 ```yaml
 name: CI
@@ -63,7 +63,26 @@ jobs:
           verbose: true   
 ```
 
-With this you will be able to see at the github action summary the list of the events that detected by Falco.
+After the execution, you will be able to see the results at the github action summary.
+
+
+If you want a more detailed report, you can use the action `falcosecurity/falco-actions/analyze`; it will allow you to have a better report with information like:
+
+* Falco rules triggered during steps' execution.
+* Contacted IPs
+* Contacted DNS domains
+* SHA256 hash of spawned executables
+* Spawned container images
+* Written files
+* A summary of the report generated with OpenAI
+* Reputation of Contacted IPs
+* Reputation of SHA256 hashes
+
+For more informations about the usage, you can check the [github repository](https://github.com/falcosecurity/falco-actions) for the actions.
+
+## Conclusions
+
+These actions are just the beginning of having the Falco capabilities inside the CI/CD pipelines. You can customize and have your own set of rules, keeping all environments and scenarios covered and protected from supply chain attacks.
 
 
 
