@@ -63,6 +63,8 @@ jobs:
           verbose: true   
 ```
 
+**OBS: main is being used here only to simplify how it works, you should always pin your dependencies to a specific commit SHA.**
+
 After the execution, you will be able to see the results at the github action summary.
 
 
@@ -80,12 +82,32 @@ If you want a more detailed report, you can use the action `falcosecurity/falco-
 
 For more informations about the usage, you can check the [github repository](https://github.com/falcosecurity/falco-actions) for the actions.
 
+## Default rules file
+
+By default, Falco action will detect a variety of events, following the [default CICD rules](https://raw.githubusercontent.com/falcosecurity/falco-actions/refs/heads/main/rules/falco_cicd_rules.yaml), that can be overrided if you want.
+
+In the example from **tj-actions/changed-files** exploit, one rule that would be triggered is the **Process Dumping Memory of Others**, which was used during the exploit to dump environment variables from the main process and printing it as part of the Github runner execution.
+
+Falco team is always adding new rules to make sure our users get value out of the box, but you can also write your own rules accordingly to your company policy.
+
 ## Conclusions
 
 These actions are just the beginning of having the Falco capabilities inside the CI/CD pipelines. You can customize and have your own set of rules, keeping all environments and scenarios covered and protected from supply chain attacks.
 
+## Let's meet!
+
+As always, we meet every week in our [community calls](https://github.com/falcosecurity/community),
+if you want to know the latest and the greatest you should join us there!
+
+If you have any questions
+
+ - Join the #falco channel on the [Kubernetes Slack](https://slack.k8s.io)
+ - [Join the Falco mailing list](https://lists.cncf.io/g/cncf-falco-dev)
 
 
+Enjoy 😎,
+
+_Igor and Edson_
 
 
 
