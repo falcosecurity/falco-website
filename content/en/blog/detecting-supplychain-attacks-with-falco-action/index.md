@@ -49,7 +49,7 @@ jobs:
         uses: falcosecurity/falco-actions/start@main
         with:
           mode: live
-          falco-version: '0.39.0'
+          falco-version: '0.40.0'
           verbose: true
         
       - name: My Custom Step
