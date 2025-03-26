@@ -7,7 +7,7 @@ tags: ["Falco","Kubernetes", "cicd", "Github Action", "SupplyChain"]
 ---
 
 
-The recently discovered CVE for the GitHub action tj-actions/changed-files brought to light a topic that is really critical for companies: supply chain attacks. With that, we want to discuss and show a bit about how Falco can help your organization detect this kind of attack and other suspect behaviors inside your CI/CD pipeline.
+The recently discovered CVE for the GitHub action `tj-actions/changed-files` brought to light a topic that is really critical for companies: supply chain attacks. With that, we want to discuss and show a bit about how Falco can help your organization detect this kind of attack and other suspect behaviors inside your CI/CD pipeline.
 
 
 ## What is Falco?
@@ -16,7 +16,7 @@ Falco is a cloud native security tool that provides runtime security across host
 
 ## What is Falco Actions?
 
-Falco Actions enable you to run Falco in GitHub Actions to detect suspicious behavior in your CI/CD workflows. If you run it in a pull request, the action will create a comment with the findings.
+[Falco Actions](https://github.com/falcosecurity/falco-actions) enable you to run Falco in GitHub Actions to detect suspicious behavior in your CI/CD workflows. If you run it in a pull request, the action will create a comment with the findings.
 
 Thanks to ad-hoc Falco rules specific to this use case, these GitHub actions can monitor your GitHub runner and detect software supply chain attacks.
 
@@ -84,11 +84,11 @@ For more informations about the usage, you can check the [github repository](htt
 
 ## Default rules file
 
-By default, Falco action will detect a variety of events, following the [default CICD rules](https://raw.githubusercontent.com/falcosecurity/falco-actions/refs/heads/main/rules/falco_cicd_rules.yaml), that can be overrided if you want.
+By default, Falco action will detect a variety of events, following the [default CICD rules](https://github.com/falcosecurity/falco-actions/blob/main/rules/falco_cicd_rules.yaml), that can be overridden if you want.
 
 In the example from **tj-actions/changed-files** exploit, one rule that would be triggered is the **Process Dumping Memory of Others**, which was used during the exploit to dump environment variables from the main process and printing it as part of the Github runner execution.
 
-Falco team is always adding new rules to make sure our users get value out of the box, but you can also write your own rules accordingly to your company policy.
+The Falco team is always adding new rules to ensure our users get value out of the box, but you can also write your own rules according to your company policy.
 
 ## Conclusions
 
@@ -96,7 +96,7 @@ These actions are just the beginning of having the Falco capabilities inside the
 
 ## Let's meet!
 
-As always, we meet every week in our [community calls](https://github.com/falcosecurity/community),
+As always, we meet every 2 weeks on Wednesday at 4pm UTC in our [community calls](https://github.com/falcosecurity/community),
 if you want to know the latest and the greatest you should join us there!
 
 If you have any questions
