@@ -86,7 +86,7 @@ For more informations about the usage, you can check the [github repository](htt
 
 By default, Falco action will detect a variety of events, following the [default CICD rules](https://github.com/falcosecurity/falco-actions/blob/main/rules/falco_cicd_rules.yaml), that can be overridden if you want.
 
-In the example from **tj-actions/changed-files** exploit, one rule that would be triggered is the **Process Dumping Memory of Others**, which was used during the exploit to dump environment variables from the main process and printing it as part of the Github runner execution.
+In the example from the `tj-actions/changed-files` exploit, one rule that would be triggered is the **Process Dumping Memory of Others**, which was used during the exploit to dump environment variables from the main process and print them as part of the Github runner execution.
 
 The Falco team is always adding new rules to ensure our users get value out of the box, but you can also write your own rules according to your company policy.
 
