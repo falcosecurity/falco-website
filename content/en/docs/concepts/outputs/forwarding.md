@@ -12,9 +12,9 @@ Falco alerts can easily be forwarded to third-party systems. Their JSON format a
 
 ## Falcosidekick
 
-Falcosidekick is a proxy forwarder, it acts as central point for any fleet of Falco instances using their http outputs to send their alerts.
+Falcosidekick is a proxy forwarder that acts as a central point for any fleet of Falco instances, using their HTTP outputs to send alerts.
 
-The currently available outputs are chat, alert, log, storage, streaming systems, etc.
+It supports forwarding alerts to various outputs such as chat platforms, alerting systems, logs, storage services, and streaming systems.
 
 ![Falcosidekick](/docs/images/falcosidekick_forwarding.png)
 
