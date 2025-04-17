@@ -300,13 +300,13 @@ points to the minikube cluster. Then run:
     2. Trigger a Falco rule:
 
         ```bash
-        kubectl exec $(kubectl get pods -l app.kubernetes.io/name=falco -o name) -- touch /bin/test-bin
+        kubectl exec $(kubectl get pods -l app.kubernetes.io/name=falco -o name) -- cat /etc/shadow
         ```
 
         Check that a log similar to this one has been printed:
 
         ```bash
-        15:32:04.318689836: Error File below a known binary directory opened for writing (user=<NA> user_loginuid=-1 command=touch /bin/test-bin pid=20954 file=/bin/test-bin parent=<NA> pcmdline=<NA> gparent=<NA> container_id=38e44b926166 image=falcosecurity/falco-no-driver) k8s.ns=default k8s.pod=falco-bggd7 container=38e44b926166
+        15:32:04.318689836: Warning Sensitive file opened for reading by non-trusted program (file=/etc/shadow gparent=systemd ggparent=<NA> gggparent=<NA> evt_type=openat user=root user_uid=0 user_loginuid=-1 process=cat proc_exepath=/usr/bin/cat parent=containerd-shim command=cat /etc/shadow terminal=0 container_id=38e44b926166 container_image=falcosecurity/falco container_image_tag=0.40.0-debian container_name=k8s_falco_falco-bggd7_default_7bb0145f-dca5-452d-a670-01e23d839e5a_1 k8s_ns=<NA> k8s_pod_name=<NA>)
         ```
 
 ## kind
