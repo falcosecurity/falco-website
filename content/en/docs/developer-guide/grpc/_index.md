@@ -14,4 +14,4 @@ The current APIs are:
 - [schema definition](/docs/developer-guide/grpc/outputs): get or subscribe to Falco output events.
 - [schema definition](/docs/developer-guide/grpc/version): retrieve the Falco version.
 
-In order to interact with these APIs, the The Falco Project provides a [Golang SDK](/docs/grpc/client-go).
+In order to interact with these APIs, the The Falco Project provides a [Golang SDK](/docs/developer-guide/grpc/client-go/).
