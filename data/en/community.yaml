@@ -1,18 +1,16 @@
-- name: GitHub
-  icon: /icons/github.svg
-  title: Find us on GitHub
-  content: <i class="fa fa-star"></i> 4.6K+
-  url: https://github.com/falcosecurity/falco
 - name: Slack
   icon: /icons/slack.svg
   title: Join our Slack
   url: https://kubernetes.slack.com/messages/falco
+- name: GitHub
+  icon: /icons/github.svg
+  title: Contribute on GitHub
+  url: https://github.com/falcosecurity/falco
 - name: YouTube
   icon: /icons/youtube.svg
   title: Watch us on YouTube
-  url: https://www.youtube.com/playlist?list=PLgVVUpW8NIJAaZtszf1_nxB2y6mQrlY4s
+  url: https://www.youtube.com/@falcosecurity
 - name: Docker
   icon: /icons/docker64.svg
-  title: Download on Dockerhub
-  content: 60M+ Downloads
+  title: Pull from Docker Hub
   url: https://hub.docker.com/u/falcosecurity
