@@ -398,11 +398,6 @@ enable = true
 	url = "https://lists.cncf.io/g/cncf-falco-dev"
 	icon = "fa fa-envelope"
         desc = "Discuss development issues around the project"
-[[params.links.developer]]
-	name = "Contributor of the Month"
-	url = "/docs/contribute/contributor-of-the-month/"
-	icon = "fa fa-star"
-        desc = "View the contributors of the month"
 
 [params.mermaid]
 enable = false
