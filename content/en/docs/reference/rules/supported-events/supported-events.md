@@ -1,4 +1,4 @@
-The events below are valid for Falco *Schema Version*: 3.5.0
+The events below are valid for Falco *Schema Version*: 3.6.0
 ## Syscall events
 
 Default | Dir | Name | Params 
@@ -10,7 +10,7 @@ Yes | `<` | `close` | ERRNO **res**
 No | `>` | `read` | FD **fd**, UINT32 **size**
 No | `<` | `read` | ERRNO **res**, BYTEBUF **data**, FD **fd**, UINT32 **size**
 No | `>` | `write` | FD **fd**, UINT32 **size**
-No | `<` | `write` | ERRNO **res**, BYTEBUF **data**
+No | `<` | `write` | ERRNO **res**, BYTEBUF **data**, FD **fd**, UINT32 **size**
 Yes | `>` | `socket` | ENUMFLAGS32 **domain**: *AF_NFC*, *AF_ALG*, *AF_CAIF*, *AF_IEEE802154*, *AF_PHONET*, *AF_ISDN*, *AF_RXRPC*, *AF_IUCV*, *AF_BLUETOOTH*, *AF_TIPC*, *AF_CAN*, *AF_LLC*, *AF_WANPIPE*, *AF_PPPOX*, *AF_IRDA*, *AF_SNA*, *AF_RDS*, *AF_ATMSVC*, *AF_ECONET*, *AF_ASH*, *AF_PACKET*, *AF_ROUTE*, *AF_NETLINK*, *AF_KEY*, *AF_SECURITY*, *AF_NETBEUI*, *AF_DECnet*, *AF_ROSE*, *AF_INET6*, *AF_X25*, *AF_ATMPVC*, *AF_BRIDGE*, *AF_NETROM*, *AF_APPLETALK*, *AF_IPX*, *AF_AX25*, *AF_INET*, *AF_LOCAL*, *AF_UNIX*, *AF_UNSPEC*, UINT32 **type**, UINT32 **proto**
 Yes | `<` | `socket` | FD **fd**, ENUMFLAGS32 **domain**: *AF_NFC*, *AF_ALG*, *AF_CAIF*, *AF_IEEE802154*, *AF_PHONET*, *AF_ISDN*, *AF_RXRPC*, *AF_IUCV*, *AF_BLUETOOTH*, *AF_TIPC*, *AF_CAN*, *AF_LLC*, *AF_WANPIPE*, *AF_PPPOX*, *AF_IRDA*, *AF_SNA*, *AF_RDS*, *AF_ATMSVC*, *AF_ECONET*, *AF_ASH*, *AF_PACKET*, *AF_ROUTE*, *AF_NETLINK*, *AF_KEY*, *AF_SECURITY*, *AF_NETBEUI*, *AF_DECnet*, *AF_ROSE*, *AF_INET6*, *AF_X25*, *AF_ATMPVC*, *AF_BRIDGE*, *AF_NETROM*, *AF_APPLETALK*, *AF_IPX*, *AF_AX25*, *AF_INET*, *AF_LOCAL*, *AF_UNIX*, *AF_UNSPEC*, UINT32 **type**, UINT32 **proto**
 Yes | `>` | `bind` | FD **fd**
@@ -86,7 +86,7 @@ Yes | `<` | `fchdir` | ERRNO **res**
 No | `>` | `pread` | FD **fd**, UINT32 **size**, UINT64 **pos**
 No | `<` | `pread` | ERRNO **res**, BYTEBUF **data**, FD **fd**, UINT32 **size**, UINT64 **pos**
 No | `>` | `pwrite` | FD **fd**, UINT32 **size**, UINT64 **pos**
-No | `<` | `pwrite` | ERRNO **res**, BYTEBUF **data**
+No | `<` | `pwrite` | ERRNO **res**, BYTEBUF **data**, FD **fd**, UINT32 **size**, UINT64 **pos**
 No | `>` | `readv` | FD **fd**
 No | `<` | `readv` | ERRNO **res**, UINT32 **size**, BYTEBUF **data**
 No | `>` | `writev` | FD **fd**, UINT32 **size**
@@ -811,6 +811,8 @@ Yes | `>` | `close_range` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `close_range` | SYSCALLID **ID**
 Yes | `>` | `fanotify_mark` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `fanotify_mark` | SYSCALLID **ID**
+Yes | `>` | `open_tree_attr` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `open_tree_attr` | SYSCALLID **ID**
 Yes | `>` | `timerfd` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `timerfd` | SYSCALLID **ID**
 Yes | `>` | `s390_pci_mmio_read` | SYSCALLID **ID**, UINT16 **nativeID**
