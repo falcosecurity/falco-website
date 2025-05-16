@@ -84,7 +84,7 @@ One of the rules in `k8s_audit_rules.yaml` is as follows:
   desc: >
      Detect configmap operations with map containing a private credential (aws key, password, etc.)
   condition: kevt and configmap and modify and contains_private_credentials
-  output: K8s configmap with private credential (user=%ka.user.name verb=%ka.verb name=%ka.req.configmap.name configmap=%ka.req.configmap.name config=%ka.req.configmap.obj)
+  output: K8s configmap with private credential | user=%ka.user.name verb=%ka.verb name=%ka.req.configmap.name configmap=%ka.req.configmap.name config=%ka.req.configmap.obj
   priority: WARNING
   source: k8s_audit
   tags: [k8s]
