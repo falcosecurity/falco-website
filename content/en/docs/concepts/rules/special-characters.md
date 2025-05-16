@@ -15,7 +15,7 @@ You can use `"` to capture these special characters. Here's an example:
 - rule: Any Open Activity by Systemd
   desc: Detects all open events by systemd.
   condition: evt.type=open and proc.name="(systemd)" or proc.name=systemd
-  output: "File opened by systemd (user=%user.name command=%proc.cmdline file=%fd.name)"
+  output: "File opened by systemd | user=%user.name command=%proc.cmdline file=%fd.name
   priority: WARNING
 ```
 
@@ -28,6 +28,6 @@ When including items in {{< glossary_tooltip text="lists" term_id="lists" >}}, e
 - rule: Any Open Activity by Systemd
   desc: Detects all open events by systemd.
   condition: evt.type=open and proc.name in (systemd_procs)
-  output: "File opened by systemd (user=%user.name command=%proc.cmdline file=%fd.name)"
+  output: "File opened by systemd | user=%user.name command=%proc.cmdline file=%fd.name"
   priority: WARNING
 ```

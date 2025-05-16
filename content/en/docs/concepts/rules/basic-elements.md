@@ -20,9 +20,9 @@ A rule is a YAML object, part of the rules file, whose definition contains at le
     (proc.name = bash or
      proc.name = ksh)
   output: >
-    shell in a container
-    (user=%user.name container_id=%container.id container_name=%container.name 
-    shell=%proc.name parent=%proc.pname cmdline=%proc.cmdline)
+    shell in a container |
+    user=%user.name container_id=%container.id container_name=%container.name 
+    shell=%proc.name parent=%proc.pname cmdline=%proc.cmdline
   priority: WARNING
 ```
 
@@ -60,9 +60,9 @@ Therefore, a complete rule using the above condition might be:
     container.id != host and 
     proc.name = bash
   output: >
-    shell in a container 
-    (user=%user.name container_id=%container.id container_name=%container.name 
-    shell=%proc.name parent=%proc.pname cmdline=%proc.cmdline)
+    shell in a container |
+    user=%user.name container_id=%container.id container_name=%container.name 
+    shell=%proc.name parent=%proc.pname cmdline=%proc.cmdline
   priority: WARNING
 ```
 {{% alert color="primary" %}}
@@ -190,9 +190,9 @@ With these macros defined, we can then rewrite the above rule's condition as `sp
     container and 
     proc.name = bash
   output: >
-    shell in a container
-    (user=%user.name container_id=%container.id container_name=%container.name 
-    shell=%proc.name parent=%proc.pname cmdline=%proc.cmdline)
+    shell in a container |
+    user=%user.name container_id=%container.id container_name=%container.name 
+    shell=%proc.name parent=%proc.pname cmdline=%proc.cmdline
   priority: WARNING
 ```
 
@@ -254,9 +254,9 @@ Referring to a list inserts the list items in the macro, rule, or list. Therefor
     container and 
     shell_procs
   output: >
-    shell in a container
-    (user=%user.name container_id=%container.id container_name=%container.name 
-    shell=%proc.name parent=%proc.pname cmdline=%proc.cmdline)
+    shell in a container |
+    user=%user.name container_id=%container.id container_name=%container.name 
+    shell=%proc.name parent=%proc.pname cmdline=%proc.cmdline
   priority: WARNING
 ```
 

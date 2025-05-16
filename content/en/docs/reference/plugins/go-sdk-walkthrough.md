@@ -609,7 +609,7 @@ This simple rule prints a Falco alert any time the event number is between 0 and
 - rule: My Dummy Rule
   desc: My Desc
   condition: evt.num > 0 and evt.num < 10 and dummy.divisible[3] = 1
-  output: A dummy event (event=%evt.plugininfo sample=%dummy.value sample_str=%dummy.strvalue num=%evt.num)
+  output: A dummy event | event=%evt.plugininfo sample=%dummy.value sample_str=%dummy.strvalue num=%evt.num
   priority: INFO
   source: dummy
 ```
