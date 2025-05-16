@@ -63,7 +63,7 @@ The following instructions assume **`v0.X.Y` is the new version** and **v0.x.y**
     - **Insert** the following config block for *the new version* as the first entry of the list, right after the `versions:` line. Make sure the indentation is right (it should align with the adyacent blocks) and tabs should be avoided.
     ```yaml
       - fullversion: v0.X.Y
-        version: vX.Y
+        version: v0.X
         githubbranch: master
         docsbranch: master
         url: https://falco.org/
@@ -77,3 +77,10 @@ The following instructions assume **`v0.X.Y` is the new version** and **v0.x.y**
         url: https://v0-x.falco.org/
     ```
 2. Once the PR gets approved and merged, the website will be updated shortly, and no other actions are needed.
+
+## Update version-dependent pages
+
+Once the old website has been archived, any change to pages that should be updated for new versions can be merged.
+At least two changes must be made at every release. Using the new Falco binary or container:
+- run `falco --list-events --markdown > ./content/en/docs/reference/rules/supported-events/supported-events.md`
+- run `falco --list=syscall --markdown  | sed -E 's/## Field Class/### Field Class/g' | awk '!/^Event Sources: syscall\w*/' | awk '/Field Class: evt/{c++;if(c==2){sub("evt","evt (for system calls)");c=0}}1' > ./content/en/docs/reference/rules/supported-fields/supported-fields.md`
