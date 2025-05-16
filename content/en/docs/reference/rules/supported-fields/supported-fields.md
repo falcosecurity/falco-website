@@ -47,7 +47,7 @@ Name | Type | Description
 `evt.args` | CHARBUF | all the event arguments, aggregated into a single string.
 `evt.arg` | CHARBUF | one of the event arguments specified by name or by number. Some events (e.g. return codes or FDs) will be converted into a text representation when possible. E.g. 'evt.arg.fd' or 'evt.arg[0]'.
 `evt.rawarg` | DYNAMIC | one of the event arguments specified by name. E.g. 'evt.rawarg.fd'.
-`evt.info` | CHARBUF | for most events, this field returns the same value as evt.args. However, for some events (like writes to /dev/log) it provides higher level information coming from decoding the arguments.
+`evt.info` | CHARBUF | Currently, this field returns the same value as 'evt.args'.
 `evt.buffer` | BYTEBUF | the binary data buffer for events that have one, like read(), recvfrom(), etc. Use this field in filters with 'contains' to search into I/O data buffers.
 `evt.buflen` | UINT64 | the length of the binary data buffer for events that have one, like read(), recvfrom(), etc.
 `evt.res` | CHARBUF | event return value, as a string. If the event failed, the result is an error code string (e.g. 'ENOENT'), otherwise the result is the string 'SUCCESS'.
@@ -90,7 +90,8 @@ Name | Type | Description
 `proc.name` | CHARBUF | The process name (truncated after 16 characters) generating the event (task->comm). Truncation is determined by kernel settings and not by Falco. This field is collected from the syscalls args or, as a fallback, extracted from /proc/PID/comm. The name of the process and the name of the executable file on disk (if applicable) can be different if a process is given a custom name which is often the case for example for java applications.
 `proc.pname` | CHARBUF | The proc.name (truncated after 16 characters) of the parent process.
 `proc.aname` | CHARBUF | The proc.name (truncated after 16 characters) for a specific process ancestor. You can access different levels of ancestors by using indices. For example, proc.aname[1] retrieves the proc.name of the parent process, proc.aname[2] retrieves the proc.name of the grandparent process, and so on. The current process's proc.name line can be obtained using proc.aname[0]. When used without any arguments, proc.aname is applicable only in filters and matches any of the process ancestors. For instance, you can use `proc.aname=bash` to match any process ancestor whose name is `bash`.
-`proc.args` | CHARBUF | The arguments passed on the command line when starting the process generating the event excluding argv[0] (truncated after 4096 bytes). This field is collected from the syscalls args or, as a fallback, extracted from /proc/PID/cmdline.
+`proc.args` | CHARBUF | The arguments passed on the command line when starting the process generating the event excluding argv[0] (truncated after 4096 bytes). This field is collected from the system call arguments, or as a fallback, extracted from /proc/PID/cmdline, can be accessed by specifying proc.args[INDEX], e.g., proc.args[0] or proc.args[1]. The indexing is zero-based, meaning proc.args[0] refers to the first command-line argument passed, rather than argv[0].
+`proc.aargs` | CHARBUF | The arguments passed on the command line when starting the process generating the event for a specific process ancestor. You can access different levels of ancestors by using indices. For example, proc.aargs[1] retrieves the arguments passed on the command line of the parent process, proc.aargs[2] retrieves the proc.args of the grandparent process, and so on. The current process's arguments passed on the command line can be obtained using proc.aargs[0]. When used without any arguments, proc.aargs is applicable only in filters and matches any of the process ancestors. For instance, you can use `proc.aargs contains base64` to match any process ancestor whose arguments passed on the command line contains the term base64.
 `proc.cmdline` | CHARBUF | The concatenation of `proc.name + proc.args` (truncated after 4096 bytes) when starting the process generating the event.
 `proc.pcmdline` | CHARBUF | The proc.cmdline (full command line (proc.name + proc.args)) of the parent process.
 `proc.acmdline` | CHARBUF | The full command line (proc.name + proc.args) for a specific process ancestor. You can access different levels of ancestors by using indices. For example, proc.acmdline[1] retrieves the full command line of the parent process, proc.acmdline[2] retrieves the proc.cmdline of the grandparent process, and so on. The current process's full command line can be obtained using proc.acmdline[0]. When used without any arguments, proc.acmdline is applicable only in filters and matches any of the process ancestors. For instance, you can use `proc.acmdline contains base64` to match any process ancestor whose command line contains the term base64.
@@ -139,9 +140,6 @@ Name | Type | Description
 `thread.cap_permitted` | CHARBUF | The permitted capabilities set
 `thread.cap_inheritable` | CHARBUF | The inheritable capabilities set
 `thread.cap_effective` | CHARBUF | The effective capabilities set
-`proc.is_container_healthcheck` | BOOL | 'true' if this process is running as a part of the container's health check.
-`proc.is_container_liveness_probe` | BOOL | 'true' if this process is running as a part of the container's liveness probe.
-`proc.is_container_readiness_probe` | BOOL | 'true' if this process is running as a part of the container's readiness probe.
 `proc.fdopencount` | UINT64 | Number of open FDs for the process
 `proc.fdlimit` | INT64 | Maximum number of FDs the process can open.
 `proc.fdusage` | DOUBLE | The ratio between open FDs and maximum available FDs for the process.
@@ -194,41 +192,6 @@ Name | Type | Description
 :----|:-----|:-----------
 `group.gid` | UINT32 | group ID.
 `group.name` | CHARBUF | group name.
-
-### Field Class: container
-
-Container information. If the event is not happening inside a container, both id and name will be set to 'host'.
-
-
-Name | Type | Description
-:----|:-----|:-----------
-`container.id` | CHARBUF | The truncated container ID (first 12 characters), e.g. 3ad7b26ded6d is extracted from the Linux cgroups by Falco within the kernel. Consequently, this field is reliably available and serves as the lookup key for Falco's synchronous or asynchronous requests against the container runtime socket to retrieve all other 'container.*' information. One important aspect to be aware of is that if the process occurs on the host, meaning not in the container PID namespace, this field is set to a string called 'host'. In Kubernetes, pod sandbox container processes can exist where `container.id` matches `k8s.pod.sandbox_id`, lacking other 'container.*' details.
-`container.full_id` | CHARBUF | The full container ID, e.g. 3ad7b26ded6d8e7b23da7d48fe889434573036c27ae5a74837233de441c3601e. In contrast to `container.id`, we enrich this field as part of the container engine enrichment. In instances of userspace container engine lookup delays, this field may not be available yet.
-`container.name` | CHARBUF | The container name. In instances of userspace container engine lookup delays, this field may not be available yet. One important aspect to be aware of is that if the process occurs on the host, meaning not in the container PID namespace, this field is set to a string called 'host'.
-`container.image` | CHARBUF | The container image name (e.g. falcosecurity/falco:latest for docker). In instances of userspace container engine lookup delays, this field may not be available yet.
-`container.image.id` | CHARBUF | The container image id (e.g. 6f7e2741b66b). In instances of userspace container engine lookup delays, this field may not be available yet.
-`container.type` | CHARBUF | The container type, e.g. docker, cri-o, containerd etc.
-`container.privileged` | BOOL | 'true' for containers running as privileged, 'false' otherwise. In instances of userspace container engine lookup delays, this field may not be available yet.
-`container.mounts` | CHARBUF | A space-separated list of mount information. Each item in the list has the format 'source:dest:mode:rdrw:propagation'. In instances of userspace container engine lookup delays, this field may not be available yet.
-`container.mount` | CHARBUF | Information about a single mount, specified by number (e.g. container.mount[0]) or mount source (container.mount[/usr/local]). The pathname can be a glob (container.mount[/usr/local/*]), in which case the first matching mount will be returned. The information has the format 'source:dest:mode:rdrw:propagation'. If there is no mount with the specified index or matching the provided source, returns the string "none" instead of a NULL value. In instances of userspace container engine lookup delays, this field may not be available yet.
-`container.mount.source` | CHARBUF | The mount source, specified by number (e.g. container.mount.source[0]) or mount destination (container.mount.source[/host/lib/modules]). The pathname can be a glob. In instances of userspace container engine lookup delays, this field may not be available yet.
-`container.mount.dest` | CHARBUF | The mount destination, specified by number (e.g. container.mount.dest[0]) or mount source (container.mount.dest[/lib/modules]). The pathname can be a glob. In instances of userspace container engine lookup delays, this field may not be available yet.
-`container.mount.mode` | CHARBUF | The mount mode, specified by number (e.g. container.mount.mode[0]) or mount source (container.mount.mode[/usr/local]). The pathname can be a glob. In instances of userspace container engine lookup delays, this field may not be available yet.
-`container.mount.rdwr` | CHARBUF | The mount rdwr value, specified by number (e.g. container.mount.rdwr[0]) or mount source (container.mount.rdwr[/usr/local]). The pathname can be a glob. In instances of userspace container engine lookup delays, this field may not be available yet.
-`container.mount.propagation` | CHARBUF | The mount propagation value, specified by number (e.g. container.mount.propagation[0]) or mount source (container.mount.propagation[/usr/local]). The pathname can be a glob. In instances of userspace container engine lookup delays, this field may not be available yet.
-`container.image.repository` | CHARBUF | The container image repository (e.g. falcosecurity/falco). In instances of userspace container engine lookup delays, this field may not be available yet.
-`container.image.tag` | CHARBUF | The container image tag (e.g. stable, latest). In instances of userspace container engine lookup delays, this field may not be available yet.
-`container.image.digest` | CHARBUF | The container image registry digest (e.g. sha256:d977378f890d445c15e51795296e4e5062f109ce6da83e0a355fc4ad8699d27). In instances of userspace container engine lookup delays, this field may not be available yet.
-`container.healthcheck` | CHARBUF | The container's health check. Will be the null value ("N/A") if no healthcheck configured, "NONE" if configured but explicitly not created, and the healthcheck command line otherwise. In instances of userspace container engine lookup delays, this field may not be available yet.
-`container.liveness_probe` | CHARBUF | The container's liveness probe. Will be the null value ("N/A") if no liveness probe configured, the liveness probe command line otherwise. In instances of userspace container engine lookup delays, this field may not be available yet.
-`container.readiness_probe` | CHARBUF | The container's readiness probe. Will be the null value ("N/A") if no readiness probe configured, the readiness probe command line otherwise. In instances of userspace container engine lookup delays, this field may not be available yet.
-`container.start_ts` | UINT64 | Container start as epoch timestamp in nanoseconds based on proc.pidns_init_start_ts and extracted in the kernel and not from the container runtime socket / container engine.
-`container.duration` | RELTIME | Number of nanoseconds since container.start_ts.
-`container.ip` | CHARBUF | The container's / pod's primary ip address as retrieved from the container engine. Only ipv4 addresses are tracked. Consider container.cni.json (CRI use case) for logging ip addresses for each network interface. In instances of userspace container engine lookup delays, this field may not be available yet.
-`container.cni.json` | CHARBUF | The container's / pod's CNI result field from the respective pod status info. It contains ip addresses for each network interface exposed as unparsed escaped JSON string. Supported for CRI container engine (containerd, cri-o runtimes), optimized for containerd (some non-critical JSON keys removed). Useful for tracking ips (ipv4 and ipv6, dual-stack support) for each network interface (multi-interface support). In instances of userspace container engine lookup delays, this field may not be available yet.
-`container.host_pid` | BOOL | 'true' if the container is running in the host PID namespace, 'false' otherwise.
-`container.host_network` | BOOL | 'true' if the container is running in the host network namespace, 'false' otherwise.
-`container.host_ipc` | BOOL | 'true' if the container is running in the host IPC namespace, 'false' otherwise.
 
 ### Field Class: fd
 
@@ -298,19 +261,6 @@ Name | Type | Description
 `fs.path.target` | CHARBUF | For any event type that deals with a filesystem path, and specifically for a target and target like mv, cp, etc, the target path the file syscall is operating on. This path is always fully resolved, prepending the thread cwd when needed.
 `fs.path.targetraw` | CHARBUF | For any event type that deals with a filesystem path, and specifically for a target and target like mv, cp, etc, the target path the file syscall is operating on. This path is always the path provided to the syscall and may not be fully resolved.
 
-### Field Class: syslog
-
-Content of Syslog messages.
-
-
-Name | Type | Description
-:----|:-----|:-----------
-`syslog.facility.str` | CHARBUF | facility as a string.
-`syslog.facility` | UINT32 | facility as a number (0-23).
-`syslog.severity.str` | CHARBUF | severity as a string. Can have one of these values: emerg, alert, crit, err, warn, notice, info, debug
-`syslog.severity` | UINT32 | severity as a number (0-7).
-`syslog.message` | CHARBUF | message sent to syslog.
-
 ### Field Class: fdlist
 
 Poll event related fields.
@@ -325,15 +275,46 @@ Name | Type | Description
 `fdlist.cports` | CHARBUF | for TCP/UDP FDs, for poll events, this is a comma-separated list of the client TCP/UDP ports in the 'fds' argument, returned as a string.
 `fdlist.sports` | CHARBUF | for poll events, this is a comma-separated list of the server TCP/UDP ports in the 'fds' argument, returned as a string.
 
-### Field Class: k8s
 
-Kubernetes context about pods and namespace name. These fields are populated with data gathered from the container runtime.
+### Field Class: container (plugin)
 
 
 Name | Type | Description
 :----|:-----|:-----------
-`k8s.ns.name` | CHARBUF | The Kubernetes namespace name. This field is extracted from the container runtime socket simultaneously as we look up the 'container.*' fields. In cases of lookup delays, it may not be available yet.
+`container.id` | CHARBUF | The truncated container ID (first 12 characters), e.g. 3ad7b26ded6d is extracted from the Linux cgroups by Falco within the kernel. Consequently, this field is reliably available and serves as the lookup key for Falco's synchronous or asynchronous requests against the container runtime socket to retrieve all other 'container.*' information. One important aspect to be aware of is that if the process occurs on the host, meaning not in the container PID namespace, this field is set to a string called 'host'. In Kubernetes, pod sandbox container processes can exist where `container.id` matches `k8s.pod.sandbox_id`, lacking other 'container.*' details.
+`container.full_id` | CHARBUF | The full container ID, e.g. 3ad7b26ded6d8e7b23da7d48fe889434573036c27ae5a74837233de441c3601e. In contrast to `container.id`, we enrich this field as part of the container engine enrichment. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.name` | CHARBUF | The container name. In instances of userspace container engine lookup delays, this field may not be available yet. One important aspect to be aware of is that if the process occurs on the host, meaning not in the container PID namespace, this field is set to a string called 'host'.
+`container.image` | CHARBUF | The container image name (e.g. falcosecurity/falco:latest for docker). In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.image.id` | CHARBUF | The container image id (e.g. 6f7e2741b66b). In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.type` | CHARBUF | The container type, e.g. docker, cri-o, containerd etc.
+`container.privileged` | BOOL | 'true' for containers running as privileged, 'false' otherwise. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.mounts` | CHARBUF | A space-separated list of mount information. Each item in the list has the format 'source:dest:mode:rdrw:propagation'. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.mount` | CHARBUF | Information about a single mount, specified by number (e.g. container.mount[0]) or mount source (container.mount[/usr/local]). The pathname can be a glob (container.mount[/usr/local/*]), in which case the first matching mount will be returned. The information has the format 'source:dest:mode:rdrw:propagation'. If there is no mount with the specified index or matching the provided source, returns the string "none" instead of a NULL value. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.mount.source` | CHARBUF | The mount source, specified by number (e.g. container.mount.source[0]) or mount destination (container.mount.source[/host/lib/modules]). The pathname can be a glob. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.mount.dest` | CHARBUF | The mount destination, specified by number (e.g. container.mount.dest[0]) or mount source (container.mount.dest[/lib/modules]). The pathname can be a glob. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.mount.mode` | CHARBUF | The mount mode, specified by number (e.g. container.mount.mode[0]) or mount source (container.mount.mode[/usr/local]). The pathname can be a glob. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.mount.rdwr` | CHARBUF | The mount rdwr value, specified by number (e.g. container.mount.rdwr[0]) or mount source (container.mount.rdwr[/usr/local]). The pathname can be a glob. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.mount.propagation` | CHARBUF | The mount propagation value, specified by number (e.g. container.mount.propagation[0]) or mount source (container.mount.propagation[/usr/local]). The pathname can be a glob. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.image.repository` | CHARBUF | The container image repository (e.g. falcosecurity/falco). In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.image.tag` | CHARBUF | The container image tag (e.g. stable, latest). In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.image.digest` | CHARBUF | The container image registry digest (e.g. sha256:d977378f890d445c15e51795296e4e5062f109ce6da83e0a355fc4ad8699d27). In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.healthcheck` | CHARBUF | The container's health check. Will be the null value ("N/A") if no healthcheck configured, "NONE" if configured but explicitly not created, and the healthcheck command line otherwise. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.liveness_probe` | CHARBUF | The container's liveness probe. Will be the null value ("N/A") if no liveness probe configured, the liveness probe command line otherwise. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.readiness_probe` | CHARBUF | The container's readiness probe. Will be the null value ("N/A") if no readiness probe configured, the readiness probe command line otherwise. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.start_ts` | ABSTIME | Container start as epoch timestamp in nanoseconds based on proc.pidns_init_start_ts and extracted in the kernel and not from the container runtime socket / container engine.
+`container.duration` | RELTIME | Number of nanoseconds since container.start_ts.
+`container.ip` | CHARBUF | The container's / pod's primary ip address as retrieved from the container engine. Only ipv4 addresses are tracked. Consider container.cni.json (CRI use case) for logging ip addresses for each network interface. In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.cni.json` | CHARBUF | The container's / pod's CNI result field from the respective pod status info. It contains ip addresses for each network interface exposed as unparsed escaped JSON string. Supported for CRI container engine (containerd, cri-o runtimes), optimized for containerd (some non-critical JSON keys removed). Useful for tracking ips (ipv4 and ipv6, dual-stack support) for each network interface (multi-interface support). In instances of userspace container engine lookup delays, this field may not be available yet.
+`container.host_pid` | BOOL | 'true' if the container is running in the host PID namespace, 'false' otherwise.
+`container.host_network` | BOOL | 'true' if the container is running in the host network namespace, 'false' otherwise.
+`container.host_ipc` | BOOL | 'true' if the container is running in the host IPC namespace, 'false' otherwise.
+`container.label` | CHARBUF | Container label. E.g. 'container.label.foo'.
+`container.labels` | CHARBUF | Container comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'.
+`proc.is_container_healthcheck` | BOOL | 'true' if this process is running as a part of the container's health check.
+`proc.is_container_liveness_probe` | BOOL | 'true' if this process is running as a part of the container's liveness probe.
+`proc.is_container_readiness_probe` | BOOL | 'true' if this process is running as a part of the container's readiness probe.
 `k8s.pod.name` | CHARBUF | The Kubernetes pod name. This field is extracted from the container runtime socket simultaneously as we look up the 'container.*' fields. In cases of lookup delays, it may not be available yet.
+`k8s.ns.name` | CHARBUF | The Kubernetes namespace name. This field is extracted from the container runtime socket simultaneously as we look up the 'container.*' fields. In cases of lookup delays, it may not be available yet.
 `k8s.pod.id` | CHARBUF | [LEGACY] The Kubernetes pod UID, e.g. 3e41dc6b-08a8-44db-bc2a-3724b18ab19a. This legacy field points to `k8s.pod.uid`; however, the pod ID typically refers to the pod sandbox ID. We recommend using the semantically more accurate `k8s.pod.uid` field. This field is extracted from the container runtime socket simultaneously as we look up the 'container.*' fields. In cases of lookup delays, it may not be available yet.
 `k8s.pod.uid` | CHARBUF | The Kubernetes pod UID, e.g. 3e41dc6b-08a8-44db-bc2a-3724b18ab19a. Note that the pod UID is a unique identifier assigned upon pod creation within Kubernetes, allowing the Kubernetes control plane to manage and track pods reliably. As such, it is fundamentally a different concept compared to the pod sandbox ID. This field is extracted from the container runtime socket simultaneously as we look up the 'container.*' fields. In cases of lookup delays, it may not be available yet.
 `k8s.pod.sandbox_id` | CHARBUF | The truncated Kubernetes pod sandbox ID (first 12 characters), e.g 63060edc2d3a. The sandbox ID is specific to the container runtime environment. It is the equivalent of the container ID for the pod / sandbox and extracted from the Linux cgroups. As such, it differs from the pod UID. This field is extracted from the container runtime socket simultaneously as we look up the 'container.*' fields. In cases of lookup delays, it may not be available yet. In Kubernetes, pod sandbox container processes can exist where `container.id` matches `k8s.pod.sandbox_id`, lacking other 'container.*' details.
@@ -342,5 +323,23 @@ Name | Type | Description
 `k8s.pod.labels` | CHARBUF | The Kubernetes pod comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'. This field is extracted from the container runtime socket simultaneously as we look up the 'container.*' fields. In cases of lookup delays, it may not be available yet.
 `k8s.pod.ip` | CHARBUF | The Kubernetes pod ip, same as container.ip field as each container in a pod shares the network stack of the sandbox / pod. Only ipv4 addresses are tracked. Consider k8s.pod.cni.json for logging ip addresses for each network interface. This field is extracted from the container runtime socket simultaneously as we look up the 'container.*' fields. In cases of lookup delays, it may not be available yet.
 `k8s.pod.cni.json` | CHARBUF | The Kubernetes pod CNI result field from the respective pod status info, same as container.cni.json field. It contains ip addresses for each network interface exposed as unparsed escaped JSON string. Supported for CRI container engine (containerd, cri-o runtimes), optimized for containerd (some non-critical JSON keys removed). Useful for tracking ips (ipv4 and ipv6, dual-stack support) for each network interface (multi-interface support). This field is extracted from the container runtime socket simultaneously as we look up the 'container.*' fields. In cases of lookup delays, it may not be available yet.
-
+`k8s.rc.name` | CHARBUF | Kubernetes replication controller name.
+`k8s.rc.id` | CHARBUF | Kubernetes replication controller id.
+`k8s.rc.label` | CHARBUF | Kubernetes replication controller label. E.g. 'k8s.rc.label.foo'.
+`k8s.rc.labels` | CHARBUF | Kubernetes replication controller comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'.
+`k8s.svc.name` | CHARBUF | Kubernetes service name (can return more than one value, concatenated).
+`k8s.svc.id` | CHARBUF | Kubernetes service id (can return more than one value, concatenated).
+`k8s.svc.label` | CHARBUF | Kubernetes service label. E.g. 'k8s.svc.label.foo' (can return more than one value, concatenated).
+`k8s.svc.labels` | CHARBUF | Kubernetes service comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'.
+`k8s.ns.id` | CHARBUF | Kubernetes namespace id.
+`k8s.ns.label` | CHARBUF | Kubernetes namespace label. E.g. 'k8s.ns.label.foo'.
+`k8s.ns.labels` | CHARBUF | Kubernetes namespace comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'.
+`k8s.rs.name` | CHARBUF | Kubernetes replica set name.
+`k8s.rs.id` | CHARBUF | Kubernetes replica set id.
+`k8s.rs.label` | CHARBUF | Kubernetes replica set label. E.g. 'k8s.rs.label.foo'.
+`k8s.rs.labels` | CHARBUF | Kubernetes replica set comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'.
+`k8s.deployment.name` | CHARBUF | Kubernetes deployment name.
+`k8s.deployment.id` | CHARBUF | Kubernetes deployment id.
+`k8s.deployment.label` | CHARBUF | Kubernetes deployment label. E.g. 'k8s.rs.label.foo'.
+`k8s.deployment.labels` | CHARBUF | Kubernetes deployment comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'.
 
