@@ -69,7 +69,7 @@ The fields `fd.*ip.name` can be used in rule outputs, but they will return meani
 - rule: Connect to Yahoo
   desc: Detect Connects to yahoo.com IPs
   condition: evt.type=connect and fd.sip.name=yahoo.com
-  output: Some connect to yahoo (command=%proc.cmdline connection=%fd.name IP=%fd.sip.name)
+  output: Some connect to yahoo | command=%proc.cmdline connection=%fd.name IP=%fd.sip.name
   priority: INFO
 ```
 
@@ -79,7 +79,7 @@ In contrast, this rule will never display a meaningful output for `...IP=%fd.sip
 - rule: Connect to Anything but Yahoo
   desc: Detect Connects to anything other than yahoo.com IPs
   condition: evt.type=connect and fd.sip.name!=yahoo.com
-  output: Some connect to something other than yahoo (command=%proc.cmdline connection=%fd.name IP=%fd.sip.name)
+  output: Some connect to something other than yahoo | command=%proc.cmdline connection=%fd.name IP=%fd.sip.name
   priority: INFO
 ```
 

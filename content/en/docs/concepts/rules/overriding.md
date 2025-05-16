@@ -53,9 +53,9 @@ In all the examples below, it's assumed one is running Falco via `falco -r /etc/
   items: [ls, cat, pwd]
 
 - rule: my_programs_opened_file
-  desc: track whenever a set of programs opens a file
+  desc: Track whenever a set of programs opens a file
   condition: proc.name in (my_programs) and (evt.type=open or evt.type=openat)
-  output: a tracked program opened a file (user=%user.name command=%proc.cmdline file=%fd.name)
+  output: A tracked program opened a file | user=%user.name command=%proc.cmdline file=%fd.name
   priority: INFO
 ```
 
@@ -79,9 +79,9 @@ The rule `my_programs_opened_file` would trigger whenever any of `ls`, `cat`, `p
   items: [ls, cat, pwd]
 
 - rule: my_programs_opened_file
-  desc: track whenever a set of programs opens a file
+  desc: Track whenever a set of programs opens a file
   condition: proc.name in (my_programs) and (evt.type=open or evt.type=openat)
-  output: a tracked program opened a file (user=%user.name command=%proc.cmdline file=%fd.name)
+  output: A tracked program opened a file | user=%user.name command=%proc.cmdline file=%fd.name
   priority: INFO
 ```
 
@@ -104,9 +104,9 @@ The rule `my_programs_opened_file` would trigger whenever any of `vi`, `vim`, or
   condition: evt.type=open
 
 - rule: program_accesses_file
-  desc: track whenever a set of programs opens a file
+  desc: Track whenever a set of programs opens a file
   condition: (access_file) and proc.name in (cat, ls)
-  output: a tracked program opened a file (user=%user.name command=%proc.cmdline file=%fd.name)
+  output: A tracked program opened a file | user=%user.name command=%proc.cmdline file=%fd.name
   priority: INFO
 ```
 
@@ -127,9 +127,9 @@ The rule `program_accesses_file` would trigger when `ls`/`cat` either used `open
 
 ```yaml
 - rule: program_accesses_file
-  desc: track whenever a set of programs opens a file
+  desc: Yrack whenever a set of programs opens a file
   condition: evt.type=open and proc.name in (cat, ls) 
-  output: a tracked program opened a file (user=%user.name command=%proc.cmdline file=%fd.name)
+  output: A tracked program opened a file | user=%user.name command=%proc.cmdline file=%fd.name
   priority: INFO
 ```
 
@@ -261,9 +261,9 @@ Here's an example of appending to lists:
   items: [ls, cat, pwd]
 
 - rule: my_programs_opened_file
-  desc: track whenever a set of programs opens a file
+  desc: Track whenever a set of programs opens a file
   condition: proc.name in (my_programs) and (evt.type=open or evt.type=openat)
-  output: a tracked program opened a file (user=%user.name command=%proc.cmdline file=%fd.name)
+  output: A tracked program opened a file | user=%user.name command=%proc.cmdline file=%fd.name
   priority: INFO
 ```
 
@@ -288,9 +288,9 @@ Here's an example of appending to macros:
   condition: evt.type=open
 
 - rule: program_accesses_file
-  desc: track whenever a set of programs opens a file
+  desc: Track whenever a set of programs opens a file
   condition: proc.name in (cat, ls) and (access_file)
-  output: a tracked program opened a file (user=%user.name command=%proc.cmdline file=%fd.name)
+  output: A tracked program opened a file | user=%user.name command=%proc.cmdline file=%fd.name
   priority: INFO
 ```
 
@@ -312,7 +312,7 @@ Here's an example of appending to rules:
 - rule: program_accesses_file
   desc: track whenever a set of programs opens a file
   condition: proc.name in (cat, ls) and evt.type=open
-  output: a tracked program opened a file (user=%user.name command=%proc.cmdline file=%fd.name)
+  output: A tracked program opened a file | user=%user.name command=%proc.cmdline file=%fd.name
   priority: INFO
 ```
 
