@@ -1,11 +1,11 @@
 Please follow these steps to add your blog to [Falco blog folder](https://falco.org/blog/):
 1. Fork the [Falco](https://github.com/falcosecurity/falco-website) repository.
 2. Clone the repository locally or work directly on GitHub.
-3. In the path [`falco-website/content/en/blog/`](https://github.com/falcosecurity/falco-website/tree/master/content/en/blog) create a directory to contain your [Markdown](https://www.markdownguide.org/cheat-sheet/) `index.md` file and a subdirectory called `images/`.
+3. In the path [`falco-website/content/en/blog/`](https://github.com/falcosecurity/falco-website/tree/main/content/en/blog) create a directory to contain your [Markdown](https://www.markdownguide.org/cheat-sheet/) `index.md` file and a subdirectory called `images/`.
     - The directory name should **not** contain any space. For better readability, _kebab-case_ is recommended (lowercase words separated by dashes). 
     - It is recommended to match the directory name to the [slug](https://en.wikipedia.org/wiki/Clean_URL#Slug) of the blog post.
     - Keep it short but informative.
-    - [Example on GitHub](https://github.com/falcosecurity/falco-website/tree/master/content/en/blog/gitops-your-falco-rules):
+    - [Example on GitHub](https://github.com/falcosecurity/falco-website/tree/main/content/en/blog/gitops-your-falco-rules):
       ```
       falco-website/content/en/blog/gitops-your-falco-rules/
       falco-website/content/en/blog/gitops-your-falco-rules/index.md

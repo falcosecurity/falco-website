@@ -1,7 +1,7 @@
 # Falco Website Release Process
 
 
-The release process of the [falco.org](https://falco.org) is automated by using [netlify](https://www.netlify.com/). Each commit merged into the `master` branch will be automatically deployed to [falco.org](https://falco.org).
+The release process of the [falco.org](https://falco.org) is automated by using [netlify](https://www.netlify.com/). Each commit merged into the `main` branch will be automatically deployed to [falco.org](https://falco.org).
 
 > You can find the last deploy status by clicking on this [![Netlify Status](https://api.netlify.com/api/v1/badges/3ff1ba0c-68c8-4f94-b8fa-6260c6ae1925/deploy-status)](https://app.netlify.com/sites/falcosecurity/deploys) badge.
 
@@ -21,7 +21,7 @@ Finally, once a snapshot for the previous version has been created, you need to 
 
 The following instructions assume **`v0.x.y` is the version to be archived**.
 
-1. Create the new `v0.x` branch from the current `master` branch.
+1. Create the new `v0.x` branch from the current `main` branch.
 2. Configure [the branch deploy control on Netlify](https://docs.netlify.com/site-deploys/overview/#branch-deploy-controls) by adding the newly created branch `v0.x`.
 3. Within the `v0.x` branch, edit the [versions/params.yaml](config/_default/versions/params.yaml) file:
     - Set `archived_version` to `true`,
@@ -43,7 +43,7 @@ The following instructions assume **`v0.x.y` is the version to be archived**.
     ```yaml
     falco-website:
       branches:
-        master:
+        main:
           protect: true
         v0.26:
           protect: true
@@ -58,14 +58,14 @@ The following instructions assume **`v0.x.y` is the version to be archived**.
 >
 The following instructions assume **`v0.X.Y` is the new version** and **v0.x.y** is the previous already-archived version.
 
-1. [Open a PR in the falcosecurity/falco-website repo](https://github.com/falcosecurity/falco-website/edit/master/config/_default/versions/params.yaml) to modify the [versions/params.yaml](config/_default/versions/params.yaml) file on the `master` branch:
+1. [Open a PR in the falcosecurity/falco-website repo](https://github.com/falcosecurity/falco-website/edit/main/config/_default/versions/params.yaml) to modify the [versions/params.yaml](config/_default/versions/params.yaml) file on the `main` branch:
     - Make sure the `version` field is set to `v0.X.Y` (i.e., *the new version*).
     - **Insert** the following config block for *the new version* as the first entry of the list, right after the `versions:` line. Make sure the indentation is right (it should align with the adyacent blocks) and tabs should be avoided.
     ```yaml
       - fullversion: v0.X.Y
         version: vX.Y
-        githubbranch: master
-        docsbranch: master
+        githubbranch: main
+        docsbranch: main
         url: https://falco.org/
     ```
     - Update the current second YAML block refering to `v0.x.y` (i.e., *the previous version*) as following:
