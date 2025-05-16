@@ -114,7 +114,7 @@ As of 0.6.0, rules have an optional set of {{< glossary_tooltip text="tags" term
 - rule: File Open by Privileged Container
   desc: Any open by a privileged container. Exceptions are made for known trusted images.
   condition: (open_read or open_write) and container and container.privileged=true and not trusted_containers
-  output: File opened for read/write by privileged container (user=%user.name command=%proc.cmdline %container.info file=%fd.name)
+  output: File opened for read/write by privileged container | user=%user.name command=%proc.cmdline file=%fd.name
   priority: WARNING
   tags: [container, cis]
 ```

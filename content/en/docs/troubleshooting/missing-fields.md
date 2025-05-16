@@ -25,7 +25,6 @@ Check the basics:
 - Is the container runtime socket correctly mounted? For Kubernetes, mount with the `HOST_ROOT` prefix: `/host/run/k3s/containerd/containerd.sock`. See [deploy-kubernetes](https://github.com/falcosecurity/deploy-kubernetes/tree/main/kubernetes) example template.
 - Is a custom path specified for the container runtime socket in Kubernetes? If yes, use the `-o container_engines.cri.sockets[]=<socket_path>` command line option when running Falco. The default paths include: `/run/containerd/containerd.sock`, `/run/k3s/containerd/containerd.sock`, `/run/crio/crio.sock`.
 - To expedite lookups, attempt to disable asynchronous CRI API calls by using the `-o container_engines.cri.disable_async=true` command line option when running Falco.
-- If you run the upstream Falco rules containing the `%container.info` placeholder output field, run Falco with the `-pc` or `-pk` command line option to automatically include and resolve crucial container and Kubernetes-related output fields. For additional details, consult the [Outputs Formatting](/doc/outputs/formatting/) Guide, and consider adding more [Supported Output Fields](/docs/reference/rules/supported-fields/#field-class-container).
 - Falco monitors both host and container processes. If the `container.id` is set to `host`, it indicates that the process is running on the host, and therefore, no container image is associated with it.
 
 {{% pageinfo color=info %}}
