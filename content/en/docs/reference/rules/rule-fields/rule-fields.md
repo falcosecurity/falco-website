@@ -9,6 +9,6 @@ Key | Required | Description | Default
 `enabled` | no | If set to `false`, a rule is neither loaded nor matched against any events. | `true`
 `tags` | no | A list of tags applied to the rule (more on this [below](/docs/rules/controlling-rules/#tags)). |
 `warn_evttypes` | no | If set to `false`, Falco suppresses warnings related to a rule not having an event type (more on this [below](/docs/rules/style-guide/#condition-syntax)). | `true`
-`skip-if-unknown-filter` | no | If set to `true`, if a rule conditions contains a filtercheck, e.g. `fd.some_new_field`, that is not known to this version of Falco, Falco silently accepts the rule but does not execute it; if set to `false`, Falco repots an error and exists when finding an unknown filtercheck. | `false`
+`skip-if-unknown-filter` | no | If set to `true`, if a rule conditions contains a filtercheck, e.g. `fd.some_new_field`, that is not known to this version of Falco, Falco silently accepts the rule but does not execute it; if set to `false`, Falco reports an error and exists when finding an unknown filtercheck. | `false`
 `source` | no | The event source for which this rule should be evaluated. Typical values are `syscall`, `k8s_audit`, or the source advertised by a source [plugin](/docs/plugins/). | `syscall`
 `append` | no | When set to `true`, it adds conditions and/or exceptions to a previously defined rule or macro instead of overseeding it. Not used when the goal is just to enable an already existing rule. In case of appending to a list, it adds new elements to it. |
