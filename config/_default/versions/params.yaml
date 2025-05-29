@@ -32,7 +32,7 @@ versions:
     version: v0.40
     githubbranch: 0.40.0
     docsbranch: v0.40
-    url: https://v0.40.falco.org/
+    url: https://v0-40.falco.org/
 
   - fullversion: v0.39.2
     version: v0.39
