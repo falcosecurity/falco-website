@@ -22,8 +22,8 @@ Finally, once a snapshot for the previous version has been created, you need to 
 The following instructions assume **`v0.x.y` is the version to be archived**.
 
 1. Create the new `v0.x` branch from the current `master` branch.
-2. Configure [the branch deploy control on Netlify](https://docs.netlify.com/site-deploys/overview/#branch-deploy-controls) by adding the newly created branch `v0.x`.
-3. Within the `v0.x` branch, edit the [versions/params.yaml](config/_default/versions/params.yaml) file:
+2. Configure [the branch deploy control on Netlify](https://app.netlify.com/projects/falcosecurity/configuration/deploys#branches-and-deploy-contexts) by adding the newly created branch `v0.x`.
+3. Within the `v0.x` branch, edit the [config/_default/versions/params.yaml](config/_default/versions/params.yaml) file:
     - Set `archived_version` to `true`,
     - Make sure `version` is equal to `v0.x.y`,
     - Update the YAML block referring to `v0.x.y` (i.e., *the previous version*) as following:
@@ -37,7 +37,7 @@ The following instructions assume **`v0.x.y` is the version to be archived**.
         url: https://v0-x.falco.org/
     ```
     - Finally, commit and push to `v0.x`.
-4. Once the Netlify branch build is done (see the [Deploys section](https://app.netlify.com/sites/falcosecurity/deploys)), add a new [branch subdomain on Netilify](https://docs.netlify.com/domains-https/custom-domains/multiple-domains/#branch-subdomains) by selecting the branch deploy configured in the previous step.
+4. Once the Netlify branch build is done (see the [Deploys section](https://app.netlify.com/sites/falcosecurity/deploys)), add a new [branch subdomain on Netilify](https://app.netlify.com/projects/falcosecurity/domain-management#branch-subdomains) by selecting the branch deploy configured in the previous step.
 5. Open a [PR in falcosecurity/test-infra](https://github.com/falcosecurity/test-infra/edit/master/config/config.yaml) to add `v0.x` as protected branch to the `prow/config.yaml`, for example:
 
     ```yaml
@@ -60,6 +60,10 @@ The following instructions assume **`v0.X.Y` is the new version** and **v0.x.y**
 
 1. [Open a PR in the falcosecurity/falco-website repo](https://github.com/falcosecurity/falco-website/edit/master/config/_default/versions/params.yaml) to modify the [versions/params.yaml](config/_default/versions/params.yaml) file on the `master` branch:
     - Make sure the `version` field is set to `v0.X.Y` (i.e., *the new version*).
+    ```yaml
+      version: v0.X.Y
+    ```
+   - Make sure the `rules*` fields are updated to the relevant versions.
     - **Insert** the following config block for *the new version* as the first entry of the list, right after the `versions:` line. Make sure the indentation is right (it should align with the adyacent blocks) and tabs should be avoided.
     ```yaml
       - fullversion: v0.X.Y
