@@ -9,7 +9,7 @@ weight: 20
 ---
 
 {{% pageinfo color="primary" %}}
-Falco consumes streams of events and evaluates them against a set of security {{< glossary_tooltip text="rules" term_id="rules" >}} to detect abnormal behavior. By default, Falco is preconfigured to consume events from the Linux Kernel. This scenario requires Falco to be privileged, and depending on the kernel version installed on the node, a {{< glossary_tooltip text="driver" term_id="drivers" >}} will be installed on the node. Since orchestration systems like Kubernetes are out of scope for this section, it's up to the user to manage the container lifecycle and deployment across the nodes.
+Falco consumes streams of events and evaluates them against a set of security {{< glossary_tooltip text="rules" term_id="rules" >}} to detect abnormal behavior. By default, Falco is pre-configured to consume events from the Linux Kernel. This scenario requires Falco to be privileged, and depending on the kernel version installed on the node, a {{< glossary_tooltip text="driver" term_id="drivers" >}} will be installed on the node. Since orchestration systems like Kubernetes are out of scope for this section, it's up to the user to manage the container lifecycle and deployment across the nodes.
 
 For other installation scenarios, such as consuming cloud events or other data sources using plugins, please refer to the [Plugins](/docs/concepts/plugins/) section.
 {{% /pageinfo %}}
@@ -18,7 +18,7 @@ For other installation scenarios, such as consuming cloud events or other data s
 
 This section describes how to run the Falco userspace process in a container using one of the released [container images](/docs/download#images).
 
-By default, Falco is preconfigured to consume events from the Linux Kernel. For this default installation scenario, Falco can be run in two ways:
+By default, Falco is pre-configured to consume events from the Linux Kernel. For this default installation scenario, Falco can be run in two ways:
 
 - [Fully Privileged](#docker-privileged)
 - [Least Privileged (Recommended)](#docker-least-privileged)

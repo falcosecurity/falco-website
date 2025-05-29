@@ -5,7 +5,7 @@ weight: 40
 ---
 
 {{% pageinfo color="primary" %}}
-Falco consumes streams of events and evaluates them against a set of security {{< glossary_tooltip text="rules" term_id="rules" >}} to detect abnormal behavior. By default, Falco is preconfigured to consume events from the Linux Kernel. This scenario requires Falco to be privileged, and depending on the kernel version installed on the host, a {{< glossary_tooltip text="driver" term_id="drivers" >}} needs to be installed.
+Falco consumes streams of events and evaluates them against a set of security {{< glossary_tooltip text="rules" term_id="rules" >}} to detect abnormal behavior. By default, Falco is pre-configured to consume events from the Linux Kernel. This scenario requires Falco to be privileged, and depending on the kernel version installed on the host, a {{< glossary_tooltip text="driver" term_id="drivers" >}} needs to be installed.
 
 For other installation scenarios, such as consuming cloud events or other data sources using plugins, please refer to the [Plugins](/docs/concepts/plugins/) section.
 {{% /pageinfo %}}

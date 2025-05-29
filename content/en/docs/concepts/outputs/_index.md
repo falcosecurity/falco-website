@@ -23,4 +23,4 @@ Find further information about how to configure each of those channels under [Ou
 
 ## Integration with third parties
 
-Falco alerts can easily be forwarded to third-party systems like off-host SIEM, databases, or Faas. While many tools can natively connect to the generic outputs channels that Falco provides such as files and standrd output, a forwarder proxy, [Falcosidekick](/docs/outputs/forwarding), was created to facilitate integration with more than 50 different systems.
+Falco alerts can easily be forwarded to third-party systems like off-host SIEM, databases, or Faas. While many tools can natively connect to the generic outputs channels that Falco provides such as files and standard output, a forwarder proxy, [Falcosidekick](/docs/outputs/forwarding), was created to facilitate integration with more than 50 different systems.

@@ -44,7 +44,7 @@ The fields only work for exit events and only return a value if the syscall succ
 
 The below tables show:
 * the specific syscalls that are are supported
-* the specific falco event identifers are supported. The reason there are multiple event identifers for the same syscall (e.g. MKDIR vs MKDIR_2) is that libs used to define new events every time we added/modified arguments to the enter or exit event. Older applications using the older version of libs will use the older event identifier for the syscall name, while newer applications will use the newer event identifier.
+* the specific falco event identifiers are supported. The reason there are multiple event identifiers for the same syscall (e.g. MKDIR vs MKDIR_2) is that libs used to define new events every time we added/modified arguments to the enter or exit event. Older applications using the older version of libs will use the older event identifier for the syscall name, while newer applications will use the newer event identifier.
 * the specific event fields that are mapped to `fs.path.*` fields
 * whether the fields actually come from the enter event instead of the exit event.
 

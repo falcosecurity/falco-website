@@ -152,7 +152,7 @@ const (
 )
 ```
 
-The `const` are used to declare all mandatory informations of our plugin through the `docker.SetInfo()` method:
+The `const` are used to declare all mandatory information of our plugin through the `docker.SetInfo()` method:
 * `ID`:  Must be unique among all plugins, it's used by the framework in captures to know which `plugin` is the `source` of events. It's also important for avoiding collisions if you want to share your plugin in the [registry](https://github.com/falcosecurity/plugins), see [the main repository](https://github.com/falcosecurity/plugins#registering-a-new-plugin) for more details.
 * `Name`: The name of our plugin, will be used in `plugins` section of  `falco.yaml`. The plugin name must match this regular expression: `^[a-z]+[a-z0-9-_\-]*$` (however, its not recommended to use _ in the name, unless you are trying to match the name of a source or for particular reasons).
 * `Description`: The description of our plugin.
@@ -531,7 +531,7 @@ func (p *Plugin) SetInfo(id uint32, name, description, contact, version, eventSo
 
 ##### `Info()`
 
-This method is mandatory and all plugins must respect that. It allows the *Falco plugin framework* to have all intels about the plugin itself, we use the global variables and the `SetInfo()` method to set the values:
+This method is mandatory and all plugins must respect that. It allows the *Falco plugin framework* to have all intel about the plugin itself, we use the global variables and the `SetInfo()` method to set the values:
 
 ```go
 // Info displays information of the plugin to Falco plugin framework
@@ -751,9 +751,9 @@ This methods is used by the *Falco plugin framework* for opening a new `stream` 
 
 To simplify the creation of this `source.Instance`, the Go SDK provides two easy functions, see the [docs](https://falco.org/docs/plugins/go-sdk-walkthrough/#best-practices-and-go-sdk-prebuilts-for-source-instances):
 * `source.NewPullInstance`: for when the event source can be implemented sequentially and the time required to generate a sequence of event is deterministic, eg: periodic calls to an external API
-* `souce.NewPushInstance`: for when the event source can be suspensive and there is no time guarantee regarding when an event gets produced, eg: we wait a webhook from an external service
+* `source.NewPushInstance`: for when the event source can be suspensive and there is no time guarantee regarding when an event gets produced, eg: we wait a webhook from an external service
 
-For collecting events from `docker`, we'll use `souce.NewPushInstance` as the `docker SDK` creates a channel and sends the events into when they happened.
+For collecting events from `docker`, we'll use `source.NewPushInstance` as the `docker SDK` creates a channel and sends the events into when they happened.
 
 ```go
 // Open is called by Falco plugin framework for opening a stream of events, we call that an instance

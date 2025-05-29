@@ -87,4 +87,4 @@ The rule can match a given connect to an IP like 1.5.6.7, which is outside the k
 
 ### Limited Comparison Operators
 
-Although the falco rules systax supports a fairly wide set of comparison operators for IPs, including contains, the only allowed operators for `fd.*ip.name` fields are =/!=/in, with an optional preceding not.
+Although the falco rules syntax supports a fairly wide set of comparison operators for IPs, including contains, the only allowed operators for `fd.*ip.name` fields are =/!=/in, with an optional preceding not.

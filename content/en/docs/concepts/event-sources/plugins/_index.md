@@ -9,7 +9,7 @@ aliases:
 
 Since the introduction of the [Plugin System](/docs/plugins), additional event sources can serve as input for Falco. Those event sources are provided by plugins implementing the [event sourcing capability](/docs/reference/plugins/plugin-api-reference/#event-sourcing-capability-api). 
 
-Examples of event source defined by offically-supported plugins are:
+Examples of event source defined by officially-supported plugins are:
 
 * [Kubernetes Audit Events](/docs/concepts/event-sources/plugins/kubernetes-audit)
 * [AWS CloudTrail](/docs/concepts/event-sources/plugins/cloudtrail)
