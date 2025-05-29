@@ -58,6 +58,15 @@ These changes should address all issues related to missing container metadata.
 In Falco 0.41.0, we worked hard to create a Falco k8s operator: https://github.com/falcosecurity/falco-operator/.
 For now, this is considered a technical preview, but we will deliver a fully functional operator very soon. Expect more news in a new blog post!
 
+## Security best practices improvements
+
+We are grateful for the suggestions we received from security experts and adopters in our community, and so we implemented the following enhancements:
+
+The modern eBPF probe will no longer store security sensitive settings in the `.bss` mmapable segment but will use dedicated maps instead. This is a security best practice because it prevents other processes running with elevated privileges from tampering with the map file descriptor, which would be harder to detect. We would like to thank [Mouad Kondah](https://github.com/mouadk) for suggesting this change!
+
+Falco will no longer consider rule files or contents of rule directories that do not have a `.yml`/`.yaml` extension. This prevents accidental processing of files that are not related to rules. We would like to thank our user [Travis Smith](https://github.com/tks98) for suggesting this change!
+
+
 ## Breaking changes and deprecations ⚠️
 This version comes with breaking changes, mostly in the configuration interface.
 
