@@ -19,7 +19,7 @@ doing all this, chances that you are willing to contribute are high! Please read
 CentOS 8 Stream / RHEL 8
 
 ```bash
-dnf install git gcc gcc-c++ git make cmake elfutils-libelf-devel perl-IPC-Cmd
+dnf install git gcc gcc-c++ make cmake elfutils-libelf-devel perl-IPC-Cmd
 ```
 
 {{< /tab >}}}
