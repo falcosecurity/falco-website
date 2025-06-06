@@ -701,7 +701,7 @@ In the plugin framework, **state tables** are simple key-value mappings represen
 
 A state table is a key-value map that can be used for storing pieces of state within the plugin framework. State tables are an abstract concept, and the plugin API does not enforce any specific implementation. Instead, the API specifies interface boundaries in the form of C virtual tables of methods representing the behavior of state tables. This allows the plugin API to remain flexible, abstract, and multi-language by nature. The model by which state tables work is defined by the notions of ownership, registration, and discovery.
 
-Every state table must have an owner, which is responsible of managing the table's memory and of implementing all the functions of the state tables API. Owners can either be plugins or any of the other actors that are part of the Falcosecurity libraries. For example, libsinsp is the ower of the `threads` table, which is a key-value store where the key is a thread ID of a Linux machine and the value is a set of information describing a Linux thread. Plugins can access the `threads` table of libsinsp for retrieving thread information given a thread ID, reading and writing the info fields, extending the info with additional metadata, and do much more. However, plugins are never responsible of managing the memory and the implementation of the `threads` table, as it is owned by libsinsp only. Instead, plugins can do the same by defining their own stateful components and implementing the required interface functions to register them as "state tables". Stateful components must be registered in the framework in order to be considered "state tables". Libsinsp, which owns the plugins loaded at runtime, also holds a "table registry" that is the source of truth for all the state tables known at runtime. Once a state table is registered in the table registry, it is discoverable by all the actors and plugins running in the context of the same Falcosecurity libs instance.
+Every state table must have an owner, which is responsible of managing the table's memory and of implementing all the functions of the state tables API. Owners can either be plugins or any of the other actors that are part of the Falcosecurity libraries. For example, libsinsp is the owner of the `threads` table, which is a key-value store where the key is a thread ID of a Linux machine and the value is a set of information describing a Linux thread. Plugins can access the `threads` table of libsinsp for retrieving thread information given a thread ID, reading and writing the info fields, extending the info with additional metadata, and do much more. However, plugins are never responsible of managing the memory and the implementation of the `threads` table, as it is owned by libsinsp only. Instead, plugins can do the same by defining their own stateful components and implementing the required interface functions to register them as "state tables". Stateful components must be registered in the framework in order to be considered "state tables". Libsinsp, which owns the plugins loaded at runtime, also holds a "table registry" that is the source of truth for all the state tables known at runtime. Once a state table is registered in the table registry, it is discoverable by all the actors and plugins running in the context of the same Falcosecurity libs instance.
 
 The way plugins can interact with state tables is through discovery and the usage of accessors. At initialization time (in the `init` function), plugins are provided interface functions that allow them to list all the state tables available at runtime and obtaining "accessors" for later usage. An *accessor* is an opaque pointers obtained at initialization time and that can be used later (e.g. when parsing an event or when extracting a field) for accessing a given table or the fields of its entries. Considering the example of the `threads` table, in its `init` function a given plugin could obtain an accessor to the table and to some of the fields of each thread info (such as the `pid` or the `comm`) and store them in its plugin state. Later, when extracting a field, the same plugin would be available to query the `threads` table for a given thread ID (perhaps obtained by reading the event payload of a syscall) by using the table accessor, and then reading the `pid` of the obtained thread by using the field accessor.
 
@@ -778,7 +778,7 @@ typedef struct
 	ss_plugin_rc (*add_table)(ss_plugin_owner_t* o, const ss_plugin_table_input* in);
 	//
 	// Vtable for controlling operations related to fields on the state tables
-	// registeted in the plugin's owner.
+	// registered in the plugin's owner.
 	ss_plugin_table_fields_vtable fields;
 } ss_plugin_init_tables_input;
 ```
@@ -816,7 +816,7 @@ static ss_plugin_t* plugin_init(const ss_plugin_init_input* in, ss_plugin_rc* rc
     // create a new table entry
     auto entry = in->tables->writer_ext->create_table_entry(ret->thread_table);
 
-    // read the subtable hanlde ftom the new entry
+    // read the subtable handle from the new entry
     ss_plugin_state_data data;
     in->tables->reader_ext->read_entry_field(ret->thread_table, entry, ret->table_field_fdtable, &data);
     auto fdtable = data.table;
@@ -831,7 +831,7 @@ static ss_plugin_t* plugin_init(const ss_plugin_init_input* in, ss_plugin_rc* rc
 
 ### Accessing Tables
 
-After obtaining accessors for all the tables and fields a given plugin is interested into, they can be used for performong operations over tables at runtime. Table operations are splitted in the two "reading" and "writing" categories, each having their own vtable and set of functions. The "reader" and the "writer" vtables are passed to the interested plugin functions for different capabilities, depending on their scope. For example, the `extract_fields` function of the field extraction capability gets passed the state tables reader vtable, whereas the `parse_event` function of the event parsing capability has access to both the reader and writer vtables. This enforces users to only apply state tables modifications at event parsing time, leaving field extraction a "stateless" code path. The reader and writer vtables and their respective functions are reported below.
+After obtaining accessors for all the tables and fields a given plugin is interested into, they can be used for performing operations over tables at runtime. Table operations are split in the two "reading" and "writing" categories, each having their own vtable and set of functions. The "reader" and the "writer" vtables are passed to the interested plugin functions for different capabilities, depending on their scope. For example, the `extract_fields` function of the field extraction capability gets passed the state tables reader vtable, whereas the `parse_event` function of the event parsing capability has access to both the reader and writer vtables. This enforces users to only apply state tables modifications at event parsing time, leaving field extraction a "stateless" code path. The reader and writer vtables and their respective functions are reported below.
 
 ```CPP
 // Vtable for controlling a state table for read operations.
@@ -851,7 +851,7 @@ typedef struct
 	ss_plugin_table_entry_t* (*get_table_entry)(ss_plugin_table_t* t, const ss_plugin_state_data* key);
 	//
 	// Reads the value of an entry field from a table's entry.
-	// The field accessor must be obtainied during plugin_init().
+	// The field accessor must be obtained during plugin_init().
 	// The read value is stored in the "out" parameter.
 	// Returns SS_PLUGIN_SUCCESS if successful, and SS_PLUGIN_FAILURE otherwise.
 	ss_plugin_rc (*read_entry_field)(ss_plugin_table_t* t, ss_plugin_table_entry_t* e, const ss_plugin_table_field_t* f, ss_plugin_state_data* out);
@@ -871,7 +871,7 @@ typedef struct
 	// Creates a new entry that can later be added to the same table it was
 	// created from. The entry is represented as an opaque pointer owned
 	// by the plugin. Once obtained, the plugin can either add the entry
-	// to the table through add_table_entry(), or destroy it throgh
+	// to the table through add_table_entry(), or destroy it through
 	// destroy_table_entry(). Returns an opaque pointer to the newly-created
 	// entry, or NULL in case of error.
 	ss_plugin_table_entry_t* (*create_table_entry)(ss_plugin_table_t* t);
@@ -888,7 +888,7 @@ typedef struct
 	ss_plugin_table_entry_t* (*add_table_entry)(ss_plugin_table_t* t, const ss_plugin_state_data* key, ss_plugin_table_entry_t* entry);
 	//
 	// Updates a table's entry by writing a value for one of its fields.
-	// The field accessor must be obtainied during plugin_init().
+	// The field accessor must be obtained during plugin_init().
 	// The written value is read from the "in" parameter.
 	// Returns SS_PLUGIN_SUCCESS if successful, and SS_PLUGIN_FAILURE otherwise.
 	ss_plugin_rc (*write_entry_field)(ss_plugin_table_t* t, ss_plugin_table_entry_t* e, const ss_plugin_table_field_t* f, const ss_plugin_state_data* in);
@@ -921,7 +921,7 @@ ss_plugin_rc plugin_parse_event(ss_plugin_t *s, const ss_plugin_event_input *ev,
     tmp.s64 = 0;
     ss_plugin_table_entry_t* fd_entry = in->table_reader_ext->get_table_entry(fdtable, &tmp);
 
-    // read a field from the entry in the file desciptors table
+    // read a field from the entry in the file descriptors table
     in->table_reader_ext->read_entry_field(fdtable, fd_entry, ps->table_field_fdtable_name, &tmp);
 }
 ```
@@ -963,9 +963,9 @@ typedef struct
 
 ### Thread-safety and Reproducibility
 
-State access is not thread-safe. Operations related to either discovery, reading, or writing, must all be executed in the synchronous context and within the thread in which the framework invokes the given plugin function that is capable of accessing tables. For example, plugins are only allowed to read from a table during the exection of `extract_fields` or `parse_event`, but they are not allowed to launch an asynchronous thread that reuses the same accessors to read from a table after any of those functions have returned.
+State access is not thread-safe. Operations related to either discovery, reading, or writing, must all be executed in the synchronous context and within the thread in which the framework invokes the given plugin function that is capable of accessing tables. For example, plugins are only allowed to read from a table during the execution of `extract_fields` or `parse_event`, but they are not allowed to launch an asynchronous thread that reuses the same accessors to read from a table after any of those functions have returned.
 
-Also, the previous sections imply that state tables can be operated on during the execution of varios plugin functions, but that however only the `parse_event` function of the event parsing capability can perform write operations. This is by purpose and design due to the architecture of the Falcosecurity libraries themselves.
+Also, the previous sections imply that state tables can be operated on during the execution of various plugin functions, but that however only the `parse_event` function of the event parsing capability can perform write operations. This is by purpose and design due to the architecture of the Falcosecurity libraries themselves.
 
 There may be use cases when the state update results of some asynchronous job and computation. For example, the Falcosecurity libraries implement the container metadata enrichment support by connecting to one or more container runtime sockets and fetching information asynchronously using a separate thread of the main event processing loop. In those cases, state updates must still happen synchronously. The [async events capability](/docs/reference/plugins/plugin-api-reference/#async-events-capability-api) is the strategy provided by the plugin framework. With that, plugins are provided with a thread-safe callback that they can use to inject asynchronous events in the currently-open event stream, and the framework will guarantee those events to be later received by functions such as `parse_event` or `extract_fields` just like any other events. Plugins can only safely utilize asynchronously-obtained information for state updates and field extraction through this messaging-like communication mode.
 
