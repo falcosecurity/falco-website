@@ -36,16 +36,16 @@ The new plugin-based implementation has been developed to be as similar as possi
 
 * K8S Audit Events support must be configured in `falco.yaml` through the `plugins` section through the plugin's init configuration and open parameters.
 
-* In the legacy implementation, the extraction of list of values was supported implicitly. When extracting a field for a rule condition or output, the check used to be able to extract single values or list of values, and use them with operators such as `in`, `intersect`, etc. However, the concept of "list" was totally implicity and there was no distinction between single values and lists of values with lenght equal to 1.\
+* In the legacy implementation, the extraction of list of values was supported implicitly. When extracting a field for a rule condition or output, the check used to be able to extract single values or list of values, and use them with operators such as `in`, `intersect`, etc. However, the concept of "list" was totally implicity and there was no distinction between single values and lists of values with length equal to 1.\
 Now, the plugin-based implementation is compliant to the new semantics supported in the libs since Falco 0.32, which allows fields to be of explicit list type. A field of list type will always extract list of values, containing one or more entries, or fail the extraction.
 
 *  Fields of list type now only support the `in` and `intersects` operators. For example, checks such as `ka.req.role.rules.verbs contains create` would be rejected and would need to be changed in the equivalent `ka.req.role.rules.verbs intersects (create)`.
 
 * Failed field value extraction should now be checked with the `exists` operator, and not by comparing with the `<NA>` string.
 
-* The `<NA>` string literal is not returned anymore, neither in single-valued fields nor in list fields. In the legacy implementation, field existence was occasionally checked with expressions like `ka.target.subresource != <NA>`, which would now inherently be always false, because if the field was absent the string comparison ends up failing. Instead, prefer using the analoguous `ka.target.subresource exists`, which explicitly checks for missing values
+* The `<NA>` string literal is not returned anymore, neither in single-valued fields nor in list fields. In the legacy implementation, field existence was occasionally checked with expressions like `ka.target.subresource != <NA>`, which would now inherently be always false, because if the field was absent the string comparison ends up failing. Instead, prefer using the analogous `ka.target.subresource exists`, which explicitly checks for missing values
 
-* The `/healtz` endpoint endpoint of Falco cannot bind to the same port of the K8S Audit Log endpoint (e.g. `/k8s-audit`), due to the fact that they are now managed by two different webservers (one in Falco, one in the plugin).
+* The `/healthz` endpoint of Falco cannot bind to the same port of the K8S Audit Log endpoint (e.g. `/k8s-audit`), due to the fact that they are now managed by two different webservers (one in Falco, one in the plugin).
 
 * In Falco versions 0.32.x ([Falco v0.32.0](/blog/falco-0-32-0/), [v0.32.1](/blog/falco-0-32-1/), and [ v0.32.2](/blog/falco-0-32-2/)), Falco didn't allow the use of Syscalls and K8S Audit event sources on the same instance. Starting from [version 0.33.0](/blog/falco-0-33-0/), Falco introduced the capability of [consuming events from multiple event sources simultaneously within the same Falco instance](/docs/event-sources/#configuring-event-sources).
 
