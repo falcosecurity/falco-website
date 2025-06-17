@@ -9,20 +9,20 @@ archived_version: false
 # Used in the "version-banner" partial to display a version number for the
 # current doc set.
 
-version: v0.41.0
+version: v0.41.2
 
 # The version of the default rules sets
 # Keep it aligned with the version of Falco for compatibility
 rulesStableVersion: 4.0.0
-rulesIncubatingVersion: 5.0.0
-rulesSandboxVersion: 5.0.0
+rulesIncubatingVersion: 5.0.1
+rulesSandboxVersion: 5.0.1
 rulesDeprecatedVersion: 3.0.0
 
 # The archived versions of the docs available for reference.
 # Used in the Releases menu, as well as in the Available Documentation Versions
 
 versions:
-  - fullversion: v0.41.0
+  - fullversion: v0.41.2
     version: v0.41
     githubbranch: master
     docsbranch: master
