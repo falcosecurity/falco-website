@@ -36,7 +36,7 @@ e.g.:
 The [falcoctl](https://github.com/falcosecurity/falcoctl) tool provides functionality to download and update rules files distributed as OCI artifacts. The `install` command of the [falcoctl](https://github.com/falcosecurity/falcoctl) tool will download rules files to a configurable directory (by default, that is `/etc/falco`). For instance, to install a specific version of the default rules file in `/etc/falco` you can run the following commands:
 
 ```
-# falcoctl index add falcosecurity https://github.io/falcosecurity/index.yaml
+# falcoctl index add falcosecurity https://falcosecurity.github.io/falcoctl/index.yaml
 # falcoctl artifact install falco-rules:3.2.0
 ```
 
