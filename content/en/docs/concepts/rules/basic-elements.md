@@ -168,7 +168,7 @@ Key | Required | Description | Default
 
 Macros provide a way to define common sub-portions of rules in a reusable way. 
 
-By looking at the condition above it looks like both `evt.type = execve and evt.dir = <` and `container.id != host` would be used many by other rules, so to make our job easier we can easily define macros for both:
+By looking at the condition above it looks like both `evt.type = execve and evt.dir = <` and `container.id != host` would be used by many other rules, so to make our job easier we can easily define macros for both:
 
 ```yaml
 - macro: container
