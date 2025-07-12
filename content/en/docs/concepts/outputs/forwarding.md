@@ -148,7 +148,7 @@ The available outputs in Falcosidekick are:
 
 ### Installation in Kubernetes with Helm
 
-See the available [Helm values](https://github.com/falcosecurity/charts/blob/master/falcosidekick/values.yaml) to configure Falcosidekick. 
+See the available [Helm values](https://github.com/falcosecurity/charts/blob/master/charts/falcosidekick/values.yaml) to configure Falcosidekick. 
 
 ```shell
 helm install falco falcosecurity/falco \
