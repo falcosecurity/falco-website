@@ -64,13 +64,28 @@ helm install falco \
 
 ### Add custom rules with a configmap
 
-You can always add the `customRules` value to add your own custom rules in a configmap. For instance, if we create a file as [described in the documentation](https://github.com/falcosecurity/charts/tree/master/charts/falco#loading-custom-rules), and then add it to our one of the above command lines with
+You can always use the `customRules` value to add your own custom rules in a configmap. For instance, if we create a file as [described in the documentation](https://github.com/falcosecurity/charts/tree/master/charts/falco#loading-custom-rules), and then add it to our install command above as follows:
 
 ```
--f custom_rules.yaml
+helm install falco \
+    --set falcoctl.artifact.install.enabled=false \
+    --set falcoctl.artifact.follow.enabled=false \
+    -f custom_rules.yaml
+```
+or if you have already installed falco, you can use the `helm upgrade -i`
+
+```
+helm upgrade -i falco \
+    --set falcoctl.artifact.install.enabled=false \
+    --set falcoctl.artifact.follow.enabled=false \
+    -f custom_rules.yaml
 ```
 
-it will be loaded and configured in our Falco instance.
+it will be loaded and configured in our Falco instance and you can verify by checking the falco daemonset container logs with the command below:
+
+```
+kubectl logs -n falco daemonsets/falco
+```
 
 > Notice: the new rule files described in `customRules` will be placed in the `/etc/falco/rules.d` directory, and will be loaded following the order specified in the configuration file: in the default configuration, this means that will be loaded after `/etc/falco/falco.yaml` and `/etc/falco/falco_rules.local.yaml` rules files.
 
