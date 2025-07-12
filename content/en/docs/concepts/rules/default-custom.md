@@ -81,7 +81,7 @@ helm upgrade -i falco \
     -f custom_rules.yaml
 ```
 
-it will be loaded and configured in our Falco instance and you can verify by checking the falco daemonset container logs with the command below:
+it will be loaded and configured in our Falco instance and you can verify changes by checking the falco daemonset container logs with the command below:
 
 ```
 kubectl logs -n falco daemonsets/falco
