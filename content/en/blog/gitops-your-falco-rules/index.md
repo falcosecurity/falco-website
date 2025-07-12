@@ -719,7 +719,7 @@ and here are the changes that we want to do on it so it checks every 2 minutes, 
 ...
 ```
 
-Translated into our Helm chart [`values.yaml`](https://github.com/falcosecurity/charts/blob/master/falco/values.yaml), the fields to modify would look like:
+Translated into our Helm chart [`values.yaml`](https://github.com/falcosecurity/charts/blob/master/charts/falco/values.yaml), the fields to modify would look like:
 
 ```yaml
 ...
@@ -747,7 +747,7 @@ falcoctl:
 The previous and following steps assume you have a local `values.yaml` file that you can customize. 
 We'll  pass it as an argument (`-f` option) to the Helm command updating in this way our Falco deployment. 
 
-You can download a copy of that file from [here](https://github.com/falcosecurity/charts/blob/master/falco/values.yaml).
+You can download a copy of that file from [here](https://github.com/falcosecurity/charts/blob/master/charts/falco/values.yaml).
 
 {{% /pageinfo %}}
 

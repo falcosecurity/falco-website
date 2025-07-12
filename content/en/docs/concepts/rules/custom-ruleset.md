@@ -27,7 +27,7 @@ Considering this, it's important to remember that the default rules file include
 
 If you are deploying Falco on a Kubernetes cluster, you will likely use [Helm](https://helm.sh) for the installation. In this scenario, instead of placing custom rules files directly in the `/etc/falco/rules.d` directory, you can add them to the `values.yaml` file provided to the `helm` command.
 
-Locate the line `customRules: {}` in the [`values.yaml`](https://github.com/falcosecurity/charts/blob/master/falco/values.yaml) file and replace it with a configuration similar to the following:
+Locate the line `customRules: {}` in the [`values.yaml`](https://github.com/falcosecurity/charts/blob/master/charts/falco/values.yaml) file and replace it with a configuration similar to the following:
 
 ```
 customRules:
