@@ -27,7 +27,7 @@ dnf install git gcc gcc-c++ make cmake elfutils-libelf-devel perl-IPC-Cmd
 {{% tab name="Debian/ Ubuntu" %}}
 
 ```bash
-apt update && apt install git cmake clang build-essential linux-tools-common linux-tools-generic libelf-dev
+apt update && apt install git cmake clang build-essential linux-tools-common linux-tools-generic libelf-dev bpftool
 ```
 
 {{< /tab >}}}
