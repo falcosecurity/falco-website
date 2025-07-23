@@ -96,7 +96,7 @@ aws eks describe-cluster --name {cluster-name} --query "cluster.identity.oidc.is
 
 Since you made it this far it means that you have everything ready on AWS' side, now it's time to configure Falco and Falcosidekick. The easiest way to get started is by using the official [Helm chart](https://github.com/falcosecurity/charts/tree/master/charts/falco).
 
-To configure Falcosidekick at minimum use this `values.yaml` with all the necessary values to complete the configuration, see [here](https://github.com/falcosecurity/charts/blob/master/falcosidekick/values.yaml):
+To configure Falcosidekick at minimum use this `values.yaml` with all the necessary values to complete the configuration, see [here](https://github.com/falcosecurity/charts/blob/master/charts/falcosidekick/values.yaml):
 
 ```yaml
 falcosidekick:

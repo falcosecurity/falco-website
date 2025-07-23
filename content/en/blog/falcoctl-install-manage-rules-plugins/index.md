@@ -323,7 +323,7 @@ helm repo update
 
 ### Configure the installation and followed by the artifacts
 
-Like any other values, we can set the `values.yaml` field to choose the [artifacts to install and follow](https://github.com/falcosecurity/charts/blob/master/falco/values.yaml#L331) the index we use for.
+Like any other values, we can set the `values.yaml` field to choose the [artifacts to install and follow](https://github.com/falcosecurity/charts/blob/master/charts/falco/values.yaml#L331) the index we use for.
 
 ```yaml
 ...
