@@ -84,7 +84,7 @@ engine:
 
 You're now monitoring your gVisor sandboxes.
 
-## Permament configuration with Systemd
+## Permanent configuration with Systemd
 
 Alternatively, for a more permanent configuration:
 
