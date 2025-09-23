@@ -122,7 +122,7 @@ $ sudo falco --gvisor-config=/etc/docker/runsc_falco_config.json
 
 You're now monitoring your gVisor sandboxes!
 
-### Example permament configuration with Systemd
+### Example permanent configuration with Systemd
 
 Alternatively, for a more permanent configuration:
 
