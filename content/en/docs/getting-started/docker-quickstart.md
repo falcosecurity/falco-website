@@ -14,11 +14,14 @@ First, ensure you have a Linux machine with a recent version of Docker installed
 Run the following command:
 
 ```sh
-sudo docker run --rm -i -t --name falco --privileged  \
-    -v /var/run/docker.sock:/host/var/run/docker.sock \
-    -v /dev:/host/dev -v /proc:/host/proc:ro -v /boot:/host/boot:ro \
-    -v /lib/modules:/host/lib/modules:ro -v /usr:/host/usr:ro -v /etc:/host/etc:ro \
-    falcosecurity/falco:{{< latest >}}
+docker run --rm -it \
+           --name falco \
+           --privileged \
+           -v /sys/kernel/tracing:/sys/kernel/tracing:ro \
+           -v /var/run/docker.sock:/host/var/run/docker.sock \
+           -v /proc:/host/proc:ro \
+           -v /etc:/host/etc:ro \
+           falcosecurity/falco:{{< latest >}}
 ```
 
 Falco is now monitoring your system using the [pre-installed set of rules](https://github.com/falcosecurity/rules/blob/main/rules/falco_rules.yaml) that alert you upon suspicious behavior.
@@ -59,12 +62,15 @@ Stop the Falco container with `Ctrl-C`, copy the following text in a file and ca
 Then start Falco again, this time mounting the new rule file:
 
 ```sh
-sudo docker run --name falco --rm -i -t --privileged \
-    -v $(pwd)/falco_custom_rules.yaml:/etc/falco/falco_rules.local.yaml \
-    -v /var/run/docker.sock:/host/var/run/docker.sock \
-    -v /dev:/host/dev -v /proc:/host/proc:ro -v /boot:/host/boot:ro \
-    -v /lib/modules:/host/lib/modules:ro -v /usr:/host/usr:ro -v /etc:/host/etc:ro \
-    falcosecurity/falco:{{< latest >}}
+docker run --rm -it \
+           --name falco \
+           --privileged \
+           -v /sys/kernel/tracing:/sys/kernel/tracing:ro \
+           -v /var/run/docker.sock:/host/var/run/docker.sock \
+           -v /proc:/host/proc:ro \
+           -v /etc:/host/etc:ro \
+           -v $(pwd)/falco_custom_rules.yaml:/etc/falco/falco_rules.local.yaml \
+           falcosecurity/falco:{{< latest >}}
 ```
 
 Finally, open another terminal and write a file in `/etc`:
