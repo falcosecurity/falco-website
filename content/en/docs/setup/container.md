@@ -34,14 +34,31 @@ To run Falco in a container using Docker with full privileges, use the following
 The {{< glossary_tooltip text="Modern eBPF" term_id="modern-ebpf-probe" >}} is bundled into the Falco binary. This allows you to run Falco without dependencies by using the following command:
 
 ```shell
-docker pull falcosecurity/falco:latest
+docker pull falcosecurity/falco:{{< latest >}}
 docker run --rm -it \
            --privileged \
+           -v /sys/kernel/tracing:/sys/kernel/tracing:ro \
            -v /var/run/docker.sock:/host/var/run/docker.sock \
            -v /proc:/host/proc:ro \
            -v /etc:/host/etc:ro \
-           falcosecurity/falco:latest
+           falcosecurity/falco:{{< latest >}}
 ```
+
+{{% pageinfo color="primary" %}}
+
+On some systems, `tracefs` is available at `/sys/kernel/debug/tracing` instead of `/sys/kernel/tracing`. If this is the
+case, please replace `-v /sys/kernel/tracing:/sys/kernel/tracing:ro` with
+`-v /sys/kernel/debug/tracing:/sys/kernel/tracing:ro`.
+
+{{% /pageinfo %}}
+
+{{% pageinfo color="warning" %}}
+
+Mounting the host's `tracefs` (i.e.: mounting the host `/sys/kernel/tracing` path) is an optional but recommended
+pre-requisite. By removing the `-v /sys/kernel/tracing:/sys/kernel/tracing:ro` line from the above command, you will
+reduce the amount of accesses granted to the container, but will not benefit anymore from TOCTOU mitigation support.
+
+{{% /pageinfo %}}
 
 #### Kernel Module {#docker-privileged-kernel-module}
 
@@ -52,14 +69,14 @@ For the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver"
 2. Run Falco:
 
     ```shell
-    docker pull falcosecurity/falco:latest
+    docker pull falcosecurity/falco:{{< latest >}}
     docker run --rm -it \
-        --privileged \
-        -v /var/run/docker.sock:/host/var/run/docker.sock \
-        -v /dev:/host/dev \
-        -v /proc:/host/proc:ro \
-        -v /etc:/host/etc:ro \
-        falcosecurity/falco:latest falco -o engine.kind=kmod
+               --privileged \
+               -v /var/run/docker.sock:/host/var/run/docker.sock \
+               -v /dev:/host/dev \
+               -v /proc:/host/proc:ro \
+               -v /etc:/host/etc:ro \
+               falcosecurity/falco:{{< latest >}} falco -o engine.kind=kmod
     ```
 
 
@@ -72,14 +89,14 @@ For the {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} driver, 
 2. Run Falco:
 
     ```shell
-    docker pull falcosecurity/falco:latest
+    docker pull falcosecurity/falco:{{< latest >}}
     docker run --rm -it \
-        --privileged \
-        -v /var/run/docker.sock:/host/var/run/docker.sock \
-        -v /root/.falco:/root/.falco \
-        -v /proc:/host/proc:ro \
-        -v /etc:/host/etc:ro \
-        falcosecurity/falco:latest falco -o engine.kind=ebpf
+               --privileged \
+               -v /var/run/docker.sock:/host/var/run/docker.sock \
+               -v /root/.falco:/root/.falco \
+               -v /proc:/host/proc:ro \
+               -v /etc:/host/etc:ro \
+               falcosecurity/falco:{{< latest >}} falco -o engine.kind=ebpf
 
     # If running a kernel version < 4.14, add '-v /sys/kernel/debug:/sys/kernel/debug:ro \' to the above docker command.
     ```
@@ -91,16 +108,17 @@ To run Falco in a container using Docker with the [principle of least privilege]
 #### Modern eBPF {#docker-least-privileged-modern-ebpf}
 
 ```shell
-docker pull falcosecurity/falco:latest
+docker pull falcosecurity/falco:{{< latest >}}
 docker run --rm -it \
            --cap-drop all \
            --cap-add sys_admin \
            --cap-add sys_resource \
            --cap-add sys_ptrace \
+           -v /sys/kernel/debug:/sys/kernel/debug:ro \
            -v /var/run/docker.sock:/host/var/run/docker.sock \
            -v /proc:/host/proc:ro \
            -v /etc:/host/etc:ro \
-           falcosecurity/falco:latest
+           falcosecurity/falco:{{< latest >}}
 ```
 
 {{% pageinfo color="primary" %}}
@@ -116,6 +134,22 @@ However, in the command above, we use `CAP_SYS_ADMIN` because [Docker does not y
 
 {{% /pageinfo %}}
 
+{{% pageinfo color="primary" %}}
+
+On some systems, `tracefs` is available at `/sys/kernel/debug/tracing` instead of `/sys/kernel/tracing`. If this is the
+case, please replace `-v /sys/kernel/tracing:/sys/kernel/tracing:ro` with
+`-v /sys/kernel/debug/tracing:/sys/kernel/tracing:ro`.
+
+{{% /pageinfo %}}
+
+{{% pageinfo color="warning" %}}
+
+Mounting the host's `tracefs` (i.e.: mounting the host `/sys/kernel/tracing` path) is an optional but recommended
+pre-requisite. By removing the `-v /sys/kernel/tracing:/sys/kernel/tracing:ro` line from the above command, you will
+reduce the amount of accesses granted to the container, but will not benefit anymore from TOCTOU mitigation support.
+
+{{% /pageinfo %}}
+
 #### Kernel Module {#docker-least-privileged-kernel-module}
 
 For the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}} driver, Falco requires the driver to be installed on the host system first. This step requires full privileges, while the Falco container can then run with the least privileges.
@@ -125,13 +159,13 @@ For the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver"
 2. Run Falco using the `falcosecurity/falco` image with the least privileges:
 
     ```shell
-    docker pull falcosecurity/falco:latest
+    docker pull falcosecurity/falco:{{< latest >}}
     docker run --rm -it \
-        -e HOST_ROOT=/ \
-        --cap-add SYS_PTRACE --pid=host $(ls /dev/falco* | xargs -I {} echo --device {}) \
-        -v /var/run/docker.sock:/var/run/docker.sock \
-        -v /etc:/host/etc:ro \
-        falcosecurity/falco:latest falco -o engine.kind=kmod
+               -e HOST_ROOT=/ \
+               --cap-add SYS_PTRACE --pid=host $(ls /dev/falco* | xargs -I {} echo --device {}) \
+               -v /var/run/docker.sock:/var/run/docker.sock \
+               -v /etc:/host/etc:ro \
+               falcosecurity/falco:{{< latest >}} falco -o engine.kind=kmod
     ```
 
 {{% pageinfo color="primary" %}}
@@ -158,17 +192,17 @@ For the {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} driver, 
 2. Run Falco using the `falcosecurity/falco` image with the least privileges:
 
     ```shell
-    docker pull falcosecurity/falco:latest
+    docker pull falcosecurity/falco:{{< latest >}}
     docker run --rm -it \
-        --cap-drop all \
-        --cap-add sys_admin \
-        --cap-add sys_resource \
-        --cap-add sys_ptrace \
-        -v /var/run/docker.sock:/host/var/run/docker.sock \
-        -v /root/.falco:/root/.falco \
-        -v /proc:/host/proc:ro \
-        -v /etc:/host/etc \
-        falcosecurity/falco:latest falco -o engine.kind=ebpf
+               --cap-drop all \
+               --cap-add sys_admin \
+               --cap-add sys_resource \
+               --cap-add sys_ptrace \
+               -v /var/run/docker.sock:/host/var/run/docker.sock \
+               -v /root/.falco:/root/.falco \
+               -v /proc:/host/proc:ro \
+               -v /etc:/host/etc \
+               falcosecurity/falco:{{< latest >}} falco -o engine.kind=ebpf
 
     # If running a kernel version < 4.14, add '-v /sys/kernel/debug:/sys/kernel/debug:ro \' to the above Docker command.
     ```
@@ -220,14 +254,14 @@ To install the kernel module driver on the host system, you can use the followin
 ```shell
 docker pull falcosecurity/falco-driver-loader:latest
 docker run --rm -it \
-    --privileged \
-    -v /root/.falco:/root/.falco \
-    -v /boot:/host/boot:ro \
-    -v /lib/modules:/host/lib/modules \
-    -v /usr:/host/usr:ro \
-    -v /proc:/host/proc:ro \
-    -v /etc:/host/etc:ro \
-    falcosecurity/falco-driver-loader:latest kmod
+           --privileged \
+           -v /root/.falco:/root/.falco \
+           -v /boot:/host/boot:ro \
+           -v /lib/modules:/host/lib/modules \
+           -v /usr:/host/usr:ro \
+           -v /proc:/host/proc:ro \
+           -v /etc:/host/etc:ro \
+           falcosecurity/falco-driver-loader:latest kmod
 ```
 
 ### eBPF Probe {#driver-installation-ebpf-probe}
@@ -237,14 +271,14 @@ To install the eBPF probe driver on the host system, you can use the following c
 ```shell
 docker pull falcosecurity/falco-driver-loader:latest
 docker run --rm -it \
-    --privileged \
-    -v /root/.falco:/root/.falco \
-    -v /boot:/host/boot:ro \
-    -v /lib/modules:/host/lib/modules:ro \
-    -v /usr:/host/usr:ro \
-    -v /proc:/host/proc:ro \
-    -v /etc:/host/etc:ro \
-    falcosecurity/falco-driver-loader:latest ebpf
+           --privileged \
+           -v /root/.falco:/root/.falco \
+           -v /boot:/host/boot:ro \
+           -v /lib/modules:/host/lib/modules:ro \
+           -v /usr:/host/usr:ro \
+           -v /proc:/host/proc:ro \
+           -v /etc:/host/etc:ro \
+           falcosecurity/falco-driver-loader:latest ebpf
 ```
 
 ## Verify Image Signing
