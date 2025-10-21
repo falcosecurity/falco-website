@@ -478,19 +478,19 @@ When performing kernel upgrades on your host, a reboot is required. When using a
 
 ## Uninstall
 
-### `apt` (Debian/Ubuntu) {#install-with-apt}
+### `apt` (Debian/Ubuntu) {#uninstall-with-apt}
 
 ```shell
 apt-get --purge autoremove falco
 ```
 
-### `yum` (CentOS/RHEL/Fedora/Amazon Linux) {#install-with-yum}
+### `yum` (CentOS/RHEL/Fedora/Amazon Linux) {#uninstall-with-yum}
 
 ```shell
 yum remove falco
 ```
 
-### `zypper` (openSUSE) {#install-with-zypper}
+### `zypper` (openSUSE) {#uninstall-with-zypper}
 
 ```shell
 zypper remove falco
