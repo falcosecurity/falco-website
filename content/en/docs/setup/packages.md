@@ -487,7 +487,7 @@ apt-get --purge autoremove falco
 ### `yum` (CentOS/RHEL/Fedora/Amazon Linux) {#install-with-yum}
 
 ```shell
-yum autoremove falco
+yum remove falco
 ```
 
 ### `zypper` (openSUSE) {#install-with-zypper}
