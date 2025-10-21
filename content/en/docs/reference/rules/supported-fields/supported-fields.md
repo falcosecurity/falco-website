@@ -38,7 +38,6 @@ Name | Type | Description
 `evt.deltatime` | RELTIME | delta between this event and the previous event, in nanoseconds.
 `evt.deltatime.s` | RELTIME | integer part of the delta between this event and the previous event.
 `evt.deltatime.ns` | RELTIME | fractional part of the delta between this event and the previous event.
-`evt.dir` | CHARBUF | event direction can be either '>' for enter events or '<' for exit events.
 `evt.type` | CHARBUF | The name of the event (e.g. 'open').
 `evt.type.is` | UINT32 | allows one to specify an event type, and returns 1 for events that are of that type. For example, evt.type.is.open returns 1 for open events, 0 for any other event.
 `syscall.type` | CHARBUF | For system call events, the name of the system call (e.g. 'open'). Unset for other events (e.g. switch or internal events). Use this field instead of evt.type if you need to make sure that the filtered/printed value is actually a system call.
@@ -275,7 +274,6 @@ Name | Type | Description
 `fdlist.cports` | CHARBUF | for TCP/UDP FDs, for poll events, this is a comma-separated list of the client TCP/UDP ports in the 'fds' argument, returned as a string.
 `fdlist.sports` | CHARBUF | for poll events, this is a comma-separated list of the server TCP/UDP ports in the 'fds' argument, returned as a string.
 
-
 ### Field Class: container (plugin)
 
 
@@ -323,23 +321,22 @@ Name | Type | Description
 `k8s.pod.labels` | CHARBUF | The Kubernetes pod comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'. This field is extracted from the container runtime socket simultaneously as we look up the 'container.*' fields. In cases of lookup delays, it may not be available yet.
 `k8s.pod.ip` | CHARBUF | The Kubernetes pod ip, same as container.ip field as each container in a pod shares the network stack of the sandbox / pod. Only ipv4 addresses are tracked. Consider k8s.pod.cni.json for logging ip addresses for each network interface. This field is extracted from the container runtime socket simultaneously as we look up the 'container.*' fields. In cases of lookup delays, it may not be available yet.
 `k8s.pod.cni.json` | CHARBUF | The Kubernetes pod CNI result field from the respective pod status info, same as container.cni.json field. It contains ip addresses for each network interface exposed as unparsed escaped JSON string. Supported for CRI container engine (containerd, cri-o runtimes), optimized for containerd (some non-critical JSON keys removed). Useful for tracking ips (ipv4 and ipv6, dual-stack support) for each network interface (multi-interface support). This field is extracted from the container runtime socket simultaneously as we look up the 'container.*' fields. In cases of lookup delays, it may not be available yet.
-`k8s.rc.name` | CHARBUF | Kubernetes replication controller name.
-`k8s.rc.id` | CHARBUF | Kubernetes replication controller id.
-`k8s.rc.label` | CHARBUF | Kubernetes replication controller label. E.g. 'k8s.rc.label.foo'.
-`k8s.rc.labels` | CHARBUF | Kubernetes replication controller comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'.
-`k8s.svc.name` | CHARBUF | Kubernetes service name (can return more than one value, concatenated).
-`k8s.svc.id` | CHARBUF | Kubernetes service id (can return more than one value, concatenated).
-`k8s.svc.label` | CHARBUF | Kubernetes service label. E.g. 'k8s.svc.label.foo' (can return more than one value, concatenated).
-`k8s.svc.labels` | CHARBUF | Kubernetes service comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'.
-`k8s.ns.id` | CHARBUF | Kubernetes namespace id.
-`k8s.ns.label` | CHARBUF | Kubernetes namespace label. E.g. 'k8s.ns.label.foo'.
-`k8s.ns.labels` | CHARBUF | Kubernetes namespace comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'.
-`k8s.rs.name` | CHARBUF | Kubernetes replica set name.
-`k8s.rs.id` | CHARBUF | Kubernetes replica set id.
-`k8s.rs.label` | CHARBUF | Kubernetes replica set label. E.g. 'k8s.rs.label.foo'.
-`k8s.rs.labels` | CHARBUF | Kubernetes replica set comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'.
-`k8s.deployment.name` | CHARBUF | Kubernetes deployment name.
-`k8s.deployment.id` | CHARBUF | Kubernetes deployment id.
-`k8s.deployment.label` | CHARBUF | Kubernetes deployment label. E.g. 'k8s.rs.label.foo'.
-`k8s.deployment.labels` | CHARBUF | Kubernetes deployment comma-separated key/value labels. E.g. 'foo1:bar1,foo2:bar2'.
-
+`k8s.rc.name` | CHARBUF | Deprecated. Use `k8smeta` plugin instead.
+`k8s.rc.id` | CHARBUF | Deprecated. Use `k8smeta` plugin instead.
+`k8s.rc.label` | CHARBUF | Deprecated. Use `k8smeta` plugin instead.
+`k8s.rc.labels` | CHARBUF | Deprecated. Use `k8smeta` plugin instead.
+`k8s.svc.name` | CHARBUF | Deprecated. Use `k8smeta` plugin instead.
+`k8s.svc.id` | CHARBUF | Deprecated. Use `k8smeta` plugin instead.
+`k8s.svc.label` | CHARBUF | Deprecated. Use `k8smeta` plugin instead.
+`k8s.svc.labels` | CHARBUF | Deprecated. Use `k8smeta` plugin instead.
+`k8s.ns.id` | CHARBUF | Deprecated. Use `k8smeta` plugin instead.
+`k8s.ns.label` | CHARBUF | Deprecated. Use `k8smeta` plugin instead.
+`k8s.ns.labels` | CHARBUF | Deprecated. Use `k8smeta` plugin instead.
+`k8s.rs.name` | CHARBUF | Deprecated. Use `k8smeta` plugin instead.
+`k8s.rs.id` | CHARBUF | Deprecated. Use `k8smeta` plugin instead.
+`k8s.rs.label` | CHARBUF | Deprecated. Use `k8smeta` plugin instead.
+`k8s.rs.labels` | CHARBUF | Deprecated. Use `k8smeta` plugin instead.
+`k8s.deployment.name` | CHARBUF | Deprecated. Use `k8smeta` plugin instead.
+`k8s.deployment.id` | CHARBUF | Deprecated. Use `k8smeta` plugin instead.
+`k8s.deployment.label` | CHARBUF | Deprecated. Use `k8smeta` plugin instead.
+`k8s.deployment.labels` | CHARBUF | Deprecated. Use `k8smeta` plugin instead.
