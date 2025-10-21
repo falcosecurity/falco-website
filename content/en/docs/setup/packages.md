@@ -127,7 +127,7 @@ sudo apt-get install apt-transport-https
 2. Configure the `yum` repository
 
     ```shell
-    curl -s -o /etc/yum.repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
+    curl -o /etc/yum.repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
     ```
 
 3. Update the package list
@@ -186,7 +186,7 @@ sudo apt-get install apt-transport-https
 2. Configure the zypper repository
 
     ```shell
-    curl -s -o /etc/zypp/repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
+    curl -o /etc/zypp/repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
     ```
 
 3. Update the package list
