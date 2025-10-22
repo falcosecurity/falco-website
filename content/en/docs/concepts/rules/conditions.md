@@ -103,7 +103,7 @@ tolower(proc.name) = tolower(proc.pname)
 {{% pageinfo color=warning %}}
 
 The `evt.dir` field, as well as the concept of "direction", have been deprecated in Falco `0.42.0` and will be removed
-in Falco `1.0.0`. Until field removal and since Falco `0.42.0`, specifying `evt.dir='>'` will match nothing, while
+in a future release. Until field removal and since Falco `0.42.0`, specifying `evt.dir='>'` will match nothing, while
 specifying `evt.dir='<'` will match everything, with a warning informing the user about the deprecation. Users are
 encouraged to get rid of any reference to `evt.dir`, as its presence will result in an error at rules loading time after
 its removal.
