@@ -108,7 +108,7 @@ Observe the following rule that detects when a `bash` shell is spawned inside a 
 
 ```
 - rule: Example Rule
-  condition: container.id != host and proc.name = bash and evt.type = execve and evt.dir=< and proc.pname exists and not proc.pname in (bash, docker)
+  condition: container.id != host and proc.name = bash and evt.type = execve and proc.pname exists and not proc.pname in (bash, docker)
 ```
 
 could be rewritten as:
@@ -368,15 +368,10 @@ Let's now build a rule to detect that behavior.
 - rule: Detect privilege escalation in /tmp
   desc: Detect privilege escalationof binaries executed in /tmp
   condition: >
-    evt.type = setresuid and evt.dir=> and
-    proc.exepath startswith /tmp/
+    evt.type = setresuid and proc.exepath startswith /tmp/
   output: "The binary %proc.name has tried to escalate privileges: %evt.args"
   priority: debug
   ```
-
-This rule is designed to trigger when the syscall `setresuid` is invoked. When a syscall is made, it follows two distinct flows, each with its own direction. The first flow represents the request from the process to the kernel and is symbolized as `>`. The second flow symbolizes the answer from the kernel to the process and is represented as `<`. To specifically filter for the request flow, we have included the `evt.dir=>` condition. This ensures we receive alerts only when the syscall is requested, avoiding redundant alerts for the answer flow.
-
-It's essential to consider the specific syscall and the data exchanged in both the request and the response to determine which direction to observe and monitor. This decision will depend on the monitoring objectives and the information necessary for detecting relevant events in the system.
 
 When we execute our binary once more, the triggered rule should produce an output similar to the following:
 

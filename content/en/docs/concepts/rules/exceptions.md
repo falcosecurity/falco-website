@@ -15,7 +15,8 @@ Almost all Falco Rules have cases where the behavior {{< glossary_tooltip text="
 - rule: Write below binary dir
   desc: an attempt to write to any file below a set of binary directories
   condition: >
-    bin_dir and evt.dir = < and open_write
+    open_write
+    and bin_dir
     and not package_mgmt_procs
     and not exe_running_docker_save
     and not python_running_get_pip
@@ -59,7 +60,8 @@ Starting in `0.28.0`, Falco supports an optional `exceptions` property to rules.
 - rule: Write below binary dir
   desc: an attempt to write to any file below a set of binary directories
   condition: >
-    bin_dir and evt.dir = < and open_write
+    open_write
+    and bin_dir
     and not package_mgmt_procs
     and not exe_running_docker_save
     and not python_running_get_pip

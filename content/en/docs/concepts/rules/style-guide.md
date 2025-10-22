@@ -92,7 +92,7 @@ evt.type!=execve
 
 ```yaml
 - macro: spawned_process
-  condition: (evt.type in (execve, execveat) and evt.dir=<)
+  condition: (evt.type in (execve, execveat))
  ...
 
 - list: known_drop_and_execute_containers

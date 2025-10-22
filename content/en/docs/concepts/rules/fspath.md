@@ -13,7 +13,7 @@ This section explains how the fields `fs.path.*` work and when they can be used.
 
 ### Motivation
 
-A variety of different syscalls take file system paths as arguments. However, there is little consistency in the fields that can access those file system paths. Depending on the syscall, the file system path might be available in `evt.rawarg.path`, `evt.rawarg.pathname`, `evt.rawarg.name`, `fd.name`, etc. And for some system calls, the file system path is in the enter event instead of the exit event. This makes writing simple Falco rules that act on file system paths challenging because the field must depend on the syscall and the event direction.
+A variety of different syscalls take file system paths as arguments. However, there is little consistency in the fields that can access those file system paths. Depending on the syscall, the file system path might be available in `evt.rawarg.path`, `evt.rawarg.pathname`, `evt.rawarg.name`, `fd.name`, etc. This makes writing simple Falco rules that act on file system paths challenging because the field must depend on the syscall.
 
 To help address this inconsistency, in Falco version 0.36, we added a new set of fields that normalize file system paths across various syscalls.
 
@@ -44,9 +44,8 @@ The fields only work for exit events and only return a value if the syscall succ
 
 The below tables show:
 * the specific syscalls that are are supported
-* the specific falco event identifiers are supported. The reason there are multiple event identifiers for the same syscall (e.g. MKDIR vs MKDIR_2) is that libs used to define new events every time we added/modified arguments to the enter or exit event. Older applications using the older version of libs will use the older event identifier for the syscall name, while newer applications will use the newer event identifier.
+* the specific falco event identifiers are supported. The reason there are multiple event identifiers for the same syscall (e.g. MKDIR vs MKDIR_2) is that libs used to define new events every time we added/modified arguments to the event. Older applications using the older version of libs will use the older event identifier for the syscall name, while newer applications will use the newer event identifier.
 * the specific event fields that are mapped to `fs.path.*` fields
-* whether the fields actually come from the enter event instead of the exit event.
 
 #### Single Argument File System Syscalls
 

@@ -1,4 +1,4 @@
 ```yaml
 - macro: spawned_process
-  condition: evt.type = execve and evt.dir=<
+  condition: (evt.type in (execve, execveat))
 ```

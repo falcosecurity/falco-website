@@ -17,7 +17,7 @@ The set of {{< glossary_tooltip text="fields" term_id="fields" >}} available dep
 For example, the following condition triggers for each execution of `cat` or `grep`:
 
 ```
-evt.type = execve and evt.dir = < and (proc.name = cat or proc.name = grep)
+evt.type = execve and (proc.name = cat or proc.name = grep)
 ```
 
 ## Operators
@@ -100,6 +100,16 @@ tolower(proc.name) = tolower(proc.pname)
 
 ## Syscall event types, direction, and args
 
+{{% pageinfo color=warning %}}
+
+The `evt.dir` field, as well as the concept of "direction", have been deprecated in Falco `0.42.0` and will be removed
+in Falco `1.0.0`. Until field removal and since Falco `0.42.0`, specifying `evt.dir='>'` will match nothing, while
+specifying `evt.dir='<'` will match everything, with a warning informing the user about the deprecation. Users are
+encouraged to get rid of any reference to `evt.dir`, as its presence will result in an error at rules loading time after
+its removal.
+
+{{% /pageinfo %}}
+
 Every syscall event includes the [`evt` field class](/docs/reference/rules/supported-fields/#field-class-evt). Each condition you write for these events typically begins with an `evt.type` expression or macro. This is practical because security rules often focus on one syscall type at a time. For instance, you might consider `open` or `openat` to detect suspicious activity when files are opened, or `execve` to inspect newly spawned processes. You do not have to guess the syscall name—simply refer to the complete [list of supported system call events](/docs/reference/rules/supported-fields/) for an overview of what you can use.
 
 Each syscall has an entry event and an exit event, tracked by the `evt.dir` field, also referred to as the "direction" of the system call. A value of `>` indicates entry (when the syscall is invoked), while `<` marks exit (when the call has returned). By looking at the supported system call list, you will see that events have both entry and exit forms. For example:
@@ -135,7 +145,7 @@ The [`proc` field class](/docs/rules/supported-fields/#field-class-process) give
 An example rule that detects whenever `bash` is executed inside a container could look like this:
 
 ```
-evt.type = execve and evt.dir = < and container.id != host and proc.name = bash
+evt.type = execve and container.id != host and proc.name = bash
 ```
 
-Notice that you do not need to check the `execve` arguments. Once `execve` has returned, Falco updates the process context, so all `proc.` fields refer to the new process that was just spawned, including command line, executable path, arguments, and so on.
+Notice that you do not need to check the `execve` arguments. Once `execve` has returned, Falco updates the process context, so all `proc.*` fields refer to the new process that was just spawned, including command line, executable path, arguments, and so on.

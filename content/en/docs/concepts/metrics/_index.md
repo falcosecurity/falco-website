@@ -616,18 +616,14 @@ falcosecurity_falco_host_num_cpus_total 8
     "scap.evts_rate_sec": 0.0, # Taken between 2 metrics snapshots
     "scap.n_drops": 0, # Monotonic counter all-time kernel side drops
     # Below coarse-grained (non-comprehensive) categories for more granular insights into kernel-side drops
-    "scap.n_drops_buffer_clone_fork_enter": 0,
     "scap.n_drops_buffer_clone_fork_exit": 0,
     "scap.n_drops_buffer_close_exit": 0,
     "scap.n_drops_buffer_connect_enter": 0,
     "scap.n_drops_buffer_connect_exit": 0,
-    "scap.n_drops_buffer_dir_file_enter": 0,
     "scap.n_drops_buffer_dir_file_exit": 0,
-    "scap.n_drops_buffer_execve_enter": 0,
     "scap.n_drops_buffer_execve_exit": 0,
     "scap.n_drops_buffer_open_enter": 0,
     "scap.n_drops_buffer_open_exit": 0,
-    "scap.n_drops_buffer_other_interest_enter": 0,
     "scap.n_drops_buffer_other_interest_exit": 0,
     "scap.n_drops_buffer_proc_exit": 0,
     "scap.n_drops_buffer_total": 0,
@@ -666,13 +662,7 @@ falcosecurity_scap_engine_name_info{engine_name="bpf",evt_source="syscall"} 1
 falcosecurity_scap_n_evts_total 17613
 # HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_drops_buffer_total counter
-falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="clone_fork"} 0
-# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_scap_n_drops_buffer_total counter
 falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="clone_fork"} 0
-# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_scap_n_drops_buffer_total counter
-falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="execve"} 0
 # HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_drops_buffer_total counter
 falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="execve"} 0
@@ -690,13 +680,7 @@ falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="open"} 0
 falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="open"} 0
 # HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_drops_buffer_total counter
-falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="dir_file"} 0
-# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_scap_n_drops_buffer_total counter
 falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="dir_file"} 0
-# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_scap_n_drops_buffer_total counter
-falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="other_interest"} 0
 # HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_drops_buffer_total counter
 falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="other_interest"} 0
@@ -781,18 +765,14 @@ falcosecurity_falco_host_num_cpus_total 8
     "scap.evts_drop_rate_sec": 0.0,
     "scap.evts_rate_sec": 2548.6,
     "scap.n_drops": 0,
-    "scap.n_drops_buffer_clone_fork_enter": 0,
     "scap.n_drops_buffer_clone_fork_exit": 0,
     "scap.n_drops_buffer_close_exit": 0,
     "scap.n_drops_buffer_connect_enter": 0,
     "scap.n_drops_buffer_connect_exit": 0,
-    "scap.n_drops_buffer_dir_file_enter": 0,
     "scap.n_drops_buffer_dir_file_exit": 0,
-    "scap.n_drops_buffer_execve_enter": 0,
     "scap.n_drops_buffer_execve_exit": 0,
     "scap.n_drops_buffer_open_enter": 0,
     "scap.n_drops_buffer_open_exit": 0,
-    "scap.n_drops_buffer_other_interest_enter": 0,
     "scap.n_drops_buffer_other_interest_exit": 0,
     "scap.n_drops_buffer_proc_exit": 0,
     "scap.n_drops_buffer_total": 0,
@@ -848,13 +828,7 @@ falcosecurity_scap_engine_name_info{engine_name="bpf",evt_source="syscall"} 1
 falcosecurity_scap_n_evts_total 145680
 # HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_drops_buffer_total counter
-falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="clone_fork"} 0
-# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_scap_n_drops_buffer_total counter
 falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="clone_fork"} 0
-# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_scap_n_drops_buffer_total counter
-falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="execve"} 0
 # HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_drops_buffer_total counter
 falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="execve"} 0
@@ -872,13 +846,7 @@ falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="open"} 0
 falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="open"} 0
 # HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_drops_buffer_total counter
-falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="dir_file"} 0
-# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_scap_n_drops_buffer_total counter
 falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="dir_file"} 0
-# HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
-# TYPE falcosecurity_scap_n_drops_buffer_total counter
-falcosecurity_scap_n_drops_buffer_total{dir="enter",drop="other_interest"} 0
 # HELP falcosecurity_scap_n_drops_buffer_total https://falco.org/docs/metrics/
 # TYPE falcosecurity_scap_n_drops_buffer_total counter
 falcosecurity_scap_n_drops_buffer_total{dir="exit",drop="other_interest"} 0
