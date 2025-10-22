@@ -3,7 +3,7 @@
   condition: container.id != host
 
 - macro: spawned_process
-  condition: evt.type = execve and evt.dir=<
+  condition: (evt.type in (execve, execveat))
 
 - rule: run_shell_in_container
   desc: a shell was spawned by a non-shell program in a container. Container entrypoints are excluded.

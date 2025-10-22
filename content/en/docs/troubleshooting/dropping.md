@@ -47,18 +47,14 @@ Here is an example metrics log snippet highlighting the fields crucial for this 
     "scap.evts_rate_sec": 93546.8, # Taken between 2 metrics snapshots
     "scap.n_drops": 0, # Monotonic counter all-time kernel side drops
     # Coarse-grained (non-comprehensive) categories for more granular insights
-    "scap.n_drops_buffer_clone_fork_enter": 0,
     "scap.n_drops_buffer_clone_fork_exit": 0,
     "scap.n_drops_buffer_close_exit": 0,
     "scap.n_drops_buffer_connect_enter": 0,
     "scap.n_drops_buffer_connect_exit": 0,
-    "scap.n_drops_buffer_dir_file_enter": 0,
     "scap.n_drops_buffer_dir_file_exit": 0,
-    "scap.n_drops_buffer_execve_enter": 0,
     "scap.n_drops_buffer_execve_exit": 0,
     "scap.n_drops_buffer_open_enter": 0,
     "scap.n_drops_buffer_open_exit": 0,
-    "scap.n_drops_buffer_other_interest_enter": 0,
     "scap.n_drops_buffer_other_interest_exit": 0,
     "scap.n_drops_buffer_proc_exit": 0,
     "scap.n_drops_buffer_total": 0,
@@ -98,7 +94,7 @@ Generate a dummy rule designed not to trigger any alerts:
 
 ```yaml
 - macro: spawned_process
-  condition: (evt.type in (execve, execveat) and evt.dir=<)
+  condition: (evt.type in (execve, execveat))
 
 - rule: TEST Simple Spawned Process
   desc: "Test base_syscalls config option"

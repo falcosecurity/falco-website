@@ -1,6 +1,6 @@
 ```yaml
 - macro: outbound
-  condition: syscall.type=connect and evt.dir=< and (fd.typechar=4 or fd.typechar=6)
+  condition: syscall.type=connect and (fd.typechar=4 or fd.typechar=6)
 
 - macro: elasticsearch_cluster_port
   condition: fd.sport=9300

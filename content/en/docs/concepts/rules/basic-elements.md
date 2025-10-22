@@ -14,8 +14,7 @@ A rule is a YAML object, part of the rules file, whose definition contains at le
 - rule: shell_in_container
   desc: notice shell activity within a container
   condition: >
-    evt.type = execve and 
-    evt.dir = < and 
+    (evt.type in (execve, execveat)) and
     container.id != host and 
     (proc.name = bash or
      proc.name = ksh)
@@ -43,10 +42,10 @@ Since this condition does not include a clause with a system call it will only c
 Because of that, if a bash shell does start up in a container, Falco outputs events for every syscall that is performed by that shell.
 {{% /alert %}}
 
-If you want to be alerted only for each successful spawn of a shell in a container, add the appropriate event type and direction to the condition:
+If you want to be alerted only for each successful spawn of a shell in a container, add the appropriate event types to the condition:
 
 ```
-evt.type = execve and evt.dir = < and container.id != host and proc.name = bash
+(evt.type in (execve, execveat)) and container.id != host and proc.name = bash
 ```
 
 Therefore, a complete rule using the above condition might be:
@@ -55,8 +54,7 @@ Therefore, a complete rule using the above condition might be:
 - rule: shell_in_container
   desc: notice shell activity within a container
   condition: >
-    evt.type = execve and 
-    evt.dir = < and 
+    (evt.type in (execve, execveat)) and
     container.id != host and 
     proc.name = bash
   output: >
@@ -168,16 +166,16 @@ Key | Required | Description | Default
 
 Macros provide a way to define common sub-portions of rules in a reusable way. 
 
-By looking at the condition above it looks like both `evt.type = execve and evt.dir = <` and `container.id != host` would be used by many other rules, so to make our job easier we can easily define macros for both:
+By looking at the condition above it looks like both `evt.type in (execve, execveat)` and `container.id != host` would be used by many other rules, so to make our job easier we can easily define macros for both:
 
 ```yaml
 - macro: container
-  condition: container.id != host
+  condition: (container.id != host)
 ```
 
 ```yaml
 - macro: spawned_process
-  condition: evt.type = execve and evt.dir = <
+  condition: (evt.type in (execve, execveat))
 ```
 
 With these macros defined, we can then rewrite the above rule's condition as `spawned_process and container and proc.name = bash`.
