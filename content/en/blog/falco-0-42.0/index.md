@@ -27,6 +27,7 @@ To learn everything about the changes, read on!
 * [Drop enter initiative for performance](#drop-enter-initiative);
 * [Plugin event schema validation](#plugin-event-schema-versioning);
 * [Thread table auto-purging configuration](#thread-table-auto-purging-configuration);
+* [Static fields](#static-fields);
 
 *Key fixes:*
 
@@ -153,6 +154,26 @@ It introduces tunable parameters for Falco's internal thread table, which tracks
 * `thread_table_auto_purging_thread_timeout_s` sets how long inactive threads are kept before removal.
 
 These options let you balance memory efficiency, CPU usage, and state accuracy, with related metrics (`n_drops_full_threadtable`, `n_store_evts_drops`) available to guide tuning.
+
+### Static fields
+
+Falco 0.42.0 adds a new `static_fields` configuration object allowing users to add statically defined fields to the
+Falco engine. The following example illustrates how to specify new static fields:
+```yaml
+static_fields:
+  foo: bar
+  foo2: ${bar2}
+```
+Notice that `foo2: ${bar2}` leverages the Falco's behavior of expanding env variables in config YAML.
+
+After specifying them, these fields can be used in normal rule conditions, by prepending the `static.` prefix (e.g.:
+`evt.type=open and static.foo=bar`).
+Moreover, if `append_output.suggested_output` is true, they'll be automatically appended to each rule output, in the
+form `static_foo=bar`.
+
+For more details, see:
+- [Feature request](https://github.com/falcosecurity/falco/issues/3554)
+- [PR adding the feature](https://github.com/falcosecurity/falco/pull/3557)
 
 ## Breaking changes and deprecations ⚠️
 
