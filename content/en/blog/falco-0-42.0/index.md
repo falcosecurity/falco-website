@@ -39,7 +39,7 @@ To learn everything about the changes, read on!
 * Stability improvements for container plugin and static linking of libgcc/libstdc++ for legacy compatibility;
 
 {{% pageinfo color="warning" %}}
-This release also comes with [breaking changes](#breaking-changes-and-deprecations-%EF%B8%8F) that you should be aware of before upgrading.
+This release also comes with [breaking changes](#breaking-changes-and-deprecations) that you should be aware of before upgrading.
 {{% /pageinfo %}}
 
 ## Major features and improvements
