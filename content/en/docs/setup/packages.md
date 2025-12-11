@@ -499,7 +499,7 @@ zypper remove falco
 ## Package signing {#package-signing}
 
 {{% pageinfo color="warning" %}}
-On January 18th, 2023 the GPG key used to sign Falco packages has been rotated. Check out [the related blog post](/blog/falco-packages-gpg-key-rotated/) and make sure you're using the most up-to-date key available at [falco.org/repo/falcosecurity-packages.asc](https://falco.org/repo/falcosecurity-packages.asc).
+On December, 2025 we started rotating the GPG key used to sign Falco packages. Check out [the related blog post](/blog/gpg-key-rotation-2026/) and make sure you're using the most up-to-date key available at [falco.org/repo/falcosecurity-packages.asc](https://falco.org/repo/falcosecurity-packages.asc).
 {{% /pageinfo %}}
 
 Most Falco packages available at [download.falco.org](https://download.falco.org/?prefix=packages/) are provided with a detached signature that can be used to verify that the package information downloaded from the remote repository can be trusted.
@@ -508,7 +508,8 @@ The **latest trusted public GPG key** used for packages signing can be downloade
 
 | **Fingerprint**                            | **Expiration** | **Usage**              | **Status** | **Download**                                                   |
 | ------------------------------------------ | -------------- | ---------------------- | ---------- | -------------------------------------------------------------- |
-| `2005399002D5E8FF59F28CE64021833E14CB7A8D` | 2026-01-17     | Signing Falco Packages | Trusted    | [falcosecurity-14CB7A8D.asc](/repo/falcosecurity-14CB7A8D.asc) |
+| `478B2FBBC75F4237B731DA4365106822B35B1B1F` | 2028-12-10     | Signing Falco Packages | Trusted    | [falcosecurity-B35B1B1F.asc](/repo/falcosecurity-B35B1B1F.asc) |
+| `2005399002D5E8FF59F28CE64021833E14CB7A8D` | 2026-01-17     | Signing Falco Packages | Trusted (Expiring soon) | [falcosecurity-14CB7A8D.asc](/repo/falcosecurity-14CB7A8D.asc) |
 | `15ED05F191E40D74BA47109F9F76B25B3672BA8F` | 2023-02-24     | Signing Falco Packages | Revoked    | [falcosecurity-3672BA8F.asc](/repo/falcosecurity-3672BA8F.asc) |
 
 ## Troubleshooting
