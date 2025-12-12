@@ -2,6 +2,9 @@
 
 This is a guide to completely disable automatic updates for both the Falco engine and rules, addressing concerns about supply chain risks.
 
+**Important note: When Falco is installed via .deb or .rpm packages, falcoctl is also installed and comes with a systemd service that may have auto-update enabled by default.
+In this scenario, even though Falco itself does not perform any automatic updates, falcoctl may still automatically update rules, plugins, or other artifacts. Therefore, you must ensure that falcoctl auto-update is explicitly disabled.**
+
 ---
 
 ## Without `falcoctl`
