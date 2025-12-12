@@ -10,7 +10,6 @@ title: Falco
 {{< /blocks/section >}}
 
 
-
 {{% blocks/section type="feature" color="white" %}}
 
 {{% blocks/feature icon="fa-shield-alt" title="Strengthen container security" %}}
