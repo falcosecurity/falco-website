@@ -509,7 +509,7 @@ The **latest trusted public GPG key** used for packages signing can be downloade
 | **Fingerprint**                            | **Expiration** | **Usage**              | **Status** | **Download**                                                   |
 | ------------------------------------------ | -------------- | ---------------------- | ---------- | -------------------------------------------------------------- |
 | `478B2FBBC75F4237B731DA4365106822B35B1B1F` | 2028-12-10     | Signing Falco Packages | Trusted    | [falcosecurity-B35B1B1F.asc](/repo/falcosecurity-B35B1B1F.asc) |
-| `2005399002D5E8FF59F28CE64021833E14CB7A8D` | 2026-01-17     | Signing Falco Packages | Trusted (Expiring soon) | [falcosecurity-14CB7A8D.asc](/repo/falcosecurity-14CB7A8D.asc) |
+| `2005399002D5E8FF59F28CE64021833E14CB7A8D` | 2026-01-17     | Signing Falco Packages | Revoked    | [falcosecurity-14CB7A8D.asc](/repo/falcosecurity-14CB7A8D.asc) |
 | `15ED05F191E40D74BA47109F9F76B25B3672BA8F` | 2023-02-24     | Signing Falco Packages | Revoked    | [falcosecurity-3672BA8F.asc](/repo/falcosecurity-3672BA8F.asc) |
 
 ## Troubleshooting
