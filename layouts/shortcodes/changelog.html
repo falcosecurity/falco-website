@@ -2,11 +2,19 @@
 {{- $gh_project_repo := ($.Site.Param "github_project_repo") -}}
 {{- $dataJSON := false }}
 
+{{- $headers := dict -}}
 {{- with $github_token := (os.Getenv "HUGO_GITHUB_TOKEN" | default false ) -}}
-  {{- $bearer_token := dict "Authorization" (printf "Bearer %s" .) -}}
-  {{- $dataJSON = getJSON $releases_url $bearer_token -}}
-{{- else }}
-  {{- $dataJSON = getJSON $releases_url -}}
+  {{- $headers = dict "Authorization" (printf "Bearer %s" .) -}}
+{{- end -}}
+
+{{- with try (resources.GetRemote $releases_url (dict "headers" $headers)) -}}
+  {{- with .Err -}}
+    {{- errorf "Error fetching GitHub API: %s" . -}}
+  {{- else with .Value -}}
+    {{- $dataJSON = . | transform.Unmarshal -}}
+  {{- end -}}
+{{- else -}}
+  {{- errorf "Unable to fetch remote resource %q" $releases_url -}}
 {{- end }}
 
 {{ with $dataJSON }}

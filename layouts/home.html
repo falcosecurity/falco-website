@@ -1,0 +1,192 @@
+{{ define "main" }}
+
+<!-- Schema -->
+<section class="row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-12">
+        <h1 class="mt-5 pt-5">{{ T "home_falco_what_is_falco_title" | markdownify }}</h1>
+        <p class="mb-0 mt-3">
+          {{ T "home_falco_what_is_falco" | markdownify }}
+        </p>
+        <a href="/docs/getting-started/" role="button" class="btn btn-primary px-5 mt-5">
+          {{ T "home_falco_primary_btn" | markdownify }}
+        </a>
+      </div>
+      <div class="col-md-6 col-12">
+        <img class="mt-4 " src="/img/falco-schema.svg" alt="plug" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Use cases -->
+<section class="row">
+  <div class="container td-arrow-down">
+      <div class="row">
+        <div class="col-12">
+            {{ partial "landing/use-cases.html" }}
+        </div>
+      </div>
+    </div>
+</section>
+
+<!-- Falco features -->
+<section class="row">
+  <div class="container td-arrow-down">
+    <div class="row">
+      <div class="col-12">
+        <h3>{{ T "home_falco_features" | markdownify }}</h3>
+        <div class="mt-4 pt-3">{{ partial "landing/features.html" }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Created by Sysdig -->
+<section class="row p-0">
+    <div class="container">
+        <div class="row justify-content-center align-items-end gap-2">
+            <h6 class="m-0 text-dark">{{ T "created_by" }}</h6>
+            <a href="{{ $.Site.Params.sysdig }}" target="_blank">
+                <img src="/icons/sysdig.svg" style="transform: translateY(20%) translateX(-10%);" alt="sysdig" width="130">
+            </a>
+        </div>
+      </div>
+</section>
+
+<!-- Testimonials -->
+<section class="row">
+  <div class="container slider-wrapper">
+    <h3>
+      {{ T "home_stories_from_our_users" | markdownify }}
+    </h3>
+    <div
+      class="swiper__container d-flex justify-content-center align-items-center mt-4"
+    >
+      <span class="swiper__control"
+        >{{ with resources.Get "icons/chevron-down.svg" }}{{ ( . |
+        minify).Content | safeHTML }}{{ end }}</span
+      >
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          {{ $data := index $.Site.Data .Site.Language.Lang }} {{ range $quote
+          := $data.quotes }}
+          <div class="swiper-slide px-3">
+            {{ partial "quote.html" (dict "text" $quote.text "logoUrl"
+            $quote.logoUrl "linkUrl" $quote.linkUrl "authorImgUrl" $quote.authorImgUrl "authorName"
+            $quote.authorName "authorPosition" $quote.authorPosition
+            "shareStory" $quote.shareStory "coauthorImgUrl" $quote.coauthorImgUrl "coauthorName" $quote.coauthorName "coauthorPosition" $quote.coauthorPosition) }}
+          </div>
+          {{ end }}
+        </div>
+        <div
+          class="swiper__pagination d-flex justify-content-center mt-4"
+        ></div>
+      </div>
+      <span class="swiper__control-reverse"
+        >{{ with resources.Get "icons/chevron-down.svg" }}{{ ( . |
+        minify).Content | safeHTML }}{{ end }}</span
+      >
+    </div>
+  </div>
+</section>
+
+<!-- Community -->
+<section class="row">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-7 mt-4 pt-2 d-flex flex-column">
+        <div class="d-flex justify-content-between pb-3">
+          <h4 class="mb-0">{{ T "ui_featured_videos" }}</h4>
+          <a href="https://www.youtube.com/@falcosecurity" target="_blank" role="button" class="btn btn-outline-primary">
+            {{ T "falco_on_youtube" | markdownify }}
+          </a>
+        </div>
+        <div class="d-flex flex-column gap-4">{{ partial "landing/videos.html" }}</div>
+      </div>  
+      <div class="col-lg-5 d-flex flex-column gap-4">
+        <div class="card mt-4 mt-lg-0 shadow">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+              <h4 class="mt-0 pb-1">{{ T "ui_news" }}</h4>
+              <a href="/blog" role="button" class="btn btn-outline-primary">
+                {{ T "falco_blog" | markdownify }}
+              </a>
+            </div>
+            {{ partial "landing/news.html" }}
+          </div>
+        </div>
+        <div class="card shadow">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+              <h4 class="mt-0 pb-1">{{ T "ui_events" }}</h4>
+              <a href="/community/events" role="button" class="btn btn-outline-primary">
+                {{ T "falco_events" | markdownify }}
+              </a>
+            </div>
+            {{ partial "landing/events.html" }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Community -->
+<section class="row">
+  <div class="container td-arrow-down">
+    <div class="row">
+      <div class="col">
+        <h3 class="">{{ T "home_falco_community" }}</h3>
+        <div class="mt-4 pt-3">{{ partial "landing/community.html" . }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CNCF -->
+<section class="row">
+  <div class="container td-arrow-down">
+    <div class="row justify-content-center">
+      <div class="px-3">
+        <h4 class="font-weight-normal">
+          {{ T "home_falco_cncf" | markdownify }}
+        </h4>
+        <a href="https://lists.cncf.io/g/cncf-falco-dev/">
+          <img src="/img/cncf-color-bg.svg" alt="CNCF"/>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Adopters -->
+<section class="row relative">
+  <div class="container">
+    <h3 class="">{{ T "home_falco_is_used_by" | markdownify }}</h3>
+    <div class="grid-2 grid-md-3 grid-lg-4 grid-xl-5 gap-5">
+      {{ $endUsers := index $.Site.Data.adopters "endusers" }}
+      {{ range $endUsers }}
+        <figure class="my-auto">
+            <a href="{{ .url }}">
+              <img class="img-fluid" src="{{ printf "/img/adopters/%s" .src | relURL }}" alt="{{ .alt }}">
+            </a>
+        </figure>
+      {{ end }}
+    </div>
+    <div class="mt-5 d-flex justify-content-center">
+      <a href="https://github.com/falcosecurity/falco-website/blob/master/ADD_LANDING_LOGO.md" role="button" class="btn btn-primary px-4 py-2">
+        {{ T "add_your_logo_btn" | markdownify }}
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="container eclipse__layout">
+  <div class="eclipse eclipse-top"></div>
+  <!-- TODO: uncomment when feed section is ready -->
+  <div class="eclipse eclipse-bottom"></div>
+</div>
+
+{{ end }}

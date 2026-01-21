@@ -3,7 +3,6 @@ title: GSoC Week 2 updates
 date: 2023-07-11
 author: Rohith Raju
 tags: ["Gsoc","week2","Mentorship"]
-author: Rohith Raju
 slug: gsoc-2023-2nd-week
 images:
   - /blog/gsoc2023/images/falco-gsoc-featured.jpg
