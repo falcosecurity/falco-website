@@ -66,6 +66,22 @@ h6[id] {
 }
 
 .swiper {
+  // Hide slides until Swiper is initialized to prevent flash
+  &:not(.swiper-initialized) {
+    .swiper-wrapper {
+      display: flex;
+      overflow: hidden;
+    }
+    .swiper-slide {
+      min-width: 100%;
+      flex-shrink: 0;
+      // Hide all but first slide until initialized
+      &:not(:first-child) {
+        display: none !important;
+      }
+    }
+  }
+
   &-slide {
     height: auto !important;
   }

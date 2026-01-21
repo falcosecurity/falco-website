@@ -283,6 +283,7 @@ copyright_linux =  "The Linux Foundation ®."
 sysdig = "https://sysdig.com/opensource/"
 time_format_blog = "Monday, January 02, 2006"
 time_format_default = "Jan 2, 2006"
+project_facts_date = "January, 2026"
 
 # Menu title if your navbar has a versions selector to access old versions of your site.
 # This menu appears only if you have at least one [params.versions] set.

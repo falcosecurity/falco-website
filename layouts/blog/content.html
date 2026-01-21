@@ -37,14 +37,8 @@
 <section class="td-content">
 	<div class="container">
 		<div class="row flex-xl-nowrap"> 
-      <div class="col-10">
+			<div class="col-10">
 				{{ .Content }}
-				{{ if (.Site.Params.DisqusShortname) }}
-					<br />
-					{{ partial "disqus-comment.html" . }}
-					<br />
-				{{ end }}
-
 				{{ partial "pager.html" . }}
 			</div>
 			<aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
