@@ -5,8 +5,8 @@ functions = "functions"
 
 [build.environment]
 HUGO_VERSION = "0.154.5"
-NODE_VERSION = "25.4.0"
-NPM_VERSION  = "11.7.0"
+NODE_VERSION = "24.13.0"
+NPM_VERSION  = "11.8.0"
 
 [context.production.environment]
 HUGO_BASEURL = "https://falco.org/"
