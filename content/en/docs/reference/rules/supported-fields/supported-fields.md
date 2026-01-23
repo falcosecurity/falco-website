@@ -31,10 +31,6 @@ Event fields applicable to syscall events. Note that for most events you can acc
 
 Name | Type | Description
 :----|:-----|:-----------
-`evt.latency` | RELTIME | delta between an exit event and the correspondent enter event, in nanoseconds.
-`evt.latency.s` | RELTIME | integer part of the event latency delta.
-`evt.latency.ns` | RELTIME | fractional part of the event latency delta.
-`evt.latency.human` | CHARBUF | delta between an exit event and the correspondent enter event, as a human readable string (e.g. 10.3ms).
 `evt.deltatime` | RELTIME | delta between this event and the previous event, in nanoseconds.
 `evt.deltatime.s` | RELTIME | integer part of the delta between this event and the previous event.
 `evt.deltatime.ns` | RELTIME | fractional part of the delta between this event and the previous event.
@@ -57,7 +53,6 @@ Name | Type | Description
 `evt.is_io_write` | BOOL | 'true' for events that write to FDs, like write(), send(), etc.
 `evt.io_dir` | CHARBUF | 'r' for events that read from FDs, like read(); 'w' for events that write to FDs, like write().
 `evt.is_wait` | BOOL | 'true' for events that make the thread wait, e.g. sleep(), select(), poll().
-`evt.wait_latency` | RELTIME | for events that make the thread wait (e.g. sleep(), select(), poll()), this is the time spent waiting for the event to return, in nanoseconds.
 `evt.is_syslog` | BOOL | 'true' for events that are writes to /dev/log.
 `evt.count` | UINT32 | This filter field always returns 1.
 `evt.count.error` | UINT32 | This filter field returns 1 for events that returned with an error.
@@ -340,3 +335,4 @@ Name | Type | Description
 `k8s.deployment.id` | CHARBUF | Deprecated. Use `k8smeta` plugin instead.
 `k8s.deployment.label` | CHARBUF | Deprecated. Use `k8smeta` plugin instead.
 `k8s.deployment.labels` | CHARBUF | Deprecated. Use `k8smeta` plugin instead.
+

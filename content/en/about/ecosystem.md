@@ -30,15 +30,6 @@ title: Falco Ecosystem
 
   <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-md-5 mt-3">
   <div class="mr-md-4 mr-lg-5">
-    <h3>gVisor</h3>
-    <p>Falco can be used out of the box with gVisor sandboxes, more info 
-    <a href="https://falco.org/blog/intro-gvisor-falco/">here</a>.</p>
-  </div>
-    <img src="/img/falco-gvisor.png" alt="falco-gvisor" loading="lazy" width="200"/>
-  </div>
-
-  <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-md-5 mt-3">
-  <div class="mr-md-4 mr-lg-5">
     <h3>Helm</h3>
     <p>You can smoothly install Falco and its ecosystem components in your Kubernetes clusters with our official Helm charts, more info 
     <a href="https://github.com/falcosecurity/charts">here</a>.</p>

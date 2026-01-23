@@ -950,9 +950,9 @@ falcosecurity_falco_host_num_cpus_total 8
   `libbpf_stats_enabled: true`
   </summary>
 
-Applies only for `ebpf` and `modern_ebpf`, requires `sysctl kernel.bpf_stats_enabled=1` kernel setting as precondition. Compare to `bpftool prog show` capabilities.
+Applies only for `ebpf` (deprecated) and `modern_ebpf`, requires `sysctl kernel.bpf_stats_enabled=1` kernel setting as precondition. Compare to `bpftool prog show` capabilities.
 
-Here is a snippet with respect to the kernel tracepoints for an `x86_64` machine using the traditional eBPF driver `engine.kind=ebpf`:
+Here is a snippet with respect to the kernel tracepoints for an `x86_64` machine using the traditional eBPF driver `engine.kind=ebpf` (deprecated):
 
 `json`
 

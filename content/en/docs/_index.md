@@ -51,14 +51,14 @@ Rules are the conditions under which an alert should be generated. A rule is acc
 
 ## What are Falco alerts?
 
-Alerts are configurable downstream actions that can be as simple as logging to `stdout` or as complex as delivering a {{< glossary_tooltip text="gRPC" term_id="grpc" >}} call to a client. For more information about configuring, understanding, and developing alerts, see [Falco Outputs](/docs/concepts/outputs). Falco can send alerts to:
+Alerts are configurable downstream actions that can be as simple as logging to `stdout` or as complex as delivering an HTTP request to an endpoint. For more information about configuring, understanding, and developing alerts, see [Falco Outputs](/docs/concepts/outputs). Falco can send alerts to:
 
 - Standard Output
 - A file
 - Syslog
 - A spawned program
 - A HTTP[s] end point
-- A client through the gRPC API
+- A client through the gRPC API (deprecated)
 
 ## What are the Components of Falco?
 
@@ -71,7 +71,7 @@ Falco is composed of several main components:
  - Driver - is a software that adheres to the Falco driver specification and sends a stream of kernel events. Currently, Falco supports the following drivers:
 
     - (Default) Modern eBPF probe (CO-RE paradigm and more)
-    - Legacy eBPF probe built
+    - Legacy eBPF probe built (deprecated)
     - Kernel module
 
     For more information, see [Falco Event Sources](/docs/concepts/event-sources).

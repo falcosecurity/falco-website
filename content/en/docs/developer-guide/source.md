@@ -205,7 +205,7 @@ make driver
 {{< /tab >}}}
 {{< /tabs >}}
 
-4. Build eBPF driver (optional)
+4. Build eBPF driver (deprecated)
 
 {{< tabs name="eBPFdriver" >}}
 {{% tab name="CentOS / RHEL " %}}

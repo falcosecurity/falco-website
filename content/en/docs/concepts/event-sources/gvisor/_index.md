@@ -7,6 +7,14 @@ aliases:
 - ../../../event-sources/gvisor/
 ---
 
+{{% pageinfo color=warning %}}
+
+The gVisor engine has been deprecated in Falco `0.43.0` and will be removed in a future release. Until removal and since
+Falco `0.43.0`, using it will result in a warning informing the user about the deprecation. Users are encouraged to
+switch to another engine, such as the modern eBPF probe, as the usage will result in an error after the removal.
+
+{{% /pageinfo %}}
+
 Falco can work with **[gVisor](https://gvisor.dev/)**.
 
 gVisor, quoting the [official documentation](https://gvisor.dev/docs), is an application kernel that provides an **additional layer of isolation** between running applications and the host operating system. It delivers an additional security boundary for containers by **intercepting and monitoring workload runtime instructions in user space** before they can reach the underlying host.

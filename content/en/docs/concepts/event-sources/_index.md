@@ -27,7 +27,7 @@ By default, Falco enables event collection from all known sources, including `sy
 
 Before enabling or disabling specific event sources, you must configure the Falco engine and/or plugins as required by your use case:
 
-- **Engine:** For [drivers](/docs/concepts/event-sources/kernel/), [gVisor](/docs/concepts/event-sources/gvisor/) or capture files. 
+- **Engine:** For [drivers](/docs/concepts/event-sources/kernel/), [gVisor](/docs/concepts/event-sources/gvisor/) (deprecated) or capture files. 
 - **Plugins:** Ensure plugins are loaded properly by following the [plugin usage guide](https://falco.org/docs/plugins/usage/#loading-plugins-in-falco).
 
 ## Managing Event Sources

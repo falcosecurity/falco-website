@@ -5,6 +5,15 @@ description: Setup Falco to serve events via the gRPC Server
 weight: 10
 ---
 
+{{% pageinfo color=warning %}}
+
+The gRPC Output as well as the embedded gRPC server have been deprecated in Falco `0.43.0` and will be removed in a
+future release. Until removal and since Falco `0.43.0`, using any of them will result in a warning informing the user
+about the deprecation. Users are encouraged to leverage another output and/or Falcosidekick, as the usage will result
+in an error after the removal.
+
+{{% /pageinfo %}}
+
 ## Enabling the Server
 
 The Falco {{< glossary_tooltip text="gRPC" term_id="grpc" >}} server and the Falco gRPC Outputs APIs are not enabled by default.

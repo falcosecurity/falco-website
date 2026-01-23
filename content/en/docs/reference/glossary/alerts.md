@@ -13,7 +13,7 @@ Downstream actions executed after a rule is triggered.
 
 <!--more--> 
 
-They can be as simple as logging to `stdout` or as complex as delivering a {{< glossary_tooltip text="gRPC" term_id="grpc" >}} call to a client.
+They can be as simple as logging to `stdout` or as complex as delivering an HTTP request to an endpoint.
 
 Falco supports sending alerts to:
 
@@ -22,4 +22,4 @@ Falco supports sending alerts to:
 - Syslog
 - A spawned program
 - An HTTP[s] endpoint
-- A client through the {{< glossary_tooltip text="gRPC" term_id="grpc" >}} API
+- A client through the {{< glossary_tooltip text="gRPC" term_id="grpc" >}} API (deprecated)
