@@ -31,6 +31,26 @@ Check the basics:
 The `k8s.*` fields are extracted from the container runtime socket simultaneously as we look up the `container.*` fields from the CRI API calls responses.
 {{% /pageinfo %}}
 
+### Using CRI with containerd
+
+When using containerd as your container runtime, you should configure Falco to use the **CRI engine** to consume the containerd socket (`/run/containerd/containerd.sock`). This is important because:
+
+- The native containerd protocol does not support container **names** - it only provides container IDs
+- Containerd typically exposes two interfaces on the same socket: the native containerd protocol and the CRI (Container Runtime Interface) protocol
+- The CRI protocol provides richer metadata, including container names
+
+If you are missing `container.name` or other container metadata fields while using containerd, ensure you are using the CRI engine configuration (not the containerd engine) in your Falco setup. For example, configure the container plugin with:
+
+```yaml
+engines:
+  cri:
+    enabled: true
+    sockets:
+      - /run/containerd/containerd.sock
+  containerd:
+    enabled: false
+```
+
 Carefully read the field description documentation:
 
 - Supported Output Fields [`container.*`](/docs/reference/rules/supported-fields/#field-class-container) retrieved from the container runtime socket
