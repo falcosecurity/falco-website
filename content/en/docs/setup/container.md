@@ -244,7 +244,7 @@ However, if the driver loader cannot automatically fetch the required kernel hea
 {{% /pageinfo %}}
 
 {{% pageinfo color="primary" %}}
-The `falcosecurity/falco-driver-loader:latest` is based on a recent Debian image. For ancient kernel versions, this might not work. The alternative `falcosecurity/falco-driver-loader:latest-buster` (based on an older Debian image) may work in such a case.
+The `falcosecurity/falco-driver-loader:{{< latest >}}` is based on a recent Debian image. For ancient kernel versions, this might not work. The alternative `falcosecurity/falco-driver-loader:{{< latest >}}-buster` (based on an older Debian image) may work in such a case.
 {{% /pageinfo %}}
 
 ### Kernel Module {#driver-installation-kernel-module}
@@ -252,7 +252,7 @@ The `falcosecurity/falco-driver-loader:latest` is based on a recent Debian image
 To install the kernel module driver on the host system, you can use the following command:
 
 ```shell
-docker pull falcosecurity/falco-driver-loader:latest
+docker pull falcosecurity/falco-driver-loader:{{< latest >}}
 docker run --rm -it \
            --privileged \
            -v /root/.falco:/root/.falco \
@@ -261,7 +261,7 @@ docker run --rm -it \
            -v /usr:/host/usr:ro \
            -v /proc:/host/proc:ro \
            -v /etc:/host/etc:ro \
-           falcosecurity/falco-driver-loader:latest kmod
+           falcosecurity/falco-driver-loader:{{< latest >}} kmod
 ```
 
 ### eBPF Probe {#driver-installation-ebpf-probe}
@@ -269,7 +269,7 @@ docker run --rm -it \
 To install the eBPF probe driver on the host system, you can use the following command:
 
 ```shell
-docker pull falcosecurity/falco-driver-loader:latest
+docker pull falcosecurity/falco-driver-loader:{{< latest >}}
 docker run --rm -it \
            --privileged \
            -v /root/.falco:/root/.falco \
@@ -278,7 +278,7 @@ docker run --rm -it \
            -v /usr:/host/usr:ro \
            -v /proc:/host/proc:ro \
            -v /etc:/host/etc:ro \
-           falcosecurity/falco-driver-loader:latest ebpf
+           falcosecurity/falco-driver-loader:{{< latest >}} ebpf
 ```
 
 ## Verify Image Signing

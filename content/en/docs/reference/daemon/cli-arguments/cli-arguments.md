@@ -4,7 +4,7 @@ Usage:
   falco [OPTION...]
 
   -h, --help                    Print this help list and exit.
-  -c <path>                     Configuration file. If not specified tries /home/runner/work/falco/falco/falco.yaml, /etc/falco/falco.yaml.
+  -c <path>                     Configuration file. If not specified tries /etc/falco/falco.yaml.
       --config-schema           Print the config json schema and exit.
       --rule-schema             Print the rule json schema and exit.
       --disable-source <event_source>
@@ -22,7 +22,8 @@ Usage:
                                 enabled. This option can not be mixed with --disable-source. This option has no effect when reproducing 
                                 events from a capture file.
       --gvisor-generate-config [=<socket_path>(=/run/falco/gvisor.sock)]
-                                Generate a configuration file that can be used for gVisor and exit. See --gvisor-config for more details.
+                                DEPRECATED: Generate a configuration file that can be used for gVisor and exit. See --gvisor-config for 
+                                more details.
   -i                            Print those events that are ignored by default for performance reasons and exit.
   -L                            Show the name and description of all rules and exit. If json_output is set to true, it prints details about 
                                 all rules, macros, and lists in JSON format.
@@ -52,7 +53,6 @@ Usage:
   -p, --print <output_format>   DEPRECATED: use -o append_output... instead. Print additional information in the rule's output.
                                 Use -pc or -pcontainer to append container details to syscall events.
                                 Use -pk or -pkubernetes to add both container and Kubernetes details to syscall events.
-                                If using gVisor, choose -pcg or -pkg variants (or -pcontainer-gvisor and -pkubernetes-gvisor, respectively).
                                 The details will be directly appended to the rule's output.
                                 Alternatively, use -p <output_format> for a custom format. In this case, the given <output_format> will be 
                                 appended to the rule's output without any replacement to all events, including plugin events.

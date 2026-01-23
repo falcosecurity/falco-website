@@ -384,7 +384,7 @@ In this mode, the Falcoctl service is masked by default so if you want to enable
 
 ### Custom service {#systemd-custom-service}
 
-You may have noticed a Falco unit called `falco-custom.service`. You should use it when you want to run Falco with a custom configuration like a plugin or Gvisor. Please note that in this case you have to modify this template according to how you want to run Falco, the unit should not be used as is!
+You may have noticed a Falco unit called `falco-custom.service`. You should use it when you want to run Falco with a custom configuration like a plugin. Please note that in this case you have to modify this template according to how you want to run Falco, the unit should not be used as is!
 
 ## Configuration {#configuration}
 

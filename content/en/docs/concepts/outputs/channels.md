@@ -203,4 +203,13 @@ Here's the same output, pretty-printed:
 
 ## gRPC Output
 
+{{% pageinfo color=warning %}}
+
+The gRPC Output as well as the embedded gRPC server have been deprecated in Falco `0.43.0` and will be removed in a
+future release. Until removal and since Falco `0.43.0`, using any of them will result in a warning informing the user
+about the deprecation. Users are encouraged to leverage another output and/or Falcosidekick, as the usage will result
+in an error after the removal.
+
+{{% /pageinfo %}}
+
 If you'd like to send alerts to an external program connected via gRPC API, you need to enable both the `grpc` and `grpc_output` options as described under the [gRPC Configuration section](/docs/grpc/#configuration).

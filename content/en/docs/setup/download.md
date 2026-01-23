@@ -65,7 +65,7 @@ The Falco packages and container images come with a built-in ruleset file (inclu
 
 When using Falco for [Kernel Events](/docs/event-sources/kernel/) (i.e., with the `syscall` data source enabled), the Falco binary relies on having a {{< glossary_tooltip text="driver" term_id="drivers" >}} available on the host system.
 
-Starting from Falco 0.38.0, the default driver is the {{< glossary_tooltip text="Modern eBPF" term_id="modern-ebpf-probe" >}} driver, which is included in the Falco binary and built using the [CO-RE "Compile Once - Run Everywhere"](https://en.wikipedia.org/wiki/EBPF#eBPF_CO-RE_(Compile_Once_-_Run_Everywhere)) technology. If your system satisfies the modern eBPF driver requirements, no further action is needed. Otherwise, you need to use the {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} or the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}}, which provide wider compatibility.
+Starting from Falco 0.38.0, the default driver is the {{< glossary_tooltip text="Modern eBPF" term_id="modern-ebpf-probe" >}} driver, which is included in the Falco binary and built using the [CO-RE "Compile Once - Run Everywhere"](https://en.wikipedia.org/wiki/EBPF#eBPF_CO-RE_(Compile_Once_-_Run_Everywhere)) technology. If your system satisfies the modern eBPF driver requirements, no further action is needed. Otherwise, you need to use the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}}, which provides wider compatibility.
 
 In brief, you don't need to install a driver if you are either:
  - using the [modern eBPF driver](/docs/event-sources/kernel/#modern-ebpf-probe) (default option) 
@@ -75,7 +75,7 @@ In brief, you don't need to install a driver if you are either:
 
 Pre-built Falco drivers for a vast variety of Linux Kernel releases are distributed at [download.falco.org](https://download.falco.org/?prefix=driver/).
 
-To download a pre-built driver, navigate to the driver versions' directory that is compatible with the Falco binary you're currently using (check with `falco --version`), then download the kernel artifact corresponding to your kernel release (`uname -r`) for either `.ko` (kernel module) or `.o` (legacy eBPF driver). To make this easier, Falco comes with the [falcoctl](https://github.com/falcosecurity/falcoctl) tool that automates the driver download (or tries to build it on the fly). The [Install](/docs/install-operate/installation/) guide will explain this more, and the text blob below also has more information.
+To download a pre-built driver, navigate to the driver versions' directory that is compatible with the Falco binary you're currently using (check with `falco --version`), then download the kernel artifact corresponding to your kernel release (`uname -r`) for either `.ko` (kernel module) or `.o` (legacy eBPF driver, deprecated). To make this easier, Falco comes with the [falcoctl](https://github.com/falcosecurity/falcoctl) tool that automates the driver download (or tries to build it on the fly). The [Install](/docs/install-operate/installation/) guide will explain this more, and the text blob below also has more information.
 
 ### Tools {#tools}
 

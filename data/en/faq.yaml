@@ -26,8 +26,6 @@
   
     In addition, Falco can hook into the container runtime and that way associate each kernel event with the exact container (e.g. container id, name, image repository, tags) as well as Kubernetes attributes such as namespace or pod name etc.
     
-    Lastly, Falco supports gVisor in GCP. However, please note that when for example microVMs are used in Kubernetes Falco would need to be installed in each microVM / VM guest OS.
-    
     Please check the documentation to learn about limitations in kernel instrumentation options for some platforms such as GCP or AWS Fargate.
   index: 4
 - title: Why do I need a driver to use Falco?

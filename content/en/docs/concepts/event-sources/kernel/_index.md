@@ -15,14 +15,14 @@ Falco uses different instrumentations to analyze the system workload and pass se
 
 There are several supported drivers:
 
-- Kernel module *(default)*
-- Modern eBPF probe
-- Legacy eBPF probe
+- Modern eBPF probe *(default)*
+- Legacy eBPF probe (deprecated)
+- Kernel module
 
-|             | Kernel module | Legacy eBPF probe  | Modern eBPF probe                                                    |
-| ----------- | ------------- | ------------------ | -------------------------------------------------------------------- |
-| **x86_64**  | >= 2.6        | >= 4.14            | [Minimal set of features](/docs/event-sources/kernel/#requirements) |
-| **aarch64** | >= 3.4        | >= 4.17            | [Minimal set of features](/docs/event-sources/kernel/#requirements) |
+|             | Kernel module | Legacy eBPF probe (deprecated) | Modern eBPF probe                                                    |
+| ----------- |---------------|--------------------------------| -------------------------------------------------------------------- |
+| **x86_64**  | >= 3.10       | >= 4.14                        | [Minimal set of features](/docs/event-sources/kernel/#requirements) |
+| **aarch64** | >= 3.10       | >= 4.17                        | [Minimal set of features](/docs/event-sources/kernel/#requirements) |
 
 ## Kernel module
 
@@ -96,6 +96,14 @@ The only condition needed is a kernel version that supports these capabilities. 
 > **Please note**: we will try to do our best to keep this as the minimum required set but due to [some issues with CO-RE relocations](https://lore.kernel.org/bpf/CAGQdkDvYU_e=_NX+6DRkL_-TeH3p+QtsdZwHkmH0w3Fuzw0C4w@mail.gmail.com/T/#u) it is possible that this changes in the future.
 
 ## Legacy eBPF probe
+
+{{% pageinfo color=warning %}}
+
+The Legacy eBPF probe has been deprecated in Falco `0.43.0` and will be removed in a future release. Until removal and
+since Falco `0.43.0`, using it will result in a warning informing the user about the deprecation. Users are encouraged
+to switch to another engine, such as the modern eBPF probe, as the usage will result in an error after the removal.
+
+{{% /pageinfo %}}
 
 The legacy {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} is an alternative source to the ones described above, leveraging greater compatibility than the modern eBPF one, since it requires older kernel versions.
 

@@ -5,6 +5,15 @@ description: Retrieve Falco events using the gRPC Go Client
 weight: 50
 ---
 
+{{% pageinfo color=warning %}}
+
+The gRPC Output as well as the embedded gRPC server have been deprecated in Falco `0.43.0` and will be removed in a
+future release. Until removal and since Falco `0.43.0`, using any of them will result in a warning informing the user
+about the deprecation. Users are encouraged to leverage another output and/or Falcosidekick, as the usage will result
+in an error after the removal.
+
+{{% /pageinfo %}}
+
 The [client-go](https://github.com/falcosecurity/client-go) Go library provides:
 
 - [type and service mappings](https://godoc.org/github.com/falcosecurity/client-go/pkg/api/outputs) for the Falco gRPC API. For more information, see [output schema](/docs/grpc/outputs).

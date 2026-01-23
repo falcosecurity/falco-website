@@ -26,5 +26,5 @@
     - Powered by eBPF technology.
     - Runs on x64 & ARM CPUs.
     - Deployable in Kubernetes with an official Helm chart.
-    - Run on many platforms like GKE, EKS, AKS, gVisor and others.
+    - Run on many platforms like GKE, EKS, AKS and others.
     - Zero cost to start, and easy to audit, extend, and integrate.
