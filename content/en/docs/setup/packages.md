@@ -162,17 +162,27 @@ sudo apt-get install apt-transport-https
  You might need to validate the driver signature if your system has UEFI SecureBoot enabled. Follow these steps to do so:
 
 1. Import the DKMS Machine Owner Key
-    
+
         ```shell
         sudo mokutil --import /var/lib/dkms/mok.pub
         ```
  2. Restart the system and wait for the MOK key enrollment prompt
  3. Choose the option:  `Enroll MOK`
  4. Load the Falco driver
-        
+
             ```shell
             sudo insmod /var/lib/dkms/falco/<driver-version>/$(uname -r)/x86_64/module/falco.ko.xz
             ```
+{{% /pageinfo %}}
+
+{{% pageinfo color="warning" %}}
+**RHEL 8 / UBI 8 users:** Starting from Falco 0.42, you may need to set the `LD_PRELOAD` environment variable due to a glibc compatibility issue:
+
+```shell
+LD_PRELOAD=/lib64/libresolv.so.2 falco
+```
+
+When using systemd, you can add this to your service override or edit the unit file to include `Environment="LD_PRELOAD=/lib64/libresolv.so.2"`.
 {{% /pageinfo %}}
 
 ### `zypper` (openSUSE) {#install-with-zypper}
