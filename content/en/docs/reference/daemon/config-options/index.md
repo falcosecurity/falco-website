@@ -61,3 +61,13 @@ config_files:
   - path: /etc/falco/extra_config.yaml
     strategy: add-only
 ```
+
+{{% pageinfo color="warning" %}}
+**Important:** Configuration merging occurs only at the **root key level**, not for nested keys. This means that if a configuration file in `config.d/` contains a root-level key (e.g., `engine:`), the **entire section** from the main `falco.yaml` will be replaced, not merged.
+
+For example, if you have `engine-falcoctl.yaml` in `/etc/falco/config.d/` that sets the `engine.kind` option, and you try to modify `engine.buf_size_preset` in `/etc/falco/falco.yaml`, your change will be ignored because the entire `engine:` section is overridden by the file in `config.d/`.
+
+**To modify nested configuration options**, you should either:
+- Edit the file in `config.d/` that contains the root key you want to modify
+- Or remove/rename that file from `config.d/` and make all changes directly in `falco.yaml`
+{{% /pageinfo %}}
