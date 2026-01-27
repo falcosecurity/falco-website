@@ -121,19 +121,19 @@ sudo apt-get install apt-transport-https
 1. Trust the `falcosecurity` GPG key
 
     ```shell
-    rpm --import https://falco.org/repo/falcosecurity-packages.asc
+    sudo rpm --import https://falco.org/repo/falcosecurity-packages.asc
     ```
 
 2. Configure the `yum` repository
 
     ```shell
-    curl -o /etc/yum.repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
+    sudo curl -o /etc/yum.repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
     ```
 
 3. Update the package list
 
     ```shell
-    yum update -y
+    sudo yum update -y
     ```
 
 4. Install some required dependencies that are needed to build the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}} and the {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}}
@@ -142,19 +142,19 @@ sudo apt-get install apt-transport-https
 
     ```shell
     # If necessary install it using: `yum install epel-release` (or `amazon-linux-extras install epel` in case of amzn2), then `yum install make dkms`.
-    yum install -y dkms make
+    sudo yum install -y dkms make
     # If the package was not found by the below command, you might need to run `yum distro-sync` in order to fix it. Rebooting the system may be required.
-    yum install -y kernel-devel-$(uname -r)
+    sudo yum install -y kernel-devel-$(uname -r)
     # If you use falcoctl driver loader to build the eBPF probe locally you need also clang toolchain
-    yum install -y clang llvm
+    sudo yum install -y clang llvm
     # You can install also the dialog package if you want it
-    yum install -y dialog
+    sudo yum install -y dialog
     ```
 
 5. Install the Falco package
 
     ```shell
-    yum install -y falco
+    sudo yum install -y falco
     ```
     
  
@@ -190,19 +190,19 @@ When using systemd, you can add this to your service override or edit the unit f
 1. Trust the `falcosecurity` GPG key
 
     ```shell
-    rpm --import https://falco.org/repo/falcosecurity-packages.asc
+    sudo rpm --import https://falco.org/repo/falcosecurity-packages.asc
     ```
 
 2. Configure the zypper repository
 
     ```shell
-    curl -o /etc/zypp/repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
+    sudo curl -o /etc/zypp/repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
     ```
 
 3. Update the package list
 
     ```shell
-    zypper -n update
+    sudo zypper -n update
     ```
 
 4. Install some required dependencies that are needed to build the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}} and the {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}}
@@ -210,25 +210,25 @@ When using systemd, you can add this to your service override or edit the unit f
     > _Note_: You don't need to install these dependencies if you want to use the {{< glossary_tooltip text="Modern eBPF" term_id="modern-ebpf-probe" >}}.
 
     ```shell
-    zypper -n install dkms make
+    sudo zypper -n install dkms make
     # If the package was not found by the below command, you might need to run `zypper -n dist-upgrade` in order to fix it. Rebooting the system may be required.
-    zypper -n install kernel-default-devel-$(uname -r | sed s/\-default//g)
+    sudo zypper -n install kernel-default-devel-$(uname -r | sed s/\-default//g)
     # If you use falcoctl driver loader to build the eBPF probe locally you need also clang toolchain
-    zypper -n install clang llvm
+    sudo zypper -n install clang llvm
     # You can install also the dialog package if you want it
-    zypper -n install dialog
+    sudo zypper -n install dialog
     ```
 
 5. Install Falco:
 
     ```shell
-    zypper -n install falco
+    sudo zypper -n install falco
     ```
 
 6. Uninstall Falco:
 
     ```shell
-    zypper rm falco
+    sudo zypper rm falco
     ```
 
 ## Systemd setup
@@ -432,14 +432,14 @@ apt-get --only-upgrade install falco
 If you configured the `yum` repository by having followed the instructions for Falco 0.27.0 or older, you may need to update the repository URL, otherwise, **feel free to ignore this message**
 
 ```shell
-sed -i 's,https://dl.bintray.com/falcosecurity/rpm,https://download.falco.org/packages/rpm,' /etc/yum.repos.d/falcosecurity.repo
-yum clean all
+sudo sed -i 's,https://dl.bintray.com/falcosecurity/rpm,https://download.falco.org/packages/rpm,' /etc/yum.repos.d/falcosecurity.repo
+sudo yum clean all
 ```
 
 Then check that the `falcosecurity-rpm` repository is pointing to `https://download.falco.org/packages/rpm/`:
 
 ```shell
-yum repolist -v falcosecurity-rpm
+sudo sudo yum repolist -v falcosecurity-rpm
 ```
 
 {{% /pageinfo %}}
@@ -449,13 +449,13 @@ If you installed Falco by following the [provided instructions](/docs/install-op
 1. Check for updates:
 
     ```shell
-    yum check-update
+    sudo yum check-update
     ```
 
 2. If a newer Falco version is available:
 
     ```shell
-    yum update falco
+    sudo yum update falco
     ```
 
 ### `zypper` (openSUSE) {#upgrade-with-zypper}
@@ -464,14 +464,14 @@ If you installed Falco by following the [provided instructions](/docs/install-op
 If you configured the `zypper` repository by having followed the instructions for Falco 0.27.0 or older, you may need to update the repository URL, otherwise, **feel free to ignore this message**
 
 ```shell
-sed -i 's,https://dl.bintray.com/falcosecurity/rpm,https://download.falco.org/packages/rpm,' /etc/zypp/repos.d/falcosecurity.repo
-zypper refresh
+sudo sed -i 's,https://dl.bintray.com/falcosecurity/rpm,https://download.falco.org/packages/rpm,' /etc/zypp/repos.d/falcosecurity.repo
+sudo zypper refresh
 ```
 
 Then check that the `falcosecurity-rpm` repository is pointing to `https://download.falco.org/packages/rpm/`:
 
 ```shell
-zypper lr falcosecurity-rpm
+sudo zypper lr falcosecurity-rpm
 ```
 
 {{% /pageinfo %}}
@@ -479,7 +479,7 @@ zypper lr falcosecurity-rpm
 If you installed Falco by following the [provided instructions](/docs/install-operate/installation/#suse):
 
 ```shell
-zypper update falco
+sudo zypper update falco
 ```
 
 ### Kernel Upgrades {#kernel-upgrades}
@@ -491,19 +491,19 @@ When performing kernel upgrades on your host, a reboot is required. When using a
 ### `apt` (Debian/Ubuntu) {#uninstall-with-apt}
 
 ```shell
-apt-get --purge autoremove falco
+sudo apt-get --purge autoremove falco
 ```
 
 ### `yum` (CentOS/RHEL/Fedora/Amazon Linux) {#uninstall-with-yum}
 
 ```shell
-yum remove falco
+sudo yum remove falco
 ```
 
 ### `zypper` (openSUSE) {#uninstall-with-zypper}
 
 ```shell
-zypper remove falco
+sudo zypper remove falco
 ```
 
 ## Package signing {#package-signing}
