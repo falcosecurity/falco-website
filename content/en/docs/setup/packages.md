@@ -116,7 +116,7 @@ sudo apt-get install apt-transport-https
     sudo apt-get install -y falco
     ```
 
-### `yum` (CentOS/RHEL/Fedora/Amazon Linux) {#install-with-yum}
+### `yum`/`dnf` (CentOS/RHEL/Fedora/Amazon Linux) {#install-with-yum}
 
 1. Trust the `falcosecurity` GPG key
 
@@ -124,7 +124,7 @@ sudo apt-get install apt-transport-https
     rpm --import https://falco.org/repo/falcosecurity-packages.asc
     ```
 
-2. Configure the `yum` repository
+2. Configure the `yum`/`dnf` repository
 
     ```shell
     curl -o /etc/yum.repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
@@ -133,7 +133,10 @@ sudo apt-get install apt-transport-https
 3. Update the package list
 
     ```shell
-    yum update -y
+    # For systems using dnf:
+    dnf update -y
+    # For systems using yum:
+    # yum update -y
     ```
 
 4. Install some required dependencies that are needed to build the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}} and the {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}}
@@ -141,20 +144,35 @@ sudo apt-get install apt-transport-https
    > _Note_: You don't need to install these dependencies if you want to use the {{< glossary_tooltip text="Modern eBPF" term_id="modern-ebpf-probe" >}}.
 
     ```shell
-    # If necessary install it using: `yum install epel-release` (or `amazon-linux-extras install epel` in case of amzn2), then `yum install make dkms`.
-    yum install -y dkms make
-    # If the package was not found by the below command, you might need to run `yum distro-sync` in order to fix it. Rebooting the system may be required.
-    yum install -y kernel-devel-$(uname -r)
+    # If necessary install it using: `dnf install epel-release` or `yum install epel-release` (or `amazon-linux-extras install epel` in case of amzn2), then `dnf install make dkms` or `yum install make dkms`.
+    # For systems using dnf:
+    dnf install -y dkms make
+    # For systems using yum:
+    # yum install -y dkms make
+    # If the package was not found by the below command, you might need to run `dnf distro-sync` or `yum distro-sync` in order to fix it. Rebooting the system may be required.
+    # For systems using dnf:
+    dnf install -y kernel-devel-$(uname -r)
+    # For systems using yum:
+    # yum install -y kernel-devel-$(uname -r)
     # If you use falcoctl driver loader to build the eBPF probe locally you need also clang toolchain
-    yum install -y clang llvm
+    # For systems using dnf:
+    dnf install -y clang llvm
+    # For systems using yum:
+    # yum install -y clang llvm
     # You can install also the dialog package if you want it
-    yum install -y dialog
+    # For systems using dnf:
+    dnf install -y dialog
+    # For systems using yum:
+    # yum install -y dialog
     ```
 
 5. Install the Falco package
 
     ```shell
-    yum install -y falco
+    # For systems using dnf:
+    dnf install -y falco
+    # For systems using yum:
+    # yum install -y falco
     ```
     
  
@@ -426,20 +444,26 @@ If you installed Falco by following the [provided instructions](#install):
 apt-get --only-upgrade install falco
 ```
 
-### `yum` (CentOS/RHEL/Fedora/Amazon Linux) {#upgrade-with-yum}
+### `yum`/`dnf` (CentOS/RHEL/Fedora/Amazon Linux) {#upgrade-with-yum}
 
 {{% pageinfo color="warning" %}}
-If you configured the `yum` repository by having followed the instructions for Falco 0.27.0 or older, you may need to update the repository URL, otherwise, **feel free to ignore this message**
+If you configured the `yum`/`dnf` repository by having followed the instructions for Falco 0.27.0 or older, you may need to update the repository URL, otherwise, **feel free to ignore this message**
 
 ```shell
 sed -i 's,https://dl.bintray.com/falcosecurity/rpm,https://download.falco.org/packages/rpm,' /etc/yum.repos.d/falcosecurity.repo
-yum clean all
+# For systems using dnf:
+dnf clean all
+# For systems using yum:
+# yum clean all
 ```
 
 Then check that the `falcosecurity-rpm` repository is pointing to `https://download.falco.org/packages/rpm/`:
 
 ```shell
-yum repolist -v falcosecurity-rpm
+# For systems using dnf:
+dnf repolist -v falcosecurity-rpm
+# For systems using yum:
+# yum repolist -v falcosecurity-rpm
 ```
 
 {{% /pageinfo %}}
@@ -449,13 +473,19 @@ If you installed Falco by following the [provided instructions](/docs/install-op
 1. Check for updates:
 
     ```shell
-    yum check-update
+    # For systems using dnf:
+    dnf check-update
+    # For systems using yum:
+    # yum check-update
     ```
 
 2. If a newer Falco version is available:
 
     ```shell
-    yum update falco
+    # For systems using dnf:
+    dnf update falco
+    # For systems using yum:
+    # yum update falco
     ```
 
 ### `zypper` (openSUSE) {#upgrade-with-zypper}
@@ -494,10 +524,13 @@ When performing kernel upgrades on your host, a reboot is required. When using a
 apt-get --purge autoremove falco
 ```
 
-### `yum` (CentOS/RHEL/Fedora/Amazon Linux) {#uninstall-with-yum}
+### `yum`/`dnf` (CentOS/RHEL/Fedora/Amazon Linux) {#uninstall-with-yum}
 
 ```shell
-yum remove falco
+# For systems using dnf:
+dnf remove falco
+# For systems using yum:
+# yum remove falco
 ```
 
 ### `zypper` (openSUSE) {#uninstall-with-zypper}
