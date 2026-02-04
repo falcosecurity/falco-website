@@ -115,7 +115,6 @@ docker run --rm -it \
            --cap-add sys_resource \
            --cap-add sys_ptrace \
            -v /sys/kernel/tracing:/sys/kernel/tracing:ro \
-           -v /sys/kernel/debug:/sys/kernel/debug:ro \
            -v /var/run/docker.sock:/host/var/run/docker.sock \
            -v /proc:/host/proc:ro \
            -v /etc:/host/etc:ro \
