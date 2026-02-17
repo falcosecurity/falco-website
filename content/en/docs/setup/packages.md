@@ -19,6 +19,10 @@ There are two main methods to install Falco on your host using the [released Fal
 1. **RPM or DEB package (includes Systemd setup):** This method is detailed on this page.
 2. **Tarball archive:** For instructions, refer to the [Install on a host (tarball)](/docs/setup/tarball) page.
 
+## System requirements {#system-requirements}
+
+Falco runs on **Linux** and is available for the **x86_64** and **aarch64** architectures. Falco with its bundled plugins requires **GLIBC 2.28** or newer. You can check your system's GLIBC version by running `ldd --version`.
+
 ## Install {#install}
 
 This installation method is for Linux distributions with a package manager that supports DEB (Debian, Ubuntu) or RPM (CentOS, RHEL, Fedora, Amazon Linux) packages.
