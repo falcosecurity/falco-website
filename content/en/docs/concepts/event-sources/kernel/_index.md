@@ -21,8 +21,8 @@ There are several supported drivers:
 
 |             | Kernel module | Legacy eBPF probe (deprecated) | Modern eBPF probe                                                    |
 | ----------- |---------------|--------------------------------| -------------------------------------------------------------------- |
-| **x86_64**  | >= 3.10       | >= 4.14                        | [Minimal set of features](/docs/event-sources/kernel/#requirements) |
-| **aarch64** | >= 3.10       | >= 4.17                        | [Minimal set of features](/docs/event-sources/kernel/#requirements) |
+| **x86_64**  | >= 3.10       | >= 4.14                        | [Minimal set of features](/docs/concepts/event-sources/kernel/#requirements) |
+| **aarch64** | >= 3.10       | >= 4.17                        | [Minimal set of features](/docs/concepts/event-sources/kernel/#requirements) |
 
 ## Kernel module
 

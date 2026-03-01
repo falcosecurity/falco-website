@@ -2,7 +2,7 @@
 title: Drivers
 id: drivers
 date: 2023-07-17
-full_link: /docs/event-sources/kernel/
+full_link: /docs/concepts/event-sources/kernel/
 short_description: >
   The global term for the software that sends events from the kernel.
 aka:
