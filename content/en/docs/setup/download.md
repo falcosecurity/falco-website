@@ -63,13 +63,13 @@ The Falco packages and container images come with a built-in ruleset file (inclu
 
 {{% pageinfo color="primary" %}}
 
-When using Falco for [Kernel Events](/docs/event-sources/kernel/) (i.e., with the `syscall` data source enabled), the Falco binary relies on having a {{< glossary_tooltip text="driver" term_id="drivers" >}} available on the host system.
+When using Falco for [Kernel Events](/docs/concepts/event-sources/kernel/) (i.e., with the `syscall` data source enabled), the Falco binary relies on having a {{< glossary_tooltip text="driver" term_id="drivers" >}} available on the host system.
 
 Starting from Falco 0.38.0, the default driver is the {{< glossary_tooltip text="Modern eBPF" term_id="modern-ebpf-probe" >}} driver, which is included in the Falco binary and built using the [CO-RE "Compile Once - Run Everywhere"](https://en.wikipedia.org/wiki/EBPF#eBPF_CO-RE_(Compile_Once_-_Run_Everywhere)) technology. If your system satisfies the modern eBPF driver requirements, no further action is needed. Otherwise, you need to use the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}}, which provides wider compatibility.
 
 In brief, you don't need to install a driver if you are either:
- - using the [modern eBPF driver](/docs/event-sources/kernel/#modern-ebpf-probe) (default option) 
- - or if you are using only [plugin data sources](/docs/event-sources/plugins/).
+ - using the [modern eBPF driver](/docs/concepts/event-sources/kernel/#modern-ebpf-probe) (default option) 
+ - or if you are using only [plugin data sources](/docs/concepts/event-sources/plugins/).
 
 {{% /pageinfo %}}
 

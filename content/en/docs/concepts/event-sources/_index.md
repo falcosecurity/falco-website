@@ -11,7 +11,7 @@ aliases:
 
 Falco evaluates streams of events against security rules to detect abnormal behavior. Events are consumed through various event sources, which define the origin, nature, and format of the streamed events.
 
-Falco natively supports the `syscall` event source, which is enabled by default, consuming events from the Linux Kernel via drivers. The [plugin system](/docs/event-sources/plugins/) allows Falco to extend its capabilities with new event sources.
+Falco natively supports the `syscall` event source, which is enabled by default, consuming events from the Linux Kernel via drivers. The [plugin system](/docs/concepts/event-sources/plugins/) allows Falco to extend its capabilities with new event sources.
 
 ### How It Works
 
