@@ -325,6 +325,9 @@ Leveraging lists and macros again, to detect the XMRig binary, security teams ca
 ```
 - macro: in_malicious_binaries
   condition: (proc.name in (malicious_binaries))
+
+- macro: scripts_in_or
+  condition: (proc.args endswith "/wb.sh" or proc.args endswith "/ldr.sh" or proc.args endswith "aktualisieren.sh" or proc.args endswith "creds.sh" or proc.args endswith "cronb.sh" or proc.args endswith "abah1.sh" or proc.args endswith "/huh.sh" or proc.args endswith "ohshit.sh" or proc.args endswith "/mxr.sh")
 ```
 
 ### List
