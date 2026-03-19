@@ -12,7 +12,12 @@ We're excited to share that the Falco community will be at **KubeCon + CloudNati
 
 Falco is celebrating **10 years** of development and adoption, and we are on the lookout for people who would like to say Happy Birthday to the project or share their best Falco story. Libby Schulze and I will be on the event floor with mic and camera to capture some amazing moments and memories from Falco's 10 years. So bring your best story, and we'll see you at the Falco booth!
 
-Here’s where you can find us in Amsterdam and everything we have lined up.
+## Sneak peek
+Psst... we have something really cool brewing that we will show at the Falco booth. You, our amazing reader, is the first to hear about this. It's a way to run Falco locally on your development machine, and make sure your AI coding agents are following new rules that are being defined. We'd love to get your feedback on this as we're currently building it!
+
+--- 
+
+**Here’s where you can find us in Amsterdam and everything we have lined up:**
 
 ## Project lightning talk
 
