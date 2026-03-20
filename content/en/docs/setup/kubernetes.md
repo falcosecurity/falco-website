@@ -1,5 +1,5 @@
 ---
-title: Deploy on Kubernetes
+title: Deploy on Kubernetes with Helm
 description: Learn how to deploy Falco on Kubernetes with Helm
 slug: kubernetes
 aliases:
@@ -9,13 +9,17 @@ aliases:
 weight: 10
 ---
 
+{{% pageinfo color="info" %}}
+The **[Falco Operator](/docs/setup/operator/)** is now the recommended way to deploy Falco on Kubernetes. It provides a declarative, Kubernetes-native experience with Custom Resources for managing Falco instances, rules, plugins, and configuration. The Helm chart method described on this page remains fully supported.
+{{% /pageinfo %}}
+
 {{% pageinfo color="primary" %}}
 Falco consumes streams of events and evaluates them against a set of security {{< glossary_tooltip text="rules" term_id="rules" >}} to detect abnormal behavior. By default, Falco is pre-configured to consume events from the Linux Kernel. This default installation scenario will add Falco to all nodes in your cluster using a [DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/). This scenario requires Falco to be privileged, and depending on the kernel version installed on the node, a {{< glossary_tooltip text="driver" term_id="drivers" >}} will be installed on the node.
 
 For other installation scenarios, such as consuming cloud events or other data sources using plugins, please refer to the [Plugins](/docs/concepts/plugins/) section.
 {{% /pageinfo %}}
 
-The recommended way to deploy Falco on a Kubernetes cluster is to use the provided Helm chart. The official Falco charts repository is hosted at:
+A well-established method to deploy Falco on a Kubernetes cluster is to use the provided Helm chart. The official Falco charts repository is hosted at:
 
 - [https://falcosecurity.github.io/charts](https://falcosecurity.github.io/charts)
 
