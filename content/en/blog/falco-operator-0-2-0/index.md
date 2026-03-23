@@ -1,6 +1,6 @@
 ---
 title: Introducing Falco Operator 0.2.0
-date: 2026-03-19
+date: 2026-03-23
 author: Alessandro Cannarella, Aldo Lacuku
 slug: falco-operator-0-2-0
 images:
