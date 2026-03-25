@@ -21,21 +21,21 @@ Override this macro to reflect hosts that can connect to known SSH ports (ie a b
 
 {{< markdown_inline contentPath = "/docs/reference/rules/macros-override/allowed_ssh_hosts.md" >}}
 
-### User Whitelisted Containers
+### User Trusted Containers
 
-Whitelist containers that are allowed to run in privileged mode.
+Allowlist containers that are allowed to run in privileged mode.
 
 {{< markdown_inline contentPath = "/docs/reference/rules/macros-override/user_trusted_containers.md" >}}
 
 ### Containers Allowed to Spawn Shells
 
-Whitelist containers that are allowed to spawn shells, which may be needed if containers are used in the CI/CD pipeline.
+Allowlist containers that are allowed to spawn shells, which may be needed if containers are used in the CI/CD pipeline.
 
 {{< markdown_inline contentPath = "/docs/reference/rules/macros-override/user_shell_container_exclusions.md" >}}
 
 ### Containers Allowed to Communicate with EC2 Metadata Services
 
-Whitelist containers that are allowed to communicate with the EC2 metadata service. Default: any container.
+Allowlist containers that are allowed to communicate with the EC2 metadata service. Default: any container.
 
 {{< markdown_inline contentPath = "/docs/reference/rules/macros-override/ec2_metadata_containers.md" >}}
 
@@ -47,7 +47,7 @@ Set the IP of your Kubernetes API Service here.
 
 ### Containers Allowed to Communicate with the Kubernetes API
 
-Whitelist containers that are allowed to communicate with the Kubernetes API Service. Requires k8s_api_server being set.
+Allowlist containers that are allowed to communicate with the Kubernetes API Service. Requires k8s_api_server being set.
 
 {{< markdown_inline contentPath = "/docs/reference/rules/macros-override/k8s_containers.md" >}}
 
