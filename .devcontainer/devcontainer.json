@@ -1,0 +1,22 @@
+{
+  "name": "Falco Website",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/hugo:1": {
+      "version": "0.154.5",
+      "extended": true
+    },
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+  "forwardPorts": [1313],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "budparr.language-hugo-vscode",
+        "davidanson.vscode-markdownlint"
+      ]
+    }
+  }
+}
