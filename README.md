@@ -38,6 +38,10 @@ To build this website you need:
 git clone git@github.com:falcosecurity/falco-website.git
 ```
 
+#### Dev Containers
+
+If you are using Visual Studio Code with the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers), the development container is ready to use. Open the repository in VS Code and select **Reopen in Container** when prompted. All required tools (Hugo, Node.js, Yarn) will be automatically set up for you.
+
 #### Run hugo server
 
 ```bash
