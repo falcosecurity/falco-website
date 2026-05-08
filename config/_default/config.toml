@@ -46,12 +46,6 @@ enableGitInfo = true
  [caches.assets]
   dir = ":cacheDir/_gen"
   maxAge = -1
- [caches.getcsv]
-  dir = ":cacheDir/:project"
-  maxAge = "60s"
- [caches.getjson]
-  dir = ":cacheDir/:project"
-  maxAge = "60s"
  [caches.images]
   dir = ":cacheDir/_images"
   maxAge = -1
@@ -417,3 +411,7 @@ disable_toc = false
 main_url = "https://static.scarf.sh/a.png?x-pxid=91d2b9ed-2cd3-43e5-8eee-dbaa47affa14"
 blog_url = "https://static.scarf.sh/a.png?x-pxid=29c6e383-a814-4868-aa21-7d0b143ba609"
 docs_url = "https://static.scarf.sh/a.png?x-pxid=db2b8d9b-d667-42d5-8ee3-62b4b59dc8bc"
+
+[module]
+[[module.imports]]
+path = "cj.rs/gohugo-asciinema"

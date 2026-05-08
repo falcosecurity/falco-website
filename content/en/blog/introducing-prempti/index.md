@@ -1,18 +1,16 @@
 ---
-title: Introducing Prempti: Falco meets AI coding agents
+title: "Introducing Prempti: Falco meets AI coding agents"
 date: 2026-05-12
 author: Leonardo Grasso
 slug: introducing-prempti
 tags: ["Prempti", "AI Coding Agents", "Falco"]
 ---
 
-# Introducing Prempti: Falco meets AI coding agents
-
 Today's developer workflow is increasingly reliant on AI coding agents. Tools like Claude Code sit in your terminal, read your files, run shell commands, make network requests, and write code, all on your behalf. They are fast, capable, and increasingly trusted with real tasks on real machines.
 
 But with that trust comes a question worth taking seriously: what exactly is your coding agent doing on your machine?
 
-Today, we're introducing an experimental project that brings Falco to this new frontier: Prempti.
+Today, we're introducing an experimental project that brings Falco to this new frontier: [Prempti](https://prempti.falco.org).
 
 ## Agents are a black box at runtime
 
@@ -22,17 +20,38 @@ Here's a simple scenario: you ask your coding agent to refactor a module. It rea
 
 The demo below captures exactly this situation:
 
+{{< asciicast src="https://asciinema.org/a/857572.json" poster="npt:0:04" autoPlay=true loop=true >}}
+
 The agent tried to both read and write to sections it's not allowed to, and both were blocked. The agent itself received a structured message explaining why, and showed that to the user. This is detection and enforcement working together at the tool-call level.
 
 ## How Prempti works
 
 Prempti runs as a lightweight user-space service alongside your coding agent. It does not require root, kernel modules, or containers. When your agent makes a tool call such as a file write, a shell command, or a file read, Prempti intercepts it **before it executes**, evaluates it against Falco rules, and delivers a verdict:
 
-| Verdict | What Happens |
-|---------|-------------|
-| **Allow** | The tool call proceeds normally |
-| **Deny** | The tool call is blocked and the agent is told why |
-| **Ask** | You are prompted to approve or reject interactively |
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Verdict</th>
+        <th>What Happens</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Allow</strong></td>
+        <td>The tool call proceeds normally</td>
+      </tr>
+      <tr>
+        <td><strong>Deny</strong></td>
+        <td>The tool call is blocked and the agent is told why</td>
+      </tr>
+      <tr>
+        <td><strong>Ask</strong></td>
+        <td>You are prompted to approve or reject interactively</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 The architecture looks like this:
 
@@ -156,6 +175,6 @@ Runtime security for AI coding agents is genuinely new territory. The threat mod
 - What agents or platforms do you need support for?
 - What didn't work as expected?
 
-Open an issue, start a discussion, or come chat with us in the Falco Slack. Every piece of feedback shapes what this project becomes.
+Open an [issue](https://github.com/falcosecurity/prempti/issues), start a [discussion](https://github.com/falcosecurity/prempti/discussions), or come chat with us in the [Falco Slack](https://kubernetes.slack.com/archives/CMWH3EH32). Every piece of feedback shapes what this project becomes.
 
 *Prempti is released under the Apache License 2.0. Currently supports Claude Code on Linux (x86_64, aarch64), macOS (Apple Silicon, Intel), and Windows (x86_64, ARM64). Codex integration is on the roadmap.*
