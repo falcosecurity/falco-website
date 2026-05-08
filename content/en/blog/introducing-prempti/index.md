@@ -158,7 +158,7 @@ bash install.sh
 
 **Windows:**
 ```shell
-powershell -ExecutionPolicy Bypass -File Install-Prempti.ps1
+msiexec /i prempti-<version>-windows-<arch>.msi
 ```
 
 Verify your setup:
