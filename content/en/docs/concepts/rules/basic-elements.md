@@ -270,3 +270,5 @@ In other words, visibility is defined in cascade and is quite important:
 - A macro can only reference macros defined before it.
 - A macro can reference any list.
 - A rule can reference any macro.
+
+The same load-order principle applies across multiple rules files. See [Overriding Rules](/docs/concepts/rules/overriding/#overview) for details on how the order of rules files affects appending and overriding existing lists, macros, and rules.
