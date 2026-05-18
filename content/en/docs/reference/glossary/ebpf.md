@@ -2,7 +2,7 @@
 title: eBPF
 id: ebpf
 date: 2023-07-17
-full_link: /docs/concepts/event-sources/kernel/#legacy-ebpf-probe
+full_link: /docs/concepts/event-sources/kernel/#modern-ebpf-probe
 short_description: >
   eBPF is a technology to collect metrics and events from the Kernel in a secure way.
 tags:

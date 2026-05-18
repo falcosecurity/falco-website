@@ -22,4 +22,3 @@ Falco supports sending alerts to:
 - Syslog
 - A spawned program
 - An HTTP[s] endpoint
-- A client through the {{< glossary_tooltip text="gRPC" term_id="grpc" >}} API (deprecated)

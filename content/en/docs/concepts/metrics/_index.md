@@ -950,68 +950,7 @@ falcosecurity_falco_host_num_cpus_total 8
   `libbpf_stats_enabled: true`
   </summary>
 
-Applies only for `ebpf` (deprecated) and `modern_ebpf`, requires `sysctl kernel.bpf_stats_enabled=1` kernel setting as precondition. Compare to `bpftool prog show` capabilities.
-
-Here is a snippet with respect to the kernel tracepoints for an `x86_64` machine using the traditional eBPF driver `engine.kind=ebpf` (deprecated):
-
-`json`
-
-```yaml
-{
-  "hostname": "test",
-  "output": "Falco metrics snapshot",
-  "output_fields": {
-    "evt.hostname": "test",
-    "evt.source": "syscall",
-    "evt.time": 1748559260010429172,
-    "falco.duration_sec": 160,
-    "falco.evts_rate_sec": 19097.2,
-    "falco.host_boot_ts": 1748555738000000000,
-    "falco.host_netinfo.interfaces.docker0.protocols.ipv4.addresses": "172.17.0.1",
-    "falco.host_netinfo.interfaces.wlo1.protocols.ipv4.addresses": "192.168.4.222",
-    "falco.host_netinfo.interfaces.wlo1.protocols.ipv6.addresses": "fd7e:da33:f3a2:1:2c07:2831:bc9a:da8e,fe80:0:0:0:37a5:f3c9:ffeb:64df",
-    "falco.host_num_cpus": 8,
-    "falco.kernel_release": "6.14.6-300.fc42.x86_64",
-    "falco.num_evts": 1901309,
-    "falco.num_evts_prev": 1519365,
-    "falco.outputs_queue_num_drops": 0,
-    "falco.reload_ts": 1748559099987386014,
-    "falco.sha256_config_file.falco_yaml": "0632e93f4858878af24d0d442bd06c7d0f6311d0317fb9ebc20ec6c512395cc3",
-    "falco.sha256_rules_file.falco_rules_yaml": "58a4f187b6b04b43ae938132325cbbb6b2bb9eb4e76e553f5b4b7b5b360ee0b4",
-    "falco.start_ts": 1748559099986267926,
-    "falco.version": "0.41.0",
-    "scap.engine_name": "bpf",
-    "scap.n_drops_perc": 0.0,
-    # libbpf stats -> all-time kernel tracepoints invocations stats for an `x86_64` machine
-    # Note: no equivalent stats for kmod driver available
-    "scap.page_fault_kern.avg_time_ns": 0, # Disabled by default
-    "scap.page_fault_kern.run_cnt": 0,
-    "scap.page_fault_kern.run_time_ns": 0,
-    "scap.page_fault_user.avg_time_ns": 0, # Disabled by default
-    "scap.page_fault_user.run_cnt": 0,
-    "scap.page_fault_user.run_time_ns": 0,
-    "scap.sched_process_e.avg_time_ns": 4398, # scheduler process exit tracepoint, used to purge procs from process cache
-    "scap.sched_process_e.run_cnt": 92,
-    "scap.sched_process_e.run_time_ns": 404679,
-    "scap.sched_switch.avg_time_ns": 0, # Disabled by default
-    "scap.sched_switch.run_cnt": 0,
-    "scap.sched_switch.run_time_ns": 0,
-    "scap.signal_deliver.avg_time_ns": 0, # Disabled by default
-    "scap.signal_deliver.run_cnt": 0,
-    "scap.signal_deliver.run_time_ns": 0,
-    "scap.sys_enter.avg_time_ns": 599, # syscall enter (raw) tracepoint
-    "scap.sys_enter.run_cnt": 317515,
-    "scap.sys_enter.run_time_ns": 190404592,
-    "scap.sys_exit.avg_time_ns": 675, # syscall exit (raw) tracepoint
-    "scap.sys_exit.run_cnt": 317517,
-    "scap.sys_exit.run_time_ns": 214464597
-  },
-  "priority": "Informational",
-  "rule": "Falco internal: metrics snapshot",
-  "source": "internal",
-  "time": "2025-05-29T22:54:20.010429172Z"
-}
-```
+Applies only for `modern_ebpf`, requires `sysctl kernel.bpf_stats_enabled=1` kernel setting as precondition. Compare to `bpftool prog show` capabilities.
 
 Here is a snippet with respect to the kernel tracepoints for an `x86_64` machine using the modern eBPF driver `engine.kind=modern_ebpf`:
 

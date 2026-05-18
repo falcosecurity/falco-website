@@ -28,7 +28,7 @@ Falco runs on **Linux** and is available for the **x86_64** and **aarch64** arch
 This installation method is for Linux distributions with a package manager that supports DEB (Debian, Ubuntu) or RPM (CentOS, RHEL, Fedora, Amazon Linux) packages.
 
 In interactive installations, the Falco installation package uses the `dialog` binary for configuration prompts. The dialog allows the user to complete the Systemd setup which includes:
-- The driver selection (kmod, ebpf, modern_ebpf) or automatic selection
+- The driver selection (kmod, modern_ebpf) or automatic selection
 - The Falcoctl service setup
 
 In non-interactive installations (e.g., `dialog` is not available, or if the user disables it by setting `FALCO_FRONTEND=noninteractive` when installing Falco using the package manager), the automatic driver selection is enabled by default and for other options, the user needs to manually configure the [Systemd](https://systemd.io/) services.
@@ -38,7 +38,7 @@ In non-interactive installations (e.g., `dialog` is not available, or if the use
 The following environment variables can be used to customize the installation process:
 
 - `FALCO_FRONTEND`: Set to `noninteractive` to disable the dialog prompts. The default is `dialog`.
-- `FALCO_DRIVER_CHOICE`: Set to `kmod`, `ebpf`, or `modern_ebpf` to choose a driver; set to `none` to disable service installation. If one of the previous option is selected, the dialog will be skipped too. The default (empty) is automatic selection.
+- `FALCO_DRIVER_CHOICE`: Set to `kmod` or `modern_ebpf` to choose a driver; set to `none` to disable service installation. If one of the previous option is selected, the dialog will be skipped too. The default (empty) is automatic selection.
 - `FALCOCTL_ENABLED`: Set to `no` to disable the automatic rules update provided by `falcoctl`. The default (empty) or any value other than `no` will keep the option enabled.
 
 These environment variables can be used in conjunction with the package manager (as described in the following sections) to customize the installation process as needed.
@@ -102,14 +102,12 @@ sudo apt-get install apt-transport-https
     sudo apt-get update -y
     ```
     
-4. Install some required dependencies that are needed to build the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}} and the {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}}
+4. Install some required dependencies that are needed to build the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}}
 
    > _Note_: You don't need to install these dependencies if you want to use the {{< glossary_tooltip text="Modern eBPF" term_id="modern-ebpf-probe" >}}.
 
     ```shell
     sudo apt install -y dkms make linux-headers-$(uname -r)
-    # If you use falcoctl driver loader to build the eBPF probe locally you need also clang toolchain
-    sudo apt install -y clang llvm
     # You can install also the dialog package if you want it
     sudo apt install -y dialog
     ```
@@ -140,7 +138,7 @@ sudo apt-get install apt-transport-https
     sudo yum update -y
     ```
 
-4. Install some required dependencies that are needed to build the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}} and the {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}}
+4. Install some required dependencies that are needed to build the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}}
 
    > _Note_: You don't need to install these dependencies if you want to use the {{< glossary_tooltip text="Modern eBPF" term_id="modern-ebpf-probe" >}}.
 
@@ -149,8 +147,6 @@ sudo apt-get install apt-transport-https
     sudo yum install -y dkms make
     # If the package was not found by the below command, you might need to run `yum distro-sync` in order to fix it. Rebooting the system may be required.
     sudo yum install -y kernel-devel-$(uname -r)
-    # If you use falcoctl driver loader to build the eBPF probe locally you need also clang toolchain
-    sudo yum install -y clang llvm
     # You can install also the dialog package if you want it
     sudo yum install -y dialog
     ```
@@ -209,7 +205,7 @@ When using systemd, you can add this to your service override or edit the unit f
     sudo zypper -n update
     ```
 
-4. Install some required dependencies that are needed to build the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}} and the {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}}
+4. Install some required dependencies that are needed to build the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}}
 
     > _Note_: You don't need to install these dependencies if you want to use the {{< glossary_tooltip text="Modern eBPF" term_id="modern-ebpf-probe" >}}.
 
@@ -217,8 +213,6 @@ When using systemd, you can add this to your service override or edit the unit f
     sudo zypper -n install dkms make
     # If the package was not found by the below command, you might need to run `zypper -n dist-upgrade` in order to fix it. Rebooting the system may be required.
     sudo zypper -n install kernel-default-devel-$(uname -r | sed s/\-default//g)
-    # If you use falcoctl driver loader to build the eBPF probe locally you need also clang toolchain
-    sudo zypper -n install clang llvm
     # You can install also the dialog package if you want it
     sudo zypper -n install dialog
     ```
@@ -243,7 +237,7 @@ By default, if you have the `dialog` binary installed on your system, you will b
 
 ![](/docs/getting-started/images/dialog-1.png)
 
-From here you can choose one of our 3 drivers `Kmod`, `eBPF`, `Modern eBPF`, a [`Manual configuration`](#manual-configuration) or the `Automatic selection` (recommended) to trigger the automatic logic to select the best driver for you. When you choose a driver from the dialog, the `systemd` service is always enabled by default so it will start at every system reboot. If you want to disable this behavior type `systemctl disable falco-kmod.service` (if you are using the kernel module like in this example).
+From here you can choose one of our 2 drivers `Kmod` and `Modern eBPF`, a [`Manual configuration`](#manual-configuration) or the `Automatic selection` (recommended) to trigger the automatic logic to select the best driver for you. When you choose a driver from the dialog, the `systemd` service is always enabled by default so it will start at every system reboot. If you want to disable this behavior type `systemctl disable falco-kmod.service` (if you are using the kernel module like in this example).
 
 After the first dialog, you should see a second one:
 
@@ -262,7 +256,6 @@ First, let's verify the available services:
 $ sudo systemctl list-unit-files "falco*"
 
 UNIT FILE                        STATE    PRESET 
-falco-bpf.service                disabled enabled
 falco-custom.service             disabled enabled
 falco-kmod-inject.service        static   enabled
 falco-kmod.service               disabled enabled
@@ -282,7 +275,6 @@ Created symlink /etc/systemd/system/multi-user.target.wants/falco-modern-bpf.ser
 $ sudo systemctl list-unit-files "falco*"
 
 UNIT FILE                        STATE    PRESET 
-falco-bpf.service                disabled enabled
 falco-custom.service             disabled enabled
 falco-kmod-inject.service        static   -      
 falco-kmod.service               disabled enabled
@@ -305,7 +297,6 @@ Created symlink /etc/systemd/system/multi-user.target.wants/falco-kmod.service â
 $ sudo systemctl list-unit-files "falco*"
 
 UNIT FILE                        STATE    PRESET 
-falco-bpf.service                disabled enabled
 falco-custom.service             disabled enabled
 falco-kmod-inject.service        static   -      
 falco-kmod.service               enabled  enabled
@@ -313,7 +304,7 @@ falco-modern-bpf.service         disabled enabled
 falco.service                    alias    -      
 falcoctl-artifact-follow.service disabled enabled
 
-7 unit files listed.
+6 unit files listed.
 ```
 
 As you can see, enabling the `falco-kmod.service`, `falco-modern-bpf.service` or `falco-custom.service` also creates a
@@ -337,25 +328,26 @@ If you installed the Falco packages using the `dialog` option, all your services
 
 If you need to switch from one service to another, ensure that the current service is properly stopped before starting the new one. This can be done by using the appropriate service management commands for your system (e.g., `systemctl stop <service_name>` and `systemctl start <new_service_name>`).
 
-For example, if you want to use the service for the {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}}:
+For example, if you want to use the service for the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}}:
 
 1. Type `systemctl list-units | grep falco` to check that no unit is running. Stop the current services, if any.
 
 2. Now you have to decide whether you want the Falcoctl service running together with the Falco one. If yes you don't have to do anything, else you will need to mask the Falcoctl service with `systemctl mask falcoctl-artifact-follow.service`. The Falcoctl service is strictly related to the Falco one so if you don't mask it, it will be started together with the Falco service.
 
-3. Type `falcoctl driver config --type ebpf` to configure Falco to use {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}}, then `falcoctl driver install` to download/compile the eBPF probe.
+3. Type `falcoctl driver config --type kmod` to configure Falco to use the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}}, then `falcoctl driver install` to download/compile the kernel module.
 
-4. Now running `systemctl start falco-bpf.service` and typing `systemctl list-units | grep falco` you should see something like that (supposing you didn't mask the Falcoctl service):
+4. Now running `systemctl start falco-kmod.service` and typing `systemctl list-units | grep falco` you should see something like that (supposing you didn't mask the Falcoctl service):
 
     ```text
-    falco-bpf.service                                 loaded active running   Falco: Container Native Runtime Security with ebpf
+    falco-kmod-inject.service                         loaded active exited    Falco: Container Native Runtime Security with kmod, inject.
+    falco-kmod.service                                loaded active running   Falco: Container Native Runtime Security with kmod
     falcoctl-artifact-follow.service                  loaded active running   Falcoctl Artifact Follow: automatic artifacts update service
     ```
 
 5. If you want to stop both services in one shot
 
     ```shell
-    systemctl stop falco-bpf.service
+    systemctl stop falco-kmod.service
     ```
 
 ### Falcoctl service (automatic rules update) {#falcoctl-service}
@@ -488,7 +480,7 @@ sudo zypper update falco
 
 ### Kernel Upgrades {#kernel-upgrades}
 
-When performing kernel upgrades on your host, a reboot is required. When using a {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} or a {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}} driver, the Falco driver loader (i.e., `falcoctl driver`) should be able to automatically find a pre-built driver (or build it on the fly) corresponding to the updated kernel release (`uname -r`), making it easy to handle kernel upgrades. The Falco Project features a kernel crawler and automated CI, ensuring you can always obtain the necessary pre-built driver artifact, even for the latest kernel releases we support.
+When performing kernel upgrades on your host, a reboot is required. When using a {{< glossary_tooltip text="Kernel Module" term_id="kernel-module-driver" >}} driver, the Falco driver loader (i.e., `falcoctl driver`) should be able to automatically find a pre-built driver (or build it on the fly) corresponding to the updated kernel release (`uname -r`), making it easy to handle kernel upgrades. The Falco Project features a kernel crawler and automated CI, ensuring you can always obtain the necessary pre-built driver artifact, even for the latest kernel releases we support.
 
 ## Uninstall
 
@@ -534,7 +526,7 @@ This section aims to offer further guidance when something doesn't go as expecte
 
 * `ERROR failed: unable to find a prebuilt driver`
 
-This error message appears when the falcoctl driver loader tool, which looks for the Falco driver and loads it in memory, is not able to find a pre-built driver, neither as an eBPF probe nor as a kernel module, at the [Falco driver repository] (https://download.falco.org).
+This error message appears when the falcoctl driver loader tool, which looks for the Falco driver and loads it in memory, is not able to find a pre-built kernel module driver at the [Falco driver repository] (https://download.falco.org).
 
 {{% pageinfo color=info %}}
 
@@ -556,7 +548,7 @@ There are a limited set of Linux distributions whose kernels are supported by th
 
 ### Enable the BPF JIT Compiler {#enable-bpf-jit-compiler}
 
-If you are using the eBPF probe, in order to ensure that performance is not degraded, make sure that:
+If you are using the modern eBPF probe, in order to ensure that performance is not degraded, make sure that:
 
 * Your kernel has `CONFIG_BPF_JIT` enabled
 * `net.core.bpf_jit_enable` is set to 1 (enable the BPF JIT Compiler)

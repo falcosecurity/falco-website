@@ -12,4 +12,3 @@ tags:
 More robust {{< glossary_tooltip text="eBPF" term_id="ebpf" >}} probe, which brings the CO-RE paradigm, better performances, and maintainability.
 
 <!--more--> 
-It replaced the deprecated {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}}.

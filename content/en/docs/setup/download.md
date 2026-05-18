@@ -75,7 +75,7 @@ In brief, you don't need to install a driver if you are either:
 
 Pre-built Falco drivers for a vast variety of Linux Kernel releases are distributed at [download.falco.org](https://download.falco.org/?prefix=driver/).
 
-To download a pre-built driver, navigate to the driver versions' directory that is compatible with the Falco binary you're currently using (check with `falco --version`), then download the kernel artifact corresponding to your kernel release (`uname -r`) for either `.ko` (kernel module) or `.o` (legacy eBPF driver, deprecated). To make this easier, Falco comes with the [falcoctl](https://github.com/falcosecurity/falcoctl) tool that automates the driver download (or tries to build it on the fly). The [Install](/docs/install-operate/installation/) guide will explain this more, and the text blob below also has more information.
+To download a pre-built driver, navigate to the driver versions' directory that is compatible with the Falco binary you're currently using (check with `falco --version`), then download the kernel artifact corresponding to your kernel release (`uname -r`) for `.ko` (kernel module). To make this easier, Falco comes with the [falcoctl](https://github.com/falcosecurity/falcoctl) tool that automates the driver download (or tries to build it on the fly). The [Install](/docs/install-operate/installation/) guide will explain this more, and the text blob below also has more information.
 
 ### Tools {#tools}
 
