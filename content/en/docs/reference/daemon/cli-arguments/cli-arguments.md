@@ -21,9 +21,6 @@ Usage:
                                 can be passed multiple times. When using this option, only the event sources specified by it will be 
                                 enabled. This option can not be mixed with --disable-source. This option has no effect when reproducing 
                                 events from a capture file.
-      --gvisor-generate-config [=<socket_path>(=/run/falco/gvisor.sock)]
-                                DEPRECATED: Generate a configuration file that can be used for gVisor and exit. See --gvisor-config for 
-                                more details.
   -i                            Print those events that are ignored by default for performance reasons and exit.
   -L                            Show the name and description of all rules and exit. If json_output is set to true, it prints details about 
                                 all rules, macros, and lists in JSON format.

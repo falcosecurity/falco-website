@@ -36,16 +36,14 @@ In these steps, we are targeting a Debian-like system on `x86_64` architecture. 
     cp -R falco-{{< latest >}}-x86_64/* /
     ```
 
-3. Install some required dependencies that are needed to build the kernel module and the eBPF probe. If you want to use other sources like the modern eBPF probe or plugins, you can skip this step.
+3. Install some required dependencies that are needed to build the kernel module. If you want to use other sources like the modern eBPF probe or plugins, you can skip this step.
 
     ```shell
     apt update -y
     apt install -y dkms make linux-headers-$(uname -r)
-    # If you use falcoctl driver loader to build the eBPF probe locally you need also clang toolchain
-    apt install -y clang llvm
     ```
 
-4. Use the `falcoctl driver` tool to configure Falco and install the kernel module or the eBPF probe. If you want to use other sources like the modern eBPF probe or plugins, you can skip this step.
+4. Use the `falcoctl driver` tool to configure Falco and install the kernel module. If you want to use other sources like the modern eBPF probe or plugins, you can skip this step.
 
    {{% pageinfo color="info" %}}
 
@@ -56,8 +54,6 @@ In these steps, we are targeting a Debian-like system on `x86_64` architecture. 
    ```shell
    # If you want to use the kernel module, configure Falco for it
    falcoctl driver config --type kmod
-   # If you want to use the eBPF probe, configure Falco for it
-   falcoctl driver config --type ebpf
    # Install the chosen driver
    falcoctl driver install
    ```
@@ -67,10 +63,10 @@ In these steps, we are targeting a Debian-like system on `x86_64` architecture. 
    You can use the environment variable `FALCOCTL_DRIVER_REPOS` to override the default repository URL for prebuilt drivers. The URL must not have a trailing slash, i.e., `https://myhost.mydomain.com` or, if the server has a subdirectory structure, `https://myhost.mydomain.com/drivers`. The drivers must be hosted with the following structure:
 
    ```shell
-   /${driver_version}/${arch}/falco_${target}_${kernelrelease}_${kernelversion}.[ko|o]
+   /${driver_version}/${arch}/falco_${target}_${kernelrelease}_${kernelversion}.ko
    ```
 
-   where `ko` and `o` stand for Kernel module and `eBPF` probe, respectively. This is an example:
+   where `ko` stands for Kernel module. This is an example:
 
    ```text
    /7.0.0+driver/x86_64/falco_amazonlinux2022_5.10.75-82.359.amzn2022.x86_64_1.ko
@@ -93,11 +89,9 @@ The Falco configuration file is located at `/etc/falco/falco.yaml`. You can edit
 
 Since Falco 0.38.0, a new config key, `config_files`, allows the user to load additional configuration files to override main config entries; it allows users to keep local customization between Falco upgrades. Its default value points to a new folder, `/etc/falco/config.d/`, that gets installed by Falco and will be processed to look for local configuration files.
 
-You can also override the default configuration by passing options to the `falco` binary. For example, to force the eBPF probe or the kernel module:
+You can also override the default configuration by passing options to the `falco` binary. For example, to force the kernel module:
 
 ```shell
-# Force eBPF probe
-falco -o engine.kind=ebpf
 # Force kernel module
 falco -o engine.kind=kmod
 ```
@@ -118,12 +112,6 @@ If you are using the {{< glossary_tooltip text="Kernel Module" term_id="kernel-m
 
 ```shell
 rmmod falco
-```
-
-When utilizing the {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} driver, although not strictly required, you can remove the corresponding previous object files:
-
-```shell
-rm /root/.falco/*.o
 ```
 
 With {{< glossary_tooltip text="Modern eBPF" term_id="modern-ebpf-probe" >}}, there is no requirement when updating Falco, as the driver is bundled within the Falco binary.

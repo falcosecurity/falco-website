@@ -36,7 +36,7 @@ apt update && apt install git cmake clang build-essential linux-tools-common lin
 
 ```bash
 pacman -S git cmake make gcc wget
-pacman -S zlib jq yaml-cpp openssl curl c-ares protobuf grpc libyaml bpf
+pacman -S zlib jq yaml-cpp openssl curl c-ares libyaml bpf
 ```
 
 You'll also need kernel headers for building and making binaries properly.
@@ -205,68 +205,6 @@ make driver
 {{< /tab >}}}
 {{< /tabs >}}
 
-4. Build eBPF driver (deprecated)
-
-{{< tabs name="eBPFdriver" >}}
-{{% tab name="CentOS / RHEL " %}}
-
-If you do not want to use the kernel module driver you can, alternatively, build the eBPF driver as follows.
-
-In the build directory:
-
-```bash
-dnf install clang llvm
-cmake -DBUILD_BPF=ON ..
-make bpf
-```
-
-{{< /tab >}}}
-
-{{% tab name="Debian/ Ubuntu" %}}
-
-If you do not want to use the kernel module driver you can, alternatively, build the eBPF driver as follows.
-
-In the build directory:
-
-```bash
-apt install llvm clang
-cmake -DBUILD_BPF=ON ..
-make bpf
-```
-
-{{< /tab >}}}
-
-{{% tab name="Arch Linux" %}}
-
-If you do not want to use the kernel module driver you can, alternatively, build the eBPF driver as follows.
-
-In the build directory:
-
-```bash
-pacman -S llvm clang
-cmake -DBUILD_BPF=ON ..
-make bpf
-```
-
-{{< /tab >}}}
-{{% tab name="Alpine" %}}
-NO STEP
-{{< /tab >}}}
-
-{{% tab name="openSUSE" %}}
-If you do not want to use the kernel module driver you can, alternatively, build the eBPF driver as follows.
-
-In the build directory:
-
-```bash
-zypper -n install clang llvm
-cmake -DBUILD_BPF=ON ..
-make bpf
-```
-
-{{< /tab >}}}
-{{< /tabs >}}
-
 ## Dependencies
 
 By default Falco build bundles **most of** its runtime dependencies **dynamically**.
@@ -331,7 +269,7 @@ Do the build folder and cmake setup, then:
 make sinsp
 ```
 
-#### Build the eBPF probe / kernel driver only
+#### Build the kernel driver only
 
 Do the build folder and cmake setup, then:
 
@@ -341,11 +279,10 @@ make driver
 
 #### Build results
 
-Once Falco is built, the three interesting things that you will find in your `build` folder are:
+Once Falco is built, the two interesting things that you will find in your `build` folder are:
 
 - `userspace/falco/falco`: the actual Falco binary
 - `driver/src/falco.ko`: the Falco kernel driver
-- `driver/bpf/falco.o`: if you built Falco with [eBPF support](#enable-ebpf-support)
 
 If you'd like to build a debug version, run cmake as `cmake -DCMAKE_BUILD_TYPE=Debug ..` instead, see the [CMake Options](#cmake-options) section for further customizations.
 
@@ -408,18 +345,6 @@ Optionally the user can specify the version he wants Falco to have. Eg.,
 When not explicitly specifying it the build system will compute the `FALCO_VERSION` value from the git history.
 
 In case the current git revision has a git tag, the Falco version will be equal to it (without the leading "v" character). Otherwise the Falco version will be in the form `0.<commit hash>[.dirty]`.
-
-#### Enable eBPF support
-
-```
--DBUILD_BPF=True
-```
-
-When enabling this you will be able to make the `bpf` target after:
-
-```bash
-make bpf
-```
 
 ## Load latest falco kernel module
 

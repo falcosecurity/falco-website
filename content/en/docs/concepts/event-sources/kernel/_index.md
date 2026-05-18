@@ -16,13 +16,12 @@ Falco uses different instrumentations to analyze the system workload and pass se
 There are several supported drivers:
 
 - Modern eBPF probe *(default)*
-- Legacy eBPF probe (deprecated)
 - Kernel module
 
-|             | Kernel module | Legacy eBPF probe (deprecated) | Modern eBPF probe                                                    |
-| ----------- |---------------|--------------------------------| -------------------------------------------------------------------- |
-| **x86_64**  | >= 3.10       | >= 4.14                        | [Minimal set of features](/docs/concepts/event-sources/kernel/#requirements) |
-| **aarch64** | >= 3.10       | >= 4.17                        | [Minimal set of features](/docs/concepts/event-sources/kernel/#requirements) |
+|             | Kernel module | Modern eBPF probe                                                    |
+| ----------- |---------------| -------------------------------------------------------------------- |
+| **x86_64**  | >= 3.10       | [Minimal set of features](/docs/concepts/event-sources/kernel/#requirements) |
+| **aarch64** | >= 3.10       | [Minimal set of features](/docs/concepts/event-sources/kernel/#requirements) |
 
 ## Kernel module
 
@@ -95,41 +94,3 @@ The only condition needed is a kernel version that supports these capabilities. 
 
 > **Please note**: we will try to do our best to keep this as the minimum required set but due to [some issues with CO-RE relocations](https://lore.kernel.org/bpf/CAGQdkDvYU_e=_NX+6DRkL_-TeH3p+QtsdZwHkmH0w3Fuzw0C4w@mail.gmail.com/T/#u) it is possible that this changes in the future.
 
-## Legacy eBPF probe
-
-{{% pageinfo color=warning %}}
-
-The Legacy eBPF probe has been deprecated in Falco `0.43.0` and will be removed in a future release. Until removal and
-since Falco `0.43.0`, using it will result in a warning informing the user about the deprecation. Users are encouraged
-to switch to another engine, such as the modern eBPF probe, as the usage will result in an error after the removal.
-
-{{% /pageinfo %}}
-
-The legacy {{< glossary_tooltip text="eBPF probe" term_id="ebpf-probe" >}} is an alternative source to the ones described above, leveraging greater compatibility than the modern eBPF one, since it requires older kernel versions.
-
-To install the eBPF probe, please refer to the [installation](/docs/getting-started/installation/#install-driver) page.
-
-To enable the eBPF support in Falco set the `engine.kind` configuration key to `ebpf` and eventually customize `engine.ebpf.probe` to the path where the eBPF probe resides; the default path is the location used by `falcoctl driver` tool to install the eBPF probe, ie: `${HOME}/.falco/falco-bpf.o`, where `${HOME}` will expand to the home dir of the user running Falco.
-
-### Least privileged mode
-
-The minimal set of capabilities required by Falco to run the legacy eBPF probe is the following:
-
-- `CAP_SYS_ADMIN`
-- `CAP_SYS_RESOURCE`
-- `CAP_SYS_PTRACE`
-
-The mentioned capabilities require no further explanation since they were already discussed in detail in the modern eBPF probe section. Moreover, for legacy eBPF probe the `kernel.perf_event_paranoid` sysctl value must also be double checked: reading the [manual](https://linuxsecurity.expert/kb/sysctl/kernel_perf_event_paranoid/) it is stated that `perf_event_paranoid` influences only the behavior of unprivileged users, but under the hood, some distributions like Debian or Ubuntu introduce additional `perf_event_paranoid` levels. Consider [`Ubuntu`](https://kernel.ubuntu.com/git/ubuntu-stable/ubuntu-stable-jammy.git/tree/kernel/events/core.c#n11991) as an example:
-
-```c
-if (perf_paranoid_any() && !capable(CAP_SYS_ADMIN))
-  return -EACCES;
-
-// where perf_paranoid_any is defined as:
-static inline bool perf_paranoid_any(void) {
-  return sysctl_perf_event_paranoid > 2;
-}
-```
-
-As you can notice, when your `kernel.perf_event_paranoid` is `>2` the capability `CAP_PERFMON` won't suffice, you would still need `CAP_SYS_ADMIN`.
-So before disabling `CAP_SYS_ADMIN` check your `perf_event_paranoid` value with `sysctl kernel.perf_event_paranoid` and make sure their values are compatible with your distribution enforcement.

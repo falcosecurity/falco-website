@@ -58,7 +58,6 @@ Alerts are configurable downstream actions that can be as simple as logging to `
 - Syslog
 - A spawned program
 - A HTTP[s] end point
-- A client through the gRPC API (deprecated)
 
 ## What are the Components of Falco?
 
@@ -71,7 +70,6 @@ Falco is composed of several main components:
  - Driver - is a software that adheres to the Falco driver specification and sends a stream of kernel events. Currently, Falco supports the following drivers:
 
     - (Default) Modern eBPF probe (CO-RE paradigm and more)
-    - Legacy eBPF probe built (deprecated)
     - Kernel module
 
     For more information, see [Falco Event Sources](/docs/concepts/event-sources).
