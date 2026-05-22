@@ -1,4 +1,4 @@
-The events below are valid for Falco *Schema Version*: 4.1.0
+The events below are valid for Falco *Schema Version*: 4.3.0
 ## Syscall events
 
 Default | Dir | Name | Params 
@@ -8,7 +8,7 @@ Yes | `<` | `open` | FD **fd**, FSPATH **name**, FLAGS32 **flags**: *O_LARGEFILE
 Yes | `<` | `close` | ERRNO **res**, FD **fd**
 No | `<` | `read` | ERRNO **res**, BYTEBUF **data**, FD **fd**, UINT32 **size**
 No | `<` | `write` | ERRNO **res**, BYTEBUF **data**, FD **fd**, UINT32 **size**
-Yes | `<` | `socket` | FD **fd**, ENUMFLAGS32 **domain**: *AF_NFC*, *AF_ALG*, *AF_CAIF*, *AF_IEEE802154*, *AF_PHONET*, *AF_ISDN*, *AF_RXRPC*, *AF_IUCV*, *AF_BLUETOOTH*, *AF_TIPC*, *AF_CAN*, *AF_LLC*, *AF_WANPIPE*, *AF_PPPOX*, *AF_IRDA*, *AF_SNA*, *AF_RDS*, *AF_ATMSVC*, *AF_ECONET*, *AF_ASH*, *AF_PACKET*, *AF_ROUTE*, *AF_NETLINK*, *AF_KEY*, *AF_SECURITY*, *AF_NETBEUI*, *AF_DECnet*, *AF_ROSE*, *AF_INET6*, *AF_X25*, *AF_ATMPVC*, *AF_BRIDGE*, *AF_NETROM*, *AF_APPLETALK*, *AF_IPX*, *AF_AX25*, *AF_INET*, *AF_LOCAL*, *AF_UNIX*, *AF_UNSPEC*, UINT32 **type**, UINT32 **proto**
+Yes | `<` | `socket` | FD **fd**, ENUMFLAGS32 **domain**: *AF_NFC*, *AF_ALG*, *AF_CAIF*, *AF_IEEE802154*, *AF_PHONET*, *AF_ISDN*, *AF_RXRPC*, *AF_IUCV*, *AF_BLUETOOTH*, *AF_TIPC*, *AF_CAN*, *AF_LLC*, *AF_WANPIPE*, *AF_PPPOX*, *AF_IRDA*, *AF_SNA*, *AF_RDS*, *AF_ATMSVC*, *AF_ECONET*, *AF_ASH*, *AF_PACKET*, *AF_ROUTE*, *AF_NETLINK*, *AF_KEY*, *AF_SECURITY*, *AF_NETBEUI*, *AF_DECnet*, *AF_ROSE*, *AF_INET6*, *AF_X25*, *AF_ATMPVC*, *AF_BRIDGE*, *AF_NETROM*, *AF_APPLETALK*, *AF_IPX*, *AF_AX25*, *AF_INET*, *AF_LOCAL*, *AF_UNIX*, *AF_UNSPEC*, UINT32 **type**, UINT32 **proto**, FLAGS32 **flags**: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*, *O_F_CREATED*, *FD_UPPER_LAYER*, *FD_LOWER_LAYER*
 Yes | `<` | `bind` | ERRNO **res**, SOCKADDR **addr**, FD **fd**
 Yes | `>` | `connect` | FD **fd**, SOCKADDR **addr**
 Yes | `<` | `connect` | ERRNO **res**, SOCKTUPLE **tuple**, FD **fd**, SOCKADDR **addr**
@@ -18,8 +18,8 @@ Yes | `<` | `sendto` | ERRNO **res**, BYTEBUF **data**, FD **fd**, UINT32 **size
 No | `<` | `recv` | ERRNO **res**, BYTEBUF **data**, FD **fd**, UINT32 **size**, SOCKTUPLE **tuple**
 Yes | `<` | `recvfrom` | ERRNO **res**, BYTEBUF **data**, SOCKTUPLE **tuple**, FD **fd**, UINT32 **size**
 Yes | `<` | `shutdown` | ERRNO **res**, FD **fd**, ENUMFLAGS8 **how**: *SHUT_UNKNOWN*, *SHUT_RDWR*, *SHUT_WR*, *SHUT_RD*
-Yes | `<` | `getsockname` |
-Yes | `<` | `getpeername` |
+Yes | `<` | `getsockname` | 
+Yes | `<` | `getpeername` | 
 Yes | `<` | `socketpair` | ERRNO **res**, FD **fd1**, FD **fd2**, UINT64 **source**, UINT64 **peer**, ENUMFLAGS32 **domain**: *AF_NFC*, *AF_ALG*, *AF_CAIF*, *AF_IEEE802154*, *AF_PHONET*, *AF_ISDN*, *AF_RXRPC*, *AF_IUCV*, *AF_BLUETOOTH*, *AF_TIPC*, *AF_CAN*, *AF_LLC*, *AF_WANPIPE*, *AF_PPPOX*, *AF_IRDA*, *AF_SNA*, *AF_RDS*, *AF_ATMSVC*, *AF_ECONET*, *AF_ASH*, *AF_PACKET*, *AF_ROUTE*, *AF_NETLINK*, *AF_KEY*, *AF_SECURITY*, *AF_NETBEUI*, *AF_DECnet*, *AF_ROSE*, *AF_INET6*, *AF_X25*, *AF_ATMPVC*, *AF_BRIDGE*, *AF_NETROM*, *AF_APPLETALK*, *AF_IPX*, *AF_AX25*, *AF_INET*, *AF_LOCAL*, *AF_UNIX*, *AF_UNSPEC*, UINT32 **type**, UINT32 **proto**
 Yes | `<` | `setsockopt` | ERRNO **res**, FD **fd**, ENUMFLAGS8 **level**: *SOL_SOCKET*, *SOL_TCP*, *UNKNOWN*, ENUMFLAGS8 **optname**: *SO_COOKIE*, *SO_MEMINFO*, *SO_PEERGROUPS*, *SO_ATTACH_BPF*, *SO_INCOMING_CPU*, *SO_BPF_EXTENSIONS*, *SO_MAX_PACING_RATE*, *SO_BUSY_POLL*, *SO_SELECT_ERR_QUEUE*, *SO_LOCK_FILTER*, *SO_NOFCS*, *SO_PEEK_OFF*, *SO_WIFI_STATUS*, *SO_RXQ_OVFL*, *SO_DOMAIN*, *SO_PROTOCOL*, *SO_TIMESTAMPING*, *SO_MARK*, *SO_TIMESTAMPNS*, *SO_PASSSEC*, *SO_PEERSEC*, *SO_ACCEPTCONN*, *SO_TIMESTAMP*, *SO_PEERNAME*, *SO_DETACH_FILTER*, *SO_ATTACH_FILTER*, *SO_BINDTODEVICE*, *SO_SECURITY_ENCRYPTION_NETWORK*, *SO_SECURITY_ENCRYPTION_TRANSPORT*, *SO_SECURITY_AUTHENTICATION*, *SO_SNDTIMEO*, *SO_RCVTIMEO*, *SO_SNDLOWAT*, *SO_RCVLOWAT*, *SO_PEERCRED*, *SO_PASSCRED*, *SO_REUSEPORT*, *SO_BSDCOMPAT*, *SO_LINGER*, *SO_PRIORITY*, *SO_NO_CHECK*, *SO_OOBINLINE*, *SO_KEEPALIVE*, *SO_RCVBUFFORCE*, *SO_SNDBUFFORCE*, *SO_RCVBUF*, *SO_SNDBUF*, *SO_BROADCAST*, *SO_DONTROUTE*, *SO_ERROR*, *SO_TYPE*, *SO_REUSEADDR*, *SO_DEBUG*, *UNKNOWN*, DYNAMIC **val**, UINT32 **optlen**
 Yes | `<` | `getsockopt` | ERRNO **res**, FD **fd**, ENUMFLAGS8 **level**: *SOL_SOCKET*, *SOL_TCP*, *UNKNOWN*, ENUMFLAGS8 **optname**: *SO_COOKIE*, *SO_MEMINFO*, *SO_PEERGROUPS*, *SO_ATTACH_BPF*, *SO_INCOMING_CPU*, *SO_BPF_EXTENSIONS*, *SO_MAX_PACING_RATE*, *SO_BUSY_POLL*, *SO_SELECT_ERR_QUEUE*, *SO_LOCK_FILTER*, *SO_NOFCS*, *SO_PEEK_OFF*, *SO_WIFI_STATUS*, *SO_RXQ_OVFL*, *SO_DOMAIN*, *SO_PROTOCOL*, *SO_TIMESTAMPING*, *SO_MARK*, *SO_TIMESTAMPNS*, *SO_PASSSEC*, *SO_PEERSEC*, *SO_ACCEPTCONN*, *SO_TIMESTAMP*, *SO_PEERNAME*, *SO_DETACH_FILTER*, *SO_ATTACH_FILTER*, *SO_BINDTODEVICE*, *SO_SECURITY_ENCRYPTION_NETWORK*, *SO_SECURITY_ENCRYPTION_TRANSPORT*, *SO_SECURITY_AUTHENTICATION*, *SO_SNDTIMEO*, *SO_RCVTIMEO*, *SO_SNDLOWAT*, *SO_RCVLOWAT*, *SO_PEERCRED*, *SO_PASSCRED*, *SO_REUSEPORT*, *SO_BSDCOMPAT*, *SO_LINGER*, *SO_PRIORITY*, *SO_NO_CHECK*, *SO_OOBINLINE*, *SO_KEEPALIVE*, *SO_RCVBUFFORCE*, *SO_SNDBUFFORCE*, *SO_RCVBUF*, *SO_SNDBUF*, *SO_BROADCAST*, *SO_DONTROUTE*, *SO_ERROR*, *SO_TYPE*, *SO_REUSEADDR*, *SO_DEBUG*, *UNKNOWN*, DYNAMIC **val**, UINT32 **optlen**
@@ -62,7 +62,7 @@ Yes | `<` | `inotify_init` | FD **res**, UINT8 **flags**
 Yes | `<` | `getrlimit` | ERRNO **res**, INT64 **cur**, INT64 **max**, ENUMFLAGS8 **resource**: *RLIMIT_UNKNOWN*, *RLIMIT_RTTIME*, *RLIMIT_RTPRIO*, *RLIMIT_NICE*, *RLIMIT_MSGQUEUE*, *RLIMIT_SIGPENDING*, *RLIMIT_LOCKS*, *RLIMIT_AS*, *RLIMIT_MEMLOCK*, *RLIMIT_NOFILE*, *RLIMIT_NPROC*, *RLIMIT_RSS*, *RLIMIT_CORE*, *RLIMIT_STACK*, *RLIMIT_DATA*, *RLIMIT_FSIZE*, *RLIMIT_CPU*
 Yes | `<` | `setrlimit` | ERRNO **res**, INT64 **cur**, INT64 **max**, ENUMFLAGS8 **resource**: *RLIMIT_UNKNOWN*, *RLIMIT_RTTIME*, *RLIMIT_RTPRIO*, *RLIMIT_NICE*, *RLIMIT_MSGQUEUE*, *RLIMIT_SIGPENDING*, *RLIMIT_LOCKS*, *RLIMIT_AS*, *RLIMIT_MEMLOCK*, *RLIMIT_NOFILE*, *RLIMIT_NPROC*, *RLIMIT_RSS*, *RLIMIT_CORE*, *RLIMIT_STACK*, *RLIMIT_DATA*, *RLIMIT_FSIZE*, *RLIMIT_CPU*
 Yes | `<` | `prlimit` | ERRNO **res**, INT64 **newcur**, INT64 **newmax**, INT64 **oldcur**, INT64 **oldmax**, INT64 **pid**, ENUMFLAGS8 **resource**: *RLIMIT_UNKNOWN*, *RLIMIT_RTTIME*, *RLIMIT_RTPRIO*, *RLIMIT_NICE*, *RLIMIT_MSGQUEUE*, *RLIMIT_SIGPENDING*, *RLIMIT_LOCKS*, *RLIMIT_AS*, *RLIMIT_MEMLOCK*, *RLIMIT_NOFILE*, *RLIMIT_NPROC*, *RLIMIT_RSS*, *RLIMIT_CORE*, *RLIMIT_STACK*, *RLIMIT_DATA*, *RLIMIT_FSIZE*, *RLIMIT_CPU*
-Yes | `<` | `fcntl` | FD **res**, FD **fd**, ENUMFLAGS8 **cmd**: *F_GETPIPE_SZ*, *F_SETPIPE_SZ*, *F_NOTIFY*, *F_DUPFD_CLOEXEC*, *F_CANCELLK*, *F_GETLEASE*, *F_SETLEASE*, *F_GETOWN_EX*, *F_SETOWN_EX*, *F_SETLKW64*, *F_SETLK64*, *F_GETLK64*, *F_GETSIG*, *F_SETSIG*, *F_GETOWN*, *F_SETOWN*, *F_SETLKW*, *F_SETLK*, *F_GETLK*, *F_SETFL*, *F_GETFL*, *F_SETFD*, *F_GETFD*, *F_DUPFD*, *F_OFD_GETLK*, *F_OFD_SETLK*, *F_OFD_SETLKW*, *UNKNOWN*
+Yes | `<` | `fcntl` | FD **res**, FD **fd**, ENUMFLAGS8 **cmd**: *F_GETPIPE_SZ*, *F_SETPIPE_SZ*, *F_NOTIFY*, *F_DUPFD_CLOEXEC*, *F_CANCELLK*, *F_GETLEASE*, *F_SETLEASE*, *F_GETOWN_EX*, *F_SETOWN_EX*, *F_SETLKW64*, *F_SETLK64*, *F_GETLK64*, *F_GETSIG*, *F_SETSIG*, *F_GETOWN*, *F_SETOWN*, *F_SETLKW*, *F_SETLK*, *F_GETLK*, *F_SETFL*, *F_GETFL*, *F_SETFD*, *F_GETFD*, *F_DUPFD*, *F_OFD_GETLK*, *F_OFD_SETLK*, *F_OFD_SETLKW*, *UNKNOWN*, UINT64 **arg**
 Yes | `<` | `brk` | UINT64 **res**, UINT32 **vm_size**, UINT32 **vm_rss**, UINT32 **vm_swap**, UINT64 **addr**
 Yes | `<` | `mmap` | ERRNO **res**, UINT32 **vm_size**, UINT32 **vm_rss**, UINT32 **vm_swap**, UINT64 **addr**, UINT64 **length**, FLAGS32 **prot**: *PROT_READ*, *PROT_WRITE*, *PROT_EXEC*, *PROT_SEM*, *PROT_GROWSDOWN*, *PROT_GROWSUP*, *PROT_SAO*, *PROT_NONE*, FLAGS32 **flags**: *MAP_SHARED*, *MAP_PRIVATE*, *MAP_FIXED*, *MAP_ANONYMOUS*, *MAP_32BIT*, *MAP_RENAME*, *MAP_NORESERVE*, *MAP_POPULATE*, *MAP_NONBLOCK*, *MAP_GROWSDOWN*, *MAP_DENYWRITE*, *MAP_EXECUTABLE*, *MAP_INHERIT*, *MAP_FILE*, *MAP_LOCKED*, FD **fd**, UINT64 **offset**
 Yes | `<` | `mmap2` | ERRNO **res**, UINT32 **vm_size**, UINT32 **vm_rss**, UINT32 **vm_swap**, UINT64 **addr**, UINT64 **length**, FLAGS32 **prot**: *PROT_READ*, *PROT_WRITE*, *PROT_EXEC*, *PROT_SEM*, *PROT_GROWSDOWN*, *PROT_GROWSUP*, *PROT_SAO*, *PROT_NONE*, FLAGS32 **flags**: *MAP_SHARED*, *MAP_PRIVATE*, *MAP_FIXED*, *MAP_ANONYMOUS*, *MAP_32BIT*, *MAP_RENAME*, *MAP_NORESERVE*, *MAP_POPULATE*, *MAP_NONBLOCK*, *MAP_GROWSDOWN*, *MAP_DENYWRITE*, *MAP_EXECUTABLE*, *MAP_INHERIT*, *MAP_FILE*, *MAP_LOCKED*, FD **fd**, UINT64 **pgoffset**
@@ -168,6 +168,8 @@ Yes | `<` | `process_vm_writev` | INT64 **res**, PID **pid**, BYTEBUF **data**
 Yes | `<` | `delete_module` | ERRNO **res**, CHARBUF **name**, FLAGS32 **flags**: *O_NONBLOCK*, *O_TRUNC*
 Yes | `<` | `setreuid` | ERRNO **res**, UID **ruid**, UID **euid**
 Yes | `<` | `setregid` | ERRNO **res**, UID **rgid**, UID **egid**
+Yes | `<` | `close_range` | ERRNO **res**, UINT32 **first**, UINT32 **last**, FLAGS32 **flags**: *CLOSE_RANGE_UNSHARE*, *CLOSE_RANGE_CLOEXEC*
+Yes | `<` | `keyctl` | ERRNO **res**, ENUMFLAGS32 **operation**: *KEYCTL_GET_KEYRING_ID*, *KEYCTL_JOIN_SESSION_KEYRING*, *KEYCTL_UPDATE*, *KEYCTL_REVOKE*, *KEYCTL_CHOWN*, *KEYCTL_SETPERM*, *KEYCTL_DESCRIBE*, *KEYCTL_CLEAR*, *KEYCTL_LINK*, *KEYCTL_UNLINK*, *KEYCTL_SEARCH*, *KEYCTL_READ*, *KEYCTL_INSTANTIATE*, *KEYCTL_NEGATE*, *KEYCTL_SET_REQKEY_KEYRING*, *KEYCTL_SET_TIMEOUT*, *KEYCTL_ASSUME_AUTHORITY*, *KEYCTL_GET_SECURITY*, *KEYCTL_SESSION_TO_PARENT*, *KEYCTL_REJECT*, *KEYCTL_INSTANTIATE_IOV*, *KEYCTL_INVALIDATE*, *KEYCTL_GET_PERSISTENT*, *KEYCTL_DH_COMPUTE*, *KEYCTL_PKEY_QUERY*, *KEYCTL_PKEY_ENCRYPT*, *KEYCTL_PKEY_DECRYPT*, *KEYCTL_PKEY_SIGN*, *KEYCTL_PKEY_VERIFY*, *KEYCTL_RESTRICT_KEYRING*, *KEYCTL_MOVE*, *KEYCTL_CAPABILITIES*, *KEYCTL_WATCH_KEY*, DYNAMIC **arg2**, DYNAMIC **arg3**, DYNAMIC **arg4**, DYNAMIC **arg5**
 Yes | `>` | `adjtimex` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `adjtimex` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `>` | `exit` | SYSCALLID **ID**, UINT16 **nativeID**
@@ -378,6 +380,10 @@ Yes | `>` | `ftruncate` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `ftruncate` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `>` | `pkey_free` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `pkey_free` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `>` | `io_pgetevents` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `io_pgetevents` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `>` | `listxattrat` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `listxattrat` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `>` | `sched_rr_get_interval` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `sched_rr_get_interval` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `>` | `open_tree` | SYSCALLID **ID**, UINT16 **nativeID**
@@ -474,8 +480,6 @@ Yes | `>` | `signal` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `signal` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `>` | `mq_open` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `mq_open` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `>` | `keyctl` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `keyctl` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `>` | `ioprio_set` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `ioprio_set` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `>` | `landlock_add_rule` | SYSCALLID **ID**, UINT16 **nativeID**
@@ -632,10 +636,6 @@ Yes | `>` | `statx` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `statx` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `>` | `getpriority` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `getpriority` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `>` | `io_pgetevents` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `io_pgetevents` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `>` | `listxattrat` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `listxattrat` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `>` | `set_mempolicy_home_node` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `set_mempolicy_home_node` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `>` | `readahead` | SYSCALLID **ID**, UINT16 **nativeID**
@@ -652,8 +652,6 @@ Yes | `>` | `membarrier` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `membarrier` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `>` | `pciconfig_iobase` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `pciconfig_iobase` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `>` | `close_range` | SYSCALLID **ID**, UINT16 **nativeID**
-Yes | `<` | `close_range` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `>` | `fanotify_mark` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `fanotify_mark` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `>` | `open_tree_attr` | SYSCALLID **ID**, UINT16 **nativeID**
@@ -708,9 +706,14 @@ Yes | `>` | `setxattrat` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `setxattrat` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `>` | `file_getattr` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `file_getattr` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `>` | `rseq_slice_yield` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `rseq_slice_yield` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `>` | `file_setattr` | SYSCALLID **ID**, UINT16 **nativeID**
 Yes | `<` | `file_setattr` | SYSCALLID **ID**, UINT16 **nativeID**
-
+Yes | `>` | `listns` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `listns` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `>` | `uprobe` | SYSCALLID **ID**, UINT16 **nativeID**
+Yes | `<` | `uprobe` | SYSCALLID **ID**, UINT16 **nativeID**
 
 ## Tracepoint events
 
@@ -721,13 +724,11 @@ Yes | `>` | `procexit` | ERRNO **status**, ERRNO **ret**, SIGTYPE **sig**, UINT8
 Yes | `>` | `signaldeliver` | PID **spid**, PID **dpid**, SIGTYPE **sig**
 Yes | `>` | `page_fault` | UINT64 **addr**, UINT64 **ip**, FLAGS32 **error**: *PROTECTION_VIOLATION*, *PAGE_NOT_PRESENT*, *WRITE_ACCESS*, *READ_ACCESS*, *USER_FAULT*, *SUPERVISOR_FAULT*, *RESERVED_PAGE*, *INSTRUCTION_FETCH*
 
-
 ## Plugin events
 
 Default | Dir | Name | Params 
 :-------|:----|:-----|:-----
 Yes | `>` | `pluginevent` | UINT32 **plugin_id**, BYTEBUF **event_data**
-
 
 ## Metaevents
 
@@ -746,3 +747,4 @@ Yes | `>` | `userdeleted` | UINT32 **uid**, UINT32 **gid**, CHARBUF **name**, CH
 Yes | `>` | `groupadded` | UINT32 **gid**, CHARBUF **name**, CHARBUF **container_id**
 Yes | `>` | `groupdeleted` | UINT32 **gid**, CHARBUF **name**, CHARBUF **container_id**
 Yes | `>` | `asyncevent` | UINT32 **plugin_id**, CHARBUF **name**, BYTEBUF **data**
+
