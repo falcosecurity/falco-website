@@ -86,5 +86,5 @@ The following instructions assume **`v0.X.Y` is the new version** and **v0.x.y**
 
 Once the old website has been archived, any change to pages that should be updated for new versions can be merged.
 At least two changes must be made at every release. Using the new Falco binary or container:
-- run `falco --list-events --markdown > ./content/en/docs/reference/rules/supported-events/supported-events.md`
-- run `falco --list=syscall --markdown  | sed -E 's/## Field Class/### Field Class/g' | awk '!/^Event Sources: syscall\w*/' | awk '/Field Class: evt/{c++;if(c==2){sub("evt","evt (for system calls)");c=0}}1' > ./content/en/docs/reference/rules/supported-fields/supported-fields.md`
+- run `falco --list-events --format markdown > ./content/en/docs/reference/rules/supported-events/supported-events.md`
+- run `falco --list=syscall --format markdown  | sed -E 's/## Field Class/### Field Class/g' | awk '!/^Event Sources: syscall\w*/' | awk '/Field Class: evt/{c++;if(c==2){sub("evt","evt (for system calls)");c=0}}1' > ./content/en/docs/reference/rules/supported-fields/supported-fields.md`
