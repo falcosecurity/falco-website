@@ -32,22 +32,26 @@ The operator uses **five Custom Resource Definitions (CRDs)** across two API gro
 
 - Kubernetes 1.29+ (native sidecar support required)
 - `kubectl` installed and configured
+- `helm` installed and configured
 - Cluster admin privileges (for CRD and ClusterRole installation)
 
 ## Install the Operator
 
-Install the Falco Operator with a single command:
+Add the Falco Helm charts repository:
 
 ```shell
-VERSION=latest
-if [ "$VERSION" = "latest" ]; then
-  kubectl apply --server-side -f https://github.com/falcosecurity/falco-operator/releases/latest/download/install.yaml
-else
-  kubectl apply --server-side -f https://github.com/falcosecurity/falco-operator/releases/download/${VERSION}/install.yaml
-fi
+helm repo add falcosecurity https://falcosecurity.github.io/charts
+helm repo update
 ```
 
-This creates:
+Install the Falco Operator:
+
+```shell
+helm install falco-operator falcosecurity/falco-operator --namespace falco-operator --create-namespace
+```
+
+The chart creates:
+
 - 5 CRDs
 - The `falco-operator` namespace
 - A ServiceAccount, ClusterRole, and ClusterRoleBinding
@@ -59,6 +63,22 @@ Verify the operator is running:
 kubectl get pods -n falco-operator
 kubectl wait pods --for=condition=Ready --all -n falco-operator
 ```
+
+<details>
+<summary>Alternative: install with YAML manifest</summary>
+
+```shell
+kubectl create namespace falco-operator
+
+VERSION=latest
+if [ "$VERSION" = "latest" ]; then
+  kubectl apply --server-side -f https://github.com/falcosecurity/falco-operator/releases/latest/download/install.yaml
+else
+  kubectl apply --server-side -f https://github.com/falcosecurity/falco-operator/releases/download/${VERSION}/install.yaml
+fi
+```
+
+</details>
 
 ## Full Stack Quickstart
 
@@ -333,7 +353,42 @@ spec:
 
 ## Uninstall
 
-Remove resources in the correct order, artifacts first (so the sidecar can clean up finalizers), then instances, then the operator:
+Remove resources in the correct order, artifacts first (so the sidecar can clean up finalizers), then instances, then the operator release:
+
+```shell
+# 1. Remove artifact resources first
+kubectl delete rulesfiles --all --all-namespaces
+kubectl delete plugins --all --all-namespaces
+kubectl delete configs --all --all-namespaces
+
+# 2. Remove instance resources
+kubectl delete components --all --all-namespaces
+kubectl delete falco --all --all-namespaces
+
+# 3. Uninstall the Helm release
+helm uninstall falco-operator --namespace falco-operator
+
+# 4. Remove the operator namespace
+kubectl delete namespace falco-operator
+```
+
+{{% pageinfo color="warning" %}}
+Deleting Falco instances before artifacts will terminate the Artifact Operator sidecar, leaving artifact finalizers unresolved. Always delete artifact resources (`Rulesfile`, `Plugin`, `Config`) before Falco instances.
+{{% /pageinfo %}}
+
+Helm does not delete CRDs installed from the chart `crds/` directory. If you want to fully remove the operator API surface from the cluster, delete the CRDs manually after `helm uninstall`:
+
+```shell
+kubectl delete crd \
+  falcos.instance.falcosecurity.dev \
+  components.instance.falcosecurity.dev \
+  configs.artifact.falcosecurity.dev \
+  plugins.artifact.falcosecurity.dev \
+  rulesfiles.artifact.falcosecurity.dev
+```
+
+<details>
+<summary>Alternative: uninstall YAML manifest</summary>
 
 ```shell
 # 1. Remove artifact resources first
@@ -347,11 +402,12 @@ kubectl delete falco --all --all-namespaces
 
 # 3. Remove the operator and CRDs
 kubectl delete -f https://github.com/falcosecurity/falco-operator/releases/latest/download/install.yaml
+
+# 4. Remove the operator namespace
+kubectl delete namespace falco-operator
 ```
 
-{{% pageinfo color="warning" %}}
-Deleting Falco instances before artifacts will terminate the Artifact Operator sidecar, leaving artifact finalizers unresolved. Always delete artifact resources (`Rulesfile`, `Plugin`, `Config`) before Falco instances.
-{{% /pageinfo %}}
+</details>
 
 ## Learn More
 
