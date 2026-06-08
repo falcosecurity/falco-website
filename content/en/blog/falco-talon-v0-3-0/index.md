@@ -16,7 +16,7 @@ Three updates in a row, after [Falco](https://falco.org/blog/falco-0-40-0/) and 
 
 The key feature this release brings is the new actionner `kubernetes:sysdig`. For those who are not familiar with [sysdig](https://github.com/draios/sysdig), it's a CLI tool that allows to capture and record the syscalls, like `tcpdump` does for the network packets. Old brother of Falco, they share the same libs and filters.
 
-With this new integration, when a suspicious event occurs in a pod, Talon triggers a capture and then exports the created artifact to AWS S3 or Minio. You can configure the `duration` and the `amount of bytes` captured for each syscall. Check out the [docs](https://docs.falco-talon.org/docs/actionners/list/#kubernetessysdig) to discover more settings.
+With this new integration, when a suspicious event occurs in a pod, Talon triggers a capture and then exports the created artifact to AWS S3 or Minio. You can configure the `duration` and the `amount of bytes` captured for each syscall. Check out the [docs](https://falco-talon.github.io/docs/actionners/list/#kubernetessysdig) to discover more settings.
 
 See this example rule:
 
@@ -59,7 +59,7 @@ You can also explore the captures with [Stratoshark](https://stratoshark.org/), 
 
 ## Try it! 🏎️
 
-In case you want to try out this **Falco Talon 0.3.0**, you can install the Helm chart following the instructions on the [`documentation`](https://docs.falco-talon.org/docs/installation_usage/helm/)
+In case you want to try out this **Falco Talon 0.3.0**, you can install the Helm chart following the instructions on the [`documentation`](https://falco-talon.github.io/docs/installation_usage/helm/)
 
 ## Let's meet 🤝
 

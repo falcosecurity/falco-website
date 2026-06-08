@@ -168,7 +168,7 @@ The available `actionners` are:
 - `calico:networkpolicy`
 - `cilium:networkpolicy`
 
-To know more about what the `actionners` do, what parameters they require, you can read on [docs/actionners](https://docs.falco-talon.org/docs/actionners/list/).
+To know more about what the `actionners` do, what parameters they require, you can read on [docs/actionners](https://falco-talon.github.io/docs/actionners/list/).
 
 {{% pageinfo color="info" %}}
 You can notice all `actionners` names are composed of 2 elements `x:y`, the first element is the `category` of the actionner. All `actionners` in the same category share the same client, it avoid to have multi inits and instances.
@@ -184,7 +184,7 @@ Some `actionners` require an `output`, an `output` is a target for the artifact 
 - `aws:s3`
 - `minio:s3`
 
-The list of the available `outputs` can be found on [docs/outputs](https://docs.falco-talon.org/docs/outputs/list/).
+The list of the available `outputs` can be found on [docs/outputs](https://falco-talon.github.io/docs/outputs/list/).
 
 #### Example
 
@@ -222,7 +222,7 @@ Apart from logs output to `stdout`, some `notifiers` can be used to forward acti
 - `smtp`
 - `webhook`
 
-The list of the available `notifiers` can be found on [docs/notifiers](https://docs.falco-talon.org/docs/notifiers/list/).
+The list of the available `notifiers` can be found on [docs/notifiers](https://falco-talon.github.io/docs/notifiers/list/).
 
 #### Examples
 
@@ -322,7 +322,7 @@ The logs, whatever the component emitting them, keep always the same structure a
 The value of `trace_id` is also used to create the `TraceId` the OTEL Traces, by using a log backend like Loki, it becomes easy to correlate the traces with the logs in the same UI, like Grafana.
 {{% /pageinfo %}}
 
-The CLI contains more features, take a look at them on [docs /installation_usage/usage](https://docs.falco-talon.org/docs/installation_usage/usage/).
+The CLI contains more features, take a look at them on [docs /installation_usage/usage](https://falco-talon.github.io/docs/installation_usage/usage/).
 
 #### Example
 
@@ -350,7 +350,7 @@ Each step is clearly identified by the _tag_ after the log level:
 To keep a consistency, all metrics related to `Falco Talon` itself are prefixed with `falcosecurity_falco_talon_`, it follows the same convention used by Falco for its metrics.
 {{% /pageinfo %}}
 
-For people interested by the metrics in the OTEL format, it's also available, see [docs installation_usage/metrics](https://docs.falco-talon.org/docs/installation_usage/metrics/)
+For people interested by the metrics in the OTEL format, it's also available, see [docs installation_usage/metrics](https://falco-talon.github.io/docs/installation_usage/metrics/)
 
 #### Example
 
@@ -371,7 +371,7 @@ falcosecurity_falco_talon_match_total{event="Unexpected outbound connection dest
 
 We know following logs can be not really convenient, and they may lack of useful informations. You can therefore enable the emits of Traces in the OTEL format. All backends accepting this format can be used to store and visualize them.
 
-To know how to set up the traces, see [docs installation_usage/traces](https://docs.falco-talon.org/docs/installation_usage/traces/).
+To know how to set up the traces, see [docs installation_usage/traces](https://falco-talon.github.io/docs/installation_usage/traces/).
 
 #### Examples
 
@@ -425,5 +425,5 @@ _Thomas_
 To go further:
 
 - GitHub repo of the `Falco Talon` project: [https://github.com/falco-talon/falco-talon](https://github.com/falco-talon/falco-talon)
-- Official docs of `Falco Talon`: [https://docs.falco-talon.org/](https://docs.falco-talon.org/)
+- Official docs of `Falco Talon`: [https://falco-talon.github.io/](https://falco-talon.github.io/)
 - A record of a talk (by Rachid and Thomas) in French to introduce `Falco Talon`: [https://www.youtube.com/watch?v=Mx28fhyKX7Q](https://www.youtube.com/watch?v=Mx28fhyKX7Q)
