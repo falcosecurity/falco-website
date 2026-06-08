@@ -10,7 +10,7 @@ tags: ["security-concept"]
 ---
 
 * Falco Talon Repository: https://github.com/Falco-Talon/falco-talon
-* Falco Talon Documentation: https://docs.falco-talon.org/
+* Falco Talon Documentation: https://falco-talon.github.io/
 
 
 {{% pageinfo color="warning" %}}
@@ -24,7 +24,7 @@ Setting up robust network security in Kubernetes is a challenge that demands bot
 
 Building network policies around IP addresses is notoriously challenging. For instance, threat feeds, which list known malicious IP addresses, are constantly changing. An IP address associated with a malicious entity one week might be reassigned and deemed safe the next. This fluidity necessitates an agile approach to network policy management, integrating solutions like NetworkSets to dynamically update policies based on the latest intelligence. However, the sheer volume of threat intelligence feeds – from Tor IP lists to cryptomining blocklists – complicates this integration, making it a daunting task to maintain accurate network controls.
 
-Here, Falco Talon emerges as a transformative solution. By leveraging Falco's detection capabilities, such as identifying [Outbound Connections to C2 Servers](https://thomas.labarussias.fr/falco-rules-explorer/?hash=0d2e8a0dd3369a030f7acfaab682ad92), Falco Talon can instantly update Kubernetes network policies  to block all egress traffic except allowed CIDR ranges. This is facilitated through the [kubernetes:networkpolicy](https://docs.falco-talon.org/docs/actionners/list/#kubernetesnetworkpolicy) Talon action, demonstrating a seamless integration of dynamic threat detection with network policy enforcement.
+Here, Falco Talon emerges as a transformative solution. By leveraging Falco's detection capabilities, such as identifying [Outbound Connections to C2 Servers](https://thomas.labarussias.fr/falco-rules-explorer/?hash=0d2e8a0dd3369a030f7acfaab682ad92), Falco Talon can instantly update Kubernetes network policies  to block all egress traffic except allowed CIDR ranges. This is facilitated through the [kubernetes:networkpolicy](https://falco-talon.github.io/docs/actionners/list/#kubernetesnetworkpolicy) Talon action, demonstrating a seamless integration of dynamic threat detection with network policy enforcement.
 
 
 ```
@@ -59,7 +59,7 @@ kubectl label pod <pod-name> -n <namespace-name> quarantine=true
 
 This is certainly a cleaner approach than the previous enforced network policy implementation, but the challenge here is the manual process of labeling those suspected workloads, which can be cumbersome and slow in response to emerging threats. How many minutes will it take our security team to enforce this label action, and what happens if this happens over the weekend? 
 
-Falco Talon addresses this gap with its [kubernetes:labelize](https://docs.falco-talon.org/docs/actionners/list/#kuberneteslabelize) response action. Upon detecting a threat, such as the [Detect outbound connections to common miner pool ports](https://thomas.labarussias.fr/falco-rules-explorer/?hash=3f01c102c6d26af968d5eb6b6777085d), Talon can automatically apply a ```quarantine:true``` label to the affected pod, triggering the enforcement of the quarantine network policy in real-time. This capability not only enhances the speed and efficiency of response actions but also underscores the power of integrating dynamic threat detection with network policy enforcement.
+Falco Talon addresses this gap with its [kubernetes:labelize](https://falco-talon.github.io/docs/actionners/list/#kuberneteslabelize) response action. Upon detecting a threat, such as the [Detect outbound connections to common miner pool ports](https://thomas.labarussias.fr/falco-rules-explorer/?hash=3f01c102c6d26af968d5eb6b6777085d), Talon can automatically apply a ```quarantine:true``` label to the affected pod, triggering the enforcement of the quarantine network policy in real-time. This capability not only enhances the speed and efficiency of response actions but also underscores the power of integrating dynamic threat detection with network policy enforcement.
 
 ```
 - action: Quarantine Pod in Network Policy

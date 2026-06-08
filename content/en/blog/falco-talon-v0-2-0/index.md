@@ -38,7 +38,7 @@ Falco Talon 0.2.0 is a minor release that includes new actionners and outputs, a
 
 ## Try it! 🏎️
 
-In case you just want to try out the **Falco Talon 0.2.0**, you can install the helm chart following the instructions on the [`documentation`](https://docs.falco-talon.org/docs/installation_usage/helm/)
+In case you just want to try out the **Falco Talon 0.2.0**, you can install the helm chart following the instructions on the [`documentation`](https://falco-talon.github.io/docs/installation_usage/helm/)
 
 ## Let's meet 🤝
 
