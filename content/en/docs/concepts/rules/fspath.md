@@ -43,7 +43,7 @@ These convert relative paths to absolute paths when needed, using the thread's c
 The fields only work for exit events and only return a value if the syscall succeeds.
 
 The below tables show:
-* the specific syscalls that are are supported
+* the specific syscalls that are supported
 * the specific falco event identifiers are supported. The reason there are multiple event identifiers for the same syscall (e.g. MKDIR vs MKDIR_2) is that libs used to define new events every time we added/modified arguments to the event. Older applications using the older version of libs will use the older event identifier for the syscall name, while newer applications will use the newer event identifier.
 * the specific event fields that are mapped to `fs.path.*` fields
 
@@ -85,7 +85,7 @@ The below tables show:
 
 ### Example Rule Using `fs.path.*` Fields
 
-Here is an example rule that allows monitoring a wide variety of different file related operations below a set of specifed root directories:
+Here is an example rule that allows monitoring a wide variety of different file related operations below a set of specified root directories:
 
 ```
 - list: file_operation_paths

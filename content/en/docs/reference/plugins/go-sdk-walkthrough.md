@@ -77,7 +77,7 @@ type InitSchema interface {
 }
 ```
 
-Plugins with field extraction capability can optionally implement the `sdk.Destroyer` interface. In that case, `Destroy()` will be called when the plugin gets destroyed and can be used to release any allocated resource. they can also also optionally implement the `sdk.InitSchema` interface. In that case, `InitSchema()` will be used to to return a schema describing the data expected to be passed as a configuration during the plugin initialization. This follows the semantics documented for [`get_init_schema`](/docs/reference/plugins/plugin-api-reference/#get-init-schema). Currently, the schema must follow the [JSON Schema specific](https://json-schema.org/), which in Go can also be easily auto-generated with external packages (e.g. [alecthomas/jsonschema](https:/github.com/alecthomas/jsonschema)).
+Plugins with field extraction capability can optionally implement the `sdk.Destroyer` interface. In that case, `Destroy()` will be called when the plugin gets destroyed and can be used to release any allocated resource. They can also optionally implement the `sdk.InitSchema` interface. In that case, `InitSchema()` will be used to return a schema describing the data expected to be passed as a configuration during the plugin initialization. This follows the semantics documented for [`get_init_schema`](/docs/reference/plugins/plugin-api-reference/#get-init-schema). Currently, the schema must follow the [JSON Schema specific](https://json-schema.org/), which in Go can also be easily auto-generated with external packages (e.g. [alecthomas/jsonschema](https://github.com/alecthomas/jsonschema)).
 
 ### Defining a Plugin with Event Sourcing Capability
 
