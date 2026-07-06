@@ -127,7 +127,7 @@ The rule `program_accesses_file` would trigger when `ls`/`cat` either used `open
 
 ```yaml
 - rule: program_accesses_file
-  desc: Yrack whenever a set of programs opens a file
+  desc: Track whenever a set of programs opens a file
   condition: evt.type=open and proc.name in (cat, ls) 
   output: A tracked program opened a file | user=%user.name command=%proc.cmdline file=%fd.name
   priority: INFO
