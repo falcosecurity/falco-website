@@ -12,10 +12,10 @@ created_by:
   other: Created by
 created_by_originally:
   other: Falco was originally created by
-main_copyright_notice:
-  other: The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our <a class="text-white" href="https://www.linuxfoundation.org/trademark-usage">Trademark Usage page</a>.
-privacy_policy:
-  other: <a class="text-white" href="https://www.linuxfoundation.org/privacy">Privacy Policy</a> and <a class="text-white" href="https://www.linuxfoundation.org/terms">Terms of Use</a>.
+footer_copyright_series:
+  other: "Copyright"
+footer_policies_notice:
+  other: "For website terms of use, trademark policy and other project policies, please see"
 cncf_status_statement:
   other: We are a <a href="https://cncf.io/">CNCF</a> graduated Project
 version_banner_title:

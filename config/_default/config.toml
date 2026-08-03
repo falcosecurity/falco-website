@@ -273,7 +273,8 @@ rss_sections = ["blog"]
 
 [params]
 copyright = "The Falco Authors"
-copyright_linux =  "The Linux Foundation ®."
+copyright_linux_series = "Falco a Series of LF Projects, LLC"
+policies_url = "https://lfprojects.org/policies/"
 sysdig = "https://sysdig.com/opensource/"
 time_format_blog = "Monday, January 02, 2006"
 time_format_default = "Jan 2, 2006"
