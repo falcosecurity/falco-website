@@ -367,7 +367,7 @@ insmod driver/falco.ko
 Once Falco is built and the kernel module is loaded, assuming you are in the `build` dir, you can run falco as:
 
 ```bash
-sudo ./userspace/falco/falco -c ../falco.yaml -r ../rules/falco_rules.yaml
+sudo ./userspace/falco/falco -c ./falco.yaml -r ../rules/falco_rules.yaml
 ```
 
 By default, falco logs events to standard error.
