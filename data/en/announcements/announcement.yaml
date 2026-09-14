@@ -6,7 +6,7 @@
 # content: 'Test announcement 1'
 
 index: 2
-startDate: '2026-05-08T00:00:00'
-endDate: '2026-06-08T18:00:00'
+startDate: '2026-09-13T00:00:00'
+endDate: '2026-11-12T18:00:00'
 hideCloseButton: true
-content: '<span><a href="/blog/introducing-prempti/">Introducing Prempti: Falco meets AI coding agents</a></span>'
+content: '<span><a href="https://events.linuxfoundation.org/kubecon-cloudnativecon-north-america/register/?utm_source=falco&utm_medium=ribbon-banner&utm_campaign=KubeCon-CloudNativeCon-NA-2026&utm_content=hero">Join the global cloud native community at KubeCon + CloudNativeCon North America 2026. Register Now!</a></span>'
