@@ -580,6 +580,32 @@ falcosecurity_falco_host_num_cpus_total 8
   
 </details>
 
+### Modern eBPF auxiliary map counters
+
+Since Falco 0.45, `kernel_event_counters_enabled: true` also exposes these counters for the `modern_ebpf` driver. Auxiliary maps hold variable-size events while the probe builds them.
+
+| JSON metric | Meaning |
+| --- | --- |
+| `scap.n_drops_auxmap_reentrancy` | Events dropped because the event being built lost ownership of its auxiliary map segment. |
+| `scap.n_drops_auxmap_reentrancy_tail_call` | The subset of reentrancy drops detected when resuming an event across a tail call. |
+| `scap.n_drops_auxmap_pool_full` | Events dropped because all auxiliary map segments for the current CPU were in use. |
+| `scap.n_auxmap_migrations` | Continuations that recovered their auxiliary map segment from another CPU's pool after migration. This counter does not count drops. |
+
+`scap.n_drops` includes reentrancy and pool-full drops. The tail-call counter is already included in the reentrancy counter, so do not add it again when calculating a total. A recovered migration can still encounter another drop condition later, such as a full ring buffer.
+
+Example of these additional JSON fields for `modern_ebpf` in Falco 0.45:
+
+```json
+{
+  "scap.n_drops_auxmap_reentrancy": 0,
+  "scap.n_drops_auxmap_reentrancy_tail_call": 0,
+  "scap.n_drops_auxmap_pool_full": 0,
+  "scap.n_auxmap_migrations": 0
+}
+```
+
+See [Kernel Events](/docs/concepts/event-sources/kernel/#auxiliary-map-memory) for the auxiliary map memory allocation and [dropped-event troubleshooting](/docs/troubleshooting/dropping/#kernel-side-syscalls-drops-metrics) for guidance on interpreting the counters.
+
 <details>
   <summary> Show Base / Wrapper Fields + Kernel-Side Event Drop + Event Counters Fields
   

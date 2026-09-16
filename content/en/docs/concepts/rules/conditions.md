@@ -45,7 +45,7 @@ Operators | Description
 `in` | Evaluates whether the first set is completely contained in the second set. Example: `(b,c,d) in (a,b,c)` is `FALSE` because `d` is not found in `(a,b,c)`.
 `intersects` | Evaluates whether the first set has at least one element in common with the second set. Example: `(b,c,d) intersects (a,b,c)` is `TRUE` because both sets contain `b` and `c`.
 `pmatch` | Compares a file path against a set of file or directory prefixes. Example: `fd.name pmatch (/tmp/hello)` evaluates to true for `/tmp/hello`, `/tmp/hello/world` but not `/tmp/hello_world`. More details in the [below section](#pmatch-operator).
-`regex` | Checks whether a string field matches a regular expression. The regex engine is [Google RE2](https://github.com/google/re2/wiki/Syntax) configured in POSIX mode, which restricts patterns to POSIX extended (egrep) syntax (backreferences are not supported). Note that `regex` can be considerably slower than simpler string operations. The `regex` operator performs a full match only, not a partial match (i.e., anchored to both the beginning and the end). Example: `fd.name regex '[a-z]*/proc/[0-9]+/cmdline'`.
+`regex` | Checks whether a string field matches a regular expression. The regex engine is [Google RE2](https://github.com/google/re2/wiki/Syntax) configured in POSIX mode, which restricts patterns to POSIX extended (egrep) syntax (backreferences are not supported). Note that `regex` can be considerably slower than simpler string operations. Invalid UTF-8 sequences in the field value are replaced with `U+FFFD` before matching (see [string matching](#string-matching-and-character-encoding)). The `regex` operator performs a full match only, not a partial match (i.e., anchored to both the beginning and the end). Example: `fd.name regex '[a-z]*/proc/[0-9]+/cmdline'`.
 `startswith`, `bstartswith` | Checks if a string starts with a given prefix. The `bstartswith` variant allows byte matching against a raw string of bytes, taking a hexadecimal string as input. For example: `evt.buffer bstartswith 012AB3CC`.
 
 #### `pmatch` operator
@@ -89,6 +89,16 @@ Use a space before and after the modifier. Put the right-hand values in parenthe
 Modifiers compare a single field value with the right-hand list. For list-valued fields, use `in` or `intersects`. An empty right-hand list makes all three modifiers evaluate to false.
 
 With `!=`, each individual comparison tests inequality. To exclude both `bash` and `sh`, use `proc.name != allof (bash, sh)`. Using `!= anyof (bash, sh)` would also match `bash`, since it differs from `sh`.
+
+### String matching and character encoding
+
+Since Falco 0.45 (engine version `0.63.0`), conditions evaluate the original field bytes. String operators can match non-printable characters and invalid UTF-8 sequences. For example, `fd.name contains "\xFF"` matches a filename containing byte `0xFF`, and `fd.name contains "\n"` matches a filename containing a newline. A `glob` wildcard `?` can also match an invalid byte.
+
+The `regex` operator is an exception: it replaces invalid UTF-8 sequences in the field value with the Unicode replacement character `�` (`U+FFFD`) before matching. For example, `fd.name regex "/tmp/bad�"` and `fd.name regex "/tmp/bad."` both match `/tmp/bad` followed by byte `0xFF`. Use a literal replacement character or a suitable regex pattern to match this sanitized input; a raw invalid byte expressed as `\xFF` is not a valid UTF-8 regex pattern.
+
+Use `\xHH` inside a quoted condition string to express a byte with exactly two hexadecimal digits. NUL (`\x00`) is accepted only for byte-buffer fields, such as `evt.buffer contains "\x00"`; other field types reject filter values containing NUL. The `bcontains` and `bstartswith` operators already take hexadecimal digits, so use `evt.buffer bcontains 00` rather than mixing their syntax with `\xHH` escapes. See [Escaping Special Characters](/docs/concepts/rules/special-characters/) for YAML examples.
+
+When upgrading from Falco 0.44 or earlier, review conditions that used non-regex operators to match the replacement character in place of invalid bytes or non-printable characters. Match the original bytes instead. [Alert formatting](/docs/concepts/outputs/formatting/#character-encoding-of-field-values) applies escaping and UTF-8 replacement when producing output, so the displayed value may differ from the bytes used by the condition.
 
 ## Transformers
 
