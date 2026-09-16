@@ -63,7 +63,7 @@ When deploying Falco via Helm, you will use Helm values to pass the Falco config
 If you wish to upgrade Falco to a new version, you need to find the corresponding version in the [Falco Helm Chart repository](https://github.com/falcosecurity/charts/blob/master/charts/falco) (e.g., `4.8.1` is for Falco `0.38.2`) then run:
 
 ```shell
-helm upgrade falco -n falco --version 4.8.1
+helm upgrade falco falcosecurity/falco -n falco --version 4.8.1
 ```
 
 {{% pageinfo color="warning" %}}
