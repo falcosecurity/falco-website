@@ -39,6 +39,7 @@ The following environment variables can be used to customize the installation pr
 
 - `FALCO_FRONTEND`: Set to `noninteractive` to disable the dialog prompts. The default is `dialog`.
 - `FALCO_DRIVER_CHOICE`: Set to `kmod` or `modern_ebpf` to choose a driver; set to `none` to disable service installation. If one of the previous option is selected, the dialog will be skipped too. The default (empty) is automatic selection.
+- `FALCOCTL_DRIVER_VERSION`: Set an explicit driver version for the package transaction. Use it during an upgrade to retain a deliberate pin that equals the outgoing package's default driver version. Otherwise, that value follows the new package default. The selected version must be compatible with Falco.
 - `FALCOCTL_ENABLED`: Set to `no` to disable the automatic rules update provided by `falcoctl`. The default (empty) or any value other than `no` will keep the option enabled.
 
 These environment variables can be used in conjunction with the package manager (as described in the following sections) to customize the installation process as needed.
@@ -176,13 +177,13 @@ sudo apt-get install apt-transport-https
 {{% /pageinfo %}}
 
 {{% pageinfo color="warning" %}}
-**RHEL 8 / UBI 8 users:** Starting from Falco 0.42, you may need to set the `LD_PRELOAD` environment variable due to a glibc compatibility issue:
+**RHEL 8 / UBI 8 users running Falco 0.42 through 0.44.x:** On systems with glibc older than 2.34, the bundled container plugin may fail to load with `undefined symbol: __res_search`. Container plugin 0.7.2 fixes this issue, and Falco 0.45.0 bundles a fixed version. The following workaround is only needed for affected older installations:
 
 ```shell
 LD_PRELOAD=/lib64/libresolv.so.2 falco
 ```
 
-When using systemd, you can add this to your service override or edit the unit file to include `Environment="LD_PRELOAD=/lib64/libresolv.so.2"`.
+When using systemd, add `Environment="LD_PRELOAD=/lib64/libresolv.so.2"` to a service override. After upgrading to Falco 0.45.0 or a container plugin version of 0.7.2 or newer, you can remove this workaround.
 {{% /pageinfo %}}
 
 ### `zypper` (openSUSE) {#install-with-zypper}
@@ -399,6 +400,12 @@ systemctl restart falco
 ```
 
 ## Upgrade {#upgrade}
+
+From Falco 0.45.0, the DEB and RPM packages configure and start the selected Falco service after an upgrade. Driver selection follows the same environment variables and dialog choices as installation. `FALCO_DRIVER_CHOICE=none` skips driver configuration and startup. When `kmod` is selected, the package installs a persistent kernel module and checks that `modprobe` can find the selected version. RPM performs driver installation and service startup in `%posttrans`, after the outgoing package has finished its cleanup.
+
+A configured driver version matching the outgoing Falco binary's default is updated to the incoming package's default. Other driver version pins are retained. To retain a deliberate pin equal to the outgoing default, set `FALCOCTL_DRIVER_VERSION` explicitly in the environment of the upgrade command. Custom pins still require a compatible driver and, for `kmod`, the corresponding driver sources.
+
+The package only removes masks of `falcoctl-artifact-follow.service` that it recorded as package-created. Administrator masks and older masks without an ownership record are preserved. To enable automatic rules updates when such a mask exists, unmask the service explicitly.
 
 ### `apt` (Debian/Ubuntu) {#upgrade-with-apt}
 
