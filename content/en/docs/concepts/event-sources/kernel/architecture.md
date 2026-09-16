@@ -15,7 +15,7 @@ When using the kernel module, the driver will need to be installed and deployed 
 
 Upon connection to its kernel counterpart, libscap will need to negotiate the API Version and Schema Version that the driver recognizes. These versions are expressed with a [semver](https://semver.org/) subset and are [documented in the libs repository](https://github.com/falcosecurity/libs/blob/master/driver/README.VERSION.md).
 * The [API version](https://github.com/falcosecurity/libs/blob/master/driver/README.VERSION.md#api-version-number) refers to the communication mechanism between the kernel and userspace. Every driver has a different communication mechanism which changes between versions. The kernel module may use `ioctl`s and a ring buffer, while the modern eBPF probe can use maps and different APIs depending on the kernel version. Since some drivers can be deployed separately from Falco, at startup libscap will verify if the driver it's connecting to is compatible.
-* The [Schema version](https://github.com/falcosecurity/libs/blob/master/driver/README.VERSION.md#api-version-number) refers to the type of events that the specific driver supports. The [Syscall Events](/docs/reference/rules/supported-events/) documentation page shows the list of fields that are supported for each version of Falco. Every time that list changes the version number is updated as well.
+* The [Schema version](https://github.com/falcosecurity/libs/blob/master/driver/README.VERSION.md#schema-version-number) refers to the type of events that the specific driver supports. The [Syscall Events](/docs/reference/rules/supported-events/) documentation page shows the list of fields that are supported for each version of Falco. Every time that list changes the version number is updated as well.
 
 <div>
   <img style="width: 60%; margin: auto" 
@@ -23,21 +23,13 @@ Upon connection to its kernel counterpart, libscap will need to negotiate the AP
        src="/docs/images/kernel_source_start_capture.png" >
 </div>
 
-When running Falco it is possible to verify the currently compatible version numbers with `falco --version`. For instance, this is the output for Falco 0.35.1:
+Run the following command to inspect the versions supported by your installed Falco binary:
 
+```shell
+falco --version
 ```
-# falco --version
-2023-07-01T16:23:43+0000: Falco version: 0.35.1 (x86_64)
-2023-07-01T16:23:43+0000: Falco initialized with configuration file: /etc/falco/falco.yaml
-Falco version: 0.35.1
-Libs version:  0.11.3
-Plugin API:    3.0.0
-Engine:        17
-Driver:
-  API version:    4.0.0
-  Schema version: 2.0.0
-  Default driver: 5.0.1+driver
-```
+
+The output includes the Falco, libraries, plugin API, and rules engine versions. Under `Driver`, it reports the minimum required API and schema versions and the default driver version. These values describe the binary's driver requirements; they do not identify a separately installed kernel module.
 
 Once Falco is running, a stream of events is returned directly from the kernel. libscap's API allow the data to flow with a consistent format from the kernel to userspace.
 
