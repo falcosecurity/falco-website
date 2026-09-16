@@ -23,8 +23,9 @@ Furthermore, sometimes Linux may not operate exactly as expected. One concrete e
 Check the basics:
 
 - Is the container runtime socket correctly mounted? For Kubernetes, mount with the `HOST_ROOT` prefix: `/host/run/k3s/containerd/containerd.sock`. See [deploy-kubernetes](https://github.com/falcosecurity/deploy-kubernetes/tree/main/kubernetes) example template.
-- Is a custom path specified for the container runtime socket in Kubernetes? If yes, use the `-o container_engines.cri.sockets[]=<socket_path>` command line option when running Falco. The default paths include: `/run/containerd/containerd.sock`, `/run/k3s/containerd/containerd.sock`, `/run/crio/crio.sock`.
-- To expedite lookups, attempt to disable asynchronous CRI API calls by using the `-o container_engines.cri.disable_async=true` command line option when running Falco.
+- Is the `container` plugin loaded? Check that it is listed in `load_plugins` and configured in `plugins` in your Falco configuration.
+- Is a custom path specified for the container runtime socket? Set `engines.cri.sockets` in the container plugin's `init_config`, as shown below. Paths are relative to `HOST_ROOT` when that environment variable is set. The default CRI paths include `/run/containerd/containerd.sock`, `/run/k3s/containerd/containerd.sock`, `/run/crio/crio.sock`, and `/run/host-containerd/containerd.sock`.
+- The old `container_engines.cri` configuration is no longer supported. The container plugin has no equivalent of `container_engines.cri.disable_async`.
 - Falco monitors both host and container processes. If the `container.id` is set to `host`, it indicates that the process is running on the host, and therefore, no container image is associated with it.
 
 {{% pageinfo color=info %}}
@@ -39,17 +40,35 @@ When using containerd as your container runtime, you should configure Falco to u
 - Containerd typically exposes two interfaces on the same socket: the native containerd protocol and the CRI (Container Runtime Interface) protocol
 - The CRI protocol provides richer metadata, including container names
 
-If you are missing `container.name` or other container metadata fields while using containerd, ensure you are using the CRI engine configuration (not the containerd engine) in your Falco setup. For example, configure the container plugin with:
+If you are missing `container.name` or other container metadata fields while using containerd, ensure you are using the CRI engine configuration (not the containerd engine) in your Falco setup. For example, update the `container` entry in `plugins` in your Falco configuration. This example enables CRI only; keep any other plugin entries and `load_plugins` entries that your setup needs:
 
 ```yaml
-engines:
-  cri:
-    enabled: true
-    sockets:
-      - /run/containerd/containerd.sock
-  containerd:
-    enabled: false
+plugins:
+  - name: container
+    library_path: libcontainer.so
+    init_config:
+      engine_timeout: 10
+      engines:
+        cri:
+          enabled: true
+          sockets:
+            - /run/containerd/containerd.sock
+        containerd:
+          enabled: false
+        docker:
+          enabled: false
+        podman:
+          enabled: false
+        lxc:
+          enabled: false
+        libvirt_lxc:
+          enabled: false
+        bpm:
+          enabled: false
+load_plugins: [container]
 ```
+
+`engine_timeout` bounds each connection to a container runtime and the initial listing of its containers. The default is `10` seconds; `0` disables the timeout. An engine that does not answer in time is skipped with a warning for the rest of the run, and its containers have no metadata. Check the plugin warnings and socket connectivity when metadata is missing. If an engine answers but cannot finish inspecting all containers before the timeout, it remains enabled and the unfinished work is retried in the background. Those containers have no metadata until recovery completes.
 
 Carefully read the field description documentation:
 
@@ -77,9 +96,9 @@ Here is an example metrics log snippet highlighting the fields crucial for this 
 
 `falco.n_containers` indicates how many containers are running at a given time, typically less than 100-300 at maximum. `falco.n_missing_container_images` is an updated snapshot of how many containers are internally stored in Falco without a container image at any given time.
 
-To complicate matters, some processes in Kubernetes run in the pod sandbox container, which has no container image in the API responses. In such cases, the `container.id` is the same as the `k8s.pod.sandbox_id`. If the container image is consistently missing throughout the lifetime of the container, it's likely a process in a pod sandbox container in the majority of the cases. However, sandbox containers likely constitute less than 1% of the distinct containers in your overall Falco logs. Note that this comparison will be fully supported by Falco 0.38 and is a work in progress. 
+To complicate matters, some processes in Kubernetes run in the pod sandbox container, which has no container image in the API responses. In such cases, the `container.id` is the same as the `k8s.pod.sandbox_id`. If the container image is consistently missing throughout the lifetime of the container, it's likely a process in a pod sandbox container in the majority of the cases. However, sandbox containers likely constitute less than 1% of the distinct containers in your overall Falco logs.
 
-Additionally, the improvement of the overall efficiency of the container engine, especially for the `-o container_engines.cri.disable_async=true` option, is also a work in progress. A more performant implementation is expected to be available by Falco 0.38. This improvement aims to address missing images observed by adopters and resolve most cases, leaving only some edge cases of race conditions where the lookup hasn't happened yet.
+Container metadata may also be missing when an event arrives before its container lookup has completed.
 
 ## Missing User Names
 
