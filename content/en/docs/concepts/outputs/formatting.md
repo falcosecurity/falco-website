@@ -15,6 +15,14 @@ Adding the same output field to multiple rules by manually editing rule files ca
 - Using the `append_output` configuration option in `falco.yaml` to add output text or fields to a subset of loaded rules
 - Adding an override to a specific rule to replace its output
 
+## Character encoding of field values
+
+Since Falco 0.45, [rule conditions](/docs/concepts/rules/conditions/#string-matching-and-character-encoding) evaluate original field bytes. Falco applies output encoding when constructing the alert: control characters are escaped, and invalid UTF-8 sequences are replaced with the Unicode replacement character `�` (`U+FFFD`). Valid printable UTF-8 remains readable.
+
+Plain text output uses the same JSON string escaping policy as JSON output. For example, a newline appears as the two characters `\n` in the serialized alert, rather than creating another line. Quotes and backslashes are escaped too. A JSON parser decodes those JSON escapes when reading string values; the invalid UTF-8 bytes replaced with `�` cannot be recovered from the alert.
+
+When upgrading from Falco 0.44 or earlier, review downstream parsers that relied on the old sanitization of control characters, or on unescaped quotes and backslashes in plain text alerts. Output encoding does not change the bytes evaluated by the rule condition.
+
 ## Appending Extra Output and Fields with `append_output`
 
 The `append_output` option can be specified in the `falco.yaml` configuration file. You can use it to add extra output to rules specified by source, tag, name, or to all rules unconditionally. The `append_output` section is a list of items that are applied in the order they appear.
