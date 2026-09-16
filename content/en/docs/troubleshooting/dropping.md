@@ -20,7 +20,7 @@ Falco monitors each syscall based on deployed Falco rules. Additionally, Falco r
 
 Falco monitors syscalls by hooking into kernel tracepoints. To transfer events from the kernel to userspace, it uses buffers. For each CPU, Falco allocates separate buffers. If you're using the `modern_ebpf` driver, you can choose to have fewer, larger buffers shared among multiple CPUs  (contention, according to kernel experts, should not be a problem). The buffer size is fixed but can be adjusted in the `buf_size_preset` config. Increasing the size helps, but keep in mind that the benefits may not increase proportionally. Also, remember that a larger buffer means more preallocated memory.
 
-- [buf_size_preset](https://github.com/falcosecurity/falco/blob/master/falco.yaml) of `5` or `6` could be a valid option for large machines assuming you use the kmod or ebpf drivers.
+- [buf_size_preset](https://github.com/falcosecurity/falco/blob/master/falco.yaml) of `5` or `6` could be a valid option for large machines assuming you use the `kmod` driver.
 - For the `modern_ebpf` driver try a `modern_ebpf.buf_size_preset` of `6` or `7`, along with a `modern_ebpf.cpus_for_each_buffer` of `4` or `6`. Feel free to experiment and adjust these values as needed.
 
 Lastly, while it may sound appealing to push all filtering into the kernel, it is not that straightforward. In the kernel, you are in the application context, and yes, you can slow down both the kernel and the application (for example, apps may then experience lower request rates). Checkout the [Driver Kernel Testing Framework](https://github.com/falcosecurity/libs/blob/master/proposals/20230530-driver-kernel-testing-framework.md) for more information. Additionally, in the kernel, you only have raw syscall arguments and can't easily correlate them with other events. All this being said, we are actively looking into ways to improve this and make the kernel logic smarter without sacrificing performance.
@@ -30,7 +30,9 @@ Lastly, while it may sound appealing to push all filtering into the kernel, it i
 Falco's [metrics](https://github.com/falcosecurity/falco/blob/master/falco.yaml) config (see also [Falco Metrics](/docs/metrics/falco-metrics/)) enables you to measure Falco's kernel-side syscall drops and provides a range of useful metrics related to software functioning. Key settings include:
 
 - `kernel_event_counters_enabled: true`
-- `libbpf_stats_enabled: true` (for `ebpf` or `modern_ebpf` drivers, enable `/proc/sys/kernel/bpf_stats_enabled`)
+- `libbpf_stats_enabled: true` (for the `modern_ebpf` driver, enable `/proc/sys/kernel/bpf_stats_enabled`)
+
+For the `modern_ebpf` driver, Falco 0.45 also reports [auxiliary map counters](/docs/concepts/metrics/#modern-ebpf-auxiliary-map-counters). Check `scap.n_drops_auxmap_reentrancy` and `scap.n_drops_auxmap_pool_full` to distinguish drops while building an event from drops caused by a full ring buffer. Both contribute to `scap.n_drops`; `scap.n_drops_auxmap_reentrancy_tail_call` is a subset of reentrancy drops. Increasing `buf_size_preset` changes ring buffer capacity, not the auxiliary map pool. `scap.n_auxmap_migrations` counts recovered continuations after CPU migration and is not a drop counter.
 
 Here is an example metrics log snippet highlighting the fields crucial for this analysis. Pay close attention to `falco.evts_rate_sec` and `scap.evts_rate_sec`, as well as the monotonic drop counters categorizing syscalls into coarse-grained (non-comprehensive) categories. For more details, refer to the dedicated metrics section in the [Falco Performance](/docs/metrics/performance/) guide for a more detailed explanation.
 
@@ -58,6 +60,11 @@ Here is an example metrics log snippet highlighting the fields crucial for this 
     "scap.n_drops_buffer_other_interest_exit": 0,
     "scap.n_drops_buffer_proc_exit": 0,
     "scap.n_drops_buffer_total": 0,
+    # Additional modern_ebpf counters in Falco 0.45
+    "scap.n_drops_auxmap_reentrancy": 0,
+    "scap.n_drops_auxmap_reentrancy_tail_call": 0, # Subset of reentrancy drops
+    "scap.n_drops_auxmap_pool_full": 0,
+    "scap.n_auxmap_migrations": 0, # Recovered continuations, not drops
     "scap.n_drops_bug": 0,
     "scap.n_drops_page_faults": 0,
     "scap.n_drops_perc": 0.0, # Taken between 2 metrics snapshots

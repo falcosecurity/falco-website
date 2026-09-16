@@ -55,6 +55,14 @@ sudo bpftool feature probe kernel | grep -q "map_type ringbuf is available" && e
 sudo bpftool feature probe kernel | grep -q "program_type tracing is available" && echo "true" || echo "false" 
 ```
 
+Since Falco 0.45, the probe uses BPF atomic compare-and-swap instructions when the kernel supports them. These instructions were introduced in Linux 5.12, but availability depends on the architecture and any distribution backports. Falco checks support at startup. If the instructions are unavailable, it falls back to plain stores and logs a warning containing `no BPF atomics on this kernel`. This fallback relies on the kernel preventing preemption while an auxiliary map is being claimed.
+
+### Auxiliary map memory
+
+The probe stages variable-size events in auxiliary maps before sending them to the ring buffers. Since Falco 0.45, it allocates two auxiliary map segments per possible CPU, including offline CPUs, so an event can keep its segment while another event is processed on the same CPU. Each segment has 128 KiB of event storage, plus metadata. This doubles auxiliary event storage from 128 KiB to 256 KiB per possible CPU; it does not double the total memory used by Falco.
+
+The auxiliary map pool is separate from the ring buffers configured through `engine.modern_ebpf.buf_size_preset` and `engine.modern_ebpf.cpus_for_each_buffer`. See [kernel event counters](/docs/concepts/metrics/#modern-ebpf-auxiliary-map-counters) for the related diagnostics.
+
 ### How to run it
 
 Modern eBPF probe is bundled into the userspace binary and works out of the box, regardless of the kernel release, thanks to the eBPF feature called 'Compile Once Run Everywhere' (CO-RE). To enable it in Falco, just set the `engine.kind` configuration key to `modern_ebpf`. 
