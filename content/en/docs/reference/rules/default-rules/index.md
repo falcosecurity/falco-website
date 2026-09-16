@@ -15,9 +15,9 @@ By default, only the `stable` rules are loaded by Falco, you can install the `sa
 
 ```shell
 helm install falco falcosecurity/falco \
---set "falcoctl.config.artifact.install.refs={falco-rules:3,falco-incubating-rules:4,falco-sandbox-rules:4}" \
---set "falcoctl.config.artifact.follow.refs={falco-rules:3,falco-incubating-rules:4,falco-sandbox-rules:4}" \
---set "falco.rules_files={/etc/falco/k8s_audit_rules.yaml,/etc/falco/rules.d,/etc/falco/falco_rules.yaml,/etc/falco/falco-incubating_rules.yaml,/etc/falco/falco-sandbox_rules.yaml}"
+--set "falcoctl.config.artifact.install.refs={falco-rules:5,falco-incubating-rules:6,falco-sandbox-rules:6}" \
+--set "falcoctl.config.artifact.follow.refs={falco-rules:5,falco-incubating-rules:6,falco-sandbox-rules:6}" \
+--set "falco.rules_files={/etc/falco/falco_rules.yaml,/etc/falco/falco-incubating_rules.yaml,/etc/falco/falco-sandbox_rules.yaml,/etc/falco/falco_rules.local.yaml,/etc/falco/rules.d}"
 ```
 
 Where the option `falcoctl.config.artifact.install.refs` governs which rules are downloaded at startup, `falcoctl.config.artifact.follow.refs` identifies which rules are automatically updated and `falco.rules_files` indicates which rules are loaded by the engine.
