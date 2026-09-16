@@ -36,12 +36,12 @@ Operators | Description
 
 Operators | Description
 :---------|:-----------
-`=`, `!=` | Equality and inequality operators.
+`=`, `==`, `!=` | Equality and inequality operators.
 `<=`, `<`, `>=`, `>` | Comparison operators for numeric values.
 `contains`, `bcontains`, `icontains` | Strings are evaluated to be true if a string contains another. For flags, `contains` evaluates to true if the specified flag is set. For example: `proc.cmdline contains "-jar"`, `evt.arg.flags contains O_TRUNC`. The `icontains` variant works similarly but is case-insensitive. The `bcontains` variant allows byte matching against a raw string of bytes, taking a hexadecimal string as input. For example: `evt.buffer bcontains CAFEBABE`
 `endswith` | Checks if a string ends with a given suffix.
 `exists` | Checks whether a field is set. Example: `k8s.pod.name exists`.
-`glob` | Evaluates standard glob patterns. Example: `fd.name glob "/home/*/.ssh/*"`.
+`glob`, `iglob` | Evaluates standard glob patterns. The `iglob` variant is case-insensitive. Example: `fd.name glob "/home/*/.ssh/*"`.
 `in` | Evaluates whether the first set is completely contained in the second set. Example: `(b,c,d) in (a,b,c)` is `FALSE` because `d` is not found in `(a,b,c)`.
 `intersects` | Evaluates whether the first set has at least one element in common with the second set. Example: `(b,c,d) intersects (a,b,c)` is `TRUE` because both sets contain `b` and `c`.
 `pmatch` | Compares a file path against a set of file or directory prefixes. Example: `fd.name pmatch (/tmp/hello)` evaluates to true for `/tmp/hello`, `/tmp/hello/world` but not `/tmp/hello_world`. More details in the [below section](#pmatch-operator).
@@ -65,6 +65,30 @@ fd.name pmatch (/var/*/*.txt, /etc, /boot)
 ```
 
 This still performs a prefix match. Unlike `glob`, which must fully match the path, `pmatch` succeeds if the path starts with one of the specified prefixes. Hence, `fd.name pmatch (/var/*)` matches `/var/run/file.txt`, while `fd.name glob /var/*` does not. Wildcards do not cross directory separators (see [glob.7](https://man7.org/linux/man-pages/man7/glob.7.html)).
+
+### String comparison modifiers
+
+Since Falco 0.44, you can compare a single field value against several values or patterns using `anyof`, `allof`, or `oneof` after a string comparison operator:
+
+```
+proc.cmdline contains anyof (curl, wget)
+proc.cmdline contains allof (curl, --upload-file)
+proc.cmdline contains oneof (curl, wget)
+```
+
+Modifier | The comparison is true when
+:--------|:-----------
+`anyof` | At least one right-hand value matches.
+`allof` | Every right-hand value matches.
+`oneof` | Exactly one right-hand value matches.
+
+For example, a command line containing both `curl` and `wget` matches the `anyof` example but does not match the `oneof` example. Repeated list entries count separately for `oneof`.
+
+Use a space before and after the modifier. Put the right-hand values in parentheses. You can also reference a [Falco list](/docs/concepts/rules/basic-elements/#lists) inside those parentheses, for example `fd.name contains anyof (suspicious_paths)`. Modifiers work with `=`, `==`, `!=`, `contains`, `icontains`, `bcontains`, `startswith`, `bstartswith`, `endswith`, `glob`, `iglob`, and `regex`, subject to the field's supported operators. They do not apply to `in`, `intersects`, `pmatch`, `exists`, or numeric ordering operators such as `>`.
+
+Modifiers compare a single field value with the right-hand list. For list-valued fields, use `in` or `intersects`. An empty right-hand list makes all three modifiers evaluate to false.
+
+With `!=`, each individual comparison tests inequality. To exclude both `bash` and `sh`, use `proc.name != allof (bash, sh)`. Using `!= anyof (bash, sh)` would also match `bash`, since it differs from `sh`.
 
 ## Transformers
 
