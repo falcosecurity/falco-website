@@ -16,7 +16,7 @@ At a high level, the API functions are grouped as follows:
 * Functions that are commons to all plugins
 * Functions that implement one specific capability
 
-The C header files [plugin_api.h](https://github.com/falcosecurity/libs/blob/0.17.2/userspace/plugin/plugin_types.h) numerate all the API functions and associated structs/types as they are used by the plugins framework. The whole plugin API and the loader used in Falco are implemented in C in a standalone module located inside [falcosecurity/libs/userspace/plugin](https://github.com/falcosecurity/libs/tree/master/userspace/plugin), and can be imported and reused in other projects using the falcosecurity plugin system (e.g. we have a [plugin loader written in Go](https://github.com/falcosecurity/plugin-sdk-go/tree/main/pkg/loader) developed on top of the C one).
+The C header files [plugin_api.h](https://github.com/falcosecurity/libs/blob/0.25.4/userspace/plugin/plugin_api.h) numerate all the API functions and associated structs/types as they are used by the plugins framework. The whole plugin API and the loader used in Falco are implemented in C in a standalone module located inside [falcosecurity/libs/userspace/plugin](https://github.com/falcosecurity/libs/tree/master/userspace/plugin), and can be imported and reused in other projects using the falcosecurity plugin system (e.g. we have a [plugin loader written in Go](https://github.com/falcosecurity/plugin-sdk-go/tree/main/pkg/loader) developed on top of the C one).
 
 Remember, however, that from the perspective of the plugin, each function name has a prefix `plugin_` e.g. `plugin_get_required_api_version`, `plugin_get_name`, etc.
 
@@ -24,7 +24,7 @@ Since [Falco v0.33.0](/blog/falco-0-33-0), some function symbols of **the plugin
 
 ### Plugin API Versioning
 
-**The current version of the plugin API is `3.6.0`**.
+**The plugin API version supported by Falco is `3.12.0`**, as defined in [plugin_api.h](https://github.com/falcosecurity/libs/blob/0.25.4/userspace/plugin/plugin_api.h#L32-L34).
 
 The plugin API is a formal contract between the framework and the plugins, and it is versioned using [semantic versioning](https://semver.org/). The framework exposes the plugin API version it supports, and each plugin expresses a required plugin API version. If the version required by a plugin does not pass the semantic check with the one supported by the framework, then the plugin cannot be loaded. See the section about [`plugin_get_required_api_version`](#get-required-api-version) for more details.
 
