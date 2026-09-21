@@ -1,17 +1,11 @@
 ---
 title: Introducing Falco 0.45.0
-# date: RELEASE_DATE
+date: 2026-09-21
 author: Leonardo Grasso, Alessandro Cannarella
 slug: falco-0-45-0
 tags: ["Falco", "Release"]
 draft: true
 ---
-
-<!-- Before publication: set the date, remove draft: true,
-     and add final PR counts and contributor credits from the generated changelog.
-     September 21 snapshot: Falco 58 PRs (23 release notes), libs 65 PRs (38 release notes).
-     Confirm final component versions and kernel-module pre-build availability.
-     Replace feature PR links with versioned documentation where appropriate once live. -->
 
 Dear Falco Community, we are happy to announce the release of Falco 0.45.0 today!
 
@@ -123,10 +117,6 @@ The protection requires BPF atomic operations. Falco checks support at load time
 support use a fallback and emit a warning. The driver API also moves to `11.0.0`, so older drivers are incompatible
 with the new userspace.
 See the [preemption handling changes](https://github.com/falcosecurity/libs/pull/3086).
-
-<!-- Release day: check kernel-module pre-build coverage. If builds are still in progress,
-     add the warning used in the 0.44.0 post, including the falcoctl local-build fallback.
-     Do not promise an availability date without confirmation. -->
 
 ## Plugins
 
