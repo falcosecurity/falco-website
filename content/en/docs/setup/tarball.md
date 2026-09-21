@@ -106,6 +106,8 @@ If this option is disabled, you can manually reload the configuration by sending
 kill -1 $(pidof falco)
 ```
 
+Since Falco 0.45.0, the `/reload` webserver endpoint reports the reload status, and the optional `reload_control` setting enables reload requests over a Unix socket. See `falco.yaml` for details.
+
 ## Upgrade
 
 If you are using the {{< glossary_tooltip text="Kernel Module" term_id="kernel-module" >}} driver, please remove it with root privileges before upgrading Falco to avoid issues during the upgrade.

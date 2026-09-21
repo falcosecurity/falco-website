@@ -399,6 +399,8 @@ If this option is disabled, you can manually restart the Falco systemd service t
 systemctl restart falco
 ```
 
+Since Falco 0.45.0, the `/reload` webserver endpoint reports the reload status, and the optional `reload_control` setting enables reload requests over a Unix socket. See `falco.yaml` for details.
+
 ## Upgrade {#upgrade}
 
 From Falco 0.45.0, the DEB and RPM packages configure and start the selected Falco service after an upgrade. Driver selection follows the same environment variables and dialog choices as installation. `FALCO_DRIVER_CHOICE=none` skips driver configuration and startup. When `kmod` is selected, the package installs a persistent kernel module and checks that `modprobe` can find the selected version. RPM performs driver installation and service startup in `%posttrans`, after the outgoing package has finished its cleanup.
