@@ -4,7 +4,6 @@ date: 2026-09-21
 author: Leonardo Grasso, Alessandro Cannarella
 slug: falco-0-45-0
 tags: ["Falco", "Release"]
-draft: true
 ---
 
 Dear Falco Community, we are happy to announce the release of Falco 0.45.0 today!
