@@ -4,7 +4,7 @@ Usage:
   falco [OPTION...]
 
   -h, --help                    Print this help list and exit.
-  -c <path>                     Configuration file. If not specified tries /etc/falco/falco.yaml.
+  -c <path>                     Configuration file. If not specified uses /etc/falco/falco.yaml.
       --config-schema           Print the config json schema and exit.
       --rule-schema             Print the rule json schema and exit.
       --disable-source <event_source>
@@ -32,16 +32,21 @@ Usage:
       --list-events             List all defined syscall events, metaevents, tracepoint events and exit.
       --list-plugins            Print info on all loaded plugins and exit.
   -M <num_seconds>              Stop Falco execution after <num_seconds> are passed. (default: 0)
-      --markdown                Print output in Markdown format when used in conjunction with --list or --list-events options. It has no 
-                                effect when used with other options.
+      --markdown                DEPRECATED: use --format markdown instead. Print output in Markdown format when used in conjunction with 
+                                --list or --list-events options. It has no effect when used with other options.
+      --format <format>         Print output in the specified <format> when used in conjunction with --list or --list-events options. Valid 
+                                values are 'text', 'markdown', or 'json'. It has no effect when used with other options. Cannot be used 
+                                together with --markdown.
   -N                            Only print field names when used in conjunction with the --list option. It has no effect when used with 
                                 other options.
   -o, --option <opt>=<val>      Set the value of option <opt> to <val>. Overrides values in the configuration file. <opt> can be identified 
                                 using its location in the configuration file using dot notation. Elements of list entries can be accessed 
-                                via square brackets [].
-                                    E.g. base.id = val
-                                         base.subvalue.subvalue2 = val
+                                via square brackets []. Use backslash (\) to escape literal dots, brackets, or backslashes in key names.
+                                    E.g. base.id=val
+                                         base.subvalue.subvalue2=val
                                          base.list[1]=val
+                                         base.dotted\.key=val
+                                         base.back\\slash=val
       --plugin-info <plugin_name>
                                 Print info for the plugin specified by <plugin_name> and exit.
                                 This includes all descriptive information like name and author, along with the
