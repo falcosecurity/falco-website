@@ -4,10 +4,10 @@ approvers:
   - Issif
   - LucaGuerra
   - ekoops
+  - c2ndev
 reviewers:
   - mstemm
   - vjjmiras
-  - c2ndev
 emeritus_approvers:
   - fntlnz
   - leodido
