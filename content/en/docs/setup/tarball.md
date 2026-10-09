@@ -81,7 +81,7 @@ In these steps, we are targeting a Debian-like system on `x86_64` architecture. 
 
 ## Manual Systemd setup
 
-The Falco `.tar.gz` archive doesn't include the Systemd setup. If you want to enable Falco to start automatically at boot time, you can still download `systemd` files from the [Falco repo](https://github.com/falcosecurity/falco/tree/master/scripts/systemd) and place them in the `/lib/systemd/system` directory. Finally, you can follow the same instructions for [enabling Systemd manually](/docs/setup/packages#enable-falco-on-systemd-manually) under the _Install on a host (DEB, RPM)_ section.
+The Falco `.tar.gz` archive doesn't include the Systemd setup. If you want to enable Falco to start automatically at boot time, you can still download `systemd` files from the [Falco repo](https://github.com/falcosecurity/falco/tree/master/scripts/systemd) and place them in the `/lib/systemd/system` directory. Finally, you can follow the same instructions for [enabling Systemd manually](/docs/setup/packages/#manual-configuration) under the _Install on a host (DEB, RPM)_ section.
 
 ## Configuration
 

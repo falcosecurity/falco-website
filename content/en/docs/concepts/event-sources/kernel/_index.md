@@ -25,7 +25,7 @@ There are several supported drivers:
 
 ## Kernel module
 
-By default, the {{< glossary_tooltip text="kernel module" term_id="kernel-module" >}} will be installed when installing the Falco [debian/rpm](/docs/getting-started/installation) package, when running the `falcoctl driver` tool shipped within the [binary package](/docs/getting-started/installation#linux-binary), or when running the `falcosecurity/falco-driver-loader` docker image (that just wraps the aforementioned tool).
+By default, the {{< glossary_tooltip text="kernel module" term_id="kernel-module" >}} will be installed when installing the Falco [debian/rpm](/docs/getting-started/installation) package, when running the `falcoctl driver` tool shipped within the [binary package](/docs/setup/tarball/), or when running the `falcosecurity/falco-driver-loader` docker image (that just wraps the aforementioned tool).
 
 To install the kernel module, please refer to the [installation](/docs/getting-started/installation/#install-driver) page.
 
@@ -69,9 +69,9 @@ Modern eBPF probe is bundled into the userspace binary and works out of the box,
 
 It is supported in all the installation methods of other drivers:
 
-* [Falco packages](/docs/getting-started/installation/#installation-with-dialog)
-* [Falco binary](/docs/getting-started/running/#falco-binary)
-* [Docker](/docs/getting-started/running/#modern-ebpf)
+* [Falco packages](/docs/setup/packages/#systemd-setup-with-dialog)
+* [Falco binary](/docs/setup/tarball/)
+* [Docker](/docs/setup/container/#docker-privileged-modern-ebpf)
 * [Helm chart](https://github.com/falcosecurity/charts/tree/master/charts/falco#daemonset)
 
 
