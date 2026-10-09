@@ -13,7 +13,7 @@ There are currently two optional fields in the falco rules file related to versi
 
 Element | Description
 :-------|:-----------
-`required_engine_version` | Used to track compatibility between rules content and the falco [engine version](/docs/rules/versioning/#falco-engine-versioning).
+`required_engine_version` | Used to track compatibility between rules content and the falco [engine version](/docs/concepts/rules/versioning/#falco-engine-versioning).
 `required_plugin_versions` | Used to track compatibility between rules content and [plugin versions](/docs/plugins#plugin-versions-and-falco-rules).
 
 ### Falco Engine Versioning

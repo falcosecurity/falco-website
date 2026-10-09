@@ -86,7 +86,7 @@ Rules in Falco are defined using YAML syntax. Each rule is represented as an obj
 
 - The `tags` key categorizes the ruleset into groups of related rules. Although not mandatory when starting to write a rule, its use is highly recommended at a later stage for management purposes. For further information, refer to the [Tags section of the Style Guide of Falco Rules][/docs/rules/style-guide/#tags)
 
-Refer to the [Advanced Rule Syntax](/docs/rules/basic-elements/#advanced-rule-syntax) documentation to enhance your Falco rules further. The [Style Guide of Falco Rules](/docs/rules/style-guide) is also highly recommended to ensure your rules are easier to maintain and share with the community. These resources will provide you with valuable information about additional keys that can be used to augment and customize your Falco rules. Exploring these advanced options will allow you to expand the capabilities and effectiveness of your rules.
+Refer to the [Advanced Rule Syntax](/docs/concepts/rules/basic-elements/#advanced-rule-syntax) documentation to enhance your Falco rules further. The [Style Guide of Falco Rules](/docs/rules/style-guide) is also highly recommended to ensure your rules are easier to maintain and share with the community. These resources will provide you with valuable information about additional keys that can be used to augment and customize your Falco rules. Exploring these advanced options will allow you to expand the capabilities and effectiveness of your rules.
 
 ## Building up the Condition
 
@@ -94,7 +94,7 @@ A condition in Falco acts as a checklist of requirements an event must meet to t
 
 To achieve the desired effect, it is necessary to consider the Boolean operators: `and`, `or`, and `not`. These operators enable the condition to evaluate one or more situations and produce the desired outcome.
 
-Each item on the checklist corresponds to a comparison involving the information in the syscall invocation and any relevant metadata that provides additional context. These comparisons employ operators such as `=`, `!=`, `in`, `contains`, and others. Refer to the [section operators](/docs/rules/conditions/#operators) in the documentation for a more extensive list of available operators.
+Each item on the checklist corresponds to a comparison involving the information in the syscall invocation and any relevant metadata that provides additional context. These comparisons employ operators such as `=`, `!=`, `in`, `contains`, and others. Refer to the [section operators](/docs/concepts/rules/conditions/#operators) in the documentation for a more extensive list of available operators.
 
 Before proceeding, it's recommended to refer to the [condition syntax](/docs/rules/conditions/) documentation, which provides detailed guidance on writing conditions. This resource will offer valuable information to ensure accurate and effective condition creation.
 
@@ -102,7 +102,7 @@ When constructing comparisons within conditions, an extensive set of fields is a
 
 ## Leveraging Macros and Lists
 
-Additionally, the benefits of using [macros](/docs/rules/basic-elements/#macros) and [lists](/docs/rules/basic-elements/#lists) when writing rules are worth noting: leveraging these features allows for more straightforward and more concise rule creation while promoting the reuse of conditions that have been thoroughly tested. This approach enhances maintainability and efficiency in rule development.
+Additionally, the benefits of using [macros](/docs/concepts/rules/basic-elements/#macros) and [lists](/docs/concepts/rules/basic-elements/#lists) when writing rules are worth noting: leveraging these features allows for more straightforward and more concise rule creation while promoting the reuse of conditions that have been thoroughly tested. This approach enhances maintainability and efficiency in rule development.
 
 Observe the following rule that detects when a `bash` shell is spawned inside a container:
 

@@ -74,7 +74,7 @@ Please note again that the order of the specified configuration file matters! Th
 ### Via Custom Rule Definition
 
 {{% pageinfo color="warning" %}}
-The `enabled` attribute used as an override is deprecated and it will be removed in Falco `1.0.0`. Use the [`override.enabled` attribute](/docs/rules/overriding/#enabling-a-disabled-rule) instead.
+The `enabled` attribute used as an override is deprecated and it will be removed in Falco `1.0.0`. Use the [`override.enabled` attribute](/docs/concepts/rules/overriding/#enabling-a-disabled-rule) instead.
 Please note that the `enabled` key is only deprecated when used as an override! So a rule like this is perfectly legit:
 ```yaml
 - rule: legit_rule

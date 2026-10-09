@@ -168,13 +168,13 @@ Each event has a list of arguments that you can access through `evt.arg.<argname
 evt.type in (open, openat) and evt.dir = < and evt.arg.flags contains O_TRUNC
 ```
 
-Note that arguments do not necessarily match the raw parameters used in the Linux kernel; Falco may parse them in ways that make rule-writing more straightforward. By using the [`evt` fields](/docs/rules/supported-fields/#field-class-evt), you can inspect many other aspects common across different events.
+Note that arguments do not necessarily match the raw parameters used in the Linux kernel; Falco may parse them in ways that make rule-writing more straightforward. By using the [`evt` fields](/docs/reference/rules/supported-fields/#field-class-evt), you can inspect many other aspects common across different events.
 
 ## Syscall event context and metadata
 
 While the `evt` fields allow you to write expressive conditions, arguments and common fields alone are often insufficient for complete security rules. You might also need to consider the process context in which the event occurred, whether or not it happened inside a container, or how it correlates with Kubernetes metadata. To enable this, Falco enriches many events with [additional field classes](/docs/rules/supported-fields). Not all field classes are available for all events, and the list grows over time. Each field class’s documentation clarifies when those fields are expected to be present, but some are so common that rules often rely on them.
 
-The [`proc` field class](/docs/rules/supported-fields/#field-class-process) gives you context about the process and thread generating a specific syscall. This information is frequently very important. For example, you can use `proc.name` and `proc.pid`, or even traverse the process hierarchy with `proc.aname[<n>]` and `proc.apid[<n>]`. You can also see which user performed the action with the `user` field class.
+The [`proc` field class](/docs/reference/rules/supported-fields/#field-class-process) gives you context about the process and thread generating a specific syscall. This information is frequently very important. For example, you can use `proc.name` and `proc.pid`, or even traverse the process hierarchy with `proc.aname[<n>]` and `proc.apid[<n>]`. You can also see which user performed the action with the `user` field class.
 
 An example rule that detects whenever `bash` is executed inside a container could look like this:
 
