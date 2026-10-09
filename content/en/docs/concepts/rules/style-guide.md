@@ -142,7 +142,7 @@ Each rule must include output fields.
 
 For the output fields, expect that each Falco release typically exposes new [Supported Output Fields](/docs/reference/rules/supported-fields/) that can help you write more expressive rules and/or add more context to a rule for incident response.
 
-Building upon the guide around writing rules with respect to [Falco Outputs](/docs/rules/basic-elements/#output), when considering upstreaming your rule, core output fields relevant for this rule must be included. At the same time, we try to keep them to a minimum, and adopters can add more output fields as they see fit.
+Building upon the guide around writing rules with respect to [Falco Outputs](/docs/concepts/rules/basic-elements/#output), when considering upstreaming your rule, core output fields relevant for this rule must be included. At the same time, we try to keep them to a minimum, and adopters can add more output fields as they see fit.
 
 For each rule include the critical fields listed below related to process and user information, as well as the actual event type. For example, the `tty` field (terminal) can help determine if the process ran in an interactive shell. Additionally, examining the exepath alongside the process name provides insights into whether the binary might be located in more suspicious folders like `tmp`. Understanding the direct parent process is vital for basic process lineage analysis.
 
@@ -188,7 +188,7 @@ output: "Read monitored file via directory traversal | file=%fd.name fileraw=%fd
 
 ### Priority
 
-Please refer to the relevant [reference/rules](/docs/reference/rules/rule-fields/) section and the [Basic Rules Guide](/docs/rules/basic-elements/#priority) for more information.
+Please refer to the relevant [reference/rules](/docs/reference/rules/rule-fields/) section and the [Basic Rules Guide](/docs/concepts/rules/basic-elements/#priority) for more information.
 
 When considering upstreaming the rule to The Falco Project, the `priority` level shall not be set to `DEBUG` and instead shall be at a minimum of `INFO`.
 

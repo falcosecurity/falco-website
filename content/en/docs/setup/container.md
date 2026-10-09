@@ -16,7 +16,7 @@ For other installation scenarios, such as consuming cloud events or other data s
 
 ## Install
 
-This section describes how to run the Falco userspace process in a container using one of the released [container images](/docs/download#images).
+This section describes how to run the Falco userspace process in a container using one of the released [container images](/docs/setup/download/#images).
 
 By default, Falco is pre-configured to consume events from the Linux Kernel. For this default installation scenario, Falco can be run in two ways:
 

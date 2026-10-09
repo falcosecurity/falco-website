@@ -57,7 +57,7 @@ If multiple conditions are specified under `match`, all must be met for the entr
 
 ## Adding an Override to a Specific Rule
 
-Note that `append_output` only *adds* output to an existing rule; it does not remove or replace existing fields. To remove or replace output fields, you can add another rule file (loaded after the original) that uses an [override](/docs/rules/overriding/#append-and-replace-items-in-a-rule). For example:
+Note that `append_output` only *adds* output to an existing rule; it does not remove or replace existing fields. To remove or replace output fields, you can add another rule file (loaded after the original) that uses an [override](/docs/concepts/rules/overriding/#append-and-replace-items-in-a-rule). For example:
 
 ```yaml
 - rule: Read sensitive file trusted after startup

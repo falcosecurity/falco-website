@@ -19,7 +19,7 @@ Falco rules files can also contain two optional elements related to [versioning]
 
 Element | Description
 :-------|:-----------
-`required_engine_version` | Used to track compatibility between rules content and the falco [engine version](/docs/rules/versioning/#falco-engine-versioning).
+`required_engine_version` | Used to track compatibility between rules content and the falco [engine version](/docs/concepts/rules/versioning/#falco-engine-versioning).
 `required_plugin_versions` | Used to track compatibility between rules content and [plugin versions](/docs/plugins#plugin-versions-and-falco-rules).
 
 The Falco organization maintains a [rules repository](https://github.com/falcosecurity/rules) that provides easy-to-install rules and examples for rule writers. You can learn more about the [default and custom rulesets](/docs/rules/default-custom) in the documentation.
