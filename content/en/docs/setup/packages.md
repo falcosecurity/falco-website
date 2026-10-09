@@ -317,7 +317,7 @@ new alias/service called `falco.service` that can be used in place of the aliase
 
 {{% /pageinfo %}}
 
-As a side note, if you prefer not to use the `falcoctl` tool to automatically update your rules, you can mask it as follows. Otherwise, as explained [here](/docs/install-operate/installation/#rule-update), Falco will enable it too.
+As a side note, if you prefer not to use the `falcoctl` tool to automatically update your rules, you can mask it as follows. Otherwise, as explained [here](#falcoctl-service), Falco will enable it too.
 
 ```
 $ sudo systemctl mask falcoctl-artifact-follow.service
@@ -449,7 +449,7 @@ sudo sudo yum repolist -v falcosecurity-rpm
 
 {{% /pageinfo %}}
 
-If you installed Falco by following the [provided instructions](/docs/install-operate/installation/#centos-rhel):
+If you installed Falco by following the [provided instructions](#install-with-yum):
 
 1. Check for updates:
 
@@ -481,7 +481,7 @@ sudo zypper lr falcosecurity-rpm
 
 {{% /pageinfo %}}
 
-If you installed Falco by following the [provided instructions](/docs/install-operate/installation/#suse):
+If you installed Falco by following the [provided instructions](#install-with-zypper):
 
 ```shell
 sudo zypper update falco

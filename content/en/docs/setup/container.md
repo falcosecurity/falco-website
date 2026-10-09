@@ -227,5 +227,5 @@ You can configure Falco by either:
 
 Further configurable options via environment variables include (to be passed with `-e` with Docker):
 
-- `FALCOCTL_DRIVER_REPOS` - See the [Installing the Driver](https://falco.org/docs/getting-started/installation/#install-driver) section.
+- `FALCOCTL_DRIVER_REPOS` - See the [Installing the Driver](#driver-installation) section.
 - `SKIP_DRIVER_LOADER` - Set this environment variable to avoid running `falcoctl driver` tool when the `falcosecurity/falco` image starts. Useful when the driver has already been installed on the host by other means.
