@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="580" viewBox="0 0 1100 580" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif">
+  <title>How artifacts reach Falco in Falco Operator 0.5.0</title>
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#14283a" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glow" cx="700" cy="300" r="520" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00AEC7" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#00AEC7" stop-opacity="0"/>
+    </radialGradient>
+    <marker id="a" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#6fa3b8"/>
+    </marker>
+    <marker id="ac" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#00AEC7"/>
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#34d399"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="580" rx="18" fill="#0b1622"/>
+  <rect width="1100" height="580" rx="18" fill="url(#grid)"/>
+  <rect width="1100" height="580" rx="18" fill="url(#glow)"/>
+
+  <text x="40" y="48" font-size="15" font-weight="600" fill="#6c8fa1" letter-spacing="1.5">CLUSTER-WIDE</text>
+
+  <!-- OCI registry -->
+  <rect x="40" y="112" width="180" height="72" rx="12" fill="#13283a" stroke="#2f5b73" stroke-width="1.5"/>
+  <text x="130" y="144" font-size="18" fill="#d4f1f6" text-anchor="middle" font-weight="600">OCI registry</text>
+  <text x="130" y="166" font-size="13" fill="#6c8fa1" text-anchor="middle">rules · plugins</text>
+
+  <path d="M222 148H286" stroke="#6fa3b8" stroke-width="2" marker-end="url(#a)"/>
+  <text x="254" y="136" font-size="13" fill="#8fb3c4" text-anchor="middle">pull once</text>
+
+  <!-- Instance operator -->
+  <rect x="290" y="72" width="530" height="152" rx="16" fill="#00AEC7"/>
+  <text x="314" y="108" font-size="21" font-weight="700" fill="#0b1622">Instance operator</text>
+  <g font-size="15" fill="#06404d">
+    <circle cx="320" cy="137" r="3.5" fill="#06404d"/>
+    <text x="332" y="142">resolves tags to digests</text>
+    <circle cx="320" cy="164" r="3.5" fill="#06404d"/>
+    <text x="332" y="169">caches files per OS and arch</text>
+    <circle cx="320" cy="191" r="3.5" fill="#06404d"/>
+    <text x="332" y="196">assigns artifacts to nodes</text>
+  </g>
+
+  <rect x="610" y="94" width="188" height="108" rx="12" fill="#0b1622"/>
+  <text x="704" y="134" font-size="17" font-weight="700" fill="#ffffff" text-anchor="middle">artifact server</text>
+  <text x="704" y="158" font-size="14" fill="#00AEC7" text-anchor="middle">:8082</text>
+  <text x="704" y="182" font-size="13" fill="#6c8fa1" text-anchor="middle">serves cached files</text>
+
+  <!-- Node region -->
+  <rect x="520" y="300" width="540" height="240" rx="18" fill="#0d1d2c" fill-opacity="0.6" stroke="#2f5b73" stroke-width="1.5" stroke-dasharray="7 6"/>
+  <text x="544" y="330" font-size="15" font-weight="600" fill="#6c8fa1" letter-spacing="1.5">EVERY NODE RUNNING FALCO</text>
+
+  <!-- Server -> sidecar over mTLS -->
+  <path d="M704 202V352" stroke="#34d399" stroke-width="2.5" marker-end="url(#ag)"/>
+  <g transform="translate(704 262)">
+    <circle r="17" fill="#0b1622" stroke="#34d399" stroke-width="2"/>
+    <path d="M-4.5 -1V-5a4.5 4.5 0 0 1 9 0V-1" fill="none" stroke="#34d399" stroke-width="2.4"/>
+    <rect x="-7" y="-2" width="14" height="10" rx="2" fill="#34d399"/>
+  </g>
+  <text x="732" y="258" font-size="15" font-weight="700" fill="#34d399">HTTP or mTLS</text>
+  <text x="732" y="278" font-size="13" fill="#8fb3c4">one identity per Falco</text>
+
+  <!-- Sidecar -->
+  <rect x="552" y="354" width="270" height="160" rx="14" fill="#5b3fa8"/>
+  <text x="574" y="386" font-size="19" font-weight="700" fill="#ffffff">Artifact operator</text>
+  <text x="574" y="407" font-size="13" fill="#d9ccff">sidecar, one per node</text>
+  <g font-size="15" fill="#f1ecff">
+    <circle cx="580" cy="436" r="3.5" fill="#d9ccff"/>
+    <text x="592" y="441">checks compatibility</text>
+    <circle cx="580" cy="462" r="3.5" fill="#d9ccff"/>
+    <text x="592" y="467">installs files</text>
+    <circle cx="580" cy="488" r="3.5" fill="#d9ccff"/>
+    <text x="592" y="493">reloads Falco</text>
+  </g>
+
+  <!-- Sidecar -> Falco -->
+  <path d="M824 434H884" stroke="#6fa3b8" stroke-width="2" marker-end="url(#a)"/>
+  <text x="854" y="422" font-size="13" fill="#8fb3c4" text-anchor="middle">files</text>
+  <text x="854" y="456" font-size="13" fill="#8fb3c4" text-anchor="middle">SIGHUP</text>
+
+  <!-- Falco -->
+  <rect x="888" y="354" width="148" height="160" rx="14" fill="#0e6b52"/>
+  <text x="962" y="400" font-size="21" font-weight="700" fill="#ffffff" text-anchor="middle">Falco</text>
+  <g font-size="13" fill="#bdf2dd" text-anchor="middle">
+    <text x="962" y="436">rules.d</text>
+    <text x="962" y="458">plugins</text>
+    <text x="962" y="480">config.d</text>
+  </g>
+
+  <!-- ArtifactNode -->
+  <rect x="40" y="360" width="290" height="148" rx="14" fill="#0f2536" stroke="#00AEC7" stroke-width="2"/>
+  <text x="62" y="394" font-size="20" font-weight="700" fill="#ffffff">ArtifactNode</text>
+  <text x="62" y="415" font-size="13" fill="#6c8fa1">one per node, named after it</text>
+  <g font-size="15">
+    <text x="62" y="450" fill="#00AEC7" font-weight="700">spec</text>
+    <text x="110" y="450" fill="#d4f1f6">artifacts assigned</text>
+    <text x="62" y="482" fill="#b9a5f5" font-weight="700">status</text>
+    <text x="118" y="482" fill="#d4f1f6">what is installed</text>
+  </g>
+
+  <!-- Instance operator -> ArtifactNode spec -->
+  <path d="M370 226V300Q370 330 340 330H230Q200 330 200 345V356" fill="none" stroke="#00AEC7" stroke-width="2.5" marker-end="url(#ac)"/>
+  <text x="384" y="282" font-size="13" fill="#8fb3c4">writes spec</text>
+
+  <!-- Sidecar reads spec / writes status -->
+  <path d="M332 428H548" stroke="#00AEC7" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#ac)"/>
+  <text x="440" y="418" font-size="13" fill="#8fb3c4" text-anchor="middle">reads spec</text>
+  <path d="M548 478H334" stroke="#b9a5f5" stroke-width="2.5" marker-end="url(#a)"/>
+  <text x="440" y="500" font-size="13" fill="#8fb3c4" text-anchor="middle">reports status</text>
+</svg>
