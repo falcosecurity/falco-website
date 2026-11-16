@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#5f7a85"/>
+    </marker>
+    <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#00aec7"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="560" fill="#ffffff"/>
+
+  <!-- Falco -->
+  <rect x="30" y="215" width="150" height="90" rx="12" fill="#ecf8fa" stroke="#00aec7" stroke-width="2"/>
+  <text x="105" y="255" text-anchor="middle" font-size="22" font-weight="700" fill="#0d1a24">Falco</text>
+  <text x="105" y="282" text-anchor="middle" font-size="15" fill="#4a5f68">one or many</text>
+
+  <line x1="182" y1="260" x2="248" y2="260" stroke="#5f7a85" stroke-width="2" marker-end="url(#a)"/>
+  <text x="215" y="248" text-anchor="middle" font-size="13" fill="#4a5f68">:2801</text>
+
+  <!-- Falcosidekick box -->
+  <rect x="250" y="40" width="680" height="480" rx="16" fill="#f6fbfc" stroke="#00aec7" stroke-width="2"/>
+  <text x="272" y="72" font-size="20" font-weight="700" fill="#0d1a24">Falcosidekick</text>
+
+  <!-- Ingest / Enrich -->
+  <rect x="272" y="215" width="130" height="90" rx="10" fill="#ffffff" stroke="#9fc9d1" stroke-width="1.5"/>
+  <text x="337" y="252" text-anchor="middle" font-size="17" font-weight="700" fill="#0d1a24">Ingest</text>
+  <text x="337" y="276" text-anchor="middle" font-size="13" fill="#4a5f68">validate, count</text>
+
+  <line x1="404" y1="260" x2="428" y2="260" stroke="#5f7a85" stroke-width="2" marker-end="url(#a)"/>
+
+  <rect x="430" y="215" width="130" height="90" rx="10" fill="#ffffff" stroke="#9fc9d1" stroke-width="1.5"/>
+  <text x="495" y="252" text-anchor="middle" font-size="17" font-weight="700" fill="#0d1a24">Enrich</text>
+  <text x="495" y="276" text-anchor="middle" font-size="13" fill="#4a5f68">fields, tags</text>
+
+  <!-- fan out -->
+  <line x1="562" y1="260" x2="596" y2="118" stroke="#5f7a85" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="562" y1="260" x2="596" y2="260" stroke="#5f7a85" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="562" y1="260" x2="596" y2="402" stroke="#5f7a85" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- output lanes -->
+  <g>
+    <rect x="598" y="78" width="310" height="80" rx="10" fill="#ffffff" stroke="#9fc9d1" stroke-width="1.5"/>
+    <rect x="612" y="96" width="14" height="44" rx="2" fill="#00aec7"/><rect x="630" y="96" width="14" height="44" rx="2" fill="#00aec7" opacity="0.6"/><rect x="648" y="96" width="14" height="44" rx="2" fill="#00aec7" opacity="0.3"/>
+    <text x="676" y="112" font-size="16" font-weight="700" fill="#0d1a24">slack</text>
+    <text x="676" y="134" font-size="13" fill="#4a5f68">queue · workers · retry · circuit</text>
+    <circle cx="890" cy="98" r="6" fill="#2fa36b"/>
+  </g>
+  <g>
+    <rect x="598" y="220" width="310" height="80" rx="10" fill="#ffffff" stroke="#9fc9d1" stroke-width="1.5"/>
+    <rect x="612" y="238" width="14" height="44" rx="2" fill="#00aec7"/><rect x="630" y="238" width="14" height="44" rx="2" fill="#00aec7" opacity="0.6"/><rect x="648" y="238" width="14" height="44" rx="2" fill="#00aec7" opacity="0.3"/>
+    <text x="676" y="254" font-size="16" font-weight="700" fill="#0d1a24">loki</text>
+    <text x="676" y="276" font-size="13" fill="#4a5f68">queue · batches · retry · circuit</text>
+    <circle cx="890" cy="240" r="6" fill="#2fa36b"/>
+  </g>
+  <g>
+    <rect x="598" y="362" width="310" height="80" rx="10" fill="#ffffff" stroke="#d64545" stroke-width="1.5"/>
+    <rect x="612" y="380" width="14" height="44" rx="2" fill="#d64545"/><rect x="630" y="380" width="14" height="44" rx="2" fill="#d64545"/><rect x="648" y="380" width="14" height="44" rx="2" fill="#d64545"/>
+    <text x="676" y="396" font-size="16" font-weight="700" fill="#0d1a24">webhook</text>
+    <text x="676" y="418" font-size="13" fill="#4a5f68">error: circuit open, queue full</text>
+    <circle cx="890" cy="382" r="6" fill="#d64545"/>
+  </g>
+  <text x="753" y="508" text-anchor="middle" font-size="13" fill="#4a5f68">one queue per output: a slow destination holds back only itself</text>
+
+  <!-- destinations -->
+  <line x1="910" y1="118" x2="988" y2="118" stroke="#5f7a85" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="910" y1="260" x2="988" y2="260" stroke="#5f7a85" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="910" y1="402" x2="988" y2="402" stroke="#d64545" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#a)"/>
+  <rect x="990" y="88" width="180" height="60" rx="10" fill="#ffffff" stroke="#c7d6db" stroke-width="1.5"/>
+  <text x="1080" y="124" text-anchor="middle" font-size="16" fill="#0d1a24">Slack</text>
+  <rect x="990" y="230" width="180" height="60" rx="10" fill="#ffffff" stroke="#c7d6db" stroke-width="1.5"/>
+  <text x="1080" y="266" text-anchor="middle" font-size="16" fill="#0d1a24">Loki</text>
+  <rect x="990" y="372" width="180" height="60" rx="10" fill="#ffffff" stroke="#c7d6db" stroke-width="1.5"/>
+  <text x="1080" y="408" text-anchor="middle" font-size="16" fill="#0d1a24">Your webhook</text>
+
+  <!-- status to management -->
+  <rect x="272" y="400" width="288" height="96" rx="10" fill="#ffffff" stroke="#00aec7" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="416" y="432" text-anchor="middle" font-size="16" font-weight="700" fill="#0d1a24">Status of every output</text>
+  <text x="416" y="456" text-anchor="middle" font-size="13" fill="#4a5f68">/metrics on :2801</text>
+  <text x="416" y="478" text-anchor="middle" font-size="13" fill="#4a5f68">API and web UI on :2802</text>
+  <path d="M596 402 C 575 402, 575 430, 562 440" fill="none" stroke="#00aec7" stroke-width="1.5" marker-end="url(#b)"/>
+</svg>
