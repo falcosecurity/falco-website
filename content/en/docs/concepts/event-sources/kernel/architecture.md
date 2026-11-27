@@ -54,7 +54,7 @@ For example, the `dup3` event is defined in the reference as:
 Meaning that its encoding will be composed of an header containing the timestamp and tid, `nparams` will be 4 and the complete encoding will be:
 
 ```
-[header] [uint16(8)] [uint16(8)] [uint16(8)] [uint16(32)] [res] [oldfd] [newfd] [flags]
+[header] [uint16(8)] [uint16(8)] [uint16(8)] [uint16(4)] [res] [oldfd] [newfd] [flags]
 ```
 
 <div>
