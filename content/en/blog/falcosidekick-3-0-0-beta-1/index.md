@@ -1,7 +1,7 @@
 ---
 title: Introducing Falcosidekick v3
 linktitle: Introducing Falcosidekick v3
-date: 2026-11-16
+date: 2026-11-27
 author: "[Alessandro Cannarella](https://github.com/c2ndev)"
 slug: falcosidekick-3-0-0-beta-1
 images:
@@ -9,7 +9,7 @@ images:
 tags: ["Falcosidekick", "Release"]
 ---
 
-Dear Falco Community, last week at [KubeCon + CloudNativeCon North America](https://events.linuxfoundation.org/kubecon-cloudnativecon-north-america/) in Salt Lake City, we presented Falcosidekick v3 in our Falco Maintainer Track session, [Falco Never Flies Alone: Runtime Security as an Ecosystem](https://events.linuxfoundation.org/kubecon-cloudnativecon-north-america/program/schedule/?id=1289719). The same day, November 12, we released **Falcosidekick 3.0.0-beta.1**, its first beta. This post tells the whole story.
+Dear Falco Community, earlier this month at [KubeCon + CloudNativeCon North America](https://events.linuxfoundation.org/kubecon-cloudnativecon-north-america/) in Salt Lake City, we presented Falcosidekick v3 in our Falco Maintainer Track session, [Falco Never Flies Alone: Runtime Security as an Ecosystem](https://events.linuxfoundation.org/kubecon-cloudnativecon-north-america/program/schedule/?id=1289719). On the same day, November 12, we released **Falcosidekick 3.0.0-beta.1**, its first beta. This post tells the whole story.
 
 [Thomas Labarussias](https://github.com/Issif) made the first commit of Falcosidekick in September 2018. Since then, about 140 contributors have added integrations with about 70 tools, from Slack and Teams to Loki, Elasticsearch, Kafka and on-call services.
 
@@ -129,9 +129,9 @@ The UI and the API run on a separate management port, `2802`, which listens on `
 
 ### Outputs from the UI, and several replicas
 
-The API is read-only by default. With `api.allow_writes: true`, you can create, edit and remove outputs from the UI, with a form built from each output's schema and the same validation as the files. The outputs defined in your files stay read-only, unless you set `provisioning.allow_ui_updates`.
+The API is read-only by default. With `api.allow_writes: true`, you can create, edit and remove outputs from the UI, with a form built from each output's schema and the same validation as the files. The outputs defined in your files stay read-only, unless you set `provisioning.allow_ui_updates`. Even then, Falcosidekick never writes your files: a change from the UI lasts until the next restart or reload of the output files, which puts the file version back.
 
-By default, outputs created from the UI live in memory. With `database.backend` set to `sqlite` or `postgres`, they're kept across restarts, together with the UI layout. Secret values are never written to the database: there, a secret has to be a file path. With postgres, several replicas share the same outputs: a change made on one reaches the others through database notifications, with periodic polling as a fallback.
+By default, outputs created from the UI live in memory. With `database.backend` set to `sqlite` or `postgres`, they're kept across restarts, together with the UI layout. Secret values are never written to the database: there, a secret has to be a file path. With postgres, several replicas share the same outputs: a change made on one reaches the others through database notifications, with periodic polling as a fallback. The outputs from your files don't need any of this: every replica reads the same files. The recent events the UI shows are per replica.
 
 ### Outputs
 
