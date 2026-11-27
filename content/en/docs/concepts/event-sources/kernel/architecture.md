@@ -45,17 +45,28 @@ struct ppm_evt_hdr {
 };
 ```
 
-The payload contains an array of lengths of each parameter followed by the content of the parameters themselves. The parameter type is a numeric identifer that maps with each event documented in the reference.
+The payload starts with an array of parameter lengths in bytes, followed by the parameter values in the same order. The event type in the header identifies the schema that defines the parameters and their types.
 
-For example, the `dup3` event is defined in the reference as:
+For example, the `dup3` exit event is defined in the reference as:
 
 **dup3**(FD res, FD oldfd, FD newfd, FLAGS32 flags: *O_LARGEFILE*, *O_DIRECTORY*, *O_DIRECT*, *O_TRUNC*, *O_SYNC*, *O_NONBLOCK*, *O_EXCL*, *O_DSYNC*, *O_APPEND*, *O_CREAT*, *O_RDWR*, *O_WRONLY*, *O_RDONLY*, *O_CLOEXEC*, *O_NONE*, *O_TMPFILE*) 
 
-Meaning that its encoding will be composed of an header containing the timestamp and tid, `nparams` will be 4 and the complete encoding will be:
+For this event, `nparams` is `4` and each length is stored as a `uint16_t`. The three `FD` values each occupy 8 bytes, and the `FLAGS32` value occupies 4 bytes. In the layout below, `uint16(4)` is a two-byte field holding the byte count for `flags`.
 
 ```
-[header] [uint16(8)] [uint16(8)] [uint16(8)] [uint16(32)] [res] [oldfd] [newfd] [flags]
+[header] [uint16(8)] [uint16(8)] [uint16(8)] [uint16(4)] [res] [oldfd] [newfd] [flags]
 ```
+
+The offsets below are in bytes, measured from the first byte after the header. The four length fields take up the first 8 bytes, so `res` starts at offset 8. To find the next value, add the current value's length to its offset.
+
+| Parameter | Length field offset | Value offset | Value length (bytes) |
+| --- | ---: | ---: | ---: |
+| `res` | 0 | 8 | 8 |
+| `oldfd` | 2 | 16 | 8 |
+| `newfd` | 4 | 24 | 8 |
+| `flags` | 6 | 32 | 4 |
+
+For example, read the two-byte length field at offset 6 to get `4`, then read the four-byte `flags` value starting at offset 32. The payload ends after byte 35, for a total of 36 bytes.
 
 <div>
   <img style="width: 60%; margin: auto" 
